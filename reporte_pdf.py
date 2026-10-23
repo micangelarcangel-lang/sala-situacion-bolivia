@@ -157,19 +157,74 @@ def grafico_acumulado(evs, ahora, dias):
     return png(fig)
 
 
+import re
+PARADAS = set("de la el los las del en y a un una por con que se al para su sus tras mas más bolivia boliviano boliviana fallecidos fallecido muertos muerto heridos herido personas reportan reportado reportados casos".split())
+
+
+def _ficha(titulo):
+    t = re.sub(r" - [^-]+$", "", titulo or "").lower()
+    t = re.sub(r"[^a-záéíóúñü ]", " ", t)
+    return {w[:6] for w in t.split() if len(w) > 2 and w not in PARADAS}
+
+
+def _similitud(a, b):
+    inter, menor = len(a & b), min(len(a), len(b))
+    return inter / menor if inter >= 3 and menor else 0
+
+
+def agrupar_hechos(evs):
+    """Une titulares de prensa que cuentan el mismo hecho. Fallecidos/heridos = MÁXIMO reportado (no suma)."""
+    grupos = []
+    for e in evs:
+        f = _ficha(e["titulo"]) if str(e["id"]).startswith("noticia:") else None
+        hallado = None
+        if f is not None:
+            for g in grupos:
+                if g["f"] is not None and g["tipo"] == e["tipo"] and _similitud(g["f"], f) >= 0.5:
+                    hallado = g; break
+        if hallado: hallado["items"].append(e)
+        else: grupos.append({"tipo": e["tipo"], "f": f, "items": [e]})
+    out = []
+    for g in grupos:
+        its = g["items"]
+        rep = dict(max(its, key=lambda x: (x["nivel"], x.get("lat") is not None, x["ts"])))
+        rep["nivel"] = max(i["nivel"] for i in its)
+        vf = sorted({i.get("fall") or 0 for i in its if (i.get("fall") or 0) > 0})
+        vh = sorted({i.get("her") or 0 for i in its if (i.get("her") or 0) > 0})
+        rep["fall"] = max(vf) if vf else 0
+        rep["her"] = max(vh) if vh else 0
+        rep["_vf"], rep["_vh"] = vf, vh
+        rep["_contradice"] = len(vf) > 1 or len(vh) > 1
+        rep["_ids"] = [i["id"] for i in its]
+        rep["_fuentes"] = sorted({i["fuente"] for i in its})
+        rep["_enlaces"] = [(i["fuente"], i["url"]) for i in its if (i.get("url") or "").startswith("http")][:3]
+        rep["ts"] = max(i["ts"] for i in its)
+        if rep.get("lat") is None:
+            for i in its:
+                if i.get("lat") is not None:
+                    rep["lat"], rep["lon"], rep["metodo"], rep["lugar"] = i["lat"], i["lon"], i.get("metodo"), i.get("lugar"); break
+        out.append(rep)
+    return out
+
+
 def build(evs_all, geo, salida, modo="programado", horas=24, ahora=None, ref=None, etiqueta=None):
     ahora = ahora or int(time.time() * 1000)
     lim = ahora - horas * 3600000
     prev_lim = lim - horas * 3600000
-    evs = sorted([e for e in evs_all if e["ts"] >= lim], key=lambda e: (-e["nivel"], -e["ts"]))
-    prev = [e for e in evs_all if prev_lim <= e["ts"] < lim]
-    for i, e in enumerate(evs, 1):
-        e["_n"] = i
+    # titulares sin clasificar y de nivel verde no son amenazas: se excluyen del análisis
+    evs_all = [e for e in evs_all if not (e["tipo"] == "sin clasificar" and e["nivel"] == 0)]
+    evs = sorted(agrupar_hechos([e for e in evs_all if e["ts"] >= lim]), key=lambda e: (-e["nivel"], -e["ts"]))
+    prev = agrupar_hechos([e for e in evs_all if prev_lim <= e["ts"] < lim])
+    for e in evs:
         e["_dep"], e["_mun"] = ubicar(e, geo)
-    graves = [e for e in evs if (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0 or e["nivel"] >= 2]
-    foco = [e for e in evs if (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0 or e["nivel"] == 3] if modo == "inmediato" else None
+    vis = [e for e in evs if e["nivel"] >= 1 or (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0]
+    n_verde_omitidos = len(evs) - len(vis)
+    for i, e in enumerate(vis, 1):
+        e["_n"] = i
+    graves = [e for e in vis if (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0 or e["nivel"] >= 2]
+    foco = [e for e in vis if (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0 or e["nivel"] == 3] if modo == "inmediato" else None
     if modo == "inmediato" and ref:
-        foco = [e for e in evs if e["id"] in ref] or foco
+        foco = [e for e in vis if set(e["_ids"]) & set(ref)] or foco
 
     S = lambda n, **k: ParagraphStyle(n, fontName=k.pop("fn", "Helvetica"), **k)
     st = {
@@ -211,13 +266,13 @@ def build(evs_all, geo, salida, modo="programado", horas=24, ahora=None, ref=Non
     # Resumen
     cont = Counter(e["nivel"] for e in evs)
     fall = sum(e.get("fall") or 0 for e in evs); her = sum(e.get("her") or 0 for e in evs)
-    sinloc = sum(1 for e in evs if e.get("lat") is None)
+    sinloc = sum(1 for e in vis if e.get("lat") is None)
     d_prev = len(evs) - len(prev)
     tabla_res = Table([[
         *[Paragraph(f'<font size=16 color="{COL[n]}"><b>{cont.get(n, 0)}</b></font><br/><font size=7>{NOM[n]}</font>', st["p"]) for n in (3, 2, 1, 0)],
         Paragraph(f'<font size=16><b>{fall}</b></font><br/><font size=7>Fallecidos</font>', st["p"]),
         Paragraph(f'<font size=16><b>{her}</b></font><br/><font size=7>Heridos</font>', st["p"]),
-        Paragraph(f'<font size=16><b>{len(evs)}</b></font><br/><font size=7>Eventos ({d_prev:+d} vs prev.)</font>', st["p"]),
+        Paragraph(f'<font size=16><b>{len(evs)}</b></font><br/><font size=7>Hechos ({d_prev:+d} vs prev.)</font>', st["p"]),
     ]], colWidths=[(W - 30 * mm) * x for x in (.125, .125, .125, .125, .13, .13, .24)])
     tabla_res.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), .5, colors.HexColor("#c9cfd8")), ("INNERGRID", (0, 0), (-1, -1), .3, colors.HexColor("#e3e7ec")),
                                    ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f7f9fb")), ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5)]))
@@ -226,16 +281,16 @@ def build(evs_all, geo, salida, modo="programado", horas=24, ahora=None, ref=Non
         el.append(Paragraph("<b>Motivo de la alerta inmediata:</b> evento(s) con víctimas (fallecidos/heridos) o nivel rojo. Información preliminar de fuentes abiertas; requiere confirmación con la red de salud local.", st["p"]))
         el.append(Spacer(1, 2 * mm))
     el.append(Paragraph("1. Geolocalización de los hechos", st["h2"]))
-    el.append(Image(mapa_png(geo, evs, foco, 6.4, 6.6), width=(W - 30 * mm) * .96, height=(W - 30 * mm) * .96 * 6.6 / 6.4, hAlign="CENTER"))
+    el.append(Image(mapa_png(geo, vis, foco, 6.4, 6.6), width=(W - 30 * mm) * .96, height=(W - 30 * mm) * .96 * 6.6 / 6.4, hAlign="CENTER"))
     el.append(Paragraph(f"Los números del mapa corresponden a la columna N° de la tabla. {sinloc} evento(s) no se pintan por no tener coordenadas confiables." if sinloc else "Los números del mapa corresponden a la columna N° de la tabla.", st["pm"]))
     el.append(NextPageTemplate("p2")); el.append(PageBreak())
 
     # Tabla de hechos
-    el.append(Paragraph("2. Hechos registrados", st["h2"]))
+    el.append(Paragraph("2. Hechos registrados (un hecho = varias notas del mismo suceso agrupadas)", st["h2"]))
     filas = [[Paragraph(x, st["cellh"]) for x in ["N°", "Hora local", "Nivel", "Tipo", "Hecho", "Ubicación", "Fall.", "Her.", "Fuente"]]]
     ts = [("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0f3d6e")), ("VALIGN", (0, 0), (-1, -1), "TOP"),
           ("GRID", (0, 0), (-1, -1), .25, colors.HexColor("#d3d8df")), ("TOPPADDING", (0, 0), (-1, -1), 2.5), ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5)]
-    for r, e in enumerate(evs[:60], 1):
+    for r, e in enumerate(vis[:60], 1):
         ub = ", ".join(x for x in [e["_mun"], e["_dep"]] if x) or "Sin ubicación"
         filas.append([Paragraph(str(e["_n"]), st["cell"]), Paragraph(hora(e["ts"]).strftime("%d/%m %H:%M"), st["cell"]),
                       Paragraph(f'<b>{NOM[e["nivel"]]}</b>', S("n", fontSize=7, leading=8.6, textColor=colors.white if e["nivel"] != 1 else colors.HexColor("#222"))),
@@ -244,8 +299,10 @@ def build(evs_all, geo, salida, modo="programado", horas=24, ahora=None, ref=Non
         ts.append(("BACKGROUND", (2, r), (2, r), colors.HexColor(COL[e["nivel"]])))
     t = Table(filas, colWidths=[8 * mm, 17 * mm, 15 * mm, 21 * mm, 50 * mm, 33 * mm, 10 * mm, 10 * mm, 16 * mm], repeatRows=1)
     t.setStyle(TableStyle(ts)); el.append(t)
-    if len(evs) > 60:
-        el.append(Paragraph(f"Se muestran los 60 de mayor nivel; hay {len(evs) - 60} más en la base de datos.", st["pm"]))
+    if len(vis) > 60:
+        el.append(Paragraph(f"Se muestran los 60 de mayor nivel; hay {len(vis) - 60} más en la base de datos.", st["pm"]))
+    if n_verde_omitidos:
+        el.append(Paragraph(f"Se omiten del listado {n_verde_omitidos} hecho(s) de nivel Verde sin víctimas (se cuentan en el resumen; disponibles en la base de datos CSV).", st["pm"]))
 
     # Detalle de graves
     el.append(Paragraph("3. Detalle de hechos de mayor gravedad", st["h2"]))
@@ -257,14 +314,17 @@ def build(evs_all, geo, salida, modo="programado", horas=24, ahora=None, ref=Non
         bloque = [Paragraph(f'<b>N° {e["_n"]} · <font color="{COL[e["nivel"]]}">{NOM[e["nivel"]].upper()}</font> · {esc(e["titulo"])}</b>', st["p"]),
                   Paragraph(f'Tipo: {e["tipo"]} · Fecha/hora: {hora(e["ts"]).strftime("%d/%m/%Y %H:%M")} · Lugar: {esc(ub)} · Coord.: {coord} ({esc(e.get("metodo") or "método no registrado")}) · Fallecidos: {e.get("fall") or 0} · Heridos: {e.get("her") or 0}', st["pm"]),
                   Paragraph(esc(e.get("detalle") or "Sin detalle adicional."), st["p"]),
-                  Paragraph(f'Fuente: {esc(e["fuente"])}' + (f' · {esc(e["url"])}' if e.get("url", "").startswith("http") else ""), st["pm"]), Spacer(1, 2.5 * mm)]
+                  Paragraph(f'Fuentes ({len(e["_fuentes"])}): {esc(", ".join(e["_fuentes"]))}' + "".join(f'<br/>{esc(f)}: {esc(u)}' for f, u in e["_enlaces"]), st["pm"])]
+        if e["_contradice"]:
+            bloque.append(Paragraph(f'<font color="#c62828"><b>Cifras distintas entre fuentes</b></font> — fallecidos: {e["_vf"] or "—"}; heridos: {e["_vh"] or "—"}. Se muestra el máximo reportado; confirmar con la red de salud.', st["pm"]))
+        bloque.append(Spacer(1, 2.5 * mm))
         el.append(KeepTogether(bloque))
 
     # Indicadores
     el.append(PageBreak())
     dias = 14 if horas <= 168 else 30
     el.append(Paragraph(f"4. Indicadores y tendencias (últimos {dias} días)", st["h2"]))
-    base = [e for e in evas_ventana(evs_all, ahora, dias)]
+    base = agrupar_hechos(evas_ventana(evs_all, ahora, dias))
     el.append(Image(grafico_tendencia(base, ahora, dias), width=(W - 30 * mm) * .98, height=(W - 30 * mm) * .98 * 2.5 / 6.4, hAlign="CENTER"))
     for e in base:
         e["_dep"], _ = ubicar(e, geo)
@@ -284,9 +344,9 @@ def build(evs_all, geo, salida, modo="programado", horas=24, ahora=None, ref=Non
         comp.append([Paragraph(nombre, st["cell"]), Paragraph(str(x), st["cell"]), Paragraph(str(y), st["cell"]), Paragraph(var, st["cell"])])
     tc = Table(comp, colWidths=[60 * mm, 35 * mm, 35 * mm, 30 * mm]); tc.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0f3d6e")), ("GRID", (0, 0), (-1, -1), .25, colors.HexColor("#d3d8df")), ("TOPPADDING", (0, 0), (-1, -1), 3), ("BOTTOMPADDING", (0, 0), (-1, -1), 3)]))
     el.append(tc); el.append(Spacer(1, 3 * mm))
-    el.append(Paragraph("Nota metodológica: eventos tomados de fuentes abiertas automáticas (USGS, GDACS, Open-Meteo y titulares de prensa). Las cifras de víctimas se extraen de titulares y pueden estar incompletas o contradecirse entre medios; no sustituyen la notificación oficial. Los niveles de color son preliminares (heurística propia).", st["pm"]))
+    el.append(Paragraph("Nota metodológica: eventos tomados de fuentes abiertas automáticas (USGS, GDACS, Open-Meteo y titulares de prensa). Varias notas sobre el mismo suceso se agrupan en un solo hecho y las cifras de víctimas son el máximo reportado (no se suman). Se extraen de titulares y pueden estar incompletas o contradecirse; no sustituyen la notificación oficial. Los niveles de color son preliminares (heurística propia).", st["pm"]))
     doc.build(el)
-    return {"eventos": len(evs), "graves": len(graves)}
+    return {"hechos": len(evs), "listados": len(vis), "graves": len(graves)}
 
 
 def esc(s):

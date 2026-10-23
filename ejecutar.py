@@ -6,7 +6,7 @@
 Variables: DATOS_URL (secreto), SLACK_WEBHOOK (secreto), MODO/HORAS (solo ejecución manual), DATOS_FILE (pruebas)
 """
 import os, sys, json, time, urllib.request, urllib.parse, datetime as dt
-from reporte_pdf import cargar_geo, build
+from reporte_pdf import cargar_geo, build, agrupar_hechos
 
 DOCS = "docs"
 REP = os.path.join(DOCS, "reportes")
@@ -44,6 +44,13 @@ def cargar_datos():
     log("ERROR al descargar los datos del motor: " + str(ult)); sys.exit(1)
 
 
+def relevante(e):
+    """Descarta ruido de prensa: titulares sin relación con amenazas, y nivel 0 sin ubicación ni víctimas."""
+    if e.get("tipo") == "sin clasificar":
+        return False
+    return e["nivel"] >= 1 or e.get("lat") is not None or (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0
+
+
 def avisar(texto):
     wh = os.environ.get("SLACK_WEBHOOK", "").strip()
     if not wh:
@@ -75,9 +82,12 @@ def main():
     ahora_ms = int(time.time() * 1000)
     ahora = dt.datetime.fromtimestamp(ahora_ms / 1000, TZ)
     datos = cargar_datos()
-    evs = datos["eventos"]
+    todos = datos["eventos"]
+    evs = [e for e in todos if relevante(e)]
+    # data.json = lo relevante (tablero y reportes); data_completo.json = base completa para análisis
     json.dump({"generado": ahora_ms, "eventos": evs}, open(os.path.join(DOCS, "data.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-    log(f"{len(evs)} eventos descargados")
+    json.dump({"generado": ahora_ms, "eventos": todos}, open(os.path.join(DOCS, "data_completo.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    log(f"{len(todos)} eventos descargados, {len(evs)} relevantes")
     estado = json.load(open(ESTADO)) if os.path.exists(ESTADO) else {"reportados": [], "diario": "", "semanal": ""}
     geo = None
     hechos = []  # (archivo, texto)
@@ -98,12 +108,14 @@ def main():
     else:
         # 1) inmediato: hechos con víctimas o nivel rojo, aún no reportados
         lim = ahora_ms - 48 * 3600000
-        graves = [e for e in evs if e["ts"] >= lim and ((e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0 or e["nivel"] >= 3)
-                  and e["id"] not in estado["reportados"]]
+        grupos = agrupar_hechos([e for e in evs if e["ts"] >= lim and not (e["tipo"] == "sin clasificar" and e["nivel"] == 0)])
+        graves = [g for g in grupos if ((g.get("fall") or 0) > 0 or (g.get("her") or 0) > 0 or g["nivel"] >= 3)
+                  and not (set(g["_ids"]) & set(estado["reportados"]))]  # un hecho ya avisado no se repite
         if graves:
             n = f"alerta_{ahora:%Y%m%d_%H%M}.pdf"
-            pdf(n, modo="inmediato", horas=48, ref=[e["id"] for e in graves])
-            estado["reportados"] = (estado["reportados"] + [e["id"] for e in graves])[-2000:]
+            ids = [i for g in graves for i in g["_ids"]]
+            pdf(n, modo="inmediato", horas=48, ref=ids)
+            estado["reportados"] = (estado["reportados"] + ids)[-3000:]
             fall = sum(e.get("fall") or 0 for e in graves); her = sum(e.get("her") or 0 for e in graves)
             hechos.append((n, f":rotating_light: <!channel> ALERTA INMEDIATA: {len(graves)} hecho(s) grave(s) (fallecidos {fall}, heridos {her}, cifras preliminares de prensa)"))
         # 2) diario (desde las 07:00 hora La Paz, una vez por día)
