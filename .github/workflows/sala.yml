@@ -1,0 +1,46 @@
+name: Sala de Situación
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "Escriba solicitud para generar un reporte ahora"
+        default: "solicitud"
+      horas:
+        description: "Horas hacia atrás que cubre el reporte (24 = un día, 168 = una semana)"
+        default: "24"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sala
+  cancel-in-progress: false
+
+jobs:
+  sala:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Descargar datos y generar reportes
+        env:
+          DATOS_URL: ${{ secrets.DATOS_URL }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MODO: ${{ github.event.inputs.modo }}
+          HORAS: ${{ github.event.inputs.horas }}
+        run: python ejecutar.py
+      - name: Guardar resultados en el repositorio
+        run: |
+          git config user.name "sala-bot"
+          git config user.email "sala-bot@users.noreply.github.com"
+          git add docs
+          git diff --staged --quiet || (git commit -m "Actualización automática" && git push)
