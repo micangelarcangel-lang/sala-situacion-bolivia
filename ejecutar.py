@@ -1,7 +1,198 @@
 # -*- coding: utf-8 -*-
 """Orquestador de la Sala de Situación (se ejecuta en GitHub Actions cada 30 min).
 1) Descarga los eventos del motor (Apps Script) -> docs/data.json (alimenta el tablero)
+2) Genera PDF: inmediato (hechos con ví# -*- coding: utf-8 -*-
+"""Orquestador de la Sala de Situación (se ejecuta en GitHub Actions cada 30 min).
+1) Descarga los eventos del motor (Apps Script) -> docs/data.json (alimenta el tablero)
 2) Genera PDF: inmediato (hechos con víctimas o nivel rojo), diario, semanal, o por solicitud
+3) Avisa a Slack con el enlace al PDF
+Variables: DATOS_URL (secreto), SLACK_WEBHOOK (secreto), MODO/HORAS (solo ejecución manual), DATOS_FILE (pruebas)
+"""
+import os, sys, json, time, urllib.request, urllib.parse, datetime as dt
+from reporte_pdf import cargar_geo, build, agrupar_hechos
+
+DOCS = "docs"
+REP = os.path.join(DOCS, "reportes")
+TZ = dt.timezone(dt.timedelta(hours=-4))  # America/La_Paz
+HORA_DIARIO = 7
+ESTADO = os.path.join(DOCS, "estado.json")
+
+
+def log(m):
+    print(m, flush=True)
+
+
+def cargar_datos():
+    f = os.environ.get("DATOS_FILE")
+    if f:
+        return json.load(open(f, encoding="utf-8"))
+    url = os.environ.get("DATOS_URL", "").strip()
+    if not url:
+        log("ERROR: falta el secreto DATOS_URL"); sys.exit(1)
+    p = urllib.parse.urlsplit(url)
+    q = dict(urllib.parse.parse_qsl(p.query)); q["dias"] = "30"
+    url = urllib.parse.urlunsplit((p.scheme, p.netloc, p.path, urllib.parse.urlencode(q), ""))
+    ult = None
+    for i in range(3):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "sala-situacion"})
+            with urllib.request.urlopen(req, timeout=90) as r:
+                d = json.loads(r.read().decode("utf-8"))
+            if "eventos" not in d:
+                raise ValueError("respuesta sin eventos: " + str(d.get("error", "?")))
+            return d
+        except Exception as e:  # no imprimir la URL (contiene la clave)
+            ult = type(e).__name__ + ": " + str(e)[:120].replace(url, "[url]")
+            time.sleep(5 * (i + 1))
+    log("ERROR al descargar los datos del motor: " + str(ult)); sys.exit(1)
+
+
+EXTRANJERO = ["cuba", "habana", "dominicana", "santo domingo", "puerto rico", "mexico", "guatemala", "honduras", "salvador", "nicaragua",
+              "costa rica", "panama", "colombia", "venezuela", "ecuador", "peru", "lima", "argentina", "buenos aires", "chile", "santiago de chile",
+              "paraguay", "uruguay", "brasil", "espana", "madrid", "estados unidos", "eeuu", "florida", "texas", "california", "haiti", "jamaica"]
+EXCLUIDOS = []
+
+
+def es_extranjero(e):
+    """Sin coordenadas en Bolivia, sin la palabra 'Bolivia' y con un país o ciudad extranjera en el titular."""
+    if e.get("lat") is not None:
+        return False
+    t = " " + _n(e.get("titulo", "") + " " + e.get("detalle", "")) + " "
+    if "bolivia" in t:
+        return False
+    import re
+    return any(re.search(r"\b" + re.escape(k) + r"\b", t) for k in EXTRANJERO)
+
+
+def relevante(e):
+    """Descarta ruido de prensa: titulares sin relación con amenazas, y nivel 0 sin ubicación ni víctimas."""
+    if e.get("tipo") == "sin clasificar":
+        return False
+    if es_extranjero(e):
+        EXCLUIDOS.append(e.get("titulo", "")[:90])
+        return False
+    return e["nivel"] >= 1 or e.get("lat") is not None or (e.get("fall") or 0) > 0 or (e.get("her") or 0) > 0
+
+
+def _n(t):
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", str(t or "").lower()) if unicodedata.category(c) != "Mn")
+
+
+def filtrar_busqueda(evs, q):
+    """Reporte por evento: deja solo los eventos cuyo título, detalle o lugar contienen todas las palabras de q."""
+    ps = [_n(x) for x in q.split() if len(x) >= 3]
+    return [e for e in evs if all(p in _n(" ".join([e.get("titulo", ""), e.get("detalle", ""), e.get("lugar", "")])) for p in ps)]
+
+
+def avisar(texto):
+    wh = os.environ.get("SLACK_WEBHOOK", "").strip()
+    if not wh:
+        log("(sin SLACK_WEBHOOK: no se avisa a Slack)"); return
+    try:
+        req = urllib.request.Request(wh, data=json.dumps({"text": texto}).encode("utf-8"), headers={"Content-Type": "application/json"})
+        urllib.request.urlopen(req, timeout=30).read()
+    except Exception as e:
+        log("Aviso a Slack falló: " + type(e).__name__)
+
+
+def base_url():
+    repo = os.environ.get("GITHUB_REPOSITORY", "usuario/repositorio")
+    o, n = repo.split("/")
+    return f"https://{o.lower()}.github.io/{n}/"
+
+
+def indice_reportes():
+    pdfs = sorted([f for f in os.listdir(REP) if f.endswith(".pdf")], reverse=True)
+    filas = "".join(f'<li><a href="{f}">{f}</a></li>' for f in pdfs) or "<li>Aún no hay reportes.</li>"
+    open(os.path.join(REP, "index.html"), "w", encoding="utf-8").write(
+        '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reportes PDF</title>'
+        '<style>body{font:15px/1.6 system-ui;max-width:720px;margin:24px auto;padding:0 16px}a{color:#0b5cab}</style>'
+        '<h1>Reportes PDF — Sala de Situación</h1><p><a href="../">← Volver al tablero</a></p><ul>' + filas + "</ul>")
+
+
+def main():
+    os.makedirs(REP, exist_ok=True)
+    ahora_ms = int(time.time() * 1000)
+    ahora = dt.datetime.fromtimestamp(ahora_ms / 1000, TZ)
+    datos = cargar_datos()
+    todos = datos["eventos"]
+    evs = [e for e in todos if relevante(e)]
+    # data.json = lo relevante (tablero y reportes); data_completo.json = base completa para análisis
+    json.dump({"generado": ahora_ms, "eventos": evs}, open(os.path.join(DOCS, "data.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    json.dump({"generado": ahora_ms, "eventos": todos}, open(os.path.join(DOCS, "data_completo.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    log(f"{len(todos)} eventos descargados, {len(evs)} relevantes")
+    if EXCLUIDOS:
+        log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
+        for t in EXCLUIDOS[:30]:
+            log("  - " + t)
+    estado = json.load(open(ESTADO)) if os.path.exists(ESTADO) else {"reportados": [], "diario": "", "semanal": ""}
+    geo = None
+    hechos = []  # (archivo, texto)
+
+    def pdf(nombre, **kw):
+        nonlocal geo
+        geo = geo or cargar_geo("geo.json")
+        r = build([dict(e) for e in evs], geo, os.path.join(REP, nombre), ahora=ahora_ms, **kw)
+        log(f"PDF {nombre}: {r}")
+        return r
+
+    modo = os.environ.get("MODO", "").strip()
+    if modo == "solicitud":
+        horas = int(os.environ.get("HORAS") or 24)
+        q = (os.environ.get("BUSCAR") or "").strip()
+        if q:
+            evs = filtrar_busqueda(evs, q)
+            ev_n = len([e for e in evs if e["ts"] >= ahora_ms - horas * 3600000])
+            log(f"Búsqueda '{q}': {ev_n} evento(s) en las últimas {horas} h")
+            if ev_n == 0:
+                avisar(f":mag: Reporte por solicitud '{q}' (últimas {horas} h): *no se encontraron eventos* en lo que el sistema ha captado. Puede que la prensa no lo haya publicado o que el titular no use esas palabras.")
+                json.dump(estado, open(ESTADO, "w"), ensure_ascii=False); indice_reportes(); return
+            n = f"evento_{ahora:%Y%m%d_%H%M}.pdf"
+            pdf(n, modo="programado", horas=horas, etiqueta=f"Reporte por evento: {q} — últimas {horas} h")
+            hechos.append((n, f":page_facing_up: Reporte por evento «{q}» (últimas {horas} h, {ev_n} registro(s))"))
+        else:
+            n = f"solicitud_{ahora:%Y%m%d_%H%M}_{horas}h.pdf"
+            pdf(n, modo="programado", horas=horas, etiqueta=f"Reporte por solicitud — últimas {horas} h")
+            hechos.append((n, f":page_facing_up: Reporte por solicitud (últimas {horas} h)"))
+    else:
+        # 1) inmediato: hechos con víctimas o nivel rojo, aún no reportados
+        lim = ahora_ms - 48 * 3600000
+        grupos = agrupar_hechos([e for e in evs if e["ts"] >= lim and not (e["tipo"] == "sin clasificar" and e["nivel"] == 0)])
+        graves = [g for g in grupos if ((g.get("fall") or 0) > 0 or (g.get("her") or 0) > 0 or g["nivel"] >= 3)
+                  and not (set(g["_ids"]) & set(estado["reportados"]))]  # un hecho ya avisado no se repite
+        if graves:
+            n = f"alerta_{ahora:%Y%m%d_%H%M}.pdf"
+            ids = [i for g in graves for i in g["_ids"]]
+            pdf(n, modo="inmediato", horas=48, ref=ids)
+            estado["reportados"] = (estado["reportados"] + ids)[-3000:]
+            fall = sum(e.get("fall") or 0 for e in graves); her = sum(e.get("her") or 0 for e in graves)
+            hechos.append((n, f":rotating_light: <!channel> ALERTA INMEDIATA: {len(graves)} hecho(s) grave(s) (fallecidos {fall}, heridos {her}, cifras preliminares de prensa)"))
+        # 2) diario (desde las 07:00 hora La Paz, una vez por día)
+        hoy = f"{ahora:%Y-%m-%d}"
+        if ahora.hour >= HORA_DIARIO and estado["diario"] != hoy:
+            n = f"diario_{hoy}.pdf"
+            pdf(n, modo="programado", horas=24, etiqueta="Reporte diario de situación")
+            estado["diario"] = hoy
+            hechos.append((n, f":page_facing_up: Reporte diario {hoy}"))
+        # 3) semanal (lunes desde las 07:00)
+        sem = f"{ahora.isocalendar()[0]}-W{ahora.isocalendar()[1]:02d}"
+        if ahora.weekday() == 0 and ahora.hour >= HORA_DIARIO and estado["semanal"] != sem:
+            n = f"semanal_{sem}.pdf"
+            pdf(n, modo="programado", horas=168, etiqueta="Reporte semanal de situación")
+            estado["semanal"] = sem
+            hechos.append((n, f":page_facing_up: Reporte semanal {sem}"))
+
+    json.dump(estado, open(ESTADO, "w"), ensure_ascii=False)
+    indice_reportes()
+    for n, t in hechos:
+        avisar(f"{t}\n{base_url()}reportes/{n}")
+    log("Listo. Reportes nuevos: " + (", ".join(n for n, _ in hechos) or "ninguno"))
+
+
+if __name__ == "__main__":
+    main()
+ctimas o nivel rojo), diario, semanal, o por solicitud
 3) Avisa a Slack con el enlace al PDF
 Variables: DATOS_URL (secreto), SLACK_WEBHOOK (secreto), MODO/HORAS (solo ejecución manual), DATOS_FILE (pruebas)
 """
