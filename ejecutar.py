@@ -164,7 +164,7 @@ def main():
         log("No se pudo actualizar la base de datos descargable: " + type(e).__name__ + " " + str(e)[:100])
     try:
         import senamhi
-        log("Alertas oficiales SENAMHI: " + senamhi.actualizar(DOCS))
+        log("Alertas oficiales SENAMHI: " + senamhi.actualizar(DOCS, geo=cargar_geo("geo.json")))
         log("Avisos SENAMHI enviados a Slack: " + str(senamhi.avisar_nuevos(DOCS, avisar)))
     except Exception as e:
         log("No se pudo actualizar SENAMHI (se conserva lo anterior): " + type(e).__name__ + " " + str(e)[:100])

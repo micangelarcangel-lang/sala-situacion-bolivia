@@ -62,7 +62,88 @@ def leer_pdf(url):
     return {"departamentos": deps, "rios": rios[:40], "poblaciones": pobl[:25], "definicion": defin[:700], "texto": cuerpo[:6000]}
 
 
-def actualizar(docs, max_nuevos=60):
+
+# ------------------------------------------------------------------ AVISOS METEOROLÓGICOS (consulta pública de la app del SENAMHI)
+URL_METEO = "https://senab.senamhi.gob.bo/api/forecastweather/datatable"
+URL_VER = "https://sena.senamhi.gob.bo/public/forecast-public-reports/"
+
+
+def _post_meteo(cuerpo):
+    # el servidor de esta aplicación solo acepta TLS 1.2
+    err = ""
+    for i in range(3):
+        c = ssl.create_default_context()
+        c.maximum_version = ssl.TLSVersion.TLSv1_2
+        try:
+            rq = urllib.request.Request(URL_METEO, data=json.dumps(cuerpo).encode(), method="POST",
+                                        headers={"User-Agent": UA, "Content-Type": "application/json", "Accept": "application/json"})
+            with urllib.request.urlopen(rq, timeout=120, context=c) as r:
+                return json.loads(r.read())
+        except Exception as e:
+            err = type(e).__name__ + ": " + str(e)[:80]
+            time.sleep(5)
+    raise RuntimeError(err)
+
+
+def _nivel_texto(nombre):
+    n = (nombre or "").upper()
+    return "ROJO" if n.startswith("ROJ") else "NARANJA" if n.startswith("NARAN") else "AMARILLO" if n.startswith("AMAR") else n
+
+
+def _zonas(poligono, geo):
+    """Departamentos y municipios que cruza el polígono del aviso (límites geoBoundaries)."""
+    from shapely.geometry import shape
+    g = shape(poligono)
+    if not g.is_valid:
+        g = g.buffer(0)
+    g = g.simplify(0.005)
+    if g.is_empty or g.area == 0:
+        return [], [], 0
+    deps = []
+    for u in geo["dep"]:
+        if u["_s"].intersects(g) and u["_s"].intersection(g).area / g.area >= 0.02:
+            deps.append((u["_s"].intersection(g).area, u["n"]))
+    muns = []
+    for u in geo["mun"]:
+        s = u["_s"]
+        if s.intersects(g):
+            a = s.intersection(g).area
+            if a / s.area >= 0.2 or a / g.area >= 0.05:
+                muns.append((a, u["n"] + " (" + u["d"] + ")"))
+    deps = [n for a, n in sorted(deps, reverse=True)]
+    muns = [n for a, n in sorted(muns, reverse=True)]
+    return deps, muns[:60], len(muns)
+
+
+def avisos_meteo(previo, geo, limite=12):
+    """Lee los últimos avisos meteorológicos APROBADOS (lista pública). Devuelve lista de dicts en el mismo formato que los hidrológicos."""
+    j = _post_meteo({"offset": 0, "limit": limite, "order": None, "query": {}, "type": "Aprobado"})
+    hoy = datetime.date.today().isoformat()
+    out = []
+    for r in j.get("data", []):
+        if not r.get("enable", True):
+            continue
+        clave = URL_VER + str(r["id"])
+        a = dict(previo.get(clave, {}))
+        ini, fin = (r.get("date") or ["", ""])[:2]
+        nivel = _nivel_texto((r.get("ForecastTypeAlert") or {}).get("alertType"))
+        fen = (r.get("ForecastTypeEvent") or {}).get("eventType", "")
+        pub = (r.get("publicationDate") or r.get("audCreatedAt") or "").replace("T", " ")[:19]
+        a.update({"tipo": "meteorológica", "publicada": pub, "inicio": ini, "fin": fin, "nivel": nivel, "fenomeno": fen,
+                  "titulo": f"AVISO METEOROLÓGICO N° {r['code']} — {fen}", "pdf": clave, "url": clave,
+                  "descripcion": re.sub(r"\s+", " ", r.get("description") or "").strip()})
+        if geo and "departamentos" not in a:
+            try:
+                d, m, n = _zonas(r["dropArea"], geo)
+                a.update({"departamentos": d, "municipios": m, "n_municipios": n})
+            except Exception as e:
+                a["error_zonas"] = type(e).__name__ + ": " + str(e)[:60]
+        a["texto"] = a.get("descripcion", "")
+        out.append(a)
+    return out
+
+
+def actualizar(docs, max_nuevos=60, geo=None):
     ruta = os.path.join(docs, "senamhi_alertas.json")
     previo = {}
     if os.path.exists(ruta):
@@ -89,10 +170,23 @@ def actualizar(docs, max_nuevos=60):
         a["vigente"] = f["fin"] >= hoy
         a["nivel_num"] = NIV[f["nivel"]]
         alertas.append(a)
+    n_meteo, err_meteo = 0, ""
+    try:
+        for a in avisos_meteo(previo, geo):
+            m = re.search(r"N°\s*(\d+)\s*/\s*(\d+)", a["titulo"])
+            a["numero"] = f"{int(m.group(1))}/{m.group(2)}" if m else ""
+            a["vigente"] = a["fin"] >= hoy
+            a["nivel_num"] = NIV.get(a["nivel"], 0)
+            alertas.append(a); n_meteo += 1
+    except Exception as e:
+        err_meteo = type(e).__name__ + ": " + str(e)[:80]
+        # conserva los meteorológicos ya guardados si falla la consulta
+        alertas += [dict(v, vigente=v.get("fin", "") >= hoy) for v in previo.values() if v.get("tipo") == "meteorológica"]
     alertas.sort(key=lambda x: x["publicada"], reverse=True)
     json.dump({"actualizado": datetime.datetime.utcnow().isoformat() + "Z", "fuente": BASE + "alertas2.php", "alertas": alertas},
               open(ruta, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    return f"{len(alertas)} avisos, {sum(1 for a in alertas if a['vigente'])} vigentes, {nuevos} PDF nuevos leídos, {fallos} PDF con error"
+    return (f"{len(alertas)} avisos, {sum(1 for a in alertas if a['vigente'])} vigentes, {nuevos} PDF nuevos leídos, {fallos} PDF con error; "
+            f"meteorológicos leídos: {n_meteo}" + (f" (ERROR: {err_meteo})" if err_meteo else ""))
 
 
 if __name__ == "__main__":
@@ -113,13 +207,19 @@ def avisar_nuevos(docs, avisar, url_tablero=""):
         est["avisados"].append(a["pdf"])
         if not a.get("vigente"):
             continue
-        lugares = ", ".join(a.get("departamentos") or []) or "ver PDF"
-        ríos = ", ".join((a.get("rios") or [])[:8])
-        txt = (f"{emo.get(a['nivel'], '')} *ALERTA OFICIAL SENAMHI — {a['nivel']}* · Aviso N° {a['numero']}\n"
-               f"Vigencia: {a['inicio']} al {a['fin']} · Departamentos: {lugares}\n"
-               + (f"Ríos citados: {ríos}\n" if ríos else "")
-               + f"{a['titulo']}\nPDF oficial: {a['pdf']}"
-               + ("\n_Fuente oficial (SENAMHI); no es un nivel preliminar del CCES._"))
+        lugares = ", ".join(a.get("departamentos") or []) or "ver aviso"
+        if a.get("tipo") == "meteorológica":
+            muni = a.get("municipios") or []
+            txt = (f"{emo.get(a['nivel'], '')} *ALERTA OFICIAL SENAMHI — {a['nivel']}* · Aviso meteorológico N° {a['numero']}\n"
+                   f"*{a.get('fenomeno', '')}* · Vigencia: {a['inicio']} al {a['fin']}\n"
+                   f"Departamentos: {lugares}" + (f" · Municipios (algunos): {', '.join(muni[:8])}" if muni else "") + "\n"
+                   f"{a.get('descripcion', '')[:400]}\nAviso oficial: {a['url']}\n_Fuente oficial (SENAMHI)._")
+        else:
+            ríos = ", ".join((a.get("rios") or [])[:8])
+            txt = (f"{emo.get(a['nivel'], '')} *ALERTA OFICIAL SENAMHI — {a['nivel']}* · Aviso hidrológico N° {a['numero']}\n"
+                   f"Vigencia: {a['inicio']} al {a['fin']} · Departamentos: {lugares}\n"
+                   + (f"Ríos citados: {ríos}\n" if ríos else "")
+                   + f"{a['titulo']}\nPDF oficial: {a['pdf']}\n_Fuente oficial (SENAMHI)._")
         avisar(txt)
         n += 1
     json.dump(est, open(est_ruta, "w"), ensure_ascii=False)
