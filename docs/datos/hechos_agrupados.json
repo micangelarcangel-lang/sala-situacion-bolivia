@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:kat0rb",
+  "fecha_hora_local": "2026-10-25 18:51",
+  "ts_ms": 1792968716000,
+  "titulo": "Intensos vientos en Vallegrande afecta comunidades rurales - La Patria Bolivia",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Patria Bolivia",
+  "lat": -18.738,
+  "lon": -63.973,
+  "lugar": "Vallegrande, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Vallegrande",
+  "enlaces": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPWGxyMTJiYUQxMGhvdFVZb21YLW5ROEdwQUl6YWxrRUNpeTBZUzdzWEdLQk9IUmlrcWpvSURNWVlpdzBoeVQ4MDNsVWdiMXZzMVdNdUVqdUU3UUJ4ZXBuUlFTQ0pDU3c4WGNycnVJaGFVSldDOWtSQ2pqZjFBWUpEV1g5RFlvM2pnbUNQallkWTJJOUFyX0xWQUhqZUpEdm90TG9ycA?oc=5"
+ },
+ {
   "hecho_id": "noticia:1dz6gcb",
   "fecha_hora_local": "2026-10-25 18:13",
   "ts_ms": 1792966431000,
