@@ -160,20 +160,26 @@ def frases_clave(texto, titulo="", max_n=5):
 
 
 # ---------------------------------------------------------------- agrupación
-def agrupar_items(evs):
-    """Como agrupar_hechos, pero devuelve las listas de notas de cada hecho."""
+def agrupar_items(evs, ignorar_tipo=False):
+    """Como agrupar_hechos, pero devuelve las listas de notas de cada hecho.
+    ignorar_tipo: en una búsqueda dirigida, notas del mismo hecho clasificadas distinto se unen y toman un mismo tipo."""
     grupos = []
     for e in evs:
         f = rp._ficha(e["titulo"]) if str(e["id"]).startswith("noticia:") else None
         hallado = None
         if f is not None:
             for g in grupos:
-                if g["f"] is not None and g["tipo"] == e["tipo"] and rp._similitud(g["f"], f) >= 0.5:
+                if g["f"] is not None and (ignorar_tipo or g["tipo"] == e["tipo"]) and rp._similitud(g["f"], f) >= 0.5:
                     hallado = g; break
         if hallado:
             hallado["items"].append(e)
         else:
             grupos.append({"tipo": e["tipo"], "f": f, "items": [e]})
+    if ignorar_tipo:
+        for g in grupos:
+            mejor = max(g["items"], key=lambda i: (i["nivel"], i["ts"]))["tipo"]
+            for i in g["items"]:
+                i["tipo"] = mejor
     return [g["items"] for g in grupos]
 
 
@@ -229,8 +235,10 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     for e in items:
         t, est, real = textos.get(e["id"], ("", "no es una nota de prensa", e.get("url")))
         ft, ht = cifras(t) if t else (0, 0)
+        if not str(e["id"]).startswith("noticia:") and (e.get("detalle") or "").strip():
+            t, est = "", "registro ingresado a mano (sin nota de prensa)"
         filas_f.append({"e": e, "texto": t, "estado": est, "url": real or e.get("url"), "f_tit": e.get("fall") or 0, "h_tit": e.get("her") or 0,
-                        "f_txt": ft, "h_txt": ht, "frases": frases_clave(t, e["titulo"])})
+                        "f_txt": ft, "h_txt": ht, "frases": frases_clave(t, e["titulo"]) if t else ([e["detalle"].strip()[:600]] if not str(e["id"]).startswith("noticia:") and (e.get("detalle") or "").strip() else [])})
     fvals = sorted({v for r in filas_f for v in (r["f_tit"], r["f_txt"]) if v > 0})
     hvals = sorted({v for r in filas_f for v in (r["h_tit"], r["h_txt"]) if v > 0})
     max_f = max(fvals or [0]); max_h = max(hvals or [0])
@@ -293,6 +301,10 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     # 2. Resumen consolidado (construido con reglas, no inventa nada)
     fuentes = ", ".join(rep["_fuentes"])
     partes = [f"Entre las {primera:%H:%M} y las {ultima:%H:%M} del {primera:%d/%m/%Y}, {len(rep['_fuentes'])} fuente(s) de prensa ({esc(fuentes)}) publicaron {len(items)} nota(s) sobre este hecho ({esc(rep['tipo'])})."]
+    solo_registro = all(not str(e["id"]).startswith("noticia:") for e in items)
+    if solo_registro:
+        partes[0] = (f"Hecho registrado a mano ({esc(fuentes)}) el {primera:%d/%m/%Y a las %H:%M}. No proviene de una nota de prensa: los datos son los que declaró "
+                     f"quien lo registró y no están verificados ({esc(rep['tipo'])}).")
     if ub and ub != "no determinada":
         partes.append(f"Ubicación: {esc(ub)} (determinada por: {esc(metodo)}).")
     else:
@@ -301,7 +313,8 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
         partes.append(f"Cifras de prensa: hasta {max_f} fallecido(s) y {max_h} herido(s)." + (" <b>Las fuentes no coinciden</b>: se detallan abajo." if len(fvals) > 1 or len(hvals) > 1 else " Las fuentes que dan cifras coinciden."))
     else:
         partes.append("Ninguna nota informa fallecidos ni heridos.")
-    partes.append(f"Se pudo leer el texto de {leidas} de {len(items)} nota(s); en las demás solo se dispone del titular.")
+    if not solo_registro:
+        partes.append(f"Se pudo leer el texto de {leidas} de {len(items)} nota(s); en las demás solo se dispone del titular.")
     el.append(Paragraph("2. Resumen consolidado", st["h2"])); el.append(Paragraph(" ".join(partes), st["p"]))
 
     # 3. Mapa
@@ -346,7 +359,8 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
                 bloque.append(Paragraph("Otras frases de esta nota repiten, casi igual, lo ya citado de: " + esc(", ".join(r["comparte"])) + ".", st["pm"]))
         else:
             bloque.append(Paragraph("Solo se dispone del titular de esta nota." if not r["texto"] else "El texto no contiene frases con datos identificables.", st["pm"]))
-        bloque.append(Paragraph(f'Enlace: {esc(r["url"])}', st["pm"]))
+        if r["url"]:
+            bloque.append(Paragraph(f'Enlace: {esc(r["url"])}', st["pm"]))
         bloque.append(Spacer(1, 2.5 * mm))
         if e.get("_repetidas"):
             bloque.insert(-2, Paragraph(f'Esta nota apareció {e["_repetidas"] + 1} veces (versión normal y AMP o duplicado); se muestra una sola vez.', st["pm"]))
@@ -359,7 +373,9 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
         pend.append("Las fuentes dan cifras distintas; confirmar cuál es la correcta.")
     if rep.get("lat") is None or "aprox" in (metodo or ""):
         pend.append("Ubicación exacta (municipio, comunidad o tramo).")
-    if leidas < len(items):
+    if solo_registro:
+        pend.append("Verificar el hecho con el establecimiento de salud, la policía u otra fuente oficial: el registro no está verificado.")
+    elif leidas < len(items):
         pend.append("Algunas notas no se pudieron leer completas: revisar su enlace.")
     pend.append("Causa del hecho y atención recibida (si las notas no la precisan).")
     for p in pend:

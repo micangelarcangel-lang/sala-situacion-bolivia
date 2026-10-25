@@ -73,6 +73,8 @@ def es_extranjero(e):
         return True
     if e.get("lat") is not None:  # con coordenadas y sin nombrar otro país: se acepta
         return False
+    if f.startswith("registro"):  # registro abierto: lo ingresan personas; ya se revisó que no nombre otro país
+        return False
     if f in AMBIGUOS and not any(k in t for k in LUGARES_BO):  # mismo nombre que un medio de otro país: exige un lugar boliviano
         return True
     if re.search(r"\.bo(\s|$)", f) or f in ("eju.tv", "lostiempos.com", "correodelsur.com", "brujuladigital.net", "elpotosi.net"):
@@ -154,6 +156,12 @@ def main():
     json.dump({"generado": ahora_ms, "eventos": tablero}, open(os.path.join(DOCS, "data.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     json.dump({"generado": ahora_ms, "eventos": todos}, open(os.path.join(DOCS, "data_completo.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     log(f"{len(todos)} eventos descargados, {len(evs)} relevantes, {len(tablero)} hechos en el tablero")
+    try:
+        import datos_abiertos
+        geo_d = cargar_geo("geo.json")
+        log("Base de datos descargable: " + str(datos_abiertos.exportar(os.path.join(DOCS, "datos"), ahora_ms, evs, geo_d)))
+    except Exception as e:
+        log("No se pudo actualizar la base de datos descargable: " + type(e).__name__ + " " + str(e)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
@@ -176,13 +184,22 @@ def main():
         if q:
             lim_q = ahora_ms - horas * 3600000
             pool = [e for e in filtrar_busqueda(evs, q) if e["ts"] >= lim_q]
-            log(f"Búsqueda '{q}': {len(pool)} nota(s) en las últimas {horas} h")
+            n_sistema = len(pool)
+            # búsqueda en vivo: ayuda al sistema con hechos que no captó solo
+            import busqueda
+            geo = geo or cargar_geo("geo.json")
+            vivos, msg_vivo = busqueda.buscar_en_vivo(q, horas, geo)
+            claves = {_n(e["titulo"]) for e in pool} | {e.get("url") for e in pool}
+            nuevos = [v for v in vivos if _n(v["titulo"]) not in claves and v["url"] not in claves and not es_extranjero(v)]
+            descartados = len(vivos) - len(nuevos)
+            pool += nuevos
+            pool.sort(key=lambda e: e["ts"])
+            log(f"Búsqueda '{q}': {n_sistema} nota(s) del sistema + {len(nuevos)} nuevas en vivo ({msg_vivo}; {descartados} repetidas o de otro país)")
             if not pool:
-                avisar(f":mag: Informe de hecho «{q}» (últimas {horas} h): *no se encontraron notas* en lo que el sistema ha captado. Puede que la prensa no lo haya publicado o que el titular no use esas palabras.")
+                avisar(f":mag: Informe de hecho «{q}» (últimas {horas} h): *no se encontraron notas* ni en el sistema ni en Google Noticias ({msg_vivo}). Puede que la prensa no lo haya publicado o que el titular no use esas palabras. Si lo conoce, regístrelo a mano en la página de pedidos.")
                 json.dump(estado, open(ESTADO, "w"), ensure_ascii=False); indice_reportes(); return
             import informe_hecho as ih
-            geo = geo or cargar_geo("geo.json")
-            hechos_q = sorted(ih.agrupar_items(pool), key=lambda g: (-len({i["fuente"] for i in g}), -len(g)))[:3]
+            hechos_q = sorted(ih.agrupar_items(pool, ignorar_tipo=True), key=lambda g: (-len({i["fuente"] for i in g}), -len(g)))[:3]
             for k, items in enumerate(hechos_q, 1):
                 n = f"hecho_{ahora:%Y%m%d_%H%M}_{k}.pdf"
                 r = ih.informe(items, geo, os.path.join(REP, n), ahora=ahora_ms, consulta=q)
