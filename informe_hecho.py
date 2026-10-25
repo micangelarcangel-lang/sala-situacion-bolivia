@@ -158,7 +158,8 @@ _NEG = {"no", "sin", "ningun", "ninguna", "ni", "descartan", "descarto", "descar
 def evidencia(texto, tipo):
     """Frase de la nota de donde sale la mayor cifra de heridos ('h') o fallecidos ('f')."""
     mejor, frase_mejor = 0, ""
-    for fr in re.split(r"(?<=[.!?])\s+", re.sub(r"\s+", " ", texto or "")):
+    texto = re.sub(r"(?i)escuchar esta nota", " ", texto or "")
+    for fr in re.split(r"(?<=[.!?])\s+", re.sub(r"\s+", " ", texto)):
         f, h = cifras(fr)
         v = h if tipo == "h" else f
         if v > mejor:
