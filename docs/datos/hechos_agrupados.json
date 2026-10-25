@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "manual:1c1299f3",
+  "fecha_hora_local": "2026-10-25 12:44",
+  "ts_ms": 1792946640000,
+  "titulo": "Vuelco de minibus",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 2,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Registro abierto (sin verificar)",
+  "lat": -15.813,
+  "lon": -67.463,
+  "lugar": "Caranavi, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Caranavi",
+  "enlaces": ""
+ },
+ {
   "hecho_id": "noticia:oww2zc",
   "fecha_hora_local": "2026-10-25 12:08",
   "ts_ms": 1792944531000,
@@ -10,14 +30,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 3,
-  "fuentes": "Red Uno",
+  "n_notas": 4,
+  "fuentes": "Opinión Bolivia; Red Uno",
   "lat": -20.05,
   "lon": -63.486,
   "lugar": "Camiri, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Camiri",
-  "enlaces": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQLXlqSFdvWUVhQUNadnpkdE5lUTZQS0lobThzUTZWbDNJTE94alVhaDBaYU9Fd09SSGt3UlR3Y0dfZlNIcml1ZktnWjctNk1Na3V4S0tINFNkMXM0OHBoV2lCTTBiYXlPUTA3T2ZkeXE2RElYWjhfVHd3Nng1Z0E4alBmOFI5NDFwX09kazZlSWl2OVR2ZVR6MDhvSHFnSmJKbTFXSEFDNFFYcWVDNGtYWEQ0bDhJel9CaEpEZWZ4SWN0TE9Ya0E?oc=5 | https://news.google.com/rss/articles/CBMitgFBVV95cUxPTTF0OUdVS1c1a0lZWmk3bGxHdDJIalpWZTRyQTY3eWE2a2dWOHlsaldKZXpSLWN5c3BkUWdBRkJuSzhHdWl2ZjgwTFFFYnd0aTAxZ3dJU0hCekNZNm9aTTJSZUNfQjVIM3FrUUJ4NXAwa3paZ3BEek9xTVZNQWdnN01xRHloV1ZXZHV6N0JpUWo3RE9DMlFGdkNnWkloTjVVY3RBR1RSRUJJWFVtby1fMWFMNTdLZw?oc=5 | https://news.google.com/rss/articles/CBMiwAFBVV95cUxORUhqeWpKY1FHRWoxaHN0UXFzS3dpeHh6N0NwLUJOZTlZcDVoNHN0VnI0by1qMWtZZEkxVmtUNjdNTFhjaEFQU2IyMlNwZW95WFBzbFJPVVB6TjJtdjNENk1LWVlsMUxUUzBNVzkxRk1HZ3lQU0s2M1lRVlRuaXlkMmJrd3AyTGpIdXItNkhlU3dhTzBRME56Rm1DSlZCYjNxSnNTbTFqNWRoUkdraHhlREhuYldqeFk2N3poWEx2M08?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQLXlqSFdvWUVhQUNadnpkdE5lUTZQS0lobThzUTZWbDNJTE94alVhaDBaYU9Fd09SSGt3UlR3Y0dfZlNIcml1ZktnWjctNk1Na3V4S0tINFNkMXM0OHBoV2lCTTBiYXlPUTA3T2ZkeXE2RElYWjhfVHd3Nng1Z0E4alBmOFI5NDFwX09kazZlSWl2OVR2ZVR6MDhvSHFnSmJKbTFXSEFDNFFYcWVDNGtYWEQ0bDhJel9CaEpEZWZ4SWN0TE9Ya0E?oc=5 | https://news.google.com/rss/articles/CBMiugFBVV95cUxNUTdxSzBJVTZnajZQUXhyTVhwMlpvU0tyZGVBYnFwV2kyZWthenNRT1FDRVJFZnk4ZndGTFQ0cnFXZmZ1WHZaMFhUbWo0SWkzcjcxbjJwU3pKUXR4WEVZLVlRNFpxOUVMY2NNNUZsbmJSMk9xZG1sTklEdEtGSXJyUUp5b0R2dVpYcHJLdTRNRlRjcWpNNXg4c0Z4UWwteFc2dDRqVmpnQnFfQXgwN0twTzl4ZWhYdUtYWGfSAboBQVVfeXFMTVE3cUswSVU2Z2o2UFF4ck1YcDJab1NLcmRlQWJxcFdpMmVrYXpzUU9RQ0VSRWZ5OGZ3RkxUNHJxV2ZmdVh2WjBYVG1qNElpM3I3MW4ycFN6SlF0eFhFWS1ZUTRacTlFTGNjTTVGbG5iUjJPcWRtbE5JRHRLRklyclFKeW9EdnVaWHByS3U0TUZUY3FqTTV4OHNGeFFsLXhXNnQ0alZqZ0JxX0F4MDdLcE85eGVoWHVLWFhn?oc=5 | https://news.google.com/rss/articles/CBMitgFBVV95cUxPTTF0OUdVS1c1a0lZWmk3bGxHdDJIalpWZTRyQTY3eWE2a2dWOHlsaldKZXpSLWN5c3BkUWdBRkJuSzhHdWl2ZjgwTFFFYnd0aTAxZ3dJU0hCekNZNm9aTTJSZUNfQjVIM3FrUUJ4NXAwa3paZ3BEek9xTVZNQWdnN01xRHloV1ZXZHV6N0JpUWo3RE9DMlFGdkNnWkloTjVVY3RBR1RSRUJJWFVtby1fMWFMNTdLZw?oc=5"
  },
  {
   "hecho_id": "noticia:1sg8pi0",
