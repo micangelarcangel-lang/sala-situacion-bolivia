@@ -1,0 +1,242 @@
+Prueba 8 SENAMHI - 2026-10-25T22:22:51.210704Z
+
+chunks diferidos: 56
+tamaños: main.js=1057294, 91.a3c8023e54a624536bca.js=26118, 223.f48e4b53b89e1aafdd2d.js=45453, 236.7fe861b40ffca771dd9f.js=28352, 1061.336b0ea2f0ae26e24c1a.js=16456, 1076.77a09433f31d03514d3a.js=14970, 1077.f169b43c7a6f7d1a05fc.js=4133, 1153.f38bbab59be4105bfbca.js=1285419, 1499.18ef312d1dac337aedc6.js=10024, 1651.bdfc52e7276356fb36ca.js=112112, 1685.8020f85405e14ebb26f5.js=19579, 1748.774f529e18b7774fc9de.js=26402, 2021.702ed036f590d29cfe70.js=8428, 2051.5165b0d85de58d7fb532.js=2679, 2270.3cc97fd4e8a36aa19e34.js=15362, 2295.ef5a5ef2c2051466495b.js=14879, 2501.2a24a4f10a11b08151ed.js=64235, 2633.c89d8310d769ada6a3b4.js=301, 3063.ffe23bd932040bd41600.js=9098, 3816.5dbf6257e7c0327aaf14.js=129719, 3831.7095a37cb808414d033f.js=29463, 3871.638a4e3786f1985af542.js=7594, 4142.c268001c249db4776230.js=2358667, 4252.725d5fbaeae9aa0d2370.js=43664, 4323.b3a846637b6358b8c3a5.js=43427, 4500.37b8024e48ac89a3e5fd.js=110434, 4608.22c16d68dfd2262a97c4.js=335353, 4676.44996a3dac7a6cbeb437.js=7777, 4685.ea6527e4662732294d11.js=139609, 4856.c7716b61924c8ec6ae81.js=4946, 5205.21f1fd84e69937d6d280.js=37161, 5372.a0ca14aa0cd56c04289c.js=57792, 5478.d30eb19d8504cc66519c.js=10088, 5586.29543f87af91cdab65b4.js=40764, 5722.756c4d77150fc69c9e82.js=19821, 5980.60aeef67bcd3671617bd.js=51366, 6427.48266814c45a88d73085.js=5343, 6771.538cc4f371eb50d6e956.js=186851, 6824.c824e7cafaa97f46e283.js=79649, 7061.05c9538bcd618ee79a16.js=51154, 7153.433fb1f3aab4c65c79ce.js=2090, 7368.0c67bcab5c6fb66c8dc3.js=31167, 7602.6f5b7580d7ed1244d20f.js=24359, 7793.fbbdf1afe24d2646a00a.js=16962, 7894.2f15956210f5dd391ebc.js=147191, 7918.de62a8529981ad935bbc.js=59197, 8500.645f005f50e287d551f4.js=3939, 8529.bde53a4b679039afdc8e.js=19164, 8592.a78c05df9967e8f28d70.js=7577, 8888.8998772a8868ce2cac36.js=14626, 8939.8017dd5c28e757768a0b.js=16535, 9188.ce052202c56538ed8e6a.js=20592, 9208.db755eea5c43ffb4ba41.js=1325, 9273.eb4f7d782b31d637eecc.js=9266, 9364.3539f6fd21f5a934fb7a.js=214697, 9642.46addb5025d314a74e19.js=16446, 9695.015722bb9e34a35f85ed.js=20281
+
+--- main.js [X-SENA-Public-Request] @1052129
+nimations?pr:fr}}}return e.\u0275fac=function(t){return new(t||e)},e.\u0275mod=s.oAB({type:e}),e.\u0275inj=s.cJS({providers:fr,imports:[r.b2]}),e})();var yr=n(2693),vr=n(529);const br=[{provide:yr.TP,useClass:(()=>{class e{intercept(e,t){const n=sessionStorage.getItem("auth_token"),r=e.headers.has("X-SENA-Public-Request"),s=r?e.clone({headers:e.headers.delete("X-SENA-Public-Request")}):e,i=vr.N.forecastWebService,o=vr.N.hostForecast,a=vr.N.forecastHydrological,l=s.url.includes("/api/static/")||s.url.includes("/stations/station/")||s.url.includes("/stations/croquis/")||s.url.includes("/images/")||s.url.includes("/assets/");if(r||!n||s.url.startsWith(i)||s.url.startsWith(o)||s.url.startsWith(a)||l)return t.handle(s);const u=s.clone({headers:s.headers.set("Authorization",`${n}`)});return t.handle(u)}}return e.\u0275fac=function(t){return new(t||e)},e.\u0275prov=s.Yz7({token:e,factory:e.\u0275fac}),e})(),multi:!0}];var Mr=n(3449);let wr=(()=>{class e{}return e.\u0275fac=function(t){return new(t||e)},e.\u0275mo
+--- main.js [X-SENA-Public-Request] @1052192
+e)},e.\u0275mod=s.oAB({type:e}),e.\u0275inj=s.cJS({providers:fr,imports:[r.b2]}),e})();var yr=n(2693),vr=n(529);const br=[{provide:yr.TP,useClass:(()=>{class e{intercept(e,t){const n=sessionStorage.getItem("auth_token"),r=e.headers.has("X-SENA-Public-Request"),s=r?e.clone({headers:e.headers.delete("X-SENA-Public-Request")}):e,i=vr.N.forecastWebService,o=vr.N.hostForecast,a=vr.N.forecastHydrological,l=s.url.includes("/api/static/")||s.url.includes("/stations/station/")||s.url.includes("/stations/croquis/")||s.url.includes("/images/")||s.url.includes("/assets/");if(r||!n||s.url.startsWith(i)||s.url.startsWith(o)||s.url.startsWith(a)||l)return t.handle(s);const u=s.clone({headers:s.headers.set("Authorization",`${n}`)});return t.handle(u)}}return e.\u0275fac=function(t){return new(t||e)},e.\u0275prov=s.Yz7({token:e,factory:e.\u0275fac}),e})(),multi:!0}];var Mr=n(3449);let wr=(()=>{class e{}return e.\u0275fac=function(t){return new(t||e)},e.\u0275mod=s.oAB({type:e,bootstrap:[Ne]}),e.\u0275inj=s.cJS({providers:[
+--- INTERCEPTOR completo
+intercept(e,t){const n=sessionStorage.getItem("auth_token"),r=e.headers.has("X-SENA-Public-Request"),s=r?e.clone({headers:e.headers.delete("X-SENA-Public-Request")}):e,i=vr.N.forecastWebService,o=vr.N.hostForecast,a=vr.N.forecastHydrological,l=s.url.includes("/api/static/")||s.url.includes("/stations/station/")||s.url.includes("/stations/croquis/")||s.url.includes("/images/")||s.url.includes("/assets/");if(r||!n||s.url.startsWith(i)||s.url.startsWith(o)||s.url.startsWith(a)||l)return t.handle(s);const u=s.clone({headers:s.headers.set("Authorization",`${n}`)});return t.handle(u)}}return e.\u0275fac=function(t){return new(t||e)},e.\u0275prov=s.Yz7({token:e,factory:e.\u0275fac}),e})(),multi:!0}];var Mr=n(3449);let wr=(()=>{class e{}return e.\u0275fac=function(t){return new(t||e)},e.\u0275mod=s.oAB({type:e,bootstrap:[Ne]}),e.\u0275inj=s.cJS({providers:[br],imports:[[r.b2,Fe,gr,yr.JF,c.Rh.forRoot(),o.u5,o.UX,N.forRoot(),l.zk.forRoot(),d.gz,Mr.Z]]}),e})();vr.N.production&&(0,s.G48)(),r.q6().bootstrapModule(wr).catch(e=>console.error(e))},6700:(e,t,n)=>{var r={"./af":776,"./af.js":776,"./ar":7634,"./ar-dz":2758,"./ar-dz.js":2758,"./ar-kw":4980,"./ar-kw.js":4980,"./ar-ly":9602,"./ar-ly.js":9602,"./ar-ma":2500,"./ar-ma.js":2500,"./ar-sa":6909,"./ar-sa.js":6909,"./ar-tn":2735,"./ar-tn.js":2735,"./ar.js":7634,"./az":7798,"./az.js":7798,"./be":9949,"./be.js":9949,"./bg":4590,"./bg.js":4590,"./bm":5938,"./bm.js":5938,"./bn":595,"./bn-bd":1942,"./bn-bd.js":1942,"./bn.js":595,"./bo":4756,"./bo.js":4756,"./br":7277,"./br.js":7277,"./bs":4166,"./bs.js":4166,"./ca":3943,"./ca.js":3943,"./cs":3474,"./cs.js":3474,"./cv":2218,"./cv.js":2218,"./cy":1061,"./cy.js":1061,"./da":2743,"./da.js":2743,"./de":1899,"./de-at":8580,"./de-at.js":8580,"./de-ch":3264,"./de-ch.js":3264,"./de.js":1899,"./dv":8784,"./dv.js":8784,"./el":4654,"./el.js":4654,"./en-au":6277,"./en-au.js":6277,"./en-ca":6896,"./en-ca.js":6896,"./en-gb":1609,"./en-gb.js":1609,"./en-ie":7392,"./en-ie.js":7392,"./en-il":5836,"./en-il.js":5836,"./en-in":262,"./en-in.js":262,"./en-nz":3586,"./en-nz.js":3586,"./en-sg":8965,"./en-sg.js":8965,"./eo":2777,"./eo.js":2777,"./es":3357,"./es-do":3128,"./es-do.js":3128,"./es-mx":9179,".
+--- 3816.5dbf6257e7c0327aaf14.js [public-report] @78829
+esolve({})).catch(e=>{a().fire({title:"Atenci\xf3n",text:e.error&&e.error.message?e.error.message:"Error",icon:"warning",showCancelButton:!0,confirmButtonText:"Si",cancelButtonText:"No"})}).finally(()=>{this.getNewsLetter()}):"view"===t?this.router.navigate(this.isFromPublic?[`./public/hydrological-public-reports-newsletter/${e.id}`]:[`./hydrological-forecast/report/${e.id}`]):"publish"===t&&a().fire({title:"Esta seguro que desea publicar este boletin?",text:"Una vez publicado no podra ser cancelado",icon:"warning",showCancelButton:!0,confirmButtonText:"Si",cancelButtonText:"No"}).then(t=>t.isConfirmed?this.hydrologicalForecastService.publishNewsLetter(e.id):Promise.resolve({})).catch(e=>{console.error(e)}).finally(()=>{this.getNewsLetter()})}setFilter(e,t,o,i=""){"filterGlobal"===t?this.table.filterGlobal(e.target.value,o):"filter"===t&&this.table.filter(e.target.value,i,o)}generateNew(){var e;this.bsModalRef=this.modalService.show(n.z),this.bsModalRef.setClass("modal-md"),this.modalAddSubscriptio
+--- 3831.7095a37cb808414d033f.js [X-SENA-Public-Request] @354
+amhi_project||[]).push([[3831],{3870:(e,t,a)=>{"use strict";a.d(t,{d:()=>Q});var i=a(529),n=a(2051),o=a(7368),r=a(2693),s=a(5023);let l=(()=>{class e{constructor(e,t){this._httpClient=e,this._baseHttpService=t}postDownloadRequest(e,t,a){const i=`${this._baseHttpService.urlBase}/${e}`,n=a?new r.WM({"X-SENA-Public-Request":"true"}):new r.WM;return this._httpClient.post(i,t,{headers:n}).toPromise()}layersType(e){return this._baseHttpService.get("layerstype/"+e).toPromise()}listVariablesByStations(e){return this._baseHttpService.post("variables/filterstations",e).toPromise()}listEnablelapses(e){return this._baseHttpService.post("variables/enablelapses",e).toPromise()}dataTable(e){return this._baseHttpService.post("stations/datatable",e).toPromise()}exportShp(e,t,a,i,n,o={},r=!1){return this.postDownloadRequest("stations/exportshp",Object.assign({data:e,idStation:t,idVariable:a,date:i,multiDim:n},o),r)}exportXlsx(e,t,a,i,n,o={},r=!1){return this.postDownloadRequest("stations/exportxlsx",Object.assign({data:e,id
+--- 4500.37b8024e48ac89a3e5fd.js [forecast-public] @4141
+e:"Unidad de Pronostico",description:"La alerta meteorol\xf3gica se emite cuando hay una alta probabilidad de que ocurra un fen\xf3meno meteorol\xf3gico adverso que puede afectar a una regi\xf3n. Esta advertencia se env\xeda a  las autoridades y a ciudadanos ante una posible amenaza.",link:"/public/forecast-public-reports"},{title:"Geoan\xe1lisis",image:"./assets/images/iga.png",external:!1,subTitile:"Senamhi",description:"Este m\xf3dulo pone a disposici\xf3n del usuario un conjunto de herramientas y mecanismos que permiten, extraer o superponer datos, proyectar una capa y la combinaci\xf3n de informaci\xf3n meteorol\xf3gica, clim\xe1tica, datos de pron\xf3stico, predicciones clim\xe1ticas, alertas meteorol\xf3gicas, estaciones, datos puntuales y otros, para diferentes tipos de an\xe1lisis.",link:"/public/public-geoanalisys"},{title:"Balance H\xeddrico Agron\xf3mico",image:"./assets/images/ibh.png",external:!1,subTitile:"Senamhi",description:"El balance h\xeddrico agropecuario, estima el contenido de
+--- 4500.37b8024e48ac89a3e5fd.js [forecast-public] @45852
+ath:"",component:O},{path:"climatology-public-reports",component:u},{path:"hydrological-public-reports",component:H},{path:"hydrological-public-reports-newsletter/:id",component:T},{path:"hydrological-public-waning-list",component:S},{path:"hydrological-public-waning-report/:id",component:I},{path:"forecast-public-reports",component:l},{path:"forecast-public-reports/:id",component:s},{path:"public-geoanalisys",component:r},{path:"bh-public-reports",component:x.n},{path:"public-stations",component:Y},{path:"public-stations-info-export",component:z},{path:"public-historical-graphic",component:(()=>{class n{constructor(n,t,o){this.climatologyService=n,this.hidrologicoService=t,this.route=o,this.stations=[],this.basicData={},this.header=[{label:"Nro.",column:"nro",sort:!1,filter:!1,value:null},{label:"Estacion",column:"estacion",sort:!0,filter:!1,value:null},{label:"Historico",column:"historico",relation:"GranCuenca",sort:!0,filter:!0,op:"*",value:null},{label:"Comparativo",column:"comparativo",relation:
+--- 4500.37b8024e48ac89a3e5fd.js [forecast-public] @45897
+-reports",component:u},{path:"hydrological-public-reports",component:H},{path:"hydrological-public-reports-newsletter/:id",component:T},{path:"hydrological-public-waning-list",component:S},{path:"hydrological-public-waning-report/:id",component:I},{path:"forecast-public-reports",component:l},{path:"forecast-public-reports/:id",component:s},{path:"public-geoanalisys",component:r},{path:"bh-public-reports",component:x.n},{path:"public-stations",component:Y},{path:"public-stations-info-export",component:z},{path:"public-historical-graphic",component:(()=>{class n{constructor(n,t,o){this.climatologyService=n,this.hidrologicoService=t,this.route=o,this.stations=[],this.basicData={},this.header=[{label:"Nro.",column:"nro",sort:!1,filter:!1,value:null},{label:"Estacion",column:"estacion",sort:!0,filter:!1,value:null},{label:"Historico",column:"historico",relation:"GranCuenca",sort:!0,filter:!0,op:"*",value:null},{label:"Comparativo",column:"comparativo",relation:"Station",sort:!0,filter:!0,op:"*",value:null
+--- 4500.37b8024e48ac89a3e5fd.js [public-report] @2934
+e una variable hidrometeorol\xf3gica determinada y un \xe1rea espec\xedfica de forma continua, tiene el objetivo de responder a necesidades. De esta manera coadyuvar a la toma de decisiones que permitan realizar procesos de preparaci\xf3n  y acci\xf3n con anticipaci\xf3n.",link:"/public/climatology-public-reports"},{title:"Pronostico Hidrologico",image:"./assets/images/isc.png",external:!1,subTitile:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quidem ullam. Cumque officia consequuntur ipsam corporis eveniet",link:"/public/hydrological-public-reports"},{title:"Alerta Hidrol\xf3gica",image:"./assets/images/isc.png",external:!1,subTitile:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quide
+--- 4500.37b8024e48ac89a3e5fd.js [public-report] @3335
+e:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quidem ullam. Cumque officia consequuntur ipsam corporis eveniet",link:"/public/hydrological-public-reports"},{title:"Alerta Hidrol\xf3gica",image:"./assets/images/isc.png",external:!1,subTitile:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quidem ullam. Cumque officia consequuntur ipsam corporis eveniet",link:"/public/hydrological-public-waning-list"},{title:"Alerta Meteor\xf3logica",image:"./assets/images/iam.png",external:!1,subTitile:"Unidad de Pronostico",description:"La alerta meteorol\xf3gica se emite cuando hay una alta probabilidad de que ocurra un fen\xf3meno meteorol\xf3gico adverso que puede afectar a una regi\xf3n. Esta advert
+--- 4500.37b8024e48ac89a3e5fd.js [public-report] @4150
+ de Pronostico",description:"La alerta meteorol\xf3gica se emite cuando hay una alta probabilidad de que ocurra un fen\xf3meno meteorol\xf3gico adverso que puede afectar a una regi\xf3n. Esta advertencia se env\xeda a  las autoridades y a ciudadanos ante una posible amenaza.",link:"/public/forecast-public-reports"},{title:"Geoan\xe1lisis",image:"./assets/images/iga.png",external:!1,subTitile:"Senamhi",description:"Este m\xf3dulo pone a disposici\xf3n del usuario un conjunto de herramientas y mecanismos que permiten, extraer o superponer datos, proyectar una capa y la combinaci\xf3n de informaci\xf3n meteorol\xf3gica, clim\xe1tica, datos de pron\xf3stico, predicciones clim\xe1ticas, alertas meteorol\xf3gicas, estaciones, datos puntuales y otros, para diferentes tipos de an\xe1lisis.",link:"/public/public-geoanalisys"},{title:"Balance H\xeddrico Agron\xf3mico",image:"./assets/images/ibh.png",external:!1,subTitile:"Senamhi",description:"El balance h\xeddrico agropecuario, estima el contenido de humeda
+--- 4500.37b8024e48ac89a3e5fd.js [public-report] @5248
+elo y cultivo antecesor. Los datos meteorol\xf3gicos utilizados (precipitaci\xf3n, temperatura, radiaci\xf3n, viento y humedad relativa). y los calendarios de los cultivos, rotaciones y consumo h\xeddrico, finalmente utiliza los par\xe1metros hidr\xe1ulicos de los suelos locales. ",link:"/public/bh-public-reports"},{title:"Monitor de Sequ\xedas",image:"./assets/images/ims.png",external:!0,subTitile:"Senamhi",description:"Integra el conocimiento t\xe9cnico cient\xedfico de diferentes instituciones nacionales involucradas en el monitoreo de sequ\xedas para proporcionar un an\xe1lisis multisectorial de las condiciones de sequ\xedas y generar informaci\xf3n sobre: severidad, evoluci\xf3n espacio temporal e impactos sobre los diferentes sectores.",link:"http://monitorsequias.senamhi.gob.bo/#/"},{title:"Predicci\xf3n Senamhi",image:"./assets/images/ipc.png",external:!0,subTitile:"Senamhi",description:"Las predicciones del clima son procesos que involucran el an\xe1lisis estad\xedstico y din\xe1mico que m
+--- 4500.37b8024e48ac89a3e5fd.js [public-report] @36899
+)=>{class n{constructor(){this.isModalShown=!0}ngOnInit(){}showModal(){this.isModalShown=!0}hideModal(){var n;null===(n=this.autoShownModal)||void 0===n||n.hide()}onHidden(){this.isModalShown=!1}}return n.\u0275fac=function(t){return new(t||n)},n.\u0275cmp=a.Xpm({type:n,selectors:[["app-climatology-public-report"]],viewQuery:function(n,t){if(1&n&&a.Gf(m,5),2&n){let n;a.iGM(n=a.CRH())&&(t.autoShownModal=n.first)}},decls:2,vars:2,consts:[[3,"isFromPublic"],["bsModal","","class","modal fade","tabindex","-1","role","dialog","aria-labelledby","dialog-auto-name",3,"config","onHidden",4,"ngIf"],["bsModal","","tabindex","-1","role","dialog","aria-labelledby","dialog-auto-name",1,"modal","fade",3,"config","onHidden"],["autoShownModal","bs-modal"],[1,"modal-dialog","modal-lg"],[1,"modal-content"],[1,"modal-header"],["id","dialog-auto-name",1,"modal-title","pull-left"],[1,"modal-body"],[1,"btn","btn-success",3,"click"]],template:function(n,t){1&n&&(a._UZ(0,"app-climatology-report",0),a.YNc(1,h,21,2,"div",1)),
+--- 5478.d30eb19d8504cc66519c.js [forecast-public] @3049
+e:"Unidad de Pronostico",description:"La alerta meteorol\xf3gica se emite cuando hay una alta probabilidad de que ocurra un fen\xf3meno meteorol\xf3gico adverso que puede afectar a una regi\xf3n. Esta advertencia se env\xeda a  las autoridades y a ciudadanos ante una posible amenaza.",link:"/public/forecast-public-reports"},{title:"Geoan\xe1lisis",image:"./assets/images/iga.png",external:!1,subTitile:"Senamhi",description:"Este m\xf3dulo pone a disposici\xf3n del usuario un conjunto de herramientas y mecanismos que permiten, extraer o superponer datos, proyectar una capa y la combinaci\xf3n de informaci\xf3n meteorol\xf3gica, clim\xe1tica, datos de pron\xf3stico, predicciones clim\xe1ticas, alertas meteorol\xf3gicas, estaciones, datos puntuales y otros, para diferentes tipos de an\xe1lisis.",link:"/public/public-geoanalisys"},{title:"Balance H\xeddrico Agron\xf3mico",image:"./assets/images/ibh.png",external:!1,subTitile:"Senamhi",description:"El balance h\xeddrico agropecuario, estima el contenido de
+--- 5478.d30eb19d8504cc66519c.js [public-report] @1842
+e una variable hidrometeorol\xf3gica determinada y un \xe1rea espec\xedfica de forma continua, tiene el objetivo de responder a necesidades. De esta manera coadyuvar a la toma de decisiones que permitan realizar procesos de preparaci\xf3n  y acci\xf3n con anticipaci\xf3n.",link:"/public/climatology-public-reports"},{title:"Pronostico Hidrologico",image:"./assets/images/isc.png",external:!1,subTitile:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quidem ullam. Cumque officia consequuntur ipsam corporis eveniet",link:"/public/hydrological-public-reports"},{title:"Alerta Hidrol\xf3gica",image:"./assets/images/isc.png",external:!1,subTitile:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quide
+--- 5478.d30eb19d8504cc66519c.js [public-report] @2243
+e:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quidem ullam. Cumque officia consequuntur ipsam corporis eveniet",link:"/public/hydrological-public-reports"},{title:"Alerta Hidrol\xf3gica",image:"./assets/images/isc.png",external:!1,subTitile:"Unidad de Hidrologia",description:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem sapiente numquam amet consectetur nam, nesciunt eius repellendus tenetur odit veritatis tempora inventore, quidem ullam. Cumque officia consequuntur ipsam corporis eveniet",link:"/public/hydrological-public-waning-list"},{title:"Alerta Meteorol\xf3gica",image:"./assets/images/iam.png",external:!1,subTitile:"Unidad de Pronostico",description:"La alerta meteorol\xf3gica se emite cuando hay una alta probabilidad de que ocurra un fen\xf3meno meteorol\xf3gico adverso que puede afectar a una regi\xf3n. Esta advert
+--- 5478.d30eb19d8504cc66519c.js [public-report] @3058
+ de Pronostico",description:"La alerta meteorol\xf3gica se emite cuando hay una alta probabilidad de que ocurra un fen\xf3meno meteorol\xf3gico adverso que puede afectar a una regi\xf3n. Esta advertencia se env\xeda a  las autoridades y a ciudadanos ante una posible amenaza.",link:"/public/forecast-public-reports"},{title:"Geoan\xe1lisis",image:"./assets/images/iga.png",external:!1,subTitile:"Senamhi",description:"Este m\xf3dulo pone a disposici\xf3n del usuario un conjunto de herramientas y mecanismos que permiten, extraer o superponer datos, proyectar una capa y la combinaci\xf3n de informaci\xf3n meteorol\xf3gica, clim\xe1tica, datos de pron\xf3stico, predicciones clim\xe1ticas, alertas meteorol\xf3gicas, estaciones, datos puntuales y otros, para diferentes tipos de an\xe1lisis.",link:"/public/public-geoanalisys"},{title:"Balance H\xeddrico Agron\xf3mico",image:"./assets/images/ibh.png",external:!1,subTitile:"Senamhi",description:"El balance h\xeddrico agropecuario, estima el contenido de humeda
+--- 5478.d30eb19d8504cc66519c.js [public-report] @4156
+elo y cultivo antecesor. Los datos meteorol\xf3gicos utilizados (precipitaci\xf3n, temperatura, radiaci\xf3n, viento y humedad relativa). y los calendarios de los cultivos, rotaciones y consumo h\xeddrico, finalmente utiliza los par\xe1metros hidr\xe1ulicos de los suelos locales. ",link:"/public/bh-public-reports"},{title:"Monitor de Sequ\xedas",image:"./assets/images/ims.png",external:!0,subTitile:"Senamhi",description:"Integra el conocimiento t\xe9cnico cient\xedfico de diferentes instituciones nacionales involucradas en el monitoreo de sequ\xedas para proporcionar un an\xe1lisis multisectorial de las condiciones de sequ\xedas y generar informaci\xf3n sobre: severidad, evoluci\xf3n espacio temporal e impactos sobre los diferentes sectores.",link:"http://monitorsequias.senamhi.gob.bo/#/"},{title:"Predicci\xf3n Senamhi",image:"./assets/images/ipc.png",external:!0,subTitile:"Senamhi",description:"Las predicciones del clima son procesos que involucran el an\xe1lisis estad\xedstico y din\xe1mico que m
+
+Rutas candidatas: 199
+  1153.f38bbab59be4105bfbca.js: event-listener
+  1153.f38bbab59be4105bfbca.js: event-listeners
+  1499.18ef312d1dac337aedc6.js: warning
+  1651.bdfc52e7276356fb36ca.js: alert
+  1651.bdfc52e7276356fb36ca.js: alert-description
+  1651.bdfc52e7276356fb36ca.js: alert-level
+  1651.bdfc52e7276356fb36ca.js: alertType
+  1651.bdfc52e7276356fb36ca.js: eventType
+  1651.bdfc52e7276356fb36ca.js: eventos
+  1651.bdfc52e7276356fb36ca.js: forecast-analysis
+  1651.bdfc52e7276356fb36ca.js: forecast-analysis-publish/${t}
+  1651.bdfc52e7276356fb36ca.js: forecast-analysis-unpublish/${t}
+  1651.bdfc52e7276356fb36ca.js: forecast-analysis/
+  1651.bdfc52e7276356fb36ca.js: forecast-analysis/${e}
+  1651.bdfc52e7276356fb36ca.js: forecast-analysis/${t}
+  1651.bdfc52e7276356fb36ca.js: forecast-event
+  1651.bdfc52e7276356fb36ca.js: forecast-event-publish/${t}
+  1651.bdfc52e7276356fb36ca.js: forecast-event-unpublish/${t}
+  1651.bdfc52e7276356fb36ca.js: forecast-event-upload-photos
+  1651.bdfc52e7276356fb36ca.js: forecast-event/
+  1651.bdfc52e7276356fb36ca.js: forecast-event/${e}
+  1651.bdfc52e7276356fb36ca.js: forecast-event/${t}
+  1651.bdfc52e7276356fb36ca.js: forecasttypealerts
+  1651.bdfc52e7276356fb36ca.js: forecasttypeevents
+  1651.bdfc52e7276356fb36ca.js: forecastweather
+  1651.bdfc52e7276356fb36ca.js: forecastweather/
+  1651.bdfc52e7276356fb36ca.js: forecastweather/${e}
+  1651.bdfc52e7276356fb36ca.js: forecastweather/${t}
+  1651.bdfc52e7276356fb36ca.js: forecastweather/${t}/unpublish
+  1651.bdfc52e7276356fb36ca.js: forecastweather/datatable
+  1651.bdfc52e7276356fb36ca.js: forecastweather/report/
+  1651.bdfc52e7276356fb36ca.js: public/forecastweather
+  1651.bdfc52e7276356fb36ca.js: publicActions
+  1651.bdfc52e7276356fb36ca.js: publicationDate
+  1651.bdfc52e7276356fb36ca.js: report-container
+  1651.bdfc52e7276356fb36ca.js: report-date
+  1651.bdfc52e7276356fb36ca.js: report-description
+  1651.bdfc52e7276356fb36ca.js: report-header
+  1651.bdfc52e7276356fb36ca.js: report-title
+  1651.bdfc52e7276356fb36ca.js: warning
+  1748.774f529e18b7774fc9de.js: warning
+  2501.2a24a4f10a11b08151ed.js: alert
+  2501.2a24a4f10a11b08151ed.js: warning
+  3816.5dbf6257e7c0327aaf14.js: ./hydrological-forecast/generate/${e.id}
+  3816.5dbf6257e7c0327aaf14.js: ./hydrological-forecast/generate/${t.data.data.id}
+  3816.5dbf6257e7c0327aaf14.js: ./hydrological-forecast/report/${e.id}
+  3816.5dbf6257e7c0327aaf14.js: ./hydrological-forecast/warning-detail/${e.id}
+  3816.5dbf6257e7c0327aaf14.js: ./hydrological-forecast/warning-detail/${t.data.data.id}
+  3816.5dbf6257e7c0327aaf14.js: ./hydrological-forecast/warning-report/${e.id}
+  3816.5dbf6257e7c0327aaf14.js: ./public/hydrological-public-reports-newsletter/${e.id}
+  3816.5dbf6257e7c0327aaf14.js: ./public/hydrological-public-waning-report/${e.id}
+  3816.5dbf6257e7c0327aaf14.js: /hydrological-forecast
+  3816.5dbf6257e7c0327aaf14.js: /hydrological-forecast/warning
+  3816.5dbf6257e7c0327aaf14.js: alert
+  3816.5dbf6257e7c0327aaf14.js: alert-info
+  3816.5dbf6257e7c0327aaf14.js: alert-warning
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alert-publish/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alerta/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas-detalle-alerta
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas-detalle-alerta/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas-detalle/${e}/${t}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas-public
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas-reporte/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-alertas-hidrologicas/${t}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-generate-forecast/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-last-newsletter
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-bassin
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-bassin-delete/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-bassin-update/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-bassin/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-data-estacion/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-estaciones-cuenca/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-forecast-type
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-levels
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-niveles-formulario
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-niveles-formulario/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-pronostico
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-pronostico/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-public
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-publish/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-rios/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-tipo-analisis
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-tipo-nivel-cuenca
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter-tipo-pronostico
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter/${e}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter/${t}
+  3816.5dbf6257e7c0327aaf14.js: hydrological-newsletter/datatable
+  3816.5dbf6257e7c0327aaf14.js: warning
+  3831.7095a37cb808414d033f.js: alert
+  3831.7095a37cb808414d033f.js: alert-danger
+  3831.7095a37cb808414d033f.js: alert-info
+  3831.7095a37cb808414d033f.js: alert-success
+  3831.7095a37cb808414d033f.js: publicMode
+  3831.7095a37cb808414d033f.js: publicRequestPurpose
+  3831.7095a37cb808414d033f.js: publicRequesterEmail
+  3831.7095a37cb808414d033f.js: publicRequesterInstitution
+  3831.7095a37cb808414d033f.js: publicRequesterName
+  4142.c268001c249db4776230.js: publicado
+  4142.c268001c249db4776230.js: reportenivel
+  4142.c268001c249db4776230.js: reportenivel/${A}
+  4142.c268001c249db4776230.js: reportenivel/${t}
+  4323.b3a846637b6358b8c3a5.js: alert
+  4323.b3a846637b6358b8c3a5.js: report
+  4500.37b8024e48ac89a3e5fd.js: /public/bh-public-reports
+  4500.37b8024e48ac89a3e5fd.js: /public/climatology-public-reports
+  4500.37b8024e48ac89a3e5fd.js: /public/forecast-public-reports
+  4500.37b8024e48ac89a3e5fd.js: /public/hydrological-public-reports
+  4500.37b8024e48ac89a3e5fd.js: /public/hydrological-public-waning-list
+  4500.37b8024e48ac89a3e5fd.js: /public/public-geoanalisys
+  4500.37b8024e48ac89a3e5fd.js: forecast-public-reports
+  4500.37b8024e48ac89a3e5fd.js: hydrological-public-reports
+  4500.37b8024e48ac89a3e5fd.js: hydrological-public-waning-list
+  4500.37b8024e48ac89a3e5fd.js: public-geoanalisys
+  4500.37b8024e48ac89a3e5fd.js: public-historical-graphic
+  4500.37b8024e48ac89a3e5fd.js: public-historical-graphic-all
+  4500.37b8024e48ac89a3e5fd.js: public-stations
+  4500.37b8024e48ac89a3e5fd.js: public-stations-info-export
+  4500.37b8024e48ac89a3e5fd.js: publicMode
+  4500.37b8024e48ac89a3e5fd.js: report-page-wrapper
+  4608.22c16d68dfd2262a97c4.js: alert
+  4608.22c16d68dfd2262a97c4.js: alert-warning
+  4608.22c16d68dfd2262a97c4.js: alerta_naranja
+  4608.22c16d68dfd2262a97c4.js: alerta_roja
+  4608.22c16d68dfd2262a97c4.js: alerta_temprana
+  4608.22c16d68dfd2262a97c4.js: alertas
+  4608.22c16d68dfd2262a97c4.js: alerts
+  4608.22c16d68dfd2262a97c4.js: forecast
+  4608.22c16d68dfd2262a97c4.js: forecast-card__day
+  4608.22c16d68dfd2262a97c4.js: forecast-card__day--full
+  4608.22c16d68dfd2262a97c4.js: forecast-card__icon
+  4608.22c16d68dfd2262a97c4.js: forecast-card__metrics
+  4608.22c16d68dfd2262a97c4.js: forecast-card__period
+  4608.22c16d68dfd2262a97c4.js: forecast-card__phenomenon
+  4608.22c16d68dfd2262a97c4.js: forecast-card__temp
+  4608.22c16d68dfd2262a97c4.js: forecast-card__time
+  4608.22c16d68dfd2262a97c4.js: forecast-card__top
+  4608.22c16d68dfd2262a97c4.js: forecast-legend
+  4608.22c16d68dfd2262a97c4.js: forecast-popup
+  4608.22c16d68dfd2262a97c4.js: forecast-popup__toggle
+  4608.22c16d68dfd2262a97c4.js: forecast-status
+  4608.22c16d68dfd2262a97c4.js: forecast-status--error
+  4608.22c16d68dfd2262a97c4.js: forecast-strip
+  4608.22c16d68dfd2262a97c4.js: forecastChanged
+  4608.22c16d68dfd2262a97c4.js: forecastExtendedChanged
+  4608.22c16d68dfd2262a97c4.js: forecastweather/datatable
+  4608.22c16d68dfd2262a97c4.js: forecastweather/report/
+  4608.22c16d68dfd2262a97c4.js: hydrological-alerts-details/${e}
+  4608.22c16d68dfd2262a97c4.js: hydrological-alerts/datatable
+  4608.22c16d68dfd2262a97c4.js: hydrological-newsletter-geo/${e}
+  4608.22c16d68dfd2262a97c4.js: hydrological-newsletter/datatable
+  4676.44996a3dac7a6cbeb437.js: forecastweather/datatable
+  4676.44996a3dac7a6cbeb437.js: forecastweather/report/
+  4676.44996a3dac7a6cbeb437.js: hydrological-alerts-details/${e}
+  4676.44996a3dac7a6cbeb437.js: hydrological-alerts/datatable
+  4676.44996a3dac7a6cbeb437.js: hydrological-newsletter-geo/${e}
+  4676.44996a3dac7a6cbeb437.js: hydrological-newsletter/datatable
+  4856.c7716b61924c8ec6ae81.js: alert
+  5205.21f1fd84e69937d6d280.js: alert
+  5205.21f1fd84e69937d6d280.js: alert-danger
+  5205.21f1fd84e69937d6d280.js: alert-success
+  5205.21f1fd84e69937d6d280.js: alert-warning
+  5205.21f1fd84e69937d6d280.js: public
+  5372.a0ca14aa0cd56c04289c.js: alert
+  5372.a0ca14aa0cd56c04289c.js: alert-danger
+  5372.a0ca14aa0cd56c04289c.js: publica
+  5372.a0ca14aa0cd56c04289c.js: warning
+  5478.d30eb19d8504cc66519c.js: /public/bh-public-reports
+  5478.d30eb19d8504cc66519c.js: /public/climatology-public-reports
+  5478.d30eb19d8504cc66519c.js: /public/forecast-public-reports
+  5478.d30eb19d8504cc66519c.js: /public/hydrological-public-reports
+  5478.d30eb19d8504cc66519c.js: /public/hydrological-public-waning-list
+  5478.d30eb19d8504cc66519c.js: /public/public-geoanalisys
+  5980.60aeef67bcd3671617bd.js: forecast
+  5980.60aeef67bcd3671617bd.js: warning
+  6771.538cc4f371eb50d6e956.js: events
+  6824.c824e7cafaa97f46e283.js: alert
+  8500.645f005f50e287d551f4.js: alerta_temprana
+  8500.645f005f50e287d551f4.js: alertas
+  8939.8017dd5c28e757768a0b.js: warning
+  91.a3c8023e54a624536bca.js: alert
+  91.a3c8023e54a624536bca.js: events
+  9364.3539f6fd21f5a934fb7a.js: alert
+  9695.015722bb9e34a35f85ed.js: warning
+  main.js: /forecast
+  main.js: /hydrological-forecast
+  main.js: /hydrological-forecast/warning
+  main.js: /hydrological_studies
+  main.js: alert
+  main.js: alertdialog
+  main.js: eventTask
+  main.js: events
+  main.js: forecast
+  main.js: hydrological-forecast
+  main.js: hydrological_studies
+  main.js: public
+  main.js: public/public-geoanalisys
