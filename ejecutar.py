@@ -120,6 +120,21 @@ def indice_reportes():
         '<h1>Reportes PDF — Sala de Situación</h1><p><a href="../">← Volver al tablero</a></p><ul>' + filas + "</ul>")
 
 
+def por_hecho(evs):
+    """Una fila por hecho para el tablero: une las notas que cuentan lo mismo (cifras = máximo reportado, no suma)."""
+    import reporte_pdf as rp
+    filas = []
+    for r in rp.agrupar_hechos([dict(e) for e in evs]):
+        n = len(r.get("_ids", []))
+        if n > 1:
+            r["detalle"] = f"{n} notas de {len(r['_fuentes'])} fuente(s): {', '.join(r['_fuentes'])}. " + (r.get("detalle") or "")
+            if r.get("_contradice"):
+                r["detalle"] = "Las fuentes difieren en las cifras. " + r["detalle"]
+        r["n_notas"] = n
+        filas.append({k: v for k, v in r.items() if not k.startswith("_")})
+    return sorted(filas, key=lambda e: -e["ts"])
+
+
 def main():
     os.makedirs(REP, exist_ok=True)
     ahora_ms = int(time.time() * 1000)
@@ -128,9 +143,10 @@ def main():
     todos = datos["eventos"]
     evs = [e for e in todos if relevante(e)]
     # data.json = lo relevante (tablero y reportes); data_completo.json = base completa para análisis
-    json.dump({"generado": ahora_ms, "eventos": evs}, open(os.path.join(DOCS, "data.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    tablero = por_hecho(evs)
+    json.dump({"generado": ahora_ms, "eventos": tablero}, open(os.path.join(DOCS, "data.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     json.dump({"generado": ahora_ms, "eventos": todos}, open(os.path.join(DOCS, "data_completo.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-    log(f"{len(todos)} eventos descargados, {len(evs)} relevantes")
+    log(f"{len(todos)} eventos descargados, {len(evs)} relevantes, {len(tablero)} hechos en el tablero")
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
