@@ -1,0 +1,322 @@
+Prueba 3 SENAMHI - 2026-10-25T21:19:49.896017Z
+
+alertas2.php estado=200 bytes=67919
+filas=42
+Fecha de publicación | Fecha comienzo | Fecha Final | Título | Nivel | Desplegar | PDF
+2026-10-23 09:19:58 | 2026-10-23 | 2026-10-27 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 42/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1539.pdf
+2026-10-13 17:10:20 | 2026-10-13 | 2026-10-16 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 41/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1538.pdf
+2026-10-09 08:56:50 | 2026-10-09 | 2026-10-13 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 40/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1537.pdf
+2026-09-28 05:55:26 | 2026-09-28 | 2026-10-03 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 38/2026 | AMARILLO |  | PDF  -> pdf_alertas/alerta_1535.pdf
+2026-09-28 06:04:34 | 2026-09-28 | 2026-10-03 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 39/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1536.pdf
+2026-09-21 09:18:29 | 2026-09-21 | 2026-09-24 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 37/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1534.pdf
+2026-09-17 15:17:11 | 2026-09-17 | 2026-09-20 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 36/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1533.pdf
+2026-09-16 13:25:46 | 2026-09-16 | 2026-09-19 | AVISO DE AMENAZA HIDROLÓGICA AMARILLA PARA EMISIÓN DE ALERTA N° 35/2026 | AMARILLO |  | PDF  -> pdf_alertas/alerta_1532.pdf
+2026-09-10 14:16:22 | 2026-09-10 | 2026-09-16 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 33/2026 | AMARILLO |  | PDF  -> pdf_alertas/alerta_1530.pdf
+2026-09-10 14:22:41 | 2026-09-10 | 2026-09-15 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 34/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1531.pdf
+2026-09-09 15:35:30 | 2026-09-09 | 2026-09-10 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 32/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1529.pdf
+2026-09-03 17:53:12 | 2026-09-03 | 2026-09-08 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 31/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1526.pdf
+2026-09-08 12:12:44 | 2026-09-01 | 2026-09-03 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 30/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1528.pdf
+2026-08-21 20:19:37 | 2026-08-21 | 2026-08-26 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 29/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1523.pdf
+2026-08-21 20:12:02 | 2026-08-21 | 2026-08-25 | AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 28/2026 | AMARILLO |  | PDF  -> pdf_alertas/alerta_1522.pdf
+2026-08-16 12:34:39 | 2026-08-16 | 2026-08-21 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 26/2026 | AMARILLO |  | PDF  -> pdf_alertas/alerta_1520.pdf
+2026-08-16 12:44:41 | 2026-08-16 | 2026-08-21 | AAVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 27/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1521.pdf
+2026-08-07 09:21:06 | 2026-08-07 | 2026-08-13 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 25/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1518.pdf
+2026-07-29 13:50:49 | 2026-07-29 | 2026-08-06 | AVISO DE AMENAZA HIDROLÓGICA NARANJA PARA EMISIÓN DE ALERTA N° 24/2026 | NARANJA |  | PDF  -> pdf_alertas/alerta_1517.pdf
+2026-07-22 14:08:53 | 2026-07-22 | 2026-07-25 | PROBABLES ASCENSOS REPENTINOS DE NIVEL, CON POSIBLES DESBORDES EN LA CUENCA DEL RÍO ICHILO AFECTANDO A: | AMARILLO |  | PDF  -> pdf_alertas/alerta_1516.pdf
+2026-07-22 09:40:22 | 2026-07-22 | 2026-07-25 | PROBABLES ASCENSOS REPENTINOS DE NIVEL, CON POSIBLES DESBORDES EN LA CUENCA DEL RÍO ICHILO Y YAPACANÍ AFECTANDO A: | NARANJA |  | PDF  -> pdf_alertas/alerta_1515.pdf
+2026-05-07 16:57:22 | 2026-05-07 | 2026-05-11 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 21/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1497.pdf
+2026-04-09 15:28:05 | 2026-04-09 | 2026-04-11 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 19/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1488.pdf
+2026-03-27 19:59:10 | 2026-03-27 | 2026-03-30 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 18/26 | ROJO |  | PDF  -> pdf_alertas/alerta_1485.pdf
+2026-03-24 12:00:38 | 2026-03-24 | 2026-03-30 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 17/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1483.pdf
+2026-03-24 11:56:16 | 2026-03-24 | 2026-03-30 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 16/26 | ROJO |  | PDF  -> pdf_alertas/alerta_1482.pdf
+2026-03-24 11:51:59 | 2026-03-24 | 2026-03-30 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 15/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1481.pdf
+2026-03-20 21:08:08 | 2026-03-20 | 2026-03-23 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 14/26 | ROJO |  | PDF  -> pdf_alertas/alerta_1480.pdf
+2026-03-20 20:56:22 | 2026-03-20 | 2026-03-23 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 13/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1479.pdf
+2026-03-18 14:08:03 | 2026-03-18 | 2026-03-23 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 12/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1476.pdf
+2026-03-16 20:54:51 | 2026-03-16 | 2026-03-20 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 11/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1474.pdf
+2026-03-13 19:21:14 | 2026-03-13 | 2026-03-16 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 10/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1473.pdf
+2026-03-11 17:53:16 | 2026-03-11 | 2026-03-17 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 09/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1470.pdf
+2026-03-08 23:13:15 | 2026-03-08 | 2026-03-13 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 08/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1468.pdf
+2026-02-28 09:29:35 | 2026-02-28 | 2026-03-02 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 07/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1465.pdf
+2026-02-23 16:00:40 | 2026-02-23 | 2026-02-27 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 06/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1464.pdf
+2026-01-31 20:06:35 | 2026-01-31 | 2026-02-04 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 05/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1462.pdf
+2026-01-29 19:34:05 | 2026-01-29 | 2026-02-02 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 04/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1459.pdf
+2026-01-09 21:04:46 | 2026-01-09 | 2026-01-12 | AVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 03/26 | NARANJA |  | PDF  -> pdf_alertas/alerta_1457.pdf
+
+despliegaalerta1.php estado=200 bytes=5391 inicio=b'<!DOCTYPE HTML>\n<html lang="es">\n<head>\n    <meta charset="UTF-8">\n\n    <title>SERVICIO NACIONAL DE METEOROLOG\xc3\x8dA E HIDROLOG\xc3\x8dA</title>\n\n    <meta name="description" content="Servicio Nacional de Hidr'
+alertasanteriores2.php estado=200 bytes=7497 inicio=b'<!DOCTYPE HTML>\r\n<html>\r\n<head>\r\n\t<meta charset="UTF-8">\r\n\t<title>SERVICIO NACIONAL DE METEOROLOG\xc3\x8dA E HIDROLOG\xc3\x8dA</title>\r\n\t<meta name="description" content="Servicio Nacional de Hidrolog\xc3\xada y Meteor'
+
+=== PDF https://www.senamhi.gob.bo/pdf_alertas/alerta_1539.pdf estado=HTTPError: HTTP Error 404: Not Found bytes=0
+
+=== PDF https://www.senamhi.gob.bo/pdf_alertas/alerta_1538.pdf estado=200 bytes=859972
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+MINISTERIO DE PRODUCCIÓN SOSTENIBLE, MEDIO AMBIENTE Y AGUA  
+VICEMINISTERIO DE SEGURIDAD HÍDRICA, AGUA SANEAMIENTO BÁSICO Y RIEGO 
+SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA       
+ Calle Reyes Ortiz N° - 41 - Telefono: 2355824 –  Web: www.senamhi.gob.bo 
+  E-mail: dirmethi@senamhi.gob.bo 
+La Paz – Bolivia 
+ 
+AAVISO HIDROLÓGICO PARA EMISIÓN DE 
+ALERTA  N° 41/2026 
+ALERTA NARANJA 
+ 
+PARA EL PERIODO: 14 AL 16 OCTUBRE DE 2026   
+PROBABLES ASCENSOS REPENTINOS Y PROGRESIVOS DE 
+NIVEL, CON POSIBLES DESBORDES EN LAS CUENCAS SAN 
+JULIÁN, GRANDE, PIRAÍ, YAPACANÍ, ICHILO y CHAPARE CON 
+POSIBLES AFECTACIONES EN: 
+ 
+ 
+ 
+ 
+DEL 14 AL 16/10/2026: 
+ 
+✓ Departamento de Santa Cruz (Cuenca Río San Julián, Grande, Piraí, Yapacaní 
+e Ichilo): 
+➢ Río Ichilo, y afluentes secundarios ascensos con posibles desbordes 
+en las poblaciones de: Bulo Bulo, San Juan Campo Victoria, San 
+Germán, Avaróa Molle, Villa Rosario, Barranca General Román, 
+Yuracaré Mojeño y comunidades cercanas. 
+
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+MINISTERIO DE PRODUCCIÓN SOSTENIBLE, MEDIO AMBIENTE Y AGUA  
+VICEMINISTERIO DE SEGURIDAD HÍDRICA, AGUA SANEAMIENTO BÁSICO Y RIEGO 
+SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA       
+ Calle Reyes Ortiz N° - 41 - Telefono: 2355824 –  Web: www.senamhi.gob.bo 
+  E-mail: dirmethi@senamhi.gob.bo 
+La Paz – Bolivia 
+ 
+➢ Río Yapacaní, y afluentes secundarios ascensos de nivel con posibles 
+desbordes en áreas próximas a los poblados de San Juan de Yapacaní 
+y comunidades cercanas.  
+➢ Río Surutú, ascensos de nivel con posibles desbordes en áreas 
+próximas a los poblados de San Carlos y comunidades cercanas.  
+➢ Río Piraí, y afluentes secundarios ascensos con posibles desbordes 
+de nivel en áreas próximas a los poblados de : Warnes, Montero, 
+General Saavedra, Mineros, San Pedro y poblados cercanos cuenca 
+baja. 
+➢ Río Grande , y afluentes secundarios , ascensos con posibles 
+desbordes de nivel en área s próximas a los poblados de:  Okinawa, 
+Cuatro Cañadas, El Puente, Cuenca Baja y poblaciones cercanas. 
+➢ Río San Julián , y afluentes secundarios , ascensos de nivel con 
+posibles desbordes en áreas próximas a los poblados de San Ramón, 
+El Puente, Ascensión de Guarayos y poblaciones cercanas cuenca 
+baja.  
+ 
+DEL 14 AL 16/10/2026: 
+✓ Departamento de Cochabamba (Cuenca Alta del Rio Ichilo, 
+Chapare): 
+➢ Río Ichilo, y afluentes secundarios , crecidas con posibles desbordes 
+para los poblados de: Puerto Villarroel, Puerto Grethel, Yuravaré 
+Mojeño y comunidades cercanas. 
+➢ Río Ivirgarzama, y afluentes secundarios , crecidas repentinas con 
+posibles desbordes que afectarán a poblados de: Ivirgarzama y 
+poblados cercanos. 
+➢ Río Magareño , y afluentes secundarios , crecidas repentinas con 
+posibles desbordes que afectarán a poblados  de: Ivirgarzama y 
+poblados cercanos. 
+➢ Río Chimoré, y afluentes secundarios, crecidas con posibles desbordes 
+que afectarán a poblados de: Chimoré y comunidades cercanas. 
+ 
+➢ Río Chapare, y afluentes secundarios , ascensos con posibles 
+desbordes en las poblaciones de: Villa Tunari, Puerto San Pedro, Santa 
+Rosa del Chapare y comunidades cercanas. 
+➢ Río Chipiriri, y afluentes secundarios , ascensos con posibles 
+desbordes en las poblaciones de: Puerto San Francisco y comunidades 
+cercanas. 
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+MINISTERIO DE PRODUCCIÓN SOSTENIBLE, MEDIO AMBIENTE Y AGUA  
+VICEMINISTERIO DE SEGURIDAD HÍDRICA, AGUA SANEAMIENTO BÁSICO Y RIEGO 
+SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA       
+ Calle Reyes Ortiz N° - 41 - Telefono: 2355824 –  Web: www.senamhi.gob.bo 
+  E-mail: dirmethi@senamhi.gob.bo 
+La Paz – Bolivia 
+ 
+➢ Río Eterazama, y afluentes secundarios , ascensos con posibles 
+desbordes en las poblaciones de: Eterazama y comunidades cercanas. 
+➢ Río Ichóa, y afluentes secundarios, ascensos con posibles desbordes 
+en las poblaciones de: Ichóa y comunidades cercanas. 
+➢ Río Isiboro, y afluentes secundarios, ascensos con posibles desbordes 
+en las poblaciones de: San Miguel de Isiboro, San Cristobal y 
+comunidades cercanas. 
+➢ Río Venticuatro, y tributarios secundarios , ascensos de nivel con 
+desbordes que afectarán a poblaciones cercanas. 
+ 
+ 
+ 
+SENAMHI, MARTES 13 DE OCTUBRE DEL 2026 
+ 
+DIRECCIÓN DE HIDROLOGÍA 
+UNIDAD DE ANÁLISIS Y PRONÓSTICOS HIDROLÓGICOS 
+ 
+DEFINICION DE LA AMENAZA 
+AMENAZA NARANJA: 
+Se considera cuando la tendencia ascendente de los niveles de los ríos y la persistencia e intensidad de las lluvias indican la 
+posibilidad de presentar desbordes en las próximas horas. (Para el uso de navegación esta alerta significa que aún es posible 
+navegar). 
+ 
+
+=== PDF https://www.senamhi.gob.bo/pdf_alertas/alerta_1537.pdf estado=200 bytes=913981
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+MINISTERIO DE PRODUCCIÓN SOSTENIBLE, MEDIO AMBIENTE Y AGUA  
+VICEMINISTERIO DE SEGURIDAD HÍDRICA, AGUA SANEAMIENTO BÁSICO Y RIEGO 
+SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA       
+ Calle Reyes Ortiz N° - 41 - Telefono: 2355824 –  Web: www.senamhi.gob.bo 
+  E-mail: dirmethi@senamhi.gob.bo 
+La Paz – Bolivia 
+ 
+AAVISO HIDROLÓGICO PARA EMISIÓN DE 
+ALERTA  N° 40/2026 
+ALERTA NARANJA 
+ 
+PARA EL PERIODO: 10 AL 13 OCTUBRE DE 2026   
+PROBABLES ASCENSOS REPENTINOS Y PROGRESIVOS DE 
+NIVEL, CON POSIBLES DESBORDES EN LAS CUENCAS SAN 
+JULIÁN, GRANDE, PIRAÍ, YAPACANÍ, ICHILO, CHAPARE, 
+COTACAJES, COROICO , MANIQUI, YACUMA (cabecera)  CON 
+POSIBLES AFECTACIONES EN: 
+ 
+ 
+ 
+DEL 10 AL 13/10/2026: 
+ 
+✓ Departamento de Santa Cruz (Cuenca Río San Julián, Grande, Piraí, 
+Yapacaní, Ichilo): 
+➢ Río Ichilo, y afluentes secundarios ascensos con posibles desbordes 
+en las poblaciones de: Bulo Bulo, San Juan Campo Victoria, San 
+
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+MINISTERIO DE PRODUCCIÓN SOSTENIBLE, MEDIO AMBIENTE Y AGUA  
+VICEMINISTERIO DE SEGURIDAD HÍDRICA, AGUA SANEAMIENTO BÁSICO Y RIEGO 
+SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA       
+ Calle Reyes Ortiz N° - 41 - Telefono: 2355824 –  Web: www.senamhi.gob.bo 
+  E-mail: dirmethi@senamhi.gob.bo 
+La Paz – Bolivia 
+ 
+Germán, Avaróa Molle, Villa Rosario, Barranca General Román, 
+Yuracaré Mojeño y comunidades cercanas. 
+➢ Río Yapacaní, y afluentes secundarios ascensos de nivel con posibles 
+desbordes en áreas próximas a los poblados de San Juan de Yapacaní 
+y comunidades cercanas.  
+➢ Río Surutú, ascensos de nivel con posibles desbordes en áreas 
+próximas a los poblados de San Carlos y comunidades cercanas.  
+➢ Río Piraí, y afluentes secundarios ascensos con posibles desbordes 
+de nivel en áreas próximas a los poblados de: Samaipata, El Torno, 
+Porongo, Warnes, Montero, General Saavedra, Mineros,  La 
+Guardia, San Pedro y poblados cercanos. 
+➢ Río Grande , y afluentes secundarios , ascensos con posibles 
+desbordes de nivel en área s próximas a los poblados de:  Okinawa, 
+Cuatro Cañadas, El Puente, Cuenca Baja y poblaciones cercanas. 
+➢ Río San Julián , y afluentes secundarios , ascensos de nivel con 
+posibles desbordes en áreas próximas a los poblados de San Ramón, 
+El Puente, Ascensión de Guarayos y poblaciones cercanas.  
+ 
+DEL 10 AL 13/10/2026: 
+✓ Departamento de Cochabamba (Cuenca Alta del Rio Ichilo, 
+Chapare): 
+➢ Río Ichilo, y afluentes secundarios , crecidas con posibles desbordes 
+para los poblados de: Puerto Villarroel, Puerto Grethel, Yuravaré 
+Mojeño y comunidades cercanas. 
+➢ Río Ivirgarzama, y afluentes secundarios , crecidas repentinas con 
+posibles desbordes que afectarán a poblados de: Ivirgarzama y 
+poblados cercanos. 
+➢ Río Magareño , y afluentes secundarios , crecidas repentinas con 
+posibles desbordes que afectarán a poblados  de: Ivirgarzama y 
+poblados cercanos. 
+➢ Río Chimoré, y afluentes secundarios, crecidas con posibles desbordes 
+que afectarán a poblados de: Chimoré y comunidades cercanas. 
+ 
+➢ Río Chapare, y afluentes secundarios , ascensos con posibles 
+desbordes en las poblaciones de: Villa Tunari, Puerto San Pedro, Santa 
+Rosa del Chapare y comunidades cercanas. 
+➢ Río Chipiriri, y afluentes secundarios , ascensos con posibles 
+desbordes en las poblaciones de: Puerto San Francisco y comunidades 
+cercanas. 
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+MINISTERIO DE PRODUCCIÓN SOSTENIBLE, MEDIO AMBIENTE Y AGUA  
+VICEMINISTERIO DE SEGURIDAD HÍDRICA, AGUA SANEAMIENTO BÁSICO Y RIEGO 
+SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA       
+ Calle Reyes Ortiz N° - 41 - Telefono: 2355824 –  Web: www.senamhi.gob.bo 
+  E-mail: dirmethi@senamhi.gob.bo 
+La Paz – Bolivia 
+ 
+➢ Río Eterazama, y afluentes secundarios , ascensos con posibles 
+desbordes en las poblaciones de: Eterazama y comunidades cercanas. 
+➢ Río Ichóa, y afluentes secundarios, ascensos con posibles desbordes 
+en las poblaciones de: Ichóa y comunidades cercanas. 
+➢ Río Isiboro, y afluentes secundarios, ascensos con posibles desbordes 
+en las poblaciones de: San Miguel de Isiboro, San Cristobal y 
+comunidades cercanas. 
+➢ Río Venticuatro, y tributarios secundarios , ascensos de nivel con 
+desbordes que afectarán a poblaciones cercanas. 
+ 
+DEL 10 AL 13/10/2026: 
+✓ Departamento de La Paz (Cuenca Río Beni (cabecera)): 
+➢ Río Cotacajes, y afluentes secundarios , ascensos con posibles 
+desbordes para los poblados de: Cimarrón y comunidades cercanas. 
+➢ Río Ichara, y afluentes secundarios , ascensos con posibles 
+desbordes para los poblados de: Quime y comunidades cercanas. 
+➢ Río Tamampaya , y afluentes secundarios  ascensos progresivos 
+con posibles desbordes en poblaciones cercanas. 
+➢ Río Zongo, y afluentes secundarios  ascensos repentinos con 
+posibles desbordes para los poblados de: Zongo, Cahua , Apana, 
+Fariñas y comunidades cercanas. 
+➢ Río Coroico, y afluentes secundarios  ascensos repentinos con 
+posibles desbordes que afectarán a poblados de: Coroico, Caranavi, 
+Santa Rita de Buenos Aires y comunidades cercanas. 
+➢ Río Yara, y afluentes secundarios ascensos repentinos con posibles 
+desbordes que afectarán a poblados cercanos. 
+➢ Río Alto Beni, y afluentes secundarios  ascensos con posibles 
+desbordes que afectarán a poblados de: Palos Blanco, Alto Beni  y 
+comunidades cercanas. 
+DEL 10 AL 13/10/2026: 
+✓ Departamento de Beni (Cuenca Media del Rio Mamoré): 
+➢ Río Maniqui. y afluentes secundarios  ascensos con  posibles 
+desbordes de nivel en áreas próximas a los poblados de : San 
+Borja y poblados cercanos. 
+➢ Río Hondo, y afluentes secundarios  ascensos con  posibles 
+desbordes de nivel en áreas próximas a l a carretera Yucumo -
+Rurrenabaque y poblados cercanos. 
