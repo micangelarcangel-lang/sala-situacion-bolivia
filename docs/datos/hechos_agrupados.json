@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1dz6gcb",
+  "fecha_hora_local": "2026-10-25 18:13",
+  "ts_ms": 1792966431000,
+  "titulo": "Voraz incendio en Sacaba: tienda de k'oas queda consumida por las llamas - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.305,
+  "lon": -66.05,
+  "lugar": "Sacaba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Sacaba",
+  "enlaces": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOdGpCX3BVejVUcGJ1MzFHMERuSXlFR0t2VjRNVWRjcHdKZ2RSU04yUkVMSjBfUFBIUXBZWUpjSDNONUhoV3VtMWJKYUJyU2ttY0J2eHdTalQ1LVJPWE5qNlBKOUY3R3VZamxzbk5mZ3J4c0MzOGtOOXVQbTBmclY4aTE5Q3RtaEdnTVdmR3lNV0ZYZW1NdllVQ21qUlA4WFY4X1RtaDVNaS12RjBCeDM2Ri1fSGd6eWNfUlZBdWZ5dEhYbnZWMFg2SVVVa0M5UWlSU1E?oc=5"
+ },
+ {
   "hecho_id": "noticia:kaqalb",
   "fecha_hora_local": "2026-10-25 15:29",
   "ts_ms": 1792956564000,
