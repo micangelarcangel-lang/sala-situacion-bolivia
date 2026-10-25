@@ -1,0 +1,25 @@
+Prueba 4 SENAMHI - 2026-10-25T21:57:56.814342Z
+
+DNS: 181.115.206.244
+TCP 181.115.206.244:443 ok en 0.3s
+TCP 181.115.206.244:80 ok en 0.3s
+
+[curl https] 000 0 curl: (28) Connection timed out after 60002 milliseconds
+
+[curl https tls1.2] 200 5592
+[curl https -k] 000 0curl: (28) Connection timed out after 60002 milliseconds
+
+[curl http] 301 0 https://sena.senamhi.gob.bo/public/forecast-public-reportscurl: (28) Connection timed out after 39533 milliseconds
+
+[curl raíz] 000 0curl: (28) Connection timed out after 40000 milliseconds
+
+--- contenido b.html (5592 bytes)
+   /
+   favicon.ico
+   https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
+   main.19f39344b2ef5ab20685.js
+   polyfills.639cc88dfccfdcecfa64.js
+   runtime.8c7c35cb32f24a56e2c0.js
+   scripts.c4c463bffdf9fc1dddb9.js
+   styles.bcf448ff6ea0441f9023.css
+   texto:  SenamhiProject 1.56.1 
