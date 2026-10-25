@@ -1,0 +1,130 @@
+Prueba 11 fuentes - 2026-10-25T22:54:53.748677Z
+
+== https://senamhi.gob.bo/index.php
+   estado=200 tipo=text/html; charset=utf-8 bytes=193099
+   - https://senamhi.gob.bo/index.php/admin/convocatorias
+   - https://senamhi.gob.bo/index.php/clima/monitoreo-climatico
+   - https://senamhi.gob.bo/index.php/clima/monitoreo-enso
+   - https://senamhi.gob.bo/index.php/clima/pachauntawi
+   - https://senamhi.gob.bo/index.php/clima/prediccion-climatica
+   - https://senamhi.gob.bo/index.php/comunicados
+   - https://senamhi.gob.bo/index.php/comunicados/58-aniversario
+   - https://senamhi.gob.bo/index.php/comunicados/fortalece-el-sistema-de-alerta-temprana-en-la-amazonia-consulte-los-datos-de-las-estaciones-samhi-01-samhi-02
+   - https://senamhi.gob.bo/index.php/comunicados/senamhi-ratifica-su-liderazgo-institucional-ing-kevin-campos-campos-es-designado-oficialmente-como-director-general-ejecutivo
+   - https://senamhi.gob.bo/index.php/comunicados/taller-de-capacitacion-en-herramientas-hidrometeorologicas
+   - https://senamhi.gob.bo/index.php/contacto
+   - https://senamhi.gob.bo/index.php/hidrologia/alertas
+   - https://senamhi.gob.bo/index.php/hidrologia/boletin-hidrologico
+   - https://senamhi.gob.bo/index.php/hidrologia/estudios-hidrologicos
+   - https://senamhi.gob.bo/index.php/hidrologia/manchas
+   - https://senamhi.gob.bo/index.php/hidrologia/repositorio-pronostico
+   - https://senamhi.gob.bo/index.php/institucional/faq
+   - https://senamhi.gob.bo/index.php/institucional/mision
+   - https://senamhi.gob.bo/index.php/institucional/que-hacemos
+   - https://senamhi.gob.bo/index.php/institucional/quienes-somos
+   - https://senamhi.gob.bo/index.php/institucional/vision
+   - https://senamhi.gob.bo/index.php/meteorologia/focos-calor
+   - https://senamhi.gob.bo/index.php/meteorologia/meteorologia-agricola
+   - https://senamhi.gob.bo/index.php/meteorologia/pronostico
+   - https://senamhi.gob.bo/index.php/servicios/alerta-meteorologica
+   - https://senamhi.gob.bo/index.php/servicios/app-movil
+   - https://senamhi.gob.bo/index.php/servicios/are
+   - https://senamhi.gob.bo/index.php/servicios/balance-hidrico
+   - https://senamhi.gob.bo/index.php/servicios/bolres
+   - https://senamhi.gob.bo/index.php/servicios/estacionales
+   - https://senamhi.gob.bo/index.php/servicios/fenext
+   - https://senamhi.gob.bo/index.php/servicios/inadhi
+   - https://senamhi.gob.bo/index.php/servicios/monitor-sequias
+   - https://senamhi.gob.bo/index.php/servicios/onsc
+   - https://senamhi.gob.bo/index.php/servicios/prediccion
+   - https://senamhi.gob.bo/index.php/servicios/sequias
+   - https://senamhi.gob.bo/index.php/transparencia/area-planificacion
+   - https://senamhi.gob.bo/index.php/transparencia/auditoria-interna
+   - https://senamhi.gob.bo/index.php/transparencia/contrataciones
+   - https://senamhi.gob.bo/index.php/transparencia/convocatoria-bienes-servicios
+   - https://senamhi.gob.bo/index.php/transparencia/fuentes-financiamiento
+   - https://senamhi.gob.bo/index.php/transparencia/informacion-estadistica
+   - https://senamhi.gob.bo/index.php/transparencia/lista-proveedores
+   - https://senamhi.gob.bo/index.php/transparencia/marco-normativo
+   - https://senamhi.gob.bo/index.php/transparencia/organigrama
+   - https://senamhi.gob.bo/index.php/transparencia/recursos-humanos
+   - https://senamhi.gob.bo/index.php/transparencia/rendicion-cuentas
+focos 2026-10-25: estado=404 tipo=text/html; charset=utf-8 bytes=0
+focos 2026-10-24: estado=404 tipo=text/html; charset=utf-8 bytes=0
+focos 2026-10-23: estado=404 tipo=text/html; charset=utf-8 bytes=0
+focos 2026-10-22: estado=404 tipo=text/html; charset=utf-8 bytes=0
+focos 2026-10-21: estado=404 tipo=text/html; charset=utf-8 bytes=0
+focos 2026-10-20: estado=200 tipo=application/pdf bytes=100000
+
+== https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=-23&maxlatitude=-9&minlongitude=-70&maxlongitude=-57&minmagnitude=2.5&orderby=time&limit=20&starttime=2026-09-25
+   estado=200 tipo=application/json; charset=utf-8 bytes=13709
+   USGS: 19 sismos M>=2.5 en 30 días en la caja de Bolivia
+   - M4.2 74 km W of Ollagüe, Chile 2026-10-24 17:14:30.377000 alerta_pager=None
+   - M4.5 58 km SW of Atocha, Bolivia 2026-10-23 02:45:41.183000 alerta_pager=None
+   - M4.6 49 km S of Ollagüe, Chile 2026-10-22 21:37:56.543000 alerta_pager=None
+   - M2.8 20 km SW of Pozo Almonte, Chile 2026-10-21 21:15:50.072000 alerta_pager=None
+   - M4.6 88 km SSW of Uyuni, Bolivia 2026-10-17 16:52:45.164000 alerta_pager=None
+== https://osc.org.bo/
+   estado=200 tipo=text/html; charset=utf-8 bytes=67941
+   - https://fonts.googleapis.com/css?family=
+   - https://fonts.googleapis.com/css?family=Open+Sans
+   - https://osc.org.bo/images/en%20caso%20de%20sismo.pdf
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico
+   - https://osc.org.bo/index.php/es/27-sismicidad/66-boletines
+   - https://osc.org.bo/index.php/es/27-sismicidad/75-especiales
+   - https://osc.org.bo/index.php/es/sismicidad/anualesmenu
+   - https://osc.org.bo/index.php/es/sismicidad/boletinespecial
+   - https://osc.org.bo/index.php/es/sismicidad/boletininformativo
+   - https://osc.org.bo/index.php/es/sismicidad/inforepor
+   - https://osc.org.bo/index.php/es/sismicidad/sismogramas
+   - https://www.osc.org.bo/images/Logos/senal.png
+== https://www.osc.org.bo/
+   estado=200 tipo=text/html; charset=utf-8 bytes=67941
+   - https://fonts.googleapis.com/css?family=
+   - https://fonts.googleapis.com/css?family=Open+Sans
+   - https://www.osc.org.bo/images/Logos/senal.png
+   - https://www.osc.org.bo/images/en%20caso%20de%20sismo.pdf
+   - https://www.osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico
+   - https://www.osc.org.bo/index.php/es/27-sismicidad/66-boletines
+   - https://www.osc.org.bo/index.php/es/27-sismicidad/75-especiales
+   - https://www.osc.org.bo/index.php/es/sismicidad/anualesmenu
+   - https://www.osc.org.bo/index.php/es/sismicidad/boletinespecial
+   - https://www.osc.org.bo/index.php/es/sismicidad/boletininformativo
+   - https://www.osc.org.bo/index.php/es/sismicidad/inforepor
+   - https://www.osc.org.bo/index.php/es/sismicidad/sismogramas
+== https://osc.org.bo/sismicidad/
+   estado=404 tipo=text/html; charset=UTF-8 bytes=0
+== https://defensacivil.gob.bo/
+   estado=403 tipo=text/html; charset=UTF-8 bytes=0
+== https://www.defensacivil.gob.bo/
+   estado=403 tipo=text/html; charset=UTF-8 bytes=0
+== https://sinager.defensacivil.gob.bo/
+   estado=URLError: <urlopen error [Errno -5] No address associated with hostname> tipo= bytes=0
+== https://videci.gob.bo/
+   estado=URLError: <urlopen error [Errno -2] Name or service not known> tipo= bytes=0
+== https://queimadas.dgi.inpe.br/queimadas/dados-abertos/
+   estado=404 tipo=text/html; charset=UTF-8 bytes=0
+== https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/diario/America_do_Sul/
+   estado=404 tipo=text/html; charset=iso-8859-1 bytes=0
+== https://firms.modaps.eosdis.nasa.gov/api/area/
+   estado=200 tipo=text/html; charset=UTF-8 bytes=25670
+   - https://firms.modaps.eosdis.nasa.gov/api
+   - https://firms.modaps.eosdis.nasa.gov/api/data_availability/
+   - https://firms.modaps.eosdis.nasa.gov/content/manifest/firms.json
+   - https://firms.modaps.eosdis.nasa.gov/dist/firms_index.33b65fd4.css
+   - https://firms.modaps.eosdis.nasa.gov/download
+   - https://firms.modaps.eosdis.nasa.gov/images/favicon.ico
+   - https://firms.modaps.eosdis.nasa.gov/images/touch/icon-192x192.png
+   - https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap
+   - https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;400;600&display=swap
+   - https://go.nasa.gov/3JSgbdb
+   - https://go.nasa.gov/3sf3ALb
+   - https://wiki.earthdata.nasa.gov/display/FIRMS/2022/07/14/Wildfire+detection+in+the+US+and+Canada+within+a+minute+of+satellite+observation
+   - https://www.earthdata.nasa.gov/data/tools/firms/faq
+   - https://www.earthdata.nasa.gov/learn/find-data/near-real-time/firms/vj114imgtdlnrt
+   - https://www.earthdata.nasa.gov/learn/find-data/near-real-time/firms/vj214imgtdlnrt
+   inicio:  <!DOCTYPE html> <!-- saved from url=(0027)https://earthdata.nasa.gov/ --> <html lang="en" xmlns:fb="http://ogp.me/ns/fb#" class=""> <head> <!-- Google Tag Manager --> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WNP7MLF');</script> <!-- End Google Tag Manager --> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1"> <meta name="theme-color" content="#630202"/> <meta name='mobile-web-a
+== https://api.gdeltproject.org/api/v2/doc/doc?query=Bolivia%20inundacion%20sourcecountry:BL&mode=artlist&maxrecords=5&format=json&timespan=7d
+   estado=429 tipo= bytes=0
+== https://simb.produccion.gob.bo/simb/
+   estado=500 tipo=text/html;charset=utf-8 bytes=0
