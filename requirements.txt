@@ -1,3 +1,7 @@
 matplotlib
 reportlab
 shapely
+beautifulsoup4
+lxml
+trafilatura
+googlenewsdecoder

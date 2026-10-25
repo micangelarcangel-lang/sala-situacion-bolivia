@@ -30,7 +30,6 @@ def cargar_datos():
     q = dict(urllib.parse.parse_qsl(p.query)); q["dias"] = "30"
     url = urllib.parse.urlunsplit((p.scheme, p.netloc, p.path, urllib.parse.urlencode(q), ""))
     ult = None
-
     for i in range(3):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "sala-situacion"})
@@ -45,25 +44,36 @@ def cargar_datos():
     log("ERROR al descargar los datos del motor: " + str(ult)); sys.exit(1)
 
 
-EXTRANJERO = ["cuba", "habana", "dominicana", "santo domingo", "puerto rico", "mexico", "guatemala", "honduras", "salvador", "nicaragua",
-              "costa rica", "panama", "colombia", "venezuela", "ecuador", "peru", "lima", "argentina", "buenos aires", "chile", "santiago de chile",
-              "paraguay", "uruguay", "brasil", "espana", "madrid", "estados unidos", "eeuu", "florida", "texas", "california", "haiti", "jamaica"]
+MEDIOS_BO = ["red uno", "el deber", "el dia", "los tiempos", "opinion", "la razon", "vision 360", "el diario", "brujula digital", "pagina siete",
+             "unitel", "atb", "bolivia verifica", "el alteno", "el mundo bolivia", "correo del sur", "erbol", "radio fides", "fides", "panamericana", "abi",
+             "agencia boliviana", "la patria", "el potosi", "eju", "oxigeno", "urgente.bo", "ahora el pueblo", "bolivia tv", "bolivia", "cambio", "la region",
+             "el periodico", "sol de pando", "el nuevo dia", "opinion bolivia", "el pais", "la voz de tarija", "el tribuno", "bolivision", "tv universitaria"]
+EXTRANJERO = ["cuba", "habana", "dominicana", "santo domingo", "puerto rico", "mexico", "guatemala", "honduras", "el salvador", "nicaragua", "costa rica",
+              "panama", "colombia", "venezuela", "ecuador", "peru", "lima", "argentina", "buenos aires", "chile", "santiago de chile", "paraguay", "uruguay", "brasil",
+              "haiti", "jamaica", "estados unidos", "eeuu", "nueva york", "washington", "florida", "texas", "california", "canada", "espana", "madrid", "barcelona",
+              "francia", "paris", "italia", "alemania", "reino unido", "londres", "portugal", "rusia", "ucrania", "israel", "gaza", "libano", "siria", "turquia",
+              "iran", "irak", "afganistan", "pakistan", "india", "bangladesh", "nepal", "china", "japon", "corea", "filipinas", "indonesia", "tailandia", "vietnam",
+              "australia", "nigeria", "kenia", "sudan", "egipto", "marruecos", "argelia", "etiopia", "congo", "sudafrica", "somalia", "yemen", "myanmar", "taiwan"]
 EXCLUIDOS = []
 
 
 def es_extranjero(e):
-    """Sin coordenadas en Bolivia, sin la palabra 'Bolivia' y con un país o ciudad extranjera en el titular."""
+    """Hecho NO boliviano: sin coordenadas, sin la palabra 'Bolivia' y sin ser de un medio boliviano de la lista, o que nombra un país o ciudad extranjera."""
+    import re
     if e.get("lat") is not None:
         return False
-    t = " " + _n(e.get("titulo", "") + " " + e.get("detalle", "")) + " "
-    if "bolivia" in t:
+    t = " " + re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", _n(e.get("titulo", "") + " " + e.get("detalle", "")))) + " "
+    f = _n(e.get("fuente", ""))
+    if " bolivia " in t or " bolivian" in t or "bolivia" in f:
         return False
-    import re
-    return any(re.search(r"\b" + re.escape(k) + r"\b", t) for k in EXTRANJERO)
+    if any(" " + k + " " in t for k in EXTRANJERO):
+        return True
+    if re.search(r"\.bo(\s|$)", f) or f in ("eju.tv", "lostiempos.com", "correodelsur.com", "brujuladigital.net", "elpotosi.net"):
+        return False
+    return not any(f == m or f.startswith(m + " ") or (" " + m) in f for m in MEDIOS_BO)
 
 
 def relevante(e):
-
     """Descarta ruido de prensa: titulares sin relación con amenazas, y nivel 0 sin ubicación ni víctimas."""
     if e.get("tipo") == "sin clasificar":
         return False
@@ -96,7 +106,6 @@ def avisar(texto):
 
 
 def base_url():
-
     repo = os.environ.get("GITHUB_REPOSITORY", "usuario/repositorio")
     o, n = repo.split("/")
     return f"https://{o.lower()}.github.io/{n}/"
@@ -130,7 +139,6 @@ def main():
     geo = None
     hechos = []  # (archivo, texto)
 
-
     def pdf(nombre, **kw):
         nonlocal geo
         geo = geo or cargar_geo("geo.json")
@@ -143,15 +151,21 @@ def main():
         horas = int(os.environ.get("HORAS") or 24)
         q = (os.environ.get("BUSCAR") or "").strip()
         if q:
-            evs = filtrar_busqueda(evs, q)
-            ev_n = len([e for e in evs if e["ts"] >= ahora_ms - horas * 3600000])
-            log(f"Búsqueda '{q}': {ev_n} evento(s) en las últimas {horas} h")
-            if ev_n == 0:
-                avisar(f":mag: Reporte por solicitud '{q}' (últimas {horas} h): *no se encontraron eventos* en lo que el sistema ha captado. Puede que la prensa no lo haya publicado o que el titular no use esas palabras.")
+            lim_q = ahora_ms - horas * 3600000
+            pool = [e for e in filtrar_busqueda(evs, q) if e["ts"] >= lim_q]
+            log(f"Búsqueda '{q}': {len(pool)} nota(s) en las últimas {horas} h")
+            if not pool:
+                avisar(f":mag: Informe de hecho «{q}» (últimas {horas} h): *no se encontraron notas* en lo que el sistema ha captado. Puede que la prensa no lo haya publicado o que el titular no use esas palabras.")
                 json.dump(estado, open(ESTADO, "w"), ensure_ascii=False); indice_reportes(); return
-            n = f"evento_{ahora:%Y%m%d_%H%M}.pdf"
-            pdf(n, modo="programado", horas=horas, etiqueta=f"Reporte por evento: {q} — últimas {horas} h")
-            hechos.append((n, f":page_facing_up: Reporte por evento «{q}» (últimas {horas} h, {ev_n} registro(s))"))
+            import informe_hecho as ih
+            geo = geo or cargar_geo("geo.json")
+            hechos_q = sorted(ih.agrupar_items(pool), key=lambda g: (-len({i["fuente"] for i in g}), -len(g)))[:3]
+            for k, items in enumerate(hechos_q, 1):
+                n = f"hecho_{ahora:%Y%m%d_%H%M}_{k}.pdf"
+                r = ih.informe(items, geo, os.path.join(REP, n), ahora=ahora_ms, consulta=q)
+                log(f"Informe {n}: {r}")
+                tit = items[-1]["titulo"][:90]
+                hechos.append((n, f":page_facing_up: Informe de hecho «{tit}» — {r['notas']} nota(s), {r['fuentes']} fuente(s), texto leído en {r['leidas']} (fallecidos {r['fall']}, heridos {r['her']}, cifras de prensa)"))
         else:
             n = f"solicitud_{ahora:%Y%m%d_%H%M}_{horas}h.pdf"
             pdf(n, modo="programado", horas=horas, etiqueta=f"Reporte por solicitud — últimas {horas} h")
@@ -162,7 +176,6 @@ def main():
         grupos = agrupar_hechos([e for e in evs if e["ts"] >= lim and not (e["tipo"] == "sin clasificar" and e["nivel"] == 0)])
         graves = [g for g in grupos if ((g.get("fall") or 0) > 0 or (g.get("her") or 0) > 0 or g["nivel"] >= 3)
                   and not (set(g["_ids"]) & set(estado["reportados"]))]  # un hecho ya avisado no se repite
-
         if graves:
             n = f"alerta_{ahora:%Y%m%d_%H%M}.pdf"
             ids = [i for g in graves for i in g["_ids"]]
