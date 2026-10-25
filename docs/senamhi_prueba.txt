@@ -1,0 +1,193 @@
+Prueba SENAMHI desde GitHub Actions - 2026-10-25T17:51:16.753538Z
+
+== https://senamhi.gob.bo/index.php/servicios/alerta-meteorologica
+   estado=200 tipo=text/html; charset=utf-8 bytes=26710
+   enlaces totales=78; de interés=4
+   - https://fonts.googleapis.com
+   - https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap
+   - https://senamhi.gob.bo/index.php/hidrologia/alertas
+   - https://senamhi.gob.bo/index.php/servicios/alerta-meteorologica
+   iframe: https://sena.senamhi.gob.bo/public/forecast-public-reports
+
+== https://senamhi.gob.bo/index.php/hidrologia/rhidrologico
+   estado=200 tipo=text/html; charset=utf-8 bytes=164225
+   enlaces totales=150; de interés=76
+   - https://fonts.googleapis.com
+   - https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap
+   - https://senamhi.gob.bo/index.php/hidrologia/alertas
+   - https://senamhi.gob.bo/index.php/servicios/alerta-meteorologica
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2001102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2002102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2005102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2006102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2007102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2008102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2009102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2012102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2013102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2019102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2020102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2021102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2022102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2023102026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_01102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_02102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_05102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_06102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_07102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_08102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_09102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_12102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_13102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_19102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_20102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_21102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_22102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Octubre/REPORTE_DE_NIVELES_23102026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2001092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2002092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2003092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2004092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2007092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2008092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2009092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2010092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2011092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2014092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2015092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2016092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2017092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2018092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2021092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2022092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2023092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2024092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2025092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2028092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2029092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/BOLETIN%20DE%20MONITOREO%20DIARIO%20DE%20NIVELES%2030092026.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_01092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_02092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_03092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_04092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_07092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_08092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_09092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_10092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_11092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_14092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_15092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_16092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_17092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_18092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_21092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_22092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_23092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_24092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_25092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_28092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_29092026_SENAMHI.pdf
+   - https://senamhi.gob.bo/meteorologia/boletines/hidrologico/2026/Septiembre/REPORTE_DE_NIVELES_30092026_SENAMHI.pdf
+
+== https://senamhi.gob.bo/index.php/hidrologia/alertas
+   estado=200 tipo=text/html; charset=utf-8 bytes=26779
+   enlaces totales=78; de interés=5
+   - https://fonts.googleapis.com
+   - https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap
+   - https://senamhi.gob.bo/index.php/hidrologia/alertas
+   - https://senamhi.gob.bo/index.php/servicios/alerta-meteorologica
+   - https://www.senamhi.gob.bo/alertas2.php
+   iframe: https://www.senamhi.gob.bo/alertas2.php
+
+== https://senamhi.gob.bo/index.php/hidrologia/repositorio-pronostico
+   estado=200 tipo=text/html; charset=utf-8 bytes=1985966
+   enlaces totales=1230; de interés=1154
+   - https://fonts.googleapis.com
+   - https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2020-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2022-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2023-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2024-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2027-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2028-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2029-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/ABRIL/PRONÓSTICO%20HIDROLÓGICO%2030-04-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20%20PRONÓSTICO%20HIDROLÓGICO%20VIERNES%2014-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20%20SENAMHI%20MIÉRCOLES%2019-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20%20JUEVES%2013-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20%20MARTES%2018-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2020-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2027-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2017-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2024-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2031-08-2026o.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2025-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2026-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2021-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2028-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20JUEVES%2013-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20MARTES%2018-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2020-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2027-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2017-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2024-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2031-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2025-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2026-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2021-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2028-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BEN-RESUMEN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20%20SENAMHI%20MIÉRCOLES%2019-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20%20PRONÓSTICO%20HIDROLÓGICO%20VIERNES%2014-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20%20SENAMHI%20MIÉRCOLES%2019-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20LUNES%2010-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20%20JUEVES%2013-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20%20MARTES%2018-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2020-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2027-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2003-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2017-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2024-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2031-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2004-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2011-08-2026o.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2025-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2005-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2012-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2026-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2007-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2021-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2028-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20%20PRONÓSTICO%20HIDROLÓGICO%20VIERNES%2014-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20%20SENAMHI%20MIÉRCOLES%2019-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20%20JUEVES%2013-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20%20MARTES%2018-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2020-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2027-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2017-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2024-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2031-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2025-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2026-08-2026o.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2021-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-BOLETÍN%20DE%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2028-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20JUEVES%2013-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20MARTES%2018-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2020-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20JUEVES%2027-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2017-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2024-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20LUNES%2031-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MARTES%2025-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20MIÉRCOLES%2026-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2021-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20EN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20SENAMHI%20VIERNES%2028-08-2026.pdf
+   - https://senamhi.gob.bo/../meteorologia/boletines/pronostico_hidrologico/2026/AGOSTO/CBBA-RESUMEN%20PLANILLA%20PRONÓSTICO%20HIDROLÓGICO%20%20SENAMHI%20MIÉRCOLES%2019-08-2026.pdf
+   iframe: https://senamhi.gob.bo/pronosticoH/index.html
+
+== https://sena.senamhi.gob.bo/public/forecast-public-reports
+   estado=ERR URLError: <urlopen error _ssl.c:993: The handshake operation timed out> tipo= bytes=0
+
+PDF niveles 2026-10-25: estado=404 tipo=text/html; charset=utf-8 bytes=0 inicio=b''
+PDF niveles 2026-10-24: estado=404 tipo=text/html; charset=utf-8 bytes=0 inicio=b''
+PDF niveles 2026-10-23: estado=200 tipo=application/pdf bytes=200000 inicio=b'%PDF-'
+PDF niveles 2026-10-22: estado=200 tipo=application/pdf bytes=200000 inicio=b'%PDF-'
