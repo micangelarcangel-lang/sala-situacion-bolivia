@@ -162,6 +162,12 @@ def main():
         log("Base de datos descargable: " + str(datos_abiertos.exportar(os.path.join(DOCS, "datos"), ahora_ms, evs, geo_d)))
     except Exception as e:
         log("No se pudo actualizar la base de datos descargable: " + type(e).__name__ + " " + str(e)[:100])
+    try:
+        import senamhi
+        log("Alertas oficiales SENAMHI: " + senamhi.actualizar(DOCS))
+        log("Avisos SENAMHI enviados a Slack: " + str(senamhi.avisar_nuevos(DOCS, avisar)))
+    except Exception as e:
+        log("No se pudo actualizar SENAMHI (se conserva lo anterior): " + type(e).__name__ + " " + str(e)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
