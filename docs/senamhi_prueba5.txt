@@ -1,0 +1,22 @@
+Prueba 5 SENAMHI - 2026-10-25T22:04:41.932877Z
+
+página: 200 text/html 5592
+runtime.8c7c35cb32f24a56e2c0.js: 200 4635 bytes
+polyfills.639cc88dfccfdcecfa64.js: 200 36822 bytes
+scripts.c4c463bffdf9fc1dddb9.js: 200 852776 bytes
+main.19f39344b2ef5ab20685.js: 200 1057294 bytes
+
+Direcciones/rutas candidatas (13):
+  /api/static/
+  /geovisor-menu
+  alertdialog
+  geoanalisis
+  geoanalysis
+  geolocation
+  geovisor-menu
+  https://senab.senamhi.gob.bo/api
+  https://senageo.senamhi.gob.bo/geoserver/senamhi
+  https://senamhi.gob.bo
+  https://senamhi.gob.bo/pronosticodiarioJson.php
+  public/public-geoanalisys
+  shape-rendering
