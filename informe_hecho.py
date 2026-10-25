@@ -135,10 +135,71 @@ def cifras(texto):
     return fall, her
 
 
+_NEG = {"no", "sin", "ningun", "ninguna", "ni", "descartan", "descarto", "descartaron", "nadie", "cero"}
+
+
+def menciones(texto, raices):
+    """Cuenta menciones afirmadas y negadas ("no se registraron fallecidos") de una familia de palabras."""
+    afirma = niega = 0
+    for frase in re.split(r"[.;!?\n]+", norm(texto)):
+        tok = re.findall(r"[a-z0-9]+", frase)
+        for i, w in enumerate(tok):
+            if w.startswith(raices):
+                if any(x in _NEG for x in tok[max(0, i - 6):i]):
+                    niega += 1
+                else:
+                    afirma += 1
+    return afirma, niega
+
+
+def _huellas(texto, n=8):
+    pal = re.findall(r"[a-z0-9]+", norm(texto))
+    return {hash(" ".join(pal[i:i + n])) for i in range(max(0, len(pal) - n + 1))}
+
+
+def unir_por_texto(grupos, textos, minimo=3):
+    """Une grupos de notas cuyo cuerpo comparte frases largas idénticas (misma cobertura de un mismo hecho aunque el titular difiera).
+    textos: {id: (texto, estado, url)}. Se ignoran frases presentes en casi todas las notas (avisos, suscripciones)."""
+    hu = []
+    for g in grupos:
+        h = set()
+        for e in g:
+            t = (textos.get(e["id"]) or ("",))[0]
+            if t:
+                h |= _huellas(t)
+        hu.append(h)
+    from collections import Counter
+    cont = Counter(x for h in hu for x in h)
+    comun = {x for x, c in cont.items() if len(grupos) >= 4 and c > 0.4 * len(grupos)}
+    hu = [h - comun for h in hu]
+    padre = list(range(len(grupos)))
+
+    def raiz(i):
+        while padre[i] != i:
+            padre[i] = padre[padre[i]]; i = padre[i]
+        return i
+    for i in range(len(grupos)):
+        for j in range(i + 1, len(grupos)):
+            if len(hu[i] & hu[j]) >= minimo:
+                padre[raiz(j)] = raiz(i)
+    out = {}
+    for i, g in enumerate(grupos):
+        out.setdefault(raiz(i), []).extend(g)
+    res = []
+    for g in out.values():
+        mejor = max(g, key=lambda e: (e["nivel"], e["ts"]))["tipo"]
+        for e in g:
+            e["tipo"] = mejor
+        res.append(g)
+    return res
+
+
 def frases_clave(texto, titulo="", max_n=5):
     """Frases textuales de la nota con más información (cifras, lugar, circunstancias). Se citan sin modificar."""
     if not texto:
         return []
+    texto = re.sub(r"(?i)escuchar esta nota", " ", texto)
+    texto = re.sub(r"Foto:.*?Fuente:\s*(?:[A-ZÁÉÍÓÚÑ][\wáéíóúñ]*\s+){1,6}?(?=(?:Un|Una|El|La|Los|Las|En|Tras|Según)\b)", " ", texto)
     partes = re.split(r"(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ¿¡“\"])", re.sub(r"\s+", " ", texto))
     pal_tit = {w for w in norm(re.sub(r" - [^-]+$", "", titulo)).split() if len(w) > 4}
     cand = []
@@ -225,7 +286,18 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
             textos[e["id"]] = leer_nota(e["url"])
     n_original = len(items)
     items = quitar_repetidas(items, textos)
-    rep = rp.agrupar_hechos([dict(e) for e in items])[0]
+    reps = rp.agrupar_hechos([dict(e) for e in items])
+    rep = reps[0]
+    for r in reps[1:]:  # notas unidas por su texto aunque el titular difiera: se funden en un solo hecho
+        rep["_fuentes"] = sorted(set(rep["_fuentes"]) | set(r["_fuentes"]))
+        rep["_ids"] = rep["_ids"] + r["_ids"]
+        rep["_enlaces"] = (rep["_enlaces"] + r["_enlaces"])[:3]
+        rep["nivel"] = max(rep["nivel"], r["nivel"])
+        rep["fall"] = max(rep.get("fall") or 0, r.get("fall") or 0)
+        rep["her"] = max(rep.get("her") or 0, r.get("her") or 0)
+        rep["_contradice"] = rep.get("_contradice") or r.get("_contradice")
+        if rep.get("lat") is None and r.get("lat") is not None:
+            rep["lat"], rep["lon"], rep["metodo"], rep["lugar"] = r["lat"], r["lon"], r.get("metodo"), r.get("lugar")
     rep["_n"] = 1
     dep, mun = rp.ubicar(rep, geo)
     ub = ", ".join(x for x in [mun, dep] if x) or (rep.get("lugar") or "no determinada")
@@ -237,7 +309,9 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
         ft, ht = cifras(t) if t else (0, 0)
         if not str(e["id"]).startswith("noticia:") and (e.get("detalle") or "").strip():
             t, est = "", "registro ingresado a mano (sin nota de prensa)"
-        filas_f.append({"e": e, "texto": t, "estado": est, "url": real or e.get("url"), "f_tit": e.get("fall") or 0, "h_tit": e.get("her") or 0,
+        ha, hn = menciones(t, ("herid", "lesionad")) if t else (0, 0)
+        fa, fn = menciones(t, ("fallecid", "muert", "muri")) if t else (0, 0)
+        filas_f.append({"e": e, "texto": t, "estado": est, "h_afirma": ha, "f_niega": fn, "f_afirma": fa, "url": real or e.get("url"), "f_tit": e.get("fall") or 0, "h_tit": e.get("her") or 0,
                         "f_txt": ft, "h_txt": ht, "frases": frases_clave(t, e["titulo"]) if t else ([e["detalle"].strip()[:600]] if not str(e["id"]).startswith("noticia:") and (e.get("detalle") or "").strip() else [])})
     fvals = sorted({v for r in filas_f for v in (r["f_tit"], r["f_txt"]) if v > 0})
     hvals = sorted({v for r in filas_f for v in (r["h_tit"], r["h_txt"]) if v > 0})
@@ -287,11 +361,16 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     primera, ultima = rp.hora(items[0]["ts"]), rp.hora(items[-1]["ts"])
     coord = f'{rep["lat"]:.4f}, {rep["lon"]:.4f}' if rep.get("lat") is not None else "sin coordenadas"
     metodo = rep.get("metodo") or "método no registrado"
+    h_sc = max_h == 0 and any(r["h_afirma"] for r in filas_f)
+    f_niega = max_f == 0 and any(r["f_niega"] for r in filas_f)
+    f_sc = max_f == 0 and any(r["f_afirma"] for r in filas_f)
+    txt_h = ("0 con cifra — las notas mencionan heridos pero no dan el número" if h_sc else f"{max_h}") + (f"  — las fuentes difieren: {det_h}" if len(hvals) > 1 else "")
+    txt_f = ("0 con cifra — las notas mencionan fallecidos pero no dan el número" if f_sc else "0 — las notas indican que no hay fallecidos" if f_niega else f"{max_f}") + (f"  — las fuentes difieren: {det_f}" if len(fvals) > 1 else "")
     ficha = [["Tipo de amenaza", rep["tipo"]],
              ["Primera nota / última nota", f'{primera:%d/%m/%Y %H:%M} / {ultima:%d/%m/%Y %H:%M} (hora La Paz)'],
              ["Lugar", f"{ub} — {coord} ({metodo})"],
-             ["Fallecidos (máximo reportado)", f"{max_f}" + (f"  — las fuentes difieren: {det_f}" if len(fvals) > 1 else "")],
-             ["Heridos (máximo reportado)", f"{max_h}" + (f"  — las fuentes difieren: {det_h}" if len(hvals) > 1 else "")],
+             ["Fallecidos (máximo reportado)", txt_f],
+             ["Heridos (máximo reportado)", txt_h],
              ["Gravedad preliminar CCES", f"{rp.NOM[nivel]} (criterio propio por víctimas; no es una alerta oficial)"]]
     tf = Table([[Paragraph(f"<b>{a}</b>", st["cell"]), Paragraph(esc(b), st["cell"])] for a, b in ficha], colWidths=[48 * mm, W - 30 * mm - 48 * mm])
     tf.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), .25, colors.HexColor("#d3d8df")), ("BACKGROUND", (0, 0), (0, -1), colors.HexColor("#eef2f7")),
@@ -312,7 +391,11 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     if max_f or max_h:
         partes.append(f"Cifras de prensa: hasta {max_f} fallecido(s) y {max_h} herido(s)." + (" <b>Las fuentes no coinciden</b>: se detallan abajo." if len(fvals) > 1 or len(hvals) > 1 else " Las fuentes que dan cifras coinciden."))
     else:
-        partes.append("Ninguna nota informa fallecidos ni heridos.")
+        partes.append("Ninguna nota da cifras de fallecidos ni de heridos.")
+    if h_sc:
+        partes.append("Las notas hablan de heridos (por ejemplo «varios») pero no precisan cuántos.")
+    if f_niega:
+        partes.append("Las notas indican que no hubo fallecidos.")
     if not solo_registro:
         partes.append(f"Se pudo leer el texto de {leidas} de {len(items)} nota(s); en las demás solo se dispone del titular.")
     el.append(Paragraph("2. Resumen consolidado", st["h2"])); el.append(Paragraph(" ".join(partes), st["p"]))
@@ -329,13 +412,13 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     for r in filas_f:
         e = r["e"]
         tb.append([Paragraph(f'{rp.hora(e["ts"]):%d/%m %H:%M}', st["cell"]), Paragraph(esc(e["fuente"]), st["cell"]), Paragraph(str(r["f_tit"]), st["cell"]),
-                   Paragraph(str(r["h_tit"]), st["cell"]), Paragraph(str(r["f_txt"]) if r["texto"] else "—", st["cell"]),
-                   Paragraph(str(r["h_txt"]) if r["texto"] else "—", st["cell"]), Paragraph(esc(r["estado"]), st["cell"])])
+                   Paragraph(str(r["h_tit"]), st["cell"]), Paragraph(("s/c" if r["f_txt"] == 0 and r["f_afirma"] else str(r["f_txt"])) if r["texto"] else "—", st["cell"]),
+                   Paragraph(("s/c" if r["h_txt"] == 0 and r["h_afirma"] else str(r["h_txt"])) if r["texto"] else "—", st["cell"]), Paragraph(esc(r["estado"]), st["cell"])])
     t = Table(tb, colWidths=[18 * mm, 32 * mm, 16 * mm, 16 * mm, 16 * mm, 16 * mm, W - 30 * mm - 114 * mm], repeatRows=1)
     t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0f3d6e")), ("GRID", (0, 0), (-1, -1), .25, colors.HexColor("#d3d8df")),
                            ("VALIGN", (0, 0), (-1, -1), "TOP"), ("TOPPADDING", (0, 0), (-1, -1), 2.5), ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5)]))
     el.append(t)
-    el.append(Paragraph("«Titular» = cifra que aparece en el título; «texto» = mayor cifra detectada en el cuerpo de la nota por reglas automáticas (puede equivocarse: verifique en la nota). No se suman cifras de distintas notas porque cuentan a las mismas personas.", st["pm"]))
+    el.append(Paragraph("«Titular» = cifra que aparece en el título; «texto» = mayor cifra detectada en el cuerpo de la nota por reglas automáticas (puede equivocarse: verifique en la nota). «s/c» = la nota menciona el dato pero sin cifra (p. ej. «varios heridos»). No se suman cifras de distintas notas porque cuentan a las mismas personas.", st["pm"]))
 
     # 5. Cronología y citas
     el.append(Paragraph("5. Cronología y detalle por fuente (citas textuales)", st["h2"]))
@@ -377,6 +460,8 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
         pend.append("Verificar el hecho con el establecimiento de salud, la policía u otra fuente oficial: el registro no está verificado.")
     elif leidas < len(items):
         pend.append("Algunas notas no se pudieron leer completas: revisar su enlace.")
+    if h_sc:
+        pend.append("Número de heridos: las notas no lo precisan.")
     pend.append("Causa del hecho y atención recibida (si las notas no la precisan).")
     for p in pend:
         el.append(Paragraph("• " + esc(p), st["p"]))

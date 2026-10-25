@@ -19,7 +19,7 @@ REGLAS_TIPO = [
     ("biológica", r"brote|epidemia|dengue|sarampi|fiebre amarilla|rabia|intoxicad|intoxicaci|influenza|gripe aviar|aftosa|malaria|chikungunya|casos de"),
     ("meteorológica", r"lluvia|tormenta|granizo|granizada|viento|ventarr|helada|nevada|tornado|surazo|rayo|alerta naranja|alerta roja"),
     ("climatológica", r"sequia|ola de calor|el nino|la nina|incendio forestal|chaqueo|quema"),
-    ("antropogénica", r"incendio|bloqueo|accidente|choque|vuelco|colisi|atropell|embarranc|despen|enfrentamiento|ahog|asesin|homicid|feminicid"),
+    ("antropogénica", r"incendio|bloqueo|accidente|choque|vuelco|colisi|atropell|embarranc|despen|precipit|barranco|minibus|enfrentamiento|ahog|asesin|homicid|feminicid"),
 ]
 
 

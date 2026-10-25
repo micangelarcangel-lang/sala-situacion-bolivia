@@ -199,10 +199,19 @@ def main():
                 avisar(f":mag: Informe de hecho «{q}» (últimas {horas} h): *no se encontraron notas* ni en el sistema ni en Google Noticias ({msg_vivo}). Puede que la prensa no lo haya publicado o que el titular no use esas palabras. Si lo conoce, regístrelo a mano en la página de pedidos.")
                 json.dump(estado, open(ESTADO, "w"), ensure_ascii=False); indice_reportes(); return
             import informe_hecho as ih
-            hechos_q = sorted(ih.agrupar_items(pool, ignorar_tipo=True), key=lambda g: (-len({i["fuente"] for i in g}), -len(g)))[:3]
+            grupos_q = ih.agrupar_items(pool, ignorar_tipo=True)
+            # se leen las notas (en paralelo) para unir las que cuentan el mismo hecho con titulares distintos
+            from concurrent.futures import ThreadPoolExecutor
+            por_leer = [e for g in grupos_q for e in g if str(e["id"]).startswith("noticia:") and (e.get("url") or "").startswith("http")][:30]
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                textos_q = dict(zip([e["id"] for e in por_leer], ex.map(lambda e: ih.leer_nota(e["url"]), por_leer)))
+            antes = len(grupos_q)
+            grupos_q = ih.unir_por_texto(grupos_q, textos_q)
+            log(f"Notas leídas: {sum(1 for v in textos_q.values() if v[0])} de {len(por_leer)}; hechos {antes} -> {len(grupos_q)} tras unir por texto")
+            hechos_q = sorted(grupos_q, key=lambda g: (-len({i["fuente"] for i in g}), -len(g)))[:3]
             for k, items in enumerate(hechos_q, 1):
                 n = f"hecho_{ahora:%Y%m%d_%H%M}_{k}.pdf"
-                r = ih.informe(items, geo, os.path.join(REP, n), ahora=ahora_ms, consulta=q)
+                r = ih.informe(items, geo, os.path.join(REP, n), ahora=ahora_ms, consulta=q, textos={e["id"]: textos_q[e["id"]] for e in items if e["id"] in textos_q})
                 log(f"Informe {n}: {r}")
                 tit = items[-1]["titulo"][:90]
                 hechos.append((n, f":page_facing_up: Informe de hecho «{tit}» — {r['notas']} nota(s), {r['fuentes']} fuente(s), texto leído en {r['leidas']} (fallecidos {r['fall']}, heridos {r['her']}, cifras de prensa)"))
