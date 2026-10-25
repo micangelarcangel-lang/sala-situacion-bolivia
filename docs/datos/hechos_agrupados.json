@@ -1,9 +1,9 @@
 [
  {
-  "hecho_id": "noticia:4blj1l",
-  "fecha_hora_local": "2026-10-25 12:59",
-  "ts_ms": 1792947573000,
-  "titulo": "Santa Cruz: Dos cisternas se incendian tras colisionar - La Patria Bolivia",
+  "hecho_id": "noticia:1xi48lm",
+  "fecha_hora_local": "2026-10-25 13:02",
+  "ts_ms": 1792947732000,
+  "titulo": "Reportan el incendio de dos camiones cisterna en la carretera a Camiri - EL DÍA - Noticias de Bolivia para el mundo",
   "tipo_amenaza": "antropogénica",
   "nivel_num": 0,
   "nivel_preliminar": "verde",
@@ -11,13 +11,13 @@
   "heridos_max": 0,
   "cifras_discrepantes": "no",
   "n_notas": 6,
-  "fuentes": "FmBolivia; La Patria Bolivia; Opinión Bolivia; Red Uno",
-  "lat": -17.781,
-  "lon": -63.139,
-  "lugar": "Santa Cruz, Santa Cruz",
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo; La Patria Bolivia; Opinión Bolivia; Red Uno",
+  "lat": -20.05,
+  "lon": -63.486,
+  "lugar": "Camiri, Santa Cruz",
   "departamento": "Santa Cruz",
-  "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5 | https://news.google.com/rss/articles/CBMixgFBVV95cUxQLXlqSFdvWUVhQUNadnpkdE5lUTZQS0lobThzUTZWbDNJTE94alVhaDBaYU9Fd09SSGt3UlR3Y0dfZlNIcml1ZktnWjctNk1Na3V4S0tINFNkMXM0OHBoV2lCTTBiYXlPUTA3T2ZkeXE2RElYWjhfVHd3Nng1Z0E4alBmOFI5NDFwX09kazZlSWl2OVR2ZVR6MDhvSHFnSmJKbTFXSEFDNFFYcWVDNGtYWEQ0bDhJel9CaEpEZWZ4SWN0TE9Ya0E?oc=5 | https://news.google.com/rss/articles/CBMiugFBVV95cUxNUTdxSzBJVTZnajZQUXhyTVhwMlpvU0tyZGVBYnFwV2kyZWthenNRT1FDRVJFZnk4ZndGTFQ0cnFXZmZ1WHZaMFhUbWo0SWkzcjcxbjJwU3pKUXR4WEVZLVlRNFpxOUVMY2NNNUZsbmJSMk9xZG1sTklEdEtGSXJyUUp5b0R2dVpYcHJLdTRNRlRjcWpNNXg4c0Z4UWwteFc2dDRqVmpnQnFfQXgwN0twTzl4ZWhYdUtYWGfSAboBQVVfeXFMTVE3cUswSVU2Z2o2UFF4ck1YcDJab1NLcmRlQWJxcFdpMmVrYXpzUU9RQ0VSRWZ5OGZ3RkxUNHJxV2ZmdVh2WjBYVG1qNElpM3I3MW4ycFN6SlF0eFhFWS1ZUTRacTlFTGNjTTVGbG5iUjJPcWRtbE5JRHRLRklyclFKeW9EdnVaWHByS3U0TUZUY3FqTTV4OHNGeFFsLXhXNnQ0alZqZ0JxX0F4MDdLcE85eGVoWHVLWFhn?oc=5"
+  "municipio": "Camiri",
+  "enlaces": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNN0traUpaNVFIOU0zeFZod2tkQWhZZFQ1Q3dxc2xCVy1RNnJIX2xQbTlhT3RVckdNdHV4ZFVLQThvd2UzNDlCa3VmaWprTnU3R05rVkVkdEVCU1hFMlFsLTJ6REIySnl5VFJfdV9pQmVDTzlqUWFUSi1GQ0JvTVJVQ2dpeVBydnpMV0dYOThENTFRUDgxVFloSVg3bnN4dGo2aEVCbDFKaUgydWNISnJVUTNB?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5 | https://news.google.com/rss/articles/CBMixgFBVV95cUxQLXlqSFdvWUVhQUNadnpkdE5lUTZQS0lobThzUTZWbDNJTE94alVhaDBaYU9Fd09SSGt3UlR3Y0dfZlNIcml1ZktnWjctNk1Na3V4S0tINFNkMXM0OHBoV2lCTTBiYXlPUTA3T2ZkeXE2RElYWjhfVHd3Nng1Z0E4alBmOFI5NDFwX09kazZlSWl2OVR2ZVR6MDhvSHFnSmJKbTFXSEFDNFFYcWVDNGtYWEQ0bDhJel9CaEpEZWZ4SWN0TE9Ya0E?oc=5"
  },
  {
   "hecho_id": "manual:1c1299f3",
@@ -38,26 +38,6 @@
   "departamento": "La Paz",
   "municipio": "Caranavi",
   "enlaces": ""
- },
- {
-  "hecho_id": "noticia:1uf38hl",
-  "fecha_hora_local": "2026-10-25 10:59",
-  "ts_ms": 1792940350000,
-  "titulo": "¡Cisterna con combustible en llamas! Reportan impresionante incendio en la carretera a Camiri - Red Uno",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Red Uno",
-  "lat": -20.05,
-  "lon": -63.486,
-  "lugar": "Camiri, Santa Cruz",
-  "departamento": "Santa Cruz",
-  "municipio": "Camiri",
-  "enlaces": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxORUhqeWpKY1FHRWoxaHN0UXFzS3dpeHh6N0NwLUJOZTlZcDVoNHN0VnI0by1qMWtZZEkxVmtUNjdNTFhjaEFQU2IyMlNwZW95WFBzbFJPVVB6TjJtdjNENk1LWVlsMUxUUzBNVzkxRk1HZ3lQU0s2M1lRVlRuaXlkMmJrd3AyTGpIdXItNkhlU3dhTzBRME56Rm1DSlZCYjNxSnNTbTFqNWRoUkdraHhlREhuYldqeFk2N3poWEx2M08?oc=5"
  },
  {
   "hecho_id": "noticia:1sg8pi0",
@@ -778,6 +758,26 @@
   "departamento": "",
   "municipio": "",
   "enlaces": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPZHNBTEdaQm5Wby1lTF9mWlQ2aGg0MVc4S0MwVWJ3dUJ5WWU5X3IwYWhKRjk5VWtYWEJHRDF4QldVc29laVNPSTJNWFBDSkNFQlFSYTJUXzNMNF9hckFBN1I2T2xoQUtYQ2V6MDNTZHhHVk9qeTBCdHRpM2ZLd0pyOFRweUUxX19STzRHTHg5VUY5d1lhS0tDeXpCdklqcTZGT1J4R0xnSDhoak1EZ2dtNUhSTUV6b1o0U0VSdWY5X0E3U05Tc1dYVEN2WFZUeFhPMTBJTmowNA?oc=5"
+ },
+ {
+  "hecho_id": "noticia:12gfagq",
+  "fecha_hora_local": "2026-10-22 11:28",
+  "ts_ms": 1792682880000,
+  "titulo": "Reportan triple colisión entre dos camiones y un bus en la carretera Cochabamba-Santa Cruz - FmBolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "FmBolivia; Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNMTNBaFZNMU9SR25vdVBuNXlZY3g4VkFWYXRiQnNSaUFjemZhUHZWNHg4V2owU2xfNndBak94TnU2cHNUVXdNNWl2eUdHZVNMbVZweTR5M0o0bWdTNUN4QkoxUkI2TDBmVE03M09zRGhJRVFzV0tPZ1NCWEJLUkt1ZGN4UGduOUZMQnJoM0tMYTh0ZlFxaFJNUkJqaWFPazRlMzN3ajhjUEdUYXlZRndpb3RSdTFCX2tCZGJxQ0x4SlBISWJsRVoyN3ZR?oc=5 | https://news.google.com/rss/articles/CBMirwFBVV95cUxNNUROMzd1UDJRWVZZQ011cFd2c1FSdER1ZzdleU04cXpwYk5HaUZrLXoyU2NzdFk1dnNRUndhUWt0cG9DX09rSjlLcDItU0tzcmQtS3E4dDQ4ZF9HdGJLdk13ek9BNHJUWVlCcklrM25rZ01RbXhLalRBT1FGdDNReHdlTFZkNkJ5ZFd3N3NZVFVmOFUxbEhHN0RsaUxiSVZsM0lXVEFYSHVRQlhsOEtJ?oc=5"
  },
  {
   "hecho_id": "noticia:1jl2oid",
