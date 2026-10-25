@@ -50,11 +50,16 @@ MEDIOS_BO = ["red uno", "el deber", "el dia", "los tiempos", "opinion", "la razo
              "el periodico", "sol de pando", "el nuevo dia", "opinion bolivia", "el pais", "la voz de tarija", "el tribuno", "bolivision", "tv universitaria"]
 EXTRANJERO = ["cuba", "habana", "dominicana", "santo domingo", "puerto rico", "mexico", "guatemala", "honduras", "el salvador", "nicaragua", "costa rica",
               "panama", "colombia", "venezuela", "ecuador", "peru", "lima", "argentina", "buenos aires", "chile", "santiago de chile", "paraguay", "uruguay", "brasil",
-              "haiti", "jamaica", "estados unidos", "eeuu", "nueva york", "washington", "florida", "texas", "california", "canada", "espana", "madrid", "barcelona",
+              "haiti", "jamaica", "estados unidos", "eeuu", "nueva york", "washington", "florida", "texas", "california", "canada", "espana", "madrid", "barcelona", "malaga", "andalucia", "sevilla", "granada", "alicante", "murcia", "galicia", "cataluna", "zaragoza", "bilbao", "marbella", "mallorca", "tenerife", "ibiza", "canarias", "alhaurin", "guardia civil", "comunidad de madrid", "castilla", "asturias", "navarra", "pais vasco",
               "francia", "paris", "italia", "alemania", "reino unido", "londres", "portugal", "rusia", "ucrania", "israel", "gaza", "libano", "siria", "turquia",
               "iran", "irak", "afganistan", "pakistan", "india", "bangladesh", "nepal", "china", "japon", "corea", "filipinas", "indonesia", "tailandia", "vietnam",
               "australia", "nigeria", "kenia", "sudan", "egipto", "marruecos", "argelia", "etiopia", "congo", "sudafrica", "somalia", "yemen", "myanmar", "taiwan"]
 EXCLUIDOS = []
+
+
+AMBIGUOS = ("la razon", "el pais", "el mundo", "el periodico", "la vanguardia", "abc", "el dia", "la voz", "el tribuno", "la region", "cambio", "opinion", "el nuevo dia")
+LUGARES_BO = [" la paz ", " el alto ", " cochabamba ", " santa cruz ", " oruro ", " potosi ", " sucre ", " tarija ", " beni ", " trinidad ", " pando ", " cobija ", " chuquisaca ",
+              " caranavi ", " yungas ", " chapare ", " quillacollo ", " sacaba ", " montero ", " warnes ", " yacuiba ", " villazon ", " uyuni ", " riberalta ", " guayaramerin ", " cochabambino", " paceno", " cruceno", " boliviano", " boliviana", " senamhi ", " sernap", " abc bolivia"]
 
 
 def es_extranjero(e):
@@ -68,6 +73,8 @@ def es_extranjero(e):
         return True
     if e.get("lat") is not None:  # con coordenadas y sin nombrar otro país: se acepta
         return False
+    if f in AMBIGUOS and not any(k in t for k in LUGARES_BO):  # mismo nombre que un medio de otro país: exige un lugar boliviano
+        return True
     if re.search(r"\.bo(\s|$)", f) or f in ("eju.tv", "lostiempos.com", "correodelsur.com", "brujuladigital.net", "elpotosi.net"):
         return False
     return not any(f == m or f.startswith(m + " ") or (" " + m) in f for m in MEDIOS_BO)
