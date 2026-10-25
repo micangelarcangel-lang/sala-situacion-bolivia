@@ -1,0 +1,24 @@
+name: Probar SENAMHI 2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python probar_senamhi2.py
+      - name: Guardar resultado
+        run: |
+          git config user.name "sala-bot"
+          git config user.email "sala-bot@users.noreply.github.com"
+          git add docs/senamhi_prueba2.txt
+          git diff --staged --quiet || (git commit -m "Prueba SENAMHI 2" && git pull --rebase && git push)
