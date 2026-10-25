@@ -27,17 +27,18 @@ def norm(t):
 
 # ---------------------------------------------------------------- lectura de la nota
 def resolver(url):
-    """Los enlaces de Google Noticias son redirecciones: se intenta obtener la dirección real del medio."""
+    """Los enlaces de Google Noticias son redirecciones: se obtiene la dirección real del medio.
+    Devuelve (url_real, mensaje_de_error). Si falla, url_real es None y el mensaje dice por qué."""
     if "news.google.com" not in url:
-        return url
+        return url, ""
     try:
         from googlenewsdecoder import gnewsdecoder
         r = gnewsdecoder(url, interval=1)
-        if r.get("status") and r.get("decoded_url"):
-            return r["decoded_url"]
-    except Exception:
-        pass
-    return url
+        if isinstance(r, dict) and (r.get("success") or r.get("status")) and r.get("decoded_url"):
+            return r["decoded_url"], ""
+        return None, str((r or {}).get("message") or "sin respuesta")[:120]
+    except Exception as e:
+        return None, (type(e).__name__ + ": " + str(e))[:120]
 
 
 def descargar(url, tiempo=25):
@@ -71,16 +72,18 @@ def texto_principal(html):
 def leer_nota(url):
     """Devuelve (texto, estado, url_real). Nunca lanza excepción."""
     try:
-        real = resolver(url)
+        real, msg = resolver(url)
+        if real is None:
+            return "", f"solo titular (no se pudo obtener la dirección del medio: {msg})", url
         html, final = descargar(real)
         t = texto_principal(html).strip()
         if len(t) >= 500:
             return t, "texto completo", final
         if len(t) >= 150:
             return t, "texto parcial", final
-        return "", "solo titular (la página no entregó el texto: puede requerir suscripción)", final
+        return "", "solo titular (la página del medio no entregó el texto: puede requerir suscripción)", final
     except Exception as e:
-        return "", f"solo titular (no se pudo abrir: {type(e).__name__})", url
+        return "", f"solo titular (el medio no permitió abrir la nota: {type(e).__name__} {str(e)[:60]})", url
 
 
 # ---------------------------------------------------------------- extracción
