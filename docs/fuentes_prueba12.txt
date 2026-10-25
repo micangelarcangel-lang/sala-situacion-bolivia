@@ -1,0 +1,258 @@
+Prueba 12 fuentes - 2026-10-25T23:01:09.291472Z
+
+== https://senamhi.gob.bo/index.php/meteorologia/focos-calor
+   estado=200 tipo=text/html; charset=utf-8 bytes=139631
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261001.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261002.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261005.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261006.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261008.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261009.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261010.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261011.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261012.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261013.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261014.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261015.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261016.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261017.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261018.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261019.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261020.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260901.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260902.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260903.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260904.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260905.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260906.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260907.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260908.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260909.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260910.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260911.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260912.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260913.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260914.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260915.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260916.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260917.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260919.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260920.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260921.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260922.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260923.pdf
+   - https://senamhi.gob.bo/../focoscalor/2026/FC_9_SEPTIEMBRE_2026/Pron_Focos_Bolivia_20260924.pdf
+   texto: Focos de Calor - Servicio Nacional de Meteorología e Hidrología Sitio oficial del Estado Plurinacional de Bolivia Uso de .gob.bo Los portales oficiales del Estado Plurinacional de Bolivia emplean el dominio .gob.bo de forma exclusiva. Uso de https:// Los portales oficiales incorporan en sus direcciones el protocolo https:// y/o muestran un candado en la barra de dirección del navegador. Esto significa que estás conectado a un dominio .gob.bo de manera segura. NOTA ACLARATORIA: La información contenida en este boletín tiene carácter exclusivamente informativo, preventivo y de apoyo técnico, por lo que no constituye una declaratoria oficial de emergencia, alerta o evento de incendio forestal. La validación, evaluación y comunicación oficial de información relacionada con incendios forestales, quemas, chaqueos y emergencias asociadas corresponde a las entidades competentes del Estado, particularmente a la Dirección General de Desarrollo Forestal (Dirección Forestal) y al Viceministerio de Defensa Civil (VIDECI) , en el marco de sus atribuciones y competencias institucionales. Asimismo, las acciones operativas de prevención, control y respuesta deben ser coordinadas por las instancias oficialmente facultadas para tal efecto. Se recomienda que la información presentada en este boletín sea utilizada de manera complementaria a los reportes oficiales emitidos por las instituciones competentes y a los sistemas nacionales de monitoreo de riesgos y emergencias. Aceptar Focos de Calor Boletines Focos de Calor Pronóstico Riesgo Proyección meteorológica en mapas ARCHIVOS FOCOS DE CALOR BOLETÍN - PRONÓSTICO DE CONDICIONES ATMOSFÉRICAS PARA PROPAGACIÓN O DISMINUCIÓN DE FOCOS DE CALOR El pronóstico meteorológico predice las condiciones atmosféricas en el futuro. El objetivo principal de
+
+== https://senamhi.gob.bo/index.php/servicios/monitor-sequias
+   estado=500 tipo= bytes=0
+
+== https://senamhi.gob.bo/index.php/servicios/sequias
+   estado=200 tipo=text/html; charset=utf-8 bytes=26692
+   - https://senamhi.gob.bo/images/alpha-web-footer_OLD.png
+   - https://senamhi.gob.bo/images/banner1.png
+   - https://senamhi.gob.bo/images/banner2.png
+   - https://senamhi.gob.bo/images/banner3.png
+   - https://senamhi.gob.bo/images/banner4.png
+   - https://senamhi.gob.bo/images/banner5.png
+   - https://senamhi.gob.bo/images/sociales/app-store.png
+   - https://senamhi.gob.bo/images/sociales/facebook.jpg
+   - https://senamhi.gob.bo/images/sociales/google-play.png
+   - https://senamhi.gob.bo/images/sociales/twitter.jpg
+   - https://senamhi.gob.bo/images/sociales/whatsapp.png
+   - https://senamhi.gob.bo/images/sociales/youtube.jpg
+   iframe: https://monitorsequias.senamhi.gob.bo/#/
+   texto: SENAMHI - Servicio Nacional de Meteorología e Hidrología Sitio oficial del Estado Plurinacional de Bolivia Uso de .gob.bo Los portales oficiales del Estado Plurinacional de Bolivia emplean el dominio .gob.bo de forma exclusiva. Uso de https:// Los portales oficiales incorporan en sus direcciones el protocolo https:// y/o muestran un candado en la barra de dirección del navegador. Esto significa que estás conectado a un dominio .gob.bo de manera segura. Facebook X / Twitter WhatsApp YouTube App Store Google Play
+
+== https://senamhi.gob.bo/index.php/servicios/fenext
+   estado=500 tipo= bytes=0
+
+== https://senamhi.gob.bo/index.php/clima/monitoreo-climatico
+   estado=200 tipo=text/html; charset=utf-8 bytes=61559
+   - https://senamhi.gob.bo/../climatologia/2025//01%20RESUMEN%20CLIMÁTICO%20ENERO%202025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//02%20RESUMEN%20CLIMÁTICO%20FEBRERO%202025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//03%20RESUMEN%20CLIMÁTICO%20MARZO%202025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//04%20RESUMEN%20CLIMÁTICO%20ABRIL%202025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//05%20RESUMEN%20CLIMÁTICO%20MAYO%202025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//06_RESUMEN_CLIMÁTICO_JUNIO_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//07_RESUMEN_CLIMÁTICO_JULIO_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//08_RESUMEN_CLIMÁTICO_AGOSTO_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//09_RESUMEN_CLIMÁTICO_SEPTIEMBRE_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//10_RESUMEN_CLIMÁTICO_OCTUBRE_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//11_RESUMEN_CLIMÁTICO_NOVIEMBRE_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2025//12_RESUMEN_CLIMÁTICO_DICIEMBRE_2025.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//01%20RESUMEN%20CLIMÁTICO%20ENERO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//02%20RESUMEN%20CLIMÁTICO%20FEBRERO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//03%20RESUMEN%20CLIMÁTICO%20MARZO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//04%20RESUMEN%20CLIMÁTICO%20ABRIL%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//05%20RESUMEN%20CLIMÁTICO%20MAYO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//06%20RESUMEN%20CLIMÁTICO%20JUNIO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//07%20RESUMEN%20CLIMÁTICO%20JULIO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//08%20RESUMEN%20CLIMÁTICO%20AGOSTO%202026.pdf
+   - https://senamhi.gob.bo/../climatologia/2026//09%20RESUMEN%20CLIMÁTICO%20SEPTIEMBRE%202026.pdf
+   - https://senamhi.gob.bo/images/alpha-web-footer_OLD.png
+   - https://senamhi.gob.bo/images/banner1.png
+   - https://senamhi.gob.bo/images/banner2.png
+   - https://senamhi.gob.bo/images/banner3.png
+   - https://senamhi.gob.bo/images/banner4.png
+   - https://senamhi.gob.bo/images/banner5.png
+   - https://senamhi.gob.bo/images/sociales/app-store.png
+   - https://senamhi.gob.bo/images/sociales/facebook.jpg
+   - https://senamhi.gob.bo/images/sociales/google-play.png
+   - https://senamhi.gob.bo/images/sociales/twitter.jpg
+   - https://senamhi.gob.bo/images/sociales/whatsapp.png
+   - https://senamhi.gob.bo/images/sociales/youtube.jpg
+   texto: Monitoreo Climático - Servicio Nacional de Meteorología e Hidrología Sitio oficial del Estado Plurinacional de Bolivia Uso de .gob.bo Los portales oficiales del Estado Plurinacional de Bolivia emplean el dominio .gob.bo de forma exclusiva. Uso de https:// Los portales oficiales incorporan en sus direcciones el protocolo https:// y/o muestran un candado en la barra de dirección del navegador. Esto significa que estás conectado a un dominio .gob.bo de manera segura. Monitoreo Climático ÚLTIMO BOLETÍN VIGENTE No se encontraron boletines en este periodo. BOLETINES 2026 MÁS RECIENTE 09 RESUMEN CLIMÁTICO SEPTIEMBRE 2026 Ver PDF 08 RESUMEN CLIMÁTICO AGOSTO 2026 Ver PDF 07 RESUMEN CLIMÁTICO JULIO 2026 Ver PDF 06 RESUMEN CLIMÁTICO JUNIO 2026 Ver PDF 05 RESUMEN CLIMÁTICO MAYO 2026 Ver PDF 04 RESUMEN CLIMÁTICO ABRIL 2026 Ver PDF 03 RESUMEN CLIMÁTICO MARZO 2026 Ver PDF 02 RESUMEN CLIMÁTICO FEBRERO 2026 Ver PDF 01 RESUMEN CLIMÁTICO ENERO 2026 Ver PDF BOLETINES ANTERIORES 2025 12_RESUMEN_CLIMÁTICO_DICIEMBRE_2025 Ver PDF 11_RESUMEN_CLIMÁTICO_NOVIEMBRE_2025 Ver PDF 10_RESUMEN_CLIMÁTICO_OCTUBRE_2025 Ver PDF 09_RESUMEN_CLIMÁTICO_SEPTIEMBRE_2025 Ver PDF 08_RESUMEN_CLIMÁTICO_AGOSTO_2025 Ver PDF 07_RESUMEN_CLIMÁTICO_JULIO_2025 Ver PDF 06_RESUMEN_CLIMÁTICO_JUNIO_2025 Ver PDF 05 RESUMEN CLIMÁTICO MAYO 2025 Ver PDF 04 RESUMEN CLIMÁTICO ABRIL 2025 Ver PDF 03 RESUMEN CLIMÁTICO MARZO 2025 Ver PDF 02 RESUMEN CLIMÁTICO FEBRERO 2025 Ver PDF 01 RESUMEN CLIMÁTICO ENERO 2025 Ver PDF Visualización de documento Descargar PDF Abrir en otra pestaña Cerrar Facebook X / Twitter WhatsApp YouTube App Store Google Play
+
+== https://senamhi.gob.bo/index.php/servicios/inadhi
+   estado=200 tipo=text/html; charset=utf-8 bytes=26703
+   - https://senamhi.gob.bo/images/alpha-web-footer_OLD.png
+   - https://senamhi.gob.bo/images/banner1.png
+   - https://senamhi.gob.bo/images/banner2.png
+   - https://senamhi.gob.bo/images/banner3.png
+   - https://senamhi.gob.bo/images/banner4.png
+   - https://senamhi.gob.bo/images/banner5.png
+   - https://senamhi.gob.bo/images/sociales/app-store.png
+   - https://senamhi.gob.bo/images/sociales/facebook.jpg
+   - https://senamhi.gob.bo/images/sociales/google-play.png
+   - https://senamhi.gob.bo/images/sociales/twitter.jpg
+   - https://senamhi.gob.bo/images/sociales/whatsapp.png
+   - https://senamhi.gob.bo/images/sociales/youtube.jpg
+   texto: INADHI - Servicio Nacional de Meteorología e Hidrología Sitio oficial del Estado Plurinacional de Bolivia Uso de .gob.bo Los portales oficiales del Estado Plurinacional de Bolivia emplean el dominio .gob.bo de forma exclusiva. Uso de https:// Los portales oficiales incorporan en sus direcciones el protocolo https:// y/o muestran un candado en la barra de dirección del navegador. Esto significa que estás conectado a un dominio .gob.bo de manera segura. Facebook X / Twitter WhatsApp YouTube App Store Google Play
+
+== https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico
+   estado=200 tipo=text/html; charset=utf-8 bytes=68048
+   - https://osc.org.bo/documentos/Guia%20de%20Orientacion.pdf
+   - https://osc.org.bo/documentos/Plan%20Familiar%20de%20Emergencias.pdf
+   - https://osc.org.bo/images/en%20caso%20de%20sismo.pdf
+   - https://osc.org.bo/images/imagenes/leyenda_sismos.png
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=10
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=11
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=2
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=3
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=4
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=5
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=6
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=7
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=8
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico?_pagi_pg=9
+   - https://osc.org.bo/index.php/es/27-sismicidad/66-boletines
+   - https://osc.org.bo/index.php/es/27-sismicidad/75-especiales
+   - https://osc.org.bo/index.php/es/sismicidad/anualesmenu
+   - https://osc.org.bo/index.php/es/sismicidad/boletinespecial
+   - https://osc.org.bo/index.php/es/sismicidad/boletininformativo
+   - https://osc.org.bo/index.php/es/sismicidad/inforepor
+   - https://osc.org.bo/index.php/es/sismicidad/sismogramas
+   - https://www.osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico
+   texto: Sismos en Bolivia --> Inicio Observatorio Misión y Visión Historia Centro Nacional de Datos Estaciones Biblioteca Museo sismológico Contacto Sismicidad Boletines Especiales Boletines Informativos Boletines Anuales Informes y Reportes Sísmicos Sismogramas Publicaciones Mapa Probabilístico de Amenaza Sísmica Norma Boliviana de Diseño Sísmico Cultura sísmica Plan Familiar de Emergencias Guía de Orientación en caso de sismo Educientistas App Preguntas Frecuentes Glosario Servicios Soluciones Especializadas Otros Prevención de abusos --> Inicio Número de emergencia sísmica: 71543585 ¿Qué hacer en caso de sismo? Document Eventos sismicos de la última semana ' Última semana Último mes Último seis meses Sismos en Bolivia Detalles Creado: 25 Enero 2016 Fecha Hora local Latitud Longitud Profundidad (Km) Magnitud (M) Región 24/10/2026 18:22:58 -17.149 -66.385 16.9 3.4 Prov. Quillacollo, Cochabamba 23/10/2026 18:56:23 -21.086 -67.59 171.0 3.8 Prov. Nor Lipez, Potosí 23/10/2026 07:33:48 -22.056 -67.536 157.3 3.1 Prov. Sud Lipez, Potosí 22/10/2026 22:45:41 -21.411 -66.565 234.6 4.3 Prov. Sud Lipez, Potosí 22/10/2026 05:40:07 -18.887 -67.353 242.3 3.0 Prov. Sud Carangas, Potosí 21/10/2026 16:09:43 -16.709 -61.259 28.8 3.5 Prov. Velasco, Santa Cruz 21/10/2026 03:44:41 -22.409 -67.741 133.2 3.5 Prov. Sud Lipez, Potosí 20/10/2026 18:35:53 -21.093 -68.06 140.7 3.4 Prov. Nor Lipez, Potosí 19/10/2026 15:00:40 -21.435 -67.175 200.3 3.1 Prov. Nor Lipez, Potosí 19/10/2026 10:40:33 -22.482 -67.576 149.8 3.3 Prov. Sud Lipez, Potosí 17/10/2026 12:52:45 -21.219 -67.296 191.6 4.9 Prov. Nor Lipez, Potosí 17/10/2026 01:55:44 -20.628 -67.932 170.9 3.5 Prov. Daniel Campos, Potosí 16/10/2026 22:52:40 -20.802 -67.281 189.6 3.5 Prov. Nor Lipez, Potosí 16/10/2026 06:04:54 -22.112 -67.384 140.8 3.3 Prov. Su
+
+== https://osc.org.bo/index.php/es/sismicidad/boletininformativo
+   estado=200 tipo=text/html; charset=utf-8 bytes=80312
+   - https://osc.org.bo/documentos/Guia%20de%20Orientacion.pdf
+   - https://osc.org.bo/documentos/Plan%20Familiar%20de%20Emergencias.pdf
+   - https://osc.org.bo/images/en%20caso%20de%20sismo.pdf
+   - https://osc.org.bo/images/informativos/2016/04%20Boletin%20Informativo%20Abril.pdf
+   - https://osc.org.bo/images/informativos/2016/05%20Boletin%20Informativo%20Mayo.pdf
+   - https://osc.org.bo/images/informativos/2016/06%20Boletin%20Informativo%20Junio.pdf
+   - https://osc.org.bo/images/informativos/2016/07%20Boletin%20Informativo%20Julio.pdf
+   - https://osc.org.bo/images/informativos/2016/08%20Boletin%20Informativo%20Agosto.pdf
+   - https://osc.org.bo/images/informativos/2016/09%20Boletin%20Informativo%20Septiembre.pdf
+   - https://osc.org.bo/images/informativos/2016/10%20Boletin%20Informativo%20Octubre.pdf
+   - https://osc.org.bo/images/informativos/2016/11%20Boletin%20Informativo%20Noviembre.pdf
+   - https://osc.org.bo/images/informativos/2016/12%20Boletin%20Informativo%20Diciembre.pdf
+   - https://osc.org.bo/images/informativos/2017/01%20Boletin%20Informativo%20Enero.pdf
+   - https://osc.org.bo/images/informativos/2017/02%20Boletin%20Informativo%20Febrero.pdf
+   - https://osc.org.bo/images/informativos/2017/03%20Boletin%20Informativo%20Marzo.pdf
+   - https://osc.org.bo/images/informativos/2017/04%20Boletin%20Informativo%20Abril.pdf
+   - https://osc.org.bo/images/informativos/2017/05%20Boletin%20Informativo%20Mayo.pdf
+   - https://osc.org.bo/images/informativos/2017/06%20Boletin%20Informativo%20Junio.pdf
+   - https://osc.org.bo/images/informativos/2017/07%20Boletin%20Informativo%20Julio.pdf
+   - https://osc.org.bo/images/informativos/2017/08%20Boletin%20Informativo%20Agosto.pdf
+   - https://osc.org.bo/images/informativos/2017/09%20Boletin%20Informativo%20Septiembre.pdf
+   - https://osc.org.bo/images/informativos/2017/10%20Boletin%20Informativo%20Octubre.pdf
+   - https://osc.org.bo/images/informativos/2017/11%20Boletin%20Informativo%20Noviembre.pdf
+   - https://osc.org.bo/images/informativos/2017/12%20Boletin%20Informativo%20Diciembre.pdf
+   - https://osc.org.bo/images/informativos/2018/01%20Boletin%20informativo%20Enero.pdf
+   - https://osc.org.bo/images/informativos/2018/02%20Boletin%20informativo%20Febrero.pdf
+   - https://osc.org.bo/images/informativos/2018/03%20Boletin%20informativo%20Marzo.pdf
+   - https://osc.org.bo/images/informativos/2018/04%20Boletin%20informativo%20Abril.pdf
+   - https://osc.org.bo/images/informativos/2018/05%20Boletin%20Informativo%20Mayo.pdf
+   - https://osc.org.bo/images/informativos/2018/06%20Boletin%20Informativo%20Junio.pdf
+   - https://osc.org.bo/images/informativos/2018/07%20Boletin%20Informativo%20Julio.pdf
+   - https://osc.org.bo/images/informativos/2018/08%20Boletin%20Informativo%20Agosto.pdf
+   - https://osc.org.bo/images/informativos/2018/09%20Boletin%20Informativo%20Septiembre.pdf
+   - https://osc.org.bo/images/informativos/2018/10%20Boletin%20Informativo%20Octubre.pdf
+   - https://osc.org.bo/images/informativos/2018/11%20Boletin%20Informativo%20Noviembre.pdf
+   - https://osc.org.bo/images/informativos/2018/12%20Boletin%20Informativo%20Diciembre.pdf
+   - https://osc.org.bo/images/informativos/2019/01%20Boletin%20Informativo%20Enero.pdf
+   - https://osc.org.bo/images/informativos/2019/02%20Boletin%20Informativo%20Febrero.pdf
+   - https://osc.org.bo/images/informativos/2019/03%20Boletin%20Informativo%20Marzo.pdf
+   - https://osc.org.bo/images/informativos/2019/04%20Boletin%20Informativo%20Abril.pdf
+   texto: Boletines Informativos --> Inicio Observatorio Misión y Visión Historia Centro Nacional de Datos Estaciones Biblioteca Museo sismológico Contacto Sismicidad Boletines Especiales Boletines Informativos Boletines Anuales Informes y Reportes Sísmicos Sismogramas Publicaciones Mapa Probabilístico de Amenaza Sísmica Norma Boliviana de Diseño Sísmico Cultura sísmica Plan Familiar de Emergencias Guía de Orientación en caso de sismo Educientistas App Preguntas Frecuentes Glosario Servicios Soluciones Especializadas Otros Prevención de abusos --> Boletines Informativos Número de emergencia sísmica: 71543585 ¿Qué hacer en caso de sismo? La información que incluye este tipo de boletín muestra las actividades especiales del Observatorio San Calixto, cursos, presentaciones en la que se participó, a esta información se le incorpora las estadísticas de la sismicidad mensual, de este modo se pretende resaltar todas las actividades de monitoreo, educación y difusión a la población. Gestión 2026 Gestión 2025 Gestión 2024 Boletín Informativo Enero Boletín Informativo Enero Boletín Informativo Enero Boletín Informativo Febrero Boletín Informativo Febrero Boletín Informativo Febrero Boletín Informativo Marzo Boletín Informativo Marzo Boletín Informativo Marzo Boletín Informativo Abril Boletín Informativo Abril Boletín Informativo Abril Boletín Informativo Mayo Boletín Informativo Mayo Boletín Informativo Mayo Boletín Informativo Junio Boletín Informativo Junio Boletín Informativo Junio Boletín Informativo Julio Boletín Informativo Julio Boletín Informativo Julio Boletín Informativo Agosto Boletín Informativo Agosto Boletín Informativo Agosto Boletín Informativo Septiembre Boletín Informativo Septiembre Boletín Informativo Septiembre Boletín Informativo Octubre Boletín Informativo Octubre Bo
+
+== https://osc.org.bo/index.php/es/sismicidad/inforepor
+   estado=200 tipo=text/html; charset=utf-8 bytes=64707
+   - https://osc.org.bo/documentos/Guia%20de%20Orientacion.pdf
+   - https://osc.org.bo/documentos/Plan%20Familiar%20de%20Emergencias.pdf
+   - https://osc.org.bo/images/en%20caso%20de%20sismo.pdf
+   - https://osc.org.bo/images/reportes/2024/20241125_Reporte_sismico_01_2024_Santa%20Cruz.pdf
+   - https://osc.org.bo/images/reportes/2025/20250630_Informe_sismico_01_2025_Provincia_Chapare_CB.pdf
+   - https://osc.org.bo/images/reportes/2025/20250814_Informe_sismico_02_2025_Provincia_Zudañez_CH.pdf
+   - https://osc.org.bo/images/reportes/2025/20250822_Informe_sismico_03_2025_Sismicidad_región_Chuquisaca_Cochabamba.pdf
+   - https://osc.org.bo/images/reportes/2025/20250913_Informe_sismico_04_2025_Provincia_Esteban_Arze_CB.pdf
+   - https://osc.org.bo/images/reportes/2025/20251110_Informe_sismico_05_2025_Provincia_Azurduy_CH.pdf
+   - https://osc.org.bo/images/reportes/2025/20251130_Informe_sismico_06_2025_Provincia_Campero_CB.pdf
+   - https://osc.org.bo/images/reportes/2026/20261021_Informe_sismico_01_2026_Provincia_Velasco_SC.pdf
+   - https://osc.org.bo/images/sismicos/20160323_Informe_sismico_01_2016_Provincia_Tiraque_CB.pdf
+   - https://osc.org.bo/images/sismicos/20161126_Informe_sismico_02_2016_Provincia_Chapare_CB.pdf
+   - https://osc.org.bo/images/sismicos/20161201_Informe_sismico_03_2016_Sismo_Peru_PE.pdf
+   - https://osc.org.bo/images/sismicos/20170221_Informe_sismico_01_2017_Provincia_Zudañes_CHQ.pdf
+   - https://osc.org.bo/images/sismicos/20170521_Informe_sismico_02_2017_Sismo_Chile_CH.pdf
+   - https://osc.org.bo/images/sismicos/20170611_Informe_sismico_03_2017_Provincia_Ichilo_SC.pdf
+   - https://osc.org.bo/images/sismicos/20170625_Informe_sismico_04_2017_Provincia_Luis_Calvo_CHQ.pdf
+   - https://osc.org.bo/images/sismicos/20170803_Informe_sismico_05_2017_Provincia_Campero_CB.pdf
+   - https://osc.org.bo/images/sismicos/20170910_Informe_sismico_06_2017_Provincia_Punata_CB.pdf
+   - https://osc.org.bo/images/sismicos/20171006_Informe_sismico_07_2017_Provincia_Ichilo_SC.pdf
+   - https://osc.org.bo/images/sismicos/20171211_Informe_sismico_08_2017_Provincia_Carrasco_CB.pdf
+   - https://osc.org.bo/images/sismicos/20180114_Informe_sismico_01_2018_Sismo_Peru_PE.pdf
+   - https://osc.org.bo/images/sismicos/20180115_Informe_sismico_02_2018_Provincia_Chapare_CB.pdf
+   - https://osc.org.bo/images/sismicos/20180120_Informe_sismico_03_2018_Sismo_Chile_CH.pdf
+   - https://osc.org.bo/images/sismicos/20180125_Informe_sismico_04_2018_Sismo_Chile_CH.pdf
+   - https://osc.org.bo/images/sismicos/20180402_Informe_sismico_05_2018_Provincia_Luis_Calvo_CHQ.pdf
+   - https://osc.org.bo/images/sismicos/20180428_Informe_sismico_06_2018_Provincia_Campero_CB.pdf
+   - https://osc.org.bo/images/sismicos/20180718_Informe_sismico_07_2018_Provincia_Campero_CB.pdf
+   - https://osc.org.bo/images/sismicos/20180823_Informe_sismico_08_2018_Provincia_Campero_CB.pdf
+   - https://osc.org.bo/images/sismicos/20180828_Informe_sismico_09_2018_Provincia_Vallegrande_SC.pdf
+   - https://osc.org.bo/images/sismicos/20181010_Informe_sismico_10_2018_Provincia_Andres_Ibañez_SC.pdf
+   - https://osc.org.bo/images/sismicos/20181207_Informe_sismico_11_2018_Provincia_Chapare_CB.pdf
+   - https://osc.org.bo/images/sismicos/20181220_Informe_sismico_12_2018_Provincia_Luis_Calvo_CHQ.pdf
+   - https://osc.org.bo/images/sismicos/20190301_Informe_sismico_01_2019_Sismo_Peru_PE.pdf
+   - https://osc.org.bo/images/sismicos/20190315_Informe_sismico_02_2019_Provincia_General_Bilbao_PT.pdf
+   - https://osc.org.bo/images/sismicos/20190503_Informe_sismico_03_2019_Provincia_Gran_Chaco_TA.pdf
+   - https://osc.org.bo/images/sismicos/20190811_Informe_sismico_04_2019_Provincia_Azurduy_CHQ.pdf
+   - https://osc.org.bo/images/sismicos/20190812_Informe_sismico_05_2019_Provincia_Andres_Ibañez_SC.pdf
+   - https://osc.org.bo/images/sismicos/20190817_Informe_sismico_06_2019_Provincia_Ichilo_SC.pdf
+   texto: Informes y Reportes Sísmicos --> Inicio Observatorio Misión y Visión Historia Centro Nacional de Datos Estaciones Biblioteca Museo sismológico Contacto Sismicidad Boletines Especiales Boletines Informativos Boletines Anuales Informes y Reportes Sísmicos Sismogramas Publicaciones Mapa Probabilístico de Amenaza Sísmica Norma Boliviana de Diseño Sísmico Cultura sísmica Plan Familiar de Emergencias Guía de Orientación en caso de sismo Educientistas App Preguntas Frecuentes Glosario Servicios Soluciones Especializadas Otros Prevención de abusos --> Informes y Reportes Sísmicos Número de emergencia sísmica: 71543585 ¿Qué hacer en caso de sismo? El informe sísmico se genera para sismos sentidos (reportados), incluye parámetros hipocentrales, la fuente sismogénica del evento, los efectos que género en la población (intensidad sísmica) y datos como la aceleración, velocidad y desplazamiento del suelo. Este informe se amplía según la recepción y análisis de nuevos datos. 21 de octubre Año 2026 Sismo provincia Velasco (SC) 30 de junio 14 de agosto 22 de agosto 13 de septiembre 10 de noviembre 30 de noviembre Año 2025 Sismo provincia Chapare (CB) Sismo provincia Zudañes (CH) Sismicidad Chuquisaca y Cochabamba Sismo provincia Esteban Arce (CB) Sismo provincia Azurduy (CH) Sismo provincia Campero (CB) 25 de noviembre 24 de julio 18 de julio 12 de julio 30 de junio 6 de mayo Año 2024 Reporte - Secuencia sísmica (SC) Sismo en provincia Chapare (CB) Sismo en Atacama, Chile Sismo en provincia José Manuel Pando (LP) Sismo en provincia Quillacollo (CB) Sismo en provincia Carrasco (CB) 5 de noviembre 29 de mayo 18 de mayo 7 de marzo Año 2023 Sismo en provincia Carrasco (CB) Sismo en provincia Tapacarí (CB) Sismo en provincia Rafaél Bustillos (PT) Sismo en provincia Tiraque (CB) 14 de julio 
+
+== https://osc.org.bo/index.php/es/27-sismicidad/66-boletines
+   estado=200 tipo=text/html; charset=utf-8 bytes=56943
+   - https://osc.org.bo/documentos/Guia%20de%20Orientacion.pdf
+   - https://osc.org.bo/documentos/Plan%20Familiar%20de%20Emergencias.pdf
+   - https://osc.org.bo/images/en%20caso%20de%20sismo.pdf
+   - https://osc.org.bo/images/imagenes/leyenda_sismos.png
+   - https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico
+   - https://osc.org.bo/index.php/es/27-sismicidad/66-boletines
+   - https://osc.org.bo/index.php/es/27-sismicidad/75-especiales
+   - https://osc.org.bo/index.php/es/sismicidad/anualesmenu
+   - https://osc.org.bo/index.php/es/sismicidad/boletinespecial
+   - https://osc.org.bo/index.php/es/sismicidad/boletininformativo
+   - https://osc.org.bo/index.php/es/sismicidad/inforepor
+   - https://osc.org.bo/index.php/es/sismicidad/sismogramas
+   - https://www.osc.org.bo/index.php/es/27-sismicidad/66-boletines
+   texto: Boletines --> Inicio Observatorio Misión y Visión Historia Centro Nacional de Datos Estaciones Biblioteca Museo sismológico Contacto Sismicidad Boletines Especiales Boletines Informativos Boletines Anuales Informes y Reportes Sísmicos Sismogramas Publicaciones Mapa Probabilístico de Amenaza Sísmica Norma Boliviana de Diseño Sísmico Cultura sísmica Plan Familiar de Emergencias Guía de Orientación en caso de sismo Educientistas App Preguntas Frecuentes Glosario Servicios Soluciones Especializadas Otros Prevención de abusos --> Inicio Número de emergencia sísmica: 71543585 ¿Qué hacer en caso de sismo? Document Eventos sismicos de la última semana ' Última semana Último mes Último seis meses Boletines Detalles Creado: 10 Noviembre 2017 NUESTROS BOLETINES La Fundación Privada de Fieles Observatorio San Calixto como parte de sus labores, brinda la información mensual sobre eventos Sísmicos en el territorio nacional en sus Boletines Informativos, así como información de repercusión mundial en el área de la sismología a través de sus Boletines Especiales. BOLETÍN INFORMATIVO La información que incluye este boletín muestra las actividades especiales del Observatorio San Calixto, cursos, presentaciones, en la que se participó, a esta información se le incorpora las estadísticas de la sismicidad mensual, de este modo se pretende resaltar todas las actividades de monitoreo, educación y difusión a la población. BOLETÍN ESPECIAL Los boletines especiales detallan el procesamiento y análisis de eventos especiales como: meteoritos, deslizamientos, eventos sospechosos (explosiones nucleares) utilizando tecnologías sísmicas y de infrasonido. BOLETÏN ANUAL La información que incluye este boletín muestra los resultados del procesamiento y análisis de sismos localizados en Bolivia durante un
+
+GDELT: estado=429 bytes=0 inicio=b''
+SIMB https://simb.produccion.gob.bo/: estado=200 tipo=text/html;charset=UTF-8 bytes=15053
+SIMB https://simb.produccion.gob.bo/simb/index.xhtml: estado=200 tipo=text/html;charset=ISO-8859-1 bytes=2505
+SIMB https://simb.produccion.gob.bo/simb/faces/index.xhtml: estado=200 tipo=text/html;charset=ISO-8859-1 bytes=2505
