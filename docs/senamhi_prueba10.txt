@@ -1,0 +1,214 @@
+Prueba 10 SENAMHI - 2026-10-25T22:40:13.867693Z
+
+estado=200 bytes=1314076 count=384
+claves del registro: id, code, date, idAlertType, idEventType, dropArea, status, typeEvent, description, audCreatedAt, audUpdatedAt, audCreateUser, audUpdateUser, audDeletedAt, audDeleteUser, enable, publicationDate, ForecastTypeAlert, ForecastTypeEvent
+{
+ "id": 643,
+ "code": "88/26",
+ "date": [
+  "2026-10-26",
+  "2026-10-29"
+ ],
+ "idAlertType": 1,
+ "idEventType": 18,
+ "dropArea": {
+  "crs": {
+   "type": "name",
+   "properties": {
+    "name": "EPSG:4326"
+   }
+  },
+  "type": "MultiPolygon",
+  "coordinates": [
+   [
+    [
+     [
+      -68.763975,
+      -16.42211
+     ],
+     [
+      -68.763722,
+      -16.422128
+     ],
+     [
+      -68.76346,
+      -16.422128
+     ],
+     "...(278 en total)"
+    ]
+   ],
+   [
+    [
+     [
+      -68.767268,
+      -16.370261
+     ],
+     [
+      -68.767146,
+      -16.370414
+     ],
+     [
+      -68.767015,
+      -16.370586
+     ],
+     "...(90 en total)"
+    ]
+   ],
+   [
+    [
+     [
+      -68.698693,
+      -16.354887
+     ],
+     [
+      -68.698599,
+      -16.355483
+     ],
+     [
+      -68.698626,
+      -16.355926
+     ],
+     "...(48 en total)"
+    ]
+   ],
+   "...(12 en total)"
+  ]
+ },
+ "status": "Aprobado",
+ "typeEvent": null,
+ "description": "SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DE DIRECCIÓN OESTE-NOROESTE, A REGISTRARSE DESDE EL LUNES 26 HASTA EL JUEVES 29 OCTUBRE DE 2026 EN:",
+ "audCreatedAt": "2026-10-24T02:49:49.995Z",
+ "audUpdatedAt": "2026-10-24T16:20:33.897Z",
+ "audCreateUser": 16,
+ "audUpdateUser": 53,
+ "audDeletedAt": null,
+ "audDeleteUser": null,
+ "enable": true,
+ "publicationDate": "2026-10-24T16:26:34.026Z",
+ "ForecastTypeAlert": {
+  "id": 1,
+  "alertType": "NARANJA",
+  "color": "orange"
+ },
+ "ForecastTypeEvent": {
+  "id": 18,
+  "eventType": "Viento moderado, temporalmente fuerte"
+ }
+}
+{
+ "id": 642,
+ "code": "87/26",
+ "date": [
+  "2026-10-24",
+  "2026-10-26"
+ ],
+ "idAlertType": 1,
+ "idEventType": 28,
+ "dropArea": {
+  "crs": {
+   "type": "name",
+   "properties": {
+    "name": "EPSG:4326"
+   }
+  },
+  "type": "MultiPolygon",
+  "coordinates": [
+   [
+    [
+     [
+      -64.103488,
+      -22.336763
+     ],
+     [
+      -64.099118,
+      -22.338082
+     ],
+     [
+      -64.098073,
+      -22.340144
+     ],
+     "...(15638 en total)"
+    ]
+   ]
+  ]
+ },
+ "status": "Aprobado",
+ "typeEvent": null,
+ "description": "SE PRONOSTICA EL INGRESO DE FRENTE FRÍO AL TERRITORIO BOLIVIANO, QUE OCASIONARÁ DESCENSOS BRUSCOS DE TEMPERATURA ENTRE 6 °C Y 12 °C POR DEBAJO DE LOS VALORES NORMALES DE CADA REGIÓN AFECTADA. A OCURRIR ENTRE EL DÍA SÁBAD...(275 car.)",
+ "audCreatedAt": "2026-10-22T21:11:32.441Z",
+ "audUpdatedAt": "2026-10-23T16:53:20.913Z",
+ "audCreateUser": 65,
+ "audUpdateUser": 53,
+ "audDeletedAt": null,
+ "audDeleteUser": null,
+ "enable": true,
+ "publicationDate": "2026-10-23T16:59:21.091Z",
+ "ForecastTypeAlert": {
+  "id": 1,
+  "alertType": "NARANJA",
+  "color": "orange"
+ },
+ "ForecastTypeEvent": {
+  "id": 28,
+  "eventType": "Descenso Brusco de Temperaturas"
+ }
+}
+{
+ "id": 641,
+ "code": "86/26",
+ "date": [
+  "2026-10-21",
+  "2026-10-24"
+ ],
+ "idAlertType": 1,
+ "idEventType": 26,
+ "dropArea": {
+  "crs": {
+   "type": "name",
+   "properties": {
+    "name": "EPSG:4326"
+   }
+  },
+  "type": "MultiPolygon",
+  "coordinates": [
+   [
+    [
+     [
+      -60.989276,
+      -13.501532
+     ],
+     [
+      -60.989506,
+      -13.502318
+     ],
+     [
+      -60.989784,
+      -13.503105
+     ],
+     "...(15838 en total)"
+    ]
+   ]
+  ]
+ },
+ "status": "Aprobado",
+ "typeEvent": null,
+ "description": "SE PRONOSTICA UN ASCENSO DE LAS TEMPERATURAS MÁXIMAS POR ENCIMA DE SUS PROMEDIOS HABITUALES, ALCANZANDO VALORES DE ENTRE 36 °C Y 42 °C. DESDE EL DÍA MIÉRCOLES 21 HASTA EL DÍA SÁBADO 24 DE OCTUBRE DE 2026, EN:",
+ "audCreatedAt": "2026-10-20T06:48:22.194Z",
+ "audUpdatedAt": "2026-10-20T23:34:50.610Z",
+ "audCreateUser": 16,
+ "audUpdateUser": 53,
+ "audDeletedAt": null,
+ "audDeleteUser": null,
+ "enable": true,
+ "publicationDate": "2026-10-20T23:40:50.932Z",
+ "ForecastTypeAlert": {
+  "id": 1,
+  "alertType": "NARANJA",
+  "color": "orange"
+ },
+ "ForecastTypeEvent": {
+  "id": 26,
+  "eventType": "Ascenso de temperaturas"
+ }
+}
+tamaño por campo: id=3, code=7, date=28, idAlertType=1, idEventType=2, dropArea=610403, status=10, typeEvent=4, description=163, audCreatedAt=26, audUpdatedAt=26, audCreateUser=2, audUpdateUser=2, audDeletedAt=4, audDeleteUser=4, enable=4, publicationDate=26, ForecastTypeAlert=52, ForecastTypeEvent=64
