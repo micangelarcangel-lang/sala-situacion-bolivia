@@ -1,0 +1,24 @@
+﻿campo,tipo,descripcion,origen
+id,texto,Identificador único del evento en el registro del sistema.,Sistema
+clase,texto,"Tipo de registro: noticia, usgs, gdacs, clima, registro (ingresado a mano) u otro.",Derivado del id
+fecha_hora_local,fecha-hora,"Fecha y hora de publicación o detección, hora de Bolivia (UTC-4).",Fuente original
+ts_ms,entero,Marca de tiempo en milisegundos desde 1970-01-01 UTC.,Fuente original
+fuente,texto,"Medio o servicio que reporta (p. ej. USGS, Open-Meteo, nombre del medio de prensa, Registro abierto).",Fuente original
+tipo_amenaza,texto,"Clase de amenaza (art. 36 Ley 602): geológica, meteorológica, hidrológica, climatológica, biológica, tecnológica, antropogénica u otra. Clasificación automática por palabras clave.",Regla del sistema
+nivel_num,0-3,"Nivel preliminar CCES: 0 verde, 1 amarilla, 2 naranja, 3 roja. NO es una alerta oficial de la Ley 602.",Regla del sistema
+nivel_preliminar,texto,Nombre del nivel preliminar.,Regla del sistema
+titulo,texto,Titular de la nota o descripción del evento.,Fuente original
+detalle,texto,"Información adicional (valores del modelo, descripción del registro).",Fuente original
+url,texto,Enlace a la fuente. Los enlaces de Google Noticias redirigen al medio original.,Fuente original
+fallecidos,entero,"Fallecidos que menciona la fuente (cifra de prensa, sin validar).",Texto de la fuente
+heridos,entero,"Heridos que menciona la fuente (cifra de prensa, sin validar).",Texto de la fuente
+lat,decimal,Latitud (WGS84). Puede ser aproximada: ver metodo_ubicacion.,Fuente o gazetteer
+lon,decimal,Longitud (WGS84).,Fuente o gazetteer
+lugar,texto,Nombre del lugar determinado.,Fuente o gazetteer
+metodo_ubicacion,texto,"Cómo se obtuvo la ubicación (coordenada de la fuente, municipio o departamento nombrado en el titular, sin ubicar).",Sistema
+departamento,texto,Departamento según los límites geoBoundaries (se calcula a partir de lat/lon).,geoBoundaries
+municipio,texto,Municipio según los límites geoBoundaries (se calcula a partir de lat/lon).,geoBoundaries
+hecho_id,texto,(hechos) id del evento representativo del hecho.,Sistema
+fallecidos_max / heridos_max,entero,(hechos) Máximo reportado entre las notas del mismo hecho. No se suman porque las notas cuentan a las mismas personas.,Regla del sistema
+cifras_discrepantes,sí/no,(hechos) Las fuentes dan cifras distintas de fallecidos o heridos.,Regla del sistema
+n_notas / fuentes / enlaces,entero/texto,"(hechos) Notas unidas en el hecho, medios que las publicaron y sus enlaces.",Sistema

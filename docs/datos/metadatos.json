@@ -1,0 +1,21 @@
+{
+ "generado_local": "2026-10-25 11:02",
+ "zona_horaria": "America/La_Paz (UTC-4)",
+ "registros_eventos": 55,
+ "registros_hechos": 38,
+ "alcance": "Solo hechos de Bolivia. Datos preliminares de fuentes abiertas, sin validación oficial.",
+ "fuentes": [
+  "USGS (sismos)",
+  "GDACS (desastres)",
+  "Open-Meteo (pronóstico, CC BY 4.0)",
+  "Google Noticias (titulares y enlaces; derechos de cada medio)",
+  "Registro abierto de la Sala de Situación (sin verificar)",
+  "Límites: geoBoundaries"
+ ],
+ "advertencias": [
+  "El nivel de color es preliminar (criterio CCES) y no corresponde a una declaratoria de alerta de la Ley 602.",
+  "Fallecidos y heridos son cifras de prensa, sin validar. En un hecho se toma el máximo reportado, no la suma.",
+  "La ubicación puede ser aproximada (ver metodo_ubicacion)."
+ ],
+ "cita_sugerida": "Sala de Situación Bolivia – CCES. Base de eventos de amenazas (datos preliminares de fuentes abiertas). Consulta: 2026-10-25 11:02."
+}
