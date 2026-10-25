@@ -12,7 +12,7 @@ on:
         description: "Horas hacia atrás que cubre el reporte (24 = un día, 168 = una semana)"
         default: "24"
       buscar:
-        description: "Opcional: palabras del hecho para un reporte específico (ej: Mayaya). Vacío = reporte general"
+        description: "Opcional: palabras del hecho para un informe específico (ej: Mayaya). Vacío = reporte general"
         default: ""
 
 permissions:
@@ -47,4 +47,10 @@ jobs:
           git config user.name "sala-bot"
           git config user.email "sala-bot@users.noreply.github.com"
           git add docs
-          git diff --staged --quiet || (git commit -m "Actualización automática" && git push)
+          if git diff --staged --quiet; then echo "Sin cambios"; exit 0; fi
+          git commit -m "Actualización automática"
+          for i in 1 2 3 4; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            sleep 6
+          done
+          exit 1
