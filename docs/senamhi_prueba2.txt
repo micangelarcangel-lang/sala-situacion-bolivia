@@ -1,0 +1,72 @@
+Prueba 2 SENAMHI - 2026-10-25T18:03:56.737943Z
+
+== https://sena.senamhi.gob.bo/public/forecast-public-reports
+   estado=ERR tipo= bytes=0 URLError: <urlopen error _ssl.c:993: The handshake operation timed out>
+
+== https://www.senamhi.gob.bo/alertas2.php
+   estado=200 tipo=text/html; charset=UTF-8 bytes=67919 
+   título: SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA
+   - https://www.senamhi.gob.bo/alertasanteriores2.php
+   - https://www.senamhi.gob.bo/assets/js/docs.js
+   - https://www.senamhi.gob.bo/despliegaalerta1.php
+   - https://www.senamhi.gob.bo/dist/js/bootstrap-submenu.js
+   - https://cdn.jsdelivr.net/highlight.js/9.5.0/highlight.min.js
+   - https://www.senamhi.gob.bo/image/manifest.json
+   - https://www.senamhi.gob.bo/js_p/script.js
+   - https://www.senamhi.gob.bo/lib_p/magicsuggest/magicsuggest.js
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1455.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1456.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1457.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1459.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1462.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1464.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1465.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1468.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1470.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1473.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1474.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1476.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1479.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1480.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1481.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1482.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1483.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1485.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1488.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1497.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1515.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1516.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1517.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1518.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1520.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1521.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1522.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1523.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1526.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1528.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1529.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1530.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1531.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1532.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1533.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1534.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1535.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1536.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1537.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1538.pdf
+   - https://www.senamhi.gob.bo/pdf_alertas/alerta_1539.pdf
+   - https://www.senamhi.gob.bo/source_p/bootstrap-3.3.6-dist/js/jquery.js
+   - https://www.senamhi.gob.bo/vendor/bootstrap/js/bootstrap.js
+   texto: SERVICIO NACIONAL DE METEOROLOGÍA E HIDROLOGÍA ÚLTIMAS ALERTAS Fecha de publicación Fecha comienzo Fecha Final Título Nivel Desplegar PDF 2026-10-23 09:19:58 2026-10-23 2026-10-27 AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 42/2026 NARANJA PDF 2026-10-13 17:10:20 2026-10-13 2026-10-16 AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 41/2026 NARANJA PDF 2026-10-09 08:56:50 2026-10-09 2026-10-13 AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 40/2026 NARANJA PDF 2026-09-28 05:55:26 2026-09-28 2026-10-03 AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 38/2026 AMARIL
+
+== https://senamhi.gob.bo/pronosticoH/index.html
+   estado=200 tipo=text/html bytes=3000000 
+   título: -
+   - https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js
+   - https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js
+   - https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css
+   - https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js
+   - https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.0/leaflet-dvf.markers.min.js
+   - https://code.jquery.com/jquery-3.7.1.min.js
+   - https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+   texto: 🔍 BOLETÍN DE PRONÓSTICO HIDROLÓGICO DEL 23 OCTUBRE AL 06 NOVIEMBRE DE 2026 Unidad de Análisis y Pronósticos Hidrológicos - Dirección de Hidrología — SENAMHI Bolivia 🚨 IMPORTANTE: Crecida de ríos considerados como Amenaza Naranja y Amarilla entre los dias del 25 al 27, 28 octubre al 01 noviembre , 03 al 05 noviembre, para Tarija, Chuquisaca, Santa Cruz, Cochabamba, La Paz, Beni, Pando. Se sugiere tomar precauciones en zonas ribereñas y monitorear permanentemente el comportamiento de los niveles de agua. Nivel de Amenaza Hidrológica Amenaza Roja Amenaza Naranja Amenaza Amarilla Sin Amenaza 💧 HUM
