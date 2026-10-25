@@ -857,11 +857,12 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
     var ref=document.getElementById("aviso"); if(!ref)return;
     var box=document.createElement("div");
     box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
-    var h='<b>Alertas oficiales vigentes — SENAMHI (hidrológicas)</b> <span style="opacity:.7">· fuente: <a href="'+esc(d.fuente)+'" target="_blank" rel="noopener">senamhi.gob.bo</a></span>';
-    if(!v.length){h+='<div style="opacity:.8">Ninguna alerta vigente en la tabla del SENAMHI.</div>';}
+    var h='<b>Alertas oficiales vigentes — SENAMHI (hidrológicas y meteorológicas)</b> <span style="opacity:.7">· fuente: <a href="'+esc(d.fuente)+'" target="_blank" rel="noopener">senamhi.gob.bo</a></span>';
+    if(!v.length){h+='<div style="opacity:.8">Ningún aviso vigente publicado por el SENAMHI.</div>';}
     v.forEach(function(a){
       h+='<div style="margin-top:6px"><span style="background:'+(colores[a.nivel]||"#888")+';color:#fff;padding:1px 7px;border-radius:9px;font-size:12px">'+esc(a.nivel)+'</span> <b>N° '+esc(a.numero)+'</b> · '+esc(a.inicio)+' al '+esc(a.fin)+
-        (a.departamentos&&a.departamentos.length?' · '+esc(a.departamentos.join(", ")):'')+' · <a href="'+esc(a.pdf)+'" target="_blank" rel="noopener">PDF oficial</a>'+
+        (a.departamentos&&a.departamentos.length?' · '+esc(a.departamentos.join(", ")):'')+' · <a href="'+esc(a.url||a.pdf)+'" target="_blank" rel="noopener">'+(a.tipo==="meteorológica"?"Aviso oficial":"PDF oficial")+'</a>'+
+        (a.fenomeno?'<div style="opacity:.9">'+esc(a.fenomeno)+(a.n_municipios?' · '+a.n_municipios+' municipios en el polígono':'')+'</div>':'')+
         (a.rios&&a.rios.length?'<div style="opacity:.8">Ríos citados: '+esc(a.rios.slice(0,12).join(", "))+'</div>':'')+'</div>';
     });
     box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
