@@ -42,11 +42,23 @@ def resolver(url):
 
 
 def descargar(url, tiempo=25):
+    """Descarga la página; si el medio responde 429/502/503 (demasiados pedidos) espera y reintenta."""
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "es-419,es;q=0.9", "Accept": "text/html,application/xhtml+xml"})
-    with urllib.request.urlopen(req, timeout=tiempo) as r:
-        raw = r.read(2_500_000)
-        cs = r.headers.get_content_charset() or "utf-8"
-        return raw.decode(cs, errors="replace"), r.geturl()
+    for intento in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=tiempo) as r:
+                raw = r.read(2_500_000)
+                cs = r.headers.get_content_charset() or "utf-8"
+                return raw.decode(cs, errors="replace"), r.geturl()
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 502, 503) and intento < 3:
+                try:
+                    espera = min(20, int(e.headers.get("Retry-After", "")))
+                except Exception:
+                    espera = 4 * (intento + 1)
+                time.sleep(espera)
+                continue
+            raise
 
 
 def texto_principal(html):
@@ -92,6 +104,7 @@ def _valor(s):
     return int(s) if s.isdigit() else NUM.get(s)
 
 
+_VAGOS = {"varios", "varias", "algunos", "algunas", "muchos", "muchas", "otros", "otras", "cuantos"}
 _UNIDAD = {"de", "horas", "hrs", "h", "km", "kilometro", "kilometros", "metro", "metros", "mts", "ano", "anos", "minutos", "dias", "meses", "por", "bs", "bolivianos"}
 
 
@@ -103,7 +116,7 @@ def cifras(texto):
     for frase in re.split(r"[.;!?\n]+", t):
         tok = re.findall(r"[a-z0-9%]+", frase)
         for i, w in enumerate(tok):
-            if w.startswith(("fallecid", "muert", "muri", "perdieron")):
+            if w.startswith(("fallec", "muert", "muri", "perdieron")):
                 tipo = "f"
             elif w.startswith(("herid", "lesionad")):
                 tipo = "h"
@@ -112,9 +125,13 @@ def cifras(texto):
             v = None
             for j in range(i - 1, max(i - 13, -1), -1):
                 x = tok[j]
-                if x.startswith(("fallecid", "muert", "muri", "herid", "lesionad")):
+                if x.startswith(("fallec", "muert", "muri", "herid", "lesionad")):
+                    break
+                if x in _VAGOS:  # «varios heridos»: no hay cifra
                     break
                 n = int(x) if x.isdigit() else NUM.get(x)
+                if n == 1 and i - j > 3:  # «un» lejos de la palabra clave («a un barranco ... heridos») no es una cantidad
+                    continue
                 if n and not (j + 1 < len(tok) and tok[j + 1] in _UNIDAD):
                     v = n; break
             if v is None:
@@ -136,6 +153,17 @@ def cifras(texto):
 
 
 _NEG = {"no", "sin", "ningun", "ninguna", "ni", "descartan", "descarto", "descartaron", "nadie", "cero"}
+
+
+def evidencia(texto, tipo):
+    """Frase de la nota de donde sale la mayor cifra de heridos ('h') o fallecidos ('f')."""
+    mejor, frase_mejor = 0, ""
+    for fr in re.split(r"(?<=[.!?])\s+", re.sub(r"\s+", " ", texto or "")):
+        f, h = cifras(fr)
+        v = h if tipo == "h" else f
+        if v > mejor:
+            mejor, frase_mejor = v, fr.strip()
+    return frase_mejor[:260]
 
 
 def menciones(texto, raices):
@@ -311,7 +339,12 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
             t, est = "", "registro ingresado a mano (sin nota de prensa)"
         ha, hn = menciones(t, ("herid", "lesionad")) if t else (0, 0)
         fa, fn = menciones(t, ("fallecid", "muert", "muri")) if t else (0, 0)
-        filas_f.append({"e": e, "texto": t, "estado": est, "h_afirma": ha, "f_niega": fn, "f_afirma": fa, "url": real or e.get("url"), "f_tit": e.get("fall") or 0, "h_tit": e.get("her") or 0,
+        h_tit_v = e.get("her") or 0
+        tit_limpio = re.sub(r" - [^-]+$", "", e["titulo"])
+        if str(e["id"]).startswith("noticia:") and h_tit_v == 1 and cifras(tit_limpio)[1] == 0 and re.search(r"herid|lesionad", norm(tit_limpio)):
+            h_tit_v = 0  # «varios heridos»: el motor lo cuenta como 1, pero el titular no da cifra
+            ha = max(ha, 1)
+        filas_f.append({"e": e, "texto": t, "estado": est, "h_ev": evidencia(t, "h") if t else "", "f_ev": evidencia(t, "f") if t else "", "h_afirma": ha, "f_niega": fn, "f_afirma": fa, "url": real or e.get("url"), "f_tit": e.get("fall") or 0, "h_tit": h_tit_v,
                         "f_txt": ft, "h_txt": ht, "frases": frases_clave(t, e["titulo"]) if t else ([e["detalle"].strip()[:600]] if not str(e["id"]).startswith("noticia:") and (e.get("detalle") or "").strip() else [])})
     fvals = sorted({v for r in filas_f for v in (r["f_tit"], r["f_txt"]) if v > 0})
     hvals = sorted({v for r in filas_f for v in (r["h_tit"], r["h_txt"]) if v > 0})
@@ -418,6 +451,17 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0f3d6e")), ("GRID", (0, 0), (-1, -1), .25, colors.HexColor("#d3d8df")),
                            ("VALIGN", (0, 0), (-1, -1), "TOP"), ("TOPPADDING", (0, 0), (-1, -1), 2.5), ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5)]))
     el.append(t)
+    if len(hvals) > 1 or len(fvals) > 1:
+        el.append(Spacer(1, 2 * mm))
+        el.append(Paragraph("<b>De dónde sale cada cifra que difiere</b> (frase literal de la nota; verifique si cuenta a todos los heridos o solo a un grupo):", st["pm"]))
+        for etiqueta, campo_t, campo_x, campo_ev, vals in (("Heridos", "h_tit", "h_txt", "h_ev", hvals), ("Fallecidos", "f_tit", "f_txt", "f_ev", fvals)):
+            if len(vals) < 2:
+                continue
+            for r in filas_f:
+                v = r[campo_x] if r[campo_x] else r[campo_t]
+                if v and v in vals:
+                    ev = r[campo_ev] if r[campo_x] and r[campo_ev] else re.sub(r" - [^-]+$", "", r["e"]["titulo"])
+                    el.append(Paragraph(f'{etiqueta}: <b>{v}</b> — {esc(r["e"]["fuente"])} ({rp.hora(r["e"]["ts"]):%d/%m %H:%M}): «{esc(ev)}»', st["pm"]))
     el.append(Paragraph("«Titular» = cifra que aparece en el título; «texto» = mayor cifra detectada en el cuerpo de la nota por reglas automáticas (puede equivocarse: verifique en la nota). «s/c» = la nota menciona el dato pero sin cifra (p. ej. «varios heridos»). No se suman cifras de distintas notas porque cuentan a las mismas personas.", st["pm"]))
 
     # 5. Cronología y citas

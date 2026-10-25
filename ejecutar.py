@@ -203,7 +203,7 @@ def main():
             # se leen las notas (en paralelo) para unir las que cuentan el mismo hecho con titulares distintos
             from concurrent.futures import ThreadPoolExecutor
             por_leer = [e for g in grupos_q for e in g if str(e["id"]).startswith("noticia:") and (e.get("url") or "").startswith("http")][:30]
-            with ThreadPoolExecutor(max_workers=6) as ex:
+            with ThreadPoolExecutor(max_workers=3) as ex:
                 textos_q = dict(zip([e["id"] for e in por_leer], ex.map(lambda e: ih.leer_nota(e["url"]), por_leer)))
             antes = len(grupos_q)
             grupos_q = ih.unir_por_texto(grupos_q, textos_q)
