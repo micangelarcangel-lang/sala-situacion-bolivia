@@ -177,6 +177,33 @@ def agrupar_items(evs):
     return [g["items"] for g in grupos]
 
 
+def clave_url(u):
+    """Dirección canónica: sin versión AMP, sin parámetros ni fragmento."""
+    u = str(u or "").lower().split("#")[0].split("?")[0]
+    u = re.sub(r"\.amp\.html$", ".html", u)
+    u = re.sub(r"/amp/?$", "", u).rstrip("/")
+    return u
+
+
+def quitar_repetidas(items, textos):
+    """Une notas repetidas: misma dirección real (normal/AMP) o mismo medio con el mismo titular."""
+    vistas, salida = {}, []
+    for e in items:
+        real = textos.get(e["id"], ("", "", e.get("url")))[2] or e.get("url")
+        k1 = clave_url(real) if "news.google.com" not in str(real) else None
+        k2 = (norm(e["fuente"]), norm(re.sub(r" - [^-]+$", "", e["titulo"])))
+        previa = vistas.get(("u", k1)) if k1 else None
+        previa = previa or vistas.get(("t", k2))
+        if previa is not None:
+            previa["_repetidas"] = previa.get("_repetidas", 0) + 1
+            continue
+        if k1:
+            vistas[("u", k1)] = e
+        vistas[("t", k2)] = e
+        salida.append(e)
+    return salida
+
+
 # ---------------------------------------------------------------- PDF
 def esc(s):
     return str(s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -190,6 +217,8 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     for e in items:
         if e["id"] not in textos and str(e["id"]).startswith("noticia:") and (e.get("url") or "").startswith("http"):
             textos[e["id"]] = leer_nota(e["url"])
+    n_original = len(items)
+    items = quitar_repetidas(items, textos)
     rep = rp.agrupar_hechos([dict(e) for e in items])[0]
     rep["_n"] = 1
     dep, mun = rp.ubicar(rep, geo)
@@ -297,16 +326,30 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
 
     # 5. Cronología y citas
     el.append(Paragraph("5. Cronología y detalle por fuente (citas textuales)", st["h2"]))
+    citadas = {}
     for r in filas_f:
         e = r["e"]
+        nuevas, comparte = [], []
+        for f in r["frases"]:
+            k = norm(re.sub(r"\s+", " ", f))[:80]
+            if k in citadas:
+                if citadas[k] not in comparte:
+                    comparte.append(citadas[k])
+            else:
+                citadas[k] = e["fuente"]; nuevas.append(f)
+        r["frases_nuevas"], r["comparte"] = nuevas, comparte
         bloque = [Paragraph(f'<b>{rp.hora(e["ts"]):%d/%m/%Y %H:%M} · {esc(e["fuente"])}</b> — {esc(re.sub(r" - [^-]+$", "", e["titulo"]))}', st["p"])]
         if r["frases"]:
-            for f in r["frases"]:
+            for f in r["frases_nuevas"]:
                 bloque.append(Paragraph("«" + esc(f) + "»", st["q"]))
+            if r["comparte"]:
+                bloque.append(Paragraph("Otras frases de esta nota repiten, casi igual, lo ya citado de: " + esc(", ".join(r["comparte"])) + ".", st["pm"]))
         else:
             bloque.append(Paragraph("Solo se dispone del titular de esta nota." if not r["texto"] else "El texto no contiene frases con datos identificables.", st["pm"]))
         bloque.append(Paragraph(f'Enlace: {esc(r["url"])}', st["pm"]))
         bloque.append(Spacer(1, 2.5 * mm))
+        if e.get("_repetidas"):
+            bloque.insert(-2, Paragraph(f'Esta nota apareció {e["_repetidas"] + 1} veces (versión normal y AMP o duplicado); se muestra una sola vez.', st["pm"]))
         el.append(KeepTogether(bloque[:3])); el.extend(bloque[3:])
 
     # 6. Pendiente
@@ -324,4 +367,4 @@ def informe(items, geo, salida, ahora=None, textos=None, consulta=""):
     el.append(Spacer(1, 3 * mm))
     el.append(Paragraph("Nota metodológica: las notas provienen de Google Noticias. Cada texto se lee desde la página del medio cuando éste lo permite. Las citas son frases literales de la nota (no están corregidas). Las cifras de víctimas son del texto de prensa, preliminares y sin validar.", st["pm"]))
     doc.build(el)
-    return {"notas": len(items), "leidas": leidas, "fuentes": len(rep["_fuentes"]), "fall": max_f, "her": max_h}
+    return {"notas": len(items), "repetidas_unidas": n_original - len(items), "leidas": leidas, "fuentes": len(rep["_fuentes"]), "fall": max_f, "her": max_h}
