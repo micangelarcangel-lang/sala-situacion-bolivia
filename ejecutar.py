@@ -60,14 +60,14 @@ EXCLUIDOS = []
 def es_extranjero(e):
     """Hecho NO boliviano: sin coordenadas, sin la palabra 'Bolivia' y sin ser de un medio boliviano de la lista, o que nombra un país o ciudad extranjera."""
     import re
-    if e.get("lat") is not None:
-        return False
     t = " " + re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", _n(e.get("titulo", "") + " " + e.get("detalle", "")))) + " "
     f = _n(e.get("fuente", ""))
     if " bolivia " in t or " bolivian" in t or "bolivia" in f:
         return False
     if any(" " + k + " " in t for k in EXTRANJERO):
         return True
+    if e.get("lat") is not None:  # con coordenadas y sin nombrar otro país: se acepta
+        return False
     if re.search(r"\.bo(\s|$)", f) or f in ("eju.tv", "lostiempos.com", "correodelsur.com", "brujuladigital.net", "elpotosi.net"):
         return False
     return not any(f == m or f.startswith(m + " ") or (" " + m) in f for m in MEDIOS_BO)
