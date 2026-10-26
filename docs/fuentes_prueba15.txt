@@ -1,0 +1,44 @@
+Prueba 15 fuentes - 2026-10-26T03:21:18.747431Z
+
+boletines listados: 28; semanas: [40, 39, 38, 37, 36]
+PDF semana 40: https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1059-boletin-epidemiologico-semana-epidemiologica-no-40?Itemid=465
+   estado=200 tipo=application/pdf disp=inline; filename="Boletin EpidemiolÃ³gico_40 2026.pdf" bytes=620952 inicio=b'%PDF-'
+   páginas=26
+   texto (primeras páginas):  BOLETÍN EPIDEMIOLÓGICO Viceministerio de Promoción, Vigilancia Epidemiológica y Medicina Tradicional Dirección General de Epidemiología Semana Epidemiológica Nº 40 4 de octubre al 10 de octubre 2026 2 Boletín Epidemiológico N° 40 Dirección General de Epidemiología Presentación El Ministerio de Salud y Deportes, a través de la Dirección General de Epidemiología, presenta la 40.ª edición del Boletín Epidemiológico Semanal, correspondiente a la Semana Epidemiológica 40 (SE 40) de 2026. Este documento consolida y analiza la información generada por el Sistema Nacional de Vigilancia Epidemiológica, contribuyendo al fortalecimiento de la vigilancia de los eventos de importancia para la salud pública y a la toma oportuna de decisiones. Durante la presente semana epidemiológica se mantiene la vigilancia intensificada de los eventos prioritarios para la salud pública, entre ellos las enfermedades respiratorias estacionales, las enfermedades inmunoprevenibles, las enfermedades transmitidas por vectores, las zoonosis y otros eventos de importancia epidemiológica. En relación con las Infecciones Respiratorias Agud as (IRAs) en la última semana, hemos tenido incremento de casos en la mayoría de los departamentos, aunque las neumonías no han acompañado esta misma proporción de casos . Esta situación requiere mantener la vigilancia epidemiológica y laboratorial, fortaleciendo la capacidad de detección temprana de cambios en las tendencias y la identificación oportuna de posibles incrementos de actividad. En los departamentos de Oruro y Chuquisaca se evidencia un incremento de casos de Enfermedades Diarreicas Agudas (EDAs), principalmente en los grupos de edad extremos de la vida, como niños menores de cinco años y adultos mayores. Ante esta situación, se c ontinúa fortaleciendo la vigilancia epidemiológica, con énfasis en la detección oportuna, el seguimiento de la tendencia de los casos y la implementación de medidas de prevención y control. Durante la Semana Epidemiológica 40 (SE 40), se registraron dos nuevos casos de chikungunya y dengue, principalmente en el departamento de La Paz. Ante esta situación, se recomienda mantener y fortalecer la vigilancia epidemiológica y laboratorial, así com o intensificar las acciones de prevención y control de vectores para reducir el riesgo de transmisión y prevenir la aparición de nuevos casos. Respecto a las enfermedades inmunoprevenibles, tanto el sarampión como la tosferina presentan actualmente una menor magnitud de casos en 
+   'brote': 3 menciones
+   'alerta': 16 menciones
+   'incremento': 31 menciones
+   'casos confirmados': 36 menciones
+   'dengue': 10 menciones
+   'sarampión': 7 menciones
+   'fiebre amarilla': 0 menciones
+   'rabia': 0 menciones
+   'influenza aviar': 0 menciones
+   'diarrea': 1 menciones
+
+== OPS: estado=200 items=37
+   - Organigrama -> /es/documentos/organigrama-oficina-sanitaria-panamericana
+   -  -> /es/documentos/actualizacion-epidemiologica-dengue-chikungunya-region-americas-20-octubre-2026
+   -  -> /es/documentos/alerta-epidemiologica-miasis-por-cochliomyia-hominivorax-region-americas-16-octubre-2026
+   -  -> /es/documentos/informe-regional-no-13-sarampion-region-americas
+   -  -> /es/documentos/actualizacion-epidemiologica-influenza-aviar-ah5-region-americas-26-agosto-2026
+   -  -> /es/documentos/alerta-epidemiologica-sarampion-region-americas-7-agosto-2026
+   -  -> /es/documentos/alerta-epidemiologica-dermatofilosis-por-dermatophilus-congolensis-9-julio-2026
+   -  -> /es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-hemisferio-sur-1
+   -  -> /es/documentos/alerta-epidemiologica-difteria-region-americas-11-junio-2026
+   -  -> /es/documentos/recomendaciones-salud-publica-para-viajeros-que-asistan-copa-mundial-fifa-2026
+   -  -> /es/documentos/alerta-epidemiologica-sarampion-region-americas-29-mayo-2026
+   -  -> /es/documentos/alerta-epidemiologica-enfermedad-ebola-causada-por-virus-bundibugyo-republica
+   fragmento HTML de una tarjeta:  <a href="/es/quienes-somos/historia-organizacion-panamericana-salud-ops/ex-directores-ops" class="sf-depth-3" role="menuitem">Ex Directores de la OPS</a> </li> </ol> </div> </li> <li id="main-menu-link-contentd5ca58ea-e7d4-4436-b233-3ba2915bb5f2" class="sf-depth-2 sf-no-children" role="none"> <a href="/es/documentos/organigrama-oficina-sanitaria-panamericana" class="sf-depth-2" role="menuitem">Organigrama </a> </li> <li id="main-menu-link-contentfb08b18b-9171-49c7-ae3b-d606c7a3c65a" class="sf-depth-2 sf-no-children" role="none"> <a href="/es/node/69017" class="sf-depth-2" role="menuitem">Situación de las contribuciones de los Estados Miembros</a> </li> <li id="main-menu-link-content0640956c-6707-4695-b30e-2d638c084ed8" class="sf-depth-2 sf-multicolumn-column menuparent" role="none"> <div class="sf-multicolumn-column"> <a href="/es/quienes-somos" class="sf-depth-2 menuparent" role="menuitem" aria-haspopup="menu" aria-expanded="false">Ce que nous faisons</a> <ol role="menu"> <li id="main-menu-link-contentc1cc4f7b-277
+
+== https://www.who.int/api/news/diseaseoutbreaknews?sf_culture=en&$top=5&$orderby=PublicationDateAndTim
+   estado=200 tipo=application/json; odata.metadata=minimal bytes=9622 inicio=b'{"@odata.context":"http://www.who.int/api/news/$metadata#diseaseoutbreaknews(Title,PublicationDateAndTime,UrlName,Summary)","value":[{"UrlName":"2026-DON622","Summary":"Since the publication of the previous Disease Outbreak News on 8 October 2026, the Bundibugyo virus disease (BVD) outbreak has expanded geographically in the Democratic Republic of the Congo, as well as in the African Region, with Kenya and Nigeria reporting imported cases. \\r\\nSustained, high-level transmission continues in the Democratic Republic of the Congo. As of 20 October 2026, a total of 9704 confirmed cases, including 4687 deaths (crude case fatality ratio: 48.3%), have been reported across 66 health zones in eight p'
+== https://www.who.int/rss-feeds/news-english.xml
+   estado=200 tipo=application/rss+xml bytes=902039 inicio=b'\xef\xbb\xbf<?xml version="1.0" encoding="utf-8"?><rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0"><channel><title>News (English) - World Health Organization</title><link>https://www.who.int/</link><description>Corporate news releases, statements, and notes for media issued by the World Health Organization.</description><a10:contributor><a10:name> </a10:name></a10:contributor><a10:contributor><a10:name> </a10:name></a10:contributor><a10:contributor><a10:name> </a10:name></a10:contributor><a10:contributor><a10:name> </a10:name></a10:contributor><a10:contributor><a10:name> </a10:name></a10:contributor><a10:contributor><a10:name> </a10:name></a10:contributor><a10:contributor><a10:name> </a10:n'
+
+== https://sequiasbolivia.cimafoundation.org
+   estado=URLError: <urlopen error timed out> tipo= bytes=0 inicio=b''
+== https://sequiasbolivia.cimafoundation.org/api/
+   estado=URLError: <urlopen error timed out> tipo= bytes=0 inicio=b''
+== https://bolivia.mydewetra.cimafoundation.org/api/
+   estado=200 tipo=text/html bytes=1001 inicio=b'<!DOCTYPE html>\r\n<html  ng-app="app">\r\n\r\n<head>\r\n\t<title>Acroweb REST API</title>\r\n\t\r\n\t<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">\r\n\t<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">\r\n\t\r\n</head>\r\n\r\n<body ng-controller="ctrl">\r\n\r\n\t<!-- ACROWEB HEADER -->\r\n\t<div ac_header></div>\r\n\r\n\t<h1 ng-show="acSessi'
