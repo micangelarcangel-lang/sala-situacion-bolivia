@@ -173,6 +173,11 @@ def main():
         log("Sismos San Calixto: " + sismos.actualizar(DOCS, avisar))
     except Exception as ex:
         log("No se pudo actualizar sismos (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
+    try:
+        import epidemio
+        log("Vigilancia epidemiológica: " + epidemio.actualizar(DOCS, avisar))
+    except Exception as ex:
+        log("No se pudo actualizar la vigilancia epidemiológica (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
