@@ -1,0 +1,274 @@
+Prueba 14 fuentes - 2026-10-26T03:16:02.498690Z
+
+== https://www.paho.org/es/alertas-actualizaciones-epidemiologicas
+   estado=200 tipo=text/html; charset=UTF-8 bytes=98244
+   - https://www.paho.org/en/epidemiological-alerts-and-updates
+   - https://www.paho.org/es/alerta-intentos-estafa-nombre-opsoms
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=0
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=1
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=2
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=3
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=37
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=4
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=5
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=6
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=7
+   - https://www.paho.org/es/alertas-actualizaciones-epidemiologicas?page=8
+   - https://www.paho.org/es/documentos/actualizacion-epidemiologica-dengue-chikungunya-region-americas-20-octubre-2026
+   - https://www.paho.org/es/documentos/actualizacion-epidemiologica-influenza-aviar-ah5-region-americas-26-agosto-2026
+   - https://www.paho.org/es/documentos/actualizacion-epidemiologica-influenza-aviar-ah5n1-region-americas-11-marzo-2026
+   - https://www.paho.org/es/documentos/actualizacion-epidemiologica-mpox-region-americas-23-abril-2026
+   - https://www.paho.org/es/documentos/actualizacion-epidemiologica-tosferina-coqueluche-region-americas-25-marzo-2026
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-dermatofilosis-por-dermatophilus-congolensis-9-julio-2026
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-difteria-region-americas-11-junio-2026
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-enfermedad-ebola-causada-por-virus-bundibugyo-republica
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-fiebre-amarilla-region-americas-13-marzo-2026
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-hemisferio-sur-1
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada
+   - https://www.paho.org/es/documentos/alerta-epidemiologica-miasis-por-cochliomyia-hominivorax-region-americas-16-octubre-2026
+   texto: Alertas y actualizaciones epidemiológicas | OPS/OMS | Organización Panamericana de la Salud User account menu Iniciar sesión English Español Português Français Idioma Apply Inicio Temas Países Recursos Publicaciones Datos Herramientas Biblioteca Digital de Salud Biblioteca Virtual en Salud Campus Virtual de Salud Pública Centros Colaboradores de la OPS/OMS Regional Revolving Funds Iniciativas Alianza por la Atención Primaria de Salud en las Américas Iniciativa de eliminación Cero muertes materna
+
+== https://www.who.int/feeds/entity/csr/don/en/rss.xml
+   estado=404 tipo=text/html; charset=utf-8 bytes=0
+
+== https://www.senasag.gob.bo/phocadownload/BOLETIN_SINAVE_2026/
+   estado=403 tipo=text/html; charset=UTF-8 bytes=0
+
+== https://www.senasag.gob.bo/
+   estado=403 tipo=text/html; charset=UTF-8 bytes=0
+
+== https://www.minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   estado=200 tipo=text/html; charset=utf-8 bytes=230103
+   - https://minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   - https://minsalud.gob.bo/images/Descarga/RRHH/RES_MIN_0391_26082025.pdf
+   - https://minsalud.gob.bo/images/Descarga/prespuesto%20ejecutado.pdf
+   - https://minsalud.gob.bo/images/web/Fuentes%20de%20Financiamiento.pdf
+   - https://siccaf.minsalud.gob.bo/snis/
+   - https://snis.minsalud.gob.bo
+   - https://snis.minsalud.gob.bo/
+   - https://www.minsalud.gob.bo/8988-documentos-tecnicos-de-la-direccion-general-de-epidemiologia
+   - https://www.minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   - https://www.minsalud.gob.bo/centro-de-prensa/publicaciones/boletines
+   - https://www.minsalud.gob.bo/centro-de-prensa/publicaciones/boletines/prensa
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1000-boletin-epidemiologico-semana-epidemiologica-no-09?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1001-boletin-epidemiologico-semana-epidemiologica-no-13?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1002-boletin-epidemiologico-semana-epidemiologica-no-03?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1003-boletin-epidemiologico-semana-epidemiologica-no-07?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1024-boletin-epidemiologico-semana-epidemiologica-no-21?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1026-boletin-epidemiologico-semana-epidemiologica-no-22?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1027-boletin-epidemiologico-semana-epidemiologica-no-23?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1028-boletin-epidemiologico-semana-epidemiologica-no-24?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1029-boletin-epidemiologico-semana-epidemiologica-no-25?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1030-boletin-epidemiologico-semana-epidemiologica-no-26?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1031-boletin-epidemiologico-semana-epidemiologica-no-27?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1032-boletin-epidemiologico-semana-epidemiologica-no-28?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1033-boletin-epidemiologico-semana-epidemiologica-no-29?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1034-boletin-epidemiologico-semana-epidemiologica-no-30?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1035-boletin-epidemiologico-semana-epidemiologica-no-31?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1036-boletin-epidemiologico-semana-epidemiologica-no-32?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1043-boletin-epidemiologico-semana-epidemiologica-no-33?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1044-boletin-epidemiologico-semana-epidemiologica-no-34?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1045-boletin-epidemiologico-semana-epidemiologica-no-35?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1051-boletin-epidemiologico-semana-epidemiologica-no-36?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1056-boletin-epidemiologico-semana-epidemiologica-no-37?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1057-boletin-epidemiologico-semana-epidemiologica-no-38?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1058-boletin-epidemiologico-semana-epidemiologica-no-39?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1059-boletin-epidemiologico-semana-epidemiologica-no-40?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/994-boletin-epidemiologico-semana-epidemiologica-no-04?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/995-boletin-epidemiologico-semana-epidemiologica-no-05?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/997-boletin-epidemiologico-semana-epidemiologica-no-06?Itemid=465
+   - https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/999-boletin-epidemiologico-semana-epidemiologica-no-08?Itemid=465
+   - https://www.minsalud.gob.bo/components/com_jdownloads/assets/css/jdownloads_buttons.css
+   - https://www.minsalud.gob.bo/components/com_jdownloads/assets/css/jdownloads_custom.css
+   - https://www.minsalud.gob.bo/components/com_jdownloads/assets/css/jdownloads_fe.css
+   - https://www.minsalud.gob.bo/images/Descarga/Certificado-MedicoMS.pdf
+   - https://www.minsalud.gob.bo/images/Descarga/RM%200069_ESTRUC_MOF_241225-a.pdf
+   - https://www.minsalud.gob.bo/images/boletines/2026/TapBol13.PNG
+   - https://www.minsalud.gob.bo/images/boletines/2026/TapBol3.PNG
+   - https://www.minsalud.gob.bo/images/boletines/2026/TapBol4.PNG
+   - https://www.minsalud.gob.bo/images/boletines/2026/TapBol6.PNG
+   - https://www.minsalud.gob.bo/images/boletines/2026/TapBol7.PNG
+   - https://www.minsalud.gob.bo/images/boletines/2026/TapBol8.PNG
+   texto: Ministerio de Salud y Deportes de Bolivia - Boletines Epidemiológicos - 2026 Institucional Misión, Visión, Valores y Principios Reseña Histórica Objetivos Institucionales Memoria Institucional Plan Estratégico Institucional (PEI) Plan Operativo Anual (POA) Presupuesto Institucional Ejecución Presupuestaria Programas y Proyectos de Inversión Fuentes de Financiamiento MSyD Auditoria Ministerio de Salud Resúmenes Ejecutivos Auditoria MSyD Auditoria Instituto Gastroenterologico Bicentenario Transparencia Rendición de Cuentas Institucional Rendición de Cuentas de Otras Instancias Rendición de Cuentas - Instituto Gastroenterologico Bicentenario Denuncias por Hechos de Corrupción Formulario de Solicitud de Información Atribuciones Tramites y Servicios Tramites Registro de Profesionales en Salud Servicios Correo Electronico Institucional Herramientas y Servicios Digitales Herramientas Institucional Bono Juana Azurduy C.N.I.D.A.I.I.C. Programa Nacional de Telesalud Programa Nacional Ampliado de inmunizaciones Programa de Salud Familiar Comunitaria Intercultural Servicios Digitales SICCAF - Control de Calidad de Alimentos Fortificados SICCAF - Reportes SIPRUNPCD Sistema de Registro Profesion
+
+== https://minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   estado=200 tipo=text/html; charset=utf-8 bytes=229767
+   - https://minsalud.gob.bo/8988-documentos-tecnicos-de-la-direccion-general-de-epidemiologia
+   - https://minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   - https://minsalud.gob.bo/centro-de-prensa/publicaciones/boletines
+   - https://minsalud.gob.bo/centro-de-prensa/publicaciones/boletines/prensa
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1000-boletin-epidemiologico-semana-epidemiologica-no-09?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1001-boletin-epidemiologico-semana-epidemiologica-no-13?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1002-boletin-epidemiologico-semana-epidemiologica-no-03?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1003-boletin-epidemiologico-semana-epidemiologica-no-07?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1024-boletin-epidemiologico-semana-epidemiologica-no-21?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1026-boletin-epidemiologico-semana-epidemiologica-no-22?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1027-boletin-epidemiologico-semana-epidemiologica-no-23?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1028-boletin-epidemiologico-semana-epidemiologica-no-24?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1029-boletin-epidemiologico-semana-epidemiologica-no-25?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1030-boletin-epidemiologico-semana-epidemiologica-no-26?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1031-boletin-epidemiologico-semana-epidemiologica-no-27?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1032-boletin-epidemiologico-semana-epidemiologica-no-28?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1033-boletin-epidemiologico-semana-epidemiologica-no-29?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1034-boletin-epidemiologico-semana-epidemiologica-no-30?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1035-boletin-epidemiologico-semana-epidemiologica-no-31?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1036-boletin-epidemiologico-semana-epidemiologica-no-32?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1043-boletin-epidemiologico-semana-epidemiologica-no-33?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1044-boletin-epidemiologico-semana-epidemiologica-no-34?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1045-boletin-epidemiologico-semana-epidemiologica-no-35?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1051-boletin-epidemiologico-semana-epidemiologica-no-36?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1056-boletin-epidemiologico-semana-epidemiologica-no-37?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1057-boletin-epidemiologico-semana-epidemiologica-no-38?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1058-boletin-epidemiologico-semana-epidemiologica-no-39?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1059-boletin-epidemiologico-semana-epidemiologica-no-40?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/994-boletin-epidemiologico-semana-epidemiologica-no-04?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/995-boletin-epidemiologico-semana-epidemiologica-no-05?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/997-boletin-epidemiologico-semana-epidemiologica-no-06?Itemid=465
+   - https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/999-boletin-epidemiologico-semana-epidemiologica-no-08?Itemid=465
+   - https://minsalud.gob.bo/images/Descarga/Certificado-MedicoMS.pdf
+   - https://minsalud.gob.bo/images/Descarga/RRHH/RES_MIN_0391_26082025.pdf
+   - https://minsalud.gob.bo/images/Descarga/prespuesto%20ejecutado.pdf
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol13.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol3.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol4.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol6.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol7.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol8.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapBol9.PNG
+   - https://minsalud.gob.bo/images/boletines/2026/TapaSemGlobal.PNG
+   - https://minsalud.gob.bo/images/web/2026/bOLETINePIDE2.png
+   - https://minsalud.gob.bo/images/web/2026/dIRePIDEMIO26.png
+   - https://minsalud.gob.bo/images/web/Fuentes%20de%20Financiamiento.pdf
+   - https://siccaf.minsalud.gob.bo/snis/
+   - https://snis.minsalud.gob.bo
+   - https://snis.minsalud.gob.bo/
+   - https://www.minsalud.gob.bo/components/com_jdownloads/assets/css/jdownloads_buttons.css
+   texto: Ministerio de Salud y Deportes de Bolivia - Boletines Epidemiológicos - 2026 Institucional Misión, Visión, Valores y Principios Reseña Histórica Objetivos Institucionales Memoria Institucional Plan Estratégico Institucional (PEI) Plan Operativo Anual (POA) Presupuesto Institucional Ejecución Presupuestaria Programas y Proyectos de Inversión Fuentes de Financiamiento MSyD Auditoria Ministerio de Salud Resúmenes Ejecutivos Auditoria MSyD Auditoria Instituto Gastroenterologico Bicentenario Transparencia Rendición de Cuentas Institucional Rendición de Cuentas de Otras Instancias Rendición de Cuentas - Instituto Gastroenterologico Bicentenario Denuncias por Hechos de Corrupción Formulario de Solicitud de Información Atribuciones Tramites y Servicios Tramites Registro de Profesionales en Salud Servicios Correo Electronico Institucional Herramientas y Servicios Digitales Herramientas Institucional Bono Juana Azurduy C.N.I.D.A.I.I.C. Programa Nacional de Telesalud Programa Nacional Ampliado de inmunizaciones Programa de Salud Familiar Comunitaria Intercultural Servicios Digitales SICCAF - Control de Calidad de Alimentos Fortificados SICCAF - Reportes SIPRUNPCD Sistema de Registro Profesion
+
+== https://www.minsalud.gob.bo/
+   estado=200 tipo=text/html; charset=utf-8 bytes=67894
+   - https://minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   - https://minsalud.gob.bo/images/Descarga/RRHH/RES_MIN_0391_26082025.pdf
+   - https://minsalud.gob.bo/images/Descarga/prespuesto%20ejecutado.pdf
+   - https://minsalud.gob.bo/images/web/Fuentes%20de%20Financiamiento.pdf
+   - https://siccaf.minsalud.gob.bo/snis/
+   - https://snis.minsalud.gob.bo
+   - https://snis.minsalud.gob.bo/
+   - https://www.minsalud.gob.bo/8988-documentos-tecnicos-de-la-direccion-general-de-epidemiologia
+   - https://www.minsalud.gob.bo/9104-boletines-epidemiologicos-2026
+   - https://www.minsalud.gob.bo/centro-de-prensa/publicaciones/boletines
+   - https://www.minsalud.gob.bo/centro-de-prensa/publicaciones/boletines/prensa
+   - https://www.minsalud.gob.bo/images/Descarga/Certificado-MedicoMS.pdf
+   - https://www.minsalud.gob.bo/images/Descarga/RM%200069_ESTRUC_MOF_241225-a.pdf
+   - https://www.minsalud.gob.bo/images/web/2026/bOLETINePIDE2.png
+   - https://www.minsalud.gob.bo/images/web/2026/dIRePIDEMIO26.png
+   texto: Ministerio de Salud y Deportes de Bolivia - Institucional Institucional Misión, Visión, Valores y Principios Reseña Histórica Objetivos Institucionales Memoria Institucional Plan Estratégico Institucional (PEI) Plan Operativo Anual (POA) Presupuesto Institucional Ejecución Presupuestaria Programas y Proyectos de Inversión Fuentes de Financiamiento MSyD Auditoria Ministerio de Salud Resúmenes Ejecutivos Auditoria MSyD Auditoria Instituto Gastroenterologico Bicentenario Transparencia Rendición de Cuentas Institucional Rendición de Cuentas de Otras Instancias Rendición de Cuentas - Instituto Gastroenterologico Bicentenario Denuncias por Hechos de Corrupción Formulario de Solicitud de Información Atribuciones Tramites y Servicios Tramites Registro de Profesionales en Salud Servicios Correo Electronico Institucional Herramientas y Servicios Digitales Herramientas Institucional Bono Juana Azurduy C.N.I.D.A.I.I.C. Programa Nacional de Telesalud Programa Nacional Ampliado de inmunizaciones Programa de Salud Familiar Comunitaria Intercultural Servicios Digitales SICCAF - Control de Calidad de Alimentos Fortificados SICCAF - Reportes SIPRUNPCD Sistema de Registro Profesional (matriculación) 
+
+== monitorsequias raíz: 200 907 bytes
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Monitor de sequías de Bolivia</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="/styles.011d518750c3d1f24b90.css"></head>
+<body>
+  <app-root></app-root>
+<script src="/runtime-es2015.8fb3bdd41a3edb8889dd.js" type="module"></script><script src="/runtime-es5.8fb3bdd41a3edb8889dd.js" nomodule defer></script><script src="/polyfills-es5.eff2b00ec7b969fdbcd1.js" nomodule defer></script><script src="/polyfills-es2015.04cc2f8db368d246ffb2.js" type="module"></script><script src="/scripts.79becddc142231085adf.js" defer></script><script src="/main-es2015.373fcd30b7da9742317d.js" type="module"></script><script src="/main-es5.373fcd30b7da9742317d.js" nomodule defer></script></body>
+</h
+-- https://monitorsequias.senamhi.gob.bo/runtime-es2015.8fb3bdd41a3edb8889dd.js: 200 1486 bytes
+-- https://monitorsequias.senamhi.gob.bo/runtime-es5.8fb3bdd41a3edb8889dd.js: 200 1486 bytes
+-- https://monitorsequias.senamhi.gob.bo/polyfills-es5.eff2b00ec7b969fdbcd1.js: 200 126914 bytes
+   ruta: dataavailable
+   ruta: datasetchanged
+   ruta: datasetcomplete
+-- https://monitorsequias.senamhi.gob.bo/polyfills-es2015.04cc2f8db368d246ffb2.js: 200 37053 bytes
+   ruta: dataavailable
+   ruta: datasetchanged
+   ruta: datasetcomplete
+-- https://monitorsequias.senamhi.gob.bo/scripts.79becddc142231085adf.js: 200 175721 bytes
+   ruta: data-target
+   ruta: data-interval
+   ruta: data-slide-to
+   ruta: data-parent
+   ruta: data-original-title
+   ruta: data-original-title
+   ruta: data-original-title
+   ruta: data-content
+   ruta: data-wow-duration
+   ruta: data-wow-delay
+   ruta: data-wow-iteration
+   ruta: data-wow-offset
+-- https://monitorsequias.senamhi.gob.bo/main-es2015.373fcd30b7da9742317d.js: 200 1572952 bytes
+   http://senamhi.gob.bo/
+   https://bolivia.mydewetra.cimafoundation.org/api/
+   https://facebook.com/sharer/sharer.php?u=https://monitorsequias.senamhi.gob.bo/
+   https://monitorsequias.senamhi.gob.bo
+   https://senamhi.gob.bo/
+   https://sequiasbolivia.cimafoundation.org
+   https://twitter.com/intent/tweet?url=https://monitorsequias.senamhi.gob.bo/
+   https://www.senamhi.gob.bo
+   ruta: dataset.barPercentage
+   ruta: dataset.barThickness
+   ruta: dataset.categoryPercentage
+   ruta: dataset.minBarLength
+   ruta: dataset.maxBarThickness
+   ruta: dataset
+   ruta: dataset
+   ruta: data-action
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-target
+   ruta: data-toggle
+   ruta: data-parent
+   ruta: data-parent
+   ruta: data-parent
+   ruta: data-parent
+   ruta: data-parent
+   ruta: data-parent
+   ruta: data-parent
+   ruta: data-parent
+   ruta: /data/timeseries
+   ruta: /data/datadownload
+   ruta: /data/timeseries
+   ruta: /data/datadownload
+   ruta: data.title
+   ruta: data.component_1.title
+   ruta: data.component_1.description
+   ruta: data.component_2.title
+   ruta: data.component_2.description
+   ruta: data-tg-off
+   ruta: data-tg-on
+   ruta: data-tg-off
+   ruta: data-tg-on
+   ruta: data-tg-off
+   ruta: data-tg-on
+   ruta: data-tg-off
+   ruta: data-tg-on
+   ruta: data-tg-off
+   ruta: data-tg-on
+   ruta: data-tg-off
+   ruta: data-tg-on
+   ruta: data.timeseries.title
+   ruta: data.timeseries.lbl_001
+   ruta: data.timeseries.lbl_002
+   ruta: data.timeseries.lbl_003
+   ruta: data.timeseries.lbl_004
+   ruta: data.timeseries.lbl_005
+   ruta: data.timeseries.lbl_006
+FIRMS sin clave real: estado=400 bytes=0 inicio=b''
