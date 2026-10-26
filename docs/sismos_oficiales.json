@@ -1,0 +1,282 @@
+{
+ "actualizado": "2026-10-26T02:51:11.794206Z",
+ "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
+ "umbral_slack": 4.5,
+ "sismos": [
+  {
+   "id": "20261024T182258_-17.149_-66.385",
+   "fecha_local": "2026-10-24 18:22:58",
+   "lat": -17.149,
+   "lon": -66.385,
+   "prof_km": 16.9,
+   "mag": 3.4,
+   "provincia": "Quillacollo",
+   "departamento": "Cochabamba",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261023T185623_-21.086_-67.59",
+   "fecha_local": "2026-10-23 18:56:23",
+   "lat": -21.086,
+   "lon": -67.59,
+   "prof_km": 171.0,
+   "mag": 3.8,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261023T073348_-22.056_-67.536",
+   "fecha_local": "2026-10-23 07:33:48",
+   "lat": -22.056,
+   "lon": -67.536,
+   "prof_km": 157.3,
+   "mag": 3.1,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261022T224541_-21.411_-66.565",
+   "fecha_local": "2026-10-22 22:45:41",
+   "lat": -21.411,
+   "lon": -66.565,
+   "prof_km": 234.6,
+   "mag": 4.3,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261022T054007_-18.887_-67.353",
+   "fecha_local": "2026-10-22 05:40:07",
+   "lat": -18.887,
+   "lon": -67.353,
+   "prof_km": 242.3,
+   "mag": 3.0,
+   "provincia": "Sud Carangas",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261021T160943_-16.709_-61.259",
+   "fecha_local": "2026-10-21 16:09:43",
+   "lat": -16.709,
+   "lon": -61.259,
+   "prof_km": 28.8,
+   "mag": 3.5,
+   "provincia": "Velasco",
+   "departamento": "Santa Cruz",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261021T034441_-22.409_-67.741",
+   "fecha_local": "2026-10-21 03:44:41",
+   "lat": -22.409,
+   "lon": -67.741,
+   "prof_km": 133.2,
+   "mag": 3.5,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261020T183553_-21.093_-68.06",
+   "fecha_local": "2026-10-20 18:35:53",
+   "lat": -21.093,
+   "lon": -68.06,
+   "prof_km": 140.7,
+   "mag": 3.4,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261019T150040_-21.435_-67.175",
+   "fecha_local": "2026-10-19 15:00:40",
+   "lat": -21.435,
+   "lon": -67.175,
+   "prof_km": 200.3,
+   "mag": 3.1,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261019T104033_-22.482_-67.576",
+   "fecha_local": "2026-10-19 10:40:33",
+   "lat": -22.482,
+   "lon": -67.576,
+   "prof_km": 149.8,
+   "mag": 3.3,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261017T125245_-21.219_-67.296",
+   "fecha_local": "2026-10-17 12:52:45",
+   "lat": -21.219,
+   "lon": -67.296,
+   "prof_km": 191.6,
+   "mag": 4.9,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261017T015544_-20.628_-67.932",
+   "fecha_local": "2026-10-17 01:55:44",
+   "lat": -20.628,
+   "lon": -67.932,
+   "prof_km": 170.9,
+   "mag": 3.5,
+   "provincia": "Daniel Campos",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261016T225240_-20.802_-67.281",
+   "fecha_local": "2026-10-16 22:52:40",
+   "lat": -20.802,
+   "lon": -67.281,
+   "prof_km": 189.6,
+   "mag": 3.5,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261016T060454_-22.112_-67.384",
+   "fecha_local": "2026-10-16 06:04:54",
+   "lat": -22.112,
+   "lon": -67.384,
+   "prof_km": 140.8,
+   "mag": 3.3,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261015T164340_-22.134_-67.284",
+   "fecha_local": "2026-10-15 16:43:40",
+   "lat": -22.134,
+   "lon": -67.284,
+   "prof_km": 169.2,
+   "mag": 3.1,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261014T071857_-21.4_-66.749",
+   "fecha_local": "2026-10-14 07:18:57",
+   "lat": -21.4,
+   "lon": -66.749,
+   "prof_km": 203.8,
+   "mag": 3.3,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261014T012344_-18.364_-68.069",
+   "fecha_local": "2026-10-14 01:23:44",
+   "lat": -18.364,
+   "lon": -68.069,
+   "prof_km": 200.1,
+   "mag": 3.1,
+   "provincia": "Sajama",
+   "departamento": "Oruro",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261013T021622_-22.23_-67.408",
+   "fecha_local": "2026-10-13 02:16:22",
+   "lat": -22.23,
+   "lon": -67.408,
+   "prof_km": 110.9,
+   "mag": 3.0,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261012T075835_-21.316_-67.886",
+   "fecha_local": "2026-10-12 07:58:35",
+   "lat": -21.316,
+   "lon": -67.886,
+   "prof_km": 143.9,
+   "mag": 3.4,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261012T070626_-19.48_-66.851",
+   "fecha_local": "2026-10-12 07:06:26",
+   "lat": -19.48,
+   "lon": -66.851,
+   "prof_km": 252.2,
+   "mag": 3.4,
+   "provincia": "Antonio Quijarro",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261010T232143_-20.843_-67.346",
+   "fecha_local": "2026-10-10 23:21:43",
+   "lat": -20.843,
+   "lon": -67.346,
+   "prof_km": 187.1,
+   "mag": 3.2,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261010T084557_-21.426_-67.308",
+   "fecha_local": "2026-10-10 08:45:57",
+   "lat": -21.426,
+   "lon": -67.308,
+   "prof_km": 159.7,
+   "mag": 3.0,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261010T011845_-21.338_-66.685",
+   "fecha_local": "2026-10-10 01:18:45",
+   "lat": -21.338,
+   "lon": -66.685,
+   "prof_km": 202.8,
+   "mag": 3.0,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261009T094053_-21.906_-67.203",
+   "fecha_local": "2026-10-09 09:40:53",
+   "lat": -21.906,
+   "lon": -67.203,
+   "prof_km": 182.6,
+   "mag": 4.3,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto"
+  },
+  {
+   "id": "20261008T045217_-19.301_-67.296",
+   "fecha_local": "2026-10-08 04:52:17",
+   "lat": -19.301,
+   "lon": -67.296,
+   "prof_km": 209.8,
+   "mag": 3.0,
+   "provincia": "Ladislao Cabrera",
+   "departamento": "Oruro",
+   "fuente": "Observatorio San Calixto"
+  }
+ ]
+}
