@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1llxxuw",
+  "fecha_hora_local": "2026-10-25 22:03",
+  "ts_ms": 1792980232000,
+  "titulo": "Santa Cruz: choque de cisternas deja un herido con quemaduras de tercer grado - Red Uno",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 1,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMixAFBVV95cUxORDFXa3RydlhraWZnVEVyR0hrdnRSM1gtVWQzOTAzSUltSy02akRGYkliNlRpVXN3ZjdKbjBwY2R6YWFMZnl1QS02TThXTlE1S2FJVF9IYm5ZdzBMS3pLd3hTSnhxakZvakJ6eXFBV2tYYWk1Q1ZtVm11SVFJYjM2VE5iTEpxbXN0cEk1VnloVjFnUTRnR09uY3lsaHFzYW94Sm9rY1FfTGszWFJ2RGlkcDJieEM1blYyNTFrZVJ3V182b0Nh?oc=5"
+ },
+ {
   "hecho_id": "noticia:iqj56a",
   "fecha_hora_local": "2026-10-25 21:09",
   "ts_ms": 1792976954000,
