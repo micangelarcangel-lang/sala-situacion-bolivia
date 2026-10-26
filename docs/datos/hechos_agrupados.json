@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:10ztsyv",
+  "fecha_hora_local": "2026-10-25 23:13",
+  "ts_ms": 1792984391000,
+  "titulo": "GRUPO MUSICAL JIYAWA SUFRE ACCIDENTE EN LA RUTA AL TRÓPICO DE COCHABAMBA - El Alteño",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "El Alteño; Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOaUVRS05CcS13STc4TjBSOXdiVGtzYUNtMkNLMkZ4NTFrTl9yQTVaLXljSUQ1VkZlbGh4MW1xdTVyamN3dnNsV29FNUNLUzRsc2dzU2RUakpqY09FV0drSzFqY1RsY1h3TUJxZ29POTEtMHE2Z3plTWJqX0h0dE5icTZjbDFVRFhlU1BuTTBzWExjek5nRXNiN0FhNlR4YlMtNmNlVFBHNnU1NnRDdUd5V214VkJqamdiXzJ3?oc=5 | https://news.google.com/rss/articles/CBMiswFBVV95cUxOVDVzVTJNM2JuQ25sMThEaVZNOUNRd3FGT3RhVnFrZXZ2NDQ1YlluTVdhbVNUQnA1MGNESHRSWVUzbC1kRVh3OTR0emtlTG91cmRWeFJ5dk5zb3p2WFRyMEJUV3FNRnY1WHhRUU9WLTlJcmNyNXJZZFdoM0JoZjNpa3hjUXhMM0xrUDJab2VadkM5RWZYQ3lWZTVDdzg1akxJT2lxcDVNNzI0NG1hejdfdkUyTQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:1llxxuw",
   "fecha_hora_local": "2026-10-25 22:03",
   "ts_ms": 1792980232000,
@@ -178,26 +198,6 @@
   "departamento": "La Paz",
   "municipio": "Caranavi",
   "enlaces": ""
- },
- {
-  "hecho_id": "noticia:1sg8pi0",
-  "fecha_hora_local": "2026-10-25 09:59",
-  "ts_ms": 1792936752000,
-  "titulo": "Bus de agrupación musical sufre accidente rumbo al trópico de Cochabamba | VIDEO - Red Uno",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Red Uno",
-  "lat": -17.39,
-  "lon": -66.16,
-  "lugar": "Cochabamba, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Cochabamba",
-  "enlaces": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOVDVzVTJNM2JuQ25sMThEaVZNOUNRd3FGT3RhVnFrZXZ2NDQ1YlluTVdhbVNUQnA1MGNESHRSWVUzbC1kRVh3OTR0emtlTG91cmRWeFJ5dk5zb3p2WFRyMEJUV3FNRnY1WHhRUU9WLTlJcmNyNXJZZFdoM0JoZjNpa3hjUXhMM0xrUDJab2VadkM5RWZYQ3lWZTVDdzg1akxJT2lxcDVNNzI0NG1hejdfdkUyTQ?oc=5"
  },
  {
   "hecho_id": "noticia:167wlhz",
