@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "clima:Santa Cruz:2026-10-25:viento:1",
+  "fecha_hora_local": "2026-10-25 20:05",
+  "ts_ms": 1792973138353,
+  "titulo": "Santa Cruz 2026-10-25: 67.3 km/h de ráfagas pronosticadas",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Open-Meteo (pronóstico)",
+  "lat": -17.78,
+  "lon": -63.18,
+  "lugar": "Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://open-meteo.com/"
+ },
+ {
   "hecho_id": "noticia:kat0rb",
   "fecha_hora_local": "2026-10-25 18:51",
   "ts_ms": 1792968716000,
