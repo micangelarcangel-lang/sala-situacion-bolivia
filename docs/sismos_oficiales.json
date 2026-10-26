@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-10-26T11:28:43.287565Z",
+ "actualizado": "2026-10-26T13:54:47.236030Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261025T023932_-21.858_-67.295",
+   "fecha_local": "2026-10-25 02:39:32",
+   "lat": -21.858,
+   "lon": -67.295,
+   "prof_km": 182.1,
+   "mag": 3.1,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261024T182258_-17.149_-66.385",
    "fecha_local": "2026-10-24 18:22:58",
@@ -12,6 +24,18 @@
    "mag": 3.4,
    "provincia": "Quillacollo",
    "departamento": "Cochabamba",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
+  {
+   "id": "20261023T220833_-21.374_-67.314",
+   "fecha_local": "2026-10-23 22:08:33",
+   "lat": -21.374,
+   "lon": -67.314,
+   "prof_km": 173.9,
+   "mag": 3.1,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
    "fuente": "Observatorio San Calixto",
    "probable_sentido": false
   },
