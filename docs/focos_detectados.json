@@ -1,0 +1,86 @@
+{
+ "dias": {
+  "2026-10-24": {
+   "Santa Cruz": 882,
+   "Beni": 603,
+   "Potosí": 1,
+   "La Paz": 206,
+   "Pando": 143,
+   "Chuquisaca": 2,
+   "Oruro": 2,
+   "Cochabamba": 54
+  },
+  "2026-10-25": {
+   "Santa Cruz": 509,
+   "Beni": 371,
+   "La Paz": 122,
+   "Pando": 194,
+   "Potosí": 5
+  },
+  "2026-10-26": {
+   "Beni": 234,
+   "Pando": 58,
+   "Santa Cruz": 12,
+   "La Paz": 130,
+   "Potosí": 1
+  }
+ },
+ "municipios": {
+  "2026-10-24": {
+   "Ixiamas (La Paz)": 144,
+   "San José (Santa Cruz)": 130,
+   "San Ignacio (Santa Cruz)": 120,
+   "El Puente (Santa Cruz)": 119,
+   "San Ignacio (Beni)": 114,
+   "Concepción (Santa Cruz)": 94,
+   "Exaltación (Beni)": 90,
+   "Ascención de Guarayos (Santa Cruz)": 89,
+   "San Andrés (Beni)": 79,
+   "San Borja (Beni)": 70,
+   "Yapacaní (Santa Cruz)": 61,
+   "Santa Ana (Beni)": 51,
+   "Bolpebra (Pando)": 50,
+   "San Miguel (Santa Cruz)": 49,
+   "Santa Rosa (Beni)": 45
+  },
+  "2026-10-25": {
+   "San Ignacio (Santa Cruz)": 199,
+   "Ixiamas (La Paz)": 115,
+   "San Miguel (Santa Cruz)": 106,
+   "Bella Flor (Pando)": 81,
+   "Santa Rosa (Beni)": 78,
+   "San José (Santa Cruz)": 66,
+   "Bolpebra (Pando)": 57,
+   "Magdalena (Beni)": 55,
+   "Exaltación (Beni)": 49,
+   "Riberalta (Beni)": 42,
+   "Filadelfia (Pando)": 38,
+   "Concepción (Santa Cruz)": 33,
+   "El Puente (Santa Cruz)": 32,
+   "Ascención de Guarayos (Santa Cruz)": 32,
+   "Guayaramerín (Beni)": 26
+  },
+  "2026-10-26": {
+   "Ixiamas (La Paz)": 130,
+   "Santa Rosa (Beni)": 66,
+   "Exaltación (Beni)": 50,
+   "Riberalta (Beni)": 34,
+   "Bella Flor (Pando)": 32,
+   "Reyes (Beni)": 24,
+   "San Ramón (Beni)": 19,
+   "Santa Ana (Beni)": 16,
+   "Magdalena (Beni)": 15,
+   "Bolpebra (Pando)": 15,
+   "Guayaramerín (Beni)": 6,
+   "Filadelfia (Pando)": 6,
+   "Santa Rosa (Pando)": 4,
+   "Concepción (Santa Cruz)": 4,
+   "Ascención de Guarayos (Santa Cruz)": 3
+  }
+ },
+ "actualizado": "2026-10-26T23:54:15.786077Z",
+ "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
+ "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
+ "detecciones_fuera_de_limites": 729,
+ "slack_dia": "2026-10-26"
+}

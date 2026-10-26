@@ -1,1 +1,1 @@
-ERROR RuntimeError HTTPError: HTTP Error 400: Bad Request
+4258 detecciones (3 días), 3529 dentro de Bolivia
