@@ -913,6 +913,33 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
     box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
   }).catch(function(){});
 })();
+
+(function(){
+  function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  fetch("focos_firms.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d||!d.actual)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    var a=d.actual, dep=Object.keys(a.por_departamento||{}).slice(0,6).map(function(k){return k+": "+a.por_departamento[k];}).join(" · ");
+    var box=document.createElement("div");
+    box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
+    box.innerHTML='<b>Focos de calor — últimas 24 h (NASA FIRMS, VIIRS)</b> <span style="opacity:.7">· actualizado '+esc((d.actualizado||"").slice(0,16).replace("T"," "))+' UTC</span><div><b>'+a.total+'</b> detecciones'+(dep?' · '+esc(dep):'')+'</div><div style="opacity:.7;margin-top:3px">'+esc(d.aclaracion||"")+'</div>';
+    ref.parentNode.insertBefore(box,ref.nextSibling);
+  }).catch(function(){});
+})();
+
+(function(){
+  function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  fetch("focos_detectados.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d||!d.dias)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    var ks=Object.keys(d.dias).sort().slice(-5); if(!ks.length)return;
+    var box=document.createElement("div");
+    box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
+    var h='<b>Focos de calor detectados por satélite</b> <span style="opacity:.7">· '+esc(d.fuente)+' · <a href="datos/focos_detectados_diario.csv">CSV</a></span>';
+    ks.slice().reverse().forEach(function(k){var v=d.dias[k],t=0,top=[];Object.keys(v).forEach(function(x){t+=v[x];top.push([x,v[x]]);});top.sort(function(a,b){return b[1]-a[1];});
+      h+='<div>'+esc(k)+': <b>'+t+'</b> en Bolivia · '+esc(top.slice(0,4).map(function(x){return x[0]+" "+x[1];}).join(", "))+'</div>';});
+    h+='<div style="opacity:.7;margin-top:3px">'+esc(d.aclaracion||"")+'</div>';
+    box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
+  }).catch(function(){});
+})();
 </script>
 </body>
 </html>
