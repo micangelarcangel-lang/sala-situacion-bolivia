@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1un6ep4",
+  "fecha_hora_local": "2026-10-26 16:54",
+  "ts_ms": 1793048049000,
+  "titulo": "Choque frontal entre camión y ómnibus deja tres heridos graves en la carretera Potosí–Oruro - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 3,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPSnlEUUZBNlBSSjhrV0dGR0xhbE1NRC1NdGJ6NlNlalVfdlJnTE1kMEtfU3BoSEhGbUdfVVlwam53M0ctM25vN0otUEliR2RIVWlnNjVhME03MmFYMHVBc1REeVZ1Yy01cUhDY3FLcWF5VFFZZEdjeDRJemQ1cURvb0tTSV9qbDY0bEhIREpBaDNPTzQxSDRMbzdTb19Qb0lYaUg0Y0RscHRvYWRJa2g1bmExcmo4SVduZ1d0OGVpUjgtS0ZQeF82TTloZ1FON0I4M3dzNV9YaEE?oc=5"
+ },
+ {
   "hecho_id": "noticia:2avehj",
   "fecha_hora_local": "2026-10-26 16:01",
   "ts_ms": 1793044918000,
