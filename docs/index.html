@@ -899,6 +899,20 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
     box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
   }).catch(function(){});
 })();
+
+(function(){
+  function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  fetch("focos_propension.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d||!d.muy_propensa)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    var dias=Object.keys(d.muy_propensa).sort();
+    var box=document.createElement("div");
+    box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
+    var h='<b>Incendios forestales — pronóstico de propagación (SENAMHI)</b> <span style="opacity:.7">· boletín '+esc(d.boletin)+' · <a href="'+esc(d.url)+'" target="_blank" rel="noopener">PDF</a></span>';
+    dias.forEach(function(k){var v=d.muy_propensa[k]||[];h+='<div>'+esc(k)+': '+(v.length?'<b>Muy propensa:</b> '+esc(v.join(", ")):'<span style="opacity:.7">ninguna región en “muy propensa”</span>')+'</div>';});
+    h+='<div style="opacity:.7;margin-top:3px">'+esc(d.aclaracion||"")+'</div>';
+    box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
+  }).catch(function(){});
+})();
 </script>
 </body>
 </html>
