@@ -168,6 +168,11 @@ def main():
         log("Avisos SENAMHI enviados a Slack: " + str(senamhi.avisar_nuevos(DOCS, avisar)))
     except Exception as e:
         log("No se pudo actualizar SENAMHI (se conserva lo anterior): " + type(e).__name__ + " " + str(e)[:100])
+    try:
+        import sismos
+        log("Sismos San Calixto: " + sismos.actualizar(DOCS, avisar))
+    except Exception as ex:
+        log("No se pudo actualizar sismos (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
