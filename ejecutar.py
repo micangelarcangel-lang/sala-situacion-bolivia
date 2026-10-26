@@ -183,6 +183,16 @@ def main():
         log("Incendios (pronóstico SENAMHI): " + focos.actualizar(DOCS, avisar))
     except Exception as ex:
         log("No se pudo actualizar el pronóstico de incendios (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
+    try:
+        import firms
+        log("Focos de calor (NASA FIRMS): " + firms.actualizar(DOCS, avisar, cargar_geo("geo.json"), ahora))
+    except Exception as ex:
+        log("No se pudo actualizar FIRMS (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
+    try:
+        import firms
+        log("Focos detectados (NASA FIRMS): " + firms.actualizar(DOCS, cargar_geo("geo.json"), avisar))
+    except Exception as ex:
+        log("No se pudo actualizar FIRMS (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
