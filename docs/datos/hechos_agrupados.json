@@ -140,6 +140,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQOHY1UDdrOFBGWEozQmJRMTFjdV9UeC1OMDl5WWNfM0pxdlRGR3JhVGwxNDAxdlRnVGRfNkdIUzAzUV9jT08yQmc3NmJMTXU1N1huV0UtdTdFelMxSjE3UUxxVThnamxvbnJORzBwblRVWmlOcUxOTUx2a1N5SnA5dHA0X2NPcU9lSUd6dlBtd1dZZXNEQUJRSGM5Q2hQS0E1ZHpQZE12N2FoYVBlWEhaZVlfb1FDdjg2WWNSOVpXSQ?oc=5 | https://news.google.com/rss/articles/CBMiuwFBVV95cUxOaUVRS05CcS13STc4TjBSOXdiVGtzYUNtMkNLMkZ4NTFrTl9yQTVaLXljSUQ1VkZlbGh4MW1xdTVyamN3dnNsV29FNUNLUzRsc2dzU2RUakpqY09FV0drSzFqY1RsY1h3TUJxZ29POTEtMHE2Z3plTWJqX0h0dE5icTZjbDFVRFhlU1BuTTBzWExjek5nRXNiN0FhNlR4YlMtNmNlVFBHNnU1NnRDdUd5V214VkJqamdiXzJ3?oc=5 | https://news.google.com/rss/articles/CBMiswFBVV95cUxOVDVzVTJNM2JuQ25sMThEaVZNOUNRd3FGT3RhVnFrZXZ2NDQ1YlluTVdhbVNUQnA1MGNESHRSWVUzbC1kRVh3OTR0emtlTG91cmRWeFJ5dk5zb3p2WFRyMEJUV3FNRnY1WHhRUU9WLTlJcmNyNXJZZFdoM0JoZjNpa3hjUXhMM0xrUDJab2VadkM5RWZYQ3lWZTVDdzg1akxJT2lxcDVNNzI0NG1hejdfdkUyTQ?oc=5"
  },
  {
+  "hecho_id": "noticia:jslloq",
+  "fecha_hora_local": "2026-10-26 05:59",
+  "ts_ms": 1793008748000,
+  "titulo": "Enfrentamiento con la Felcn deja herido a líder criminal brasileño - El Diario - Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 1,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "El Diario - Bolivia; La Patria Bolivia",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNNFFwaGJFWWdBX0U5OWY1V2R3djNPT3NnOE9yM01hNmxkTnduczF3R25QeTF2S2paU1I3dDB4ZENGTWpsTXhxQWE4YTlWSmNFUUxOREZQS1J4TGhoVzlYVFVqYi14UHNlZVdVRG5jSTVBdjZkRW43c25RdDZPcHdDQVRKVWxqQXVyeENGdnNHcEJPOTFsWnJjMkVFeXlCeFZta1ZXRkdmVXNiTEcxVlFz?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxNcUJaYmY0YVV6ZUdUeFR5TzhsZ0JpTmxwNU1FWFRPZUxQZDgxQVdHcGZuNjR3R292S1RZaEUwMUZrR3YzNmtvcEgtVE00WjF4cktWaFFZQ1lWM2lZYWYtRkJVMm5lVWN0cU5PTE5hTUx6R1ZhazNQVTA1WkJVT1l4QUY4Tkh5ZDFZeVpTeFgtR1luNVFEdnp6Mw?oc=5"
+ },
+ {
   "hecho_id": "noticia:1llxxuw",
   "fecha_hora_local": "2026-10-25 22:03",
   "ts_ms": 1792980232000,
@@ -258,26 +278,6 @@
   "departamento": "Tarija",
   "municipio": "Tarija",
   "enlaces": "https://news.google.com/rss/articles/CBMihgFBVV95cUxObHF1cjVaY2tOSndEMDFoRzZCcEgwZHg5VERFa25taUF0UXVyOHB4YkNTSkhaWVVoQXRrU2xyOWlxMkhQblphT0VWeHVyVzBDUHdyUF9WM1U1MnJSSExSbDRQeGgxV05PUzQ5eHdHTURfcVVWRktlZ0lHbUpMeHhUTk9EZzc5UQ?oc=5"
- },
- {
-  "hecho_id": "noticia:1cenz4k",
-  "fecha_hora_local": "2026-10-25 14:47",
-  "ts_ms": 1792954059000,
-  "titulo": "Enfrentamiento entre la Felcn y presunto cártel brasileño deja un herido - La Patria Bolivia",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 1,
-  "nivel_preliminar": "amarilla",
-  "fallecidos_max": 0,
-  "heridos_max": 1,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "La Patria Bolivia",
-  "lat": "",
-  "lon": "",
-  "lugar": "",
-  "departamento": "",
-  "municipio": "",
-  "enlaces": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNcUJaYmY0YVV6ZUdUeFR5TzhsZ0JpTmxwNU1FWFRPZUxQZDgxQVdHcGZuNjR3R292S1RZaEUwMUZrR3YzNmtvcEgtVE00WjF4cktWaFFZQ1lWM2lZYWYtRkJVMm5lVWN0cU5PTE5hTUx6R1ZhazNQVTA1WkJVT1l4QUY4Tkh5ZDFZeVpTeFgtR1luNVFEdnp6Mw?oc=5"
  },
  {
   "hecho_id": "noticia:1xi48lm",
