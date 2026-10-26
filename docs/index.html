@@ -868,6 +868,22 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
     box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
   }).catch(function(){});
 })();
+
+(function(){
+  function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  fetch("sismos_oficiales.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d||!d.sismos||!d.sismos.length)return;
+    var ref=document.getElementById("aviso"); if(!ref)return;
+    var lim=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+    var s=d.sismos.filter(function(x){return x.fecha_local.slice(0,10)>=lim;});
+    if(!s.length)return;
+    var may=s.slice().sort(function(a,b){return b.mag-a.mag;})[0];
+    var box=document.createElement("div");
+    box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
+    box.innerHTML='<b>Sismos — Observatorio San Calixto (últimos 7 días)</b> <span style="opacity:.7">· <a href="'+esc(d.fuente)+'" target="_blank" rel="noopener">osc.org.bo</a> · <a href="sismos_oficiales.json">datos</a></span><div>'+s.length+' sismos registrados · el mayor: M '+may.mag.toFixed(1)+' ('+esc(may.provincia)+', '+esc(may.departamento)+', '+esc(may.fecha_local.slice(0,10))+', '+Math.round(may.prof_km)+' km de profundidad)</div>';
+    ref.parentNode.insertBefore(box,ref.nextSibling);
+  }).catch(function(){});
+})();
 </script>
 </body>
 </html>
