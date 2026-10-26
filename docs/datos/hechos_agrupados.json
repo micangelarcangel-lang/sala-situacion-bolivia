@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:37m88o",
+  "fecha_hora_local": "2026-10-26 18:17",
+  "ts_ms": 1793053073000,
+  "titulo": "Colapso de escenario musical deja tres heridos en Viacha - La Patria Bolivia",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 3,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Patria Bolivia",
+  "lat": -16.742,
+  "lon": -68.313,
+  "lugar": "Viacha, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Viacha",
+  "enlaces": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNa2U1clM4cWR1anlORWYxdVR5NEd2Ql9WSllfdm1LNDhqR1g2V0RQd2VqeHNDV1ozM19mME43Y2hHNW56SmlZQzdsajhsVDVNQmU1T0hOSjVLSXp2ZXV4Mnl3Z2FkbjNpQ3lwalcteXpFdnJ6bktzV0p1ZDhVTGZPR0s0a19zLUR0UEpfb1dUdzlTLVhqQ1cxenpTSEw2OFZX?oc=5"
+ },
+ {
   "hecho_id": "noticia:2avehj",
   "fecha_hora_local": "2026-10-26 17:38",
   "ts_ms": 1793050712000,
