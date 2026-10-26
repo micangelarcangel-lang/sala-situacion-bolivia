@@ -884,6 +884,21 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
     ref.parentNode.insertBefore(box,ref.nextSibling);
   }).catch(function(){});
 })();
+
+(function(){
+  function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  fetch("epidemio_oficial.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    var b=(d.boletines||[])[0], inter=(d.internacional||[]).slice(0,6);
+    if(!b&&!inter.length)return;
+    var box=document.createElement("div");
+    box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
+    var h='<b>Vigilancia epidemiológica</b>';
+    if(b){h+=' <span style="opacity:.7">· Ministerio de Salud y Deportes · SE '+esc(b.semana)+' ('+esc(b.periodo)+') · <a href="'+esc(b.url)+'" target="_blank" rel="noopener">boletín PDF</a></span><ul style="margin:4px 0 4px 18px;padding:0">'+(b.frases||[]).slice(0,3).map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul>';}
+    if(inter.length){h+='<div style="opacity:.85;margin-top:4px"><b>Vigilancia internacional</b> (OPS/OMS; no son eventos ocurridos en Bolivia):</div><ul style="margin:2px 0 0 18px;padding:0">'+inter.map(function(x){return '<li>'+esc(x.fecha||"")+' · <a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.titulo)+'</a>'+(x.menciona_bolivia?' <b>(menciona a Bolivia)</b>':'')+'</li>';}).join("")+'</ul>';}
+    box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
+  }).catch(function(){});
+})();
 </script>
 </body>
 </html>
