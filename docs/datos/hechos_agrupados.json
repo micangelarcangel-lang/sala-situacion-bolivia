@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:iqj56a",
+  "fecha_hora_local": "2026-10-25 21:09",
+  "ts_ms": 1792976954000,
+  "titulo": "Accidente en Pailón: un camión choca contra otro vehículo y deja varios heridos - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 1,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.757,
+  "lon": -61.975,
+  "lugar": "Pailón, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Pailón",
+  "enlaces": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPdmdnOEg3NkszN3RPZ3JWZkphcnc1TktlYUQtbzVkNktBd0EtYnF0Q21hWjJLQzBqZHNicWRlb1pncGhwVkYzcEhxLWpvWG5Hcnc3dmxsRkFVX3Y1Tk5lMzJ1cXhiTUZQN2g3SEhJU0FNTW1vZ1ZuVEV2QUZrRkFveDdWaFdhbF9CY09pM3I1U0prZEV3bTBWNE1KV2NWa0t3dVpTcjNTWWdlSWhxQ3prVW9INmRPNXBmWHk0eTZGc2lxMXc0Y1dB?oc=5"
+ },
+ {
   "hecho_id": "clima:Santa Cruz:2026-10-25:viento:1",
   "fecha_hora_local": "2026-10-25 20:05",
   "ts_ms": 1792973138353,
