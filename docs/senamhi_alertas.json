@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-26T23:58:13.846979Z",
+ "actualizado": "2026-10-27T00:40:35.418290Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -169,7 +169,7 @@
    "n_municipios": 97,
    "texto": "SE PRONOSTICA EL INGRESO DE FRENTE FRÍO AL TERRITORIO BOLIVIANO, QUE OCASIONARÁ DESCENSOS BRUSCOS DE TEMPERATURA ENTRE 6 °C Y 12 °C POR DEBAJO DE LOS VALORES NORMALES DE CADA REGIÓN AFECTADA. A OCURRIR ENTRE EL DÍA SÁBADO 24 DE HASTA EL DÍA LUNES 26 DE OCTUBRE, AFECTANDO A:",
    "numero": "87/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
