@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:9kbpl9",
+  "fecha_hora_local": "2026-10-27 17:28",
+  "ts_ms": 1793136534000,
+  "titulo": "Eva Copa declara como sindicada por homicidio culposo tras mazamorra en Achocalla el 2024 - Red Uno",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -16.653,
+  "lon": -68.137,
+  "lugar": "Achocalla, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Achocalla",
+  "enlaces": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPRjRkQWZoOGs0NDBUN1NVeUF5RFdiTlgwNzRsb3hBa3VtSzl2aHpQaFlNYVd2RUl4djJBSXp0M2ZEZjA0cjVURUc0TGJjaVhpSUI4bTctRkQ3SnMyRVlteGZubmpvTXF1QkxJTHRuR19WMWV5WUp0QU1GTmhRdG02QjdxWHNnMTRIMnZFazV4NnJfVWxxU3JYOXlzQ0FMc2VYeFB0QWxzTzhHbVRKUlBEMGF6NXNPTnRsREN5SmlQTnlWNmJrcjc1UHRMYWpMZF9LVEJqSVhR?oc=5"
+ },
+ {
   "hecho_id": "noticia:1acjgzw",
   "fecha_hora_local": "2026-10-27 14:16",
   "ts_ms": 1793124999000,
