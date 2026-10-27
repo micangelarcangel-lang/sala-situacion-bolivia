@@ -67,6 +67,9 @@ def es_extranjero(e):
     import re
     t = " " + re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", _n(e.get("titulo", "") + " " + e.get("detalle", "")))) + " "
     f = _n(e.get("fuente", ""))
+    # medio con dominio de otro país (.pe, .ar, .cl, .br…): solo se acepta si el texto nombra un lugar boliviano concreto
+    if re.search(r"\.(pe|ar|cl|br|co|mx|ec|py|uy|ve|es|cu|do|gt|hn|sv|ni|cr|pa|us|uk|fr|it|de)(\s|$)", f) and not any(k in t for k in LUGARES_BO):
+        return True
     if " bolivia " in t or " bolivian" in t or "bolivia" in f:
         return False
     if any(" " + k + " " in t for k in EXTRANJERO):
@@ -121,12 +124,52 @@ def base_url():
 
 
 def indice_reportes():
+    import re as _re
     pdfs = sorted([f for f in os.listdir(REP) if f.endswith(".pdf")], reverse=True)
-    filas = "".join(f'<li><a href="{f}">{f}</a></li>' for f in pdfs) or "<li>Aún no hay reportes.</li>"
+    grupos = [("hecho_", "Informes de un hecho (accidentes, desastres, etc.)"), ("sismos_", "Informes de sismos"), ("brote_", "Informes de brotes y alertas epidemiológicas (OPS/OMS)"), ("alerta_", "Alertas inmediatas"),
+              ("diario_", "Reportes diarios"), ("semanal_", "Reportes semanales"), ("mensual_", "Reportes mensuales"), ("solicitud_", "Reportes por solicitud")]
+    usados, bloques = set(), []
+
+    try:
+        tit = json.load(open(os.path.join(REP, "titulos.json"), encoding="utf-8"))
+    except Exception:
+        tit = {}
+
+    def etiqueta(f):
+        if tit.get(f):
+            return tit[f]
+        m = _re.search(r"(\d{8})_(\d{4})", f)
+        if m:
+            d, h = m.group(1), m.group(2)
+            return f"{d[6:8]}/{d[4:6]}/{d[0:4]} {h[:2]}:{h[2:]}"
+        m = _re.search(r"(\d{4}-?\d{2}-?\d{2}|\d{4}-W?\d{2})", f)
+        return m.group(1) if m else f
+    for pref, titulo in grupos:
+        fs = [f for f in pdfs if f.startswith(pref)]
+        usados.update(fs)
+        if fs:
+            bloques.append(f"<h2>{titulo}</h2><ul>" + "".join(f'<li><a href="{f}">{etiqueta(f)}</a> <small>{f[:-4].split("_",1)[-1] if f.startswith(("hecho_","sismos_","brote_")) else ""}</small></li>' for f in fs[:60]) + "</ul>")
+    try:  # lista legible por el tablero (centro de informes)
+        _lista = []
+        for f in pdfs:
+            pref = next((pr for pr, _ in grupos if f.startswith(pr)), "otro_")
+            m = _re.search(r"(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})", f) or _re.search(r"(\d{4})-(\d{2})-(\d{2})()()", f)
+            fecha = f"{m.group(1)}-{m.group(2)}-{m.group(3)}" + (f"T{m.group(4)}:{m.group(5)}" if m.group(4) else "") if m else ""
+            _lista.append({"archivo": f, "tipo": pref.rstrip("_"), "titulo": etiqueta(f), "fecha": fecha})
+        json.dump(_lista, open(os.path.join(REP, "lista.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    except Exception:
+        pass
+    otros = [f for f in pdfs if f not in usados]
+    if otros:
+        bloques.append("<h2>Otros</h2><ul>" + "".join(f'<li><a href="{f}">{f}</a></li>' for f in otros[:60]) + "</ul>")
+    cuerpo = "".join(bloques) or "<p>Aún no hay reportes.</p>"
     open(os.path.join(REP, "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reportes PDF</title>'
-        '<style>body{font:15px/1.6 system-ui;max-width:720px;margin:24px auto;padding:0 16px}a{color:#0b5cab}</style>'
-        '<h1>Reportes PDF — Sala de Situación</h1><p><a href="../">← Volver al tablero</a></p><ul>' + filas + "</ul>")
+        '<style>body{font:15px/1.6 system-ui;max-width:760px;margin:24px auto;padding:0 16px}a{color:#0b5cab}h2{font-size:16px;margin:22px 0 4px;border-bottom:1px solid #ccd}'
+        'ul{margin:4px 0;padding-left:20px}small{color:#778}.pedir{background:#eef4fb;border:1px solid #bcd;border-radius:8px;padding:10px 14px;margin:10px 0}</style>'
+        '<h1>Reportes PDF — Sala de Situación</h1><p><a href="../">← Volver al tablero</a></p>'
+        '<div class="pedir"><b>¿Necesita un informe específico?</b> Use <a href="https://script.google.com/macros/s/AKfycbzxWSLP0Vz_vJdugCpOngN-uYVsTEwW9b64phK1Q-xdmLJwiUhGhrUHqLp3srPE5sP0/exec?pedir=1">Pedir un informe</a> '
+        'y escriba, por ejemplo: <i>accidente Caranavi</i>, <i>sismo hoy</i> o <i>sismo Potosí</i>. El PDF llega a Slack y aparece aquí en pocos minutos.</div>' + cuerpo)
 
 
 def por_hecho(evs):
@@ -156,44 +199,60 @@ def main():
     json.dump({"generado": ahora_ms, "eventos": tablero}, open(os.path.join(DOCS, "data.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     json.dump({"generado": ahora_ms, "eventos": todos}, open(os.path.join(DOCS, "data_completo.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     log(f"{len(todos)} eventos descargados, {len(evs)} relevantes, {len(tablero)} hechos en el tablero")
-    try:
+    FUENTES = []
+
+    def reg(nombre, inst, fn, auto=True):
+        """Ejecuta una fuente y deja constancia de su estado (se muestra en el tablero)."""
+        t0 = time.time()
+        try:
+            r = fn()
+            FUENTES.append({"nombre": nombre, "institucion": inst, "estado": "ok", "detalle": str(r)[:200], "segundos": round(time.time() - t0, 1), "ts": ahora_ms})
+            log(f"{nombre}: {str(r)[:300]}")
+            return r
+        except Exception as ex:
+            msg = type(ex).__name__ + " " + str(ex)[:140]
+            FUENTES.append({"nombre": nombre, "institucion": inst, "estado": "error", "detalle": msg, "segundos": round(time.time() - t0, 1), "ts": ahora_ms})
+            log(f"No se pudo actualizar {nombre} (se conserva lo anterior): {msg}")
+            return None
+
+    def _datos_abiertos():
         import datos_abiertos
-        geo_d = cargar_geo("geo.json")
-        log("Base de datos descargable: " + str(datos_abiertos.exportar(os.path.join(DOCS, "datos"), ahora_ms, evs, geo_d)))
-    except Exception as e:
-        log("No se pudo actualizar la base de datos descargable: " + type(e).__name__ + " " + str(e)[:100])
-    try:
+        return datos_abiertos.exportar(os.path.join(DOCS, "datos"), ahora_ms, evs, cargar_geo("geo.json"))
+
+    def _senamhi():
         import senamhi
-        log("Alertas oficiales SENAMHI: " + senamhi.actualizar(DOCS, geo=cargar_geo("geo.json")))
-        log("Avisos SENAMHI enviados a Slack: " + str(senamhi.avisar_nuevos(DOCS, avisar)))
-    except Exception as e:
-        log("No se pudo actualizar SENAMHI (se conserva lo anterior): " + type(e).__name__ + " " + str(e)[:100])
+        r = senamhi.actualizar(DOCS, geo=cargar_geo("geo.json"))
+        return str(r) + " · avisos enviados a Slack: " + str(senamhi.avisar_nuevos(DOCS, avisar))
+
+    reg("Base de datos descargable", "Sala de Situación", _datos_abiertos)
+    reg("Alertas oficiales hidrológicas y meteorológicas", "SENAMHI", _senamhi)
+    reg("Sismos", "Observatorio San Calixto", lambda: __import__("sismos").actualizar(DOCS, avisar))
+    reg("Vigilancia epidemiológica (boletín, OPS, OMS)", "Ministerio de Salud y Deportes / OPS / OMS", lambda: __import__("epidemio").actualizar(DOCS, avisar))
+    reg("Pronóstico de propagación de incendios", "SENAMHI", lambda: __import__("focos").actualizar(DOCS, avisar))
+    _r = reg("Focos de calor detectados por satélite", "NASA FIRMS", lambda: __import__("firms").actualizar(DOCS, cargar_geo("geo.json"), avisar))
     try:
-        import sismos
-        log("Sismos San Calixto: " + sismos.actualizar(DOCS, avisar))
-    except Exception as ex:
-        log("No se pudo actualizar sismos (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
-    try:
-        import epidemio
-        log("Vigilancia epidemiológica: " + epidemio.actualizar(DOCS, avisar))
-    except Exception as ex:
-        log("No se pudo actualizar la vigilancia epidemiológica (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
-    try:
-        import focos
-        log("Incendios (pronóstico SENAMHI): " + focos.actualizar(DOCS, avisar))
-    except Exception as ex:
-        log("No se pudo actualizar el pronóstico de incendios (se conserva lo anterior): " + type(ex).__name__ + " " + str(ex)[:100])
-    try:
-        import firms
-        _r = firms.actualizar(DOCS, cargar_geo("geo.json"), avisar)
-        log("Focos detectados (NASA FIRMS): " + _r)
-    except Exception as ex:
-        _r = "ERROR " + type(ex).__name__ + " " + str(ex)[:150]
-        log("No se pudo actualizar FIRMS (se conserva lo anterior): " + _r)
-    try:
-        open(os.path.join(DOCS, "estado_firms.txt"), "w", encoding="utf-8").write(_r + "\n")
+        open(os.path.join(DOCS, "estado_firms.txt"), "w", encoding="utf-8").write(str(_r) + "\n")
     except Exception:
         pass
+    for nom, inst, why in [
+        ("Boletines de Defensa Civil / VIDECI", "Viceministerio de Defensa Civil", "El sitio bloquea el acceso automático. Se cubre por prensa y registro manual."),
+        ("Sanidad animal", "SENASAG", "El sitio bloquea el acceso automático. Se cubre por prensa y registro manual."),
+        ("Monitor de sequías", "CIMA / SENAMHI", "El servidor del monitor no responde desde el sistema; sin fuente abierta alternativa."),
+        ("Deslizamientos, eventos tecnológicos y antropogénicos", "Varias", "No existe fuente oficial abierta; se cubre con prensa verificada y registro manual."),
+    ]:
+        FUENTES.append({"nombre": nom, "institucion": inst, "estado": "sin_acceso", "detalle": why, "segundos": 0, "ts": ahora_ms})
+    FUENTES.append({"nombre": "Prensa boliviana (Google Noticias)", "institucion": "Medios de comunicación", "estado": "ok",
+                    "detalle": f"{len(todos)} notas descargadas, {len(evs)} relevantes, {len(tablero)} hechos", "segundos": 0, "ts": ahora_ms})
+    try:
+        json.dump({"generado": ahora_ms, "fuentes": FUENTES}, open(os.path.join(DOCS, "estado_fuentes.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    except Exception:
+        pass
+    try:
+        import unificar
+        _u = unificar.actualizar(DOCS, cargar_geo("geo.json"))
+        log("Base unificada de eventos: " + _u)
+    except Exception as ex:
+        log("No se pudo actualizar la base unificada (se conserva la anterior): " + type(ex).__name__ + " " + str(ex)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:
@@ -213,7 +272,39 @@ def main():
     if modo == "solicitud":
         horas = int(os.environ.get("HORAS") or 24)
         q = (os.environ.get("BUSCAR") or "").strip()
-        if q:
+        import informe_sismo as _isis
+        if q and _isis.es_consulta_sismo(q):
+            # informe específico de sismos (fuente oficial: Observatorio San Calixto)
+            try:
+                _sis = json.load(open(os.path.join(DOCS, "sismos_oficiales.json"), encoding="utf-8")).get("sismos", [])
+            except Exception:
+                _sis = []
+            geo = geo or cargar_geo("geo.json")
+            _nom = f"sismos_{ahora:%Y%m%d_%H%M%S}.pdf"
+            _ahora_dt = dt.datetime.now(_isis.TZ)
+            _r = _isis.informe(_sis, geo, os.path.join(REP, _nom), consulta=q, horas=horas, ahora=_ahora_dt)
+            log(f"Informe de sismos {_nom}: {_r}")
+            if _r["n"]:
+                _txt = (f":page_facing_up: Informe de sismos «{q}» — {_r['n']} sismo(s), mayor M {_r['mayor']:.1f} ({_r['mayor_lugar']}), "
+                        f"{_r['sentido']} posiblemente sentido(s) (M≥4,0 y ≤100 km). Fuente: Observatorio San Calixto.")
+            else:
+                _txt = f":page_facing_up: Informe de sismos «{q}»: el Observatorio San Calixto no registra sismos en ese período y lugar."
+            hechos.append((_nom, _txt))
+        elif q and __import__("informe_brote").es_consulta_brote(q):
+            # informe específico de brotes / alertas epidemiológicas (OPS, OMS, Ministerio de Salud y Deportes)
+            import informe_brote as _ib, epidemio as _ep
+            try:
+                _epi = json.load(open(os.path.join(DOCS, "epidemio_oficial.json"), encoding="utf-8"))
+            except Exception:
+                _epi = {}
+            _nom = f"brote_{ahora:%Y%m%d_%H%M%S}.pdf"
+            _r = _ib.informe(_epi, None, os.path.join(REP, _nom), consulta=q, horas=horas, ahora=dt.datetime.now(_ib.TZ),
+                             leer=lambda u: _ep._get(u, t=45).decode("utf-8", "ignore"))
+            log(f"Informe epidemiológico {_nom}: {_r}")
+            _txt = (f":page_facing_up: Informe epidemiológico «{q}» — {_r['n']} publicación(es) de OPS/OMS ({_r['periodo']}); "
+                    f"mencionan a Bolivia: {_r['bolivia']}" + ("; no hubo publicaciones en el período, se muestran las más recientes." if _r["sin_periodo"] else "."))
+            hechos.append((_nom, _txt))
+        elif q:
             lim_q = ahora_ms - horas * 3600000
             pool = [e for e in filtrar_busqueda(evs, q) if e["ts"] >= lim_q]
             n_sistema = len(pool)
@@ -279,7 +370,27 @@ def main():
             estado["semanal"] = sem
             hechos.append((n, f":page_facing_up: Reporte semanal {sem}"))
 
+        # 4) mensual (día 1, desde las 07:00): cubre el mes anterior
+        mes = f"{ahora:%Y-%m}"
+        if ahora.day == 1 and ahora.hour >= HORA_DIARIO and estado.get("mensual") != mes:
+            n = f"mensual_{mes}.pdf"
+            pdf(n, modo="programado", horas=24 * 31, etiqueta="Reporte mensual de situación")
+            estado["mensual"] = mes
+            hechos.append((n, f":page_facing_up: Reporte mensual {mes}"))
+
     json.dump(estado, open(ESTADO, "w"), ensure_ascii=False)
+    try:
+        _tp = os.path.join(REP, "titulos.json")
+        _t = json.load(open(_tp, encoding="utf-8")) if os.path.exists(_tp) else {}
+        for n, t in hechos:
+            import re as _re2
+            _m = _re2.search(r"«(.*?)»", t)
+            _tit = (_m.group(1) if _m else t.replace(":page_facing_up:", "").strip())
+            _tit = _re2.sub(r"\s+-\s+[^-]{3,40}$", "", _tit)[:110]
+            _t[n] = f"{ahora:%d/%m %H:%M} — " + (("Sismos: " + _tit) if n.startswith("sismos_") else ("Epidemiología: " + _tit) if n.startswith("brote_") else _tit)
+        json.dump(_t, open(_tp, "w", encoding="utf-8"), ensure_ascii=False)
+    except Exception:
+        pass
     indice_reportes()
     for n, t in hechos:
         avisar(f"{t}\n{base_url()}reportes/{n}")
