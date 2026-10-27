@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estado de las fuentes — Sala de Situación Bolivia</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="top"><h1>Sala de Situación — Bolivia</h1><a href="./">Tablero</a><a href="informes.html">Centro de informes</a><a href="fuentes.html">Estado de las fuentes</a><a href="reportes/">Reportes PDF</a></div>
+<div class="wrap"><div class="card"><h1 class="t" style="font-size:20px">Estado de las fuentes de información</h1>
+<p class="meta" id="gen">Cargando…</p>
+<p class="nota">Cada ciclo (cada 30 minutos) el sistema consulta estas fuentes. «Sin acceso automático» significa que la institución bloquea la lectura por programa; esos eventos se cubren por prensa o registro manual y se declaran aquí para que ningún vacío pase inadvertido.</p>
+<div style="overflow:auto"><table class="lista" id="t"><tr><th>Fuente</th><th>Institución</th><th>Estado</th><th>Detalle del último ciclo</th></tr></table></div></div></div>
+<script src="lib.js"></script>
+<script>
+SALA.cargar("estado_fuentes.json").then(function(d){
+ var S=SALA,E={ok:'<span class="badge b0">Activa</span>',error:'<span class="badge b2">Con error (se conserva lo anterior)</span>',sin_acceso:'<span class="badge bn">Sin acceso automático</span>'};
+ document.getElementById("gen").textContent="Última actualización: "+S.fecha(d.generado)+" (hora La Paz) · "+d.fuentes.filter(function(f){return f.estado==="ok";}).length+" activas de "+d.fuentes.length;
+ var t=document.getElementById("t");d.fuentes.forEach(function(f){var r=t.insertRow();r.innerHTML="<td><b>"+S.esc(f.nombre)+"</b></td><td>"+S.esc(f.institucion)+"</td><td>"+(E[f.estado]||S.esc(f.estado))+"</td><td>"+S.esc(f.detalle)+"</td>";});
+}).catch(function(e){document.getElementById("gen").textContent="No se pudo cargar el estado: "+e.message;});
+</script></body></html>

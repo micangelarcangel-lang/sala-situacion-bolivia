@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ficha de evento — Sala de Situación Bolivia</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="top"><h1>Sala de Situación — Bolivia</h1><a href="./">Tablero</a><a href="informes.html">Centro de informes</a><a href="fuentes.html">Estado de las fuentes</a><a href="reportes/">Reportes PDF</a><span class="sp"></span><span class="solo-imp">Ficha de evento</span></div>
+<div class="wrap" id="app"><p>Cargando…</p></div>
+<script src="lib.js"></script>
+<script>
+(function(){
+var S=SALA,app=document.getElementById("app");
+var id=decodeURIComponent((location.search.match(/[?&]id=([^&]+)/)||[])[1]||"");
+function fila(k,v){return v===""||v==null?"":"<tr><th>"+k+"</th><td>"+v+"</td></tr>";}
+var CRIT={
+ prensa:"Hecho construido a partir de notas de prensa de medios bolivianos. Las cifras son las máximas reportadas (no se suman) y no están verificadas por una autoridad. El nivel de color es preliminar (criterio propio del sistema por víctimas y tipo de evento) y no corresponde a una declaratoria de alerta de la Ley 602 / DS 2342.",
+ senamhi:"Aviso oficial del Servicio Nacional de Meteorología e Hidrología (SENAMHI). El nivel (verde, amarillo, naranja, rojo) es el asignado por SENAMHI; el sistema solo lo reproduce y lo localiza por departamento y municipio.",
+ sismo:"Dato del boletín sísmico del Observatorio San Calixto; es preliminar y puede ser revisado. El sistema no asigna nivel de alerta: usa magnitud y profundidad. Los sismos de más de 100 km de profundidad rara vez se perciben en superficie.",
+ foco:"Detecciones térmicas del satélite VIIRS NOAA-21 (NASA FIRMS). Incluyen quemas agrícolas y no equivalen a incendios confirmados ni a una declaratoria oficial.",
+ modelo:"Pronóstico generado por el modelo Open-Meteo para un punto de referencia del departamento. No es una observación ni un aviso oficial; para avisos use los de SENAMHI.",
+ gdacs:"Notificación del Sistema Global de Alerta y Coordinación de Desastres (GDACS, ONU y Comisión Europea). El color es el de GDACS.",
+ usgs:"Dato del Servicio Geológico de EE. UU. (USGS). Puede coincidir con un sismo del Observatorio San Calixto con magnitud distinta: cada institución calcula la suya.",
+ epidemiologia:"Publicación oficial de vigilancia (Ministerio de Salud y Deportes u OPS/OMS). Las alertas internacionales no son eventos ocurridos en Bolivia, salvo que el documento lo indique."};
+function clase(m){return m<2?"Micro":m<4?"Menor":m<5?"Leve":m<6?"Moderado":m<7?"Fuerte":"Mayor";}
+function ficha(e){
+ var c=e.cifras||{},r="";
+ r+=fila("Categoría",S.esc(e.categoria));
+ r+=fila("Fecha y hora (La Paz)",S.fecha(e.ts,e.origen==="foco"||(e.origen==="epidemiologia")));
+ r+=fila("Fuente",S.esc(e.fuente)+(e.oficial?" (oficial)":e.origen==="prensa"?" (prensa)":""));
+ r+=fila("Lugar",S.esc(e.lugar));
+ if(e.origen==="prensa"||e.origen==="modelo"||e.origen==="gdacs"||e.origen==="usgs"){r+=fila("Fallecidos (máx. reportado)",c.fallecidos);r+=fila("Heridos (máx. reportado)",c.heridos);r+=fila("Notas de prensa",c.notas);r+=fila("Ubicación obtenida por",S.esc(e.metodo));r+=fila("Coordenadas",e.lat!=null?e.lat.toFixed(4)+", "+e.lon.toFixed(4):"sin coordenadas (no se pinta en el mapa)");r+=fila("Nivel preliminar",S.badgeNivel(e));}
+ if(e.origen==="senamhi"){r+=fila("Nivel oficial SENAMHI",S.badgeNivel(e));r+=fila("Fenómeno",S.esc(e.fenomeno));r+=fila("Vigencia",S.esc(c.inicio||"")+" al "+S.esc(c.fin||""));r+=fila("Departamentos",S.esc((e.departamentos||[]).join(", ")));r+=fila("Municipios en el polígono",c.municipios);}
+ if(e.origen==="sismo"){r+=fila("Magnitud","<b>M "+c.magnitud.toFixed(1)+"</b> ("+clase(c.magnitud)+")");r+=fila("Profundidad",Math.round(c.profundidad_km)+" km");r+=fila("Coordenadas",e.lat.toFixed(3)+", "+e.lon.toFixed(3));}
+ if(e.origen==="foco"){r+=fila("Detecciones en el día",c.focos);}
+ if(e.origen==="epidemiologia"){r+=fila("Menciona a Bolivia",e.internacional?(e.menciona_bolivia?"Sí":"No"):"—");r+=fila("Período",S.esc(e.periodo||""));}
+ return r;
+}
+Promise.all([S.cargar("eventos_unificados.json"),S.cargar("geo_dep.json").catch(function(){return[];})]).then(function(x){
+ var todos=x[0].eventos,geo=x[1],e=todos.filter(function(v){return v.id===id||(v.alias&&v.alias.indexOf(id)>=0);})[0];
+ if(!e){app.innerHTML='<div class="card"><h2>Evento no encontrado</h2><p>No existe un evento con ese identificador (puede haber salido de la ventana de 400 días). <a href="informes.html">Ir al centro de informes</a>.</p></div>';return;}
+ document.title=e.titulo+" — Sala de Situación Bolivia";
+ var h='<div class="card"><div>'+S.badgeOrigen(e)+S.badgeNivel(e)+'<span class="badge" style="background:'+(S.COLCAT[e.categoria]||"#777")+'">'+S.esc(e.categoria)+'</span></div><h1 class="t">'+S.esc(e.titulo)+'</h1><div class="meta">'+S.fecha(e.ts)+' (hora La Paz) · '+S.esc(e.fuente)+(e.lugar?' · '+S.esc(e.lugar):'')+'</div>'+
+  '<div class="noimp" style="margin-top:10px"><button class="btn p" onclick="window.print()">Guardar como PDF / imprimir</button><button class="btn" id="bj">Descargar JSON</button><button class="btn" id="bc">Descargar CSV</button>'+(S.urlOk(e.url)?'<a class="btn" target="_blank" rel="noopener" href="'+S.esc(e.url)+'">Abrir fuente original</a>':'')+(e.origen==="prensa"?'<a class="btn" target="_blank" rel="noopener" href="'+S.URL_PEDIR+'">Pedir informe ampliado (lee las notas y compara cifras)</a>':'')+'</div></div>';
+ h+='<div class="grid"><div><div class="card"><h2>Ficha del evento</h2><table>'+ficha(e)+'</table></div>';
+ if(e.detalle)h+='<div class="card"><h2>Detalle</h2><p style="margin:0;white-space:pre-line">'+S.esc(e.detalle)+'</p></div>';
+ if(e.municipios&&e.municipios.length)h+='<div class="card"><h2>Municipios incluidos en el aviso ('+e.municipios.length+(e.cifras&&e.cifras.municipios>e.municipios.length?' de '+e.cifras.municipios:'')+')</h2><p style="margin:0">'+S.esc(e.municipios.join(", "))+'</p></div>';
+ h+='</div><div><div class="card"><h2>Ubicación</h2><div id="mapa"></div><p class="nota" id="mapanota"></p></div></div></div>';
+ h+='<div class="grid"><div class="card"><h2>Línea de tiempo</h2><div id="linea"></div></div><div class="card"><h2>Contexto: eventos similares (30 días)</h2><div id="ctx"></div></div></div>';
+ h+='<div class="card"><h2>Eventos relacionados</h2><div id="rel"></div></div>';
+ h+='<div class="card"><h2>Criterio y limitaciones</h2><p style="margin:0">'+S.esc(CRIT[e.origen]||"")+'</p><p class="nota" style="margin-bottom:0">Generado el '+S.fecha(Date.now())+' (hora La Paz). Sala de Situación — Bolivia · CCES.</p></div>';
+ app.innerHTML=h;
+ var pts=e.lat!=null?[{lat:e.lat,lon:e.lon,r:12,color:e.nivel!=null?["#2e7d32","#f9a825","#ef6c00","#c62828"][e.nivel]:"#c62828",t:e.titulo}]:[];
+ document.getElementById("mapa").innerHTML=S.mapaSVG(geo,{resaltar:e.departamentos,puntos:pts,titulo:"Ubicación"});
+ document.getElementById("mapanota").textContent=e.lat!=null?"Punto: ubicación del evento. Departamento resaltado: "+(e.departamentos||[]).join(", ")+".":(e.departamentos&&e.departamentos.length?"Departamentos resaltados: "+e.departamentos.join(", ")+" (el evento no tiene coordenadas puntuales).":"El evento no tiene ubicación en Bolivia determinada.");
+ /* línea de tiempo */
+ var L=[];
+ if(e.origen==="senamhi"){var c=e.cifras||{};L.push(["Publicación SENAMHI",S.fecha(e.ts)]);if(c.inicio)L.push(["Inicio de vigencia",c.inicio]);if(c.fin)L.push(["Fin de vigencia",c.fin]);}
+ else if(e.origen==="prensa"){L.push(["Primera nota de prensa",S.fecha(e.ts)]);L.push(["Notas reunidas en este hecho",String((e.cifras||{}).notas||1)]);}
+ else L.push(["Registro",S.fecha(e.ts)]);
+ document.getElementById("linea").innerHTML='<ol style="margin:0;padding-left:18px">'+L.map(function(a){return '<li><b>'+S.esc(a[0])+':</b> '+S.esc(a[1])+'</li>';}).join("")+'</ol>';
+ /* contexto: mismos categoría y departamento, 30 días */
+ var lim=e.ts-30*864e5,dep=(e.departamentos||[])[0];
+ var sim=todos.filter(function(v){return v.categoria===e.categoria&&v.ts>=lim&&v.ts<=e.ts+864e5&&(!dep||(v.departamentos||[]).indexOf(dep)>=0);});
+ var por={};sim.forEach(function(v){var k=S.diaKey(v.ts);por[k]=(por[k]||0)+1;});
+ var dias=Object.keys(por).sort().map(function(d){var o={};o[e.categoria]=por[d];return{d:d,c:o};});
+ document.getElementById("ctx").innerHTML='<div class="nota" style="margin-bottom:4px">'+sim.length+' evento(s) de categoría «'+S.esc(e.categoria)+'»'+(dep?' en '+S.esc(dep):'')+' en los 30 días previos, por día.</div>'+S.serieDiaria(dias,[e.categoria],S.COLCAT);
+ /* relacionados */
+ var rel=todos.filter(function(v){return v.id!==e.id&&Math.abs(v.ts-e.ts)<=3*864e5&&((dep&&(v.departamentos||[]).indexOf(dep)>=0)||(!dep&&v.categoria===e.categoria));}).slice(0,10);
+ document.getElementById("rel").innerHTML=rel.length?'<table class="lista"><tr><th>Fecha</th><th>Evento</th><th>Origen</th></tr>'+rel.map(function(v){return '<tr><td>'+S.fecha(v.ts)+'</td><td><a href="evento.html?id='+encodeURIComponent(v.id)+'">'+S.esc(v.titulo)+'</a></td><td>'+S.esc(S.ORIGEN[v.origen]||v.origen)+'</td></tr>';}).join("")+'</table>':'<p class="nota">No hay otros eventos en el mismo departamento con ±3 días.</p>';
+ document.getElementById("bj").onclick=function(){S.descargar("evento.json",JSON.stringify(e,null,1),"application/json");};
+ document.getElementById("bc").onclick=function(){S.descargar("evento.csv",S.csv([e]),"text/csv;charset=utf-8");};
+}).catch(function(err){app.innerHTML='<div class="card"><h2>No se pudieron cargar los datos</h2><p>'+S.esc(err.message)+'</p></div>';});
+})();
+</script></body></html>

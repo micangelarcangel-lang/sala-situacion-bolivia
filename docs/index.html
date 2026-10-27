@@ -691,6 +691,13 @@ select,button{font:inherit;color:var(--ink);background:var(--bg);border:1px soli
 .tipos label{color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:2px 8px;cursor:pointer;background:var(--bg)}
 main{flex:1;min-height:0;display:grid;grid-template-columns:1fr 380px}
 #mapa{min-height:320px;background:var(--vacio)}
+html,body{height:auto;min-height:100%}
+main{flex:none;height:calc(100vh - 170px);min-height:460px}
+#oficiales{padding:6px 12px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:0 4px;align-items:start}
+#oficiales h2{grid-column:1/-1;font-size:15px;margin:12px 4px 0}
+#ofref{display:none}
+#oficiales>div:not(#ofref){margin:8px 4px!important;background:var(--card)}
+@media(max-width:800px){main{grid-template-columns:1fr;height:auto}#mapa{height:55vh}aside{max-height:60vh}#oficiales{grid-template-columns:1fr}}
 aside{overflow:auto;border-left:1px solid var(--line);background:var(--card)}
 .tabs{display:flex;gap:6px;padding:8px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:3;flex-wrap:wrap}.tabs button.on{background:var(--acc);color:#fff;border-color:var(--acc)}#bCsv{margin-left:auto}
 .gr{padding:10px 14px;border-bottom:1px solid var(--line)}.gr h3{font-size:13px;margin:0 0 4px}.gr svg{width:100%;height:auto;display:block}.gr text{fill:var(--ink);font:10px system-ui,sans-serif}.gr .t{fill:var(--mut)}.gr rect:hover{opacity:.75}.gr small{color:var(--mut)}
@@ -710,7 +717,7 @@ aside h2{font-size:13px;margin:0;padding:10px 14px;background:var(--card);border
 </head>
 <body>
 <header>
-  <div><h1>Sala de Situación — Bolivia</h1><div class="sub" id="sub">Vigilancia de amenazas (art. 36 Ley 602). Niveles preliminares, sujetos a validación. · <a href="reportes/" style="color:var(--acc)">Reportes PDF</a> · <a href="datos/" style="color:var(--acc)">Datos</a> · <a href="https://script.google.com/macros/s/AKfycbzxWSLP0Vz_vJdugCpOngN-uYVsTEwW9b64phK1Q-xdmLJwiUhGhrUHqLp3srPE5sP0/exec?pedir=1" target="_blank" rel="noopener" style="color:var(--acc)">Pedir / registrar un hecho</a></div></div>
+  <div><h1>Sala de Situación — Bolivia</h1><div class="sub" id="sub">Vigilancia de amenazas (art. 36 Ley 602). Niveles preliminares, sujetos a validación. · <a href="informes.html" style="color:var(--acc);font-weight:650">Centro de informes</a> · <a href="fuentes.html" style="color:var(--acc)">Estado de las fuentes</a> · <a href="reportes/" style="color:var(--acc)">Reportes PDF</a> · <a href="datos/" style="color:var(--acc)">Datos</a> · <a href="https://script.google.com/macros/s/AKfycbzxWSLP0Vz_vJdugCpOngN-uYVsTEwW9b64phK1Q-xdmLJwiUhGhrUHqLp3srPE5sP0/exec?pedir=1" target="_blank" rel="noopener" style="color:var(--acc)">Pedir / registrar un hecho</a></div></div>
   <div id="cintas"></div>
   <span id="estado" class="demo">DEMO</span>
 </header>
@@ -725,6 +732,7 @@ aside h2{font-size:13px;margin:0;padding:10px 14px;background:var(--card);border
   <div id="mapa"></div>
   <aside><div class="tabs"><button id="tEv" class="on">Eventos</button><button id="tGr">Gráficos</button><button id="bCsv" title="Descarga los eventos que ve con los filtros actuales">Descargar CSV</button></div><h2 id="h2">Eventos</h2><div id="lista"></div><div id="graficos" style="display:none"></div></aside>
 </main>
+<section id="oficiales"><h2>Fuentes oficiales y satelitales</h2><div id="ofref"></div></section>
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
  * (c) 2010-2023 Vladimir Agafonkin, (c) 2010-2011 CloudMade
@@ -783,7 +791,7 @@ function lista(ev){var L=GEO[S.vista],sel=S.sel,box=document.getElementById("lis
   box.innerHTML=v.map(function(e,k){var ub=typeof e.lat==="number"?"":" · <i>sin ubicación (no se pinta en el mapa)</i>";
     return'<div class="ev" data-k="'+k+'" style="border-left-color:'+COL[e.nivel]+'"><b>'+esc(e.titulo)+'</b><small>'+NOM[e.nivel]+" · "+esc(e.tipo)+" · "+esc(e.fuente)+" · "+haceCuanto(e.ts)+ub+"</small>"+
     (e.lugar?"<div><small>Ubicación: "+esc(e.lugar)+" ("+esc(e.metodo)+")</small></div>":"")+(e.detalle?"<div><small>"+esc(e.detalle)+"</small></div>":"")+((e.fall||e.her)?"<div><small>Fallecidos: "+(e.fall||0)+" · Heridos: "+(e.her||0)+"</small></div>":"")+
-    (urlOk(e.url)?'<div><a target="_blank" rel="noopener" href="'+esc(urlOk(e.url))+'"><small>Abrir fuente</small></a></div>':"")+"</div>"}).join("");
+    '<div><a href="evento.html?id='+encodeURIComponent(e.id)+'"><small>Ver ficha, gráficas y descargas</small></a>'+(urlOk(e.url)?' · <a target="_blank" rel="noopener" href="'+esc(urlOk(e.url))+'"><small>Abrir fuente</small></a>':"")+'</div>'+"</div>"}).join("");
   Array.prototype.forEach.call(box.querySelectorAll(".ev"),function(d){d.addEventListener("click",function(){var e=v[+d.getAttribute("data-k")];if(e&&e._m){mapa.setView([e.lat,e.lon],Math.max(mapa.getZoom(),8));e._m.openPopup()}})});
 }
 
@@ -853,15 +861,16 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
   function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   fetch("senamhi_alertas.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
     if(!d||!d.alertas)return;
+    function idSen(a){var u=a.url||a.pdf||"",m=u.match(/(\d+)\s*$/)||u.match(/alerta_(\d+)/);return "senamhi:"+(a.tipo||"hidrológica").slice(0,4)+"-"+(m?m[1]:"");}
     var v=d.alertas.filter(function(a){return a.vigente;});
-    var ref=document.getElementById("aviso"); if(!ref)return;
+    var ref=document.getElementById("ofref"); if(!ref)return;
     var box=document.createElement("div");
     box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
     var h='<b>Alertas oficiales vigentes — SENAMHI (hidrológicas y meteorológicas)</b> <span style="opacity:.7">· fuente: <a href="'+esc(d.fuente)+'" target="_blank" rel="noopener">senamhi.gob.bo</a></span>';
     if(!v.length){h+='<div style="opacity:.8">Ningún aviso vigente publicado por el SENAMHI.</div>';}
     v.forEach(function(a){
       h+='<div style="margin-top:6px"><span style="background:'+(colores[a.nivel]||"#888")+';color:#fff;padding:1px 7px;border-radius:9px;font-size:12px">'+esc(a.nivel)+'</span> <b>N° '+esc(a.numero)+'</b> · '+esc(a.inicio)+' al '+esc(a.fin)+
-        (a.departamentos&&a.departamentos.length?' · '+esc(a.departamentos.join(", ")):'')+' · <a href="'+esc(a.url||a.pdf)+'" target="_blank" rel="noopener">'+(a.tipo==="meteorológica"?"Aviso oficial":"PDF oficial")+'</a>'+
+        (a.departamentos&&a.departamentos.length?' · '+esc(a.departamentos.join(", ")):'')+' · <a href="'+esc(a.url||a.pdf)+'" target="_blank" rel="noopener">'+(a.tipo==="meteorológica"?"Aviso oficial":"PDF oficial")+'</a> · <a href="evento.html?id='+encodeURIComponent(idSen(a))+'">Ver ficha</a>'+
         (a.fenomeno?'<div style="opacity:.9">'+esc(a.fenomeno)+(a.n_municipios?' · '+a.n_municipios+' municipios en el polígono':'')+'</div>':'')+
         (a.rios&&a.rios.length?'<div style="opacity:.8">Ríos citados: '+esc(a.rios.slice(0,12).join(", "))+'</div>':'')+'</div>';
     });
@@ -873,14 +882,14 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
   function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   fetch("sismos_oficiales.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
     if(!d||!d.sismos||!d.sismos.length)return;
-    var ref=document.getElementById("aviso"); if(!ref)return;
+    var ref=document.getElementById("ofref"); if(!ref)return;
     var lim=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
     var s=d.sismos.filter(function(x){return x.fecha_local.slice(0,10)>=lim;});
     if(!s.length)return;
     var may=s.slice().sort(function(a,b){return b.mag-a.mag;})[0];
     var box=document.createElement("div");
     box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
-    box.innerHTML='<b>Sismos — Observatorio San Calixto (últimos 7 días)</b> <span style="opacity:.7">· <a href="'+esc(d.fuente)+'" target="_blank" rel="noopener">osc.org.bo</a> · <a href="sismos_oficiales.json">datos</a></span><div>'+s.length+' sismos registrados · el mayor: M '+may.mag.toFixed(1)+' ('+esc(may.provincia)+', '+esc(may.departamento)+', '+esc(may.fecha_local.slice(0,10))+', '+Math.round(may.prof_km)+' km de profundidad)</div>';
+    box.innerHTML='<b>Sismos — Observatorio San Calixto (últimos 7 días)</b> <span style="opacity:.7">· <a href="'+esc(d.fuente)+'" target="_blank" rel="noopener">osc.org.bo</a> · <a href="sismos_oficiales.json">datos</a> · <a href="informes.html?cat=geol%C3%B3gica">todos los sismos en el centro de informes</a></span><div>'+s.length+' sismos registrados · el mayor: M '+may.mag.toFixed(1)+' ('+esc(may.provincia)+', '+esc(may.departamento)+', '+esc(may.fecha_local.slice(0,10))+', '+Math.round(may.prof_km)+' km de profundidad)</div><div style="margin-top:4px"><a href="https://script.google.com/macros/s/AKfycbzxWSLP0Vz_vJdugCpOngN-uYVsTEwW9b64phK1Q-xdmLJwiUhGhrUHqLp3srPE5sP0/exec?pedir=1" target="_blank" rel="noopener">Pedir informe de sismos</a> <span style="opacity:.7">(escriba «sismo hoy» o «sismo» + lugar)</span></div>';
     ref.parentNode.insertBefore(box,ref.nextSibling);
   }).catch(function(){});
 })();
@@ -888,7 +897,7 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
 (function(){
   function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   fetch("epidemio_oficial.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
-    if(!d)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    if(!d)return; var ref=document.getElementById("ofref"); if(!ref)return;
     var b=(d.boletines||[])[0], inter=(d.internacional||[]).slice(0,6);
     if(!b&&!inter.length)return;
     var box=document.createElement("div");
@@ -896,14 +905,14 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
     var h='<b>Vigilancia epidemiológica</b>';
     if(b){h+=' <span style="opacity:.7">· Ministerio de Salud y Deportes · SE '+esc(b.semana)+' ('+esc(b.periodo)+') · <a href="'+esc(b.url)+'" target="_blank" rel="noopener">boletín PDF</a></span><ul style="margin:4px 0 4px 18px;padding:0">'+(b.frases||[]).slice(0,3).map(function(f){return '<li>'+esc(f)+'</li>';}).join("")+'</ul>';}
     if(inter.length){h+='<div style="opacity:.85;margin-top:4px"><b>Vigilancia internacional</b> (OPS/OMS; no son eventos ocurridos en Bolivia):</div><ul style="margin:2px 0 0 18px;padding:0">'+inter.map(function(x){return '<li>'+esc(x.fecha||"")+' · <a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.titulo)+'</a>'+(x.menciona_bolivia?' <b>(menciona a Bolivia)</b>':'')+'</li>';}).join("")+'</ul>';}
-    box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
+    h+='<div style="margin-top:6px"><a href="https://script.google.com/macros/s/AKfycbzxWSLP0Vz_vJdugCpOngN-uYVsTEwW9b64phK1Q-xdmLJwiUhGhrUHqLp3srPE5sP0/exec?pedir=1" target="_blank" rel="noopener">Pedir informe de un brote o alerta OPS/OMS</a> <span style="opacity:.7">(escriba «brote hoy», «ébola», «dengue»…)</span></div>'; box.innerHTML=h; ref.parentNode.insertBefore(box,ref.nextSibling);
   }).catch(function(){});
 })();
 
 (function(){
   function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   fetch("focos_propension.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
-    if(!d||!d.muy_propensa)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    if(!d||!d.muy_propensa)return; var ref=document.getElementById("ofref"); if(!ref)return;
     var dias=Object.keys(d.muy_propensa).sort();
     var box=document.createElement("div");
     box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
@@ -917,7 +926,7 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
 (function(){
   function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   fetch("focos_firms.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
-    if(!d||!d.actual)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    if(!d||!d.actual)return; var ref=document.getElementById("ofref"); if(!ref)return;
     var a=d.actual, dep=Object.keys(a.por_departamento||{}).slice(0,6).map(function(k){return k+": "+a.por_departamento[k];}).join(" · ");
     var box=document.createElement("div");
     box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
@@ -929,7 +938,7 @@ cargar();setInterval(cargar,CONFIG.REFRESCO_S*1000);
 (function(){
   function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   fetch("focos_detectados.json?t="+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(d){
-    if(!d||!d.dias)return; var ref=document.getElementById("aviso"); if(!ref)return;
+    if(!d||!d.dias)return; var ref=document.getElementById("ofref"); if(!ref)return;
     var ks=Object.keys(d.dias).sort().slice(-5); if(!ks.length)return;
     var box=document.createElement("div");
     box.style.cssText="margin:8px 12px;padding:8px 12px;border:1px solid #8884;border-radius:8px;font-size:13px";
