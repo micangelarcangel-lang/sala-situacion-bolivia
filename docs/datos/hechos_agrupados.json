@@ -80,6 +80,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOanZyTzhRcHFadnlxb096bklWd0wzbG9DcVFmdHlyMTNTc1lCRUV6WG56ZmZMcHh0LUkxYkFmS3Y1RUpScHlpX2xjaFB2ZDM0VVpTS2ZMczA0TkQ1bVlTUm9VNF9MVmNJR3JDZ1hBbm9iMUdXY19XbHBmeXotaTQ2OWxkTEJJQ19pTE0wVFlyZjZndGV1aWgtMTlNTC1JZ1hUZ0xObVVLQUFLekdEcmN6cHFlTmZXRDNIVXVLWWxUZw?oc=5"
  },
  {
+  "hecho_id": "noticia:1di7x29",
+  "fecha_hora_local": "2026-10-26 18:08",
+  "ts_ms": 1793052480000,
+  "titulo": "Choque frontal entre camión y ómnibus deja tres heridos graves en Potosí - Correo del Sur",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 3,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Correo del Sur",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNRjBCLXd3TzJkRE1NaEFmbHhnTEt5ZTNrQVc4dWJ4bC1nYTVLZm9QZXZtYmxGRzNkV2ZRVUlrQnFueGNTNFl6WklTM0Z4c01mdFliNFlOV3lwN0tYbXB0VmZ0aWRiZkQ4bUZWR1F3SE81ZGpHeFhjckU0bXptMWYzZ0JFMXFQSmF4VXQwSGRrNk1HWkNPMl9WRXFESnI2YmZLT1cyUHNSUHdFejVuMUhYSURjZFhpaXVXdzI1c1J3?oc=5"
+ },
+ {
   "hecho_id": "noticia:2avehj",
   "fecha_hora_local": "2026-10-26 17:38",
   "ts_ms": 1793050712000,
