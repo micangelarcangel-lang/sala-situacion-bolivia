@@ -229,15 +229,15 @@
   "nivel_preliminar": "amarilla",
   "fallecidos_max": 0,
   "heridos_max": 2,
-  "cifras_discrepantes": "no",
-  "n_notas": 4,
-  "fuentes": "FmBolivia; La Patria Bolivia; Red Uno; unitel.bo",
+  "cifras_discrepantes": "sí",
+  "n_notas": 5,
+  "fuentes": "El Diario - Bolivia; FmBolivia; La Patria Bolivia; Red Uno; unitel.bo",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOM1lYRkFIbEM0LVoxeDZvM0ZYR1VKUXN5SmxRalhTZkQ4dmUxTzV3M2tGdXBrNmI5cmNsMHZCWFpENFRFdXlJSDF5aF82UGQ3amo2TUFJakFvUVJ3ajBhZGlnVVl4NjJyellhTEVrZXB6elVHN29FbnRvT0UtTmlNWUlWTzByWS12YzM0NVViYVlrTzJRajlma3VpOXNHcWMtbW13dXdjYWFTUzFTZklmN3RGVzlzWEprX1lpMFZFUVc5REdybnhfWjg4ZV9vSVB2SXNaUHln?oc=5 | https://news.google.com/rss/articles/CBMizwFBVV95cUxNSnNnSXdMMjJhcHh3Q2pEMEtjYU1WTkNpT243WXVTbTNsQml3ZU5PSm8zcjRKZTRTY0xjQ2lOWVJ6d2NnUV9sT2kwYXZrM2lfYlNUVWk0Mzd0NVljbzlUZkhwUGNIVmNVVHhOZHZvZGM3aVZwNEtKVHplNy04N184M2d3c1V0Y2RSMkVYWFlzZ0dDdWVJMjVBaUM0X2ZxdDZQRllOT1NFdVMtYl85R3lKcEdLclhUR2xxMXV4ZllPLWs5dzI3N01uWWRfdWNkcVk?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOM1lYRkFIbEM0LVoxeDZvM0ZYR1VKUXN5SmxRalhTZkQ4dmUxTzV3M2tGdXBrNmI5cmNsMHZCWFpENFRFdXlJSDF5aF82UGQ3amo2TUFJakFvUVJ3ajBhZGlnVVl4NjJyellhTEVrZXB6elVHN29FbnRvT0UtTmlNWUlWTzByWS12YzM0NVViYVlrTzJRajlma3VpOXNHcWMtbW13dXdjYWFTUzFTZklmN3RGVzlzWEprX1lpMFZFUVc5REdybnhfWjg4ZV9vSVB2SXNaUHln?oc=5 | https://news.google.com/rss/articles/CBMixAFBVV95cUxNclN1SWlndmNtTkNTQ3pBZm4xd1Y3U3R3ZlBHLVBGM2haY05TekxGTGxNNnNiZHJPb2tMQkdNYVNmYVlqVlE3MlVRR1VhUTZ2Z1NrZFVIaV8yYXdfdlNfbXZsVEpJa0lQT0xZTEQtb09IaHpmSnpNS0hnMHRkV21ycW9BSnlKZ1ZyRXZwYW1JaXBmZ0JTcW04X19HVXpRa1NoNHFxTGc3bUstT3ZLQnhrY2lmUzdvVDVjMFdsV1BOWlpJRGpR?oc=5 | https://news.google.com/rss/articles/CBMizwFBVV95cUxNSnNnSXdMMjJhcHh3Q2pEMEtjYU1WTkNpT243WXVTbTNsQml3ZU5PSm8zcjRKZTRTY0xjQ2lOWVJ6d2NnUV9sT2kwYXZrM2lfYlNUVWk0Mzd0NVljbzlUZkhwUGNIVmNVVHhOZHZvZGM3aVZwNEtKVHplNy04N184M2d3c1V0Y2RSMkVYWFlzZ0dDdWVJMjVBaUM0X2ZxdDZQRllOT1NFdVMtYl85R3lKcEdLclhUR2xxMXV4ZllPLWs5dzI3N01uWWRfdWNkcVk?oc=5"
  },
  {
   "hecho_id": "clima:Potosí:2026-10-26:viento:1",
