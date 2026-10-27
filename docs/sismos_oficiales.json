@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-10-27T14:19:30.912878Z",
+ "actualizado": "2026-10-27T15:17:34.721462Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261027T101921_-17.222_-65.145",
+   "fecha_local": "2026-10-27 10:19:21",
+   "lat": -17.222,
+   "lon": -65.145,
+   "prof_km": 26.6,
+   "mag": 3.7,
+   "provincia": "José Carrasco",
+   "departamento": "Cochabamba",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261026T043243_-17.64_-69.421",
    "fecha_local": "2026-10-26 04:32:43",
