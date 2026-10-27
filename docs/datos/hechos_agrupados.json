@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "clima:Santa Cruz:2026-10-28:lluvia:1",
+  "fecha_hora_local": "2026-10-27 00:05",
+  "ts_ms": 1793073938449,
+  "titulo": "Santa Cruz 2026-10-28: 39.1 mm de lluvia pronosticados",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Open-Meteo (pronóstico)",
+  "lat": -17.78,
+  "lon": -63.18,
+  "lugar": "Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://open-meteo.com/"
+ },
+ {
   "hecho_id": "noticia:16b0cah",
   "fecha_hora_local": "2026-10-26 21:40",
   "ts_ms": 1793065219000,
