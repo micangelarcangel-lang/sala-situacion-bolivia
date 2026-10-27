@@ -1,7 +1,43 @@
 {
- "actualizado": "2026-10-27T11:10:15.188081Z",
+ "actualizado": "2026-10-27T12:07:06.766974Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
+  {
+   "publicada": "2026-10-27 07:41:36",
+   "inicio": "2026-10-27",
+   "fin": "2026-11-02",
+   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 43/2026",
+   "nivel": "AMARILLO",
+   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1542.pdf",
+   "error_pdf": "HTTPError: HTTP Error 404: Not Found",
+   "numero": "43/2026",
+   "vigente": true,
+   "nivel_num": 1
+  },
+  {
+   "publicada": "2026-10-27 07:35:50",
+   "inicio": "2026-10-27",
+   "fin": "2026-10-31",
+   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 44/2026",
+   "nivel": "NARANJA",
+   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1541.pdf",
+   "error_pdf": "HTTPError: HTTP Error 404: Not Found",
+   "numero": "44/2026",
+   "vigente": true,
+   "nivel_num": 2
+  },
+  {
+   "publicada": "2026-10-27 07:27:44",
+   "inicio": "2026-10-27",
+   "fin": "2026-11-02",
+   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 43/2026",
+   "nivel": "AMARILLO",
+   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1540.pdf",
+   "error_pdf": "HTTPError: HTTP Error 404: Not Found",
+   "numero": "43/2026",
+   "vigente": true,
+   "nivel_num": 1
+  },
   {
    "tipo": "meteorológica",
    "publicada": "2026-10-24 16:26:34",

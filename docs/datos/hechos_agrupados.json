@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1q4qmfq",
+  "fecha_hora_local": "2026-10-27 06:28",
+  "ts_ms": 1793096935000,
+  "titulo": "Tres presuntos ladrones de mineral mueren por intoxicación en mina de Huanuni - Red Uno",
+  "tipo_amenaza": "biológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 1,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -18.274,
+  "lon": -66.717,
+  "lugar": "Huanuni, Oruro",
+  "departamento": "Oruro",
+  "municipio": "Huanuni",
+  "enlaces": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNcjY1Tl9FNElxNmhWQXBMMW9JUTRUYngyVUk0MTdZSGp5d05xWkNlNWg0dHRqdFFhNm5XaE9wSjcyWFRpazRhRGQzdTRoNjZRczhtQVpocWVrRjNHMG92R21oczUzc0FVbThiV2VHM2F2bkxuSGhXYjNSNXU1enFSQ09LRHladmVBcUpuRHZmM0dtMnNqMDFSdVZZTEdKZElIYnNhMG5hLXVncUl5NkkyUjMxa2JzTFA4OEdBYWh2QUFvLXli?oc=5"
+ },
+ {
   "hecho_id": "clima:Santa Cruz:2026-10-28:lluvia:2",
   "fecha_hora_local": "2026-10-27 04:05",
   "ts_ms": 1793088333701,
