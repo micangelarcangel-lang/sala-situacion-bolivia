@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1acjgzw",
+  "fecha_hora_local": "2026-10-27 14:16",
+  "ts_ms": 1793124999000,
+  "titulo": "Desborde del río San Julián afecta a siete municipios de Santa Cruz - La Patria Bolivia",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Patria Bolivia",
+  "lat": -16.831,
+  "lon": -62.734,
+  "lugar": "San Julián, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "San Julián",
+  "enlaces": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNZ0YtaDRJMk8zWGljWk1Mc2RGU1VESEVXdU1tZWR2MThna3g3eXdYZjJwUzJ3OUdQRkcwTHJXSmxYejdPMnhtT01JOFN1dGtod203R1hnaUNYWFBnZThtOWJKSlVRalg2cENDMkhkV1J6MDVFeTNmVUZCMmR0ekRQVTFRZldRcm5MUUxFN0NDTlFTUm9TWGE5TTlB?oc=5"
+ },
+ {
   "hecho_id": "noticia:j6590q",
   "fecha_hora_local": "2026-10-27 13:14",
   "ts_ms": 1793121281000,
