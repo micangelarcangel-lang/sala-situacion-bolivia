@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:2uz2pp",
+  "fecha_hora_local": "2026-10-28 08:30",
+  "ts_ms": 1793190635000,
+  "titulo": "Tragedia ferroviaria en España: al menos 50 muertos tras el choque de dos trenes en Toledo - EL DÍA - Noticias de Bolivia para el mundo",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 3,
+  "nivel_preliminar": "roja",
+  "fallecidos_max": 50,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQV2d6SG9fVkNwcVFJODBES3FJUkNpcEZxNXFjam9DZVpzdVJuamZDdFltYVJUb3RSVkJwbE9NVVJrTkQ1NlpvNWNvWG40NUJuODBVODktM05jUVkxT1plWVNPeXRsZFV1aHRHSE5QenNTQl9EYjNESkUzRHdRNnZTdzdEWnlsUTlFZ29OakMyWEZjNllWMm05VnpGRFhWS3VqZWxJOHB4Z3VVMUhhMVk1MXJUdDQ5bTJzM1hHWnBpN0dtQmVTMGRUUDNuSnhDWWJmU0J4bVBjNA?oc=5"
+ },
+ {
   "hecho_id": "noticia:1dz063o",
   "fecha_hora_local": "2026-10-28 07:43",
   "ts_ms": 1793187786000,
