@@ -82,24 +82,47 @@ def estado(ratio_max, caudal_max, p50_med):
 def actualizar(docs, forzar=False):
     ruta_c = os.path.join(docs, "caudales_clim.json")
     clim = json.load(open(ruta_c, encoding="utf-8")) if os.path.exists(ruta_c) else {}
+    if "_celdas" not in clim:
+        clim = {}                                      # climatología antigua (otra celda): se recalcula
     cambio = False
     limite = time.time() + 150
+    celdas = clim.get("_celdas", {})
+    for nom, rio, lat, lon, dep in PUNTOS:           # la celda de ~5 km más cercana puede no caer sobre el cauce: se elige la de mayor caudal en un entorno de ±0,1°
+        if nom in celdas or time.time() > limite:
+            continue
+        offs = [(a * 0.05, b * 0.05) for a in range(-2, 3) for b in range(-2, 3)]
+        q = urllib.parse.urlencode({"latitude": ",".join(str(round(lat + a, 3)) for a, b in offs), "longitude": ",".join(str(round(lon + b, 3)) for a, b in offs), "daily": "river_discharge", "forecast_days": 7})
+        try:
+            j = _get(URL + "?" + q)
+            j = j if isinstance(j, list) else [j]
+            med = [sum(x for x in (r["daily"]["river_discharge"] or []) if x is not None) for r in j]
+            k = max(range(len(med)), key=lambda i: med[i])
+            celdas[nom] = [round(lat + offs[k][0], 3), round(lon + offs[k][1], 3)]
+        except Exception:
+            celdas[nom] = [lat, lon]
+        clim["_celdas"] = celdas
+        json.dump(clim, open(ruta_c, "w", encoding="utf-8"), separators=(",", ":"))
+        time.sleep(1.5)
     for nom, rio, lat, lon, dep in PUNTOS:
         if nom in clim:
             continue
         if time.time() > limite:
             break
+        lat, lon = celdas.get(nom, [lat, lon])
         q = urllib.parse.urlencode({"latitude": lat, "longitude": lon, "daily": "river_discharge", "start_date": "1993-01-01", "end_date": "2022-12-31"})
         j = _get(URL + "?" + q)
         clim[nom] = climatologia(j["daily"]["time"], j["daily"]["river_discharge"])
         json.dump(clim, open(ruta_c, "w", encoding="utf-8"), separators=(",", ":"))
         time.sleep(2)
-    if any(p[0] not in clim for p in PUNTOS):
+    if any(p[0] not in clim or p[0] not in celdas for p in PUNTOS):
         return f"parcial: climatología {len(clim)}/{len(PUNTOS)} puntos; continúa en el próximo ciclo"
     limite = time.time() + 120
     out, altos = [], []
     for nom, rio, lat, lon, dep in PUNTOS:
+        lat_o, lon_o = lat, lon
+        lat, lon = celdas.get(nom, [lat, lon])
         q = urllib.parse.urlencode({"latitude": lat, "longitude": lon, "daily": "river_discharge", "past_days": 14, "forecast_days": 30})
+        lat, lon = lat_o, lon_o
         if time.time() > limite:
             out.append({"nombre": nom, "rio": rio, "departamento": dep, "lat": lat, "lon": lon, "error": "tiempo agotado", "nivel": 0, "estado": "sin dato"})
             continue

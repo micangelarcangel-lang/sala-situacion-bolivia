@@ -107,10 +107,24 @@ def actualizar(docs, geo, avisar=None, hora_local=None):
     key = os.environ.get("FIRMS_KEY", "").strip()
     if not key:
         return "sin clave FIRMS_KEY (se omite)"
-    try:
-        txt = _get(f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{FUENTE}/-69.7,-22.95,-57.4,-9.6/10")
-    except Exception:
-        txt = _get(f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{FUENTE}/-69.7,-22.95,-57.4,-9.6/3")   # respaldo: 3 días
+    base = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{FUENTE}/-69.7,-22.95,-57.4,-9.6"
+    hoy_u = datetime.datetime.utcnow().date()
+    partes, errs = [], []
+    for ini in (9, 4):                              # dos tramos de 5 días (la API limita el rango): hoy-9..hoy-5 y hoy-4..hoy
+        d0 = (hoy_u - datetime.timedelta(days=ini)).isoformat()
+        try:
+            t = _get(f"{base}/5/{d0}")
+            if t.lstrip().lower().startswith(("invalid", "<")) or "latitude" not in t.split("\n", 1)[0]:
+                errs.append(t[:60].replace(key, "[clave]"))
+            else:
+                partes.append(t)
+        except Exception as e:
+            errs.append(str(e)[:60])
+    if not partes:
+        partes = [_get(f"{base}/3")]                # respaldo que ya funcionaba
+    txt = partes[0]
+    for t in partes[1:]:
+        txt += "\n".join(t.split("\n")[1:])
     if txt.lstrip().lower().startswith(("invalid", "<")) or "latitude" not in txt.split("\n", 1)[0]:
         raise RuntimeError("respuesta inesperada de FIRMS: " + txt[:80].replace(key, "[clave]"))
     filas = list(csv.DictReader(io.StringIO(txt)))
@@ -167,4 +181,5 @@ def actualizar(docs, geo, avisar=None, hora_local=None):
         for dia in sorted(est["dias"]):
             for d, n in sorted(est["dias"][dia].items()):
                 w.writerow([dia, d, n, est["fuente"]])
-    return f"{len(uniq)} detecciones (10 días), {len(puntos)} en Bolivia, {0 if not puntos else 1} mapa de calor, {sum(sum(v.values()) for v in cuenta.values())} dentro de Bolivia"
+    dd = ", ".join(f"{d[5:]}: {sum(v.values())}" for d, v in sorted(cuenta.items()))
+    return f"{len(uniq)} filas, {len(puntos)} en Bolivia · por día (UTC): {dd or 'sin datos'}" + (f" · avisos: {'; '.join(errs)}" if errs else "")
