@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-27T23:59:04.201235Z",
+ "actualizado": "2026-10-28T00:30:43.447784Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -414,7 +414,7 @@
    "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1539.pdf",
    "error_pdf": "HTTPError: HTTP Error 404: Not Found",
    "numero": "42/2026",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2,
    "departamentos": [
     "La Paz",

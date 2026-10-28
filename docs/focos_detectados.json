@@ -100,9 +100,9 @@
    "Pailón (Santa Cruz)": 1
   }
  },
- "actualizado": "2026-10-27T23:59:09.688463Z",
+ "actualizado": "2026-10-28T00:30:59.291826Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 478,
- "slack_dia": "2026-10-27"
+ "detecciones_fuera_de_limites": 142,
+ "slack_dia": "2026-10-28"
 }

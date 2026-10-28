@@ -1,0 +1,240 @@
+{
+ "actualizado": "2026-10-28T00:30:59.291826Z",
+ "dia": "2026-10-27",
+ "complejos": [
+  {
+   "n": 130,
+   "frp_mw": 622.5,
+   "lat": -13.019,
+   "lon": -67.686,
+   "departamento": "La Paz",
+   "municipio": "Ixiamas",
+   "municipios": [
+    "Ixiamas"
+   ],
+   "bbox": [
+    -67.766,
+    -13.136,
+    -67.636,
+    -12.982
+   ],
+   "id": "2026-10-27:1"
+  },
+  {
+   "n": 63,
+   "frp_mw": 205.7,
+   "lat": -12.191,
+   "lon": -66.542,
+   "departamento": "Beni",
+   "municipio": "Santa Rosa",
+   "municipios": [
+    "Santa Rosa"
+   ],
+   "bbox": [
+    -66.587,
+    -12.245,
+    -66.486,
+    -12.156
+   ],
+   "id": "2026-10-27:2"
+  },
+  {
+   "n": 19,
+   "frp_mw": 118.4,
+   "lat": -12.751,
+   "lon": -65.365,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.398,
+    -12.788,
+    -65.302,
+    -12.702
+   ],
+   "id": "2026-10-27:3"
+  },
+  {
+   "n": 18,
+   "frp_mw": 97.4,
+   "lat": -13.167,
+   "lon": -63.197,
+   "departamento": "Beni",
+   "municipio": "Magdalena",
+   "municipios": [
+    "Magdalena"
+   ],
+   "bbox": [
+    -63.231,
+    -13.18,
+    -63.178,
+    -13.126
+   ],
+   "id": "2026-10-27:4"
+  },
+  {
+   "n": 23,
+   "frp_mw": 94.8,
+   "lat": -12.641,
+   "lon": -65.172,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.194,
+    -12.675,
+    -65.163,
+    -12.621
+   ],
+   "id": "2026-10-27:5"
+  },
+  {
+   "n": 9,
+   "frp_mw": 76.2,
+   "lat": -13.676,
+   "lon": -64.579,
+   "departamento": "Beni",
+   "municipio": "San Ramón",
+   "municipios": [
+    "San Ramón"
+   ],
+   "bbox": [
+    -64.591,
+    -13.681,
+    -64.571,
+    -13.673
+   ],
+   "id": "2026-10-27:6"
+  },
+  {
+   "n": 30,
+   "frp_mw": 70.3,
+   "lat": -11.184,
+   "lon": -66.03,
+   "departamento": "Beni",
+   "municipio": "Riberalta",
+   "municipios": [
+    "Riberalta"
+   ],
+   "bbox": [
+    -66.047,
+    -11.198,
+    -66.004,
+    -11.172
+   ],
+   "id": "2026-10-27:7"
+  },
+  {
+   "n": 26,
+   "frp_mw": 52.0,
+   "lat": -11.061,
+   "lon": -67.805,
+   "departamento": "Pando",
+   "municipio": "Bella Flor",
+   "municipios": [
+    "Bella Flor"
+   ],
+   "bbox": [
+    -67.815,
+    -11.077,
+    -67.796,
+    -11.051
+   ],
+   "id": "2026-10-27:8"
+  },
+  {
+   "n": 10,
+   "frp_mw": 37.0,
+   "lat": -15.724,
+   "lon": -61.819,
+   "departamento": "Santa Cruz",
+   "municipio": "Concepción",
+   "municipios": [
+    "Concepción"
+   ],
+   "bbox": [
+    -61.826,
+    -15.727,
+    -61.805,
+    -15.72
+   ],
+   "id": "2026-10-27:9"
+  },
+  {
+   "n": 12,
+   "frp_mw": 29.1,
+   "lat": -13.092,
+   "lon": -66.784,
+   "departamento": "Beni",
+   "municipio": "Reyes",
+   "municipios": [
+    "Reyes"
+   ],
+   "bbox": [
+    -66.793,
+    -13.098,
+    -66.767,
+    -13.083
+   ],
+   "id": "2026-10-27:10"
+  },
+  {
+   "n": 9,
+   "frp_mw": 27.4,
+   "lat": -14.304,
+   "lon": -65.614,
+   "departamento": "Beni",
+   "municipio": "Santa Ana",
+   "municipios": [
+    "Santa Ana"
+   ],
+   "bbox": [
+    -65.621,
+    -14.31,
+    -65.605,
+    -14.301
+   ],
+   "id": "2026-10-27:11"
+  },
+  {
+   "n": 8,
+   "frp_mw": 23.4,
+   "lat": -14.769,
+   "lon": -63.961,
+   "departamento": "Beni",
+   "municipio": "San Andrés",
+   "municipios": [
+    "San Andrés"
+   ],
+   "bbox": [
+    -63.97,
+    -14.771,
+    -63.956,
+    -14.766
+   ],
+   "id": "2026-10-27:12"
+  },
+  {
+   "n": 12,
+   "frp_mw": 14.1,
+   "lat": -11.257,
+   "lon": -69.093,
+   "departamento": "Pando",
+   "municipio": "Bolpebra",
+   "municipios": [
+    "Bolpebra"
+   ],
+   "bbox": [
+    -69.192,
+    -11.341,
+    -69.015,
+    -11.158
+   ],
+   "id": "2026-10-27:13"
+  }
+ ]
+}
