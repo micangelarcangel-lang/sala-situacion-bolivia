@@ -1,6 +1,31 @@
 {
  "boletines": [
   {
+   "semana": 41,
+   "periodo": "11 de octubre al 17 de octubre 2026",
+   "url": "https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1060-boletin-epidemiologico-semana-epidemiologica-no-41?Itemid=465",
+   "frases": [
+    "En relación con las Infecciones Respiratorias Agud as (IRAs) en la última semana, hemos tenido incremento de casos en la mayoría de los departamentos, y la circulación viral predominan te es por influenza tipo B, aunque las neumonías no han acompañado esta misma proporción de casos .",
+    "Esta situación requiere mantener la vigilancia epidemiológica y laboratorial, fortaleciendo la capacidad de detección temprana de cambios en las tendencias y la identificación oportuna de posibles incrementos de activi dad y la vacunación activa contra la Influenza.",
+    "En los departamentos de Oruro y Chuquisaca se evidencia un incremento de casos de Enfermedades Diarreicas Agudas (EDAs), principalmente en los mayores de 60 años, como niños menores de 5 años.",
+    "Durante la Semana Epidemiológica 41 (SE 41 ), se registraron dos nuevos casos de chikungunya y dengue, principalmente en el departamento de La Paz.",
+    "Ante esta situación, se recomienda mantener y fortalecer la vigilancia epidemiológica y laboratorial, así como intensificar las acciones de prevención y control de vectores para reducir el riesgo de transmisión y prevenir la aparición de nuevos casos."
+   ],
+   "menciones": {
+    "brote": 3,
+    "alerta": 21,
+    "dengue": 10,
+    "sarampión": 8,
+    "tosferina": 8,
+    "fiebre amarilla": 0,
+    "rabia": 0,
+    "influenza": 11,
+    "diarrea": 1,
+    "chikungunya": 13
+   },
+   "detectado": "2026-10-28"
+  },
+  {
    "semana": 40,
    "periodo": "4 de octubre al 10 de octubre 2026",
    "url": "https://www.minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1059-boletin-epidemiologico-semana-epidemiologica-no-40?Itemid=465",
@@ -254,5 +279,5 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON616",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON615"
  ],
- "actualizado": "2026-10-28T20:36:08.601641Z"
+ "actualizado": "2026-10-28T21:33:56.793540Z"
 }
