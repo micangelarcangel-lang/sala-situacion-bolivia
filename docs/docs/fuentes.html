@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estado de las fuentes — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="s2.css"><script src="lib.js"></script><script src="s2.js"></script></head>
+<body><div id="hdr"></div><div class="wrap">
+<div class="callout" id="ay"></div>
+<div class="grid g4" id="k" style="margin-bottom:16px"></div>
+<div class="card"><h2>Fuentes consultadas en cada ciclo</h2><div style="overflow:auto"><table id="t"><tr><th>Fuente</th><th>Institución</th><th>Estado</th><th>Detalle del último ciclo</th></tr></table></div></div>
+<div class="card" style="margin-top:16px"><h2>Cómo se triangula la información</h2><p>Cada evento se agrupa en una <b>familia de fuente</b>: <b>Oficial nacional</b> (SENAMHI, Observatorio San Calixto, MSD), <b>Satélite</b> (NASA FIRMS, GDACS), <b>Internacional</b> (USGS, OMS/OPS), <b>Modelo</b> (ERA5, GloFAS, Open-Meteo) y <b>Prensa</b>. La confianza es <b>Alta</b> con 3 o más familias, <b>Media</b> con 2 (o 3 medios de prensa distintos) y <b>Baja</b> con 1. Los modelos son indicadores, no alertas oficiales.</p></div>
+</div><script>
+(function(){var S=SALA,X=S2;X.header("fuentes.html");
+document.getElementById("ay").innerHTML=X.ic("info")+'<div><p><b>Estado de las fuentes.</b> Cada 30 minutos el sistema consulta estas fuentes. <b>«Sin acceso automático»</b> significa que la institución bloquea la lectura por programa; esos eventos se cubren por prensa o registro manual y se declaran aquí para que ningún vacío pase inadvertido.</p></div>';
+S.cargar("estado_fuentes.json").then(function(d){X.live(d.generado);var E={ok:'<span class="badge b0">Activa</span>',error:'<span class="badge b2">Con error (se conserva lo anterior)</span>',sin_acceso:'<span class="badge bn">Sin acceso automático</span>'};
+ var n=function(e){return d.fuentes.filter(function(f){return f.estado===e}).length};
+ document.getElementById("k").innerHTML=[["Activas",n("ok"),"#2e9e5b"],["Con error",n("error"),"#f26a1b"],["Sin acceso automático",n("sin_acceso"),"#7a8aa3"],["Última actualización",S.fecha(d.generado),"#1d6fb8"]].map(function(x){return'<div class="card kpi" style="--k:'+x[2]+'"><div class="l">'+x[0]+'</div><div class="v" style="font-size:'+(typeof x[1]==="number"?30:18)+'px">'+x[1]+'</div></div>'}).join("");
+ var t=document.getElementById("t");d.fuentes.forEach(function(f){var r=t.insertRow();r.innerHTML="<td><b>"+S.esc(f.nombre)+"</b></td><td>"+S.esc(f.institucion)+"</td><td>"+(E[f.estado]||S.esc(f.estado))+"</td><td>"+S.esc(f.detalle)+"</td>"});
+}).catch(function(e){document.getElementById("k").innerHTML='<div class="card vacio" style="grid-column:1/-1">No se pudo cargar el estado: '+S.esc(e.message)+'</div>'});})();
+</script></body></html>

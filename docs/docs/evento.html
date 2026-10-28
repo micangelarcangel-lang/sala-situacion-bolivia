@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe de evento — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="s2.css"><script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script>
+<style>.mapaz{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.big{font-size:22px;font-weight:800}.t-tit{font-size:24px;font-weight:800;line-height:1.25;margin:8px 0 4px}.meta{color:var(--mut);font-size:13px}
+.foot{margin-top:18px;color:var(--mut);font-size:11.5px;border-top:1px solid var(--line);padding-top:8px}.acciones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.rsm{font-size:15px;line-height:1.55}</style></head>
+<body><div id="hdr"></div><div class="wrap" id="app"><div class="card vacio">Cargando informe…</div></div>
+<script>
+(function(){
+var S=SALA,X=S2,$=function(i){return document.getElementById(i)},DIA=864e5;
+X.header("informes.html");
+var FAM={prensa:"Prensa",senamhi:"Oficial nacional",sismo:"Oficial nacional",epidemiologia:"Oficial nacional",foco:"Satélite",gdacs:"Satélite / GDACS",usgs:"Internacional",modelo:"Modelo",sequia:"Modelo",caudal:"Modelo"};
+var TIPO={sismo:"Informe de sismo",foco:"Informe de focos de calor / incendio",sequia:"Informe de sequía",caudal:"Informe de crecida / caudal",epidemiologia:"Informe de brote / evento sanitario",senamhi:"Informe de aviso oficial (SENAMHI)",prensa:"Informe de hecho reportado",gdacs:"Informe de alerta internacional",usgs:"Informe de sismo (USGS)",modelo:"Informe de pronóstico de modelo"};
+var id=decodeURIComponent((location.search.match(/[?&]id=([^&]*)/)||[])[1]||"");
+function pol(g){return g.type==="Polygon"?[g.coordinates]:g.coordinates}
+function mapaZ(b,o){o=o||{};var kx=Math.cos((b[1]+b[3])/2*Math.PI/180),W=900,sc=W/((b[2]-b[0])*kx),H=Math.round((b[3]-b[1])*sc);
+ function x(l){return((l-b[0])*kx*sc).toFixed(1)}function y(l){return((b[3]-l)*sc).toFixed(1)}
+ function path(g){var d="";pol(g).forEach(function(p){p.forEach(function(r){d+="M"+r.map(function(c){return x(c[0])+","+y(c[1])}).join("L")+"Z"})});return d}
+ var s='<svg class="mapaz" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+S.esc(o.titulo||"Mapa")+'"><rect width="'+W+'" height="'+H+'" fill="#eaf1f8" opacity=".6"/>';
+ ((o.dep&&o.dep.features)||[]).forEach(function(f){var fill=o.fillDep?o.fillDep(f.properties.n):"#fff";s+='<path d="'+path(f.geometry)+'" fill="'+fill+'" stroke="#4b5a70" stroke-width="1.6" fill-rule="evenodd"/>'});
+ if(o.mun&&o.mun.features)o.mun.features.forEach(function(f){var fill=o.fillMun?o.fillMun(f.properties):"none";s+='<path d="'+path(f.geometry)+'" fill="'+fill+'" fill-opacity=".8" stroke="#8a97ab" stroke-width=".6" fill-rule="evenodd"/>'});
+ if(o.rect)s+='<rect x="'+x(o.rect[0])+'" y="'+y(o.rect[3])+'" width="'+((o.rect[2]-o.rect[0])*kx*sc).toFixed(1)+'" height="'+((o.rect[3]-o.rect[1])*sc).toFixed(1)+'" fill="none" stroke="#d7263d" stroke-width="2.5" stroke-dasharray="8 5"/>';
+ (o.pts||[]).forEach(function(p){if(p.ring)s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+p.r+'" fill="none" stroke="'+p.color+'" stroke-width="3"/><circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r*2.2)+'" fill="none" stroke="'+p.color+'" stroke-width="1.5" opacity=".5"/>';else s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r||4)+'" fill="'+(p.color||"#d7263d")+'" fill-opacity="'+(p.op||.6)+'" stroke="'+(p.st||"none")+'" stroke-width="1"><title>'+S.esc(p.t||"")+'</title></circle>'});
+ (o.labels||[]).forEach(function(l){s+='<text x="'+x(l.lon)+'" y="'+y(l.lat)+'" font-size="'+(l.fs||15)+'" text-anchor="middle" fill="#0f1b2d" style="paint-order:stroke;stroke:#fff;stroke-width:4px" font-weight="700">'+S.esc(l.t)+'</text>'});
+ s+='<text x="14" y="26" font-size="15" fill="#4b5a70">N ↑</text><text x="'+(W-10)+'" y="'+(H-10)+'" text-anchor="end" font-size="12" fill="#4b5a70">'+b[0].toFixed(1)+'°, '+b[1].toFixed(1)+'° → '+b[2].toFixed(1)+'°, '+b[3].toFixed(1)+'°</text></svg>';return s}
+function centro(f){var xs=0,ys=0,n=0;var p=pol(f.geometry);p[0][0].forEach(function(c){xs+=c[0];ys+=c[1];n++});return[xs/n,ys/n]}
+function sec(t,ic,body,cl){return'<div class="card '+(cl||"")+'"><h2><span class="i">'+X.ic(ic)+'</span>'+t+'</h2>'+body+'</div>'}
+function kpi(l,v,d,c){return'<div class="card kpi" style="--k:'+(c||"#1d6fb8")+'"><div class="l">'+l+'</div><div class="v" style="font-size:24px">'+v+'</div><div class="d">'+(d||"")+'</div></div>'}
+function relacionados(e,ev){var w=(e.origen==="sequia"||e.origen==="caudal")?15*DIA:3*DIA;var dd=e.departamentos||[];
+ return ev.filter(function(o){if(o.id===e.id||o.categoria!==e.categoria)return false;if(Math.abs(o.ts-e.ts)>w)return false;var od=o.departamentos||[];if(dd.length&&od.length&&!dd.some(function(d){return od.indexOf(d)>=0}))return false;if(!dd.length){var pw=e.titulo.toLowerCase().match(/[a-záéíóúñ]{6,}/g)||[],tt=o.titulo.toLowerCase();return pw.some(function(w){return tt.indexOf(w)>=0})}return true}).sort(function(a,b){return b.ts-a.ts}).slice(0,12)}
+X.datos().then(function(D){
+ var ev=D.ev,e=ev.filter(function(z){return z.id===id})[0];
+ if(!e){$("app").innerHTML='<div class="card vacio"><b>No se encontró el evento solicitado.</b><br>Puede haber salido del historial. <a href="index.html#ev">Volver a la base de eventos</a></div>';return}
+ document.title=e.titulo+" — Sala de Situación Bolivia";X.live(D.eventos_unificados&&D.eventos_unificados.generado);
+ var h='',dep=D.geoDep,mun=D.geoMun,k='',cuerpo='',charts=[];
+ var cc=e.nivel!=null?X.NIVCOL[e.nivel]:(S.COLCAT[e.categoria]||"#1d6fb8");
+ h+='<div class="card" style="border-left:6px solid '+cc+'"><div class="meta">'+X.catChip(e.categoria)+' · '+(TIPO[e.origen]||"Informe de evento")+'</div><div class="t-tit">'+S.esc(e.titulo)+'</div><div class="meta">'+S.esc(e.lugar||(e.departamentos||[]).join(", ")||"Bolivia")+' · '+S.fecha(e.ts)+' (hora La Paz)</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+S.badgeNivel(e)+X.badgeOrigen(e)+X.confBadge(e)+'</div>'+
+  '<div class="acciones noimp"><button class="btn p" onclick="window.print()">'+X.ic("print")+'Guardar como PDF / imprimir</button><button class="btn" id="bj">'+X.ic("dl")+'JSON</button><button class="btn" id="bc">'+X.ic("dl")+'CSV</button>'+(S.urlOk(e.url)?'<a class="btn" target="_blank" rel="noopener" href="'+S.esc(e.url)+'">Abrir fuente original</a>':'')+'<a class="btn" href="informes.html">'+X.ic("doc")+'Otros informes</a><a class="btn" href="index.html">Volver al tablero</a></div></div>';
+ h+='<div class="card rsm" style="margin-top:16px"><h2><span class="i">'+X.ic("info")+'</span>Resumen</h2><p style="margin:6px 0 0">'+S.esc(e.detalle||"Sin detalle adicional de la fuente.")+'</p></div>';
+ /* ---- bloques por tipo ---- */
+ var bloque='',ch=[];
+ var o=e.origen;
+ if(o==="sismo"){
+  var s0=(D.sismos_oficiales&&D.sismos_oficiales.sismos||[]).filter(function(s){return"sismo:"+s.id===e.id})[0]||{lat:e.lat,lon:e.lon,mag:e.cifras.magnitud,prof_km:e.cifras.profundidad_km,fecha_local:S.fecha(e.ts)};
+  var mag=s0.mag,pf=s0.prof_km,cl=mag<3?"menor (rara vez sentido)":mag<4?"ligero":mag<5?"moderado":mag<6?"fuerte":"muy fuerte",tp=pf<70?"superficial":pf<300?"intermedio":"profundo";
+  var cerca=(D.sismos_oficiales.sismos||[]).filter(function(s){return Math.abs(s.lat-s0.lat)<2.5&&Math.abs(s.lon-s0.lon)<2.5&&"sismo:"+s.id!==e.id}).sort(function(a,b){return b.mag-a.mag});
+  k=kpi("Magnitud","M "+mag,"clase: "+cl,"#8d6e63")+kpi("Profundidad",pf+" km","sismo "+tp,"#2a7fd1")+kpi("Hora local",String(s0.fecha_local).slice(11,16),String(s0.fecha_local).slice(0,10),"#1d6fb8")+kpi("Ubicación",S.esc(s0.provincia||""),S.esc(s0.departamento||""),"#0aa3a3");
+  var b=[s0.lon-2.2,s0.lat-1.8,s0.lon+2.2,s0.lat+1.8];
+  var pts=cerca.map(function(s){return{lat:s.lat,lon:s.lon,r:3+s.mag*2.2,color:"#f5b700",op:.7,st:"#7a5b00",t:"M "+s.mag+" · "+s.fecha_local}});pts.push({lat:s0.lat,lon:s0.lon,r:10+mag*2.5,color:"#d7263d",ring:true});
+  bloque=sec("Ubicación del epicentro","map",mapaZ(b,{dep:dep,mun:mun,pts:pts,titulo:"Epicentro"})+'<div class="cap" style="margin-top:6px">Círculo rojo: este sismo. Amarillos: otros sismos en ±2° (tamaño = magnitud). Fuente: Observatorio San Calixto.</div>');
+  bloque+=sec("Contexto: sismos de la región","pulse",'<div class="ch s" id="c1"></div><div class="cap">Magnitud en el tiempo de los sismos cercanos; el rojo es el evento de este informe.</div>');
+  ch.push(function(){var all=cerca.concat([Object.assign({},s0,{es:1})]);X.chart("c1",{tooltip:{formatter:function(p){return"M "+p.data[1]+"<br>"+p.data[3]}},grid:{left:40,right:12,top:12,bottom:30},xAxis:{type:"time"},yAxis:{type:"value",name:"M",min:2},series:[{type:"scatter",symbolSize:function(v){return 6+v[1]*v[1]*.9},data:all.map(function(s){var t=s.ts||new Date(String(s.fecha_local).replace(" ","T")+"-04:00").getTime();return{value:[t,s.mag,s.prof_km,s.fecha_local],itemStyle:{color:s.es?"#d7263d":"#f5b700",borderColor:"#fff",borderWidth:1}}})}]})});
+  bloque+=sec("Sismos cercanos (±2,5°, últimos días)","list",'<table><tr><th>Fecha local</th><th>M</th><th>Prof. (km)</th><th>Ubicación</th></tr>'+(cerca.slice(0,12).map(function(s){return'<tr><td>'+s.fecha_local+'</td><td><b>'+s.mag+'</b></td><td>'+s.prof_km+'</td><td>'+S.esc(s.provincia+", "+s.departamento)+'</td></tr>'}).join("")||'<tr><td colspan="4" class="nota">Sin otros sismos cercanos en el período.</td></tr>')+'</table>');
+  bloque+=sec("Cómo interpretar","info",'<p>Magnitud <b>'+mag+'</b> ('+cl+') a <b>'+pf+' km</b> de profundidad ('+tp+'). Los sismos profundos (&gt;70 km) son frecuentes en el altiplano y la zona subandina y se sienten menos en superficie que uno superficial de igual magnitud. Esta ficha no incluye intensidad macrosísmica; la percepción reportada debe confirmarse con el Observatorio San Calixto.</p>');
+ }
+ else if(o==="foco"){
+  var bb=e.bbox||[e.lon-.4,e.lat-.4,e.lon+.4,e.lat+.4],pad=Math.max(.35,(bb[2]-bb[0])*.8),vb=[bb[0]-pad,bb[1]-pad*.75,bb[2]+pad,bb[3]+pad*.75];
+  var P=(D.focos_puntos&&D.focos_puntos.puntos||[]).filter(function(p){return p[1]>=bb[0]-.05&&p[1]<=bb[2]+.05&&p[0]>=bb[1]-.05&&p[0]<=bb[3]+.05});
+  var pd={},mm={},frp=0;P.forEach(function(p){pd[p[3]]=pd[p[3]]||{n:0,f:0};pd[p[3]].n++;pd[p[3]].f+=p[2]||0;frp+=p[2]||0;if(p[5])mm[p[5]]=(mm[p[5]]||0)+1});
+  var dias=(D.focos_puntos&&D.focos_puntos.dias)||[],mx=P.reduce(function(a,p){return Math.max(a,p[2]||0)},0);
+  k=kpi("Detecciones (10 días)",P.length,"dentro del área del evento","#d7263d")+kpi("Potencia radiativa",Math.round(frp)+" MW","FRP acumulada","#c0392b")+kpi("Foco más intenso",Math.round(mx)+" MW","máximo individual","#f26a1b")+kpi("Municipios",Object.keys(mm).length,Object.keys(mm).filter(Boolean).slice(0,3).join(", "),"#8d6e63");
+  var fc=function(f){var c=Math.min(1,(f||5)/40);return c>.6?"#7a0026":c>.3?"#e31a1c":"#fd8d3c"};
+  bloque=sec("Mapa de focos de calor","map",mapaZ(vb,{dep:dep,mun:mun,rect:bb,pts:P.map(function(p){return{lat:p[0],lon:p[1],r:3+Math.min(9,(p[2]||0)/5),color:fc(p[2]),op:.55,t:p[3]+" · "+p[5]+" · "+p[2]+" MW"}}),titulo:"Focos"})+'<div class="cap" style="margin-top:6px">Cada círculo es una detección satelital (VIIRS NOAA-21); color y tamaño según potencia (MW). Recuadro rojo: área del complejo. Las quemas agrícolas también se detectan: no equivale a incendio confirmado.</div>');
+  bloque+=sec("Evolución en el área","pulse",'<div class="ch s" id="c1"></div>')+sec("Municipios afectados","list",'<div class="ch s" id="c2"></div>');
+  ch.push(function(){X.chart("c1",{tooltip:{trigger:"axis"},legend:{top:0},grid:{left:44,right:46,top:34,bottom:28},xAxis:{type:"category",data:dias.map(function(d){return d.slice(5)})},yAxis:[{type:"value",name:"Focos"},{type:"value",name:"MW",splitLine:{show:false}}],series:[{name:"Focos",type:"bar",itemStyle:{color:"#f26a1b",borderRadius:[4,4,0,0]},data:dias.map(function(d){return(pd[d]||{n:0}).n})},{name:"Potencia (MW)",type:"line",yAxisIndex:1,smooth:true,itemStyle:{color:"#7a0026"},data:dias.map(function(d){return Math.round((pd[d]||{f:0}).f)})}]});
+   var ks=Object.keys(mm).sort(function(a,b){return mm[b]-mm[a]}).slice(0,10);X.chart("c2",{tooltip:{},series:[{type:"treemap",roam:false,breadcrumb:{show:false},label:{formatter:"{b}\n{c}",fontSize:13},itemStyle:{borderColor:"#fff",gapWidth:2},levels:[{colorSaturation:[.4,.8]}],data:ks.map(function(m){return{name:m,value:mm[m]}}),color:["#bd0026","#e31a1c","#fc4e2a","#fd8d3c","#feb24c"]}]})});
+ }
+ else if(o==="sequia"){
+  var dp=e.departamentos[0],v=D.sequia.departamentos[dp]||{};
+  k=kpi("SPI-1",v.spi1,v.clase1,"#2a7fd1")+kpi("SPI-3",v.spi3,v.clase3,"#ef8a3b")+kpi("SPI-6",v.spi6,v.clase6,"#d9a400")+kpi("SPI-12",v.spi12,v.clase12,"#c0392b");
+  var sc=function(x){x=x==null?0:x;return x<=-2?"#c0392b":x<=-1.5?"#ef8a3b":x<=-1?"#f7c873":x<1?"#eef1f5":x<1.5?"#8fc0e8":x<2?"#3b82c4":"#1d4e9c"};
+  bloque=sec("Dónde: "+dp,"map",mapaZ([-69.9,-23,-57.3,-9.5],{dep:dep,fillDep:function(n){var q=D.sequia.departamentos[n];return n===dp?sc(q&&q.spi3):"#f4f6f9"},labels:[{t:dp,lon:centro(dep.features.filter(function(f){return f.properties.n===dp})[0])[0],lat:centro(dep.features.filter(function(f){return f.properties.n===dp})[0])[1],fs:26}],titulo:"Sequía"})+'<div class="cap" style="margin-top:6px">Departamento coloreado según SPI-3.</div>');
+  bloque+=sec("Evolución del SPI-3 (36 meses)","pulse",'<div class="ch" id="c1"></div>')+sec("Lluvia del mes","water",'<p><b>'+v.precip_mes_mm+' mm</b> frente a un normal de '+v.normal_mes_mm+' mm ('+v.pct_normal+' % de lo normal) en '+D.sequia.ultimo_mes+'.</p><div class="nota">'+S.esc(D.sequia.nota||"")+'</div>');
+  ch.push(function(){var s=v.serie_spi3||[];X.chart("c1",{tooltip:{trigger:"axis"},grid:{left:40,right:56,top:12,bottom:28},xAxis:{type:"category",data:s.map(function(r){return r[0].slice(2)}),boundaryGap:false,axisLabel:{interval:3}},yAxis:{type:"value",min:-3.5,max:3.5},visualMap:{show:false,dimension:1,pieces:[{lte:-2,color:"#c0392b"},{gt:-2,lte:-1.5,color:"#ef8a3b"},{gt:-1.5,lte:-1,color:"#d9a400"},{gt:-1,lt:1,color:"#5b6b82"},{gte:1,lt:1.5,color:"#5fa8dd"},{gte:1.5,color:"#1d4e9c"}]},series:[{type:"line",smooth:true,areaStyle:{opacity:.12},lineStyle:{width:3},data:s.map(function(r){return r[1]}),markLine:{symbol:"none",silent:true,data:[{yAxis:-1},{yAxis:-1.5},{yAxis:-2}],lineStyle:{type:"dashed",color:"#ef8a3b"},label:{show:false}}}]})});
+ }
+ else if(o==="caudal"){
+  var p=D.cau_=(D.caudales&&D.caudales.puntos||[]).filter(function(q){return e.id==="caudal:"+q.nombre+":"+q.hoy})[0];
+  if(p){k=kpi("Estado",S.esc(p.estado),"modelo GloFAS","#f26a1b")+kpi("Caudal máx. 10 días",Math.round(p.caudal_max_10d)+" m³/s","","#1d6fb8")+kpi("Umbral alto (P90)",Math.round(Math.max.apply(null,p.p90))+" m³/s","1993–2022","#d7263d")+kpi("Relación con P90",p.ratio_p90_max_10d,"1 = igual al umbral","#8d6e63");
+   bloque=sec("Ubicación — "+S.esc(p.rio),"map",mapaZ([p.lon-3,p.lat-2.4,p.lon+3,p.lat+2.4],{dep:dep,pts:[{lat:p.lat,lon:p.lon,r:12,color:"#1d6fb8",ring:true}],labels:[{t:p.nombre,lat:p.lat-.35,lon:p.lon,fs:17}]}))+sec("Caudal previsto vs. umbrales","water",'<div class="ch" id="c1"></div><div class="cap">Línea continua: caudal previsto; verde: normal (P50); rojo: umbral alto (P90).</div>');
+   ch.push(function(){X.chart("c1",{tooltip:{trigger:"axis"},legend:{top:0},grid:{left:48,right:14,top:34,bottom:28},xAxis:{type:"category",data:p.fechas.map(function(f){return f.slice(5)}),boundaryGap:false,axisLabel:{interval:4}},yAxis:{type:"value",name:"m³/s",scale:true},series:[{name:"Caudal",type:"line",smooth:true,symbol:"none",lineStyle:{width:3,color:"#1d6fb8"},areaStyle:{opacity:.15},data:p.caudal_m3s},{name:"P50",type:"line",symbol:"none",lineStyle:{type:"dashed",color:"#2a9d8f"},data:p.p50},{name:"P90",type:"line",symbol:"none",lineStyle:{type:"dashed",color:"#d7263d"},data:p.p90}]})})}
+ }
+ else if(o==="senamhi"){
+  var a=(D.senamhi_alertas&&D.senamhi_alertas.alertas||[]).filter(function(z){return z.url===e.url||("senamhi:"+(z.tipo||"").slice(0,4)+"-"+(z.url||"").split("/").pop())===e.id})[0]||{municipios:[],departamentos:e.departamentos||[]};
+  var ms=a.municipios||[],setM={};ms.forEach(function(m){setM[m]=1});var byD={};ms.forEach(function(m){var d=(m.match(/\(([^)]+)\)$/)||[])[1]||"—";(byD[d]=byD[d]||[]).push(m.replace(/\s*\([^)]+\)$/,""))});
+  k=kpi("Nivel",S.NIVTXT[e.nivel]||"—",S.esc(a.fenomeno||e.fenomeno||""),cc)+kpi("Vigencia",S.esc(a.inicio||"")+" → "+S.esc(a.fin||""),"publicado: "+S.esc(a.publicada||""),"#1d6fb8")+kpi("Municipios",ms.length,"en "+Object.keys(byD).length+" departamentos","#0aa3a3")+kpi("Fuente","SENAMHI","oficial","#0b7a53");
+  var cMun=["#bfe5c9","#f9dc6b","#f7a15e","#e5576a"][e.nivel]||"#f7a15e";
+  bloque=sec("Área afectada por el aviso","map",mapaZ([-69.9,-23,-57.3,-9.5],{dep:dep,mun:mun,fillMun:function(p){return setM[p.n+" ("+p.d+")"]?cMun:"none"},titulo:"Aviso"})+'<div class="cap" style="margin-top:6px">Municipios coloreados = comprendidos en el aviso oficial.</div>')+sec("Municipios por departamento","list",'<div class="ch" id="c1"></div>')+sec("Texto del aviso","doc",'<p>'+S.esc(a.descripcion||e.detalle||"")+'</p>'+Object.keys(byD).map(function(d){return'<p><b>'+S.esc(d)+'</b>: '+S.esc(byD[d].join(", "))+'</p>'}).join(""),"rompe");
+  ch.push(function(){X.chart("c1",{tooltip:{},series:[{type:"treemap",breadcrumb:{show:false},roam:false,label:{formatter:"{b}\n{c}",fontSize:13},itemStyle:{borderColor:"#fff",gapWidth:2},data:Object.keys(byD).map(function(d){return{name:d,value:byD[d].length}}),color:[cMun,"#f4b183","#e59866","#d98880","#f0b27a"]}]})});
+ }
+ else if(o==="epidemiologia"){
+  var I=(D.epidemio_oficial&&D.epidemio_oficial.internacional||[]);
+  k=kpi("Fuente",S.esc(e.fuente||"OMS / OPS"),"vigilancia internacional","#8e24aa")+kpi("Fecha",S.fecha(e.ts,true),"","#1d6fb8")+kpi("Relevancia para Bolivia",e.menciona_bolivia?"Menciona Bolivia":"Sin mención directa",e.internacional?"evento internacional":"","#0aa3a3");
+  bloque=sec("Otros eventos sanitarios recientes (OMS/OPS)","list",'<table><tr><th>Fecha</th><th>Fuente</th><th>Evento</th></tr>'+I.slice(0,14).map(function(z){return'<tr><td>'+S.esc(z.fecha)+'</td><td>'+S.esc(z.fuente)+'</td><td><a target="_blank" rel="noopener" href="'+S.esc(z.url)+'">'+S.esc(z.titulo)+'</a></td></tr>'}).join("")+'</table>','rompe');
+  var bl=(D.epidemio_oficial.boletines||[])[0];if(bl)bloque+=sec("Boletín epidemiológico nacional (semana "+bl.semana+")","doc",'<p class="nota">'+S.esc(bl.periodo)+' · <a target="_blank" rel="noopener" href="'+S.esc(bl.url)+'">abrir boletín</a></p>'+(bl.frases||[]).slice(0,4).map(function(f){return'<p>'+S.esc(f)+'</p>'}).join(""),"rompe");
+ }
+ else{
+  if(e.lat!=null)bloque=sec("Ubicación","map",mapaZ([e.lon-3,e.lat-2.4,e.lon+3,e.lat+2.4],{dep:dep,pts:[{lat:e.lat,lon:e.lon,r:11,color:cc,ring:true}],titulo:"Ubicación"}));
+  k=kpi("Tipo",S.esc(e.categoria),S.esc(e.fenomeno||""),S.COLCAT[e.categoria])+kpi("Nivel",S.esc(e.nivel_txt||"—"),"","#f26a1b")+kpi("Fuente",S.esc(e.fuente||e.origen),e.oficial?"oficial":"no oficial","#1d6fb8")+kpi("Fecha",S.fecha(e.ts,true),"hora La Paz","#0aa3a3");
+  if(o==="prensa")bloque+=sec("¿Necesita más detalle?","doc",'<p>Este hecho proviene de prensa y es preliminar. Puede pedir un <b>informe ampliado</b>: el sistema lee las notas, compara cifras entre medios y genera un PDF.</p><div class="noimp"><a class="btn p" target="_blank" rel="noopener" href="'+S.URL_PEDIR+'">Pedir informe ampliado</a></div>');
+ }
+ /* triangulación */
+ var rel=relacionados(e,ev),fams={};fams[FAM[e.origen]||e.origen]=1;rel.forEach(function(r){fams[FAM[r.origen]||r.origen]=1});
+ var tri=sec("Triangulación de fuentes","shield",'<p>Este evento está respaldado por <b>'+Object.keys(fams).length+' familia(s) de fuentes</b>: '+Object.keys(fams).join(", ")+'. Confianza <b>'+(e.confianza?e.confianza.nivel:"—")+'</b> (Alta: ≥3 familias · Media: 2 · Baja: 1).</p>'+(rel.length?'<table><tr><th>Fecha</th><th>Familia</th><th>Fuente</th><th>Registro relacionado</th></tr>'+rel.map(function(r){return'<tr><td>'+S.fecha(r.ts)+'</td><td>'+(FAM[r.origen]||r.origen)+'</td><td>'+S.esc(r.fuente||"")+'</td><td><a href="evento.html?id='+encodeURIComponent(r.id)+'">'+S.esc(r.titulo)+'</a></td></tr>'}).join("")+'</table>':'<p class="nota">No se encontraron otros registros que coincidan en tipo, lugar y tiempo.</p>'),"rompe");
+ $("app").innerHTML=h+'<div class="grid g4" style="margin:16px 0">'+k+'</div><div class="grid g2" style="margin-bottom:16px">'+bloque+'</div>'+tri+'<div class="foot">Informe generado automáticamente por la Sala de Situación Bolivia el '+S.fecha(Date.now())+' (hora La Paz) con datos abiertos y oficiales. Información preliminar sujeta a verificación; no reemplaza comunicados de las instituciones competentes. Fuente: '+S.esc(e.fuente||e.origen)+'.</div>';
+ ch.forEach(function(f){f()});
+ $("bj").onclick=function(){S.descargar("evento.json",JSON.stringify(e,null,1),"application/json")};$("bc").onclick=function(){S.descargar("evento.csv",S.csv([e]),"text/csv")};
+}).catch(function(err){$("app").innerHTML='<div class="card vacio">No se pudo cargar el informe: '+S.esc(err.message)+'</div>'});
+})();
+</script></body></html>

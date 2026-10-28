@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css">
+<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js"></script><script src="s2.js"></script></head>
+<body><div id="hdr"></div>
+<div class="wrap">
+
+<section id="t-res">
+ <div class="hero" id="hero"><h2>Situación de hoy</h2><p id="heroT">Cargando datos…</p></div>
+ <div class="callout" id="queEs">__I_INFO__<div><p><b>¿Qué es esta página?</b> Es la Sala de Situación de Bolivia: reúne en un solo lugar los eventos que pueden afectar a la población —sismos, incendios, sequías, crecidas, lluvias y vientos, brotes y accidentes— a partir de fuentes oficiales (SENAMHI, Observatorio San Calixto, MSD, OPS/OMS), satélites (NASA FIRMS), modelos abiertos (ERA5, GloFAS) y prensa. Cada evento muestra su <b>nivel de confianza</b> según cuántas fuentes independientes lo respaldan.</p>
+ <p style="margin-top:6px"><b>Cómo explorarla:</b> use las pestañas de arriba (Mapa, Incendios, Sequías, Ríos, Eventos). Toque cualquier evento para abrir su <b>ficha con informe específico</b> (mapa, tablas, gráficos, PDF). El botón <b>Guía de uso</b> hace un recorrido de 1 minuto.</p></div></div>
+ <div class="grid g4" id="kpis" style="margin-bottom:16px"></div>
+ <div class="grid g21" style="margin-bottom:16px">
+  <div class="card" id="cAlertas"><h2><span class="i">__I_ALERT__</span>Alertas y eventos prioritarios</h2><div class="cap">Avisos naranja/rojos vigentes, complejos de incendio mayores, ríos sobre umbral y sismos relevantes. <b>Toque uno</b> para ver su informe.</div><div id="prior"></div></div>
+  <div class="card"><h2><span class="i">__I_INFO__</span>¿Cuán confiable es lo que se ve?</h2><div class="cap">Triangulación: cuántas familias de fuentes independientes coinciden en cada evento.</div><div class="ch s" id="chConf"></div><div class="how"><b>Alta</b> = 3 o más familias (p. ej. oficial + satélite + prensa). <b>Media</b> = 2. <b>Baja</b> = 1 sola fuente.</div></div>
+ </div>
+ <div class="grid g2" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Evolución diaria por tipo de evento</h2><div class="cap">Eventos registrados por día, apilados por categoría (últimos 30 días).</div><div class="ch" id="chEvol"></div></div>
+  <div class="card"><h2><span class="i">__I_MAP__</span>¿Dónde se concentra? Departamento × tipo</h2><div class="cap">Mapa de calor: más oscuro = más eventos (últimos 30 días).</div><div class="ch" id="chHeat"></div></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h2><span class="i">__I_LIST__</span>De dónde viene la información</h2><div class="cap">Flujo: fuente → tipo de evento. El grosor es la cantidad de eventos.</div><div class="ch" id="chSank"></div></div>
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Sismos de los últimos días</h2><div class="cap">Cada círculo es un sismo: tamaño = magnitud, color = profundidad (km).</div><div class="ch" id="chSis"></div></div>
+ </div>
+</section>
+
+<section id="t-map" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Cómo usar el mapa.</b> Active o desactive capas a la izquierda. El <b>mapa de calor</b> muestra dónde se concentran los focos de calor; mueva el control de días para ver su evolución. Toque un círculo para ver el detalle y abrir su informe.</p></div></div>
+ <div class="maplayout">
+  <div class="card lay" id="layers"><h2>Capas</h2>
+   <div class="sec">Incendios (NASA FIRMS)</div>
+   <label><input type="checkbox" id="lHeat" checked> Mapa de calor de focos</label>
+   <label><input type="checkbox" id="lComp" checked> Complejos de incendio</label>
+   <div class="nota" id="lblDias">Últimos 3 días</div><input type="range" id="rgDias" min="1" max="10" value="3">
+   <div class="sec">Colorear territorio por</div>
+   <label><input type="radio" name="fill" value="none" checked> Nada</label>
+   <label><input type="radio" name="fill" value="avisos"> Avisos SENAMHI (municipios)</label>
+   <label><input type="radio" name="fill" value="spi"> Sequía: SPI-3 (departamentos)</label>
+   <div class="sec">Otros eventos</div>
+   <label><input type="checkbox" id="lSis" checked> Sismos</label>
+   <label><input type="checkbox" id="lRio" checked> Ríos (GloFAS)</label>
+   <label><input type="checkbox" id="lEv" checked> Otros eventos con ubicación</label>
+   <div class="sec">Mapa base</div>
+   <label><input type="checkbox" id="lBase" checked> Calles y relieve (OpenStreetMap)</label>
+   <div class="leg" id="legMap"></div>
+  </div>
+  <div class="card" style="padding:10px"><div class="map" id="mapa"></div><div class="nota" style="margin-top:6px">Focos de calor: detecciones satelitales VIIRS NOAA-21 (NASA FIRMS); incluyen quemas agrícolas y no equivalen a incendios confirmados. Ríos: modelo GloFAS, no es alerta oficial.</div></div>
+ </div>
+</section>
+
+<section id="t-inc" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Incendios y focos de calor.</b> Datos satelitales de NASA FIRMS (VIIRS NOAA-21) dentro de Bolivia, de los últimos 10 días. Un <b>complejo</b> es un conjunto de focos vecinos en el mismo día (agrupación automática); su <b>potencia radiativa (FRP, MW)</b> indica la intensidad del fuego.</p></div></div>
+ <div class="grid g4" id="kInc" style="margin-bottom:16px"></div>
+ <div class="grid g21" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_FIRE__</span>Mapa de calor de focos</h2><div class="cap">Rojo = mayor concentración de detecciones (últimos 3 días).</div><div class="map" id="mapaInc" style="height:480px"></div></div>
+  <div class="card"><h2><span class="i">__I_LIST__</span>Complejos mayores del día</h2><div class="cap">Ordenados por número de detecciones.</div><div id="listaComp" style="max-height:480px;overflow:auto"></div></div>
+ </div>
+ <div class="grid g2" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Detecciones y potencia por día</h2><div class="cap">Barras = número de focos; línea = potencia radiativa total (MW).</div><div class="ch" id="chIncDia"></div></div>
+  <div class="card"><h2><span class="i">__I_MAP__</span>Reparto por departamento</h2><div class="cap">Participación de cada departamento en las detecciones de los últimos 10 días.</div><div class="ch" id="chIncDep"></div></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h2><span class="i">__I_MAP__</span>Departamento × día</h2><div class="cap">Mapa de calor de detecciones: cuándo y dónde.</div><div class="ch" id="chIncHeat"></div></div>
+  <div class="card"><h2><span class="i">__I_LIST__</span>Municipios con más focos</h2><div class="cap">Acumulado de los últimos 10 días.</div><div class="ch" id="chIncMun"></div></div>
+ </div>
+ <div class="card" style="margin-top:16px" id="cProp"><h2><span class="i">__I_SUN__</span>Pronóstico de propensión (SENAMHI)</h2><div class="cap" id="propCap"></div><div id="propT" style="overflow:auto"></div></div>
+</section>
+
+<section id="t-seq" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Sequías.</b> Se mide con el <b>Índice Estandarizado de Precipitación (SPI)</b>, el método recomendado por la OMM (Nº 1090): compara la lluvia acumulada de 1, 3, 6 o 12 meses con su histórico 1991–2020. <b>Valores negativos = más seco de lo normal</b> (−1 moderada, −1,5 severa, −2 extrema); positivos = más húmedo. Es un indicador calculado con ERA5, no una declaratoria oficial.</p></div></div>
+ <div class="grid g4" id="kSeq" style="margin-bottom:16px"></div>
+ <div class="grid g12" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_SUN__</span>Mapa de sequía</h2><div class="cap">Escala de acumulación: <span id="selSpi"></span></div><div class="map" id="mapaSeq" style="height:440px"></div><div class="leg" id="legSpi"></div></div>
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Evolución del SPI-3 · <span id="depSel" style="color:var(--brand2)">—</span></h2><div class="cap">Últimos 36 meses. <b>Toque un departamento del mapa o del selector</b>. Las bandas de color marcan las clases de sequía.</div><div class="filtros" style="margin-bottom:6px"><label>Departamento<select id="selDep"></select></label></div><div class="ch" id="chSpi"></div></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h2><span class="i">__I_MAP__</span>Últimos 24 meses por departamento (SPI-1)</h2><div class="cap">Rojo = seco, azul = húmedo. Permite ver cuándo empezó el déficit.</div><div class="ch t" id="chSpiHeat"></div></div>
+  <div class="card"><h2><span class="i">__I_WATER__</span>Lluvia del mes vs. normal</h2><div class="cap">Barras = lluvia del último mes (mm); marcador = promedio 1991–2020.</div><div class="ch t" id="chPre"></div></div>
+ </div>
+ <div class="card" style="margin-top:16px"><h2>Tabla de valores</h2><div style="overflow:auto" id="tSeq"></div><div class="nota" id="notaSeq" style="margin-top:6px"></div></div>
+</section>
+
+<section id="t-rio" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Ríos y crecidas.</b> Caudal diario previsto por el modelo global <b>GloFAS (Copernicus)</b> en 9 puntos de las grandes cuencas. La línea punteada es el caudal normal (P50) y la roja el umbral alto (P90) del período 1993–2022. Es un <b>indicador de modelo</b>; las alertas oficiales son las del SENAMHI (pestaña Resumen).</p></div></div>
+ <div class="grid g3" id="rios"></div>
+</section>
+
+<section id="t-ev" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Base de eventos.</b> Todos los eventos registrados, de todas las fuentes. Filtre, abra la ficha de cada uno y descargue la base completa (CSV, Excel, JSON).</p></div></div>
+ <div class="card"><div class="filtros">
+  <label>Período<select id="fPer"><option value="1">Hoy</option><option value="2">48 horas</option><option value="7" selected>7 días</option><option value="30">30 días</option><option value="400">Todo</option></select></label>
+  <label>Departamento<select id="fDep"><option value="">Todos</option></select></label>
+  <label>Fuente<select id="fOrg"><option value="">Todas</option><option value="of">Solo oficiales</option><option value="prensa">Solo prensa</option><option value="modelo">Satélite / modelos</option></select></label>
+  <label>Confianza<select id="fConf"><option value="">Todas</option><option value="Alta">Alta</option><option value="Media">Media o más</option></select></label>
+  <label>Nivel mínimo<select id="fNiv"><option value="-1">Todos</option><option value="1">Amarilla o más</option><option value="2">Naranja o más</option><option value="3">Solo roja</option></select></label>
+  <label>Buscar<input type="text" id="fQ" placeholder="accidente, dengue, Caranavi…"></label></div>
+  <div class="chips" id="fCat" style="margin-top:10px"></div>
+  <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="bCsv">__I_DL__CSV</button><button class="btn" id="bXls">__I_DL__Excel</button><button class="btn" id="bJson">__I_DL__JSON</button><a class="btn p" href="informes.html">__I_DOC__Crear informe específico</a></div>
+  <div class="nota" id="fN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:640px"><table id="tEv"></table></div></div>
+</section>
+</div>
+<script src="app.js"></script>
+</body></html>
