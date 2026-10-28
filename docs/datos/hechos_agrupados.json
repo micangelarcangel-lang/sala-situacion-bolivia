@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1caa41u",
+  "fecha_hora_local": "2026-10-27 21:10",
+  "ts_ms": 1793149809000,
+  "titulo": "Gobernación realizará trabajos en el río San Julián para prevenir nuevas inundaciones y proteger cultivos - EL DÍA - Noticias de Bolivia para el mundo",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo",
+  "lat": -16.831,
+  "lon": -62.734,
+  "lugar": "San Julián, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "San Julián",
+  "enlaces": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPMEJWWExNZU02eEVFOTczMUlMdmVVcXVQdEhHazFETjN1cGczZnNtZUtHcTdEY2lxb1hkSW1Obk5kbVBTdHBDTFJIWWxxUzNjQ2NZS0ZfX1VGcXNDYW9iOGxub1RpWGZUWC1GOW55SHRZZ1V6d1JuaGpGWUU3dFBFd1o0bDlialY1X3hNR2x6VTVnbnZVUE9lN0FmYm1DRVNWV3g4N1Bsa0YxYV9WNVJpWnhfV2xOQlhiRk5wWGt4ZDJtZURweU1fYjJGbFNobmw3bndENHVhTDAyZmNNeTFqUFdFVWVTUllV?oc=5"
+ },
+ {
   "hecho_id": "noticia:1ers92k",
   "fecha_hora_local": "2026-10-27 20:35",
   "ts_ms": 1793147706000,
