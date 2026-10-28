@@ -7,3 +7,5 @@ trafilatura
 googlenewsdecoder
 openpyxl
 pypdf
+numpy
+scipy

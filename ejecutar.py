@@ -234,10 +234,11 @@ def main():
         open(os.path.join(DOCS, "estado_firms.txt"), "w", encoding="utf-8").write(str(_r) + "\n")
     except Exception:
         pass
+    reg("Sequía: índice SPI (ERA5, método OMM)", "Open-Meteo / Copernicus ERA5", lambda: __import__("sequia").actualizar(DOCS))
+    reg("Caudales de ríos (modelo GloFAS)", "Copernicus EMS / Open-Meteo", lambda: __import__("caudales").actualizar(DOCS))
     for nom, inst, why in [
         ("Boletines de Defensa Civil / VIDECI", "Viceministerio de Defensa Civil", "El sitio bloquea el acceso automático. Se cubre por prensa y registro manual."),
         ("Sanidad animal", "SENASAG", "El sitio bloquea el acceso automático. Se cubre por prensa y registro manual."),
-        ("Monitor de sequías", "CIMA / SENAMHI", "El servidor del monitor no responde desde el sistema; sin fuente abierta alternativa."),
         ("Deslizamientos, eventos tecnológicos y antropogénicos", "Varias", "No existe fuente oficial abierta; se cubre con prensa verificada y registro manual."),
     ]:
         FUENTES.append({"nombre": nom, "institucion": inst, "estado": "sin_acceso", "detalle": why, "segundos": 0, "ts": ahora_ms})

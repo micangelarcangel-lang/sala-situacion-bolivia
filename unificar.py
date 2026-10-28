@@ -151,6 +151,87 @@ def desde_epi(docs):
     return out
 
 
+def desde_complejos(docs):
+    out = []
+    d = _j(os.path.join(docs, "focos_complejos.json"), {})
+    ts = _ms(d.get("dia", "")) if d.get("dia") else None
+    for c in d.get("complejos", [])[:15]:
+        if ts is None:
+            break
+        out.append({"id": "complejo:" + c["id"] + ":" + str(c.get("departamento")), "origen": "foco", "categoria": "climatológica",
+                    "titulo": f"Complejo de focos de calor — {c.get('municipio') or c['departamento']} ({c['n']} detecciones)", "ts": ts + 13 * 3600000,
+                    "nivel": None, "nivel_txt": "Sin nivel (agrupación de detecciones)", "oficial": True, "lugar": f"{c.get('municipio','')}, {c['departamento']}".strip(", "),
+                    "departamentos": [c["departamento"]], "lat": c["lat"], "lon": c["lon"],
+                    "detalle": f"Agrupación de {c['n']} detecciones térmicas (VIIRS NOAA-21) en dos días, con potencia radiativa acumulada de {c['frp_mw']} MW. Municipios: {', '.join(c.get('municipios') or [])}. "
+                               "Las detecciones incluyen quemas agrícolas y no equivalen a incendios confirmados.",
+                    "fuente": "NASA FIRMS (VIIRS NOAA-21)", "url": "https://firms.modaps.eosdis.nasa.gov/map/#d:24hrs;@" + f"{c['lon']},{c['lat']},11z",
+                    "cifras": {"detecciones": c["n"], "frp_mw": c["frp_mw"]}, "bbox": c.get("bbox")})
+    return out
+
+
+def desde_sequia(docs):
+    out = []
+    d = _j(os.path.join(docs, "sequia.json"), {})
+    um = d.get("ultimo_mes")
+    ts = _ms(um + "-28") if um else None
+    for dep, v in (d.get("departamentos") or {}).items():
+        sev = min([x for x in (v.get("nivel3"), v.get("nivel6"), v.get("nivel12")) if x is not None] or [0])
+        if ts is None or sev > -1:
+            continue
+        esc = min(((v.get("nivel%d" % k), k) for k in (3, 6, 12) if v.get("nivel%d" % k) is not None), key=lambda t: t[0])[1]
+        out.append({"id": f"sequia:{um}:{dep}", "origen": "sequia", "categoria": "climatológica", "titulo": f"Déficit de precipitación — {dep}: {v.get('clase%d' % esc)} (SPI-{esc} {v.get('spi%d' % esc)})",
+                    "ts": ts, "nivel": None, "nivel_txt": "Sin nivel (índice SPI)", "oficial": False, "lugar": dep, "departamentos": [dep], "lat": None, "lon": None,
+                    "detalle": f"SPI-1 {v.get('spi1')} · SPI-3 {v.get('spi3')} · SPI-6 {v.get('spi6')} · SPI-12 {v.get('spi12')}. Precipitación del mes {v.get('precip_mes_mm')} mm ({v.get('pct_normal')} % de lo normal). "
+                               "Indicador calculado con ERA5 (método OMM); no es una declaratoria de sequía.",
+                    "fuente": "ERA5 / Open-Meteo (SPI-OMM)", "url": "https://library.wmo.int/idurl/4/39629", "cifras": {k: v.get(k) for k in ("spi1", "spi3", "spi6", "spi12")}})
+    return out
+
+
+def desde_caudales(docs):
+    out = []
+    d = _j(os.path.join(docs, "caudales.json"), {})
+    ts = _ms(d.get("actualizado", "")[:10]) if d.get("actualizado") else None
+    for p in d.get("puntos", []):
+        if ts is None or (p.get("nivel") or 0) < 2:
+            continue
+        out.append({"id": f"caudal:{p['nombre']}:{p.get('hoy')}", "origen": "caudal", "categoria": "hidrológica", "titulo": f"Caudal elevado — {p['rio']} en {p['nombre']}", "ts": ts + 12 * 3600000,
+                    "nivel": None, "nivel_txt": "Sin nivel (indicador de modelo)", "oficial": False, "lugar": f"{p['nombre']}, {p['departamento']}", "departamentos": [p["departamento"]],
+                    "lat": p["lat"], "lon": p["lon"], "detalle": f"{p['estado']}. Caudal máximo previsto en 10 días: {p.get('caudal_max_10d')} m³/s. Indicador del modelo GloFAS, no alerta oficial.",
+                    "fuente": "GloFAS (Copernicus EMS)", "url": "https://global-flood.emergency.copernicus.eu/", "cifras": {"caudal_max_10d_m3s": p.get("caudal_max_10d"), "ratio_p90": p.get("ratio_p90_max_10d")}})
+    return out
+
+
+FAM = {"prensa": "Prensa", "senamhi": "Oficial nacional", "sismo": "Oficial nacional", "epidemiologia": "Oficial nacional", "foco": "Satélite", "gdacs": "Satélite / GDACS",
+       "usgs": "Internacional", "modelo": "Modelo", "sequia": "Modelo", "caudal": "Modelo"}
+
+
+def triangular(evs):
+    """Triangulación: cuántas FAMILIAS de fuente independientes respaldan un evento (misma categoría, mismo departamento o nacional, ventana de tiempo).
+    Alta ≥ 3 familias · Media 2 (o ≥ 3 medios de prensa distintos) · Baja 1."""
+    def ventana(e):
+        return 15 * 86400000 if e["origen"] in ("sequia", "caudal") else 72 * 3600000
+    for e in evs:
+        fam = {FAM.get(e["origen"], "Otra")}
+        medios = {e["fuente"]} if e["origen"] == "prensa" else set()
+        rel = 0
+        for o in evs:
+            if o is e or o["categoria"] != e["categoria"] or o.get("internacional") != e.get("internacional"):
+                continue
+            if abs(o["ts"] - e["ts"]) > max(ventana(e), ventana(o)):
+                continue
+            de, do = set(e["departamentos"]), set(o["departamentos"])
+            if de and do and not (de & do):
+                continue
+            if (not de or not do) and not (e["origen"] in ("epidemiologia",) or o["origen"] in ("epidemiologia",)):
+                continue
+            fam.add(FAM.get(o["origen"], "Otra")); rel += 1
+            if o["origen"] == "prensa":
+                medios.add(o["fuente"])
+        niv = "Alta" if len(fam) >= 3 else "Media" if (len(fam) == 2 or len(medios) >= 3) else "Baja"
+        e["confianza"] = {"nivel": niv, "familias": sorted(fam), "relacionados": rel, "medios": len(medios)}
+    return evs
+
+
 def geo_simplificado(geo, ruta):
     """Departamentos simplificados (para dibujar mapas SVG en las fichas, sin depender de internet)."""
     out = []
@@ -162,6 +243,28 @@ def geo_simplificado(geo, ruta):
     json.dump(out, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
 
 
+def geo_geojson(geo, docs):
+    """GeoJSON simplificado de departamentos y municipios para el mapa interactivo."""
+    from shapely.geometry import mapping
+    def fc(units, tol, props):
+        feats = []
+        for u in units:
+            g = u["_s"].simplify(tol, preserve_topology=True)
+            feats.append({"type": "Feature", "properties": props(u), "geometry": json.loads(json.dumps(mapping(g), separators=(",", ":")))})
+        return {"type": "FeatureCollection", "features": feats}
+    def redondear(o):
+        if isinstance(o, list):
+            return [redondear(x) for x in o]
+        if isinstance(o, float):
+            return round(o, 3)
+        return o
+    for nombre, units, tol, props in (("geo_dep.geojson", geo["dep"], 0.02, lambda u: {"n": u["n"]}), ("geo_mun.geojson", geo["mun"], 0.012, lambda u: {"n": u["n"], "d": u["d"]})):
+        f = fc(units, tol, props)
+        for ft in f["features"]:
+            ft["geometry"]["coordinates"] = redondear(ft["geometry"]["coordinates"])
+        json.dump(f, open(os.path.join(docs, nombre), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+
+
 def actualizar(docs, geo=None, retener_dias=400):
     ubicar = None
     if geo:
@@ -171,13 +274,16 @@ def actualizar(docs, geo=None, retener_dias=400):
             d = next((u["n"] for u in geo["dep"] if u["_s"].contains(p)), None)
             return d, None
         geo_simplificado(geo, os.path.join(docs, "geo_dep.json"))
+        if not os.path.exists(os.path.join(docs, "geo_mun.geojson")):
+            geo_geojson(geo, docs)
     ruta = os.path.join(docs, "eventos_unificados.json")
     previo = {e["id"]: e for e in _j(ruta, {}).get("eventos", [])}
-    nuevos = desde_prensa(docs, ubicar) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_epi(docs)
+    nuevos = desde_prensa(docs, ubicar) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs)
     for e in nuevos:
         previo[e["id"]] = e
     lim = int(time.time() * 1000) - retener_dias * 86400000
     todos = sorted([e for e in previo.values() if e["ts"] >= lim], key=lambda e: -e["ts"])
+    triangular(todos)
     json.dump({"generado": int(time.time() * 1000), "n": len(todos), "eventos": todos}, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     os.makedirs(os.path.join(docs, "datos"), exist_ok=True)
     with open(os.path.join(docs, "datos", "eventos_unificados.csv"), "w", encoding="utf-8-sig", newline="") as f:
