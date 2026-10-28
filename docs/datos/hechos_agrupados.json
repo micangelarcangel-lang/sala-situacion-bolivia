@@ -70,14 +70,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 1,
+  "n_notas": 2,
   "fuentes": "Erbol |",
   "lat": -20.605,
   "lon": -65.152,
   "lugar": "Camargo, Chuquisaca",
   "departamento": "Chuquisaca",
   "municipio": "Camargo",
-  "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPcnplRkI3QzdTYTlJQmE4QV8zLTdPZW1IV2lEM2xPR1loUUY4MG8yTlRzSzFIYUR0SjJsY0FESlVEdE5sS0lTSEVUc1NwRm1MTkllZmtCY3FPTXUwWVBTWEF1akx1R0xHS2NDWmhrV1BzS0t3SUJTbTJ3QXkxTHBjbVFRQUFTblh1T3ZfQ3I1OWlCSkVJRC00YWh5TGJMSm9HbE9pczZNN3A4Zw?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPcnplRkI3QzdTYTlJQmE4QV8zLTdPZW1IV2lEM2xPR1loUUY4MG8yTlRzSzFIYUR0SjJsY0FESlVEdE5sS0lTSEVUc1NwRm1MTkllZmtCY3FPTXUwWVBTWEF1akx1R0xHS2NDWmhrV1BzS0t3SUJTbTJ3QXkxTHBjbVFRQUFTblh1T3ZfQ3I1OWlCSkVJRC00YWh5TGJMSm9HbE9pczZNN3A4Zw?oc=5 | https://news.google.com/rss/articles/CBMipAFBVV95cUxQbXBQTF92Y3htMHRKWkFFbS1QbHJWb3UwdE4wajUwSWdPdW1rTkMyZWdwcC1PWl9ZTVBNNnFLOFN1QVF2OHVSNE9heVhJczI2WkVwVV84ZzlIbTV3LV8tRVFIeXZnUnpnT1ZQZlNxV2ZybmF5NlJOZk5sSzB6d2h0U0ZaSVJjTjZCaUtLVlBoalJXaDdqcTN5d05EZHBXN3pPRDZ5cg?oc=5"
  },
  {
   "hecho_id": "clima:Oruro:2026-10-29:viento:1",
