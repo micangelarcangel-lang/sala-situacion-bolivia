@@ -236,6 +236,23 @@ def main():
         pass
     reg("Sequía: índice SPI (ERA5, método OMM)", "Open-Meteo / Copernicus ERA5", lambda: __import__("sequia").actualizar(DOCS))
     reg("Caudales de ríos (modelo GloFAS)", "Copernicus EMS / Open-Meteo", lambda: __import__("caudales").actualizar(DOCS))
+
+    def _transito():
+        import fuentes_extra, transito
+        geo_t = cargar_geo("geo.json")
+        extra = []
+        for fn in (fuentes_extra.prensa_transito, fuentes_extra.gdelt):
+            try:
+                n_, m_ = fn(geo_t)
+                log("  · " + m_)
+                extra += n_
+            except Exception as ex_:
+                log("  · fuente adicional no disponible: " + type(ex_).__name__ + " " + str(ex_)[:80])
+        extra = [e for e in extra if relevante(e)]
+        return transito.actualizar(DOCS, evs + extra, geo_t) + f" · {len(extra)} notas de medios adicionales"
+
+    reg("Accidentes de tránsito (prensa por medio + GDELT)", "Medios bolivianos / GDELT", _transito)
+    reg("Eventos naturales (NASA EONET)", "NASA", lambda: __import__("fuentes_extra").eonet(DOCS))
     for nom, inst, why in [
         ("Boletines de Defensa Civil / VIDECI", "Viceministerio de Defensa Civil", "El sitio bloquea el acceso automático. Se cubre por prensa y registro manual."),
         ("Sanidad animal", "SENASAG", "El sitio bloquea el acceso automático. Se cubre por prensa y registro manual."),

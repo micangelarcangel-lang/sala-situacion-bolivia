@@ -75,6 +75,14 @@ def desde_prensa(docs, ubicar):
                 a.setdefault("alias", []).append(r["id"])
                 continue
             vistos[k] = r
+        if origen == "prensa":
+            try:
+                import transito
+                c = transito.clasificar(titulo)
+                if c:
+                    r["subtipo"] = "Tránsito: " + c["tipo"]
+            except Exception:
+                pass
         out.append(r)
     return out
 
@@ -151,6 +159,14 @@ def desde_epi(docs):
     return out
 
 
+def desde_extra(docs):
+    out = []
+    for x in _j(os.path.join(docs, "extra_eventos.json"), {}).get("eventos", []):
+        out.append({"id": x["id"], "origen": "eonet", "categoria": x["categoria"], "titulo": x["titulo"] + " (NASA EONET)", "ts": x["ts"], "nivel": None, "nivel_txt": "Sin nivel (evento NASA EONET)",
+                    "oficial": True, "lugar": "", "departamentos": [], "lat": x["lat"], "lon": x["lon"], "detalle": x["detalle"], "fuente": "NASA EONET", "url": x.get("url", ""), "cifras": {}})
+    return out
+
+
 def desde_complejos(docs):
     out = []
     d = _j(os.path.join(docs, "focos_complejos.json"), {})
@@ -201,7 +217,7 @@ def desde_caudales(docs):
     return out
 
 
-FAM = {"prensa": "Prensa", "senamhi": "Oficial nacional", "sismo": "Oficial nacional", "epidemiologia": "Oficial nacional", "foco": "Satélite", "gdacs": "Satélite / GDACS",
+FAM = {"eonet": "Internacional", "prensa": "Prensa", "senamhi": "Oficial nacional", "sismo": "Oficial nacional", "epidemiologia": "Oficial nacional", "foco": "Satélite", "gdacs": "Satélite / GDACS",
        "usgs": "Internacional", "modelo": "Modelo", "sequia": "Modelo", "caudal": "Modelo"}
 
 
@@ -278,7 +294,7 @@ def actualizar(docs, geo=None, retener_dias=400):
             geo_geojson(geo, docs)
     ruta = os.path.join(docs, "eventos_unificados.json")
     previo = {e["id"]: e for e in _j(ruta, {}).get("eventos", [])}
-    nuevos = desde_prensa(docs, ubicar) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs)
+    nuevos = desde_prensa(docs, ubicar) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs) + desde_extra(docs)
     for e in nuevos:
         previo[e["id"]] = e
     lim = int(time.time() * 1000) - retener_dias * 86400000
