@@ -1,81 +1,66 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Centro de informes — Sala de Situación Bolivia</title><link rel="stylesheet" href="estilo.css"></head>
-<body>
-<div class="top"><h1>Sala de Situación — Bolivia</h1><a href="./">Tablero</a><a href="informes.html">Centro de informes</a><a href="fuentes.html">Estado de las fuentes</a><a href="reportes/">Reportes PDF</a><span class="sp"></span><span class="solo-imp" id="impTit">Informe de situación</span></div>
-<div class="wrap">
-<div class="card noimp"><h2>Armar informe</h2>
- <div class="filtros">
-  <label>Período<select id="per"><option value="1">Hoy</option><option value="2">Últimas 48 horas</option><option value="7" selected>Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="400">Todo el historial</option><option value="x">Fechas exactas…</option></select></label>
-  <label id="lDesde" style="display:none">Desde<input type="date" id="desde"></label><label id="lHasta" style="display:none">Hasta<input type="date" id="hasta"></label>
-  <label>Departamento<select id="dep"><option value="">Todos</option></select></label>
-  <label>Fuente<select id="org"><option value="">Todas</option><option value="of">Solo oficiales</option><option value="prensa">Solo prensa</option></select></label>
-  <label>Nivel mínimo<select id="niv"><option value="-1">Todos</option><option value="1">Amarilla o más</option><option value="2">Naranja o más</option><option value="3">Solo roja</option></select></label>
-  <label>Buscar texto<input type="text" id="q" placeholder="accidente, dengue, Caranavi…"></label>
- </div>
- <div class="filtros" style="margin-top:10px"><label style="flex-direction:row;gap:8px;align-items:center">Tipo de evento:</label><div class="chips" id="cats"></div></div>
- <div style="margin-top:12px"><button class="btn p" onclick="window.print()">Guardar como PDF / imprimir</button><button class="btn" id="bcsv">Descargar CSV</button><button class="btn" id="bxls">Descargar Excel</button><button class="btn" id="bjson">Descargar JSON</button><a class="btn" href="datos/eventos_unificados.csv">Base completa (CSV)</a><a class="btn" target="_blank" rel="noopener" id="bped" href="#">Pedir informe ampliado de un hecho</a></div>
+<title>Centro de informes — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="s2.css"><script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script></head>
+<body><div id="hdr"></div><div class="wrap">
+<div class="callout" id="ayuda"></div>
+<h2 style="margin:6px 0 10px;font-size:17px" class="noimp">1 · Informe de UN evento específico</h2>
+<div class="card noimp"><div class="cap">Busque el hecho (un sismo de hoy, un accidente, un brote, un complejo de incendio, un aviso…) y abra su informe con mapa, tablas, gráficos y PDF.</div>
+ <div class="filtros"><label>Tipo de evento<select id="eTipo"><option value="">Todos</option><option value="sismo">Sismo</option><option value="foco">Incendio / focos de calor</option><option value="senamhi">Aviso SENAMHI</option><option value="epidemiologia">Brote / epidemiología</option><option value="prensa">Hecho reportado (accidente, incendio, derrumbe…)</option><option value="sequia">Sequía</option><option value="caudal">Río / crecida</option></select></label>
+ <label>Período<select id="ePer"><option value="1">Hoy</option><option value="2">48 horas</option><option value="7" selected>7 días</option><option value="30">30 días</option><option value="400">Todo</option></select></label>
+ <label>Departamento<select id="eDep"><option value="">Todos</option></select></label>
+ <label style="flex:1;min-width:200px">Buscar<input type="text" id="eQ" placeholder="ej. accidente, dengue, Caranavi, M 4…"></label></div>
+ <div class="nota" id="eN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:420px"><table id="eT"></table></div>
+ <div style="margin-top:10px"><a class="btn" id="bPed" target="_blank" rel="noopener" href="#">¿No aparece el hecho? Pedir informe ampliado desde la prensa</a></div></div>
+
+<h2 style="margin:22px 0 10px;font-size:17px">2 · Informe consolidado (diario, semanal, mensual o a medida)</h2>
+<div class="card noimp"><div class="filtros">
+ <label>Período<select id="per"><option value="1">Hoy</option><option value="2">48 horas</option><option value="7" selected>Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="400">Todo el historial</option><option value="x">Fechas exactas…</option></select></label>
+ <label id="lD" style="display:none">Desde<input type="date" id="desde"></label><label id="lH" style="display:none">Hasta<input type="date" id="hasta"></label>
+ <label>Departamento<select id="dep"><option value="">Todos</option></select></label>
+ <label>Fuente<select id="org"><option value="">Todas</option><option value="of">Solo oficiales</option><option value="prensa">Solo prensa</option></select></label>
+ <label>Nivel mínimo<select id="niv"><option value="-1">Todos</option><option value="1">Amarilla o más</option><option value="2">Naranja o más</option><option value="3">Solo roja</option></select></label></div>
+ <div class="chips" id="cats" style="margin-top:10px"></div>
+ <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn p" onclick="window.print()">__PRINT__Guardar como PDF / imprimir</button><button class="btn" id="bcsv">__DL__CSV</button><button class="btn" id="bxls">__DL__Excel</button><button class="btn" id="bjs">__DL__JSON</button><a class="btn" href="datos/eventos_unificados.csv">__DL__Base completa (CSV)</a><a class="btn" href="reportes/">__DOC__Informes PDF automáticos</a></div></div>
+<div id="out" style="margin-top:16px"></div>
 </div>
-<div id="out"><p>Cargando…</p></div>
-<p class="nota">Las cifras de prensa son preliminares y no están verificadas; los niveles de prensa son un criterio propio del sistema. Los datos de SENAMHI, Observatorio San Calixto, NASA FIRMS y epidemiología provienen de publicaciones oficiales y se señalan como tales.</p>
-</div>
-<script src="lib.js"></script>
 <script>
 (function(){
-var S=SALA,TODOS=[],GEO=[],ACT=[];
-var $=function(i){return document.getElementById(i);};
-S.DEPS.forEach(function(d){var o=document.createElement("option");o.textContent=d;o.value=d;$("dep").appendChild(o);});
-S.CAT.forEach(function(c){var l=document.createElement("label");l.innerHTML='<input type="checkbox" value="'+c+'" checked> '+c;$("cats").appendChild(l);});
-$("bped").href=S.URL_PEDIR;
-function lim(){var v=$("per").value;if(v==="x"){var d=$("desde").value?new Date($("desde").value+"T00:00:00-04:00").getTime():0,h=$("hasta").value?new Date($("hasta").value+"T23:59:59-04:00").getTime():Date.now();return[d,h];}
- var n=+v,hoy=S.diaKey(Date.now()),ini=new Date(hoy+"T00:00:00-04:00").getTime();return[n===1?ini:Date.now()-n*864e5,Date.now()];}
-function filtrar(){
- var r=lim(),cats=[].slice.call(document.querySelectorAll("#cats input:checked")).map(function(i){return i.value;}),dep=$("dep").value,org=$("org").value,niv=+$("niv").value,q=$("q").value.trim().toLowerCase();
- return TODOS.filter(function(e){
-  if(e.ts<r[0]||e.ts>r[1])return false; if(cats.indexOf(e.categoria)<0&&!(cats.indexOf("otra")>=0&&S.CAT.indexOf(e.categoria)<0))return false;
-  if(dep&&(e.departamentos||[]).indexOf(dep)<0)return false; if(org==="of"&&!e.oficial)return false; if(org==="prensa"&&e.oficial)return false;
-  if(niv>=0&&(e.nivel==null||e.nivel<niv))return false;
-  if(q&&(e.titulo+" "+e.lugar+" "+e.detalle+" "+e.fuente).toLowerCase().indexOf(q)<0)return false; return true;}).sort(function(a,b){return b.ts-a.ts;});
+var S=SALA,X=S2,$=function(i){return document.getElementById(i)},DIA=864e5,D,CAT={};
+X.header("informes.html");
+$("ayuda").innerHTML=X.ic("info")+'<div><p><b>Centro de informes.</b> Aquí genera (1) el informe de <b>un evento puntual</b> —con su mapa, tablas y gráficos propios según el tipo— y (2) informes <b>consolidados</b> por período, departamento y tipo. Todos se guardan como PDF con el botón «Guardar como PDF / imprimir». Los informes PDF automáticos diarios, semanales y mensuales están en <a href="reportes/">Informes PDF</a>.</p></div>';
+$("bPed").href=S.URL_PEDIR;
+[].forEach.call(document.querySelectorAll(".btn"),function(b){b.innerHTML=b.innerHTML.replace("__PRINT__",X.ic("print")).replace(/__DL__/g,X.ic("dl")).replace("__DOC__",X.ic("doc"))});
+function fichaUrl(id){return"evento.html?id="+encodeURIComponent(id)}
+X.datos().then(function(d){D=d;X.live(d.eventos_unificados&&d.eventos_unificados.generado);
+ S.DEPS.forEach(function(x){["eDep","dep"].forEach(function(i){var o=document.createElement("option");o.textContent=x;$(i).appendChild(o)})});
+ $("cats").innerHTML=S.CAT.slice(0,7).map(function(c){CAT[c]=true;return'<button class="chip on" data-c="'+c+'">'+c+'</button>'}).join("");
+ $("cats").onclick=function(e){var b=e.target.closest("[data-c]");if(!b)return;CAT[b.dataset.c]=!CAT[b.dataset.c];b.classList.toggle("on");cons()};
+ ["eTipo","ePer","eDep"].forEach(function(i){$(i).onchange=lista});$("eQ").oninput=lista;
+ ["per","desde","hasta","dep","org","niv"].forEach(function(i){$(i).onchange=function(){$("lD").style.display=$("lH").style.display=$("per").value==="x"?"":"none";cons()}});
+ lista();cons();
+}).catch(function(e){$("out").innerHTML='<div class="card vacio">No se pudieron cargar los datos: '+S.esc(e.message)+'</div>'});
+function lista(){var now=Date.now(),per=+$("ePer").value,t=$("eTipo").value,dep=$("eDep").value,q=$("eQ").value.toLowerCase().trim();
+ var L=D.ev.filter(function(e){if(per<400&&e.ts<now-per*DIA)return false;if(t&&e.origen!==t)return false;if(dep&&(e.departamentos||[]).indexOf(dep)<0)return false;if(["modelo"].indexOf(e.origen)>=0)return false;if(q&&(e.titulo+" "+(e.lugar||"")).toLowerCase().indexOf(q)<0)return false;return true}).sort(function(a,b){return b.ts-a.ts});
+ $("eN").textContent=L.length+" eventos"+(L.length>60?" (se muestran 60; afine la búsqueda)":"");
+ $("eT").innerHTML='<tr><th>Fecha</th><th>Tipo</th><th>Evento</th><th>Lugar</th><th></th></tr>'+L.slice(0,60).map(function(e){return'<tr><td style="white-space:nowrap">'+S.fecha(e.ts)+'</td><td>'+X.catChip(e.categoria)+'</td><td><b>'+S.esc(e.titulo)+'</b><br>'+X.badgeOrigen(e)+' '+X.confBadge(e)+'</td><td>'+S.esc(e.lugar||(e.departamentos||[]).join(", "))+'</td><td><a class="btn p s" href="'+fichaUrl(e.id)+'">Abrir informe</a></td></tr>'}).join("")}
+var F=[];
+function cons(){var now=Date.now(),per=$("per").value,dep=$("dep").value,org=$("org").value,nv=+$("niv").value,a,b=now;
+ if(per==="x"){a=$("desde").value?new Date($("desde").value+"T00:00:00-04:00").getTime():0;b=$("hasta").value?new Date($("hasta").value+"T23:59:59-04:00").getTime():now}else a=now-(+per)*DIA;
+ F=D.ev.filter(function(e){if(e.ts<a||e.ts>b)return false;if(e.origen==="modelo")return false;if(dep&&(e.departamentos||[]).indexOf(dep)<0)return false;if(org==="of"&&!e.oficial)return false;if(org==="prensa"&&e.origen!=="prensa")return false;if(nv>=0&&!(e.nivel!=null&&e.nivel>=nv))return false;return CAT[e.categoria]!==false}).sort(function(x,y){return y.ts-x.ts});
+ var cats=S.CAT.slice(0,7),porC={},porD={},porDia={};F.forEach(function(e){porC[e.categoria]=(porC[e.categoria]||0)+1;(e.departamentos||[]).forEach(function(d){porD[d]=(porD[d]||0)+1});var k=S.diaKey(e.ts);porDia[k]=porDia[k]||{};porDia[k][e.categoria]=(porDia[k][e.categoria]||0)+1});
+ var of=F.filter(function(e){return e.oficial}).length,alta=F.filter(function(e){return e.confianza&&e.confianza.nivel==="Alta"}).length;
+ var per_t=per==="1"?"hoy":per==="x"?"período seleccionado":per==="400"?"todo el historial":"últimos "+per+" días";
+ $("out").innerHTML='<div class="card" style="border-left:6px solid #1d6fb8"><div class="meta nota">Informe consolidado de situación</div><h1 style="font-size:22px;margin:4px 0">Bolivia'+(dep?" — "+S.esc(dep):"")+' · '+per_t+'</h1><div class="nota">Generado el '+S.fecha(Date.now())+' (hora La Paz) · '+F.length+' eventos · '+of+' de fuentes oficiales · '+alta+' con confianza alta</div></div>'+
+  '<div class="grid g2" style="margin-top:16px"><div class="card"><h2>Eventos por tipo</h2><div class="ch s" id="r1"></div></div><div class="card"><h2>Evolución diaria</h2><div class="ch s" id="r2"></div></div>'+
+  '<div class="card"><h2>Departamento × tipo</h2><div class="ch s" id="r3"></div></div><div class="card"><h2>Niveles de alerta</h2><div class="ch s" id="r4"></div></div></div>'+
+  '<div class="card rompe" style="margin-top:16px"><h2>Detalle de eventos</h2><div style="overflow:auto"><table><tr><th>Fecha</th><th>Tipo</th><th>Evento</th><th>Lugar</th><th>Nivel</th><th>Confianza</th><th>Fuente</th></tr>'+F.slice(0,400).map(function(e){return'<tr><td style="white-space:nowrap">'+S.fecha(e.ts)+'</td><td>'+S.esc(e.categoria)+'</td><td><a href="'+fichaUrl(e.id)+'">'+S.esc(e.titulo)+'</a></td><td>'+S.esc(e.lugar||(e.departamentos||[]).join(", "))+'</td><td>'+S.badgeNivel(e)+'</td><td>'+(X.confBadge(e)||"")+'</td><td>'+S.esc(e.fuente||"")+'</td></tr>'}).join("")+'</table></div><div class="foot nota" style="margin-top:8px">Información preliminar de fuentes oficiales, satélites, modelos abiertos y prensa. Sala de Situación Bolivia.</div></div>';
+ X.chart("r1",{tooltip:{trigger:"item"},series:[{type:"pie",radius:["38%","70%"],itemStyle:{borderRadius:5,borderColor:"#fff",borderWidth:2},data:cats.filter(function(c){return porC[c]}).map(function(c){return{name:c,value:porC[c],itemStyle:{color:S.COLCAT[c]}}}),label:{formatter:"{b}: {c}"}}]});
+ var ds=Object.keys(porDia).sort();X.chart("r2",{tooltip:{trigger:"axis"},legend:{top:0,type:"scroll"},grid:{left:34,right:10,top:36,bottom:26},xAxis:{type:"category",data:ds.map(function(k){return k.slice(5)}),boundaryGap:false},yAxis:{type:"value"},series:cats.map(function(c){return{name:c,type:"line",stack:"t",smooth:true,symbol:"none",areaStyle:{opacity:.75},lineStyle:{width:1},itemStyle:{color:S.COLCAT[c]},data:ds.map(function(k){return(porDia[k][c]||0)})}})});
+ var hd=[],hm=1;S.DEPS.forEach(function(d,y){cats.forEach(function(c,x){var n=F.filter(function(e){return e.categoria===c&&(e.departamentos||[]).indexOf(d)>=0}).length;hm=Math.max(hm,n);hd.push([x,y,n||null])})});
+ X.chart("r3",{tooltip:{formatter:function(p){return S.DEPS[p.value[1]]+" · "+cats[p.value[0]]+": <b>"+(p.value[2]||0)+"</b>"}},grid:{left:90,right:10,top:6,bottom:70},xAxis:{type:"category",data:cats,axisLabel:{rotate:35}},yAxis:{type:"category",data:S.DEPS,inverse:true},visualMap:{min:0,max:hm,orient:"horizontal",left:"center",bottom:0,itemWidth:10,itemHeight:110,inRange:{color:["#e8f1fb","#1d6fb8","#0b3b6e"]},textStyle:{color:X.css("--mut")}},series:[{type:"heatmap",data:hd,label:{show:true,color:"#fff",formatter:function(p){return p.value[2]||""}},itemStyle:{borderColor:"#fff",borderWidth:2}}]});
+ var nv2=[0,0,0,0,0];F.forEach(function(e){nv2[e.nivel==null?4:e.nivel]++});X.chart("r4",{tooltip:{},xAxis:{type:"category",data:["Verde","Amarilla","Naranja","Roja","Sin nivel"]},yAxis:{type:"value"},grid:{left:34,right:10,top:10,bottom:26},series:[{type:"bar",barWidth:"55%",data:nv2.map(function(v,i){return{value:v,itemStyle:{color:["#2e9e5b","#f5b700","#f26a1b","#d7263d","#8896ab"][i],borderRadius:[5,5,0,0]}}}),label:{show:true,position:"top",color:X.css("--ink")}}]});
 }
-function resumenFiltros(){
- var p=$("per").options[$("per").selectedIndex].text,t=[p];if($("dep").value)t.push($("dep").value);if($("org").value)t.push($("org").options[$("org").selectedIndex].text);if(+$("niv").value>=0)t.push("nivel "+$("niv").options[$("niv").selectedIndex].text.toLowerCase());if($("q").value)t.push("«"+$("q").value+"»");
- var c=document.querySelectorAll("#cats input:checked").length;if(c<S.CAT.length)t.push(c+" de "+S.CAT.length+" tipos");return t.join(" · ");}
-function render(){
- ACT=filtrar();var E=ACT,h="",oficial=E.filter(function(e){return e.oficial;}).length;
- var fall=0,her=0;E.forEach(function(e){if(e.origen==="prensa"){fall+=(e.cifras||{}).fallecidos||0;her+=(e.cifras||{}).heridos||0;}});
- var roj=E.filter(function(e){return e.nivel===3;}).length,nar=E.filter(function(e){return e.nivel===2;}).length;
- $("impTit").textContent="Informe de situación — "+resumenFiltros();
- h+='<div class="card"><div class="meta">Informe generado el '+S.fecha(Date.now())+' (hora La Paz) · Filtros: '+S.esc(resumenFiltros())+'</div></div>';
- h+='<div class="kpis"><div class="kpi"><b>'+E.length+'</b><span>eventos</span></div><div class="kpi"><b>'+oficial+'</b><span>de fuente oficial</span></div><div class="kpi"><b style="color:var(--n3)">'+roj+'</b><span>nivel rojo</span></div><div class="kpi"><b style="color:var(--n2)">'+nar+'</b><span>nivel naranja</span></div><div class="kpi"><b>'+fall+'</b><span>fallecidos (prensa, máx. por hecho)</span></div><div class="kpi"><b>'+her+'</b><span>heridos (prensa, máx. por hecho)</span></div></div>';
- if(!E.length){$("out").innerHTML=h+'<div class="card"><p>No hay eventos con esos filtros.</p></div>';return;}
- /* por día apilado */
- var cats=S.CAT.filter(function(c){return E.some(function(e){return e.categoria===c;});}),dias={};
- E.forEach(function(e){var k=S.diaKey(e.ts);dias[k]=dias[k]||{};dias[k][e.categoria]=(dias[k][e.categoria]||0)+1;});
- var ds=Object.keys(dias).sort().map(function(d){return{d:d,c:dias[d]};});
- var porCat=cats.map(function(c){return{n:c,v:E.filter(function(e){return e.categoria===c;}).length,c:S.COLCAT[c]};}).sort(function(a,b){return b.v-a.v;});
- var cd={};E.forEach(function(e){(e.departamentos||[]).forEach(function(d){cd[d]=(cd[d]||0)+1;});});
- var porDep=Object.keys(cd).map(function(d){return{n:d,v:cd[d],c:"#0b5cab"};}).sort(function(a,b){return b.v-a.v;});
- var mx=Math.max.apply(null,[1].concat(porDep.map(function(x){return x.v;})));
- var porOri=Object.keys(S.ORIGEN).map(function(o){return{n:S.ORIGEN[o].split(" (")[0],v:E.filter(function(e){return e.origen===o;}).length,c:"#5b6b82"};}).filter(function(x){return x.v;});
- h+='<div class="grid"><div class="card"><h2>Eventos por día y tipo</h2>'+S.serieDiaria(ds,cats,S.COLCAT)+S.leyenda(cats,S.COLCAT)+'</div><div class="card"><h2>Mapa: eventos por departamento</h2>'+
-   S.mapaSVG(GEO,{relleno:function(d){var v=cd[d]||0;if(!v)return"var(--card)";var a=.18+.62*v/mx;return"rgba(11,92,171,"+a.toFixed(2)+")";},etiqueta_dep:function(d){return cd[d]||"";},titulo_dep:function(d){return(cd[d]||0)+" evento(s)";},
-   puntos:E.filter(function(e){return e.lat!=null;}).slice(0,300).map(function(e){return{lat:e.lat,lon:e.lon,r:7,color:e.nivel!=null?["#2e7d32","#f9a825","#ef6c00","#c62828"][e.nivel]:"#444",t:e.titulo};})})+
-   '<p class="nota">Color del departamento = número de eventos (incluye avisos que abarcan varios departamentos). Puntos = eventos con coordenadas.</p></div></div>';
- h+='<div class="grid"><div class="card"><h2>Por tipo de evento</h2>'+S.barrasH(porCat)+'</div><div class="card"><h2>Por departamento</h2>'+S.barrasH(porDep)+'<h2 style="margin-top:12px">Por origen de la información</h2>'+S.barrasH(porOri,{izq:90})+'</div></div>';
- h+='<div class="card rompe"><h2>Detalle de eventos ('+E.length+')</h2><div style="overflow:auto"><table class="lista"><thead><tr><th>Fecha (La Paz)</th><th>Evento</th><th>Tipo</th><th>Nivel</th><th>Lugar</th><th>Origen</th></tr></thead>'+
-   E.slice(0,400).map(function(e){return'<tr><td style="white-space:nowrap">'+S.fecha(e.ts)+'</td><td><a href="evento.html?id='+encodeURIComponent(e.id)+'">'+S.esc(e.titulo)+'</a></td><td>'+S.esc(e.categoria)+'</td><td>'+S.badgeNivel(e)+'</td><td>'+S.esc(e.lugar)+'</td><td>'+(e.oficial?"Oficial · ":e.origen==="modelo"?"Modelo · ":"Prensa · ")+S.esc(e.fuente)+'</td></tr>';}).join("")+'</table></div>'+(E.length>400?'<p class="nota">Se muestran 400 de '+E.length+'; descargue el CSV para ver todos.</p>':'')+'</div>';
- $("out").innerHTML=h;
-}
-["per","dep","org","niv","desde","hasta"].forEach(function(i){$(i).addEventListener("change",function(){$("lDesde").style.display=$("lHasta").style.display=$("per").value==="x"?"flex":"none";render();});});
-$("q").addEventListener("input",render);document.getElementById("cats").addEventListener("change",render);
-$("bcsv").onclick=function(){S.descargar("informe_eventos.csv",S.csv(ACT),"text/csv;charset=utf-8");};
-$("bjson").onclick=function(){S.descargar("informe_eventos.json",JSON.stringify({generado:Date.now(),filtros:resumenFiltros(),eventos:ACT},null,1),"application/json");};
-$("bxls").onclick=function(){
- function hacer(){var filas=[["Fecha (La Paz)","Origen","Tipo","Evento","Nivel","Oficial","Lugar","Departamentos","Lat","Lon","Fuente","Enlace","Detalle"]].concat(ACT.map(function(e){return[S.fecha(e.ts),e.origen,e.categoria,e.titulo,e.nivel_txt,e.oficial?"sí":"no",e.lugar,(e.departamentos||[]).join("; "),e.lat,e.lon,e.fuente,e.url,(e.detalle||"").slice(0,500)];}));
-  var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(filas);ws["!cols"]=[{wch:17},{wch:12},{wch:14},{wch:60},{wch:24},{wch:8},{wch:24},{wch:22},{wch:9},{wch:9},{wch:22},{wch:40},{wch:60}];XLSX.utils.book_append_sheet(wb,ws,"Eventos");XLSX.writeFile(wb,"informe_eventos.xlsx");}
- if(window.XLSX)return hacer();var sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";sc.onload=hacer;sc.onerror=function(){alert("No se pudo cargar el generador de Excel; se descarga el CSV, que Excel también abre.");S.descargar("informe_eventos.csv",S.csv(ACT),"text/csv;charset=utf-8");};document.head.appendChild(sc);};
-Promise.all([S.cargar("eventos_unificados.json"),S.cargar("geo_dep.json").catch(function(){return[];})]).then(function(x){TODOS=x[0].eventos;GEO=x[1];
- var m=(location.search.match(/[?&]dep=([^&]+)/)||[])[1];if(m)$("dep").value=decodeURIComponent(m);var c=(location.search.match(/[?&]cat=([^&]+)/)||[])[1];if(c){c=decodeURIComponent(c);document.querySelectorAll("#cats input").forEach(function(i){i.checked=i.value===c;});}
- render();}).catch(function(e){$("out").innerHTML='<div class="card"><p>No se pudieron cargar los datos: '+S.esc(e.message)+'</p></div>';});
+$("bcsv").onclick=function(){S.descargar("informe_consolidado.csv",S.csv(F),"text/csv")};$("bjs").onclick=function(){S.descargar("informe_consolidado.json",JSON.stringify(F,null,1),"application/json")};$("bxls").onclick=function(){X.descargarXlsx("informe_consolidado.xlsx",X.filasXls(F),"Eventos")};
 })();
 </script></body></html>
