@@ -9,7 +9,7 @@ UA = "sala-situacion-bolivia"
 FUENTE = "VIIRS_NOAA21_NRT"
 
 
-def _get(u, n=3, t=120):
+def _get(u, n=2, t=75):
     err = ""
     for i in range(n):
         try:
@@ -107,7 +107,10 @@ def actualizar(docs, geo, avisar=None, hora_local=None):
     key = os.environ.get("FIRMS_KEY", "").strip()
     if not key:
         return "sin clave FIRMS_KEY (se omite)"
-    txt = _get(f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{FUENTE}/-69.7,-22.95,-57.4,-9.6/10")
+    try:
+        txt = _get(f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{FUENTE}/-69.7,-22.95,-57.4,-9.6/10")
+    except Exception:
+        txt = _get(f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{FUENTE}/-69.7,-22.95,-57.4,-9.6/3")   # respaldo: 3 días
     if txt.lstrip().lower().startswith(("invalid", "<")) or "latitude" not in txt.split("\n", 1)[0]:
         raise RuntimeError("respuesta inesperada de FIRMS: " + txt[:80].replace(key, "[clave]"))
     filas = list(csv.DictReader(io.StringIO(txt)))

@@ -4,7 +4,7 @@ Método: McKee et al. (1993) y Guía del Usuario del SPI (OMM-Nº 1090, 2012): p
 por mes calendario sobre el período de referencia 1991-2020 (tratando los meses con cero lluvia con la probabilidad de ceros) y transformación a puntuación normal estándar.
 Datos: reanálisis ERA5 (Copernicus/ECMWF) vía Open-Meteo Historical API (libre, sin clave). Cobertura: 18 puntos representativos (2 por departamento); el valor departamental es el promedio de sus puntos.
 Salida: docs/sequia.json. Se recalcula una vez al día."""
-import os, json, time, datetime as dt, urllib.request, urllib.parse, calendar
+import os, json, time, datetime as dt, urllib.request, urllib.parse, urllib.error, calendar
 
 UA = "sala-situacion-bolivia"
 URL = "https://archive-api.open-meteo.com/v1/archive"
@@ -26,15 +26,19 @@ def clase(v):
     return CLASES[-1][1], CLASES[-1][2]
 
 
-def _get(url, n=4):
+def _get(url, n=2, espera=5, timeout=45):
     err = ""
     for i in range(n):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=120) as r:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=timeout) as r:
                 return json.loads(r.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                raise RuntimeError("429 límite de consultas de Open-Meteo (se reintenta en el próximo ciclo)")
+            err = "HTTP %s" % e.code
         except Exception as e:
             err = type(e).__name__ + " " + str(e)[:80]
-            time.sleep(8 * (i + 1))
+        time.sleep(espera * (i + 1))
     raise RuntimeError(err)
 
 
@@ -96,7 +100,7 @@ def calcular(datos_por_dep, hoy=None):
     hoy = hoy or dt.date.today()
     res, ultimo = {}, None
     for dep, lista in datos_por_dep.items():
-        mens_p = [mensual(f, l) for f, l in lista]
+        mens_p = [({(int(k[:4]), int(k[5:7])): v for k, v in x.items()} if isinstance(x, dict) else mensual(*x)) for x in lista]
         comunes = set.intersection(*[set(m) for m in mens_p])
         mens = {k: sum(m[k] for m in mens_p) / len(mens_p) for k in comunes}
         if not mens:
@@ -135,15 +139,32 @@ def actualizar(docs, forzar=False):
         except Exception:
             pass
     fin = hoy - dt.timedelta(days=7)           # ERA5 se publica con ~5 días de retraso
-    datos = {}
+    rc = os.path.join(docs, "sequia_cache.json")
+    cache = {}
+    try:
+        cache = json.load(open(rc, encoding="utf-8"))
+        if (hoy - dt.date.fromisoformat(cache.get("hasta", "2000-01-01"))).days > 25:
+            cache = {}                                 # se renueva cada ~mes (cuando se completa un mes nuevo)
+    except Exception:
+        cache = {}
+    deps = cache.get("deps", {})
+    limite = time.time() + 150                         # presupuesto de tiempo por ciclo: nunca bloquea el sistema
     for dep, pts in PUNTOS.items():
+        if dep in deps:
+            continue
+        if time.time() > limite:
+            break
         q = urllib.parse.urlencode({"latitude": ",".join(str(p[0]) for p in pts), "longitude": ",".join(str(p[1]) for p in pts), "start_date": f"{REF[0] - 1}-01-01",
                                     "end_date": fin.isoformat(), "daily": "precipitation_sum", "timezone": "America/La_Paz"})
         j = _get(URL + "?" + q)
         j = j if isinstance(j, list) else [j]
-        datos[dep] = [(x["daily"]["time"], x["daily"]["precipitation_sum"]) for x in j]
+        deps[dep] = [{"%d-%02d" % k: round(v, 2) for k, v in mensual(x["daily"]["time"], x["daily"]["precipitation_sum"]).items()} for x in j]
+        json.dump({"hasta": cache.get("hasta") or hoy.isoformat(), "deps": deps}, open(rc, "w", encoding="utf-8"), separators=(",", ":"))
         time.sleep(2)
-    out = calcular(datos, hoy)
+    falta = [d for d in PUNTOS if d not in deps]
+    if falta:
+        return f"parcial: {len(deps)}/{len(PUNTOS)} departamentos descargados; continúa en el próximo ciclo"
+    out = calcular(deps, hoy)
     json.dump(out, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     sec = [d for d, v in out["departamentos"].items() if (v.get("nivel3") or 0) <= -1]
     return f"SPI hasta {out['ultimo_mes']}: {len(out['departamentos'])} departamentos; con sequía (SPI-3 ≤ -1): {', '.join(sec) or 'ninguno'}"

@@ -3,7 +3,7 @@
 Compara el pronóstico de 30 días con la climatología 1993-2022 de la misma época (percentiles 50 y 90) en 9 puntos de ríos principales.
 ES UN INDICADOR DE MODELO (celda de ~5 km más cercana al río), NO una alerta oficial: las alertas hidrológicas oficiales son las del SENAMHI.
 Salida: docs/caudales.json; climatología en docs/caudales_clim.json (se calcula una sola vez)."""
-import os, json, time, datetime as dt, urllib.request, urllib.parse
+import os, json, time, datetime as dt, urllib.request, urllib.parse, urllib.error
 
 UA = "sala-situacion-bolivia"
 URL = "https://flood-api.open-meteo.com/v1/flood"
@@ -14,15 +14,19 @@ PUNTOS = [
     ("San Borja", "Río Maniqui", -14.82, -66.85, "Beni")]
 
 
-def _get(url, n=4):
+def _get(url, n=2, espera=5, timeout=45):
     err = ""
     for i in range(n):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=120) as r:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=timeout) as r:
                 return json.loads(r.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                raise RuntimeError("429 límite de consultas de Open-Meteo (se reintenta en el próximo ciclo)")
+            err = "HTTP %s" % e.code
         except Exception as e:
             err = type(e).__name__ + " " + str(e)[:80]
-            time.sleep(8 * (i + 1))
+        time.sleep(espera * (i + 1))
     raise RuntimeError(err)
 
 
@@ -79,19 +83,26 @@ def actualizar(docs, forzar=False):
     ruta_c = os.path.join(docs, "caudales_clim.json")
     clim = json.load(open(ruta_c, encoding="utf-8")) if os.path.exists(ruta_c) else {}
     cambio = False
+    limite = time.time() + 150
     for nom, rio, lat, lon, dep in PUNTOS:
         if nom in clim:
             continue
+        if time.time() > limite:
+            break
         q = urllib.parse.urlencode({"latitude": lat, "longitude": lon, "daily": "river_discharge", "start_date": "1993-01-01", "end_date": "2022-12-31"})
         j = _get(URL + "?" + q)
         clim[nom] = climatologia(j["daily"]["time"], j["daily"]["river_discharge"])
-        cambio = True
-        time.sleep(2)
-    if cambio:
         json.dump(clim, open(ruta_c, "w", encoding="utf-8"), separators=(",", ":"))
+        time.sleep(2)
+    if any(p[0] not in clim for p in PUNTOS):
+        return f"parcial: climatología {len(clim)}/{len(PUNTOS)} puntos; continúa en el próximo ciclo"
+    limite = time.time() + 120
     out, altos = [], []
     for nom, rio, lat, lon, dep in PUNTOS:
         q = urllib.parse.urlencode({"latitude": lat, "longitude": lon, "daily": "river_discharge", "past_days": 14, "forecast_days": 30})
+        if time.time() > limite:
+            out.append({"nombre": nom, "rio": rio, "departamento": dep, "lat": lat, "lon": lon, "error": "tiempo agotado", "nivel": 0, "estado": "sin dato"})
+            continue
         try:
             j = _get(URL + "?" + q)
         except Exception as e:
