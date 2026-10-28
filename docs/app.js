@@ -1,7 +1,7 @@
 /* Tablero principal — Sala de Situación Bolivia 2.0 */
 (function () {
   var S = SALA, X = S2, D = null, INIT = {}, MAPS = {};
-  var TABS = [["res", "Resumen", "home"], ["map", "Mapa", "map"], ["inc", "Incendios", "fire"], ["seq", "Sequías", "sun"], ["rio", "Ríos", "water"], ["ev", "Eventos", "list"]];
+  var TABS = [["res", "Resumen", "home"], ["map", "Mapa", "map"], ["tra", "Tránsito", "shield"], ["inc", "Incendios", "fire"], ["seq", "Sequías", "sun"], ["rio", "Ríos", "water"], ["ev", "Eventos", "list"], ["rep", "Reportes PDF", "doc"], ["dat", "Datos", "db"]];
   X.header("index.html", TABS);
   var wrap = document.querySelector(".wrap"), IC = {INFO: "info", ALERT: "shield", PULSE: "pulse", MAP: "map", LIST: "list", FIRE: "fire", SUN: "sun", WATER: "water", DL: "dl", DOC: "doc"};
   wrap.innerHTML = wrap.innerHTML.replace(/__I_(\w+)__/g, function (_, k) { return X.ic(IC[k]); });
@@ -257,11 +257,100 @@
     $("tEv").innerHTML = '<tr><th>Fecha</th><th>Tipo</th><th>Evento</th><th>Lugar</th><th>Nivel</th><th>Confianza</th><th>Fuente</th></tr>' + FIL.slice(0, 300).map(function (e) { return '<tr><td style="white-space:nowrap">' + S.fecha(e.ts) + '</td><td>' + X.catChip(e.categoria) + '</td><td><a href="' + fichaUrl(e.id) + '"><b>' + S.esc(e.titulo) + '</b></a></td><td>' + S.esc(e.lugar || (e.departamentos || []).join(", ")) + '</td><td>' + S.badgeNivel(e) + '</td><td>' + (X.confBadge(e) || "") + '</td><td>' + X.badgeOrigen(e) + '</td></tr>'; }).join("");
   }
 
+  /* ---------- TRÁNSITO ---------- */
+  var CONFCOL = {Alta: "#2e9e5b", Media: "#f5b700", Baja: "#8896ab"}, TRF = [];
+  function trLista() { return (D.transito && D.transito.hechos) || []; }
+  function vict(h) { return (h.fallecidos || 0) + (h.heridos || 0); }
+  function trCard(h) {
+    var c = h.confianza || {}, cl = {Alta: "ba", Media: "bm", Baja: "bb"}[c.nivel] || "bb";
+    var enl = (h.enlaces || []).map(function (e) { return '<li><a href="' + S.esc(S.urlOk(e.url)) + '" target="_blank" rel="noopener">' + S.esc(e.medio || "medio") + '</a> — ' + S.esc(e.titulo) + '</li>'; }).join("");
+    return '<details style="border-bottom:1px solid var(--line);padding:9px 2px"><summary style="cursor:pointer;list-style:none"><div style="display:flex;gap:8px;justify-content:space-between;align-items:flex-start"><b style="font-size:13.5px">' + S.esc(h.titulo) + '</b><span class="badge ' + cl + '">Confianza ' + (c.nivel || "").toLowerCase() + '</span></div>' +
+      '<div class="nota" style="margin-top:3px">' + S.fecha(h.ts) + ' · ' + S.esc(h.lugar || h.departamento || "sin ubicar") + ' · ' + S.esc(h.tipo || "") + ' · ' + h.n_medios + ' medio(s)' + (vict(h) ? ' · <b>' + h.fallecidos + ' fallecidos, ' + h.heridos + ' heridos</b>' : '') + '</div></summary>' +
+      '<div class="nota" style="margin:8px 0 4px">' + S.esc(c.razon || "") + '</div><ul style="margin:4px 0 4px 18px;font-size:12.5px">' + enl + '</ul></details>';
+  }
+  function transito() {
+    var T = trLista(), now = Date.now(), r = (D.transito && D.transito.resumen) || {};
+    var t30 = T.filter(function (h) { return h.ts > now - 30 * DIA; });
+    $("kTra").innerHTML = kpi("Hechos en 24 h", r.hechos_24h || 0, "prensa boliviana, preliminar", "#d7263d", "shield") + kpi("Hechos en 7 días", r.hechos_7d || 0, (r.alta_7d || 0) + " con confianza alta", "#f26a1b", "list") +
+      kpi("Fallecidos (7 días)", r.fallecidos_7d || 0, "máximo reportado por hecho", "#8d6e63", "pulse") + kpi("Heridos (7 días)", r.heridos_7d || 0, "máximo reportado por hecho", "#1d6fb8", "pulse");
+    $("listaTra").innerHTML = T.length ? T.slice(0, 40).map(trCard).join("") : '<p class="nota">Sin hechos de tránsito registrados todavía.</p>';
+    var m = MAPS.tra = nuevoMapa("mapaTra", true);
+    m.on("load", function () {
+      m.addSource("dep", {type: "geojson", data: geoCopia(D.geoDep)}); m.addLayer({id: "dep-line", type: "line", source: "dep", paint: {"line-color": "#4b5a70", "line-width": 1.2}});
+      var f = T.filter(function (h) { return h.lat != null; }).map(function (h) { return {type: "Feature", properties: {t: h.titulo, l: h.lugar, v: vict(h), c: h.confianza.nivel, n: h.n_medios, f: S.fecha(h.ts)}, geometry: {type: "Point", coordinates: [h.lon, h.lat]}}; });
+      m.addSource("tra", {type: "geojson", data: {type: "FeatureCollection", features: f}});
+      m.addLayer({id: "traHeat", type: "heatmap", source: "tra", maxzoom: 7, paint: {"heatmap-weight": ["interpolate", ["linear"], ["get", "v"], 0, .4, 10, 1], "heatmap-radius": 28, "heatmap-opacity": .55, "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, "rgba(255,255,255,0)", .3, "#fdd49e", .6, "#fc8d59", 1, "#b30000"]}});
+      m.addLayer({id: "traPt", type: "circle", source: "tra", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "v"], 0, 6, 10, 12, 30, 20], "circle-color": ["match", ["get", "c"], "Alta", CONFCOL.Alta, "Media", CONFCOL.Media, CONFCOL.Baja], "circle-opacity": .9, "circle-stroke-color": "#fff", "circle-stroke-width": 1.5}});
+      popEv(m, "traPt", function (p) { return "<b>" + S.esc(p.t) + "</b>" + S.esc(p.l) + "<br>" + p.f + " · " + p.n + " medio(s) · confianza " + p.c.toLowerCase() + (p.v ? "<br>" + p.v + " víctimas reportadas" : ""); });
+    });
+    var dias = []; for (var i = 29; i >= 0; i--) dias.push(S.diaKey(now - i * DIA)), 0;
+    var nd = {}, vd = {}; dias.forEach(function (d) { nd[d] = 0; vd[d] = 0; });
+    t30.forEach(function (h) { var k = S.diaKey(h.ts); if (k in nd) { nd[k]++; vd[k] += vict(h); } });
+    X.chart("chTraDia", {tooltip: {trigger: "axis"}, legend: {top: 0}, grid: {left: 40, right: 40, top: 40, bottom: 30}, xAxis: {type: "category", data: dias.map(function (d) { return d.slice(5); })}, yAxis: [{type: "value", minInterval: 1}, {type: "value", minInterval: 1}],
+      series: [{name: "Hechos", type: "bar", data: dias.map(function (d) { return nd[d]; }), itemStyle: {color: "#d7263d", borderRadius: [4, 4, 0, 0]}}, {name: "Víctimas", type: "line", yAxisIndex: 1, smooth: true, data: dias.map(function (d) { return vd[d]; }), itemStyle: {color: "#1d6fb8"}}]});
+    var dp = {}; S.DEPS.forEach(function (d) { dp[d] = [0, 0]; }); t30.forEach(function (h) { if (dp[h.departamento]) { dp[h.departamento][0] += h.fallecidos; dp[h.departamento][1] += h.heridos; } });
+    var ds = S.DEPS.slice().sort(function (a, b) { return (dp[a][0] + dp[a][1]) - (dp[b][0] + dp[b][1]); });
+    X.chart("chTraDep", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, legend: {top: 0}, grid: {left: 90, right: 20, top: 36, bottom: 20}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: ds},
+      series: [{name: "Fallecidos", type: "bar", stack: "v", data: ds.map(function (d) { return dp[d][0]; }), itemStyle: {color: "#7a1f2b"}}, {name: "Heridos", type: "bar", stack: "v", data: ds.map(function (d) { return dp[d][1]; }), itemStyle: {color: "#f26a1b"}}]});
+    function cuenta(k) { var o = {}; t30.forEach(function (h) { var v = h[k] || "No precisado"; o[v] = (o[v] || 0) + 1; }); return Object.keys(o).map(function (n) { return {name: n, value: o[n]}; }); }
+    X.chart("chTraTipo", {tooltip: {trigger: "item"}, legend: {show: false}, series: [{type: "pie", roseType: "radius", radius: ["18%", "70%"], itemStyle: {borderRadius: 5, borderColor: "#fff", borderWidth: 2}, label: {formatter: "{b}\n{c}"}, data: cuenta("tipo")}]});
+    X.chart("chTraVeh", {tooltip: {}, series: [{type: "treemap", roam: false, nodeClick: false, breadcrumb: {show: false}, label: {formatter: "{b}\n{c}"}, data: cuenta("vehiculo")}]});
+    var cf = {Alta: 0, Media: 0, Baja: 0}; t30.forEach(function (h) { cf[h.confianza.nivel]++; });
+    X.chart("chTraConf", {tooltip: {trigger: "item"}, legend: {show: false}, series: [{type: "pie", radius: ["45%", "72%"], label: {formatter: "{b}: {c}"}, data: ["Alta", "Media", "Baja"].map(function (k) { return {name: k, value: cf[k], itemStyle: {color: CONFCOL[k]}}; })}]});
+    S.DEPS.forEach(function (d) { var o = document.createElement("option"); o.textContent = d; $("tDep").appendChild(o); });
+    ["tPer", "tDep", "tConf"].forEach(function (i) { $(i).onchange = pintaTra; }); pintaTra();
+    $("tCsv").onclick = function () { S.descargar("transito_sala_bolivia.csv", "﻿" + [["fecha", "titulo", "tipo", "vehiculo", "departamento", "lugar", "lat", "lon", "fallecidos", "heridos", "confianza", "medios", "notas"].join(",")].concat(TRF.map(function (h) { return [S.fecha(h.ts), h.titulo, h.tipo, h.vehiculo, h.departamento, h.lugar, h.lat == null ? "" : h.lat, h.lon == null ? "" : h.lon, h.fallecidos, h.heridos, h.confianza.nivel, h.medios.join("; "), h.n_notas].map(function (v) { v = String(v == null ? "" : v); return '"' + v.replace(/"/g, '""') + '"'; }).join(","); })).join("\n"), "text/csv"); };
+    $("tJson").onclick = function () { S.descargar("transito_sala_bolivia.json", JSON.stringify(TRF, null, 1), "application/json"); };
+    $("tXls").onclick = function () { X.descargarXlsx("transito_sala_bolivia.xlsx", TRF.map(function (h) { return {"Fecha (La Paz)": S.fecha(h.ts), Título: h.titulo, Tipo: h.tipo, Vehículo: h.vehiculo, Departamento: h.departamento, Lugar: h.lugar, Latitud: h.lat, Longitud: h.lon, Fallecidos: h.fallecidos, Heridos: h.heridos, Confianza: h.confianza.nivel, Medios: h.medios.join("; "), Notas: h.n_notas, Enlaces: h.enlaces.map(function (e) { return e.url; }).join(" | ")}; }), "Tránsito"); };
+  }
+  function pintaTra() {
+    var per = +$("tPer").value, dep = $("tDep").value, cf = $("tConf").value, now = Date.now();
+    TRF = trLista().filter(function (h) { return (per >= 400 || h.ts > now - per * DIA) && (!dep || h.departamento === dep) && (!cf || h.confianza.nivel === "Alta" || (cf === "Media" && h.confianza.nivel === "Media")); });
+    $("tN").textContent = TRF.length + " hechos";
+    $("tTra").innerHTML = '<tr><th>Fecha</th><th>Hecho</th><th>Lugar</th><th>Tipo</th><th>Vehículo</th><th>Fallec.</th><th>Heridos</th><th>Confianza</th><th>Medios</th></tr>' + TRF.map(function (h) { var cl = {Alta: "ba", Media: "bm", Baja: "bb"}[h.confianza.nivel]; return '<tr><td style="white-space:nowrap">' + S.fecha(h.ts) + '</td><td><b>' + S.esc(h.titulo) + '</b></td><td>' + S.esc(h.lugar || h.departamento) + '</td><td>' + S.esc(h.tipo) + '</td><td>' + S.esc(h.vehiculo) + '</td><td>' + h.fallecidos + '</td><td>' + h.heridos + '</td><td><span class="badge ' + cl + '">' + h.confianza.nivel + '</span></td><td title="' + S.esc(h.medios.join(", ")) + '">' + h.n_medios + '</td></tr>'; }).join("");
+  }
+
+  /* ---------- REPORTES PDF ---------- */
+  var TIPOREP = {alerta: "Alerta inmediata", diario: "Reporte diario", semanal: "Reporte semanal", mensual: "Reporte mensual", solicitud: "Por solicitud", hecho: "Informe de un hecho", sismos: "Sismo", brote: "Brote / OPS-OMS", evento: "Evento", otro: "Otros"}, REPSEL = "";
+  function limpiaTit(t) { return String(t || "").replace(/:[a-z_]+:/g, "").replace(/<!channel>/g, "").replace(/\s+/g, " ").trim(); }
+  function reportes() {
+    S.cargar("reportes/lista.json").then(function (L) {
+      L.sort(function (a, b) { return (b.fecha || "").localeCompare(a.fecha || ""); });
+      var tipos = {}; L.forEach(function (x) { tipos[x.tipo] = (tipos[x.tipo] || 0) + 1; });
+      $("rChips").innerHTML = '<button class="chip on" data-r="">Todos (' + L.length + ')</button>' + Object.keys(tipos).map(function (k) { return '<button class="chip" data-r="' + k + '">' + (TIPOREP[k] || k) + ' (' + tipos[k] + ')</button>'; }).join("");
+      var u = L.filter(function (x) { return x.tipo === "diario"; })[0] || L[0]; if (u) $("rUlt").href = "reportes/" + u.archivo;
+      function pinta() {
+        var F = L.filter(function (x) { return !REPSEL || x.tipo === REPSEL; });
+        $("rN").textContent = F.length + " reportes (los más recientes primero)";
+        $("tRep").innerHTML = '<tr><th>Fecha</th><th>Tipo</th><th>Título</th><th></th></tr>' + F.slice(0, 200).map(function (x) { return '<tr><td style="white-space:nowrap">' + S.esc((x.fecha || "").replace("T", " ")) + '</td><td>' + (TIPOREP[x.tipo] || x.tipo) + '</td><td>' + S.esc(limpiaTit(x.titulo)) + '</td><td><a class="btn s" href="reportes/' + S.esc(x.archivo) + '" target="_blank" rel="noopener">' + X.ic("dl") + 'PDF</a></td></tr>'; }).join("");
+      }
+      $("rChips").onclick = function (e) { var b = e.target.closest("[data-r]"); if (!b) return; REPSEL = b.dataset.r; [].forEach.call($("rChips").children, function (c) { c.classList.toggle("on", c === b); }); pinta(); };
+      pinta();
+    }).catch(function () { $("rN").textContent = "Aún no hay reportes generados."; });
+  }
+
+  /* ---------- DATOS ---------- */
+  function datosTab() {
+    var A = [["Todos los eventos (base unificada)", "Sismos, avisos SENAMHI, focos, sequía, ríos, brotes y prensa, con nivel de confianza.", [["CSV", "datos/eventos_unificados.csv"], ["JSON", "eventos_unificados.json"]]],
+      ["Hechos de tránsito y accidentes", "Un registro por accidente, con medios, cifras y confianza.", [["CSV", "datos/transito_hechos.csv"], ["JSON", "transito.json"]]],
+      ["Libro Excel completo", "Varias hojas: eventos, hechos, sismos, focos y metadatos.", [["Excel", "datos/datos_bolivia.xlsx"]]],
+      ["Mapa de hechos (GIS)", "Capa para QGIS / ArcGIS / Google Earth.", [["GeoJSON", "datos/hechos.geojson"]]],
+      ["Hechos de prensa agrupados", "Notas del mismo hecho unidas (cifras = máximo reportado).", [["CSV", "datos/hechos_agrupados.csv"], ["JSON", "datos/hechos_agrupados.json"]]],
+      ["Histórico de eventos", "Registro acumulado para análisis de series de tiempo.", [["CSV", "datos/historico_eventos.csv"]]],
+      ["Sismos (San Calixto)", "Historial de sismos registrados en Bolivia.", [["CSV", "datos/sismos_historico.csv"]]],
+      ["Focos de calor por día", "Detecciones satelitales NASA FIRMS por día.", [["CSV", "datos/focos_detectados_diario.csv"]]],
+      ["Diccionario de datos y metadatos", "Qué significa cada columna, fuentes y advertencias.", [["Diccionario CSV", "datos/diccionario_datos.csv"], ["Metadatos", "datos/metadatos.json"]]]];
+    $("gDat").innerHTML = A.map(function (a) { return '<div class="card"><h2>' + S.esc(a[0]) + '</h2><div class="cap">' + S.esc(a[1]) + '</div><div style="display:flex;gap:8px;flex-wrap:wrap">' + a[2].map(function (f) { return '<a class="btn" href="' + f[1] + '" download>' + X.ic("dl") + f[0] + '</a>'; }).join("") + '</div></div>'; }).join("");
+  }
+  function pie() {
+    var t = D.eventos_unificados && D.eventos_unificados.generado; $("foot").innerHTML = '<span><i class="dot"></i> Base de datos conectada' + (t ? " · actualizada " + X.ago(t) : "") + '</span><span>' + (D.ev || []).length + ' eventos · ' + trLista().length + ' hechos de tránsito</span><span><a href="informes.html">Generar reporte</a> · <a href="#rep" onclick="document.querySelector(\'[data-t=rep]\').click();return false">Ver PDF</a> · <a href="#dat" onclick="document.querySelector(\'[data-t=dat]\').click();return false">Descargar datos</a></span>';
+  }
+
   /* ---------- pestañas ---------- */
   function mostrar(t) {
     TABS.forEach(function (x) { $("t-" + x[0]).style.display = x[0] === t ? "" : "none"; });
     [].forEach.call(document.querySelectorAll(".tab"), function (b) { b.classList.toggle("on", b.dataset.t === t); });
-    if (D && !INIT[t]) { INIT[t] = 1; ({res: resumen, map: mapaGeneral, inc: incendios, seq: sequia, rio: rios, ev: eventos}[t])(); }
+    if (D && !INIT[t]) { INIT[t] = 1; ({res: resumen, map: mapaGeneral, inc: incendios, seq: sequia, rio: rios, ev: eventos, tra: transito, rep: reportes, dat: datosTab}[t])(); }
     setTimeout(function () { X.resizeAll(); for (var k in MAPS) try { MAPS[k].resize(); } catch (e) {} }, 40);
     history.replaceState(null, "", "#" + t);
   }
@@ -277,11 +366,13 @@
       {t: "Mapa de calor de focos", x: "Capas a la izquierda, mapa a la derecha. Active avisos del SENAMHI o sequía por territorio y mueva los días de los focos.", sel: "#layers", antes: function () { mostrar("map"); }},
       {t: "Incendios", x: "Mapa de calor, complejos de incendio y gráficos variados (por día, por departamento, por municipio).", sel: "#kInc", antes: function () { mostrar("inc"); }},
       {t: "Sequías", x: "Se mide con el SPI (método OMM). Elija la escala (1, 3, 6 o 12 meses) y toque un departamento para ver su historia.", sel: "#selSpi", antes: function () { mostrar("seq"); }},
+      {t: "Tránsito y accidentes", x: "Accidentes detectados en la prensa. Las notas del mismo hecho se unen y la <b>confianza</b> sube con el número de medios que lo reportan.", sel: "#kTra", antes: function () { mostrar("tra"); }},
+      {t: "Reportes PDF y datos", x: "En <b>Reportes PDF</b> están las alertas, reportes diarios y semanales. En <b>Datos</b> descarga todo en CSV, Excel, JSON y GeoJSON.", sel: "#tabs"},
       {t: "Base de eventos y informes", x: "Filtre y descargue todo en CSV, Excel o JSON. Para un informe de un hecho puntual (accidente, brote, sismo de hoy…) use <b>Informes</b> arriba.", sel: "#fCat", antes: function () { mostrar("ev"); }}
     ]);
   }
   X.datos().then(function (d) {
-    D = d; derivar(); var h = (location.hash || "#res").slice(1); mostrar(TABS.some(function (t) { return t[0] === h; }) ? h : "res");
+    D = d; derivar(); pie(); var h = (location.hash || "#res").slice(1); mostrar(TABS.some(function (t) { return t[0] === h; }) ? h : "res");
     try { if (!localStorage.getItem("sala_tour")) setTimeout(function () { if (confirm("¿Desea una guía rápida de 1 minuto para conocer la página?")) guia(); else localStorage.setItem("sala_tour", "1"); }, 1200); } catch (e) {}
   }).catch(function (e) { $("heroT").textContent = "No se pudieron cargar los datos: " + e.message; });
 })();

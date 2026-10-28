@@ -39,7 +39,7 @@ var S2 = (function () {
 
   function opt(p) { return S.cargar(p).catch(function () { return null; }); }
   function datos() {
-    var k = ["eventos_unificados", "data", "focos_puntos", "focos_complejos", "sequia", "caudales", "sismos_oficiales", "senamhi_alertas", "epidemio_oficial", "focos_propension", "focos_detectados", "estado_fuentes"];
+    var k = ["eventos_unificados", "transito", "data", "focos_puntos", "focos_complejos", "sequia", "caudales", "sismos_oficiales", "senamhi_alertas", "epidemio_oficial", "focos_propension", "focos_detectados", "estado_fuentes"];
     return Promise.all(k.map(function (n) { return opt(n + ".json"); }).concat([opt("geo_dep.geojson"), opt("geo_mun.geojson")])).then(function (r) {
       var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = (o.eventos_unificados && o.eventos_unificados.eventos) || []; return o;
     });

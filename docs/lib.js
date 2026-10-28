@@ -3,7 +3,7 @@ var SALA = (function () {
   var DEPS = ["La Paz", "Cochabamba", "Santa Cruz", "Oruro", "Potosí", "Chuquisaca", "Tarija", "Beni", "Pando"];
   var CAT = ["geológica", "meteorológica", "hidrológica", "climatológica", "biológica", "tecnológica", "antropogénica", "otra"];
   var COLCAT = {"geológica": "#8d6e63", "meteorológica": "#1e88e5", "hidrológica": "#00897b", "climatológica": "#ef6c00", "biológica": "#8e24aa", "tecnológica": "#546e7a", "antropogénica": "#c62828", "otra": "#9e9e9e"};
-  var ORIGEN = {prensa: "Prensa", senamhi: "SENAMHI (oficial)", sismo: "Observatorio San Calixto (oficial)", foco: "NASA FIRMS (satélite)", epidemiologia: "Epidemiología (MSD, OPS/OMS)", modelo: "Modelo meteorológico (pronóstico)", gdacs: "GDACS (ONU/UE)", usgs: "USGS (oficial)"};
+  var ORIGEN = {eonet: "NASA EONET (satélite)", prensa: "Prensa", senamhi: "SENAMHI (oficial)", sismo: "Observatorio San Calixto (oficial)", foco: "NASA FIRMS (satélite)", epidemiologia: "Epidemiología (MSD, OPS/OMS)", modelo: "Modelo meteorológico (pronóstico)", gdacs: "GDACS (ONU/UE)", usgs: "USGS (oficial)"};
   var NIVTXT = ["Verde", "Amarilla", "Naranja", "Roja"];
   function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
   function fecha(ms, solo) {

@@ -99,6 +99,41 @@
   <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="bCsv">__I_DL__CSV</button><button class="btn" id="bXls">__I_DL__Excel</button><button class="btn" id="bJson">__I_DL__JSON</button><a class="btn p" href="informes.html">__I_DOC__Crear informe específico</a></div>
   <div class="nota" id="fN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:640px"><table id="tEv"></table></div></div>
 </section>
+<section id="t-tra" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Tránsito y accidentes.</b> Hechos viales detectados en la <b>prensa boliviana</b> (consulta medio por medio y GDELT). Las notas que cuentan el mismo accidente se <b>unen en un solo hecho</b> y su <b>confianza</b> depende de cuántos medios distintos lo reportan: <b>Alta</b> 3 o más · <b>Media</b> 2 · <b>Baja</b> 1. No existe fuente oficial abierta (Policía, ABC, SUMA 161), por eso toda cifra es <b>preliminar</b> y se muestra el máximo reportado.</p></div></div>
+ <div class="grid g4" id="kTra" style="margin-bottom:16px"></div>
+ <div class="grid g21" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_MAP__</span>Mapa de hechos de tránsito</h2><div class="cap">Tamaño = víctimas reportadas · color = confianza (verde alta, ámbar media, gris baja). Toque un punto para ver los medios.</div><div class="map" id="mapaTra" style="height:460px"></div></div>
+  <div class="card"><h2><span class="i">__I_LIST__</span>Últimos hechos</h2><div class="cap">Toque un hecho para ver medios, cifras y enlaces.</div><div id="listaTra" style="max-height:460px;overflow:auto"></div></div>
+ </div>
+ <div class="grid g2" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Hechos y víctimas por día</h2><div class="cap">Barras = hechos; línea = heridos + fallecidos reportados.</div><div class="ch" id="chTraDia"></div></div>
+  <div class="card"><h2><span class="i">__I_MAP__</span>Víctimas por departamento</h2><div class="cap">Fallecidos y heridos reportados en los últimos 30 días.</div><div class="ch" id="chTraDep"></div></div>
+ </div>
+ <div class="grid g3" style="margin-bottom:16px">
+  <div class="card"><h2>Tipo de accidente</h2><div class="ch s" id="chTraTipo"></div></div>
+  <div class="card"><h2>Vehículos involucrados</h2><div class="ch s" id="chTraVeh"></div></div>
+  <div class="card"><h2>Confianza (triangulación)</h2><div class="ch s" id="chTraConf"></div><div class="how"><b>Alta</b> = 3+ medios · <b>Media</b> = 2 · <b>Baja</b> = 1 medio.</div></div>
+ </div>
+ <div class="card"><h2><span class="i">__I_LIST__</span>Base de hechos de tránsito</h2>
+  <div class="filtros"><label>Período<select id="tPer"><option value="2">48 horas</option><option value="7" selected>7 días</option><option value="30">30 días</option><option value="400">Todo</option></select></label>
+  <label>Departamento<select id="tDep"><option value="">Todos</option></select></label>
+  <label>Confianza<select id="tConf"><option value="">Todas</option><option value="Alta">Alta</option><option value="Media">Media o más</option></select></label></div>
+  <div style="margin:12px 0;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="tCsv">__I_DL__CSV</button><button class="btn" id="tXls">__I_DL__Excel</button><button class="btn" id="tJson">__I_DL__JSON</button><a class="btn p" href="informes.html">__I_DOC__Pedir informe PDF de un accidente</a></div>
+  <div class="nota" id="tN"></div><div style="overflow:auto;max-height:520px"><table id="tTra"></table></div></div>
+</section>
+
+<section id="t-rep" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Reportes en PDF.</b> Se generan solos: <b>alertas inmediatas</b> cuando hay un hecho grave, <b>reporte diario</b> (07:00), <b>semanal</b> (lunes) y <b>por solicitud</b>. Para el informe de un hecho puntual (un accidente, un sismo de hoy, un brote) use <b>Crear informe específico</b>.</p></div></div>
+ <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn p" href="informes.html">__I_DOC__Crear informe específico</a><a class="btn" id="rUlt" href="#" target="_blank" rel="noopener">__I_DL__Último reporte diario (PDF)</a><a class="btn" href="reportes/index.html" target="_blank" rel="noopener">__I_LIST__Ver todos</a></div>
+ <div class="card"><div class="chips" id="rChips"></div><div class="nota" id="rN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:640px"><table id="tRep"></table></div></div>
+</section>
+
+<section id="t-dat" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Base de datos abierta.</b> Descargue los datos completos para analizarlos en Excel, R, Python o QGIS. Se actualizan cada 30 minutos. Todos los registros son <b>preliminares</b>; cada archivo indica su fuente. El <b>diccionario de datos</b> explica cada columna.</p></div></div>
+ <div class="grid g3" id="gDat"></div>
+</section>
 </div>
+<div class="foot" id="foot"></div>
 <script src="app.js"></script>
 </body></html>
