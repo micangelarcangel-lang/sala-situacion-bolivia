@@ -24,7 +24,7 @@
     d.sis = ((d.sismos_oficiales && d.sismos_oficiales.sismos) || []).map(function (s) { s.ts = new Date(s.fecha_local.replace(" ", "T") + "-04:00").getTime(); return s; });
     d.avisos = ((d.senamhi_alertas && d.senamhi_alertas.alertas) || []).filter(function (a) { return (a.fin || "9999") >= HOY; });
     d.sq = (d.sequia && d.sequia.departamentos) || {};
-    d.cau = (d.caudales && d.caudales.puntos) || [];
+    d.cau = ((d.caudales && d.caudales.puntos) || []).filter(function (p) { return p.fechas; });
     var ts = [d.eventos_unificados && d.eventos_unificados.generado, d.focos_puntos && d.focos_puntos.actualizado && Date.parse(d.focos_puntos.actualizado), d.estado_fuentes && d.estado_fuentes.generado].filter(function (x) { return x && !isNaN(x); });
     X.live(Math.max.apply(null, ts.concat([0])) || null);
   }
