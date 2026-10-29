@@ -83,6 +83,9 @@
    "Santa Cruz": 163,
    "La Paz": 1,
    "Pando": 9
+  },
+  "2026-10-29": {
+   "Santa Cruz": 4
   }
  },
  "municipios": {
@@ -254,11 +257,15 @@
    "Bolpebra (Pando)": 3,
    "Bella Flor (Pando)": 3,
    "Magdalena (Beni)": 2
+  },
+  "2026-10-29": {
+   "Concepción (Santa Cruz)": 3,
+   "San Ignacio (Santa Cruz)": 1
   }
  },
- "actualizado": "2026-10-29T05:39:45.033865Z",
+ "actualizado": "2026-10-29T07:55:57.385763Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2097,
+ "detecciones_fuera_de_limites": 2101,
  "slack_dia": "2026-10-29"
 }
