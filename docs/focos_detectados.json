@@ -87,8 +87,8 @@
   "2026-10-29": {
    "Santa Cruz": 6,
    "Potosí": 8,
-   "Oruro": 2,
-   "La Paz": 2,
+   "Oruro": 5,
+   "La Paz": 4,
    "Cochabamba": 2,
    "Beni": 25
   }
@@ -271,17 +271,17 @@
    "Llica (Potosí)": 2,
    "Sacaca (Potosí)": 2,
    "Reyes (Beni)": 2,
+   "Carangas (Oruro)": 2,
+   "Calacoto (La Paz)": 2,
    "Vitiche (Potosí)": 1,
    "Tomave (Potosí)": 1,
    "Potosí (Potosí)": 1,
    "Belén de Andamarca (Oruro)": 1,
    "Arampampa (Potosí)": 1,
-   "Caracollo (Oruro)": 1,
-   "San Pedro de Curahuara (La Paz)": 1,
-   "Cochabamba (Cochabamba)": 1
+   "Caracollo (Oruro)": 1
   }
  },
- "actualizado": "2026-10-29T20:38:21.960630Z",
+ "actualizado": "2026-10-29T21:35:31.651408Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
  "detecciones_fuera_de_limites": 2147,

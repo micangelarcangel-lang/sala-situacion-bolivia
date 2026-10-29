@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1yl4fzk",
+  "fecha_hora_local": "2026-10-29 17:09",
+  "ts_ms": 1793308148000,
+  "titulo": "Manfred Reyes Villa envía ayuda humanitaria a Pasorapa ante severa sequía - Red Uno",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -18.38,
+  "lon": -64.649,
+  "lugar": "Pasorapa, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Pasorapa",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOeFpTWktvMmJiSWVMUDRtV3RrOUd1TjFEYWZSRHZZM0F3blRtNDNnTDFiNllObHVCRVZxQ0plTDhjeXJNcUhkdXZpajlRMWV5dV80N3lIX2twdEJYRzhRUjRMd3JpWEx3Ui1GcUc2dGI3VmNxZHh3VGRfNjRCMDB0RjNPUzROYnNXNzl2TFFmMGptTDJzZ1R2Um5jQnhMU2pzT0UzeEpjUjhwbHVyMll4d2IyNjBwZmZsMXh1VklzSlo?oc=5"
+ },
+ {
   "hecho_id": "noticia:1ors4x1",
   "fecha_hora_local": "2026-10-29 13:42",
   "ts_ms": 1793295752000,
