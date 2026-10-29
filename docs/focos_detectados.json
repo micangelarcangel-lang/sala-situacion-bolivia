@@ -256,9 +256,9 @@
    "Magdalena (Beni)": 2
   }
  },
- "actualizado": "2026-10-28T23:30:34.313520Z",
+ "actualizado": "2026-10-29T00:09:18.107361Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2178,
- "slack_dia": "2026-10-28"
+ "detecciones_fuera_de_limites": 2097,
+ "slack_dia": "2026-10-29"
 }
