@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1ors4x1",
+  "fecha_hora_local": "2026-10-29 13:42",
+  "ts_ms": 1793295752000,
+  "titulo": "La música regional mexicana está de luto: muere vocalista de 'El Bronco' tras sufrir graves quemaduras - Red Uno",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 1,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPM0xEWTNEYThEb1VmVE1iQVpXandRR2p4MkVLV2JER3RnTFJMOXRMY0I5VUJabXJBamtpa0VsdjZGdXVSS1Z4UHFtTjdlVmNYMlY1TTdjUjlRTldVTkRxVUg4d1dBVzVxYmcwT0IyY2xNNDUwcFZBa2RIMk42V2lIaklnVnAybjMzdXlXUGx5Yk1Pd2ZORTJxY3kzMHJSYkNJdmVURFdKengyR3NSTDd1VUNSUEt6Z2xUU2tubm1XOEJMT2RZbnlBVUdNMGt2Y1dkd1FWRU1NSmRibU4yQThtbHlWYWd5eUMxUmc?oc=5"
+ },
+ {
   "hecho_id": "noticia:3854i5",
   "fecha_hora_local": "2026-10-29 12:44",
   "ts_ms": 1793292248000,
@@ -158,6 +178,26 @@
   "departamento": "Potosí",
   "municipio": "Potosí",
   "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPeWpaZ2U0ZGc0dGRGdTJ1LXlzVHJPNFRjUDRveE1zeUNnNmdna1ZibWgydkt4VG9XN083ZC10N0tBdTkyYl8wLTlxdHp1aEEzX0VLTkc3TFlOejZDRldET3hQMU83ZnBwZ0lubjdBSHpIYk9mT2g1SWNibTBJX3dVTmtOY3N4c19HUlJCMjE5bmwwZWFDZ010R0ZiVWIzamgzeldvRFFVUnJIZw?oc=5"
+ },
+ {
+  "hecho_id": "noticia:1sxzqlz",
+  "fecha_hora_local": "2026-10-29 06:55",
+  "ts_ms": 1793271354000,
+  "titulo": "Las nevadas sorprenden a los municipios del sudoeste potosino - El Potosí",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOTTZJVUJJczEtUXpjRTRkSW1MR04ybDN0SXV4VHJtMjVJcU1aQks4eHA1UXpxMHZqYzlWMTBMSzBzcWwtY1FWaXY2OWluOU0ybllSdXFicEkzTGVLS1gtQnB4VkNlUUZJRTNlMlZtRzFGTTNENmNPeHhVMXFkQkMxMkR6T0dlWnhEN1dOcHNHMnZmc3RQa0ZnSHItR2FySU9rQUpCTg?oc=5"
  },
  {
   "hecho_id": "noticia:9bgm56",
