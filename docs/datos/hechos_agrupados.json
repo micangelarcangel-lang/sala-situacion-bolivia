@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:151jkm",
+  "fecha_hora_local": "2026-10-29 05:31",
+  "ts_ms": 1793266311000,
+  "titulo": "Fallecen 68 personas y hay 180 heridos tras choque de trenes - El Diario - Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 3,
+  "nivel_preliminar": "roja",
+  "fallecidos_max": 0,
+  "heridos_max": 180,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Diario - Bolivia",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNQWJ6SEdfWUhFbGJmeG5aeGk4QXBuVEIyZ0JDYWstZzByc0FuRkdGd3Vlay1NTTNWeFJyOEtTZzgwNXVoME9yODY2elBuTEVpRGJjbTJWMmxpM0JFN2tPc0QwTDJhY2F5NVJCM2NWWUYxazRqbmk4eHphMmJXT3pDdjhBTHpFQWRMemRldmdBYmUzVVJNeERiTGdLbzY4NHUyOW5naWNlcw?oc=5"
+ },
+ {
   "hecho_id": "clima:Oruro:2026-10-30:viento:1",
   "fecha_hora_local": "2026-10-29 00:05",
   "ts_ms": 1793246742376,
@@ -38,6 +58,26 @@
   "departamento": "Potosí",
   "municipio": "Potosí",
   "enlaces": "https://open-meteo.com/"
+ },
+ {
+  "hecho_id": "noticia:15jsaow",
+  "fecha_hora_local": "2026-10-28 21:54",
+  "ts_ms": 1793238846000,
+  "titulo": "Lluvias anegan calles y afectan el transporte público en varios barrios de Santa Cruz - Red Uno",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxObzZzT3NOb2lGR2stTXp4UTZuLW5fcjJtdHNWQWtuT01pbXc3bktxcXlGVU5ncmVaRG5MNXF4YjA4WGduU2FoSUE3eG1Bc2FxVEpPMWtidHotSmg3T2tiN1FjVnVDOHJnT2FoWV9weHV2LVJfckJQamloZTFQRkhZTldFbHM1ZmZyQkQxTWQxS3VUMmFIM0FnRGJ1aHZWV0VMZDVBQjNSM2t6UFp0Mk5LSTJPOWVjQ0tMclYxNFRwaG1BYnhvaktqejEyN1NMNnVN?oc=5"
  },
  {
   "hecho_id": "noticia:100wvru",
