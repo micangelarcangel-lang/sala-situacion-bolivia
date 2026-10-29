@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:3854i5",
+  "fecha_hora_local": "2026-10-29 12:44",
+  "ts_ms": 1793292248000,
+  "titulo": "Lluvias provocan caída parcial de la cornisa del Palacio Quemado en La Paz - Red Uno",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -16.169,
+  "lon": -68.09,
+  "lugar": "La Paz, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Nuestra Señora de La Paz",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOZTFsMTV4d2RaZ0hSX3JhVjFxbFZnYm56S2VuQXNhdTFKVzdkRGhNOU1yLUxjekhzVGFvRUU2Xzk3RWdxcUZLc1dOWF85Q2FYNWtGRkhMWUtmVzFVOEpJQXpMSlZvdEVUdFRkeDJXZ3k0WFJJWHVXQzRGRjJyeUVmaE5wMGJDWnpuWlBKSW53OFFxRUM2Tm1NM0hVcUY2LUtOczlrbFFaWkdlV1phVUZHYTduRkFDS0IycHJfNTdVMGI?oc=5"
+ },
+ {
   "hecho_id": "noticia:wy4br4",
   "fecha_hora_local": "2026-10-29 12:19",
   "ts_ms": 1793290775000,
