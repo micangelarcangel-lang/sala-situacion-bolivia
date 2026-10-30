@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe por tema — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css">
+<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js"></script><script src="s2.js"></script></head>
+<body><div id="hdr"></div><div class="wrap">
+<div class="card noimp" style="border-top:5px solid #8e24aa">
+ <h2 style="font-size:18px">Informe por tema</h2>
+ <div class="cap">Escriba un tema (una enfermedad, un lugar, un tipo de hecho) y la plataforma reúne <b>todo lo que ha registrado</b>, une las notas que cuentan lo mismo y calcula su <b>confianza</b>. Ejemplos: <i>sarampión</i>, <i>dengue Caranavi</i>, <i>bloqueo</i>, <i>incendio Chiquitania</i>.</div>
+ <div class="filtros">
+  <label style="flex:1;min-width:240px">Tema<input type="text" id="q" placeholder="ej. sarampión, dengue, accidente Oruro…" style="width:100%" autofocus></label>
+  <label>Período<select id="per"><option value="30">30 días</option><option value="90">90 días</option><option value="365" selected>Último año</option><option value="9999">Todo</option></select></label>
+  <label>Departamento<select id="dep"><option value="">Todos</option></select></label>
+  <button class="btn p" id="go" data-tip="Buscar el tema en todo lo guardado por la plataforma">Buscar</button>
+ </div>
+ <div class="chips" id="sug" style="margin-top:10px"></div>
+</div>
+<div id="out"></div>
+</div>
+<script>
+(function () {
+  var S = SALA, X = S2, $ = function (i) { return document.getElementById(i); }, DIA = 864e5, D = {}, ITEMS = [], F = [], PROF = null, QACT = "";
+  X.header("tema.html");
+  function norm(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim(); }
+  function slug(q) { return norm(q).replace(/ /g, "_").slice(0, 60) || "tema"; }
+  function coincide(txt, q) { var t = norm(txt), ok = true; norm(q).split(" ").forEach(function (w) { if (w.length < 3) return; var r = w.length > 5 && w.slice(-1) === "s" ? w.slice(0, -1) : w; if (t.indexOf(r.slice(0, 7)) < 0) ok = false; }); return ok; }
+  function p(u) { return fetch(u + "?t=" + Date.now(), {cache: "no-store"}).then(function (r) { if (!r.ok) throw 0; return r.json(); }).catch(function () { return null; }); }
+  S.DEPS.forEach(function (d) { var o = document.createElement("option"); o.textContent = d; $("dep").appendChild(o); });
+  ["sismos", "dengue", "sarampión", "influenza", "ébola", "accidente", "bloqueo", "incendio", "sequía", "inundación", "intoxicación", "rabia"].forEach(function (t) { var b = document.createElement("button"); b.className = "chip"; b.textContent = t; b.onclick = function () { $("q").value = t; buscar(); }; $("sug").appendChild(b); });
+  Promise.all([p("eventos_unificados.json"), p("transito.json"), p("epidemio_oficial.json"), p("temas/lista.json")]).then(function (r) {
+    D.ev = (r[0] && r[0].eventos) || []; D.tr = (r[1] && r[1].hechos) || []; D.epi = r[2] || {}; D.lista = r[3] || [];
+    X.live(r[0] && r[0].generado);
+    if (D.lista.length) { var h = document.createElement("span"); h.className = "nota"; h.style.marginRight = "6px"; h.textContent = "Informes ya ampliados:"; $("sug").appendChild(h); D.lista.slice(0, 8).forEach(function (x) { var b = document.createElement("button"); b.className = "chip on"; b.textContent = x.consulta; b.title = x.n_hechos + " hechos"; b.onclick = function () { $("q").value = x.consulta; buscar(); }; $("sug").appendChild(b); }); }
+    var q0 = new URLSearchParams(location.search).get("q"); if (q0) { $("q").value = q0; buscar(); }
+  });
+  $("go").onclick = buscar; $("q").onkeydown = function (e) { if (e.key === "Enter") buscar(); }; $("per").onchange = $("dep").onchange = function () { if (QACT) pinta(); };
+  function dep(t, d) { var o = []; S.DEPS.forEach(function (x) { if (norm(t).indexOf(norm(x)) >= 0) o.push(x); }); return (d && d.length ? d : o); }
+  function buscar() {
+    var q = $("q").value.trim(); if (!q) return; QACT = q; ITEMS = []; var vistos = {};
+    function add(it) { var k = norm(it.titulo).slice(0, 55); if (vistos[k]) { var a = vistos[k]; a.medios = a.medios.concat(it.medios.filter(function (m) { return a.medios.indexOf(m) < 0; })); a.enlaces = a.enlaces.concat(it.enlaces); a.conf = a.medios.length >= 3 ? "Alta" : a.medios.length === 2 ? "Media" : a.conf; return; } vistos[k] = it; ITEMS.push(it); }
+    function cf(n, pt) { return n >= 3 ? "Alta" : n === 2 ? "Media" : "Baja"; }
+    D.ev.forEach(function (e) {
+      if (e.origen === "modelo" || e.origen === "foco" || e.origen === "sequia" || !coincide(e.titulo + " " + (e.detalle || "") + " " + (e.lugar || ""), q)) return;
+      var med = (e.medios && e.medios.length) ? e.medios : (e.fuente ? [e.fuente] : []), c = e.confianza || {};
+      add({ts: e.ts, titulo: e.titulo, medios: med, deps: e.departamentos || [], lugar: e.lugar || "", fall: (e.cifras || {}).fallecidos || 0, her: (e.cifras || {}).heridos || 0, cat: e.categoria, origen: S.ORIGEN[e.origen] || e.origen, oficial: !!e.oficial,
+        conf: e.origen === "prensa" ? cf(med.length) : (c.nivel || "Baja"), pt: c.puntaje, lat: e.lat, lon: e.lon, enlaces: e.url ? [{medio: e.fuente, url: e.url}] : []});
+    });
+    D.tr.forEach(function (h) {
+      if (!coincide(h.titulo + " " + (h.notas || []).map(function (n) { return n.titulo; }).join(" "), q)) return;
+      add({ts: h.ts, titulo: h.titulo, medios: h.medios || [], deps: h.departamento ? [h.departamento] : [], lugar: h.lugar || "", fall: h.fallecidos, her: h.heridos, cat: "antropogénica", origen: "Prensa (tránsito)", oficial: false, conf: h.confianza.nivel, pt: h.confianza.puntaje, lat: h.lat, lon: h.lon, enlaces: h.enlaces || []});
+    });
+    var oficiales = [];
+    ((D.epi.internacional) || []).forEach(function (x) { if (coincide((x.titulo || "") + " " + (x.resumen || ""), q)) oficiales.push({fuente: x.fuente, titulo: x.titulo, fecha: x.fecha, url: x.url}); });
+    ((D.epi.boletines) || []).forEach(function (b) { (b.frases || []).forEach(function (f) { if (coincide(f, q)) oficiales.push({fuente: "Boletín epidemiológico MSyD, semana " + b.semana, titulo: f, fecha: b.periodo, url: b.url}); }); });
+    D.oficiales = oficiales;
+    p("temas/" + slug(q) + ".json").then(function (P) {
+      PROF = P;
+      if (P) {
+        (P.hechos || []).forEach(function (h) { add({ts: h.ts, titulo: h.titulo, medios: h.medios || [], deps: h.departamento ? [h.departamento] : [], lugar: h.lugar || "", fall: h.fallecidos, her: h.heridos, cat: "", origen: "Prensa (búsqueda ampliada)", oficial: false, conf: h.confianza.nivel, pt: h.confianza.puntaje, lat: h.lat, lon: h.lon, enlaces: h.enlaces || []}); });
+        (P.oficiales || []).forEach(function (o) { if (!oficiales.some(function (x) { return x.url === o.url && x.titulo === o.titulo; })) oficiales.push(o); });
+      }
+      pinta();
+    });
+  }
+  function pinta() {
+    var now = Date.now(), per = +$("per").value, dp = $("dep").value;
+    F = ITEMS.filter(function (i) { return (per >= 9999 || i.ts > now - per * DIA) && (!dp || dep(i.titulo + " " + i.lugar, i.deps).indexOf(dp) >= 0); }).sort(function (a, b) { return b.ts - a.ts; });
+    var medios = {}; F.forEach(function (i) { i.medios.forEach(function (m) { medios[m] = (medios[m] || 0) + 1; }); });
+    var nm = Object.keys(medios).length, okc = F.filter(function (i) { return i.conf !== "Baja"; }).length, fall = F.reduce(function (a, i) { return a + (i.fall || 0); }, 0), her = F.reduce(function (a, i) { return a + (i.her || 0); }, 0);
+    var of = (D.oficiales || []).filter(function (o) { return true; });
+    var primero = F.length ? F[F.length - 1].ts : null;
+    var h = '<div class="card" style="margin-top:16px;border-left:6px solid #8e24aa"><div class="nota">Informe por tema · generado ' + S.fecha(now) + '</div><h1 style="font-size:24px;margin:4px 0">«' + S.esc(QACT) + '» en Bolivia' + (dp ? ' — ' + S.esc(dp) : '') + '</h1>' +
+      '<div class="nota">' + (per >= 9999 ? "Todo el historial" : "Últimos " + (per === 365 ? "12 meses" : per + " días")) + '. ' + (PROF ? 'Incluye búsqueda ampliada en prensa boliviana (' + S.fecha(PROF.generado) + ', ' + PROF.notas + ' notas leídas).' : 'Solo lo registrado por la plataforma desde que empezó a funcionar.') + ' Información preliminar; la confirmación oficial corresponde a las autoridades.</div></div>';
+    h += '<div class="grid g4" style="margin:16px 0">' + [["Hechos encontrados", F.length, "notas del mismo hecho ya unidas", "#8e24aa", "list"], ["Medios distintos", nm, "que lo reportan", "#1d6fb8", "doc"], ["Con confianza media o alta", okc, "2 o más fuentes independientes", "#2e9e5b", "shield"], ["Publicaciones oficiales", of.length, "OPS/OMS y Min. Salud", "#0aa3a3", "info"]].map(function (k) { return '<div class="card kpi" style="--k:' + k[3] + '"><div class="ic" style="color:' + k[3] + '">' + X.ic(k[4]) + '</div><div class="l">' + k[0] + '</div><div class="v">' + k[1] + '</div><div class="d">' + k[2] + '</div></div>'; }).join("") + '</div>';
+    if (!F.length && !of.length) {
+      h += '<div class="card"><h2>Sin resultados todavía</h2><p>La plataforma no tiene registrado nada sobre «' + S.esc(QACT) + '» en este período. Esto no significa que no haya ocurrido: solo que aún no se ha buscado.</p>' +
+        '<p><b>Qué hacer:</b> pulse <b>«Ampliar con prensa del último año»</b>, escriba el mismo tema en el formulario y espere 3–5 minutos; luego vuelva a esta página y busque otra vez. También puede probar con una sola palabra (por ejemplo «sarampion»).</p>' + ampliar() + '</div>';
+      $("out").innerHTML = h; return;
+    }
+    h += '<div class="grid g2" style="margin-bottom:16px"><div class="card"><h2><span class="i">' + X.ic("pulse") + '</span>Hechos en el tiempo</h2><div class="cap" id="capT"></div><div class="ch" id="c1"></div></div><div class="card"><h2><span class="i">' + X.ic("map") + '</span>Mapa de hechos</h2><div class="cap">Punto = hecho con ubicación (tamaño = víctimas; color = confianza).</div><div class="map" id="mp" style="height:300px"></div></div></div>' +
+      '<div class="grid g3" style="margin-bottom:16px"><div class="card"><h2>Por departamento</h2><div class="ch s" id="c2"></div></div><div class="card"><h2>Medios que más lo reportan</h2><div class="ch s" id="c3"></div></div><div class="card"><h2>Confianza (triangulación)</h2><div class="ch s" id="c4"></div><div class="how"><b>Alta</b> = 3+ medios · <b>Media</b> = 2 · <b>Baja</b> = 1.</div></div></div>' +
+      '<div class="grid g2" style="margin-bottom:16px"><div class="card"><h2>Por tipo de fuente</h2><div class="ch s" id="c5"></div></div><div class="card"><h2>Calendario de hechos</h2><div class="cap">Cada cuadro es un día; más oscuro = más hechos.</div><div class="ch s" id="c6"></div></div></div>';
+    if (of.length) h += '<div class="card" style="margin-bottom:16px"><h2><span class="i">' + X.ic("info") + '</span>Publicaciones oficiales sobre el tema (OPS / OMS / Ministerio de Salud)</h2>' + of.slice(0, 15).map(function (o) { return '<div style="border-bottom:1px solid var(--line);padding:7px 2px"><a href="' + S.esc(S.urlOk(o.url)) + '" target="_blank" rel="noopener"><b>' + S.esc(o.titulo) + '</b></a><div class="nota">' + S.esc(o.fuente || "") + ' · ' + S.esc(o.fecha || "") + '</div></div>'; }).join("") + '</div>';
+    h += '<div class="card rompe"><h2><span class="i">' + X.ic("list") + '</span>Detalle de hechos</h2><div class="noimp" style="margin:8px 0 12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn p" onclick="window.print()" data-tip="Abrir la ventana de impresión: elija «Guardar como PDF»">' + X.ic("print") + 'Guardar como PDF</button><button class="btn" id="bc">' + X.ic("dl") + 'CSV</button><button class="btn" id="bx">' + X.ic("dl") + 'Excel</button><button class="btn" id="bj">' + X.ic("dl") + 'JSON</button>' + ampliar() + '</div>' +
+      '<div style="overflow:auto"><table><tr><th>Fecha</th><th>Hecho</th><th>Lugar</th><th>Víctimas</th><th>Medios</th><th>Confianza</th></tr>' + F.slice(0, 300).map(function (i) {
+        var cl = {Alta: "ba", Media: "bm", Baja: "bb"}[i.conf] || "bb", en = (i.enlaces || []).slice(0, 4).map(function (e) { return '<a href="' + S.esc(S.urlOk(e.url)) + '" target="_blank" rel="noopener">' + S.esc(e.medio || "enlace") + '</a>'; }).join(" · ");
+        return '<tr><td style="white-space:nowrap">' + S.fecha(i.ts, true) + '</td><td><b>' + S.esc(i.titulo) + '</b><div class="nota">' + S.esc(i.origen) + (en ? ' · ' + en : '') + '</div></td><td>' + S.esc(i.lugar || (i.deps || []).join(", ") || "—") + '</td><td>' + (i.fall || i.her ? (i.fall || 0) + ' fall., ' + (i.her || 0) + ' her.' : '—') + '</td><td>' + i.medios.length + '</td><td><span class="badge ' + cl + '">' + i.conf + (i.pt ? ' · ' + i.pt : '') + '</span></td></tr>';
+      }).join("") + '</table></div></div>';
+    $("out").innerHTML = h; graficos();
+    $("bc").onclick = function () { S.descargar("tema_" + slug(QACT) + ".csv", "﻿" + ["fecha,titulo,lugar,fallecidos,heridos,medios,confianza,puntaje"].concat(F.map(function (i) { return [S.fecha(i.ts, true), '"' + i.titulo.replace(/"/g, '""') + '"', '"' + (i.lugar || "") + '"', i.fall || 0, i.her || 0, '"' + i.medios.join("; ") + '"', i.conf, i.pt || ""].join(","); })).join("\n"), "text/csv"); };
+    $("bj").onclick = function () { S.descargar("tema_" + slug(QACT) + ".json", JSON.stringify(F, null, 1), "application/json"); };
+    $("bx").onclick = function () { X.descargarXlsx("tema_" + slug(QACT) + ".xlsx", F.map(function (i) { return {Fecha: S.fecha(i.ts, true), Hecho: i.titulo, Lugar: i.lugar, Fallecidos: i.fall || 0, Heridos: i.her || 0, Medios: i.medios.join("; "), Confianza: i.conf, Puntaje: i.pt || ""}; }), "Tema"); };
+  }
+  function ampliar() { return '<a class="btn noimp" href="' + S.URL_PEDIR + '" target="_blank" rel="noopener" data-tip="Abre el formulario: escriba el tema y la plataforma buscará en la prensa boliviana de los últimos 12 meses (tarda 3–5 minutos)">' + X.ic("plus") + 'Ampliar con prensa del último año</a>'; }
+  function graficos() {
+    var CONF = {Alta: "#2e9e5b", Media: "#f5b700", Baja: "#8896ab"}, ymd = function (t) { return S.diaKey(t); }, now = Date.now(), per = +$("per").value;
+    var largo = per > 120 || F.some(function (i) { return i.ts < now - 120 * DIA; }), ser = {}, k;
+    F.forEach(function (i) { k = largo ? ymd(i.ts).slice(0, 7) : ymd(i.ts); ser[k] = (ser[k] || 0) + 1; });
+    var ks = Object.keys(ser).sort(); $("capT").textContent = largo ? "Hechos por mes." : "Hechos por día.";
+    X.chart("c1", {tooltip: {trigger: "axis"}, grid: {left: 34, right: 12, top: 14, bottom: 30}, xAxis: {type: "category", data: ks.map(function (x) { return largo ? x : x.slice(5); })}, yAxis: {type: "value", minInterval: 1}, series: [{type: "bar", data: ks.map(function (x) { return ser[x]; }), itemStyle: {color: "#8e24aa", borderRadius: [5, 5, 0, 0]}}, {type: "line", smooth: true, symbol: "none", data: ks.map(function (x) { return ser[x]; }), lineStyle: {color: "#ef6c00", width: 2}}]});
+    var dd = {}; F.forEach(function (i) { var ds = dep(i.titulo + " " + i.lugar, i.deps); (ds.length ? ds : ["Sin ubicar"]).forEach(function (d) { dd[d] = (dd[d] || 0) + 1; }); });
+    var dk = Object.keys(dd).sort(function (a, b) { return dd[a] - dd[b]; });
+    X.chart("c2", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, grid: {left: 84, right: 24, top: 8, bottom: 18}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: dk}, series: [{type: "bar", data: dk.map(function (d) { return dd[d]; }), itemStyle: {color: "#1d6fb8", borderRadius: [0, 5, 5, 0]}, label: {show: true, position: "right"}}]});
+    var mm = {}; F.forEach(function (i) { i.medios.forEach(function (m) { mm[m.replace(/ - .*/, "")] = (mm[m.replace(/ - .*/, "")] || 0) + 1; }); });
+    var mk = Object.keys(mm).sort(function (a, b) { return mm[a] - mm[b]; }).slice(-10);
+    X.chart("c3", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, grid: {left: 110, right: 24, top: 8, bottom: 18}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: mk, axisLabel: {width: 100, overflow: "truncate"}}, series: [{type: "bar", data: mk.map(function (m) { return mm[m]; }), itemStyle: {color: "#0aa3a3", borderRadius: [0, 5, 5, 0]}}]});
+    var cc = {Alta: 0, Media: 0, Baja: 0}; F.forEach(function (i) { cc[i.conf] = (cc[i.conf] || 0) + 1; });
+    X.chart("c4", {tooltip: {trigger: "item"}, legend: {show: false}, series: [{type: "pie", radius: ["45%", "72%"], itemStyle: {borderRadius: 5, borderColor: X.css("--card"), borderWidth: 2}, label: {formatter: "{b}: {c}"}, data: ["Alta", "Media", "Baja"].map(function (x) { return {name: x, value: cc[x], itemStyle: {color: CONF[x]}}; })}]});
+    var oo = {}; F.forEach(function (i) { oo[i.origen] = (oo[i.origen] || 0) + 1; });
+    X.chart("c5", {tooltip: {trigger: "item"}, series: [{type: "pie", roseType: "radius", radius: ["15%", "70%"], itemStyle: {borderRadius: 5, borderColor: X.css("--card"), borderWidth: 2}, label: {formatter: "{b}\n{c}"}, data: Object.keys(oo).map(function (x) { return {name: x, value: oo[x]}; })}]});
+    var cal = {}, dmin = now - 120 * DIA; F.forEach(function (i) { if (i.ts > dmin) { k = ymd(i.ts); cal[k] = (cal[k] || 0) + 1; } });
+    var d0 = new Date(dmin), cd = Object.keys(cal).map(function (x) { return [x, cal[x]]; }), mx = Math.max.apply(null, [1].concat(cd.map(function (x) { return x[1]; })));
+    X.chart("c6", {tooltip: {formatter: function (p) { return p.value[0] + ": <b>" + p.value[1] + "</b> hecho(s)"; }}, visualMap: {min: 0, max: mx, show: false, inRange: {color: ["#e9d7f2", "#8e24aa"]}}, calendar: {range: [ymd(dmin), ymd(now)], cellSize: [14, 14], top: 28, left: 30, right: 10, itemStyle: {borderWidth: 2, borderColor: X.css("--card"), color: X.css("--soft")}, splitLine: {show: false}, dayLabel: {color: X.css("--mut"), nameMap: "ES"}, monthLabel: {color: X.css("--mut"), nameMap: "ES"}, yearLabel: {show: false}}, series: [{type: "heatmap", coordinateSystem: "calendar", data: cd}]});
+    var pts = F.filter(function (i) { return i.lat != null; }).map(function (i) { return {type: "Feature", properties: {t: i.titulo, c: i.conf, v: (i.fall || 0) + (i.her || 0)}, geometry: {type: "Point", coordinates: [i.lon, i.lat]}}; });
+    var m = new maplibregl.Map({container: "mp", style: {version: 8, sources: {osm: {type: "raster", tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256, attribution: "© OpenStreetMap"}}, layers: [{id: "bg", type: "background", paint: {"background-color": X.css("--soft")}}, {id: "osm", type: "raster", source: "osm", paint: {"raster-opacity": .7}}]}, bounds: [[-69.9, -23.1], [-57.2, -9.4]], fitBoundsOptions: {padding: 8}, attributionControl: {compact: true}});
+    m.on("load", function () {
+      if (D.geoDep) m.addSource("dep", {type: "geojson", data: D.geoDep});
+      m.addSource("pts", {type: "geojson", data: {type: "FeatureCollection", features: pts}});
+      m.addLayer({id: "pts", type: "circle", source: "pts", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "v"], 0, 6, 20, 16], "circle-color": ["match", ["get", "c"], "Alta", CONF.Alta, "Media", CONF.Media, CONF.Baja], "circle-stroke-color": "#fff", "circle-stroke-width": 1.5, "circle-opacity": .9}});
+      m.on("click", "pts", function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>' + S.esc(e.features[0].properties.t) + '</b>Confianza ' + e.features[0].properties.c.toLowerCase() + '</div>').addTo(m); });
+    });
+  }
+  S.cargar("geo_dep.geojson").then(function (g) { D.geoDep = g; }).catch(function () {});
+})();
+</script></body></html>

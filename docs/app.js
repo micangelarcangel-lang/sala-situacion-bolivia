@@ -82,6 +82,7 @@
     X.chart("chHeat", {tooltip: {formatter: function (p) { return S.DEPS[p.value[1]] + " · " + cats[p.value[0]] + ": <b>" + (p.value[2] || 0) + "</b>"; }}, grid: {left: 100, right: 14, top: 10, bottom: 70}, xAxis: {type: "category", data: cats, axisLabel: {rotate: 35}, splitArea: {show: true}}, yAxis: {type: "category", data: S.DEPS, inverse: true},
       visualMap: {min: 0, max: hm, calculable: false, orient: "horizontal", left: "center", bottom: 0, itemWidth: 12, itemHeight: 140, inRange: {color: ["#e8f1fb", "#7fb2e5", "#1d6fb8", "#0b3b6e"]}, textStyle: {color: X.css("--mut")}},
       series: [{type: "heatmap", data: hd, label: {show: true, color: "#fff", formatter: function (p) { return p.value[2] || ""; }}, itemStyle: {borderColor: X.css("--card"), borderWidth: 2, borderRadius: 4}}]});
+    graficosExtra(ev, now);
     /* sankey */
     var fam = {prensa: "Prensa", senamhi: "SENAMHI", sismo: "San Calixto", foco: "NASA FIRMS", epidemiologia: "Epidemiología MSD/OPS", modelo: "Modelos abiertos", gdacs: "GDACS/USGS", usgs: "GDACS/USGS", sequia: "Modelos abiertos", caudal: "Modelos abiertos"}, lk = {}, nodes = {};
     ev.forEach(function (e) { if (e.ts < now - 30 * DIA && e.origen !== "sequia" && e.origen !== "epidemiologia") return; var a = fam[e.origen] || e.origen, b = e.categoria; lk[a + "|" + b] = (lk[a + "|" + b] || 0) + 1; nodes[a] = 1; nodes[b] = 1; });
@@ -95,7 +96,8 @@
   /* ---------- MAPA ---------- */
   function estilo(base) {
     var l = [{id: "bg", type: "background", paint: {"background-color": X.css("--soft") || "#f3f6fb"}}], src = {};
-    if (base) { src.osm = {type: "raster", tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256, maxzoom: 18, attribution: "© OpenStreetMap"}; l.push({id: "osm", type: "raster", source: "osm", paint: {"raster-opacity": .75, "raster-saturation": -.4}}); }
+    var osc = document.documentElement.getAttribute("data-theme") === "dark";
+    if (base) { src.osm = {type: "raster", tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256, maxzoom: 18, attribution: "© OpenStreetMap"}; l.push({id: "osm", type: "raster", source: "osm", paint: {"raster-opacity": osc ? .55 : .75, "raster-brightness-max": osc ? .42 : 1, "raster-saturation": osc ? -.4 : 0}}); }
     return {version: 8, sources: src, layers: l};
   }
   function geoCopia(g) { return JSON.parse(JSON.stringify(g || {type: "FeatureCollection", features: []})); }
@@ -351,6 +353,22 @@
   }
   function pie() {
     var t = D.eventos_unificados && D.eventos_unificados.generado; $("foot").innerHTML = '<span><i class="dot"></i> Base de datos conectada' + (t ? " · actualizada " + X.ago(t) : "") + '</span><span>' + (D.ev || []).length + ' eventos · ' + trLista().length + ' hechos de tránsito</span><span><a href="informes.html">Generar reporte</a> · <a href="#rep" onclick="document.querySelector(\'[data-t=rep]\').click();return false">Ver PDF</a> · <a href="#dat" onclick="document.querySelector(\'[data-t=dat]\').click();return false">Descargar datos</a></span>';
+  }
+
+  function graficosExtra(ev, now) {
+    var util = ev.filter(function (e) { return e.origen !== "modelo" && e.origen !== "foco"; }), k;
+    var cal = {}; util.forEach(function (e) { if (e.ts > now - 120 * DIA) { k = S.diaKey(e.ts); cal[k] = (cal[k] || 0) + 1; } });
+    var cd = Object.keys(cal).map(function (x) { return [x, cal[x]]; }), mx = Math.max.apply(null, [1].concat(cd.map(function (x) { return x[1]; })));
+    X.chart("chCal", {tooltip: {formatter: function (p) { return p.value[0] + ": <b>" + p.value[1] + "</b> eventos"; }}, visualMap: {min: 0, max: mx, show: false, inRange: {color: [X.css("--soft"), "#1d6fb8", "#d7263d"]}}, calendar: {range: [S.diaKey(now - 120 * DIA), S.diaKey(now)], cellSize: [15, 15], top: 28, left: 30, right: 10, itemStyle: {borderWidth: 2, borderColor: X.css("--card"), color: X.css("--soft")}, splitLine: {show: false}, dayLabel: {color: X.css("--mut"), nameMap: "ES"}, monthLabel: {color: X.css("--mut"), nameMap: "ES"}, yearLabel: {show: false}}, series: [{type: "heatmap", coordinateSystem: "calendar", data: cd}]});
+    var mm = {}; util.filter(function (e) { return e.origen === "prensa" && e.ts > now - 30 * DIA; }).forEach(function (e) { (e.medios && e.medios.length ? e.medios : [e.fuente]).forEach(function (m) { if (m) { m = m.replace(/ - .*/, ""); mm[m] = (mm[m] || 0) + 1; } }); });
+    var mk = Object.keys(mm).sort(function (a, b) { return mm[a] - mm[b]; }).slice(-10);
+    X.chart("chMed", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, grid: {left: 120, right: 24, top: 8, bottom: 18}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: mk, axisLabel: {width: 110, overflow: "truncate"}}, series: [{type: "bar", data: mk.map(function (m) { return mm[m]; }), itemStyle: {color: "#0aa3a3", borderRadius: [0, 5, 5, 0]}, label: {show: true, position: "right"}}]});
+    var mu = {}; util.forEach(function (e) { if (e.ts > now - 30 * DIA && e.lat != null) { var q = munDe(e.lat, e.lon); if (q) { var n = q.n + " (" + q.d.slice(0, 3) + ")"; mu[n] = (mu[n] || 0) + 1; } } });
+    var uk = Object.keys(mu).sort(function (a, b) { return mu[a] - mu[b]; }).slice(-10);
+    X.chart("chMun", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, grid: {left: 130, right: 24, top: 8, bottom: 18}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: uk.length ? uk : ["Sin eventos ubicados"], axisLabel: {width: 120, overflow: "truncate"}}, series: [{type: "bar", data: uk.map(function (m) { return mu[m]; }), itemStyle: {color: "#ef6c00", borderRadius: [0, 5, 5, 0]}, label: {show: true, position: "right"}}]});
+    var hij = {}; util.forEach(function (e) { if (e.ts > now - 30 * DIA) { var o = S.ORIGEN[e.origen] || e.origen; hij[e.categoria] = hij[e.categoria] || {}; hij[e.categoria][o] = (hij[e.categoria][o] || 0) + 1; } });
+    X.chart("chSun", {tooltip: {trigger: "item"}, series: [{type: "sunburst", radius: ["14%", "92%"], sort: null, itemStyle: {borderColor: X.css("--card"), borderWidth: 2, borderRadius: 4}, label: {rotate: "radial", fontSize: 10, minAngle: 8},
+      data: Object.keys(hij).map(function (c) { return {name: c, itemStyle: {color: S.COLCAT[c]}, children: Object.keys(hij[c]).map(function (o) { return {name: o.replace(/ \(.*\)/, ""), value: hij[c][o]}; })}; })}]});
   }
 
   /* ---------- MUNICIPIOS (punto en polígono) ---------- */

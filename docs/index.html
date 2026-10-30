@@ -8,6 +8,8 @@
 
 <section id="t-res">
  <span id="heroT" hidden></span>
+ <div class="card buscador" style="margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:260px"><h2 style="margin:0">Buscar un tema y obtener su informe</h2><div class="cap" style="margin:2px 0 0">Escriba una enfermedad, un lugar o un tipo de hecho (sarampión, dengue Caranavi, bloqueo…). Obtendrá hechos, gráficos, confianza y PDF.</div></div>
+  <form action="tema.html" method="get" style="display:flex;gap:8px;flex:1;min-width:280px"><input type="text" name="q" placeholder="ej. sarampión" style="flex:1" required><button class="btn p" type="submit" data-tip="Abrir el informe por tema">Buscar informe</button></form></div>
  <div class="seccion"><h2 class="sec-t">Tipos de evento <small>(Ley 602, art. 36) · últimos 30 días · toque una tarjeta para ver sus eventos</small></h2></div>
  <div class="tipos" id="tipos"></div>
  <div class="grid g4" id="kpis" style="margin-bottom:16px"></div>
@@ -18,6 +20,14 @@
  <div class="grid g2" style="margin-bottom:16px">
   <div class="card"><h2><span class="i">__I_PULSE__</span>Evolución diaria por tipo de evento</h2><div class="cap">Eventos registrados por día, apilados por categoría (últimos 30 días).</div><div class="ch" id="chEvol"></div></div>
   <div class="card"><h2><span class="i">__I_MAP__</span>¿Dónde se concentra? Departamento × tipo</h2><div class="cap">Mapa de calor: más oscuro = más eventos (últimos 30 días).</div><div class="ch" id="chHeat"></div></div>
+ </div>
+ <div class="grid g2" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Calendario de eventos (120 días)</h2><div class="cap">Cada cuadro es un día; más intenso = más eventos registrados.</div><div class="ch s" id="chCal"></div></div>
+  <div class="card"><h2><span class="i">__I_LIST__</span>Tipo de evento → fuente</h2><div class="cap">Anillo interior: tipo (Ley 602). Exterior: de qué fuente viene (30 días).</div><div class="ch s" id="chSun"></div></div>
+ </div>
+ <div class="grid g2" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_DOC__</span>Medios que más reportan</h2><div class="cap">Notas de prensa por medio (últimos 30 días).</div><div class="ch s" id="chMed"></div></div>
+  <div class="card"><h2><span class="i">__I_MAP__</span>Municipios con más eventos</h2><div class="cap">Eventos ubicados por coordenadas (últimos 30 días).</div><div class="ch s" id="chMun"></div></div>
  </div>
  <div class="grid g2">
   <div class="card"><h2><span class="i">__I_LIST__</span>De dónde viene la información</h2><div class="cap">Flujo: fuente → tipo de evento. El grosor es la cantidad de eventos.</div><div class="ch" id="chSank"></div></div>

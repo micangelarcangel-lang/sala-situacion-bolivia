@@ -1,7 +1,7 @@
 /* Sala de Situación Bolivia — sistema de diseño 2.0 */
 :root{--bg:#eef2f8;--card:#fff;--ink:#0f1b2d;--mut:#5b6b82;--line:#e1e7f0;--brand:#0b3b6e;--brand2:#1d6fb8;--acc:#0aa3a3;--soft:#f6f8fc;
 --n0:#2e9e5b;--n1:#f5b700;--n2:#f26a1b;--n3:#d7263d;--nn:#7a8aa3;--shadow:0 1px 2px rgba(15,27,45,.06),0 6px 20px rgba(15,27,45,.06);--r:14px}
-@media(prefers-color-scheme:dark){:root{--bg:#0c121b;--card:#151d29;--ink:#e8eef7;--mut:#93a3ba;--line:#26313f;--brand:#0a2a4d;--brand2:#5aa9f0;--soft:#1b2433;--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3)}}
+:root[data-theme=dark]{--bg:#0c121b;--card:#151d29;--ink:#e8eef7;--mut:#93a3ba;--line:#26313f;--brand:#0a2a4d;--brand2:#5aa9f0;--soft:#1b2433;--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.3)}
 *{box-sizing:border-box}html{background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--brand2);text-decoration:none}a:hover{text-decoration:underline}
@@ -22,7 +22,7 @@ h1,h2,h3{margin:0}
 .tabs{display:flex;gap:6px;max-width:1500px;margin:12px auto 0;overflow-x:auto;scrollbar-width:none}
 .tab{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px 12px 0 0;color:#cfe2f7;font-weight:600;font-size:14px;cursor:pointer;border:0;background:transparent;white-space:nowrap;transition:.15s}
 .tab svg{width:19px;height:19px;flex:none}.tab:hover{background:rgba(255,255,255,.12);color:#fff}
-.tab.on{background:var(--bg);color:var(--brand)}@media(prefers-color-scheme:dark){.tab.on{color:var(--brand2)}}
+.tab.on{background:var(--bg);color:var(--brand)}:root[data-theme=dark] .tab.on{color:#fff}
 .wrap{max-width:1500px;margin:0 auto;padding:18px 18px 60px}
 .grid{display:grid;gap:16px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g21{grid-template-columns:2fr 1fr}.g12{grid-template-columns:1fr 2fr}
 @media(max-width:1000px){.g2,.g3,.g4,.g21,.g12{grid-template-columns:1fr}}@media(min-width:600px) and (max-width:1000px){.g4,.g3{grid-template-columns:1fr 1fr}}
@@ -116,3 +116,15 @@ body{background:radial-gradient(1200px 500px at 85% -10%,rgba(29,111,184,.16),tr
 .btn.p{box-shadow:0 4px 12px rgba(29,111,184,.35)}
 .foot{background:linear-gradient(90deg,#061f3d,#0b3b6e)}
 @media(max-width:1100px){.tipos{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.tipos{grid-template-columns:1fr}}
+
+:root[data-theme=dark]{--bg:#0a111d;--card:#121c2c;--ink:#e9f0fa;--mut:#9db1cb;--line:#22324a;--soft:#182538;--brand:#0a2a4d;--brand2:#5aa9f0;--shadow:0 1px 2px rgba(0,0,0,.5),0 10px 28px rgba(0,0,0,.35)}
+:root[data-theme=dark] body{background:radial-gradient(1100px 500px at 85% -10%,rgba(29,111,184,.22),transparent 60%),radial-gradient(900px 400px at -5% 10%,rgba(142,36,170,.14),transparent 55%),#0a111d}
+:root[data-theme=dark] .tab.on{background:var(--bg)}
+:root[data-theme=dark] .kpi{background:linear-gradient(135deg,var(--card) 55%,color-mix(in srgb,var(--k) 22%,var(--card)))}
+:root[data-theme=dark] .alert,:root[data-theme=dark] .ayuda{background:var(--card)}
+:root[data-theme=dark] select,:root[data-theme=dark] input[type=text],:root[data-theme=dark] input[type=date]{background:#0f1828;color:var(--ink)}
+:root[data-theme=dark] .maplibregl-popup-content{background:#121c2c!important;color:#e9f0fa!important}
+:root[data-theme=dark] .maplibregl-popup-tip{border-top-color:#121c2c!important;border-bottom-color:#121c2c!important}
+:root[data-theme=dark] .tipo-f,:root[data-theme=dark] .tipo{color:#fff}
+:root[data-theme=dark] .badge.bb{background:#52657f}
+.themebtn{cursor:pointer}

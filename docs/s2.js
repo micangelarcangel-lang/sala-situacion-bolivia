@@ -1,4 +1,5 @@
 /* Sala de Situación Bolivia 2.0 — núcleo compartido (cabecera, datos, gráficos, guía) */
+(function () { var t = "dark"; try { t = localStorage.getItem("sala_theme") || "dark"; } catch (e) {} document.documentElement.setAttribute("data-theme", t); })();
 var S2 = (function () {
   var S = SALA;
   var P = {
@@ -30,13 +31,15 @@ var S2 = (function () {
   var NIVTXT = ["Verde", "Amarilla", "Naranja", "Roja"];
 
   function header(activo, tabs) {
-    var nav = [["index.html", "Tablero", "home", "Pantalla principal con todos los eventos"], ["informes.html", "Informes", "doc", "Crear un informe PDF de un hecho concreto: accidente, sismo, brote o lugar"], ["fuentes.html", "Fuentes", "db", "De dónde vienen los datos y si cada fuente funciona"]];
+    var nav = [["index.html", "Tablero", "home", "Pantalla principal con todos los eventos"], ["informes.html", "Informes", "doc", "Informe de un hecho puntual (sismo, accidente, brote) o consolidado por período"], ["tema.html", "Informe por tema", "doc", "Escribir un tema (sarampión, dengue, accidente…) y obtener un informe con gráficos, confianza y PDF"], ["fuentes.html", "Fuentes", "db", "De dónde vienen los datos y si cada fuente funciona"]];
     var h = '<div class="hdr"><div class="hdr-row"><div class="logo"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>' +
       '<div><h1>Sala de Situación · Bolivia</h1><div class="sub">Vigilancia de eventos con datos abiertos · actualización automática cada 30 min</div></div><span class="live off" id="live"><i></i><span id="liveT">cargando…</span></span><span class="sp"></span>' +
       nav.map(function (n) { return '<a class="btn w s" data-tip="' + n[3] + '" href="' + n[0] + '" style="' + (activo === n[0] ? "background:rgba(255,255,255,.3)" : "") + '">' + ic(n[2]) + n[1] + '</a>'; }).join("") +
+      '<button class="btn w s themebtn" id="btnTema" data-tip="Cambiar entre tablero oscuro y claro">' + ic("sun") + (document.documentElement.getAttribute("data-theme") === "dark" ? "Modo claro" : "Modo oscuro") + '</button>' +
       '<button class="btn w s" id="btnTour" data-tip="Recorrido guiado de 1 minuto (opcional)">' + ic("help") + 'Guía de uso</button></div>';
     if (tabs) h += '<div class="tabs" id="tabs">' + tabs.map(function (t, i) { return '<button class="tab' + (i ? "" : " on") + '" data-t="' + t[0] + '" data-tip="' + (t[3] || "") + '">' + ic(t[2]) + t[1] + '</button>'; }).join("") + '</div>';
     document.getElementById("hdr").innerHTML = h + '</div>'; if (!window.__tips) { window.__tips = 1; tips(); }
+    var bt = document.getElementById("btnTema"); if (bt) bt.onclick = function () { var n = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"; try { localStorage.setItem("sala_theme", n); } catch (e) {} location.reload(); };
   }
   function tips() {
     var el = document.createElement("div"); el.className = "tipbox"; document.body.appendChild(el);
@@ -64,11 +67,12 @@ var S2 = (function () {
   var CH = [];
   function chart(el, option, h) {
     if (typeof el === "string") el = document.getElementById(el); if (!el) return null;
-    var dark = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches, ink = css("--ink") || "#0f1b2d", mut = css("--mut") || "#5b6b82", line = css("--line") || "#e1e7f0";
+    var dark = document.documentElement.getAttribute("data-theme") === "dark", ink = css("--ink") || "#0f1b2d", mut = css("--mut") || "#5b6b82", line = css("--line") || "#e1e7f0";
     var c = echarts.init(el, null, {renderer: "canvas"});
     var base = {textStyle: {fontFamily: "Inter,system-ui,sans-serif", color: ink}, animationDuration: 600, tooltip: {confine: true, backgroundColor: dark ? "#1b2433" : "#fff", borderColor: line, textStyle: {color: ink, fontSize: 12.5}}, legend: {textStyle: {color: mut}, type: "scroll"}};
     Object.keys(option).forEach(function (k) { base[k] = option[k]; });
     [].concat(base.xAxis || [], base.yAxis || []).forEach(function (a) { a.axisLabel = Object.assign({color: mut}, a.axisLabel || {}); a.axisLine = a.axisLine || {lineStyle: {color: line}}; a.splitLine = a.splitLine || {lineStyle: {color: line, opacity: .7}}; });
+    if (base.legend && !base.legend.textStyle) base.legend.textStyle = {color: ink}; if (base.legend && !base.legend.type) base.legend.type = "scroll";
     c.setOption(base); CH.push(c); return c;
   }
   window.addEventListener("resize", function () { CH.forEach(function (c) { try { c.resize(); } catch (e) {} }); });
