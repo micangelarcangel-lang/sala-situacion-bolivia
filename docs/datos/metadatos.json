@@ -1,7 +1,7 @@
 {
- "generado_local": "2026-10-30 08:44",
+ "generado_local": "2026-10-30 09:54",
  "zona_horaria": "America/La_Paz (UTC-4)",
- "registros_eventos": 171,
+ "registros_eventos": 172,
  "registros_hechos": 114,
  "alcance": "Solo hechos de Bolivia. Datos preliminares de fuentes abiertas, sin validación oficial.",
  "fuentes": [
@@ -17,5 +17,5 @@
   "Fallecidos y heridos son cifras de prensa, sin validar. En un hecho se toma el máximo reportado, no la suma.",
   "La ubicación puede ser aproximada (ver metodo_ubicacion)."
  ],
- "cita_sugerida": "Sala de Situación Bolivia – CCES. Base de eventos de amenazas (datos preliminares de fuentes abiertas). Consulta: 2026-10-30 08:44."
+ "cita_sugerida": "Sala de Situación Bolivia – CCES. Base de eventos de amenazas (datos preliminares de fuentes abiertas). Consulta: 2026-10-30 09:54."
 }
