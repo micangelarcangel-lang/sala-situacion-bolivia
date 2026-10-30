@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1dvzsah",
+  "fecha_hora_local": "2026-10-30 13:48",
+  "ts_ms": 1793382486000,
+  "titulo": "Pasorapa recibe asistencia para paliar aguda sequía - El Diario - Bolivia",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Diario - Bolivia",
+  "lat": -18.38,
+  "lon": -64.649,
+  "lugar": "Pasorapa, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Pasorapa",
+  "enlaces": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPNkFZNlFVYW9tRFB4OV9CWGtaUFo0endtVkxLcnRLVXNNU3VHNExUQ0ozMmJwajJyX3hpWldxQksxblZIaEpnQ2tQZGFsUHRJZGxyMXNYSFViaWVxamRUdlItdGZKeTIxTU4xZUE4N3IzdUZGb3QtcGUtdFZVX1N5Z2JHclcyUUUySDFjOEFBbE5FVFdkR19ZOGE5SQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:j6590q",
   "fecha_hora_local": "2026-10-30 13:47",
   "ts_ms": 1793382476000,
