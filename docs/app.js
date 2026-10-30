@@ -465,7 +465,7 @@
       var n24 = L.filter(function (e) { return e.ts > now - DIA; }).length, mx = L.reduce(function (a, e) { return Math.max(a, e.nivel == null ? -1 : e.nivel); }, -1);
       var of = L.filter(function (e) { return e.oficial || ["senamhi", "sismo", "epidemiologia"].indexOf(e.origen) >= 0; }).length;
       var extra = c === "antropogénica" ? tr7 + ' hechos de tránsito en 7 días' : of + ' de fuente oficial · ' + (L.length - of) + ' prensa/satélite';
-      return '<button class="tipo" data-c="' + c + '" style="--c:' + col + '" data-tip="Abrir ' + (c === "biológica" ? "la pestaña Salud" : "los eventos de tipo " + c) + '"><div class="tipo-top"><span class="tipo-ic">' + X.ic(df.ic) + '</span><span class="tipo-n">' + L.length + '</span></div>' +
+      return '<button class="tipo" data-c="' + c + '" style="--c:' + col + '" data-tip="Abrir el módulo de amenazas ' + c + 's: mapa, gráficos e informes"><div class="tipo-top"><span class="tipo-ic">' + X.ic(df.ic) + '</span><span class="tipo-n">' + L.length + '</span></div>' +
         '<div class="tipo-t">' + df.n + '</div><div class="tipo-ej">' + df.ej + '</div><div class="tipo-m"><span class="pill">' + n24 + ' en 24 h</span>' + (mx >= 0 ? '<span class="pill" style="background:' + COLNIV[Math.min(3, Math.floor(mx))] + ';color:' + (mx === 1 ? '#222' : '#fff') + '">nivel máx. ' + S.NIVTXT[Math.min(3, Math.floor(mx))].toLowerCase() + '</span>' : '') + '</div>' +
         '<div class="tipo-f">' + (L.length ? extra : 'Sin eventos en 30 días') + '<br><span>Fuentes: ' + df.fu + '</span></div></button>';
     }).join("") + (function () {
@@ -473,7 +473,7 @@
       return '<button class="tipo" data-c="__todos__" style="--c:#0b3b6e" data-tip="Abrir la tabla con todos los eventos"><div class="tipo-top"><span class="tipo-ic">' + X.ic("list") + '</span><span class="tipo-n">' + L.length + '</span></div><div class="tipo-t">Todos los eventos</div>' +
         '<div class="tipo-ej">Base unificada de todas las fuentes, con triangulación</div><div class="tipo-m"><span class="pill">' + ok + ' con confianza media o alta</span></div><div class="tipo-f">' + (D.transito ? trLista().length + ' hechos de tránsito unidos por medios' : '') + '<br><span>Tabla descargable en CSV, Excel y JSON</span></div></button>';
     })();
-    $("tipos").onclick = function (e) { var b = e.target.closest(".tipo"); if (!b) return; if (b.dataset.c === "biológica") { mostrar("sal"); window.scrollTo(0, 0); return; } irEventos(b.dataset.c); };
+    $("tipos").onclick = function (e) { var b = e.target.closest(".tipo"); if (!b) return; if (b.dataset.c !== "__todos__") { location.href = "modulo.html?t=" + encodeURIComponent(b.dataset.c); return; } irEventos(b.dataset.c); };
   }
   function irEventos(c) {
     mostrar("ev"); S.CAT.slice(0, 7).forEach(function (k) { CATSEL[k] = c === "__todos__" || k === c; });

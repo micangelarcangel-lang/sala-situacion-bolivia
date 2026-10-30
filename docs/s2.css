@@ -128,3 +128,17 @@ body{background:radial-gradient(1200px 500px at 85% -10%,rgba(29,111,184,.16),tr
 :root[data-theme=dark] .tipo-f,:root[data-theme=dark] .tipo{color:#fff}
 :root[data-theme=dark] .badge.bb{background:#52657f}
 .themebtn{cursor:pointer}
+
+.tiposnav{display:flex;gap:8px;align-items:center;max-width:1500px;margin:0 auto;padding:8px 0 10px;overflow-x:auto;scrollbar-width:none;position:relative}
+.tn-l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#a9c4e4;font-weight:700;margin-right:4px;white-space:nowrap}
+.tn{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;color:#fff!important;text-decoration:none!important;font-weight:700;font-size:13px;padding:6px 13px;border-radius:20px;background:color-mix(in srgb,var(--c) 70%,#000);border:1px solid color-mix(in srgb,var(--c) 60%,#fff);transition:.15s}
+.tn svg{width:16px;height:16px}.tn:hover{transform:translateY(-2px);background:var(--c);box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.tn.on{background:var(--c);box-shadow:0 0 0 2px #fff inset}
+.mhero{border-radius:20px;color:#fff;padding:22px 26px;margin-bottom:16px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 50%,#000));box-shadow:0 12px 32px color-mix(in srgb,var(--c) 40%,transparent)}
+.mhero::before{content:"";position:absolute;right:-40px;top:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12)}
+.mhero h1{font-size:28px;display:flex;align-items:center;gap:12px}.mhero h1 svg{width:34px;height:34px}.mhero p{margin:6px 0 0;max-width:900px;opacity:.95}
+.mhero .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.mhero .src span{background:rgba(255,255,255,.2);border-radius:20px;padding:3px 11px;font-size:12px;font-weight:700}
+.secb{font-size:17px;font-weight:800;margin:22px 0 10px;display:flex;align-items:center;gap:10px}.secb::before{content:"";width:6px;height:22px;border-radius:3px;background:var(--c,var(--brand2))}
+.fcard{display:flex;gap:12px;border-bottom:1px solid var(--line);padding:10px 2px}.fcard img{width:120px;height:80px;object-fit:cover;border-radius:10px;flex:none;background:var(--soft)}
+.sem{display:inline-flex;align-items:center;gap:7px;font-weight:700;border-radius:20px;padding:4px 12px;color:#fff}
+.sep{border:1px dashed var(--line);border-radius:14px;padding:4px 14px 14px;margin-top:10px}

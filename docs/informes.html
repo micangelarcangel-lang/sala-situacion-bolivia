@@ -38,6 +38,10 @@ X.datos().then(function(d){D=d;X.live(d.eventos_unificados&&d.eventos_unificados
  $("cats").onclick=function(e){var b=e.target.closest("[data-c]");if(!b)return;CAT[b.dataset.c]=!CAT[b.dataset.c];b.classList.toggle("on");cons()};
  ["eTipo","ePer","eDep"].forEach(function(i){$(i).onchange=lista});$("eQ").oninput=lista;
  ["per","desde","hasta","dep","org","niv"].forEach(function(i){$(i).onchange=function(){$("lD").style.display=$("lH").style.display=$("per").value==="x"?"":"none";cons()}});
+ var P=new URLSearchParams(location.search),pc=P.get("cat"),pp=P.get("per"),pd=P.get("dep");
+ if(pp&&[].some.call($("per").options,function(o){return o.value===pp}))$("per").value=pp;
+ if(pd)$("dep").value=pd;
+ if(pc&&CAT[pc]!==undefined){S.CAT.slice(0,7).forEach(function(c){CAT[c]=(c===pc)});[].forEach.call(document.querySelectorAll("#cats [data-c]"),function(b){b.classList.toggle("on",b.dataset.c===pc)})}
  lista();cons();
 }).catch(function(e){$("out").innerHTML='<div class="card vacio">No se pudieron cargar los datos: '+S.esc(e.message)+'</div>'});
 function lista(){var now=Date.now(),per=+$("ePer").value,t=$("eTipo").value,dep=$("eDep").value,q=$("eQ").value.toLowerCase().trim();
