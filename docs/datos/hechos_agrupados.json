@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:9zhy59",
+  "fecha_hora_local": "2026-10-30 07:49",
+  "ts_ms": 1793360955000,
+  "titulo": "Alcaldía de Cochabamba lleva agua y alimento para el ganado afectado por la sequía en Pasorapa - Red Uno",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 3,
+  "fuentes": "El Diario - Bolivia; La Patria Bolivia; Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPZzEwdHp4dmVlRGs4elViS0lhM0loZzc0VEVVOXFzRmpvMDRWeF9qMzU3dHhNVVBZcm5Hb0oxQ1VlME1JOXFzY3hyRGplUmE4Ym9xdHExWkNQeV9GLXFNc3h5T012bG4xWjRRNXJRVEhNd3dMbWZfNGpwLWNJTDlPYTVWaW9ZX0VhS2J1N3JoVHlxYXZNWXJPeVNtZS1qQzFxZGt5ZUNoWXpFR3lTRjhHNUt1SjJpYmViYjBwWElpajR6MkpSV3pjUVRkSlpDMzFhX0pwUi1Ha0JGQQ?oc=5 | https://news.google.com/rss/articles/CBMimwFBVV95cUxNV2FJN2xwRmNlMHRPeHYyUzJlVXl4aWxOV3BBV205ZVNyOUVzWVExRzlaZTMzWDZ3dmY5aTEyTjZmRURWVmlGYjhYdFUzNkJRbzY3VDlfZk5kOGg5cDZhSEQ5d2RJV05hRFBQY1J2dFZrUTVGODBlbDJxSzU1M05HTURDZncxM1M2S1FyN1NKaGp6dWxVZTR1RmJHUQ?oc=5 | https://news.google.com/rss/articles/CBMikwFBVV95cUxOeEFtZ0kxaDJpYmZiZmxidC1IaF9zTVNydFR0SGQ0TU1WTkhHYVlPU0ZaZ2JpdGlMdVZoNEpoUGRmc2ZYOVhNQ2xjdUN0UHlwaXQ2bTNHcDY1bElzZXdEY1Job0hZYll2RUlZU0Fxc0JUX29VbHQtcnZJT01DTUM1WDhmNS1ZRUlyYWpqVk54eEtkNkk?oc=5"
+ },
+ {
   "hecho_id": "clima:Oruro:2026-10-31:viento:1",
   "fecha_hora_local": "2026-10-30 05:05",
   "ts_ms": 1793351134906,
@@ -910,14 +930,14 @@
   "fallecidos_max": 1,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 3,
-  "fuentes": "La Patria Bolivia; Red Uno",
+  "n_notas": 2,
+  "fuentes": "Red Uno",
   "lat": -18.38,
   "lon": -64.649,
   "lugar": "Pasorapa, Cochabamba",
   "departamento": "Cochabamba",
   "municipio": "Pasorapa",
-  "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOMm85Y2ljR3pzV1NaR1o0V3dIS0J6aFp0Zk5mWkswR0lXU01BQVl4LVg4T1lfckpFZjBqMlJ4LWEyRGlPVkxYMGJ1WnM0MFFsZzlqQUxwSEdZcnJsdlpMUEtvLWNybEI3TU83WV8zSzhQY3RqVlhvNGRqLWF0M05HMEd5X0xOMzlyT2lPYjBSOWtjUXdNY2dMeUZ2X3hTcUVIdUxCV1o0Y216OEZzOXMzUnNPMEZUODE0YzV6Qmk3ZU5WeVVDaTlxQXFMT0o?oc=5 | https://news.google.com/rss/articles/CBMimwFBVV95cUxNV2FJN2xwRmNlMHRPeHYyUzJlVXl4aWxOV3BBV205ZVNyOUVzWVExRzlaZTMzWDZ3dmY5aTEyTjZmRURWVmlGYjhYdFUzNkJRbzY3VDlfZk5kOGg5cDZhSEQ5d2RJV05hRFBQY1J2dFZrUTVGODBlbDJxSzU1M05HTURDZncxM1M2S1FyN1NKaGp6dWxVZTR1RmJHUQ?oc=5 | https://news.google.com/rss/articles/CBMizwFBVV95cUxOOFQxc2Vzc0QwS19ydC13RkRPZnZQU3JkSTl5U3kzdUdMSldTcm5HVEhWRzZyN19CLUlwcUs4MW03Ui1obVBtdzQ3QWFQc1RKdzh3MXJ5QkpRS2pRNm50V1lVb09ScGJnaVVlemVfZlRsWjdObnRmR1FGMnlMMHAyc2pMandndy10T2twcWx6OFh4UHdvbVlFbllwME9WQ2pQVjNTQzBxeTg5YnF3bDREeHVDYXpObFFIaTZZQWtYUE12cGQ1ZGRhT0syNjVhZWs?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOMm85Y2ljR3pzV1NaR1o0V3dIS0J6aFp0Zk5mWkswR0lXU01BQVl4LVg4T1lfckpFZjBqMlJ4LWEyRGlPVkxYMGJ1WnM0MFFsZzlqQUxwSEdZcnJsdlpMUEtvLWNybEI3TU83WV8zSzhQY3RqVlhvNGRqLWF0M05HMEd5X0xOMzlyT2lPYjBSOWtjUXdNY2dMeUZ2X3hTcUVIdUxCV1o0Y216OEZzOXMzUnNPMEZUODE0YzV6Qmk3ZU5WeVVDaTlxQXFMT0o?oc=5 | https://news.google.com/rss/articles/CBMizwFBVV95cUxOOFQxc2Vzc0QwS19ydC13RkRPZnZQU3JkSTl5U3kzdUdMSldTcm5HVEhWRzZyN19CLUlwcUs4MW03Ui1obVBtdzQ3QWFQc1RKdzh3MXJ5QkpRS2pRNm50V1lVb09ScGJnaVVlemVfZlRsWjdObnRmR1FGMnlMMHAyc2pMandndy10T2twcWx6OFh4UHdvbVlFbllwME9WQ2pQVjNTQzBxeTg5YnF3bDREeHVDYXpObFFIaTZZQWtYUE12cGQ1ZGRhT0syNjVhZWs?oc=5"
  },
  {
   "hecho_id": "noticia:43tofu",
@@ -990,7 +1010,7 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 4,
+  "n_notas": 3,
   "fuentes": "El Diario - Bolivia; La Patria Bolivia",
   "lat": -17.39,
   "lon": -66.16,

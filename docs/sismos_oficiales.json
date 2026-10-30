@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-10-30T11:33:26.973848Z",
+ "actualizado": "2026-10-30T12:44:40.319726Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261029T160622_-19.368_-67.8",
+   "fecha_local": "2026-10-29 16:06:22",
+   "lat": -19.368,
+   "lon": -67.8,
+   "prof_km": 171.1,
+   "mag": 3.0,
+   "provincia": "Ladislao Cabrera",
+   "departamento": "Oruro",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261028T232707_-21.463_-66.773",
    "fecha_local": "2026-10-28 23:27:07",
