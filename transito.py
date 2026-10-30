@@ -250,6 +250,56 @@ def _hecho(g):
             "notas": [{"id": str(n["id"]), "ts": n["ts"], "medio": n.get("fuente") or "", "titulo": _limpio(n["titulo"]), "url": n.get("url") or "", "fall": n.get("fall") or 0, "her": n.get("her") or 0} for n in ns]}
 
 
+def _og_image(html):
+    for pat in (r'<meta[^>]+property=["\']og:image(?::secure_url)?["\'][^>]+content=["\']([^"\']+)', r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)'):
+        m = re.search(pat, html, re.I)
+        if m and m.group(1).startswith("http"):
+            return m.group(1).replace("&amp;", "&")
+    return ""
+
+
+def fotos(docs, hechos, presupuesto=120, max_hechos=30):
+    """Recupera la fotografía principal (og:image) del medio que informa cada hecho reciente. Solo se enlaza la imagen del medio (con su crédito); no se copia."""
+    import concurrent.futures as cf
+    ruta = os.path.join(docs, "imagenes.json")
+    try:
+        cache = json.load(open(ruta, encoding="utf-8"))
+    except Exception:
+        cache = {}
+    t0 = time.time()
+    pend = []
+    for h in hechos[:max_hechos]:
+        for e in h.get("enlaces", [])[:3]:
+            if e["url"] not in cache:
+                pend.append(e)
+    def uno(e):
+        if time.time() - t0 > presupuesto:
+            return
+        try:
+            import informe_hecho as ih
+            real, _m = ih.resolver(e["url"])
+            if not real:
+                cache[e["url"]] = {"img": "", "medio": e.get("medio", "")}; return
+            html, final = ih.descargar(real, tiempo=15)
+            cache[e["url"]] = {"img": _og_image(html or ""), "medio": e.get("medio", ""), "real": final}
+        except Exception:
+            cache[e["url"]] = {"img": "", "medio": e.get("medio", "")}
+    try:
+        with cf.ThreadPoolExecutor(max_workers=4) as ex:
+            list(ex.map(uno, pend[:60]))
+    except Exception:
+        pass
+    n = 0
+    for h in hechos:
+        for e in h.get("enlaces", []):
+            c = cache.get(e["url"])
+            if c and c.get("img"):
+                h["imagen"] = c["img"]; h["imagen_medio"] = c.get("medio") or e.get("medio", ""); h["imagen_url"] = c.get("real") or e["url"]; n += 1
+                break
+    json.dump(cache, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    return n
+
+
 def actualizar(docs, notas, geo=None):
     """notas: lista de notas de prensa (dict con id, ts, fuente, titulo, url, fall, her, lat, lon, lugar, metodo, nivel)."""
     viales = [n for n in notas if clasificar(_limpio(n.get("titulo")))]
@@ -267,6 +317,10 @@ def actualizar(docs, notas, geo=None):
     hechos = [_hecho(g) for g in agrupar(list(pool.values()))]
     lim = int(time.time() * 1000) - 400 * 86400000
     hechos = sorted([h for h in hechos if h["ts"] >= lim], key=lambda h: -h["ts"])
+    try:
+        nf = fotos(docs, hechos)
+    except Exception:
+        nf = 0
     ahora = int(time.time() * 1000)
     h7 = [h for h in hechos if h["ts"] >= ahora - 7 * 86400000]
     res = {"hechos_24h": sum(1 for h in hechos if h["ts"] >= ahora - 86400000), "hechos_7d": len(h7), "fallecidos_7d": sum(h["fallecidos"] for h in h7), "heridos_7d": sum(h["heridos"] for h in h7),
@@ -280,4 +334,4 @@ def actualizar(docs, notas, geo=None):
         for h in hechos:
             w.writerow([h["id"], _fmt(h["ts"]), h["titulo"], h["tipo"], h["vehiculo"], h["tramo"], h["departamento"], h["lugar"], h["lat"] if h["lat"] is not None else "", h["lon"] if h["lon"] is not None else "",
                         h["fallecidos"], h["heridos"], "sí" if h["cifras_discrepantes"] else "no", h["confianza"]["nivel"], h["n_medios"], "; ".join(h["medios"]), h["n_notas"], " | ".join(e["url"] for e in h["enlaces"])])
-    return f"{len(hechos)} hechos de tránsito ({res['hechos_24h']} en 24 h, {res['hechos_7d']} en 7 días; {res['alta_7d']} con confianza alta)"
+    return f"{len(hechos)} hechos de tránsito ({res['hechos_24h']} en 24 h, {res['hechos_7d']} en 7 días; {res['alta_7d']} con confianza alta; {nf} con fotografía)"
