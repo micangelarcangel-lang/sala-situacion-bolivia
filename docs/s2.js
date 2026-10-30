@@ -18,21 +18,37 @@ var S2 = (function () {
     wave: '<path d="M2 12c2.5-4 5-4 7.5 0s5 4 7.5 0 3-3 5-2M2 18c2.5-4 5-4 7.5 0s5 4 7.5 0 3-3 5-2"/>',
     pulse: '<path d="M3 12h4l2-7 4 14 2-7h6"/>',
     virus: '<circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
-    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>'
+    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+    car: '<path d="M5 17V12l2-5h10l2 5v5M3 17h18M7.5 13.5h.01M16.5 13.5h.01M6 17v2M18 17v2"/>',
+    bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+    mount: '<path d="M2 20l7-12 4 7 3-4 6 9z"/>',
+    heart: '<path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/>'
   };
   function ic(n, c) { return '<svg viewBox="0 0 24 24" fill="none" stroke="' + (c || "currentColor") + '" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + (P[n] || "") + '</svg>'; }
-  var CATICON = {"geológica": "pulse", "meteorológica": "sun", "hidrológica": "water", "climatológica": "fire", "biológica": "virus", "tecnológica": "shield", "antropogénica": "shield"};
+  var CATICON = {"geológica": "mount", "meteorológica": "sun", "hidrológica": "water", "climatológica": "fire", "biológica": "virus", "tecnológica": "bolt", "antropogénica": "car"};
   var NIVCOL = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"];
   var NIVTXT = ["Verde", "Amarilla", "Naranja", "Roja"];
 
   function header(activo, tabs) {
-    var nav = [["index.html", "Tablero", "home"], ["informes.html", "Informes", "doc"], ["fuentes.html", "Fuentes", "db"]];
+    var nav = [["index.html", "Tablero", "home", "Pantalla principal con todos los eventos"], ["informes.html", "Informes", "doc", "Crear un informe PDF de un hecho concreto: accidente, sismo, brote o lugar"], ["fuentes.html", "Fuentes", "db", "De dónde vienen los datos y si cada fuente funciona"]];
     var h = '<div class="hdr"><div class="hdr-row"><div class="logo"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>' +
       '<div><h1>Sala de Situación · Bolivia</h1><div class="sub">Vigilancia de eventos con datos abiertos · actualización automática cada 30 min</div></div><span class="live off" id="live"><i></i><span id="liveT">cargando…</span></span><span class="sp"></span>' +
-      nav.map(function (n) { return '<a class="btn w s" href="' + n[0] + '" style="' + (activo === n[0] ? "background:rgba(255,255,255,.3)" : "") + '">' + ic(n[2]) + n[1] + '</a>'; }).join("") +
-      '<button class="btn w s" id="btnTour">' + ic("help") + 'Guía de uso</button></div>';
-    if (tabs) h += '<div class="tabs" id="tabs">' + tabs.map(function (t, i) { return '<button class="tab' + (i ? "" : " on") + '" data-t="' + t[0] + '">' + ic(t[2]) + t[1] + '</button>'; }).join("") + '</div>';
-    document.getElementById("hdr").innerHTML = h + '</div>';
+      nav.map(function (n) { return '<a class="btn w s" data-tip="' + n[3] + '" href="' + n[0] + '" style="' + (activo === n[0] ? "background:rgba(255,255,255,.3)" : "") + '">' + ic(n[2]) + n[1] + '</a>'; }).join("") +
+      '<button class="btn w s" id="btnTour" data-tip="Recorrido guiado de 1 minuto (opcional)">' + ic("help") + 'Guía de uso</button></div>';
+    if (tabs) h += '<div class="tabs" id="tabs">' + tabs.map(function (t, i) { return '<button class="tab' + (i ? "" : " on") + '" data-t="' + t[0] + '" data-tip="' + (t[3] || "") + '">' + ic(t[2]) + t[1] + '</button>'; }).join("") + '</div>';
+    document.getElementById("hdr").innerHTML = h + '</div>'; if (!window.__tips) { window.__tips = 1; tips(); }
+  }
+  function tips() {
+    var el = document.createElement("div"); el.className = "tipbox"; document.body.appendChild(el);
+    function ocultar() { el.style.display = "none"; }
+    document.addEventListener("mouseover", function (e) {
+      var t = e.target.closest && e.target.closest("[data-tip]"); if (!t || !t.dataset.tip) return ocultar();
+      el.textContent = t.dataset.tip; el.style.display = "block";
+      var r = t.getBoundingClientRect(), w = el.offsetWidth, x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8), y = r.bottom + 10;
+      if (y + el.offsetHeight > innerHeight - 8) y = r.top - el.offsetHeight - 10; el.style.left = x + "px"; el.style.top = y + "px";
+    });
+    document.addEventListener("mouseout", function (e) { if (!e.relatedTarget || !(e.relatedTarget.closest && e.relatedTarget.closest("[data-tip]"))) ocultar(); });
+    document.addEventListener("scroll", ocultar, true); document.addEventListener("click", ocultar, true);
   }
   function ago(ms) { var m = Math.round((Date.now() - ms) / 60000); if (m < 1) return "hace instantes"; if (m < 60) return "hace " + m + " min"; if (m < 2880) return "hace " + Math.round(m / 60) + " h"; return "hace " + Math.round(m / 1440) + " días"; }
   function live(ms) { var el = document.getElementById("live"); if (!el || !ms) return; var v = (Date.now() - ms) < 3 * 3600e3; el.className = "live" + (v ? "" : " off"); document.getElementById("liveT").textContent = "Datos " + ago(ms); el.title = "Última actualización: " + S.fecha(ms) + " (hora La Paz)"; }
@@ -103,5 +119,5 @@ var S2 = (function () {
     if (window.XLSX) return go(); var s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"; s.onload = go; s.onerror = function () { alert("No se pudo cargar el generador de Excel. Use CSV."); }; document.head.appendChild(s);
   }
   function filasXls(evs) { return evs.map(function (e) { return {ID: e.id, "Fecha (La Paz)": S.fecha(e.ts), Origen: S.ORIGEN[e.origen] || e.origen, Categoría: e.categoria, Título: e.titulo, Nivel: e.nivel_txt, Oficial: e.oficial ? "sí" : "no", Confianza: e.confianza ? e.confianza.nivel : "", Lugar: e.lugar, Departamentos: (e.departamentos || []).join("; "), Latitud: e.lat, Longitud: e.lon, Fuente: e.fuente, Enlace: e.url, Detalle: (e.detalle || "").slice(0, 500)}; }); }
-  return {S: S, ic: ic, CATICON: CATICON, NIVCOL: NIVCOL, NIVTXT: NIVTXT, header: header, live: live, ago: ago, datos: datos, chart: chart, resizeAll: resizeAll, confBadge: confBadge, badgeOrigen: badgeOrigen, nivBadge: nivBadge, catChip: catChip, tour: tour, descargarXlsx: descargarXlsx, filasXls: filasXls, css: css};
+  return {tips: tips, S: S, ic: ic, CATICON: CATICON, NIVCOL: NIVCOL, NIVTXT: NIVTXT, header: header, live: live, ago: ago, datos: datos, chart: chart, resizeAll: resizeAll, confBadge: confBadge, badgeOrigen: badgeOrigen, nivBadge: nivBadge, catChip: catChip, tour: tour, descargarXlsx: descargarXlsx, filasXls: filasXls, css: css};
 })();

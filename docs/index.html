@@ -7,9 +7,9 @@
 <div class="wrap">
 
 <section id="t-res">
- <div class="hero" id="hero"><h2>Situación de hoy</h2><p id="heroT">Cargando datos…</p></div>
- <div class="callout" id="queEs">__I_INFO__<div><p><b>¿Qué es esta página?</b> Es la Sala de Situación de Bolivia: reúne en un solo lugar los eventos que pueden afectar a la población —sismos, incendios, sequías, crecidas, lluvias y vientos, brotes y accidentes— a partir de fuentes oficiales (SENAMHI, Observatorio San Calixto, MSD, OPS/OMS), satélites (NASA FIRMS), modelos abiertos (ERA5, GloFAS) y prensa. Cada evento muestra su <b>nivel de confianza</b> según cuántas fuentes independientes lo respaldan.</p>
- <p style="margin-top:6px"><b>Cómo explorarla:</b> use las pestañas de arriba (Mapa, Incendios, Sequías, Ríos, Eventos). Toque cualquier evento para abrir su <b>ficha con informe específico</b> (mapa, tablas, gráficos, PDF). El botón <b>Guía de uso</b> hace un recorrido de 1 minuto.</p></div></div>
+ <span id="heroT" hidden></span>
+ <div class="seccion"><h2 class="sec-t">Tipos de evento <small>(Ley 602, art. 36) · últimos 30 días · toque una tarjeta para ver sus eventos</small></h2></div>
+ <div class="tipos" id="tipos"></div>
  <div class="grid g4" id="kpis" style="margin-bottom:16px"></div>
  <div class="grid g21" style="margin-bottom:16px">
   <div class="card" id="cAlertas"><h2><span class="i">__I_ALERT__</span>Alertas y eventos prioritarios</h2><div class="cap">Avisos naranja/rojos vigentes, complejos de incendio mayores, ríos sobre umbral y sismos relevantes. <b>Toque uno</b> para ver su informe.</div><div id="prior"></div></div>
@@ -33,6 +33,9 @@
    <label><input type="checkbox" id="lHeat" checked> Mapa de calor de focos</label>
    <label><input type="checkbox" id="lComp" checked> Complejos de incendio</label>
    <div class="nota" id="lblDias">Últimos 3 días</div><input type="range" id="rgDias" min="1" max="10" value="3">
+   <div class="sec">Ir a un territorio</div>
+   <select id="mDep" style="width:100%;margin-bottom:6px"><option value="">Todo Bolivia</option></select>
+   <select id="mMun" style="width:100%" disabled><option value="">Todos los municipios</option></select>
    <div class="sec">Colorear territorio por</div>
    <label><input type="radio" name="fill" value="none" checked> Nada</label>
    <label><input type="radio" name="fill" value="avisos"> Avisos SENAMHI (municipios)</label>
@@ -45,7 +48,7 @@
    <label><input type="checkbox" id="lBase" checked> Calles y relieve (OpenStreetMap)</label>
    <div class="leg" id="legMap"></div>
   </div>
-  <div class="card" style="padding:10px"><div class="map" id="mapa"></div><div class="nota" style="margin-top:6px">Focos de calor: detecciones satelitales VIIRS NOAA-21 (NASA FIRMS); incluyen quemas agrícolas y no equivalen a incendios confirmados. Ríos: modelo GloFAS, no es alerta oficial.</div></div>
+  <div class="card" style="padding:10px"><div class="map" id="mapa"></div><div id="munPanel" style="display:none;margin-top:10px"></div><div class="nota" style="margin-top:6px">Focos de calor: detecciones satelitales VIIRS NOAA-21 (NASA FIRMS); incluyen quemas agrícolas y no equivalen a incendios confirmados. Ríos: modelo GloFAS, no es alerta oficial.</div></div>
  </div>
 </section>
 
@@ -91,6 +94,7 @@
  <div class="card"><div class="filtros">
   <label>Período<select id="fPer"><option value="1">Hoy</option><option value="2">48 horas</option><option value="7" selected>7 días</option><option value="30">30 días</option><option value="400">Todo</option></select></label>
   <label>Departamento<select id="fDep"><option value="">Todos</option></select></label>
+  <label>Municipio<select id="fMun"><option value="">Todos</option></select></label>
   <label>Fuente<select id="fOrg"><option value="">Todas</option><option value="of">Solo oficiales</option><option value="prensa">Solo prensa</option><option value="modelo">Satélite / modelos</option></select></label>
   <label>Confianza<select id="fConf"><option value="">Todas</option><option value="Alta">Alta</option><option value="Media">Media o más</option></select></label>
   <label>Nivel mínimo<select id="fNiv"><option value="-1">Todos</option><option value="1">Amarilla o más</option><option value="2">Naranja o más</option><option value="3">Solo roja</option></select></label>
@@ -99,6 +103,19 @@
   <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="bCsv">__I_DL__CSV</button><button class="btn" id="bXls">__I_DL__Excel</button><button class="btn" id="bJson">__I_DL__JSON</button><a class="btn p" href="informes.html">__I_DOC__Crear informe específico</a></div>
   <div class="nota" id="fN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:640px"><table id="tEv"></table></div></div>
 </section>
+<section id="t-sal" style="display:none">
+ <div class="callout">__I_INFO__<div><p><b>Salud: eventos biológicos.</b> Brotes y epidemias en Bolivia (prensa, boletín epidemiológico del Ministerio de Salud y Deportes) y alertas internacionales de OPS/OMS. Es vigilancia preliminar: la confirmación oficial corresponde al Ministerio de Salud y Deportes.</p></div></div>
+ <div class="grid g4" id="kSal" style="margin-bottom:16px"></div>
+ <div class="grid g2" style="margin-bottom:16px">
+  <div class="card"><h2><span class="i">__I_PULSE__</span>Eventos de salud en Bolivia</h2><div class="cap">Notas de prensa y boletín epidemiológico. Toque un evento para abrir su ficha.</div><div id="listaSal" style="max-height:520px;overflow:auto"></div></div>
+  <div class="card"><h2><span class="i">__I_INFO__</span>Alertas internacionales (OPS / OMS)</h2><div class="cap">Lo más reciente que puede afectar a Bolivia por viaje o comercio.</div><div id="listaOms" style="max-height:520px;overflow:auto"></div></div>
+ </div>
+ <div class="grid g2">
+  <div class="card"><h2>Enfermedades más mencionadas</h2><div class="cap">Cuenta de eventos y alertas por enfermedad (últimos 90 días).</div><div class="ch" id="chSalEnf"></div></div>
+  <div class="card"><h2>Boletín epidemiológico (MSyD)</h2><div class="cap">Frases clave del último boletín semanal publicado.</div><div id="boletinSal"></div></div>
+ </div>
+</section>
+
 <section id="t-tra" style="display:none">
  <div class="callout">__I_INFO__<div><p><b>Tránsito y accidentes.</b> Hechos viales detectados en la <b>prensa boliviana</b> (consulta medio por medio y GDELT). Las notas que cuentan el mismo accidente se <b>unen en un solo hecho</b> y su <b>confianza</b> depende de cuántos medios distintos lo reportan: <b>Alta</b> 3 o más · <b>Media</b> 2 · <b>Baja</b> 1. No existe fuente oficial abierta (Policía, ABC, SUMA 161), por eso toda cifra es <b>preliminar</b> y se muestra el máximo reportado.</p></div></div>
  <div class="grid g4" id="kTra" style="margin-bottom:16px"></div>
