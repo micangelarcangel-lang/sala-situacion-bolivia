@@ -91,6 +91,10 @@
    "La Paz": 4,
    "Cochabamba": 2,
    "Beni": 25
+  },
+  "2026-10-30": {
+   "Santa Cruz": 16,
+   "Tarija": 7
   }
  },
  "municipios": {
@@ -279,11 +283,17 @@
    "Belén de Andamarca (Oruro)": 1,
    "Arampampa (Potosí)": 1,
    "Caracollo (Oruro)": 1
+  },
+  "2026-10-30": {
+   "San Ignacio (Santa Cruz)": 7,
+   "Concepción (Santa Cruz)": 7,
+   "Yacuiba (Tarija)": 7,
+   "San Matías (Santa Cruz)": 2
   }
  },
- "actualizado": "2026-10-30T05:41:02.266653Z",
+ "actualizado": "2026-10-30T06:45:59.172294Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1776,
+ "detecciones_fuera_de_limites": 1841,
  "slack_dia": "2026-10-30"
 }
