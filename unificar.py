@@ -63,7 +63,7 @@ def desde_prensa(docs, ubicar):
         txt = {"prensa": " (preliminar)", "modelo": " (pronóstico de modelo)", "gdacs": " (GDACS)", "usgs": " (USGS)"}[origen]
         r = {"id": e["id"], "origen": origen, "categoria": e.get("tipo") or "otra", "titulo": titulo, "ts": e["ts"], "nivel": n, "nivel_txt": NOMNIV[n] + txt,
              "oficial": oficial, "lugar": e.get("lugar") or "", "departamentos": deps, "lat": e.get("lat"), "lon": e.get("lon"), "detalle": det, "fuente": e.get("fuente", ""),
-             "url": e.get("url", ""), "cifras": {"fallecidos": e.get("fall") or 0, "heridos": e.get("her") or 0, "notas": e.get("n_notas") or 1}, "metodo": e.get("metodo") or ""}
+             "url": e.get("url", ""), "medios": [e.get("fuente", "")] if origen == "prensa" else [], "cifras": {"fallecidos": e.get("fall") or 0, "heridos": e.get("her") or 0, "notas": e.get("n_notas") or 1}, "metodo": e.get("metodo") or ""}
         if origen == "prensa":  # mismo titular el mismo día = mismo hecho: se funde
             k = _norm(titulo)[:70]
             if k in vistos and abs(vistos[k]["ts"] - r["ts"]) <= 72 * 3600000:
@@ -72,6 +72,7 @@ def desde_prensa(docs, ubicar):
                 a["cifras"]["fallecidos"] = max(a["cifras"]["fallecidos"], r["cifras"]["fallecidos"])
                 a["cifras"]["heridos"] = max(a["cifras"]["heridos"], r["cifras"]["heridos"])
                 a["ts"] = min(a["ts"], r["ts"])
+                a["medios"] = sorted(set(a.get("medios", [])) | set(r.get("medios", [])))
                 a.setdefault("alias", []).append(r["id"])
                 continue
             vistos[k] = r
@@ -85,6 +86,51 @@ def desde_prensa(docs, ubicar):
                 pass
         out.append(r)
     return out
+
+
+def fusion_semantica(evs):
+    """Une notas de prensa que cuentan el MISMO hecho aunque el titular cambie (misma categoría, departamento compatible, ≤72 h,
+    palabras específicas y nombres propios en común). Acumula los medios distintos: eso es lo que sube la confianza."""
+    try:
+        import transito as T
+    except Exception:
+        return evs
+    res, grupos = [], []
+    absorbidas = {}
+    for r in evs:
+        for al in r.get("alias", []):
+            absorbidas[al] = r["id"]
+    evs = [r for r in evs if not (r["origen"] == "prensa" and r["id"] in absorbidas and absorbidas[r["id"]] != r["id"])]   # nota ya fundida en otro hecho
+    for r in sorted(evs, key=lambda x: x["ts"]):
+        if r["origen"] != "prensa":
+            res.append(r); continue
+        ti = r["titulo"]
+        tk, es = T._toks(ti), T._ents(ti)
+        dp = set(r.get("departamentos") or [])
+        destino = None
+        for g in grupos:
+            a = g["ev"]
+            if a["categoria"] != r["categoria"] or abs(a["ts"] - r["ts"]) > 72 * 3600000 or (g["dp"] and dp and not (g["dp"] & dp)):
+                continue
+            comun = g["tk"] & tk
+            esp = {w for w in comun if w not in T._GEN}
+            distintos = bool(g["es"] and es and not (g["es"] & es))
+            s = T._sim(g["tk"] - T._GEN, tk - T._GEN)
+            if (g["es"] & es and len(comun) >= 2) or (not distintos and s >= 0.5 and len(esp) >= 2):
+                destino = g; break
+        if destino is None:
+            grupos.append({"ev": r, "tk": set(tk), "es": set(es), "dp": set(dp)}); res.append(r); continue
+        a = destino["ev"]
+        a["medios"] = sorted(set(a.get("medios", [])) | set(r.get("medios", [])))
+        a["cifras"]["fallecidos"] = max(a["cifras"]["fallecidos"], r["cifras"]["fallecidos"])
+        a["cifras"]["heridos"] = max(a["cifras"]["heridos"], r["cifras"]["heridos"])
+        a["alias"] = sorted(set(a.get("alias", [])) | {r["id"]} | set(r.get("alias", [])))
+        a["cifras"]["notas"] = 1 + len(a["alias"])
+        a["lat"] = a["lat"] if a["lat"] is not None else r["lat"]; a["lon"] = a["lon"] if a["lon"] is not None else r["lon"]
+        destino["tk"] |= tk; destino["es"] |= es; destino["dp"] |= dp
+        if not a["departamentos"]:
+            a["departamentos"] = r.get("departamentos") or []
+    return res
 
 
 def desde_senamhi(docs):
@@ -222,13 +268,14 @@ FAM = {"eonet": "Internacional", "prensa": "Prensa", "senamhi": "Oficial naciona
 
 
 def triangular(evs):
-    """Triangulación: cuántas FAMILIAS de fuente independientes respaldan un evento (misma categoría, mismo departamento o nacional, ventana de tiempo).
-    Alta ≥ 3 familias · Media 2 (o ≥ 3 medios de prensa distintos) · Baja 1."""
+    """Triangulación: cuántas FUENTES INDEPENDIENTES respaldan un evento.
+    Cada medio de prensa distinto que cuenta el mismo hecho suma 1; cada familia no periodística (oficial nacional, satélite, internacional, modelo)
+    con evento relacionado (misma categoría, departamento compatible, ≤72 h) suma 1.  Alta ≥ 3 · Media 2 · Baja 1."""
     def ventana(e):
         return 15 * 86400000 if e["origen"] in ("sequia", "caudal") else 72 * 3600000
     for e in evs:
         fam = {FAM.get(e["origen"], "Otra")}
-        medios = {e["fuente"]} if e["origen"] == "prensa" else set()
+        medios = {m for m in e.get("medios", []) if m} if e["origen"] == "prensa" else set()
         rel = 0
         for o in evs:
             if o is e or o["categoria"] != e["categoria"] or o.get("internacional") != e.get("internacional"):
@@ -240,11 +287,14 @@ def triangular(evs):
                 continue
             if (not de or not do) and not (e["origen"] in ("epidemiologia",) or o["origen"] in ("epidemiologia",)):
                 continue
+            if o["origen"] == "prensa" and e["origen"] == "prensa":
+                continue                      # otra nota de prensa NO es el mismo hecho: solo cuenta si fue fusionada arriba
             fam.add(FAM.get(o["origen"], "Otra")); rel += 1
             if o["origen"] == "prensa":
-                medios.add(o["fuente"])
-        niv = "Alta" if len(fam) >= 3 else "Media" if (len(fam) == 2 or len(medios) >= 3) else "Baja"
-        e["confianza"] = {"nivel": niv, "familias": sorted(fam), "relacionados": rel, "medios": len(medios)}
+                medios |= set()
+        fuentes = len(fam - {"Prensa"}) + (max(len(medios), 1) if "Prensa" in fam else 0)
+        niv = "Alta" if fuentes >= 3 else "Media" if fuentes == 2 else "Baja"
+        e["confianza"] = {"nivel": niv, "familias": sorted(fam), "relacionados": rel, "medios": len(medios), "fuentes_independientes": fuentes}
     return evs
 
 
@@ -299,6 +349,7 @@ def actualizar(docs, geo=None, retener_dias=400):
         previo[e["id"]] = e
     lim = int(time.time() * 1000) - retener_dias * 86400000
     todos = sorted([e for e in previo.values() if e["ts"] >= lim], key=lambda e: -e["ts"])
+    todos = sorted(fusion_semantica(todos), key=lambda e: -e["ts"])
     triangular(todos)
     json.dump({"generado": int(time.time() * 1000), "n": len(todos), "eventos": todos}, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     os.makedirs(os.path.join(docs, "datos"), exist_ok=True)

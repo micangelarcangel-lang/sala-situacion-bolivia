@@ -51,11 +51,36 @@ def clasificar(titulo, detalle=""):
     return {"tipo": tipo, "vehiculo": veh, "tramo": m.group(1).strip() if m else ""}
 
 
-_STOP = set("accidente accidentes deja dejan dejo heridos herido herida muertos muerto fallecidos fallecido carretera ruta camino bolivia una unos las los del por con tras entre sobre para como esta este que sus mas hay luego cinco cuatro tres dos graves grave persona personas".split())
+_STOP = set("accidente accidentes deja dejan dejo heridos herido herida muertos muerto fallecidos fallecido carretera ruta camino bolivia una unos las los del por con tras entre sobre para como esta este que sus mas hay luego cinco cuatro tres dos graves grave persona personas video foto fotos ultima hora urgente atencion reportan reporta reportaron informa informan vehiculo vehiculos conductor chofer pasajeros".split())
+# palabras que describen el MISMO hecho aunque el titular use otra palabra: se reducen a un concepto
+_SINON = {"colision": "choque", "chocan": "choque", "choca": "choque", "choco": "choque", "chocaron": "choque", "triple": "choque", "frontal": "choque", "volcado": "vuelco", "volco": "vuelco", "volcadura": "vuelco",
+          "quemado": "quemadura", "quemaduras": "quemadura", "quemaron": "quemadura", "incendio": "fuego", "llamas": "fuego", "cisternas": "cisterna", "camiones": "camion", "buses": "bus", "omnibus": "bus", "flota": "bus"}
+_GEN = {"oruro", "potosi", "paz", "cruz", "santa", "cochabamba", "tarija", "beni", "pando", "chuquisaca", "bolivia", "carret", "ruta", "choque", "vuelco", "fuego", "bus", "camion", "cisterna", "quemadura", "terapia", "intensiva", "evacuan", "bomberos", "controlan", "complica", "circulacion", "congestionamiento", "tercer", "grado", "cuerpo", "lucha", "vida"}
+
+
+_PREF = (("colisi", "choque"), ("choqu", "choque"), ("chocar", "choque"), ("volc", "vuelco"), ("vuelc", "vuelco"), ("quemad", "quemadura"), ("quemar", "quemadura"), ("quemadur", "quemadura"),
+         ("incendi", "fuego"), ("cistern", "cisterna"), ("camion", "camion"), ("omnibus", "bus"))
+
+
+def _stem(w):
+    w = _SINON.get(w, w)
+    for p, r in _PREF:
+        if w.startswith(p):
+            return r
+    return w[:6] if len(w) > 6 else w
 
 
 def _toks(t):
-    return {w for w in norm(t).split() if len(w) >= 4 and w not in _STOP}
+    return {_stem(w) for w in norm(t).split() if len(w) >= 4 and w not in _STOP}
+
+
+def _ents(t):
+    """Nombres propios / lugares del titular (palabras con mayúscula que no están al inicio): sirven para decir 'es el mismo hecho'."""
+    out = set()
+    for i, w in enumerate(re.findall(r"[A-Za-zÁÉÍÓÚÑáéíóúñ]{4,}", str(t or ""))):
+        if w[0].isupper() and norm(w) not in _STOP and norm(w) not in {"santa", "cruz", "paz", "oruro", "potosi", "cochabamba", "tarija", "beni", "pando", "chuquisaca", "bolivia", "carretera", "accidente", "choque", "atencion", "video", "muere", "mueren"}:
+            out.add(_stem(norm(w)))
+    return out
 
 
 def _sim(a, b):
@@ -64,11 +89,63 @@ def _sim(a, b):
     return len(a & b) / min(len(a), len(b))
 
 
-def _dep(e):
-    for d in DEPS:
-        if d.lower() in ((e.get("lugar") or "") + " " + (e.get("titulo") or "")).lower():
-            return d
-    return ""
+def _compat(da, db):
+    """Departamentos compatibles: comparten alguno, o alguno de los dos no está identificado."""
+    return not da or not db or bool(da & db)
+
+
+def _tramo(t):
+    m = re.search(r"([A-ZÁÉÍÓÚÑ][\wáéíóúñ]+)\s*[-–]\s*([A-ZÁÉÍÓÚÑ][\wáéíóúñ]+)", str(t or ""))
+    return frozenset({norm(m.group(1)), norm(m.group(2))}) if m else frozenset()
+
+
+_TIPOS_FUERTES = ("vuelc", "volcad", "atropell", "barranco", "embarranc")
+
+
+def norm_tit_igual(g, tk):
+    return any(tk == t for t in g.get("tks", []))
+
+
+def _mismo(g, n, tk, es, dp, tr=frozenset()):
+    """¿La nota n cuenta el mismo hecho que el grupo g? Palabras, nombres propios, tramo, consecuencias, departamento y tiempo."""
+    dt_ = abs(g["ts"] - n["ts"])
+    if dt_ > 72 * 3600000 or not _compat(g["dep"], dp):
+        return False
+    if tr and g["trs"] and tr not in g["trs"]:                       # tramos de carretera distintos: son hechos distintos
+        return False
+    comun = g["tk"] & tk
+    esp = {w for w in comun if w not in _GEN}          # palabras en común que NO son genéricas
+    distintos = bool(g["es"] and es and not (g["es"] & es))   # nombres propios distintos (p. ej. Diablada vs Pisiga)
+    ent = g["es"] & es                                 # nombres propios en común (no lugares)
+    s = _sim(g["tk"] - _GEN, tk - _GEN)
+    if ent and (len(comun) >= 2 or s >= 0.3):
+        return True
+    if not distintos and dt_ <= 30 * 3600000 and len(comun - _GEN) >= 2 and _sim(g["tk"], tk) >= 0.8:      # titulares casi idénticos
+        return True
+    if not distintos and dt_ <= 30 * 3600000 and len(comun) >= 3 and norm_tit_igual(g, tk):
+        return True
+    if not distintos and s >= 0.5 and len(esp) >= 2:
+        return True
+    # mismo suceso narrado con otras palabras: misma consecuencia característica (cisterna / quemaduras / fuego)
+    if len(comun & {"cisterna", "quemadura", "fuego"}) >= 2:
+        return True
+    # mismo vehículo distintivo (cisterna; camión + ómnibus) el mismo día y departamento compatible
+    if dt_ <= 36 * 3600000 and ("cisterna" in comun or {"camion", "bus"} <= comun):
+        return True
+    # mismo tramo de carretera, mismo día y sin tipos de accidente contradictorios
+    if dt_ <= 24 * 3600000 and tr and tr in g["trs"]:
+        return True
+    return False
+
+
+def _deps(e):
+    """Departamentos que menciona el TITULAR (sin el nombre del medio: 'El Potosí' no es Potosí; 'Alto Beni' es de La Paz)."""
+    t = re.sub(r"alto beni", " ", _limpio(e.get("titulo")).lower())
+    return {d for d in DEPS if d.lower() in t}
+
+
+def _deps_blando(e):
+    return {d for d in DEPS if d.lower() in str(e.get("lugar") or "").lower()}
 
 
 def _limpio(t):
@@ -79,22 +156,38 @@ def _fmt(ms):
     return dt.datetime.fromtimestamp(ms / 1000, TZ).strftime("%Y-%m-%d %H:%M")
 
 
+def _firma(n):
+    ti = _limpio(n["titulo"])
+    return _toks(ti), _ents(ti), _deps(n), _tramo(ti)
+
+
+def _unir(a, b):
+    a["notas"] += b["notas"]; a["tk"] |= b["tk"]; a["es"] |= b["es"]; a["dep"] |= b["dep"]; a["trs"] |= b["trs"]; a["tks"] += b["tks"]; a["ts"] = min(a["ts"], b["ts"])
+
+
 def agrupar(notas):
-    """Une notas del mismo hecho: palabras clave en común + mismo departamento (si se conoce) + ≤ 72 h."""
+    """Une notas del mismo hecho (palabras, nombres propios, tramo, consecuencias, departamento y tiempo) y fusiona los grupos que resultan ser el mismo hecho."""
     grupos = []
     for n in sorted(notas, key=lambda x: x["ts"]):
-        tk = _toks(_limpio(n["titulo"]))
-        dp = _dep(n)
+        tk, es, dp, tr = _firma(n)
         for g in grupos:
-            if abs(g["ts"] - n["ts"]) > 72 * 3600000:
-                continue
-            if g["dep"] and dp and g["dep"] != dp:
-                continue
-            if _sim(g["tk"], tk) >= 0.5:
-                g["notas"].append(n); g["tk"] |= tk; g["dep"] = g["dep"] or dp
+            if _mismo(g, n, tk, es, dp, tr):
+                g["notas"].append(n); g["tks"].append(tk); g["tk"] |= tk; g["es"] |= es; g["dep"] |= dp
+                if tr: g["trs"].add(tr)
                 break
         else:
-            grupos.append({"ts": n["ts"], "tk": set(tk), "dep": dp, "notas": [n]})
+            grupos.append({"ts": n["ts"], "tk": set(tk), "es": set(es), "dep": set(dp), "trs": {tr} if tr else set(), "tks": [tk], "notas": [n]})
+    cambio = True
+    while cambio:  # segunda pasada: la nota 'puente' llegó después
+        cambio = False
+        for i in range(len(grupos)):
+            for j in range(i + 1, len(grupos)):
+                a, b = grupos[i], grupos[j]
+                if any(_mismo(a, n, *_firma(n)) for n in b["notas"]):
+                    _unir(a, b); del grupos[j]; cambio = True
+                    break
+            if cambio:
+                break
     return grupos
 
 
@@ -111,6 +204,12 @@ def _hecho(g):
         if n.get("lat") is not None:
             lat, lon, lugar, metodo = n["lat"], n["lon"], n.get("lugar") or "", n.get("metodo") or ""
             break
+    cuenta = {}
+    por_titulo = any(_deps(n) for n in ns)
+    for n in ns:
+        for d in (_deps(n) if por_titulo else _deps_blando(n)):
+            cuenta[d] = cuenta.get(d, 0) + 1
+    dep_h = max(cuenta, key=lambda d: (cuenta[d], -DEPS.index(d))) if cuenta else ""
     nm = len(medios)
     conf = "Alta" if nm >= 3 else "Media" if nm == 2 else "Baja"
     razon = (f"{nm} medios distintos cuentan el mismo hecho" if nm > 1 else "Un solo medio lo reporta") + "; sin confirmación de Policía/SUMA/ABC (no hay fuente oficial abierta)."
@@ -124,7 +223,7 @@ def _hecho(g):
             vistos.add(k); enl.append({"medio": n.get("fuente") or "", "titulo": _limpio(n["titulo"]), "url": u, "ts": n["ts"]})
     hid = "transito:" + hashlib.md5(min(str(n["id"]) for n in ns).encode()).hexdigest()[:10]
     return {"id": hid, "ts": ns[0]["ts"], "ultima_nota": ns[-1]["ts"], "titulo": _limpio(rep["titulo"]), "tipo": cls["tipo"], "vehiculo": cls["vehiculo"], "tramo": cls["tramo"],
-            "departamento": g["dep"], "lugar": lugar or g["dep"], "lat": lat, "lon": lon, "metodo_ubicacion": metodo,
+            "departamento": dep_h, "lugar": lugar or dep_h, "lat": lat, "lon": lon, "metodo_ubicacion": metodo,
             "fallecidos": max(vf) if vf else 0, "heridos": max(vh) if vh else 0, "cifras_discrepantes": len(vf) > 1 or len(vh) > 1,
             "medios": medios, "n_medios": nm, "n_notas": len(ns), "confianza": {"nivel": conf, "razon": razon}, "enlaces": enl[:8],
             "notas": [{"id": str(n["id"]), "ts": n["ts"], "medio": n.get("fuente") or "", "titulo": _limpio(n["titulo"]), "url": n.get("url") or "", "fall": n.get("fall") or 0, "her": n.get("her") or 0} for n in ns]}
