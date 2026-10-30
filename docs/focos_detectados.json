@@ -18,7 +18,7 @@
    "Potosí": 5
   },
   "2026-10-26": {
-   "Beni": 234,
+   "Beni": 233,
    "Pando": 58,
    "Santa Cruz": 12,
    "La Paz": 130,
@@ -137,8 +137,8 @@
    "Reyes (Beni)": 24,
    "San Ramón (Beni)": 19,
    "Santa Ana (Beni)": 16,
-   "Magdalena (Beni)": 15,
    "Bolpebra (Pando)": 15,
+   "Magdalena (Beni)": 14,
    "Guayaramerín (Beni)": 6,
    "Filadelfia (Pando)": 6,
    "Santa Rosa (Pando)": 4,
@@ -281,9 +281,9 @@
    "Caracollo (Oruro)": 1
   }
  },
- "actualizado": "2026-10-29T23:30:46.674740Z",
+ "actualizado": "2026-10-30T00:44:02.012209Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2147,
- "slack_dia": "2026-10-29"
+ "detecciones_fuera_de_limites": 1776,
+ "slack_dia": "2026-10-30"
 }

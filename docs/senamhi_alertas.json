@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-29T23:30:39.079072Z",
+ "actualizado": "2026-10-30T00:43:55.045688Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -84,7 +84,7 @@
    "n_municipios": 69,
    "texto": "SE PRONOSTICA, LLUVIA MODERADA, TEMPORALMENTE FUERTE CON TORMENTAS ELÉCTRICAS AISLADAS, A OCURRIR DESDE LA MAÑANA DEL DÍA MIÉRCOLES 28 HASTA LA TARDE DEL DÍA JUEVES 29 DE OCTUBRE DE 2026 EN:",
    "numero": "89/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
@@ -316,7 +316,7 @@
    "n_municipios": 101,
    "texto": "SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DE DIRECCIÓN OESTE-NOROESTE, A REGISTRARSE DESDE EL LUNES 26 HASTA EL JUEVES 29 OCTUBRE DE 2026 EN:",
    "numero": "88/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
