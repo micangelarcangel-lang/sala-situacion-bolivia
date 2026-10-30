@@ -1,5 +1,24 @@
 {
- "actualizado": "2026-10-30T07:55:53.764391Z",
+ "actualizado": "2026-10-30T08:49:01.595957Z",
  "dia": "2026-10-30",
- "complejos": []
+ "complejos": [
+  {
+   "n": 10,
+   "frp_mw": 12.6,
+   "lat": -12.879,
+   "lon": -66.028,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -66.036,
+    -12.887,
+    -66.018,
+    -12.874
+   ],
+   "id": "2026-10-30:1"
+  }
+ ]
 }

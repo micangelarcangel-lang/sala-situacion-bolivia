@@ -94,7 +94,9 @@
   },
   "2026-10-30": {
    "Santa Cruz": 16,
-   "Tarija": 7
+   "Tarija": 7,
+   "Beni": 17,
+   "Pando": 2
   }
  },
  "municipios": {
@@ -285,15 +287,19 @@
    "Caracollo (Oruro)": 1
   },
   "2026-10-30": {
+   "Exaltación (Beni)": 14,
    "San Ignacio (Santa Cruz)": 7,
    "Concepción (Santa Cruz)": 7,
    "Yacuiba (Tarija)": 7,
-   "San Matías (Santa Cruz)": 2
+   "San Matías (Santa Cruz)": 2,
+   "Riberalta (Beni)": 2,
+   "Villa Nueva (Pando)": 2,
+   "Reyes (Beni)": 1
   }
  },
- "actualizado": "2026-10-30T07:55:53.764391Z",
+ "actualizado": "2026-10-30T08:49:01.595957Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1841,
+ "detecciones_fuera_de_limites": 1844,
  "slack_dia": "2026-10-30"
 }
