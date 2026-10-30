@@ -95,10 +95,12 @@
   "2026-10-30": {
    "Santa Cruz": 25,
    "Tarija": 13,
-   "Beni": 22,
+   "Beni": 34,
    "Pando": 2,
-   "Potosí": 1,
-   "Cochabamba": 2
+   "Potosí": 5,
+   "Cochabamba": 2,
+   "Oruro": 5,
+   "La Paz": 3
   }
  },
  "municipios": {
@@ -289,26 +291,26 @@
    "Caracollo (Oruro)": 1
   },
   "2026-10-30": {
-   "Exaltación (Beni)": 14,
+   "Exaltación (Beni)": 16,
    "Yacuiba (Tarija)": 13,
    "Concepción (Santa Cruz)": 8,
    "San Ignacio (Santa Cruz)": 7,
+   "Reyes (Beni)": 7,
    "San Miguel (Santa Cruz)": 5,
+   "San Andrés (Beni)": 4,
    "Riberalta (Beni)": 3,
+   "Uyuni (Potosí)": 3,
+   "Totora (Oruro)": 3,
    "San Matías (Santa Cruz)": 2,
    "Villa Nueva (Pando)": 2,
    "Tarata (Cochabamba)": 2,
    "San José (Santa Cruz)": 2,
-   "San Joaquín (Beni)": 2,
-   "Reyes (Beni)": 1,
-   "San Pedro (Potosí)": 1,
-   "Ascención de Guarayos (Santa Cruz)": 1,
-   "Baures (Beni)": 1
+   "San Joaquín (Beni)": 2
   }
  },
- "actualizado": "2026-10-30T20:32:30.562589Z",
+ "actualizado": "2026-10-30T21:31:12.500870Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1870,
+ "detecciones_fuera_de_limites": 1879,
  "slack_dia": "2026-10-30"
 }
