@@ -126,6 +126,9 @@ def _mismo(g, n, tk, es, dp, tr=frozenset()):
         return True
     if not distintos and s >= 0.5 and len(esp) >= 2:
         return True
+    # mismo departamento (nombrado en ambos titulares), ≤ 36 h y al menos 2 palabras específicas en común
+    if not distintos and g["dep"] and dp and (g["dep"] & dp) and dt_ <= 36 * 3600000 and len(esp) >= 2 and s >= 0.3:
+        return True
     # mismo suceso narrado con otras palabras: misma consecuencia característica (cisterna / quemaduras / fuego)
     if len(comun & {"cisterna", "quemadura", "fuego"}) >= 2:
         return True
@@ -191,6 +194,23 @@ def agrupar(notas):
     return grupos
 
 
+def _cred(medio):
+    m = norm(medio)
+    if any(k in m for k in ("abi agencia", "ministerio", "senamhi", "policia", "gobierno")):
+        return 0.9
+    if any(k in m for k in ("red uno", "unitel", "el deber", "los tiempos", "opinion", "la razon", "el dia", "pagina siete", "la patria", "correo del sur", "el potosi", "el diario", "brujula", "vision 360", "atb", "bolivision", "eju")):
+        return 0.7
+    return 0.5
+
+
+def _puntaje(medios):
+    """Credibilidad combinada 0–100: 1 − Π(1 − w) con w = peso editorial de cada medio distinto (criterio del sistema, no medición)."""
+    p = 1.0
+    for m in medios:
+        p *= 1 - _cred(m)
+    return round(100 * (1 - p))
+
+
 def _hecho(g):
     ns = sorted(g["notas"], key=lambda x: x["ts"])
     cls = next((c for c in (clasificar(_limpio(n["titulo"])) for n in ns) if c), None) or {"tipo": "", "vehiculo": "", "tramo": ""}
@@ -212,6 +232,7 @@ def _hecho(g):
     dep_h = max(cuenta, key=lambda d: (cuenta[d], -DEPS.index(d))) if cuenta else ""
     nm = len(medios)
     conf = "Alta" if nm >= 3 else "Media" if nm == 2 else "Baja"
+    pt = _puntaje(medios)
     razon = (f"{nm} medios distintos cuentan el mismo hecho" if nm > 1 else "Un solo medio lo reporta") + "; sin confirmación de Policía/SUMA/ABC (no hay fuente oficial abierta)."
     if len(vf) > 1 or len(vh) > 1:
         razon += " Los medios difieren en las cifras (se muestra el máximo)."
@@ -225,7 +246,7 @@ def _hecho(g):
     return {"id": hid, "ts": ns[0]["ts"], "ultima_nota": ns[-1]["ts"], "titulo": _limpio(rep["titulo"]), "tipo": cls["tipo"], "vehiculo": cls["vehiculo"], "tramo": cls["tramo"],
             "departamento": dep_h, "lugar": lugar or dep_h, "lat": lat, "lon": lon, "metodo_ubicacion": metodo,
             "fallecidos": max(vf) if vf else 0, "heridos": max(vh) if vh else 0, "cifras_discrepantes": len(vf) > 1 or len(vh) > 1,
-            "medios": medios, "n_medios": nm, "n_notas": len(ns), "confianza": {"nivel": conf, "razon": razon}, "enlaces": enl[:8],
+            "medios": medios, "n_medios": nm, "n_notas": len(ns), "confianza": {"nivel": conf, "razon": razon + f" Puntaje de credibilidad {pt}/100.", "puntaje": pt}, "enlaces": enl[:8],
             "notas": [{"id": str(n["id"]), "ts": n["ts"], "medio": n.get("fuente") or "", "titulo": _limpio(n["titulo"]), "url": n.get("url") or "", "fall": n.get("fall") or 0, "her": n.get("her") or 0} for n in ns]}
 
 

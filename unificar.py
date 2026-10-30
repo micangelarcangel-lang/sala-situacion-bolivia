@@ -267,6 +267,24 @@ FAM = {"eonet": "Internacional", "prensa": "Prensa", "senamhi": "Oficial naciona
        "usgs": "Internacional", "modelo": "Modelo", "sequia": "Modelo", "caudal": "Modelo"}
 
 
+def _puntaje_ev(fam, medios):
+    """Credibilidad combinada 0–100 (criterio editorial del sistema): oficial .95 · satélite .85 · internacional .8 · modelo .5 · cada medio de prensa según su peso."""
+    w = {"Oficial nacional": .95, "Satélite": .85, "Internacional": .8, "Modelo": .5}
+    p = 1.0
+    for f in fam:
+        if f in w:
+            p *= 1 - w[f]
+    try:
+        import transito as T
+        for m in (medios or ()):
+            p *= 1 - T._cred(m)
+        if "Prensa" in fam and not medios:
+            p *= 1 - 0.6
+    except Exception:
+        pass
+    return round(100 * (1 - p))
+
+
 def triangular(evs):
     """Triangulación: cuántas FUENTES INDEPENDIENTES respaldan un evento.
     Cada medio de prensa distinto que cuenta el mismo hecho suma 1; cada familia no periodística (oficial nacional, satélite, internacional, modelo)
@@ -294,7 +312,7 @@ def triangular(evs):
                 medios |= set()
         fuentes = len(fam - {"Prensa"}) + (max(len(medios), 1) if "Prensa" in fam else 0)
         niv = "Alta" if fuentes >= 3 else "Media" if fuentes == 2 else "Baja"
-        e["confianza"] = {"nivel": niv, "familias": sorted(fam), "relacionados": rel, "medios": len(medios), "fuentes_independientes": fuentes}
+        e["confianza"] = {"nivel": niv, "familias": sorted(fam), "relacionados": rel, "medios": len(medios), "fuentes_independientes": fuentes, "puntaje": _puntaje_ev(fam, medios)}
     return evs
 
 

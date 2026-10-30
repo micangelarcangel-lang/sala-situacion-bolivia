@@ -290,6 +290,14 @@ def main():
     if modo == "solicitud":
         horas = int(os.environ.get("HORAS") or 24)
         q = (os.environ.get("BUSCAR") or "").strip()
+        if q:  # informe por tema para la página tema.html (todo lo guardado + prensa del último año, con gráficos)
+            try:
+                import tema as _tema
+                geo = geo or cargar_geo("geo.json")
+                _m = _tema.generar(q, DOCS, geo, meses=12, filtro_extranjero=es_extranjero, log=log)
+                avisar(f":mag: Informe por tema listo: {_m}. Ábralo en la página «Informe por tema» (tema.html?q={q.replace(' ', '+')}).")
+            except Exception as _ex:
+                log(f"Informe por tema falló: {type(_ex).__name__} {str(_ex)[:150]}")
         import informe_sismo as _isis
         if q and _isis.es_consulta_sismo(q):
             # informe específico de sismos (fuente oficial: Observatorio San Calixto)
