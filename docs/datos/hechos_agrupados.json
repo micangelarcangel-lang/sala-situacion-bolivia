@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "clima:Potosí:2026-10-31:viento:1",
+  "fecha_hora_local": "2026-10-30 20:05",
+  "ts_ms": 1793405131473,
+  "titulo": "Potosí 2026-10-31: 60.5 km/h de ráfagas pronosticadas",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Open-Meteo (pronóstico)",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://open-meteo.com/"
+ },
+ {
   "hecho_id": "noticia:p3ct5j",
   "fecha_hora_local": "2026-10-30 17:40",
   "ts_ms": 1793396438000,
