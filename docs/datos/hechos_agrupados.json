@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:ny5h38",
+  "fecha_hora_local": "2026-10-31 08:54",
+  "ts_ms": 1793451260000,
+  "titulo": "“Han podido hacer dos vidas”: motociclista muere tras atropellar a una mujer en el Canal Cotoca - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 1,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.764,
+  "lon": -62.903,
+  "lugar": "Cotoca, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Cotoca",
+  "enlaces": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNMC1YT0FGeU54WXZMbnV1RDVOVjVQWVN2bnhob2lfeS1NMWxYdlVkRVVlU0ZSSHE5R2RsOWcyaTFIRERScHBURnBiQnY2RlBURzBIZ2k1bUtJT2ZiLUw4b3BsSzgySk9XZEhmd08tUkZ4WFBhSXQ1R3FIWXhsSWs3LTJBVXJ2bXRUYmNIMXpscGl1UktRRm9xQ1pxY2pxdzdHR1lNeE03b2ZMOTFSbGwyZmFjbzQyZ0xvaGYtZFVncFJLOWpFUHhVWFlHU0kyZG9fcjAtaTVsdFA?oc=5"
+ },
+ {
   "hecho_id": "noticia:1grxtb9",
   "fecha_hora_local": "2026-10-31 06:54",
   "ts_ms": 1793444059000,
