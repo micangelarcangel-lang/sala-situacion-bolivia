@@ -64,6 +64,13 @@ def desde_prensa(docs, ubicar):
         r = {"id": e["id"], "origen": origen, "categoria": e.get("tipo") or "otra", "titulo": titulo, "ts": e["ts"], "nivel": n, "nivel_txt": NOMNIV[n] + txt,
              "oficial": oficial, "lugar": e.get("lugar") or "", "departamentos": deps, "lat": e.get("lat"), "lon": e.get("lon"), "detalle": det, "fuente": e.get("fuente", ""),
              "url": e.get("url", ""), "medios": [e.get("fuente", "")] if origen == "prensa" else [], "cifras": {"fallecidos": e.get("fall") or 0, "heridos": e.get("her") or 0, "notas": e.get("n_notas") or 1}, "metodo": e.get("metodo") or ""}
+        if origen == "prensa":
+            try:
+                import depurar
+                if depurar.revisar(r) is None:   # no es un evento o es del extranjero
+                    continue
+            except ImportError:
+                pass
         if origen == "prensa":  # mismo titular el mismo día = mismo hecho: se funde
             k = _norm(titulo)[:70]
             if k in vistos and abs(vistos[k]["ts"] - r["ts"]) <= 72 * 3600000:
@@ -88,6 +95,17 @@ def desde_prensa(docs, ubicar):
     return out
 
 
+_DEPN = {"cochabamba", "santa", "potosi", "oruro", "tarija", "beni", "pando", "chuquisaca", "paz", "alto", "sucre", "bolivia", "carretera", "accidente", "heridos", "choque"}
+
+
+def _temas(t):
+    try:
+        import depurar
+        return depurar.tema(t)
+    except ImportError:
+        return set()
+
+
 def fusion_semantica(evs):
     """Une notas de prensa que cuentan el MISMO hecho aunque el titular cambie (misma categoría, departamento compatible, ≤72 h,
     palabras específicas y nombres propios en común). Acumula los medios distintos: eso es lo que sube la confianza."""
@@ -110,16 +128,30 @@ def fusion_semantica(evs):
         destino = None
         for g in grupos:
             a = g["ev"]
-            if a["categoria"] != r["categoria"] or abs(a["ts"] - r["ts"]) > 72 * 3600000 or (g["dp"] and dp and not (g["dp"] & dp)):
+            if a["categoria"] != r["categoria"] or abs(a["ts"] - r["ts"]) > 72 * 3600000:
                 continue
             comun = g["tk"] & tk
             esp = {w for w in comun if w not in T._GEN}
+            # (a) mismo hecho con departamento distinto en la nota (p. ej. «Los Chicos Fieles»): dos o más palabras específicas largas en común, ≤48 h
+            fuertes = {w for w in esp if len(w) >= 6 and w not in _DEPN}
+            ec = {w for w in (g["es"] & es) if w not in _DEPN}
+            if len(fuertes) >= 2 and ec and abs(a["ts"] - r["ts"]) <= 48 * 3600000:
+                destino = g; break
+            if g["dp"] and dp and not (g["dp"] & dp):
+                continue
+            # (b) fenómeno de área (sequía, granizada, brote…): mismo tema, mismo departamento, ≤48 h
+            try:
+                import depurar as _dp
+                if r["categoria"] in _dp.AREA and (g["th"] & _dp.tema(ti)) and abs(a["ts"] - r["ts"]) <= 48 * 3600000 and (g["dp"] & dp):
+                    destino = g; break
+            except ImportError:
+                pass
             distintos = bool(g["es"] and es and not (g["es"] & es))
             s = T._sim(g["tk"] - T._GEN, tk - T._GEN)
             if (g["es"] & es and len(comun) >= 2) or (not distintos and s >= 0.5 and len(esp) >= 2):
                 destino = g; break
         if destino is None:
-            grupos.append({"ev": r, "tk": set(tk), "es": set(es), "dp": set(dp)}); res.append(r); continue
+            grupos.append({"ev": r, "tk": set(tk), "es": set(es), "dp": set(dp), "th": _temas(ti)}); res.append(r); continue
         a = destino["ev"]
         a["medios"] = sorted(set(a.get("medios", [])) | set(r.get("medios", [])))
         a["cifras"]["fallecidos"] = max(a["cifras"]["fallecidos"], r["cifras"]["fallecidos"])
@@ -127,7 +159,7 @@ def fusion_semantica(evs):
         a["alias"] = sorted(set(a.get("alias", [])) | {r["id"]} | set(r.get("alias", [])))
         a["cifras"]["notas"] = 1 + len(a["alias"])
         a["lat"] = a["lat"] if a["lat"] is not None else r["lat"]; a["lon"] = a["lon"] if a["lon"] is not None else r["lon"]
-        destino["tk"] |= tk; destino["es"] |= es; destino["dp"] |= dp
+        destino["tk"] |= tk; destino["es"] |= es; destino["dp"] |= dp; destino["th"] |= _temas(ti)
         if not a["departamentos"]:
             a["departamentos"] = r.get("departamentos") or []
     return res
@@ -362,6 +394,12 @@ def actualizar(docs, geo=None, retener_dias=400):
             geo_geojson(geo, docs)
     ruta = os.path.join(docs, "eventos_unificados.json")
     previo = {e["id"]: e for e in _j(ruta, {}).get("eventos", [])}
+    try:   # lo ya guardado también se depura (extranjero, no-eventos) y se reclasifica con las reglas vigentes
+        import depurar
+        for k in [k for k, e in previo.items() if e.get("origen") == "prensa" and depurar.revisar(e) is None]:
+            del previo[k]
+    except ImportError:
+        pass
     nuevos = desde_prensa(docs, ubicar) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs) + desde_extra(docs)
     for e in nuevos:
         previo[e["id"]] = e
