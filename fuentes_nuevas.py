@@ -34,25 +34,45 @@ def emsc():
 INPE_DIAG = None
 
 
-def inpe_10min():
+def _bolivia(docs):
+    try:
+        from shapely.geometry import shape
+        from shapely.ops import unary_union
+        g = json.load(open(os.path.join(docs, "geo_dep.geojson"), encoding="utf-8"))
+        return unary_union([shape(f["geometry"]).buffer(0) for f in g["features"]])
+    except Exception:
+        return None
+
+
+def inpe_10min(docs="docs"):
     base = "https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/10min/"
     idx = _get(base).decode("utf-8", "ignore")
-    nombres = sorted(set(re.findall(r'focos_10min_\d{8}_\d{4}\.csv', idx)))[-6:]  # última hora
+    nombres = sorted(set(re.findall(r'focos_10min_\d{8}_\d{4}\.csv', idx)))[-18:]  # últimas 3 horas
+    pol = _bolivia(docs)
     out = []
     global INPE_DIAG
-    INPE_DIAG = {"archivos": nombres[-2:], "filas": 0, "paises": {}}
+    INPE_DIAG = {"archivos": nombres[-2:], "filas": 0, "en_caja": 0, "poligono": pol is not None}
+    try:
+        from shapely.geometry import Point
+    except Exception:
+        Point = None
     for n in nombres:
         txt = _get(base + n).decode("utf-8", "ignore")
-        for r in csv.DictReader(io.StringIO(txt)):
+        rd = csv.DictReader(io.StringIO(txt))
+        if "columnas" not in INPE_DIAG:
+            INPE_DIAG["columnas"] = rd.fieldnames
+        for r in rd:
             INPE_DIAG["filas"] += 1
-            pz = (r.get("pais") or "?")
-            INPE_DIAG["paises"][pz] = INPE_DIAG["paises"].get(pz, 0) + 1
             try:
-                la, lo = float(r.get("lat")), float(r.get("lon"))
+                la, lo = float(r.get("lat") or r.get("latitude")), float(r.get("lon") or r.get("longitude"))
             except Exception:
                 continue
-            if LAT0 <= la <= LAT1 and LON0 <= lo <= LON1 and "bol" in (r.get("pais") or "").lower():
-                out.append({"lat": la, "lon": lo, "hora_gmt": r.get("data_hora_gmt"), "satelite": r.get("satelite"), "municipio": r.get("municipio"), "departamento": r.get("estado"), "frp": r.get("frp")})
+            if not (LAT0 <= la <= LAT1 and LON0 <= lo <= LON1):
+                continue
+            INPE_DIAG["en_caja"] += 1
+            if pol is not None and Point is not None and not pol.contains(Point(lo, la)):
+                continue
+            out.append({"lat": la, "lon": lo, "hora_gmt": r.get("data_hora_gmt") or r.get("datahora") or r.get("data"), "satelite": r.get("satelite"), "frp": r.get("frp")})
     return out
 
 
@@ -82,14 +102,17 @@ def _rss(url, max_n=40):
 
 FUENTES = [
     ("EMSC — sismos en tiempo casi real (Europa-Mediterráneo, global)", emsc),
-    ("INPE Queimadas — focos de calor cada 10 min (Brasil)", inpe_10min),
-    ("GDELT — prensa mundial sobre Bolivia (24 h)", gdelt),
+    ("INPE Queimadas — focos de calor cada 10 min (Brasil)", lambda: inpe_10min(os.path.join(DOCS_DIR[0]))),
     ("ECDC — informe semanal de amenazas de enfermedades transmisibles", lambda: _rss("https://www.ecdc.europa.eu/en/taxonomy/term/1505/feed")),
     ("ECDC — actualizaciones epidemiológicas", lambda: _rss("https://www.ecdc.europa.eu/en/taxonomy/term/1310/feed")),
 ]
 
 
+DOCS_DIR = ["docs"]
+
+
 def actualizar(docs, log=print):
+    DOCS_DIR[0] = docs
     res, datos = [], {}
     for nombre, fn in FUENTES:
         t0 = time.time()
@@ -100,7 +123,7 @@ def actualizar(docs, log=print):
         except Exception as e:
             res.append({"fuente": nombre, "estado": "error", "detalle": type(e).__name__ + " " + str(e)[:120], "registros": 0, "segundos": round(time.time() - t0, 1)})
     if INPE_DIAG:
-        res[1]["diagnostico"] = INPE_DIAG
+        [r for r in res if r["fuente"].startswith("INPE")][0]["diagnostico"] = INPE_DIAG
     salida = {"generado": int(time.time() * 1000), "modo": "observación: aún no se mezcla con los eventos oficiales", "estado": res, "datos": {k: v[:60] for k, v in datos.items()}}
     json.dump(salida, open(os.path.join(docs, "fuentes_nuevas.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     ok = sum(1 for r in res if r["estado"] == "ok")
