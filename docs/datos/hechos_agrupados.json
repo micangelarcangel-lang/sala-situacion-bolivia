@@ -40,6 +40,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMingFBVV95cUxNZ2NROGhzTjJyU09CcjY3YlUwQTkyRmp6cWVHZ3cxQlFDakd4MUx4S0VVRU9rbXJ5LVExdklmVll0N096RENMUE9ZZXpacUppaDBGZ3JvelZaQkdlVmpsZV9YbTdOcERWZUl3ZVRUNkdJS1NKejhDcUJuamxHb09uZzdlVjltcTA0UzBsbkpmajl3N19vWVZWX1k1Rzd6dw?oc=5 | https://news.google.com/rss/articles/CBMimwFBVV95cUxPNkFZNlFVYW9tRFB4OV9CWGtaUFo0endtVkxLcnRLVXNNU3VHNExUQ0ozMmJwajJyX3hpWldxQksxblZIaEpnQ2tQZGFsUHRJZGxyMXNYSFViaWVxamRUdlItdGZKeTIxTU4xZUE4N3IzdUZGb3QtcGUtdFZVX1N5Z2JHclcyUUUySDFjOEFBbE5FVFdkR19ZOGE5SQ?oc=5"
  },
  {
+  "hecho_id": "noticia:h3gkre",
+  "fecha_hora_local": "2026-10-31 06:53",
+  "ts_ms": 1793444017000,
+  "titulo": "Derrumbes interrumpen carretera en Vallegrande - El Diario - Bolivia",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Diario - Bolivia",
+  "lat": -18.738,
+  "lon": -63.973,
+  "lugar": "Vallegrande, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Vallegrande",
+  "enlaces": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNOU9lUFFPbkVQVlBOOVlQN21UakFNV0d0MlhlS0Q5NVVTOXM0RG1zSEZQMXhpRnhvWUxMRVVvMW53UkhEbTZ5Y1NyWk5PS2pTSDZqV0ljZ21HTDVsbkZya09MbDM3QXNyU3BzaVYzdkN5dTVXUnRCOEJ2YWFDdHZiS0o5SVA5anlUeTJTZWFUWkRvd1lQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:rn8ogu",
   "fecha_hora_local": "2026-10-30 20:20",
   "ts_ms": 1793406051000,

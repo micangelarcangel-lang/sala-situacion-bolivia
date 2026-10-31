@@ -1,12 +1,12 @@
 {
- "actualizado": "2026-10-31T19:33:58.635098Z",
+ "actualizado": "2026-10-31T20:29:07.368478Z",
  "dia": "2026-10-31",
  "complejos": [
   {
-   "n": 8,
-   "frp_mw": 343.3,
-   "lat": -16.471,
-   "lon": -61.548,
+   "n": 21,
+   "frp_mw": 532.1,
+   "lat": -16.472,
+   "lon": -61.544,
    "departamento": "Santa Cruz",
    "municipio": "San Miguel",
    "municipios": [
@@ -14,16 +14,178 @@
    ],
    "bbox": [
     -61.572,
-    -16.484,
-    -61.527,
-    -16.434
+    -16.543,
+    -61.516,
+    -16.43
    ],
    "id": "2026-10-31:1"
   },
   {
+   "n": 10,
+   "frp_mw": 411.6,
+   "lat": -16.331,
+   "lon": -61.158,
+   "departamento": "Santa Cruz",
+   "municipio": "San Ignacio",
+   "municipios": [
+    "San Ignacio"
+   ],
+   "bbox": [
+    -61.166,
+    -16.333,
+    -61.149,
+    -16.326
+   ],
+   "id": "2026-10-31:2"
+  },
+  {
+   "n": 12,
+   "frp_mw": 375.6,
+   "lat": -16.017,
+   "lon": -60.829,
+   "departamento": "Santa Cruz",
+   "municipio": "San Ignacio",
+   "municipios": [
+    "San Ignacio"
+   ],
+   "bbox": [
+    -60.88,
+    -16.062,
+    -60.82,
+    -16.003
+   ],
+   "id": "2026-10-31:3"
+  },
+  {
+   "n": 22,
+   "frp_mw": 251.5,
+   "lat": -12.989,
+   "lon": -66.799,
+   "departamento": "Beni",
+   "municipio": "Reyes",
+   "municipios": [
+    "Reyes"
+   ],
+   "bbox": [
+    -66.815,
+    -12.997,
+    -66.786,
+    -12.981
+   ],
+   "id": "2026-10-31:4"
+  },
+  {
+   "n": 11,
+   "frp_mw": 203.1,
+   "lat": -15.876,
+   "lon": -60.715,
+   "departamento": "Santa Cruz",
+   "municipio": "San Ignacio",
+   "municipios": [
+    "San Ignacio"
+   ],
+   "bbox": [
+    -60.724,
+    -15.888,
+    -60.707,
+    -15.868
+   ],
+   "id": "2026-10-31:5"
+  },
+  {
+   "n": 19,
+   "frp_mw": 79.9,
+   "lat": -12.907,
+   "lon": -67.841,
+   "departamento": "La Paz",
+   "municipio": "Ixiamas",
+   "municipios": [
+    "Ixiamas"
+   ],
+   "bbox": [
+    -67.864,
+    -12.92,
+    -67.827,
+    -12.895
+   ],
+   "id": "2026-10-31:6"
+  },
+  {
    "n": 8,
-   "frp_mw": 33.4,
-   "lat": -16.095,
+   "frp_mw": 70.3,
+   "lat": -11.747,
+   "lon": -66.265,
+   "departamento": "Beni",
+   "municipio": "Riberalta",
+   "municipios": [
+    "Riberalta"
+   ],
+   "bbox": [
+    -66.274,
+    -11.768,
+    -66.246,
+    -11.642
+   ],
+   "id": "2026-10-31:7"
+  },
+  {
+   "n": 11,
+   "frp_mw": 61.2,
+   "lat": -12.745,
+   "lon": -65.825,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.831,
+    -12.754,
+    -65.821,
+    -12.734
+   ],
+   "id": "2026-10-31:8"
+  },
+  {
+   "n": 8,
+   "frp_mw": 61.1,
+   "lat": -12.065,
+   "lon": -66.811,
+   "departamento": "Beni",
+   "municipio": "Reyes",
+   "municipios": [
+    "Reyes"
+   ],
+   "bbox": [
+    -66.818,
+    -12.111,
+    -66.803,
+    -12.043
+   ],
+   "id": "2026-10-31:9"
+  },
+  {
+   "n": 10,
+   "frp_mw": 55.3,
+   "lat": -12.926,
+   "lon": -65.311,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.317,
+    -12.94,
+    -65.306,
+    -12.921
+   ],
+   "id": "2026-10-31:10"
+  },
+  {
+   "n": 9,
+   "frp_mw": 41.7,
+   "lat": -16.096,
    "lon": -61.485,
    "departamento": "Santa Cruz",
    "municipio": "San Ignacio",
@@ -36,7 +198,25 @@
     -61.481,
     -16.092
    ],
-   "id": "2026-10-31:2"
+   "id": "2026-10-31:11"
+  },
+  {
+   "n": 11,
+   "frp_mw": 41.6,
+   "lat": -13.002,
+   "lon": -64.38,
+   "departamento": "Beni",
+   "municipio": "San Ramón",
+   "municipios": [
+    "San Ramón"
+   ],
+   "bbox": [
+    -64.383,
+    -13.012,
+    -64.376,
+    -12.99
+   ],
+   "id": "2026-10-31:12"
   },
   {
    "n": 14,
@@ -54,25 +234,7 @@
     -66.008,
     -12.87
    ],
-   "id": "2026-10-31:3"
-  },
-  {
-   "n": 11,
-   "frp_mw": 12.5,
-   "lat": -12.903,
-   "lon": -67.848,
-   "departamento": "La Paz",
-   "municipio": "Ixiamas",
-   "municipios": [
-    "Ixiamas"
-   ],
-   "bbox": [
-    -67.864,
-    -12.91,
-    -67.84,
-    -12.895
-   ],
-   "id": "2026-10-31:4"
+   "id": "2026-10-31:13"
   }
  ]
 }
