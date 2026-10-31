@@ -321,6 +321,12 @@ def main():
                 geo = geo or cargar_geo("geo.json")
                 _m = _tema.generar(q, DOCS, geo, meses=12, filtro_extranjero=es_extranjero, log=log)
                 avisar(f":mag: Informe por tema listo: {_m}. Ábralo en la página «Informe por tema» (tema.html?q={q.replace(' ', '+')}).")
+                try:
+                    import correo as _co
+                    _u = base_url() + "tema.html?q=" + q.replace(" ", "+")
+                    _co.enviar(f"Sala de Situación Bolivia · Informe por tema: {q}", f'<div style="font-family:Arial;max-width:600px"><h2 style="color:#0b3b6e">Informe por tema: {q}</h2><p>{_m}</p><p><a href="{_u}" style="background:#1d6fb8;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700">Abrir el informe con gráficos</a></p><p style="font-size:12px;color:#7a8aa3">Información preliminar de prensa y fuentes oficiales.</p></div>', f"Informe por tema: {q}\n{_m}\n{_u}", log=log)
+                except Exception as _ex2:
+                    log(f"Correo del informe por tema falló: {type(_ex2).__name__}")
             except Exception as _ex:
                 log(f"Informe por tema falló: {type(_ex).__name__} {str(_ex)[:150]}")
         import informe_sismo as _isis
