@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1grxtb9",
+  "fecha_hora_local": "2026-10-31 06:54",
+  "ts_ms": 1793444059000,
+  "titulo": "Pasorapa recibe asistencia para paliar aguda sequía - El Diario - Bolivia",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "El Diario - Bolivia",
+  "lat": -18.38,
+  "lon": -64.649,
+  "lugar": "Pasorapa, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Pasorapa",
+  "enlaces": "https://news.google.com/rss/articles/CBMingFBVV95cUxNZ2NROGhzTjJyU09CcjY3YlUwQTkyRmp6cWVHZ3cxQlFDakd4MUx4S0VVRU9rbXJ5LVExdklmVll0N096RENMUE9ZZXpacUppaDBGZ3JvelZaQkdlVmpsZV9YbTdOcERWZUl3ZVRUNkdJS1NKejhDcUJuamxHb09uZzdlVjltcTA0UzBsbkpmajl3N19vWVZWX1k1Rzd6dw?oc=5 | https://news.google.com/rss/articles/CBMimwFBVV95cUxPNkFZNlFVYW9tRFB4OV9CWGtaUFo0endtVkxLcnRLVXNNU3VHNExUQ0ozMmJwajJyX3hpWldxQksxblZIaEpnQ2tQZGFsUHRJZGxyMXNYSFViaWVxamRUdlItdGZKeTIxTU4xZUE4N3IzdUZGb3QtcGUtdFZVX1N5Z2JHclcyUUUySDFjOEFBbE5FVFdkR19ZOGE5SQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:rn8ogu",
   "fecha_hora_local": "2026-10-30 20:20",
   "ts_ms": 1793406051000,
@@ -118,26 +138,6 @@
   "departamento": "Santa Cruz",
   "municipio": "El Torno",
   "enlaces": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNVUNXX2lXczUzYlcwWno5UzZ4azk2S0hfLVMtaUw0NkphSVFIU0kyZHYxdzEyTzJFb0FxeXdVVXFuSnhNYWY5U1hrcElSTG1PSXJIREJqQ2ZCVXlZQWliUEJKOW9jZkpId20wVno0UHUyR2RSa1ZoS0phVkJpYW9aWmdYTTgydjJIdzdxc3U3dDdoM2hsXzdueTZaSmJZX1NTMU0yR0V3YUlSOHZtWGNNQnNyY2dmZ2lNSVJj?oc=5"
- },
- {
-  "hecho_id": "noticia:1dvzsah",
-  "fecha_hora_local": "2026-10-30 13:48",
-  "ts_ms": 1793382486000,
-  "titulo": "Pasorapa recibe asistencia para paliar aguda sequía - El Diario - Bolivia",
-  "tipo_amenaza": "climatológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "El Diario - Bolivia",
-  "lat": -18.38,
-  "lon": -64.649,
-  "lugar": "Pasorapa, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Pasorapa",
-  "enlaces": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPNkFZNlFVYW9tRFB4OV9CWGtaUFo0endtVkxLcnRLVXNNU3VHNExUQ0ozMmJwajJyX3hpWldxQksxblZIaEpnQ2tQZGFsUHRJZGxyMXNYSFViaWVxamRUdlItdGZKeTIxTU4xZUE4N3IzdUZGb3QtcGUtdFZVX1N5Z2JHclcyUUUySDFjOEFBbE5FVFdkR19ZOGE5SQ?oc=5"
  },
  {
   "hecho_id": "noticia:j6590q",
