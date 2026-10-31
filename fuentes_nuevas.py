@@ -31,14 +31,22 @@ def emsc():
     return out
 
 
+INPE_DIAG = None
+
+
 def inpe_10min():
     base = "https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/10min/"
     idx = _get(base).decode("utf-8", "ignore")
     nombres = sorted(set(re.findall(r'focos_10min_\d{8}_\d{4}\.csv', idx)))[-6:]  # última hora
     out = []
+    global INPE_DIAG
+    INPE_DIAG = {"archivos": nombres[-2:], "filas": 0, "paises": {}}
     for n in nombres:
         txt = _get(base + n).decode("utf-8", "ignore")
         for r in csv.DictReader(io.StringIO(txt)):
+            INPE_DIAG["filas"] += 1
+            pz = (r.get("pais") or "?")
+            INPE_DIAG["paises"][pz] = INPE_DIAG["paises"].get(pz, 0) + 1
             try:
                 la, lo = float(r.get("lat")), float(r.get("lon"))
             except Exception:
@@ -50,7 +58,17 @@ def inpe_10min():
 
 def gdelt(consulta='Bolivia (accidente OR incendio OR inundación OR sismo OR brote OR derrumbe OR bloqueo) sourcelang:spanish', horas=24):
     u = "https://api.gdeltproject.org/api/v2/doc/doc?" + urllib.parse.urlencode({"query": consulta, "mode": "artlist", "format": "json", "maxrecords": 100, "timespan": f"{horas}h", "sort": "datedesc"})
-    j = json.loads(_get(u))
+    j = None
+    for espera in (0, 8, 20):
+        time.sleep(espera)
+        try:
+            j = json.loads(_get(u, 40)); break
+        except Exception as e:
+            if "429" not in str(e) and espera:
+                raise
+            err = e
+    if j is None:
+        raise err
     return [{"titulo": a.get("title"), "url": a.get("url"), "fecha": a.get("seendate"), "dominio": a.get("domain"), "pais_fuente": a.get("sourcecountry"), "idioma": a.get("language")} for a in j.get("articles", [])]
 
 
@@ -66,8 +84,8 @@ FUENTES = [
     ("EMSC — sismos en tiempo casi real (Europa-Mediterráneo, global)", emsc),
     ("INPE Queimadas — focos de calor cada 10 min (Brasil)", inpe_10min),
     ("GDELT — prensa mundial sobre Bolivia (24 h)", gdelt),
-    ("ReliefWeb (ONU/OCHA) — alertas humanitarias sobre Bolivia", lambda: _rss("https://reliefweb.int/updates/rss.xml?search=Bolivia")),
-    ("ProMED — brotes y alertas epidemiológicas", lambda: _rss("https://promedmail.org/feed/")),
+    ("ECDC — informe semanal de amenazas de enfermedades transmisibles", lambda: _rss("https://www.ecdc.europa.eu/en/taxonomy/term/1505/feed")),
+    ("ECDC — actualizaciones epidemiológicas", lambda: _rss("https://www.ecdc.europa.eu/en/taxonomy/term/1310/feed")),
 ]
 
 
@@ -81,6 +99,8 @@ def actualizar(docs, log=print):
             res.append({"fuente": nombre, "estado": "ok", "registros": len(d), "segundos": round(time.time() - t0, 1)})
         except Exception as e:
             res.append({"fuente": nombre, "estado": "error", "detalle": type(e).__name__ + " " + str(e)[:120], "registros": 0, "segundos": round(time.time() - t0, 1)})
+    if INPE_DIAG:
+        res[1]["diagnostico"] = INPE_DIAG
     salida = {"generado": int(time.time() * 1000), "modo": "observación: aún no se mezcla con los eventos oficiales", "estado": res, "datos": {k: v[:60] for k, v in datos.items()}}
     json.dump(salida, open(os.path.join(docs, "fuentes_nuevas.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     ok = sum(1 for r in res if r["estado"] == "ok")
