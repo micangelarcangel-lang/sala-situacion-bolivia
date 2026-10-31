@@ -5,7 +5,7 @@
     ["sal", "Salud", "virus", "Eventos biológicos: brotes, epidemias, boletín del Ministerio de Salud y alertas OPS/OMS"], ["tra", "Tránsito", "car", "Accidentes detectados en la prensa, con nivel de confianza por número de medios"],
     ["inc", "Incendios", "fire", "Focos de calor por satélite (NASA FIRMS) y complejos de incendio"], ["seq", "Sequías", "sun", "Índice de sequía SPI por departamento"], ["rio", "Ríos", "water", "Caudales de ríos y riesgo de crecida (modelo GloFAS)"],
     ["ev", "Eventos", "list", "Tabla de todos los eventos con filtros por tipo, departamento y municipio; descarga en CSV/Excel/JSON"], ["rep", "Reportes PDF", "doc", "Alertas, reportes diarios, semanales y por solicitud en PDF"], ["dat", "Datos", "db", "Descargar la base de datos completa (CSV, Excel, JSON, GeoJSON)"]];
-  X.header("index.html", TABS);
+  X.header("index.html", TABS.filter(function (t) { return ["res", "map", "ev", "rep", "dat"].indexOf(t[0]) >= 0; }));
   var wrap = document.querySelector(".wrap"), IC = {INFO: "info", ALERT: "shield", PULSE: "pulse", MAP: "map", LIST: "list", FIRE: "fire", SUN: "sun", WATER: "water", DL: "dl", DOC: "doc"};
   wrap.innerHTML = wrap.innerHTML.replace(/__I_(\w+)__/g, function (_, k) { return X.ic(IC[k]); });
   function $(id) { return document.getElementById(id); }
