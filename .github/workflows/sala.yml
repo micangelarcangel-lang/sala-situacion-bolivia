@@ -38,6 +38,9 @@ jobs:
           DATOS_URL: ${{ secrets.DATOS_URL }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           FIRMS_KEY: ${{ secrets.FIRMS_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
           MODO: ${{ github.event.inputs.modo }}
           HORAS: ${{ github.event.inputs.horas }}
           BUSCAR: ${{ github.event.inputs.buscar }}
