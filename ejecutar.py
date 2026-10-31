@@ -187,6 +187,31 @@ def por_hecho(evs):
     return sorted(filas, key=lambda e: -e["ts"])
 
 
+def _correo_reporte(n, t, evs, ahora_ms, horas_env):
+    """Envía por correo los reportes periódicos y los pedidos (no las alertas inmediatas, que van por Slack)."""
+    import correo, reporte_pdf as rp, re as _re
+    if not correo.configurado() or n.startswith("alerta_"):
+        return
+    horas = 24 * 31 if n.startswith("mensual_") else 168 if n.startswith("semanal_") else 24 if n.startswith("diario_") else int(horas_env or 24)
+    ven = [dict(e) for e in evs if e["ts"] >= ahora_ms - horas * 3600000 and not (e["tipo"] == "sin clasificar" and e["nivel"] == 0)]
+    grupos = rp.agrupar_hechos(ven)
+    grupos.sort(key=lambda g: (-(g.get("nivel") or 0), -((g.get("fall") or 0) + (g.get("her") or 0)), -g["ts"]))
+    fall = sum(g.get("fall") or 0 for g in grupos); her = sum(g.get("her") or 0 for g in grupos)
+    resumen = [("Hechos", len(grupos)), ("Nivel naranja/rojo", sum(1 for g in grupos if (g.get("nivel") or 0) >= 2)), ("Fallecidos*", fall), ("Heridos*", her)]
+    top = [(g["titulo"][:120], f"{g.get('tipo','')} · {g.get('lugar') or 'Bolivia'}" + (f" · {g.get('fall') or 0} fallecido(s), {g.get('her') or 0} herido(s)" if (g.get('fall') or g.get('her')) else "")) for g in [x for x in grupos if 'pronosticadas' not in x['titulo']][:8]]
+    limpio = _re.sub(r":[a-z_]+:|<!channel>|\*", "", t).strip()
+    nombre = {"diario": "Reporte diario", "semanal": "Reporte semanal", "mensual": "Reporte mensual"}.get(n.split("_")[0], limpio[:80])
+    pdf_url = base_url() + "reportes/" + n
+    html_c = correo.cuerpo_html(nombre, resumen, top, pdf_url, base_url())
+    plano = f"{nombre}\n\n" + "\n".join(f"- {a}: {b}" for a, b in resumen) + "\n\n" + "\n".join(f"* {a} ({b})" for a, b in top) + f"\n\nPDF: {pdf_url}\nTablero: {base_url()}"
+    correo.enviar(f"Sala de Situación Bolivia · {nombre} · {datetime_hoy()}", html_c, plano, [os.path.join(REP, n)], log=log)
+
+
+def datetime_hoy():
+    import datetime as _d
+    return (_d.datetime.utcnow() - _d.timedelta(hours=4)).strftime("%d/%m/%Y")
+
+
 def main():
     os.makedirs(REP, exist_ok=True)
     ahora_ms = int(time.time() * 1000)
@@ -420,6 +445,10 @@ def main():
     indice_reportes()
     for n, t in hechos:
         avisar(f"{t}\n{base_url()}reportes/{n}")
+        try:
+            _correo_reporte(n, t, evs, ahora_ms, os.environ.get("HORAS"))
+        except Exception as _ex:
+            log(f"Correo del reporte {n} falló: {type(_ex).__name__} {str(_ex)[:100]}")
     log("Listo. Reportes nuevos: " + (", ".join(n for n, _ in hechos) or "ninguno"))
 
 
