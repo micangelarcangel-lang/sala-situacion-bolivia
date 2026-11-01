@@ -3,14 +3,14 @@
 cuáles funcionan. Aún no se mezclan con los eventos oficiales: primero se verifica cada una con internet real.
 Fuentes: EMSC (sismos en tiempo casi real), INPE Queimadas (focos cada 10 min), GDELT (prensa mundial sobre Bolivia),
 ReliefWeb (alertas humanitarias), ProMED (brotes). Cada una falla de forma independiente."""
-import re, io, os, csv, json, time, ssl, gzip, urllib.request, urllib.parse, xml.etree.ElementTree as ET, datetime as dt
+import re, io, os, csv, json, time, ssl, gzip, urllib.error, urllib.request, urllib.parse, xml.etree.ElementTree as ET, datetime as dt
 
 UA = "Mozilla/5.0 (SalaSituacionBolivia/3.1)"
 LAT0, LAT1, LON0, LON1 = -23.2, -9.3, -70.0, -57.3  # caja de Bolivia
 
 
-def _get(url, t=40):
-    for i in range(2):
+def _get(url, t=40, n=2):
+    for i in range(n):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=t, context=ssl.create_default_context()) as r:
                 b = r.read()
@@ -92,8 +92,8 @@ def gdelt(consulta='Bolivia (accidente OR incendio OR inundación OR sismo OR br
     return [{"titulo": a.get("title"), "url": a.get("url"), "fecha": a.get("seendate"), "dominio": a.get("domain"), "pais_fuente": a.get("sourcecountry"), "idioma": a.get("language")} for a in j.get("articles", [])]
 
 
-def _rss(url, max_n=40):
-    raiz = ET.fromstring(_get(url))
+def _rss(url, max_n=40, t=40, n=2):
+    raiz = ET.fromstring(_get(url, t, n))
     out = []
     for it in list(raiz.iter("item"))[:max_n]:
         out.append({"titulo": (it.findtext("title") or "").strip(), "url": (it.findtext("link") or "").strip(), "fecha": (it.findtext("pubDate") or "").strip(), "resumen": re.sub(r"<[^>]+>", "", it.findtext("description") or "")[:300]})
@@ -106,6 +106,69 @@ FUENTES = [
     ("ECDC — informe semanal de amenazas de enfermedades transmisibles", lambda: _rss("https://www.ecdc.europa.eu/en/taxonomy/term/1505/feed")),
     ("ECDC — actualizaciones epidemiológicas", lambda: _rss("https://www.ecdc.europa.eu/en/taxonomy/term/1310/feed")),
 ]
+
+
+# ---------------------------------------------------------------- PRENSA Y ENTIDADES OFICIALES (prueba de alcance con internet real)
+MEDIOS_RSS = {
+    "El Deber": "https://eldeber.com.bo", "Los Tiempos": "https://www.lostiempos.com", "Opinión": "https://www.opinion.com.bo", "Unitel": "https://unitel.bo",
+    "Erbol": "https://www.erbol.com.bo", "Correo del Sur": "https://correodelsur.com", "La Patria": "https://lapatria.bo", "Eju.tv": "https://eju.tv",
+    "El Potosí": "https://elpotosi.net", "Brújula Digital": "https://www.brujuladigital.net", "Fides": "https://noticiasfides.com", "Ahora El Pueblo": "https://ahoraelpueblo.bo",
+    "La Razón": "https://www.la-razon.com", "El Día": "https://eldia.com.bo", "Visión 360": "https://www.vision360.bo", "Oxígeno": "https://oxigeno.bo",
+    "ABI (agencia estatal)": "https://abi.bo", "ATB": "https://www.atb.com.bo", "Red Uno": "https://www.reduno.com.bo", "Bolivia Verifica": "https://boliviaverifica.bo",
+    "Página Siete": "https://www.paginasiete.bo", "Cambio": "https://www.cambio.bo", "El Alteño": "https://www.elalteno.com.bo", "Radio Fides": "https://www.radiofides.com",
+}
+RUTAS_RSS = ["/feed", "/feed/", "/rss", "/rss.xml", "/rss/", "/feed.xml", "/?feed=rss2", "/index.php/feed"]
+OFICIALES = {
+    "ABC — Administradora Boliviana de Carreteras": "https://www.abc.gob.bo", "ABT — Autoridad de Bosques y Tierra": "https://www.abt.gob.bo",
+    "Viceministerio de Defensa Civil": "https://www.defensacivil.gob.bo", "SENASAG": "https://www.senasag.gob.bo", "Ministerio de Salud y Deportes": "https://www.minsalud.gob.bo",
+    "SENAMHI": "https://www.senamhi.gob.bo", "Policía Boliviana": "https://www.policia.bo", "Ministerio de Defensa": "https://www.mindefensa.gob.bo",
+}
+PALABRAS_PELIGRO = re.compile(r"accident|choque|colisi|vuelc|embarranc|incendio|inundaci|riada|desborde|granizada|helada|sequ[ií]a|sismo|temblor|deslizamiento|derrumbe|mazamorra|"
+                              r"bloqueo|explosi[oó]n|derrame|fuga|brote|dengue|sarampi[oó]n|fiebre|emergencia|desastre|damnificad|fallec|muert|herid|rescat|cadáver|cuerpo", re.I)
+
+
+def _rss_medio(nombre, base):
+    intentos = []
+    for r in RUTAS_RSS:
+        try:
+            items = _rss(base + r, max_n=60, t=12, n=1)
+        except Exception as e:
+            intentos.append(f"{r}:{type(e).__name__}:{str(e)[:30]}")
+            if not isinstance(e, (urllib.error.HTTPError, ET.ParseError)):
+                break          # sitio inaccesible desde GitHub: no probar más rutas
+            continue
+        if items:
+            rel = [i for i in items if PALABRAS_PELIGRO.search(i["titulo"] + " " + i["resumen"])]
+            for i in items:
+                i["ruta"] = r; i["medio"] = nombre; i["relevante"] = bool(PALABRAS_PELIGRO.search(i["titulo"] + " " + i["resumen"]))
+            return items
+        intentos.append(f"{r}:vacío")
+    raise RuntimeError("sin RSS: " + ",".join(intentos[:6]))
+
+
+def _pagina_oficial(nombre, base):
+    html = _get(base, 15, 1).decode("utf-8", "ignore")
+    t = re.search(r"<title[^>]*>(.*?)</title>", html, re.S | re.I)
+    enl = re.findall(r'<a[^>]+href="([^"]+)"[^>]*>([^<]{25,140})</a>', html)
+    if not enl:
+        raise RuntimeError("página sin titulares legibles (" + str(len(html)) + " bytes)")
+    return [{"titulo": re.sub(r"\s+", " ", x).strip(), "url": u if u.startswith("http") else base.rstrip("/") + "/" + u.lstrip("/"), "medio": nombre, "relevante": bool(PALABRAS_PELIGRO.search(x))} for u, x in enl[:40]]
+
+
+def _lote_prensa():
+    """Prueba en paralelo todos los medios y entidades. Devuelve (estado por fuente, titulares)."""
+    from concurrent.futures import ThreadPoolExecutor
+    tareas = [(n, lambda n=n, b=b: _rss_medio(n, b)) for n, b in MEDIOS_RSS.items()] + [(n, lambda n=n, b=b: _pagina_oficial(n, b)) for n, b in OFICIALES.items()]
+
+    def uno(t):
+        n, f = t; t0 = time.time()
+        try:
+            d = f()
+            return {"fuente": "Prensa/oficial — " + n, "estado": "ok", "registros": len(d), "relevantes": sum(1 for x in d if x.get("relevante")), "ruta": d[0].get("ruta", "página"), "segundos": round(time.time() - t0, 1)}, d
+        except Exception as e:
+            return {"fuente": "Prensa/oficial — " + n, "estado": "error", "detalle": (type(e).__name__ + " " + str(e))[:160], "registros": 0, "segundos": round(time.time() - t0, 1)}, []
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        return list(ex.map(uno, tareas))
 
 
 DOCS_DIR = ["docs"]
@@ -122,6 +185,13 @@ def actualizar(docs, log=print):
             res.append({"fuente": nombre, "estado": "ok", "registros": len(d), "segundos": round(time.time() - t0, 1)})
         except Exception as e:
             res.append({"fuente": nombre, "estado": "error", "detalle": type(e).__name__ + " " + str(e)[:120], "registros": 0, "segundos": round(time.time() - t0, 1)})
+    try:
+        for est, d in _lote_prensa():
+            res.append(est)
+            if d:
+                datos[est["fuente"]] = [x for x in d if x.get("relevante")][:25] or d[:5]
+    except Exception as e:
+        res.append({"fuente": "Prensa/oficial — lote", "estado": "error", "detalle": type(e).__name__ + " " + str(e)[:120], "registros": 0, "segundos": 0})
     if INPE_DIAG:
         [r for r in res if r["fuente"].startswith("INPE")][0]["diagnostico"] = INPE_DIAG
     salida = {"generado": int(time.time() * 1000), "modo": "observación: aún no se mezcla con los eventos oficiales", "estado": res, "datos": {k: v[:60] for k, v in datos.items()}}
