@@ -85,6 +85,9 @@ def _medios_directos(docs, geo, horas=96):
             out.append({"id": "noticia:rss:" + hashlib.md5(x["url"].encode()).hexdigest()[:12], "ts": ts, "fuente": x["medio"], "tipo": busqueda.tipo_por_texto(t + " " + (x.get("resumen") or "")),
                         "nivel": 3 if (f >= 10 or h >= 30) else 2 if (f >= 3 or h >= 10) else 1, "titulo": t, "detalle": (x.get("resumen") or "")[:300], "url": x["url"], "fall": f, "her": h,
                         "lat": lat, "lon": lon, "lugar": lugar, "metodo": metodo})
+    for x in (_j(os.path.join(docs, "prensa_medios.json"), {}).get("eventos") or []):
+        if x.get("ts", 0) >= lim:
+            out.append(x)
     return out
 
 
@@ -353,6 +356,96 @@ FAM = {"eonet": "Internacional", "prensa": "Prensa", "senamhi": "Oficial naciona
        "usgs": "Internacional", "modelo": "Modelo", "sequia": "Modelo", "caudal": "Modelo"}
 
 
+# ---------------------------------------------------------------- triangulación con modelo de lenguaje (embeddings multilingües)
+UMBRAL_EMB = 0.80
+_EMB = {}
+
+
+def _embed(textos, espera_s=150):
+    """Vectores normalizados con un modelo multilingüe pequeño (fastembed/ONNX, sin GPU). Devuelve None si no está disponible
+    (sin internet para descargar el modelo, librería no instalada o demora): entonces se usa solo la fusión por reglas."""
+    import threading
+    res = {}
+
+    def trabajo():
+        try:
+            import numpy as np
+            from fastembed import TextEmbedding
+            if "m" not in _EMB:
+                _EMB["m"] = TextEmbedding("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+            v = np.array(list(_EMB["m"].embed(textos)), dtype="float32")
+            v /= (np.linalg.norm(v, axis=1, keepdims=True) + 1e-9)
+            res["v"] = v
+        except Exception as e:
+            res["err"] = type(e).__name__ + " " + str(e)[:80]
+    t = threading.Thread(target=trabajo, daemon=True)
+    t.start(); t.join(espera_s)
+    return res.get("v"), res.get("err", "sin respuesta a tiempo" if "v" not in res else "")
+
+
+def fusion_embeddings(evs, docs=None, log=print):
+    """Segunda pasada de triangulación: une notas de prensa del MISMO hecho aunque el titular use otras palabras.
+    Condiciones (todas): similitud semántica ≥ UMBRAL_EMB, ≤48 h, departamento compatible, y al menos un indicio concreto en común
+    (una palabra específica larga, un nombre propio o la misma cifra de víctimas). Cada unión queda en docs/triangulacion_log.json para auditarla."""
+    try:
+        import transito as T
+    except Exception:
+        return evs
+    prensa = [e for e in evs if e["origen"] == "prensa"]
+    if len(prensa) < 2:
+        return evs
+    V, err = _embed([re.sub(r"\s+", " ", (e["titulo"] + ". " + (e.get("detalle") or ""))[:300]) for e in prensa])
+    if V is None:
+        log("Triangulación por modelo de lenguaje no disponible (" + err + "); se usan solo las reglas.")
+        return evs
+    import numpy as np
+    S_ = V @ V.T
+    absorbido, union, log_u = {}, [], []
+    orden = sorted(range(len(prensa)), key=lambda i: prensa[i]["ts"])
+    for ia in range(len(orden)):
+        i = orden[ia]
+        if i in absorbido:
+            continue
+        a = prensa[i]
+        for ib in range(ia + 1, len(orden)):
+            j = orden[ib]
+            if j in absorbido:
+                continue
+            b = prensa[j]
+            if abs(a["ts"] - b["ts"]) > 48 * 3600000 or S_[i, j] < UMBRAL_EMB:
+                continue
+            da, db = set(a["departamentos"] or []), set(b["departamentos"] or [])
+            if da and db and not (da & db):
+                continue
+            ta, tb = T._toks(a["titulo"]) - T._GEN, T._toks(b["titulo"]) - T._GEN
+            esp = {w for w in (ta & tb) if len(w) >= 5 and w not in _DEPN}
+            ea, eb = T._ents(a["titulo"]), T._ents(b["titulo"])
+            ent = {w for w in (ea & eb) if w not in _DEPN}
+            fa, fb = a["cifras"], b["cifras"]
+            mismas = (fa.get("fallecidos", 0) > 0 and fa.get("fallecidos") == fb.get("fallecidos")) or (fa.get("heridos", 0) > 0 and fa.get("heridos") == fb.get("heridos"))
+            if not (esp or ent or mismas):
+                continue
+            if ea and eb and not (ea & eb) and S_[i, j] < 0.9:
+                continue    # nombres propios distintos: probablemente hechos distintos
+            absorbido[j] = i
+            a["medios"] = sorted(set(a.get("medios", [])) | set(b.get("medios", [])))
+            a["cifras"]["fallecidos"] = max(fa.get("fallecidos", 0), fb.get("fallecidos", 0)); a["cifras"]["heridos"] = max(fa.get("heridos", 0), fb.get("heridos", 0))
+            a["alias"] = sorted(set(a.get("alias", [])) | {b["id"]} | set(b.get("alias", [])))
+            a["cifras"]["notas"] = 1 + len(a["alias"])
+            a["ts_ult"] = max(a.get("ts_ult", a["ts"]), b.get("ts_ult", b["ts"]))
+            a["lat"] = a["lat"] if a["lat"] is not None else b["lat"]; a["lon"] = a["lon"] if a["lon"] is not None else b["lon"]
+            if not a["departamentos"]:
+                a["departamentos"] = b.get("departamentos") or []
+            log_u.append({"similitud": round(float(S_[i, j]), 3), "a": a["titulo"][:110], "b": b["titulo"][:110], "indicio": sorted(esp | ent)[:4] or "misma cifra de víctimas"})
+    if docs:
+        try:
+            json.dump({"generado": int(time.time() * 1000), "umbral": UMBRAL_EMB, "uniones": log_u[:200]}, open(os.path.join(docs, "triangulacion_log.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        except Exception:
+            pass
+    log(f"Triangulación por modelo de lenguaje: {len(log_u)} notas unidas a un hecho existente")
+    return [e for k, e in enumerate(evs) if not (e["origen"] == "prensa" and prensa.index(e) in absorbido)]
+
+
 def _puntaje_ev(fam, medios):
     """Credibilidad combinada 0–100 (criterio editorial del sistema): oficial .95 · satélite .85 · internacional .8 · modelo .5 · cada medio de prensa según su peso."""
     w = {"Oficial nacional": .95, "Satélite": .85, "Internacional": .8, "Modelo": .5}
@@ -465,6 +558,10 @@ def actualizar(docs, geo=None, retener_dias=400):
     lim = int(time.time() * 1000) - retener_dias * 86400000
     todos = sorted([e for e in previo.values() if e["ts"] >= lim], key=lambda e: -e["ts"])
     todos = sorted(fusion_semantica(todos), key=lambda e: -e["ts"])
+    try:
+        todos = sorted(fusion_embeddings(todos, docs), key=lambda e: -e["ts"])
+    except Exception as ex:
+        print("Triangulación por modelo de lenguaje falló (se conserva la de reglas): " + type(ex).__name__ + " " + str(ex)[:100])
     triangular(todos)
     json.dump({"generado": int(time.time() * 1000), "n": len(todos), "eventos": todos}, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     os.makedirs(os.path.join(docs, "datos"), exist_ok=True)

@@ -9,3 +9,5 @@ openpyxl
 pypdf
 numpy
 scipy
+
+fastembed

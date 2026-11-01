@@ -8,8 +8,10 @@ import os, re, json, time, hashlib, datetime as dt, urllib.request, urllib.parse
 import busqueda
 
 UA = busqueda.UA
-MEDIOS = ["eldeber.com.bo", "lostiempos.com", "opinion.com.bo", "brujuladigital.net", "unitel.bo", "redunitel.bo", "erbol.com.bo", "abi.bo", "correodelsur.com", "lapatria.bo",
-          "eju.tv", "noticiasfides.com", "ahoraelpueblo.bo", "elpotosi.net", "lostiempos.com", "larazon.bo", "eldia.com.bo", "radioactiva.bo", "visionbolivia.com", "oxigeno.bo"]
+MEDIOS = ["eldeber.com.bo", "lostiempos.com", "opinion.com.bo", "brujuladigital.net", "unitel.bo", "erbol.com.bo", "abi.bo", "correodelsur.com", "lapatria.bo",
+          "eju.tv", "noticiasfides.com", "ahoraelpueblo.bo", "elpotosi.net", "la-razon.com", "eldia.com.bo", "vision360.bo", "oxigeno.bo", "paginasiete.bo", "cambio.bo",
+          "atb.com.bo", "reduno.com.bo", "elalteno.com.bo", "radiopanamericana.com.bo", "fmbolivia.net", "boliviaverifica.bo", "eldiario.net", "ahoraelpueblo.bo", "el-mundo.com.bo"]
+AMENAZAS = "accidente OR choque OR vuelco OR incendio OR inundación OR riada OR granizada OR helada OR sismo OR deslizamiento OR derrumbe OR bloqueo OR explosión OR dengue OR brote OR sequía OR emergencia"
 CONSULTAS = ["accidente de tránsito", "choque vuelco carretera", "colisión bus camión"]
 
 
@@ -80,3 +82,20 @@ def eonet(docs):
                     "detalle": "Evento natural registrado por NASA EONET (curado a partir de datos satelitales y agencias). " + (e.get("description") or ""), "url": (e.get("sources") or [{}])[0].get("url") or e.get("link", "")})
     json.dump({"generado": int(time.time() * 1000), "eventos": out}, open(os.path.join(docs, "extra_eventos.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     return f"{len(out)} eventos abiertos en Bolivia (NASA EONET)"
+
+
+def prensa_amenazas(geo=None, horas=72):
+    """Google Noticias medio por medio con palabras de TODAS las amenazas (Ley 602): más medios por hecho = mejor triangulación."""
+    notas, vistos, ok, fallos = [], set(), 0, 0
+    for m in dict.fromkeys(MEDIOS):
+        ev, msg = busqueda.buscar_en_vivo(f"({AMENAZAS}) site:{m}", horas, geo=geo, max_items=30)
+        if msg.startswith("búsqueda en vivo no disponible"):
+            fallos += 1
+        else:
+            ok += 1
+        for e in ev:
+            k = busqueda.norm(re.sub(r" - [^-]+$", "", e["titulo"]))[:70] + "|" + e["fuente"]
+            if k not in vistos:
+                vistos.add(k); notas.append(e)
+        time.sleep(0.6)
+    return notas, f"{len(notas)} notas de amenazas en {ok} medios consultados ({fallos} fallidos)"

@@ -259,7 +259,7 @@ def main():
         open(os.path.join(DOCS, "estado_firms.txt"), "w", encoding="utf-8").write(str(_r) + "\n")
     except Exception:
         pass
-    reg("Fuentes adicionales (EMSC, INPE, GDELT, ReliefWeb, ProMED) — observación", "Varias (abiertas)", lambda: __import__("fuentes_nuevas").actualizar(DOCS))
+    reg("Fuentes adicionales (EMSC, INPE, ECDC, 24 medios por RSS, entidades oficiales)", "Varias (abiertas)", lambda: __import__("fuentes_nuevas").actualizar(DOCS))
     reg("Sequía: índice SPI (ERA5, método OMM)", "Open-Meteo / Copernicus ERA5", lambda: __import__("sequia").actualizar(DOCS))
     reg("Caudales de ríos (modelo GloFAS)", "Copernicus EMS / Open-Meteo", lambda: __import__("caudales").actualizar(DOCS))
 
@@ -275,6 +275,13 @@ def main():
             except Exception as ex_:
                 log("  · fuente adicional no disponible: " + type(ex_).__name__ + " " + str(ex_)[:80])
         extra = [e for e in extra if relevante(e)]
+        try:   # prensa medio por medio para TODAS las amenazas: alimenta la base unificada (más medios por hecho)
+            amen, m_ = fuentes_extra.prensa_amenazas(geo_t)
+            log("  · " + m_)
+            amen = [x for x in amen if relevante(x)]
+            json.dump({"generado": ahora_ms, "eventos": amen[:900]}, open(os.path.join(DOCS, "prensa_medios.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        except Exception as ex_:
+            log("  · prensa por medio no disponible: " + type(ex_).__name__ + " " + str(ex_)[:80])
         return transito.actualizar(DOCS, evs + extra, geo_t) + f" · {len(extra)} notas de medios adicionales"
 
     reg("Accidentes de tránsito (prensa por medio + GDELT)", "Medios bolivianos / GDELT", _transito)
