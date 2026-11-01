@@ -9,11 +9,11 @@ PORTALES = {
     "La Razón": "https://www.la-razon.com", "Opinión": "https://www.opinion.com.bo", "Los Tiempos": "https://www.lostiempos.com", "El Deber": "https://eldeber.com.bo",
     "Página Siete": "https://www.paginasiete.bo", "Visión 360": "https://www.vision360.bo", "Cambio": "https://www.cambio.bo", "Brújula Digital": "https://brujuladigital.net",
     "Eju.tv": "https://eju.tv", "Unitel": "https://unitel.bo", "Red Uno": "https://www.reduno.com.bo", "ATB": "https://www.atb.com.bo", "El Alteño": "https://elalteno.com.bo",
-    "Radio Panamericana": "https://www.radiopanamericana.com.bo", "Bolivia Verifica": "https://boliviaverifica.bo", "El Diario": "https://www.eldiario.net", "La Patria": "https://lapatriaenlinea.com",
+    "Radio Panamericana": "https://panamericana.bo", "Bolivia Verifica": "https://boliviaverifica.bo", "El Diario": "https://www.eldiario.net", "La Patria": "https://lapatriaenlinea.com",
     "Correo del Sur": "https://correodelsur.com", "El Día": "https://eldia.com.bo", "Erbol": "https://erbol.com.bo", "ABI": "https://abi.bo", "Bolivia.com": "https://www.bolivia.com",
     "Oxígeno": "https://oxigeno.bo", "Urgente.bo": "https://urgente.bo", "Infodeinteres": "https://infodeinteres.com",
     "SENAMHI": "https://www.senamhi.gob.bo", "Defensa Civil / VIDECI": "https://www.defensacivil.gob.bo", "Min. Defensa": "https://www.mindef.gob.bo", "ABC": "https://www.abc.gob.bo",
-    "Min. Salud": "https://www.minsalud.gob.bo", "SEDES La Paz": "https://sedeslapaz.gob.bo", "Gob. La Paz": "https://www.gobernacionlapaz.gob.bo", "SNGR": "https://www.sngr.gob.bo",
+    "Min. Salud": "https://www.minsalud.gob.bo", "SEDES La Paz": "https://sedeslapaz.gob.bo", "Gob. La Paz": "https://lapaz.gob.bo", "INE": "https://www.ine.gob.bo", "SNGR": "https://www.sngr.gob.bo",
 }
 PELIGRO = re.compile(r"accident|chocq|choc[oó]|vuelc|colisi|incendi|inunda|riada|granizad|helada|nevad|sism|temblor|deslizam|derrumb|bloque|explosi|dengue|brote|sequ[ií]a|emergencia|desastre|alerta|aviso|lluvia|tormenta|desborde|mazamorra|muert|fallec|herid|rescat|evacu|sarampi|fiebre|chikun|rabia|gripe|aviar|incendio forestal|quema", re.I)
 UA = {"User-Agent": "Mozilla/5.0 (compatible; SalaSituacionBolivia/1.0)", "Accept-Language": "es"}
@@ -61,7 +61,7 @@ def _tag(e):
 
 def _rss(base):
     out = []
-    for p in ("/feed", "/feed/", "/rss", "/rss.xml", "/feed.xml", "/?feed=rss2", "/index.php/feed", "/rss/portada", "/feeds/posts/default"):
+    for p in ("/rss/listado/", "/feed", "/feed/", "/rss", "/rss.xml", "/feed.xml", "/?feed=rss2", "/index.php/feed", "/rss/portada", "/feeds/posts/default"):
         try:
             x = _get(base + p)
             if "<item" not in x and "<entry" not in x:
@@ -128,16 +128,19 @@ def _sitemap(base):
 
 
 def _portada(base):
-    try:
-        x = _get(base + "/")
-        out = []
+    out = []
+    for p in ("/", "/noticias", "/prensa"):
+        try:
+            x = _get(base + p)
+        except Exception:
+            continue
         for m in re.finditer(r'<a[^>]+href="([^"#]+)"[^>]*>(.*?)</a>', x, re.S | re.I):
             h, t = m.group(1), re.sub(r"<[^>]+>|\s+", " ", m.group(2)).strip()
             if len(t) >= 35 and " " in t:
-                out.append((t, urllib.parse.urljoin(base + "/", h), 0))
-        return out[:150], "portada" if out else ""
-    except Exception:
-        return [], ""
+                out.append((t, urllib.parse.urljoin(base + p, h), 0))
+        if len(out) >= 20:
+            break
+    return out[:200], "portada" if out else ""
 
 
 
