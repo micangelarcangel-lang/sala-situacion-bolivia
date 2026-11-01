@@ -278,6 +278,12 @@ def main():
         try:   # prensa medio por medio para TODAS las amenazas: alimenta la base unificada (más medios por hecho)
             amen, m_ = fuentes_extra.prensa_amenazas(geo_t)
             log("  · " + m_)
+            try:
+                gd, mg = fuentes_extra.gdelt_bolivia(geo_t)
+                log("  · " + mg)
+                amen = amen + gd
+            except Exception as ex_:
+                log("  · GDELT no disponible: " + type(ex_).__name__ + " " + str(ex_)[:80])
             amen = [x for x in amen if relevante(x)]
             json.dump({"generado": ahora_ms, "eventos": amen[:900]}, open(os.path.join(DOCS, "prensa_medios.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
         except Exception as ex_:

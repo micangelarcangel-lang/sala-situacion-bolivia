@@ -357,7 +357,7 @@ FAM = {"eonet": "Internacional", "prensa": "Prensa", "senamhi": "Oficial naciona
 
 
 # ---------------------------------------------------------------- triangulación con modelo de lenguaje (embeddings multilingües)
-UMBRAL_EMB = 0.80
+UMBRAL_EMB = 0.75   # mismo umbral semántico que usa World Monitor (semanticClusterThreshold)
 _EMB = {}
 
 
@@ -422,10 +422,7 @@ def fusion_embeddings(evs, docs=None, log=print):
             ea, eb = T._ents(a["titulo"]), T._ents(b["titulo"])
             ent = {w for w in (ea & eb) if w not in _DEPN}
             fa, fb = a["cifras"], b["cifras"]
-            mismas = (fa.get("fallecidos", 0) > 0 and fa.get("fallecidos") == fb.get("fallecidos")) or (fa.get("heridos", 0) > 0 and fa.get("heridos") == fb.get("heridos"))
-            if not (esp or ent or mismas):
-                continue
-            if ea and eb and not (ea & eb) and S_[i, j] < 0.9:
+            if ea and eb and not (ea & eb) and S_[i, j] < 0.85:
                 continue    # nombres propios distintos: probablemente hechos distintos
             absorbido[j] = i
             a["medios"] = sorted(set(a.get("medios", [])) | set(b.get("medios", [])))

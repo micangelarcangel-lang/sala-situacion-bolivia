@@ -99,3 +99,41 @@ def prensa_amenazas(geo=None, horas=72):
                 vistos.add(k); notas.append(e)
         time.sleep(0.6)
     return notas, f"{len(notas)} notas de amenazas en {ok} medios consultados ({fallos} fallidos)"
+
+
+def gdelt_bolivia(geo=None, horas=72):
+    """GDELT (gratis, sin clave): notas de medios con sede en Bolivia, ya reunidas por GDELT. Complementa a Google Noticias."""
+    import hashlib, json, urllib.parse, urllib.request, datetime
+    import informe_hecho as ih
+    out, msgs = [], []
+    consultas = ["sourcecountry:BL sourcelang:spanish", "Bolivia sourcelang:spanish (accidente OR inundación OR incendio OR sismo OR bloqueo OR dengue OR granizada OR helada)"]
+    lim = int(time.time() * 1000) - horas * 3600000
+    vistos = set()
+    for q in consultas:
+        try:
+            url = "https://api.gdeltproject.org/api/v2/doc/doc?" + urllib.parse.urlencode({"query": q, "mode": "artlist", "format": "json", "maxrecords": 250, "timespan": f"{max(1, horas // 24)}d", "sort": "datedesc"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 SalaSituacionBolivia"})
+            d = json.loads(urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "replace"))
+            for a in d.get("articles", []):
+                titulo, link = (a.get("title") or "").strip(), a.get("url") or ""
+                if not titulo or not link or link in vistos:
+                    continue
+                vistos.add(link)
+                try:
+                    ts = int(datetime.datetime.strptime(a["seendate"], "%Y%m%dT%H%M%SZ").replace(tzinfo=datetime.timezone.utc).timestamp() * 1000)
+                except Exception:
+                    ts = int(time.time() * 1000)
+                if ts < lim:
+                    continue
+                fte = (a.get("domain") or "").replace("www.", "")
+                fa, he = ih.cifras(titulo)
+                nivel = 3 if (fa >= 10 or he >= 30) else 2 if (fa >= 3 or he >= 10) else 1
+                lat = lon = None; lugar, metodo = "", "sin ubicar"
+                if geo:
+                    lat, lon, lugar, metodo = busqueda.ubicar_por_nombre(geo, titulo)
+                out.append({"id": "noticia:vivo:" + hashlib.md5(link.encode()).hexdigest()[:12], "ts": ts, "fuente": fte or "GDELT", "tipo": busqueda.tipo_por_texto(titulo),
+                            "nivel": nivel, "titulo": titulo, "detalle": "", "url": link, "fall": fa, "her": he, "lat": lat, "lon": lon, "lugar": lugar, "metodo": metodo})
+            msgs.append("ok")
+        except Exception as e:
+            msgs.append(type(e).__name__ + " " + str(e)[:60])
+    return out, f"GDELT: {len(out)} notas ({'; '.join(msgs)})"
