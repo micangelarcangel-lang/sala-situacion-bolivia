@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe técnico de hecho — Sala de Situación Bolivia</title>
+<script src="lib.js"></script><script src="s2.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e9edf3;color:#1c2430;font:14px/1.5 Inter,system-ui,Segoe UI,Arial,sans-serif}
+.bar{position:sticky;top:0;z-index:5;background:#0f3d6e;color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.bar b{flex:1;min-width:200px}
+.btn{background:#fff;color:#0f3d6e;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;text-decoration:none;font-size:13px}.btn.p{background:#f5b700;color:#1c2430}
+.hoja{max-width:820px;margin:18px auto;background:#fff;padding:26px 34px 30px;box-shadow:0 2px 14px rgba(15,61,110,.18)}
+.cab{display:flex;justify-content:space-between;border-bottom:3px solid #0f3d6e;padding-bottom:8px;margin-bottom:12px;font-size:12px;color:#5c6675}.cab b{color:#0f3d6e;font-size:13px}
+.tri{height:4px;background:linear-gradient(90deg,#d7263d 33%,#f5b700 33% 66%,#2e9e5b 66%);margin:-12px 0 14px}
+h1{font-size:22px;line-height:1.25;margin:6px 0 4px;color:#0f1b2d}h2{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:#0f3d6e;border-bottom:1px solid #c9cfd8;padding-bottom:3px;margin:20px 0 8px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin:4px 0}th,td{border:1px solid #d3d8df;padding:5px 8px;text-align:left;vertical-align:top}th{background:#eef2f8;color:#0f3d6e;font-weight:700;width:30%}table.l th{width:auto}
+.sec{break-inside:avoid}.nota{font-size:11.5px;color:#5c6675}.q{border-left:3px solid #1d6fb8;background:#f4f8fd;padding:6px 10px;margin:6px 0;font-size:12.5px}.chip{display:inline-block;border-radius:10px;padding:1px 9px;font-size:11.5px;font-weight:700;color:#fff;margin-right:4px}
+.mapaz{width:100%;height:auto;display:block;border:1px solid #c9cfd8}.dos{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}.aviso{background:#fff7e0;border:1px solid #f0d27a;padding:7px 10px;font-size:12px;margin-top:8px}
+.pie{margin-top:18px;border-top:1px solid #c9cfd8;padding-top:6px;font-size:11px;color:#5c6675}
+@media(max-width:700px){.hoja{padding:16px}.dos{grid-template-columns:1fr}}
+@media print{body{background:#fff}.bar{display:none}.hoja{box-shadow:none;margin:0;max-width:none;padding:0}@page{size:A4;margin:14mm 14mm 16mm}h2{break-after:avoid}}
+</style></head>
+<body>
+<div class="bar"><b>Informe técnico de hecho</b><a class="btn" id="vol" href="index.html">Volver</a><button class="btn p" onclick="window.print()">Descargar PDF / imprimir</button></div>
+<div class="hoja" id="app">Cargando informe…</div>
+<script>
+(function(){
+var S=SALA,X=S2,$=function(i){return document.getElementById(i)},DIA=864e5;
+var id=decodeURIComponent((location.search.match(/[?&]id=([^&]*)/)||[])[1]||"");
+$("vol").href="evento.html?id="+encodeURIComponent(id);
+function pol(g){return g.type==="Polygon"?[g.coordinates]:g.coordinates}
+function mapaZ(b,o){var kx=Math.cos((b[1]+b[3])/2*Math.PI/180),W=700,sc=W/((b[2]-b[0])*kx),H=Math.round((b[3]-b[1])*sc);
+ function x(l){return((l-b[0])*kx*sc).toFixed(1)}function y(l){return((b[3]-l)*sc).toFixed(1)}
+ function path(g){var d="";pol(g).forEach(function(p){p.forEach(function(r){d+="M"+r.map(function(c){return x(c[0])+","+y(c[1])}).join("L")+"Z"})});return d}
+ var s='<svg class="mapaz" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mapa de ubicación"><rect width="'+W+'" height="'+H+'" fill="#eaf1f8"/>';
+ ((o.mun&&o.mun.features)||[]).forEach(function(f){s+='<path d="'+path(f.geometry)+'" fill="#fff" stroke="#9aa6b6" stroke-width=".7" fill-rule="evenodd"/>'});
+ ((o.dep&&o.dep.features)||[]).forEach(function(f){s+='<path d="'+path(f.geometry)+'" fill="none" stroke="#3d4b60" stroke-width="1.8" fill-rule="evenodd"/>'});
+ s+='<circle cx="'+x(o.lon)+'" cy="'+y(o.lat)+'" r="9" fill="none" stroke="#d7263d" stroke-width="3"/><circle cx="'+x(o.lon)+'" cy="'+y(o.lat)+'" r="3" fill="#d7263d"/>';
+ s+='<text x="'+(+x(o.lon)+14)+'" y="'+(+y(o.lat)-10)+'" font-size="15" font-weight="700" fill="#0f1b2d" style="paint-order:stroke;stroke:#fff;stroke-width:4px">'+S.esc(o.rot||"")+'</text>';
+ s+='<text x="10" y="20" font-size="12" fill="#3d4b60">N ↑</text><text x="'+(W-8)+'" y="'+(H-8)+'" text-anchor="end" font-size="10" fill="#3d4b60">'+b[0].toFixed(1)+'°, '+b[1].toFixed(1)+'° → '+b[2].toFixed(1)+'°, '+b[3].toFixed(1)+'°</text></svg>';return s}
+function limpio(t){return String(t||"").replace(/\s+-\s+[^-]{3,45}$/,"").trim()}
+function f2(ms){return S.fecha(ms)}
+function num(n,s,p){return n+" "+(n===1?s:p)}
+X.datos().then(function(D){
+ var H=((D.transito||{}).hechos||[]).filter(function(z){return z.id===id})[0],E=D.ev.filter(function(z){return z.id===id})[0];
+ if(!H&&!E){$("app").innerHTML="<b>No se encontró el hecho solicitado.</b> Puede haber salido del historial.";return}
+ var TX=((D.textos_hechos||{}).hechos||{})[id]||{},FI=TX.ficha||(H&&H.ficha)||null,NT=(TX.notas||[]).slice();
+ if(!NT.length&&H)NT=(H.enlaces||[]).map(function(n){return{medio:n.medio,titulo:n.titulo,url:n.url,ts:n.ts}});
+ NT.sort(function(a,b){return(a.ts||0)-(b.ts||0)});
+ var GN=[],gk={};NT.forEach(function(n){var k=(n.medio||"")+"|"+limpio(n.titulo);if(gk[k]){gk[k].n++;gk[k].ult=Math.max(gk[k].ult,n.ts||0);if(!gk[k].texto&&n.texto)gk[k].texto=n.texto;if(!gk[k].url_real&&n.url_real)gk[k].url_real=n.url_real}else{gk[k]=Object.assign({n:1,ult:n.ts||0},n);GN.push(gk[k])}});
+ var tit=limpio((H||E).titulo),ts=(H||E).ts,ult=Math.max(ts,(H||{}).ultima_nota||0,(E||{}).ts_ult||0);
+ var fall=H?H.fallecidos:((E.cifras||{}).fallecidos||0),her=H?H.heridos:((E.cifras||{}).heridos||0);
+ var cat=H?"antropogénica":E.categoria,transit=!!H;
+ var lat=H?H.lat:E.lat,lon=H?H.lon:E.lon,lugar=H?(H.lugar||H.departamento):(E.lugar||(E.departamentos||[]).join(", "));
+ var dep=H?H.departamento:((E.departamentos||[])[0]||"");
+ var conf=(H||E).confianza||{};
+ var vic=fall+her,niv=fall>=3||vic>=10?"Alto":fall>0||her>0?"Medio":"Bajo";
+ var cod=id.replace(/^[a-z]+:/,"").toUpperCase().slice(0,10);
+ var tipoEv=transit?"Accidente de tránsito"+(H.tipo&&!/sin precisar/i.test(H.tipo)?" — "+H.tipo.toLowerCase():""):(E.subtipo||E.fenomeno||"Hecho reportado");
+ var via=(FI&&FI.via)||(H&&H.tramo)||"";
+ var h='';
+ h+='<div class="cab"><div><b>SALA DE SITUACIÓN BOLIVIA</b><br>Informe técnico de hecho</div><div style="text-align:right">Código '+cod+'<br>Generado '+f2(Date.now())+' (hora La Paz)</div></div><div class="tri"></div>';
+ h+='<h1>'+S.esc(tit)+'</h1><div class="nota">'+S.esc(lugar||"Bolivia")+' · primera nota '+f2(ts)+' · última actualización '+f2(ult)+'</div>';
+ h+='<div class="sec"><h2>1. Identificación</h2><table>'+
+  '<tr><th>Tipo de amenaza (Ley 602, art. 36)</th><td>'+S.esc(cat.charAt(0).toUpperCase()+cat.slice(1))+'</td></tr>'+
+  '<tr><th>Tipo de evento</th><td>'+S.esc(tipoEv)+'</td></tr>'+
+  '<tr><th>Nivel de importancia (criterio del sistema)</th><td><span class="chip" style="background:'+(niv==="Alto"?"#c62828":niv==="Medio"?"#ef6c00":"#2e9e5b")+'">'+niv+'</span> según víctimas reportadas</td></tr>'+
+  '<tr><th>Confianza de la información</th><td>'+S.esc(conf.nivel||"—")+(conf.puntaje!=null?' (credibilidad '+conf.puntaje+'/100)':'')+'</td></tr>'+
+  '<tr><th>Estado</th><td>'+((Date.now()-ult)<DIA?"Reciente: con notas en las últimas 24 horas":"Sin notas nuevas en las últimas 24 horas")+'</td></tr></table></div>';
+ /* descripción */
+ var ex=NT.filter(function(n){return n.texto})[0],sint='';if(ex){ex=Object.assign({},ex);var tl=limpio(ex.titulo||tit).toLowerCase();if(ex.texto.toLowerCase().indexOf(tl)===0)ex.texto=ex.texto.slice(tl.length).replace(/^[\s.:-]+/,'')}
+ if(transit||E.origen==="prensa"){
+  sint="Según la prensa"+(FI&&FI.autoridades&&FI.autoridades.length?", que cita a "+FI.autoridades.join(" y "):"")+", se registró"+(transit?" un accidente de tránsito":" un hecho")+(via?" en la "+via.replace(/^(carretera|ruta|camino|tramo|avenida)\s+/i,function(m){return m.toLowerCase()}):"")+(lugar?" ("+lugar+")":"")+(FI&&FI.altura?", a la altura de "+FI.altura:"")+(FI&&FI.km?", km "+FI.km:"")+(FI&&FI.vehiculos&&FI.vehiculos.length?", en el que estuvieron involucrados "+FI.vehiculos.join(" y "):(H&&H.vehiculo&&!/no precisado/i.test(H.vehiculo)?" con "+H.vehiculo.toLowerCase():""))+". "+
+   (vic?"Se reportan "+(fall?num(fall,"fallecido","fallecidos"):"")+(fall&&her?" y ":"")+(her?num(her,"herido","heridos"):"")+".":"No se reportan víctimas en las notas revisadas.")+(FI&&FI.hora?" Hora referida: "+FI.hora+".":"");
+ }else sint=E.detalle||"";
+ h+='<div class="sec"><h2>2. Descripción del hecho</h2><p style="margin:4px 0">'+S.esc(sint)+'</p>';
+ if(FI&&FI.causa)h+='<div class="q"><b>Causa preliminar mencionada:</b> '+S.esc(FI.causa)+(FI.vocero?' <span class="nota">('+S.esc(FI.vocero)+')</span>':'')+'</div>';
+ if(FI&&FI.traslado)h+='<div class="q"><b>Atención y traslado:</b> '+S.esc(FI.traslado)+'</div>';
+ if(ex)h+='<div class="q"><b>Extracto de la nota:</b> '+S.esc(ex.texto)+'</div>';
+ else h+='<p class="nota">No se pudo leer el texto de las notas (el medio puede exigir suscripción o bloquear la lectura automática): este informe se basa en los titulares.</p>';
+ h+='</div>';
+ /* localización */
+ if(lat!=null){
+  h+='<div class="sec"><h2>3. Localización</h2><div class="dos"><table><tr><th>Departamento</th><td>'+S.esc(dep||"—")+'</td></tr><tr><th>Municipio / lugar</th><td>'+S.esc(lugar||"—")+'</td></tr><tr><th>Vía o tramo</th><td>'+S.esc(via||"no precisado en las notas")+'</td></tr>'+(FI&&(FI.altura||FI.km)?'<tr><th>Referencia</th><td>'+S.esc((FI.altura?"altura de "+FI.altura:"")+(FI.altura&&FI.km?", ":"")+(FI.km?"km "+FI.km:""))+'</td></tr>':'')+
+   '<tr><th>Coordenadas (aprox.)</th><td>'+(+lat).toFixed(3)+', '+(+lon).toFixed(3)+'</td></tr><tr><th>Método</th><td>'+S.esc((H&&H.metodo_ubicacion)||(E&&E.metodo)||"nombre de lugar en la nota")+'</td></tr></table>'+
+   mapaZ([lon-.7,lat-.55,lon+.7,lat+.55],{dep:D.geoDep,mun:D.geoMun,lat:lat,lon:lon,rot:(lugar||"").split(",")[0]})+'</div><p class="nota">La posición es el centro del municipio nombrado en la nota, no el punto exacto del hecho.</p></div>';
+ }
+ /* afectación */
+ h+='<div class="sec"><h2>4. Afectación reportada</h2><table><tr><th>Fallecidos</th><td><b>'+fall+'</b></td></tr><tr><th>Heridos</th><td><b>'+her+'</b></td></tr>'+(FI&&FI.vehiculos&&FI.vehiculos.length?'<tr><th>Vehículos</th><td>'+S.esc(FI.vehiculos.join(", "))+'</td></tr>':'')+
+  (H&&H.cifras_origen?'<tr><th>Origen de las cifras</th><td>'+S.esc(H.cifras_origen)+(H.cifras_titular&&(H.cifras_titular.fallecidos!==H.fallecidos||H.cifras_titular.heridos!==H.heridos)?' (el titular indicaba '+H.cifras_titular.fallecidos+' fallecidos y '+H.cifras_titular.heridos+' heridos)':'')+'</td></tr>':'')+'</table>';
+ if(FI&&FI.fallecidos_por_medio){var ms=Object.keys(FI.fallecidos_por_medio);h+='<table class="l" style="margin-top:6px"><tr><th>Fuente (texto leído; ver sección 8)</th><th>Fallecidos</th><th>Heridos</th></tr>'+ms.map(function(m){return'<tr><td>'+S.esc(m)+'</td><td>'+FI.fallecidos_por_medio[m]+'</td><td>'+(FI.heridos_por_medio||{})[m]+'</td></tr>'}).join("")+'</table>'+((FI.fallecidos_discrepa||FI.heridos_discrepa)?'<div class="aviso"><b>Las notas no coinciden en las cifras.</b> Se muestra la mayor; confirmar con Policía o SUMA 161.</div>':'');}
+ h+='<p class="nota">Cifras preliminares de prensa; pueden cambiar.</p></div>';
+ /* cronología */
+ h+='<div class="sec"><h2>5. Cronología de la cobertura</h2>'+(GN.length?'<table class="l"><tr><th style="width:7%">N.º</th><th style="width:22%">Primera nota</th><th>Titular</th><th style="width:16%">Actualizaciones</th></tr>'+GN.map(function(n,i){return'<tr><td>'+(i+1)+'</td><td>'+(n.ts?f2(n.ts):"—")+'</td><td>'+S.esc(limpio(n.titulo))+'</td><td>'+(n.n>1?(n.n-1)+' (hasta '+(n.ult?S.fecha(n.ult,true):"")+')':'—')+'</td></tr>'}).join("")+'</table>':'<p class="nota">Sin notas registradas.</p>')+'<p class="nota">N.º remite a la tabla de fuentes (sección 8). Una cobertura que se repite en el tiempo indica repercusión o información nueva.</p></div>';
+ /* contexto */
+ var T=((D.transito||{}).hechos||[]),t30=T.filter(function(z){return z.ts>Date.now()-30*DIA&&z.departamento===dep&&z.id!==id}),f30=t30.reduce(function(a,z){return a+(z.fallecidos||0)},0),h30=t30.reduce(function(a,z){return a+(z.heridos||0)},0);
+ var av=((D.senamhi_alertas||{}).alertas||[]).filter(function(a){return(a.fin||"9999")>=S.diaKey(Date.now())&&(a.departamentos||[]).indexOf(dep)>=0});
+ h+='<div class="sec"><h2>6. Contexto</h2><table>'+(transit?'<tr><th>Otros hechos de tránsito en '+S.esc(dep)+' (30 días)</th><td>'+t30.length+' hechos · '+f30+' fallecidos · '+h30+' heridos (prensa)</td></tr>':'')+
+  '<tr><th>Avisos SENAMHI vigentes en '+S.esc(dep||"el departamento")+'</th><td>'+(av.length?av.map(function(a){return S.esc((a.nivel||"")+" — "+(a.fenomeno||a.titulo))}).join("<br>"):"Ninguno")+'</td></tr></table>'+(av.length?'<p class="nota">Un aviso meteorológico vigente puede ser un factor contribuyente; esta relación no está confirmada para este hecho.</p>':'')+'</div>';
+ /* evaluación */
+ h+='<div class="sec"><h2>7. Evaluación de la información y límites</h2><ul style="margin:4px 0 0 18px;padding:0"><li>'+S.esc(conf.razon||("Confianza "+(conf.nivel||"—")))+'</li><li>No existe fuente oficial abierta de tránsito: <b>verificar con Policía Boliviana, SUMA 161 o ABC</b> antes de usar las cifras en decisiones.</li><li>Los datos se extrajeron automáticamente del texto de las notas con reglas explícitas; puede haber errores de lectura.</li><li>La ubicación es aproximada (municipio).</li></ul></div>';
+ /* fuentes */
+ h+='<div class="sec"><h2>8. Fuentes</h2><table class="l"><tr><th style="width:7%">N.º</th><th style="width:28%">Medio</th><th>Nota</th></tr>'+GN.map(function(n,i){var u=n.url_real||n.url;return'<tr><td>'+(i+1)+'</td><td>'+S.esc(n.medio||"")+'</td><td>'+(S.urlOk(u)?'<a href="'+S.esc(u)+'" target="_blank" rel="noopener">'+S.esc(limpio(n.titulo))+'</a>':S.esc(limpio(n.titulo)))+'</td></tr>'}).join("")+'</table>'+(H&&H.imagen_medio?'<p class="nota">Imagen referencial en la ficha web: '+S.esc(H.imagen_medio)+'.</p>':'')+'</div>';
+ h+='<div class="pie">Informe generado automáticamente por la Sala de Situación Bolivia con datos abiertos de prensa y fuentes oficiales. Información preliminar sujeta a verificación; no reemplaza comunicados de las instituciones competentes.</div>';
+ $("app").innerHTML=h;document.title="Informe técnico — "+tit;
+}).catch(function(e){$("app").innerHTML="No se pudo cargar el informe: "+S.esc(e.message)});
+})();
+</script></body></html>
