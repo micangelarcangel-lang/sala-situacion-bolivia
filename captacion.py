@@ -244,19 +244,35 @@ def captar_redes(nombre, base, horas):
 
 
 def captar_portal(nombre, base, horas):
+    """Combina TODOS los métodos que respondan (un RSS trae solo ~10 notas; el sitemap y Bing traen más) y quita repetidas."""
     t0 = time.time()
-    _DL.fin = t0 + 70
+    _DL.fin = t0 + 90
+    lim = int(time.time() * 1000) - horas * 3600000
+    todas, usados, vistos, errores = [], [], set(), []
     for fn in (_rss, _wp, _sitemap, _bing, _portada):
         try:
             L, met = fn(base)
-        except Exception:
+        except Exception as e:
             L, met = [], ""
+            errores.append(type(e).__name__)
+        L = [r for r in L if r[1] and r[0] and (r[2] == 0 or r[2] >= lim)]
         if L:
-            lim = int(time.time() * 1000) - horas * 3600000
-            L = [r for r in L if r[1] and r[0] and (r[2] == 0 or r[2] >= lim)]
-            if L:
-                return nombre, L, met, round(time.time() - t0, 1), ""
-    return nombre, [], "", round(time.time() - t0, 1), "ningún método respondió (portal bloqueado, caído o sin acceso público)"
+            usados.append(met)
+            for r in L:
+                k = r[1].split("?")[0]
+                if k not in vistos:
+                    vistos.add(k); todas.append(r)
+        if len(todas) >= 150 and fn is not _portada:
+            break
+    if todas:
+        return nombre, todas, " + ".join(usados), round(time.time() - t0, 1), ""
+    try:
+        _DL.fin = time.time() + 15
+        r = urllib.request.urlopen(urllib.request.Request(base + "/", headers=UA), timeout=10)
+        det = f"responde HTTP {r.status} pero sin notas legibles (página cargada con JavaScript)"
+    except Exception as e:
+        det = "el portal rechaza la lectura: " + type(e).__name__ + " " + str(e)[:50]
+    return nombre, [], "", round(time.time() - t0, 1), det
 
 
 def captar(docs, geo=None, horas=72, log=print):
