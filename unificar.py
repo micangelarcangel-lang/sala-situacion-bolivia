@@ -110,7 +110,7 @@ def desde_prensa(docs, ubicar, geo=None):
         txt = {"prensa": " (preliminar)", "modelo": " (pronóstico de modelo)", "gdacs": " (GDACS)", "usgs": " (USGS)"}[origen]
         r = {"id": e["id"], "origen": origen, "categoria": e.get("tipo") or "otra", "titulo": titulo, "ts": e["ts"], "nivel": n, "nivel_txt": NOMNIV[n] + txt,
              "oficial": oficial, "lugar": e.get("lugar") or "", "departamentos": deps, "lat": e.get("lat"), "lon": e.get("lon"), "detalle": det, "fuente": e.get("fuente", ""),
-             "url": e.get("url", ""), "medios": [e.get("fuente", "")] if origen == "prensa" else [], "cifras": {"fallecidos": e.get("fall") or 0, "heridos": e.get("her") or 0, "notas": e.get("n_notas") or 1}, "metodo": e.get("metodo") or ""}
+             "url": e.get("url", ""), "ts_ult": e["ts"], "medios": [e.get("fuente", "")] if origen == "prensa" else [], "cifras": {"fallecidos": e.get("fall") or 0, "heridos": e.get("her") or 0, "notas": e.get("n_notas") or 1}, "metodo": e.get("metodo") or ""}
         if origen == "prensa":
             try:
                 import depurar
@@ -125,6 +125,7 @@ def desde_prensa(docs, ubicar, geo=None):
                 a["cifras"]["notas"] = a["cifras"].get("notas", 1) + r["cifras"]["notas"]
                 a["cifras"]["fallecidos"] = max(a["cifras"]["fallecidos"], r["cifras"]["fallecidos"])
                 a["cifras"]["heridos"] = max(a["cifras"]["heridos"], r["cifras"]["heridos"])
+                a["ts_ult"] = max(a.get("ts_ult", a["ts"]), r["ts"])
                 a["ts"] = min(a["ts"], r["ts"])
                 a["medios"] = sorted(set(a.get("medios", [])) | set(r.get("medios", [])))
                 a.setdefault("alias", []).append(r["id"])
@@ -208,6 +209,7 @@ def fusion_semantica(evs):
         a["medios"] = sorted(set(a.get("medios", [])) | set(r.get("medios", [])))
         a["cifras"]["fallecidos"] = max(a["cifras"]["fallecidos"], r["cifras"]["fallecidos"])
         a["cifras"]["heridos"] = max(a["cifras"]["heridos"], r["cifras"]["heridos"])
+        a["ts_ult"] = max(a.get("ts_ult", a["ts"]), r.get("ts_ult", r["ts"]))
         a["alias"] = sorted(set(a.get("alias", [])) | {r["id"]} | set(r.get("alias", [])))
         a["cifras"]["notas"] = 1 + len(a["alias"])
         a["lat"] = a["lat"] if a["lat"] is not None else r["lat"]; a["lon"] = a["lon"] if a["lon"] is not None else r["lon"]
@@ -456,6 +458,9 @@ def actualizar(docs, geo=None, retener_dias=400):
         pass
     nuevos = desde_prensa(docs, ubicar, geo) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs) + desde_extra(docs)
     for e in nuevos:
+        p = previo.get(e["id"])
+        if p and e["origen"] == "prensa":   # un hecho que sigue recibiendo notas conserva su última actividad
+            e["ts_ult"] = max(e.get("ts_ult", e["ts"]), p.get("ts_ult", p["ts"]))
         previo[e["id"]] = e
     lim = int(time.time() * 1000) - retener_dias * 86400000
     todos = sorted([e for e in previo.values() if e["ts"] >= lim], key=lambda e: -e["ts"])

@@ -297,6 +297,11 @@ def main():
         log("Base unificada de eventos: " + _u)
     except Exception as ex:
         log("No se pudo actualizar la base unificada (se conserva la anterior): " + type(ex).__name__ + " " + str(ex)[:100])
+    try:
+        import leer_textos
+        log("Lectura de notas: " + leer_textos.actualizar(DOCS, log))
+    except Exception as ex:
+        log("No se pudo leer el texto de las notas: " + type(ex).__name__ + " " + str(ex)[:100])
     if EXCLUIDOS:
         log(f"Excluidos por ser de otro país ({len(EXCLUIDOS)}):")
         for t in EXCLUIDOS[:30]:

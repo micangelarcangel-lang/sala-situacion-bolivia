@@ -107,7 +107,7 @@ def seleccionar(eventos, ini, fin):
         if o == "senamhi":
             fin_av = (e.get("cifras") or {}).get("fin") or ""
             vig = fin_av >= hora(fin).strftime("%Y-%m-%d") and e["ts"] <= fin
-        if ini <= e["ts"] <= fin or vig:
+        if ini <= max(e["ts"], e.get("ts_ult", 0)) <= fin or vig:
             out.append(e)
     vistos, res = set(), []
     for e in sorted(out, key=lambda x: -x["ts"]):
