@@ -273,7 +273,7 @@
   function trCard(h) {
     var c = h.confianza || {}, cl = {Alta: "ba", Media: "bm", Baja: "bb"}[c.nivel] || "bb";
     var enl = (h.enlaces || []).map(function (e) { return '<li><a href="' + S.esc(S.urlOk(e.url)) + '" target="_blank" rel="noopener">' + S.esc(e.medio || "medio") + '</a> — ' + S.esc(e.titulo) + '</li>'; }).join("");
-    return '<details style="border-bottom:1px solid var(--line);padding:9px 2px"><summary style="cursor:pointer;list-style:none"><div style="display:flex;gap:8px;justify-content:space-between;align-items:flex-start"><b style="font-size:13.5px">' + S.esc(h.titulo) + '</b><span class="badge ' + cl + '">Confianza ' + (c.nivel || "").toLowerCase() + '</span></div>' +
+    return '<details style="border-bottom:1px solid var(--line);padding:9px 2px"><summary style="cursor:pointer;list-style:none"><div style="display:flex;gap:8px;justify-content:space-between;align-items:flex-start"><b style="font-size:13.5px">' + S.esc(h.titulo) + '</b><span class="badge ' + cl + '">' + (c.nivel === "Baja" ? "Un solo medio: sin confirmar" : "Confianza " + (c.nivel || "").toLowerCase()) + '</span></div>' +
       '<div class="nota" style="margin-top:3px">' + S.fecha(h.ts) + ' · ' + S.esc(h.lugar || h.departamento || "sin ubicar") + ' · ' + S.esc(h.tipo || "") + ' · ' + h.n_medios + ' medio(s)' + (vict(h) ? ' · <b>' + h.fallecidos + ' fallecidos, ' + h.heridos + ' heridos</b>' : '') + '</div></summary>' +
       '<div class="nota" style="margin:8px 0 4px">' + S.esc(c.razon || "") + '</div><ul style="margin:4px 0 4px 18px;font-size:12.5px">' + enl + '</ul></details>';
   }

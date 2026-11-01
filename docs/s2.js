@@ -85,7 +85,7 @@ var S2 = (function () {
   function confBadge(e) {
     var c = e && e.confianza; if (!c) return "";
     var cl = {Alta: "ba", Media: "bm", Baja: "bb"}[c.nivel] || "bb";
-    return '<span class="badge ' + cl + '" title="Triangulación: ' + S.esc((c.familias || []).join(" + ")) + (c.medios > 1 ? " · " + c.medios + " medios" : "") + '">Confianza ' + c.nivel.toLowerCase() + '</span>';
+    return '<span class="badge ' + cl + '" title="Triangulación: ' + S.esc((c.familias || []).join(" + ")) + (c.medios > 1 ? " · " + c.medios + " medios" : "") + '">' + (c.nivel === "Baja" ? "Un solo medio: sin confirmar" : "Confianza " + c.nivel.toLowerCase()) + '</span>';
   }
   function badgeOrigen(e) {
     var o = e.origen;
