@@ -113,6 +113,11 @@ def _mismo(g, n, tk, es, dp, tr=frozenset()):
         return False
     if tr and g["trs"] and tr not in g["trs"]:                       # tramos de carretera distintos: son hechos distintos
         return False
+    # mismas víctimas (mismo número de fallecidos y de heridos), ≤ 24 h, departamento compatible: es el mismo hecho contado con otras palabras
+    if dt_ <= 24 * 3600000:
+        f_, h_ = n.get("fall") or 0, n.get("her") or 0
+        if f_ >= 1 and (f_ >= 2 or h_ >= 1) and any((m.get("fall") or 0) == f_ and (m.get("her") or 0) == h_ for m in g["notas"]):
+            return True
     comun = g["tk"] & tk
     esp = {w for w in comun if w not in _GEN}          # palabras en común que NO son genéricas
     distintos = bool(g["es"] and es and not (g["es"] & es))   # nombres propios distintos (p. ej. Diablada vs Pisiga)

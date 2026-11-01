@@ -275,6 +275,7 @@ def main():
             except Exception as ex_:
                 log("  · fuente adicional no disponible: " + type(ex_).__name__ + " " + str(ex_)[:80])
         extra = [e for e in extra if relevante(e)]
+        amen = []
         try:   # prensa medio por medio para TODAS las amenazas: alimenta la base unificada (más medios por hecho)
             amen, m_ = fuentes_extra.prensa_amenazas(geo_t)
             log("  · " + m_)
@@ -295,7 +296,11 @@ def main():
             json.dump({"generado": ahora_ms, "eventos": amen[:900]}, open(os.path.join(DOCS, "prensa_medios.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
         except Exception as ex_:
             log("  · prensa por medio no disponible: " + type(ex_).__name__ + " " + str(ex_)[:80])
-        return transito.actualizar(DOCS, evs + extra, geo_t) + f" · {len(extra)} notas de medios adicionales"
+        vistos_ = set(); todas_ = []
+        for x in evs + extra + amen:   # las notas de los 34 portales también alimentan los hechos de tránsito (sin repetir)
+            if str(x["id"]) not in vistos_:
+                vistos_.add(str(x["id"])); todas_.append(x)
+        return transito.actualizar(DOCS, todas_, geo_t) + f" · {len(extra)} notas de medios adicionales"
 
     reg("Accidentes de tránsito (prensa por medio + GDELT)", "Medios bolivianos / GDELT", _transito)
     reg("Eventos naturales (NASA EONET)", "NASA", lambda: __import__("fuentes_extra").eonet(DOCS))
