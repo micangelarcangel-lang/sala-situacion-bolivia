@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:14slcaf",
+  "fecha_hora_local": "2026-11-01 17:48",
+  "ts_ms": 1793569715000,
+  "titulo": "Emiten alerta naranja en Santa Cruz por vientos de hasta 90 km/h que se extenderán por cuatro días - Red Uno",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "El Mundo Bolivia; Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNakR0T0lPQ1pTVTBmSmRvWGU5b0Q4a25MNlFmckJDOUF2SEZxYnNVQUV5c0NvX3ZqelR0ZGF0cTR4Si1VNlRtdDhWRVF1U2tIeGl5N3FXVHdTRUZaLVQ0VkQ4cjhpQ3BXMjIyYmw4Y3V1eFRVbVh6SHRHZG5BTDBDb1Z0WXp3SS1hQ1YyT2RjdWF4ZHNGaHg5ZTVfZHFMVjFDS0x0QlpoY0x2eUwtQmE3TmpEaC1NV2EzNk1IQVRMWTJUVTJqOTRQVUNDd3BFdmRYOXBGeDR5RnN3T3lCSE5zUA?oc=5 | https://news.google.com/rss/articles/CBMikwFBVV95cUxNVy0tWjhYZ29ZakNhdjEtZEFfWE9RVTZyRE1OQmFBOFVwMldCQ3RWT25WVHZWZUgxckY1R0NnU01zdEtIdkdOcGtiY3hTdXZ0Q0RPQWZTUHoxOGxhTTloMUo4S0RCNmhWcHc0OEpvbVJqbnNOSlh6YnNVUWt6U0V6Tk52TTdMdnNNM0lXamp3NVlBeTA?oc=5"
+ },
+ {
   "hecho_id": "noticia:zia558",
   "fecha_hora_local": "2026-11-01 16:24",
   "ts_ms": 1793564669000,
@@ -30,14 +50,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 26,
+  "n_notas": 27,
   "fuentes": "24horas; ANF Agencia de Noticias Fides Bolivia; Amazon.com; América Económica; Correo del Sur; Demócrata; Diario Extra; El Informador; El Nuevo Diario; El Universo; Euronews.com; Infobae; La Patria Bolivia; Opinión Bolivia; Prensa Libre; Red Uno; TV Pública; Uruguay Al Día; Vietnam.vn; Yahoo; eju.tv",
   "lat": "",
   "lon": "",
   "lugar": "",
   "departamento": "",
   "municipio": "",
-  "enlaces": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPTXVKOW1xbUg1bkhseXl4R2NOMXhfc0dNOTFmXzI4WnowZkFZVjVCc0E3UGlKVFJoTXVxTWtFajlid1Y1Y1hkeDRpVVFMUXNkWU1uQmhpaUpmVUZGVUxCWFZ3dnlyXzlORlpNVWs3U0NzN2hEcGkzTFJLMHBuWThPUEtXOUpoWGwwODBuT3lUQlc0SS1YbVJqdl8xUWF0QTFkNUpMdy14dTjSAagBQVVfeXFMT011SjltcW1INW5IbHl5eEdjTjF4X3NHTTkxZl8yOFp6MGZBWVY1QnNBN1BpSlRSaE11cU1rRWo5YndWNWNYZHg0aVVRTFFzZFlNbkJoaWlKZlVGRlVMQlhWd3Z5cl85TkZaTVVrN1NDczdoRHBpM0xSSzBwblk4T1BLVzlKaFhsMDgwbk95VEJXNEktWG1SanZfMVFhdEExZDVKTHcteHU4?oc=5 | https://news.google.com/rss/articles/CBMizAFBVV95cUxPdHZNWTR3M1JfWUJ3enkxdlZiT1Y4cUk2R245d1p0akhWRUlLdHhJRGVGUXJHYjBHSXRTUEZxY1BuVzBWOFNxZkNIdkozRzRzQTA3d21YenFKd3FnS3d3VnQyaE1CRDVCeml3VlJJVVkwVzV1dkxxMEFkYkJwVDJuSTV1Yk9QOUc2dkM4ZWJWb1habGhIWkpvdUlQTG9ocjNuWmRrVG96ZGRvNWtjcnNwU3VRNjlwMmdoVE5SUDVJSV9GbTJ4Q0ZtTDZITzg?oc=5 | https://news.google.com/rss/articles/CBMi5AFBVV95cUxNbVBMYkZmdkNVVzZPT2h5SjhRcnJUZWVjYmMxZzdRVUoyT2ZVZ0w0eUFqcEQ0UWJzUF9mWEQ5SE5ISTVsUlRfNFlkYlQ0QURTLUxrb2otY3pXRUdiUnNEU25Wa3JfQzdoakctaWRWaUZ5YjBIcU9EVFZ4ZDIzU0tvWl9PSUUtTzFRX2NiUFlCdEhiRV9rTkNqNlR1QUN6U010RFB3MWNRVWdVamhYdEFidXhQaGFyTEp5dENxTWRMWXdKb0txUGtnblNWTFN5VjduY1ZZcmdQeXg5aGxqRWh3UFJlZEHSAeQBQVVfeXFMTW1QTGJGZnZDVVc2T09oeUo4UXJyVGVlY2JjMWc3UVVKMk9mVWdMNHlBanBENFFic1BfZlhEOUhOSEk1bFJUXzRZZGJUNEFEUy1Ma29qLWN6V0VHYlJzRFNuVmtyX0M3aGpHLWlkVmlGeWIwSHFPRFRWeGQyM1NLb1pfT0lFLU8xUV9jYlBZQnRIYkVfa05DajZUdUFDelNNdERQdzFjUVVnVWpoWHRBYnV4UGhhckxKeXRDcU1kTFl3Sm9LcVBrZ25TVkxTeVY3bmNWWXJnUHl4OWhsakVod1BSZWRB?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPTXVKOW1xbUg1bkhseXl4R2NOMXhfc0dNOTFmXzI4WnowZkFZVjVCc0E3UGlKVFJoTXVxTWtFajlid1Y1Y1hkeDRpVVFMUXNkWU1uQmhpaUpmVUZGVUxCWFZ3dnlyXzlORlpNVWs3U0NzN2hEcGkzTFJLMHBuWThPUEtXOUpoWGwwODBuT3lUQlc0SS1YbVJqdl8xUWF0QTFkNUpMdy14dTjSAagBQVVfeXFMT011SjltcW1INW5IbHl5eEdjTjF4X3NHTTkxZl8yOFp6MGZBWVY1QnNBN1BpSlRSaE11cU1rRWo5YndWNWNYZHg0aVVRTFFzZFlNbkJoaWlKZlVGRlVMQlhWd3Z5cl85TkZaTVVrN1NDczdoRHBpM0xSSzBwblk4T1BLVzlKaFhsMDgwbk95VEJXNEktWG1SanZfMVFhdEExZDVKTHcteHU4?oc=5 | https://news.google.com/rss/articles/CBMiowFBVV95cUxNYUpUX2otdGhoamZheWdSaDNzUk5pMXFueHZDbmJuNDlGVE5ac253bnNSaC01SU5ERnpINDhoN3FLeTZiSWU3anJkdXdfbWVUMEE2UlYtUUZ5a0hOUjdvcTJfYlQ1dEhzUExCMU9MdDUzeGhmVHVFN1BSUE5sVjVpd1lnMUN6dXQ2eEtYNlRiTXZDWTJvV0dsRXVwRjZubDRJNVF30gGoAUFVX3lxTE9NdUo5bXFtSDVuSGx5eXhHY04xeF9zR005MWZfMjhaejBmQVlWNUJzQTdQaUpUUmhNdXFNa0VqOWJ3VjVjWGR4NGlVUUxRc2RZTW5CaGlpSmZVRkZVTEJYVnd2eXJfOU5GWk1VazdTQ3M3aERwaTNMUkswcG5ZOE9QS1c5SmhYbDA4MG5PeVRCVzRJLVhtUmp2XzFRYXRBMWQ1Skx3LXh1OA?oc=5 | https://news.google.com/rss/articles/CBMizAFBVV95cUxPdHZNWTR3M1JfWUJ3enkxdlZiT1Y4cUk2R245d1p0akhWRUlLdHhJRGVGUXJHYjBHSXRTUEZxY1BuVzBWOFNxZkNIdkozRzRzQTA3d21YenFKd3FnS3d3VnQyaE1CRDVCeml3VlJJVVkwVzV1dkxxMEFkYkJwVDJuSTV1Yk9QOUc2dkM4ZWJWb1habGhIWkpvdUlQTG9ocjNuWmRrVG96ZGRvNWtjcnNwU3VRNjlwMmdoVE5SUDVJSV9GbTJ4Q0ZtTDZITzg?oc=5"
  },
  {
   "hecho_id": "noticia:15qiac1",
@@ -998,26 +1018,6 @@
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
   "enlaces": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQeUo5TkgydHEyRTlVRFpwdDdhWkV5NVFCN3pmbmt5a3VtakxGZDdtNVNqVjZqMmtmWFk5dWFjbnlBV3hJY2NSMEVldGdremdZdlk3SHlhWTFueTROaHNuc0djaHAzZXVHYzg1WE9DeUQ1VDJIVFJkczc3Z2FWdG80TDZTWGxzYU5aSm1PVkQ4QzVVRGZmTUZUMXhCOURTQTdOUld5ZGpUcERscXppajZwMWJPdnlSXzNlbVJIem8wSk83SzJsYWxNbjg0WnhIT0E?oc=5 | https://news.google.com/rss/articles/CBMi5gFBVV95cUxPWDl5emUtdHE0Y0NxQkFMS1VfdndVLU9paEZ3Vk5fR082elZpaVFScEhDMEM5TURManljRkplYno4TWxUMTNlWEZzV2FOajhadV9PX1c4SlRGdnBvMnJzRnBHbDFGbXRjbDktR1gxQWUxM09pQVZFeUhoaUdWQ3Q5eFNxY2doUjdILVBIeG5rdk1Wd0NDOFIzUVRrMUE5ZE9lVzl2bmk5bVBxTlFRX0JZa2hpYkV4dk1CbFh6Z1VocU12djlIM3NYVmNmc2pvTnRNZ2tVNTBYa3NxN1luVHFxemZ6SFV4UQ?oc=5"
- },
- {
-  "hecho_id": "noticia:111cx62",
-  "fecha_hora_local": "2026-10-28 19:06",
-  "ts_ms": 1793228780000,
-  "titulo": "Emiten alerta naranja por fuertes lluvias en cuatro departamentos - El Mundo Bolivia",
-  "tipo_amenaza": "meteorológica",
-  "nivel_num": 2,
-  "nivel_preliminar": "naranja",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "El Mundo Bolivia",
-  "lat": "",
-  "lon": "",
-  "lugar": "",
-  "departamento": "",
-  "municipio": "",
-  "enlaces": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNVy0tWjhYZ29ZakNhdjEtZEFfWE9RVTZyRE1OQmFBOFVwMldCQ3RWT25WVHZWZUgxckY1R0NnU01zdEtIdkdOcGtiY3hTdXZ0Q0RPQWZTUHoxOGxhTTloMUo4S0RCNmhWcHc0OEpvbVJqbnNOSlh6YnNVUWt6U0V6Tk52TTdMdnNNM0lXamp3NVlBeTA?oc=5"
  },
  {
   "hecho_id": "noticia:1labrzx",
