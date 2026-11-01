@@ -41,9 +41,41 @@ def _fuente_extranjera(f):
     return bool(re.search(r"\b(pe|ar|cl|br|co|mx|ec|py|uy|ve|es|cu)$", f) or " salta" in " " + f)
 
 
-def desde_prensa(docs, ubicar):
+def _medios_directos(docs, geo, horas=96):
+    """Notas de los RSS directos de los medios (fuentes_nuevas.json) con el mismo formato que las de Google Noticias.
+    Solo titulares con palabras de peligro; así un hecho que cuentan varios medios sube de confianza."""
+    import hashlib, email.utils, time as _t
+    try:
+        import busqueda, informe_hecho as ih
+    except Exception:
+        return []
+    out, lim = [], (_t.time() - horas * 3600) * 1000
+    for k, lista in (_j(os.path.join(docs, "fuentes_nuevas.json"), {}).get("datos", {}) or {}).items():
+        if not k.startswith("Prensa/oficial"):
+            continue
+        for x in lista:
+            if not x.get("ruta") or not x.get("relevante") or not x.get("titulo") or not (x.get("url") or "").startswith("http"):
+                continue
+            try:
+                ts = int(email.utils.parsedate_to_datetime(x["fecha"]).timestamp() * 1000)
+            except Exception:
+                continue
+            if ts < lim:
+                continue
+            t = x["titulo"]
+            f, h = ih.cifras(t)
+            lat = lon = None; lugar, metodo = "", "sin ubicar"
+            if geo:
+                lat, lon, lugar, metodo = busqueda.ubicar_por_nombre(geo, t + " " + (x.get("resumen") or ""))
+            out.append({"id": "noticia:rss:" + hashlib.md5(x["url"].encode()).hexdigest()[:12], "ts": ts, "fuente": x["medio"], "tipo": busqueda.tipo_por_texto(t + " " + (x.get("resumen") or "")),
+                        "nivel": 3 if (f >= 10 or h >= 30) else 2 if (f >= 3 or h >= 10) else 1, "titulo": t, "detalle": (x.get("resumen") or "")[:300], "url": x["url"], "fall": f, "her": h,
+                        "lat": lat, "lon": lon, "lugar": lugar, "metodo": metodo})
+    return out
+
+
+def desde_prensa(docs, ubicar, geo=None):
     out, vistos = [], {}
-    for e in _j(os.path.join(docs, "data.json"), {}).get("eventos", []):
+    for e in _j(os.path.join(docs, "data.json"), {}).get("eventos", []) + _medios_directos(docs, geo):
         deps = []
         if e.get("lat") is not None and ubicar:
             d, _m = ubicar(e["lat"], e["lon"])
@@ -400,7 +432,7 @@ def actualizar(docs, geo=None, retener_dias=400):
             del previo[k]
     except ImportError:
         pass
-    nuevos = desde_prensa(docs, ubicar) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs) + desde_extra(docs)
+    nuevos = desde_prensa(docs, ubicar, geo) + desde_senamhi(docs) + desde_sismos(docs) + desde_focos(docs) + desde_complejos(docs) + desde_sequia(docs) + desde_caudales(docs) + desde_epi(docs) + desde_extra(docs)
     for e in nuevos:
         previo[e["id"]] = e
     lim = int(time.time() * 1000) - retener_dias * 86400000
