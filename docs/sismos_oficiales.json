@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-01T14:00:05.778657Z",
+ "actualizado": "2026-11-01T14:11:25.819604Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261101T050435_-17.403_-64.229",
+   "fecha_local": "2026-11-01 05:04:35",
+   "lat": -17.403,
+   "lon": -64.229,
+   "prof_km": 27.4,
+   "mag": 3.1,
+   "provincia": "Ichilo",
+   "departamento": "Santa Cruz",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261029T160622_-19.368_-67.8",
    "fecha_local": "2026-10-29 16:06:22",
