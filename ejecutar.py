@@ -279,6 +279,13 @@ def main():
             amen, m_ = fuentes_extra.prensa_amenazas(geo_t)
             log("  · " + m_)
             try:
+                import captacion
+                cd, mc = captacion.captar(DOCS, geo_t)
+                log("  · " + mc)
+                amen = amen + cd
+            except Exception as ex_:
+                log("  · captación directa falló: " + type(ex_).__name__ + " " + str(ex_)[:80])
+            try:
                 gd, mg = fuentes_extra.gdelt_bolivia(geo_t)
                 log("  · " + mg)
                 amen = amen + gd
