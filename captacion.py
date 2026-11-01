@@ -278,6 +278,47 @@ def captar_portal(nombre, base, horas):
     return nombre, [], "", round(time.time() - t0, 1), det
 
 
+
+def _navegador(portales, horas, tope_s=150):
+    """Último recurso para portales que cargan sus notas con JavaScript: abre el portal en un navegador real (Chromium sin pantalla)."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except Exception as e:
+        return {}, "navegador no instalado (" + type(e).__name__ + ")"
+    out, t0 = {}, time.time()
+    try:
+        with sync_playwright() as p:
+            b = p.chromium.launch(args=["--no-sandbox"])
+            ctx = b.new_context(user_agent=UA["User-Agent"], locale="es-BO")
+            for nombre, base in portales:
+                if time.time() - t0 > tope_s:
+                    break
+                L = []
+                for ruta in ("/", "/noticias", "/prensa"):
+                    try:
+                        pg = ctx.new_page()
+                        pg.goto(base + ruta, timeout=20000, wait_until="domcontentloaded")
+                        try:
+                            pg.wait_for_load_state("networkidle", timeout=8000)
+                        except Exception:
+                            pass
+                        for t, h in pg.eval_on_selector_all("a", "els => els.map(e => [(e.innerText||e.getAttribute('aria-label')||e.title||'').trim(), e.href])"):
+                            t = re.sub(r"\s+", " ", t)
+                            if len(t) >= 35 and " " in t and h.startswith("http"):
+                                L.append((t, h, 0))
+                        pg.close()
+                    except Exception:
+                        pass
+                    if len(L) >= 20:
+                        break
+                if L:
+                    out[nombre] = L[:200]
+            b.close()
+    except Exception as e:
+        return out, "navegador falló: " + type(e).__name__ + " " + str(e)[:80]
+    return out, f"navegador: {len(out)} portales con notas"
+
+
 def captar(docs, geo=None, horas=72, log=print):
     import busqueda
     import informe_hecho as ih
@@ -285,6 +326,15 @@ def captar(docs, geo=None, horas=72, log=print):
     estado, eventos, vistos = {}, [], set()
     with ThreadPoolExecutor(max_workers=8) as ex:
         res = list(ex.map(lambda kv: captar_portal(kv[0], kv[1], horas), PORTALES.items()))
+    pobres = [(r[0], PORTALES[r[0]]) for r in res if len(r[1]) < 8]
+    if pobres:
+        try:
+            nv, msg_nav = _navegador(pobres, horas)
+        except Exception as e:
+            nv, msg_nav = {}, "navegador falló: " + type(e).__name__
+        log("  · " + msg_nav)
+        res = [(n, (nv[n] if n in nv else L), (m + " + navegador" if n in nv else m) if (n in nv or m) else m, s, ("" if n in nv else er)) for n, L, m, s, er in res]
+        res = [(n, L, (m.strip(" +") or ("navegador" if L else "")), s, er) for n, L, m, s, er in res]
     with ThreadPoolExecutor(max_workers=8) as ex:
         rr = list(ex.map(lambda kv: captar_redes(kv[0], kv[1], horas), PORTALES.items()))
     redes_estado = {}
