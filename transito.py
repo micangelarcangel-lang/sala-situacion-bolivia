@@ -206,8 +206,8 @@ def _victimas(g):
     return f, h
 
 
-def _fusion_semantica(grupos, docs=None, umbral=0.75, horas=12):
-    """Une hechos que cuentan lo mismo con otras palabras (modelo de lenguaje multilingüe). Condiciones: similitud ≥ umbral, ≤ 12 h, departamento compatible,
+def _fusion_semantica(grupos, docs=None, umbral=0.75, horas=24):
+    """Une hechos que cuentan lo mismo con otras palabras (modelo de lenguaje multilingüe). Condiciones: similitud ≥ umbral, ≤ 24 h, departamento compatible,
     ambos hablan de víctimas y sus cifras no se contradicen. Cada unión queda en docs/triangulacion_transito_log.json para auditarla."""
     if len(grupos) < 2:
         return grupos
@@ -369,6 +369,8 @@ def actualizar(docs, notas, geo=None):
     pool = {str(n["id"]): n for n in viales}
     for h in previo:  # notas de corridas anteriores: se conservan para no perder historial ni medios
         for e in h.get("notas", []):
+            if re.search(r"artistas?|m[uú]sic|cantante|far[aá]ndula|actor|actriz|futbolista|trágicos accidentes\?", e.get("titulo") or "", re.I):
+                continue
             if e["id"] not in pool:
                 pool[e["id"]] = {"id": e["id"], "ts": e["ts"], "fuente": e.get("medio"), "titulo": e.get("titulo"), "url": e.get("url"), "fall": e.get("fall"), "her": e.get("her"),
                                  "lat": h.get("lat"), "lon": h.get("lon"), "lugar": h.get("lugar"), "metodo": h.get("metodo_ubicacion"), "nivel": 1}

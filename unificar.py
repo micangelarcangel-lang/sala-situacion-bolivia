@@ -46,8 +46,8 @@ def canon_medio(m):
     n = _norm(m)
     if not n or re.search(r"amazon|vietnam|crprensa|msn|yahoo|google|facebook|youtube|tiktok", n):
         return ""
-    for _ in range(2):
-        n = re.sub(r" (noticias de bolivia para el mundo|bolivia|bo)$", "", n).strip()
+    for _ in range(3):
+        n = re.sub(r" (noticias de bolivia para el mundo|bolivia|bo|digital|online|en linea)$", "", n).strip()
     return _MEDIO_CANON.get(n) or " ".join(w.capitalize() if len(w) > 2 else w for w in n.split())
 
 
