@@ -3,7 +3,7 @@
 y le asigna un nivel de confianza según cuántos medios independientes lo respaldan.
 Salida: docs/transito.json (acumulativo) y docs/datos/transito_hechos.csv
 Confianza: Alta = 3 o más medios distintos · Media = 2 · Baja = 1 (siempre 'preliminar': no hay fuente oficial abierta de Policía/ABC/SUMA)."""
-import os, re, csv, json, time, hashlib, unicodedata, datetime as dt
+import re, os, csv, json, time, hashlib, unicodedata, datetime as dt
 
 TZ = dt.timezone(dt.timedelta(hours=-4))
 DEPS = ["La Paz", "Cochabamba", "Santa Cruz", "Oruro", "Potosí", "Chuquisaca", "Tarija", "Beni", "Pando"]
@@ -199,6 +199,55 @@ def agrupar(notas):
     return grupos
 
 
+
+def _victimas(g):
+    f = {n.get("fall") or 0 for n in g["notas"] if (n.get("fall") or 0) > 0}
+    h = {n.get("her") or 0 for n in g["notas"] if (n.get("her") or 0) > 0}
+    return f, h
+
+
+def _fusion_semantica(grupos, docs=None, umbral=0.75, horas=12):
+    """Une hechos que cuentan lo mismo con otras palabras (modelo de lenguaje multilingüe). Condiciones: similitud ≥ umbral, ≤ 12 h, departamento compatible,
+    ambos hablan de víctimas y sus cifras no se contradicen. Cada unión queda en docs/triangulacion_transito_log.json para auditarla."""
+    if len(grupos) < 2:
+        return grupos
+    import unificar as U
+    textos = [(g["notas"][0].get("titulo") or "")[:250] for g in grupos]
+    V, err = U._embed(textos)
+    if V is None:
+        print("fusión semántica de tránsito no disponible:", err)
+        return grupos
+    vict = re.compile(r"muert|fallec|herid|v[ií]ctim|sin vida|pierde la vida|mueren|murieron", re.I)
+    uniones, absorbido = [], set()
+    for i in range(len(grupos)):
+        if i in absorbido:
+            continue
+        for j in range(i + 1, len(grupos)):
+            if j in absorbido:
+                continue
+            a, b = grupos[i], grupos[j]
+            if abs(min(n["ts"] for n in a["notas"]) - min(n["ts"] for n in b["notas"])) > horas * 3600000 or not _compat(a["dep"], b["dep"]):
+                continue
+            s = float(V[i] @ V[j])
+            if s < umbral:
+                continue
+            ta = " ".join((n.get("titulo") or "") for n in a["notas"]); tb = " ".join((n.get("titulo") or "") for n in b["notas"])
+            if not (vict.search(ta) and vict.search(tb)):
+                continue
+            fa, ha = _victimas(a); fb, hb = _victimas(b)
+            if (fa and fb and fa != fb) or (ha and hb and ha != hb) or (a["trs"] and b["trs"] and not (a["trs"] & b["trs"])):
+                continue
+            if a["es"] and b["es"] and not (a["es"] & b["es"]) and s < 0.85:
+                continue
+            _unir(a, b); a["tks"] = a["tks"]; absorbido.add(j)
+            uniones.append({"similitud": round(s, 3), "a": ta[:100], "b": tb[:100]})
+    if docs:
+        try:
+            json.dump({"generado": int(time.time() * 1000), "umbral": umbral, "uniones": uniones[:200]}, open(os.path.join(docs, "triangulacion_transito_log.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        except Exception:
+            pass
+    return [g for k, g in enumerate(grupos) if k not in absorbido]
+
 def _cred(medio):
     m = norm(medio)
     if any(k in m for k in ("abi agencia", "ministerio", "senamhi", "policia", "gobierno")):
@@ -219,7 +268,11 @@ def _puntaje(medios):
 def _hecho(g):
     ns = sorted(g["notas"], key=lambda x: x["ts"])
     cls = next((c for c in (clasificar(_limpio(n["titulo"])) for n in ns) if c), None) or {"tipo": "", "vehiculo": "", "tramo": ""}
-    medios = sorted({(n.get("fuente") or "").strip() for n in ns if (n.get("fuente") or "").strip()})
+    try:
+        from unificar import canon_medio as _cm
+    except Exception:
+        _cm = lambda m: m
+    medios = sorted({_cm((n.get("fuente") or "").strip()) or (n.get("fuente") or "").strip() for n in ns if (n.get("fuente") or "").strip()})   # un medio = una fuente (Unitel = unitel.bo; La Razón = La Razón Digital)
     vf = sorted({n.get("fall") or 0 for n in ns if (n.get("fall") or 0) > 0})
     vh = sorted({n.get("her") or 0 for n in ns if (n.get("her") or 0) > 0})
     rep = max(ns, key=lambda n: ((n.get("lat") is not None), n.get("nivel") or 0, -n["ts"]))
@@ -307,7 +360,7 @@ def fotos(docs, hechos, presupuesto=120, max_hechos=30):
 
 def actualizar(docs, notas, geo=None):
     """notas: lista de notas de prensa (dict con id, ts, fuente, titulo, url, fall, her, lat, lon, lugar, metodo, nivel)."""
-    viales = [n for n in notas if clasificar(_limpio(n.get("titulo")))]
+    viales = [n for n in notas if clasificar(_limpio(n.get("titulo"))) and not re.search(r"artistas?|m[uú]sic|cantante|far[aá]ndula|actor|actriz|futbolista|trágicos accidentes\?", _limpio(n.get("titulo")), re.I)]
     ruta = os.path.join(docs, "transito.json")
     try:
         previo = json.load(open(ruta, encoding="utf-8")).get("hechos", [])
@@ -319,7 +372,12 @@ def actualizar(docs, notas, geo=None):
             if e["id"] not in pool:
                 pool[e["id"]] = {"id": e["id"], "ts": e["ts"], "fuente": e.get("medio"), "titulo": e.get("titulo"), "url": e.get("url"), "fall": e.get("fall"), "her": e.get("her"),
                                  "lat": h.get("lat"), "lon": h.get("lon"), "lugar": h.get("lugar"), "metodo": h.get("metodo_ubicacion"), "nivel": 1}
-    hechos = [_hecho(g) for g in agrupar(list(pool.values()))]
+    grupos = agrupar(list(pool.values()))
+    try:
+        grupos = _fusion_semantica(grupos, docs)
+    except Exception as ex:
+        print("fusión semántica de tránsito omitida:", type(ex).__name__, str(ex)[:80])
+    hechos = [_hecho(g) for g in grupos]
     lim = int(time.time() * 1000) - 400 * 86400000
     hechos = sorted([h for h in hechos if h["ts"] >= lim], key=lambda h: -h["ts"])
     try:
