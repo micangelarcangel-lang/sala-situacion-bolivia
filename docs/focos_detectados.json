@@ -25,7 +25,7 @@
    "Potosí": 1
   },
   "2026-10-27": {
-   "Santa Cruz": 23,
+   "Santa Cruz": 24,
    "Beni": 30,
    "Pando": 1,
    "Chuquisaca": 1
@@ -79,7 +79,7 @@
    "Pando": 51
   },
   "2026-10-28": {
-   "Beni": 87,
+   "Beni": 86,
    "Santa Cruz": 163,
    "La Paz": 1,
    "Pando": 9
@@ -175,6 +175,7 @@
    "San José (Santa Cruz)": 4,
    "Reyes (Beni)": 3,
    "Guayaramerín (Beni)": 2,
+   "San Matías (Santa Cruz)": 1,
    "Puerto Siles (Beni)": 1,
    "Filadelfia (Pando)": 1,
    "Riberalta (Beni)": 1,
@@ -270,7 +271,7 @@
    "San Ignacio (Santa Cruz)": 100,
    "Exaltación (Beni)": 54,
    "Concepción (Santa Cruz)": 24,
-   "Riberalta (Beni)": 17,
+   "Riberalta (Beni)": 16,
    "San José (Santa Cruz)": 12,
    "Pailón (Santa Cruz)": 8,
    "San Rafael (Santa Cruz)": 8,
@@ -335,9 +336,9 @@
    "San Rafael (Santa Cruz)": 6
   }
  },
- "actualizado": "2026-10-31T23:49:58.543888Z",
+ "actualizado": "2026-11-01T00:00:49.873455Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1596,
- "slack_dia": "2026-10-31"
+ "detecciones_fuera_de_limites": 1280,
+ "slack_dia": "2026-11-01"
 }
