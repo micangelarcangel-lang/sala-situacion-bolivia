@@ -308,6 +308,19 @@ def main():
     def pdf(nombre, **kw):
         nonlocal geo
         geo = geo or cargar_geo("geo.json")
+        if kw.get("modo") == "programado":
+            try:  # motor nuevo: reporte de situación con prioridad, seguimiento e indicadores
+                import reporte_situacion as _rs
+                _ev = json.load(open(os.path.join(DOCS, "eventos_unificados.json"), encoding="utf-8")).get("eventos", [])
+                _rs.actualizar_seguimiento(DOCS, _ev, ahora_ms)
+                _per = "diario" if kw.get("horas", 24) <= 48 else "semanal" if kw.get("horas") <= 200 else "mensual"
+                if (os.environ.get("MODO") == "solicitud"):
+                    _per = "diario" if kw.get("horas", 24) <= 48 else _per
+                r = _rs.build(DOCS, os.path.join(REP, nombre), _per, kw.get("horas", 24), ahora=ahora_ms, geo=geo, etiqueta=kw.get("etiqueta"), base_url=base_url(), log=log)
+                log(f"PDF {nombre} (reporte de situación): {r}")
+                return r
+            except Exception as _ex:
+                log(f"Reporte de situación falló, se usa el reporte clásico: {type(_ex).__name__} {str(_ex)[:200]}")
         r = build([dict(e) for e in evs], geo, os.path.join(REP, nombre), ahora=ahora_ms, **kw)
         log(f"PDF {nombre}: {r}")
         return r
