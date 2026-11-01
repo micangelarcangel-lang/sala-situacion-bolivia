@@ -36,6 +36,21 @@ def _norm(t):
     return re.sub(r"[^a-z0-9 ]", " ", "".join(c for c in unicodedata.normalize("NFD", str(t or "").lower()) if unicodedata.category(c) != "Mn")).strip()
 
 
+_MEDIO_CANON = {"la patria": "La Patria", "opinion": "Opinión", "el diario": "El Diario", "el dia": "El Día", "el deber": "El Deber", "red uno": "Red Uno", "unitel": "Unitel",
+                "eju tv": "Eju.tv", "brujula digital": "Brújula Digital", "la razon": "La Razón", "los tiempos": "Los Tiempos", "correo del sur": "Correo del Sur", "el potosi": "El Potosí",
+                "anf agencia de noticias fides": "ANF", "fides": "Fides", "erbol": "Erbol", "vision 360": "Visión 360", "oxigeno": "Oxígeno", "atb": "ATB", "el mundo": "El Mundo"}
+
+
+def canon_medio(m):
+    """Nombre único del medio (La Patria = La Patria Bolivia) para que un mismo medio no cuente como dos fuentes. Devuelve '' si no es un medio periodístico."""
+    n = _norm(m)
+    if not n or re.search(r"amazon|vietnam|crprensa|msn|yahoo|google|facebook|youtube|tiktok", n):
+        return ""
+    for _ in range(2):
+        n = re.sub(r" (noticias de bolivia para el mundo|bolivia|bo)$", "", n).strip()
+    return _MEDIO_CANON.get(n) or " ".join(w.capitalize() if len(w) > 2 else w for w in n.split())
+
+
 def _fuente_extranjera(f):
     f = _norm(f)
     return bool(re.search(r"\b(pe|ar|cl|br|co|mx|ec|py|uy|ve|es|cu)$", f) or " salta" in " " + f)
@@ -160,10 +175,15 @@ def fusion_semantica(evs):
         destino = None
         for g in grupos:
             a = g["ev"]
-            if a["categoria"] != r["categoria"] or abs(a["ts"] - r["ts"]) > 72 * 3600000:
+            if abs(a["ts"] - r["ts"]) > 72 * 3600000:
                 continue
             comun = g["tk"] & tk
             esp = {w for w in comun if w not in T._GEN}
+            if a["categoria"] != r["categoria"]:
+                # mismo hecho clasificado distinto por dos medios (p. ej. decreto de emergencia por El Niño): exige casi el mismo titular
+                if len(esp) >= 4 and T._sim(g["tk"] - T._GEN, tk - T._GEN) >= 0.6 and abs(a["ts"] - r["ts"]) <= 48 * 3600000:
+                    destino = g; break
+                continue
             # (a) mismo hecho con departamento distinto en la nota (p. ej. «Los Chicos Fieles»): dos o más palabras específicas largas en común, ≤48 h
             fuertes = {w for w in esp if len(w) >= 6 and w not in _DEPN}
             ec = {w for w in (g["es"] & es) if w not in _DEPN}
@@ -357,6 +377,8 @@ def triangular(evs):
         return 15 * 86400000 if e["origen"] in ("sequia", "caudal") else 72 * 3600000
     for e in evs:
         fam = {FAM.get(e["origen"], "Otra")}
+        if e["origen"] == "prensa":
+            e["medios"] = sorted({canon_medio(m) for m in e.get("medios", []) if canon_medio(m)})
         medios = {m for m in e.get("medios", []) if m} if e["origen"] == "prensa" else set()
         rel = 0
         for o in evs:
