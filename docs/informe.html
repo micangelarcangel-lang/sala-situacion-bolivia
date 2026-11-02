@@ -18,7 +18,7 @@ table{border-collapse:collapse;width:100%;font-size:12.5px;margin:4px 0}th,td{bo
 @media print{body{background:#fff}.bar{display:none}.hoja{box-shadow:none;margin:0;max-width:none;padding:0}@page{size:A4;margin:14mm 14mm 16mm}h2{break-after:avoid}}
 </style></head>
 <body>
-<div class="bar"><b>Informe técnico de hecho</b><a class="btn" id="vol" href="index.html">Volver</a><button class="btn p" onclick="window.print()">Descargar PDF / imprimir</button></div>
+<div class="bar"><b>Informe técnico de hecho</b><a class="btn" id="vol" href="index.html">Volver</a><button class="btn p" onclick="window.print()" title="En la ventana que se abre, elija 'Guardar como PDF' en Destino">Guardar como PDF</button></div>
 <div class="hoja" id="app">Cargando informe…</div>
 <script>
 (function(){
@@ -39,6 +39,7 @@ function limpio(t){return String(t||"").replace(/\s+-\s+[^-]{3,45}$/,"").trim()}
 function f2(ms){return S.fecha(ms)}
 function num(n,s,p){return n+" "+(n===1?s:p)}
 X.datos().then(function(D){
+var _hh=((D.transito||{}).hechos||[]);if(!_hh.some(function(z){return z.id===id})){var _mm=_hh.filter(function(z){return(z.notas||[]).some(function(n){return n.id===id})})[0];if(_mm)id=_mm.id}
  var H=((D.transito||{}).hechos||[]).filter(function(z){return z.id===id})[0],E=D.ev.filter(function(z){return z.id===id})[0];
  if(!H&&!E){$("app").innerHTML="<b>No se encontró el hecho solicitado.</b> Puede haber salido del historial.";return}
  var TX=((D.textos_hechos||{}).hechos||{})[id]||{},FI=TX.ficha||(H&&H.ficha)||null,NT=(TX.notas||[]).slice();
@@ -91,9 +92,10 @@ X.datos().then(function(D){
  h+='<div class="sec"><h2>5. Cronología de la cobertura</h2>'+(GN.length?'<table class="l"><tr><th style="width:7%">N.º</th><th style="width:22%">Primera nota</th><th>Titular</th><th style="width:16%">Actualizaciones</th></tr>'+GN.map(function(n,i){return'<tr><td>'+(i+1)+'</td><td>'+(n.ts?f2(n.ts):"—")+'</td><td>'+S.esc(limpio(n.titulo))+'</td><td>'+(n.n>1?(n.n-1)+' (hasta '+(n.ult?S.fecha(n.ult,true):"")+')':'—')+'</td></tr>'}).join("")+'</table>':'<p class="nota">Sin notas registradas.</p>')+'<p class="nota">N.º remite a la tabla de fuentes (sección 8). Una cobertura que se repite en el tiempo indica repercusión o información nueva.</p></div>';
  /* contexto */
  var T=((D.transito||{}).hechos||[]),t30=T.filter(function(z){return z.ts>Date.now()-30*DIA&&z.departamento===dep&&z.id!==id}),f30=t30.reduce(function(a,z){return a+(z.fallecidos||0)},0),h30=t30.reduce(function(a,z){return a+(z.heridos||0)},0);
- var av=((D.senamhi_alertas||{}).alertas||[]).filter(function(a){return(a.fin||"9999")>=S.diaKey(Date.now())&&(a.departamentos||[]).indexOf(dep)>=0});
+ var clima=/lluvi|niebla|helad|nevad|granizo|tormenta|riada|desborde|inunda|resbal|visibilidad|derrumbe|deslizam|mazamorra/i.test(tit+' '+((FI&&FI.causa)||'')+' '+NT.map(function(n){return n.texto||''}).join(' '));
+ var av=((D.senamhi_alertas||{}).alertas||[]).filter(function(a){return clima&&(a.fin||"9999")>=S.diaKey(Date.now())&&(a.departamentos||[]).indexOf(dep)>=0});
  h+='<div class="sec"><h2>6. Contexto</h2><table>'+(transit?'<tr><th>Otros hechos de tránsito en '+S.esc(dep)+' (30 días)</th><td>'+t30.length+' hechos · '+f30+' fallecidos · '+h30+' heridos (prensa)</td></tr>':'')+
-  '<tr><th>Avisos SENAMHI vigentes en '+S.esc(dep||"el departamento")+'</th><td>'+(av.length?av.map(function(a){return S.esc((a.nivel||"")+" — "+(a.fenomeno||a.titulo))}).join("<br>"):"Ninguno")+'</td></tr></table>'+(av.length?'<p class="nota">Un aviso meteorológico vigente puede ser un factor contribuyente; esta relación no está confirmada para este hecho.</p>':'')+'</div>';
+  (!clima?'<tr><th>Factor meteorológico</th><td>No se menciona en las notas; no se asocian avisos del SENAMHI a este hecho.</td></tr>':'<tr><th>Avisos SENAMHI vigentes en '+S.esc(dep||"el departamento")+'</th><td>'+(av.length?av.map(function(a){return S.esc((a.nivel||"")+" — "+(a.fenomeno||a.titulo))}).join("<br>"):"Ninguno")+'</td></tr>')+'</table>'+(av.length?'<p class="nota">Un aviso meteorológico vigente puede ser un factor contribuyente; esta relación no está confirmada para este hecho.</p>':'')+'</div>';
  /* evaluación */
  h+='<div class="sec"><h2>7. Evaluación de la información y límites</h2><ul style="margin:4px 0 0 18px;padding:0"><li>'+S.esc(conf.razon||("Confianza "+(conf.nivel||"—")))+'</li><li>No existe fuente oficial abierta de tránsito: <b>verificar con Policía Boliviana, SUMA 161 o ABC</b> antes de usar las cifras en decisiones.</li><li>Los datos se extrajeron automáticamente del texto de las notas con reglas explícitas; puede haber errores de lectura.</li><li>La ubicación es aproximada (municipio).</li></ul></div>';
  /* fuentes */
