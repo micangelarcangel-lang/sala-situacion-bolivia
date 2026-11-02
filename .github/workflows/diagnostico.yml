@@ -1,7 +1,12 @@
 name: Diagnóstico de fuentes
 
-# Reemplaza a los 15 flujos probar_*. Solo manual. No guarda nada en el repositorio: deja el resultado como artefacto descargable.
+# Reemplaza a los 15 flujos probar_*. No guarda nada en el repositorio: deja el resultado como artefacto descargable.
+# Dos formas de pedirlo: botón manual (cuando el flujo esté en main) o, en una rama, subiendo un cambio a diag_solicitud.txt
+# (ids de fuentes.yml y/o URL, separados por espacios o líneas).
 on:
+  push:
+    branches-ignore: [main]
+    paths: ["diag_solicitud.txt"]
   workflow_dispatch:
     inputs:
       fuente:
@@ -32,9 +37,10 @@ jobs:
           FUENTE: ${{ github.event.inputs.fuente }}
           URL: ${{ github.event.inputs.url }}
         run: |
-          if [ -n "$FUENTE" ]; then python diagnostico.py --fuente "$FUENTE";
+          if [ -n "$FUENTE" ]; then python diagnostico.py --fuente $FUENTE;
           elif [ -n "$URL" ]; then python diagnostico.py --url "$URL";
-          else echo "indica fuente o url"; exit 1; fi
+          elif [ -f diag_solicitud.txt ]; then python diagnostico.py --solicitud diag_solicitud.txt;
+          else echo "indica fuente, url o diag_solicitud.txt"; exit 1; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -4,7 +4,8 @@
 Prueba una o varias direcciones y dice, por cada vía de la escalera, si respondió, cuánto tardó y si parece un bloqueo.
 Uso:
     python diagnostico.py --url https://www.defensacivil.gob.bo --vias directa navegador
-    python diagnostico.py --fuente defensa_civil_videci          # usa las URL de fuentes.yml
+    python diagnostico.py --fuente defensa_civil_videci sngr     # usa las URL de fuentes.yml
+    python diagnostico.py --solicitud diag_solicitud.txt         # ids y URL en un archivo
 Salida: imprime un resumen y escribe diag_out/diagnostico.json (no se versiona).
 """
 import argparse, json, os, re, sys, time, urllib.request, urllib.error
@@ -74,10 +75,18 @@ def urls_de_fuente(fid):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", nargs="*", default=[])
-    ap.add_argument("--fuente")
+    ap.add_argument("--fuente", nargs="*", default=[])
+    ap.add_argument("--solicitud", help="archivo con ids de fuentes.yml y/o URL separados por espacios o líneas")
     ap.add_argument("--vias", nargs="+", default=["directa", "navegador", "archivo"], choices=list(VIAS))
     a = ap.parse_args()
-    urls = list(a.url) + (urls_de_fuente(a.fuente) if a.fuente else [])
+    fuentes = list(a.fuente)
+    urls = list(a.url)
+    if a.solicitud:
+        for tok in open(a.solicitud, encoding="utf-8").read().split():
+            (urls if tok.startswith("http") else fuentes).append(tok)
+    for fid in fuentes:
+        urls += urls_de_fuente(fid)
+    urls = list(dict.fromkeys(urls))
     if not urls:
         raise SystemExit("indica --url o --fuente")
     res = []
