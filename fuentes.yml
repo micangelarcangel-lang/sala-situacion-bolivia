@@ -1,6 +1,6 @@
 # Catálogo de fuentes de la Sala de Situación Bolivia (v3).
 # Cada fuente declara su ESCALERA de vías: se prueban en orden y se registra cuál funcionó.
-# estado de cada vía:  activa = ya usada en producción · por_verificar = hay que probarla en Actions · manual = la llena una persona
+# estado de cada vía:  activa = ya usada en producción · por_verificar = hay que probarla en Actions · manual = la llena una persona · descartado_piloto = no se usa en el piloto
 # Regla: ninguna fuente termina en blanco; la última vía es siempre 'red' (registro validado) o carga manual.
 version: 1
 
@@ -74,7 +74,7 @@ fuentes:
       - {via: html, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403"}
       - {via: navegador, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403 también con navegador real (prueba en Actions, 02/11/2026)"}
       - {via: archivo, estado: por_verificar, nota: "Wayback tiene capturas (prueba 02/11/2026); falta medir qué tan recientes son"}
-      - {via: ejecutor_propio, estado: por_verificar, nota: "ejecutor en computadora con IP boliviana si el bloqueo es por IP"}
+      - {via: ejecutor_propio, estado: descartado_piloto, nota: "sin garantía de energía ni disponibilidad en el piloto; pasa a un servidor adecuado si el piloto funciona"}
       - {via: correo, estado: por_verificar}
       - {via: red, estado: manual}
 
@@ -94,7 +94,7 @@ fuentes:
     vias:
       - {via: html, url: "https://www.senasag.gob.bo", estado: activa, resultado: "403 directa y con navegador (prueba 02/11/2026)"}
       - {via: archivo, estado: por_verificar, nota: "Wayback tiene capturas; falta medir qué tan recientes son"}
-      - {via: ejecutor_propio, estado: por_verificar}
+      - {via: ejecutor_propio, estado: descartado_piloto, nota: "queda para el servidor definitivo"}
       - {via: red, estado: manual, nota: "zoonosis y sanidad animal: registro de la red"}
 
   - id: abc_carreteras
@@ -151,6 +151,6 @@ fuentes:
       - {via: html, estado: activa, nota: "portada"}
       - {via: navegador, estado: activa, nota: "Playwright para portales con JavaScript"}
       - {via: buscador, estado: activa, nota: "Bing Noticias y Google Noticias"}
-      - {via: ejecutor_propio, estado: por_verificar, nota: "ejecutor en computadora con IP boliviana para los portales que no responden desde GitHub"}
+      - {via: ejecutor_propio, estado: descartado_piloto, nota: "para los portales que no responden desde GitHub; queda para el servidor definitivo"}
       - {via: archivo, estado: por_verificar}
       - {via: red, estado: manual}
