@@ -95,4 +95,54 @@ def _aplicar_a_transito(docs, out):
             h["vehiculo"] = " y ".join(fi["vehiculos"][:2])
         if fi.get("via"):
             h["tramo"] = fi["via"]
+    try:
+        d["hechos"], nf = _fusionar_por_tramo(d.get("hechos", []))
+        if nf:
+            d["n"] = len(d["hechos"])
+    except Exception as ex:
+        print("fusión por tramo omitida:", type(ex).__name__, str(ex)[:80])
     json.dump(d, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+
+
+def _clave_tramo(s):
+    import re, unicodedata
+    n = "".join(c for c in unicodedata.normalize("NFD", (s or "").lower()) if unicodedata.category(c) != "Mn")
+    n = re.sub(r"\b(carretera|ruta|camino|tramo|doble via|autopista)\b", " ", n)
+    p = [w.strip() for w in re.split(r"\s*[-–]\s*", n) if w.strip()]
+    return "-".join(sorted(re.sub(r"[^a-z ]", "", w).strip() for w in p)) if len(p) >= 2 else ""
+
+
+def _fusionar_por_tramo(hechos, horas=36):
+    """Dos hechos leídos en el TEXTO de las notas con la MISMA carretera entre dos localidades (p. ej. Quime – Konani), con primera nota a ≤ 36 h
+    y sin heridos contradictorios, son el mismo hecho contado por medios distintos: se unen (las cifras distintas se muestran como discrepancia)."""
+    import transito as T
+    try:
+        from unificar import canon_medio as cm
+    except Exception:
+        cm = lambda m: m
+    hechos = sorted(hechos, key=lambda h: h["ts"])
+    out, uni = [], 0
+    for h in hechos:
+        k = _clave_tramo(h.get("tramo"))
+        base = next((b for b in out if k and _clave_tramo(b.get("tramo")) == k and abs(b["ts"] - h["ts"]) <= horas * 3600000
+                     and not (b.get("heridos") and h.get("heridos") and b["heridos"] != h["heridos"])
+                     and ((b.get("heridos") or 0) > 0 and b.get("heridos") == h.get("heridos") or (b.get("fallecidos") or 0) > 0 and b.get("fallecidos") == h.get("fallecidos"))), None)   # misma carretera + al menos una cifra de víctimas igual
+        if not base:
+            out.append(h); continue
+        uni += 1
+        vistos = {n["id"] for n in base.get("notas", [])}
+        base["notas"] = base.get("notas", []) + [n for n in h.get("notas", []) if n["id"] not in vistos]
+        ve = {(e.get("medio"), e.get("url")) for e in base.get("enlaces", [])}
+        base["enlaces"] = base.get("enlaces", []) + [e for e in h.get("enlaces", []) if (e.get("medio"), e.get("url")) not in ve]
+        base["medios"] = sorted({cm(m) or m for m in base.get("medios", []) + h.get("medios", [])})
+        base["n_medios"] = len(base["medios"]); base["n_notas"] = len(base["notas"])
+        base["discrep_con"] = {"fallecidos": h.get("fallecidos"), "heridos": h.get("heridos")} if (h.get("fallecidos") != base.get("fallecidos")) else base.get("discrep_con")
+        base["cifras_discrepantes"] = bool(base.get("cifras_discrepantes") or h.get("fallecidos") != base.get("fallecidos"))
+        base["ultima_nota"] = max(base.get("ultima_nota") or base["ts"], h.get("ultima_nota") or h["ts"])
+        nm = base["n_medios"]
+        base["confianza"] = dict(base.get("confianza") or {}, nivel="Alta" if nm >= 3 else "Media" if nm == 2 else "Baja", puntaje=T._puntaje(base["medios"]),
+                                 razon=f"{nm} medios distintos cuentan el mismo hecho (unidos por la misma carretera en el texto de las notas)" + ("; los medios difieren en el número de fallecidos." if base["cifras_discrepantes"] else "."))
+        if not base.get("imagen") and h.get("imagen"):
+            for c in ("imagen", "imagen_medio", "imagen_url"):
+                base[c] = h.get(c)
+    return sorted(out, key=lambda h: -h["ts"]), uni
