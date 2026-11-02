@@ -1,0 +1,42 @@
+name: Diagnóstico de fuentes
+
+# Reemplaza a los 15 flujos probar_*. Solo manual. No guarda nada en el repositorio: deja el resultado como artefacto descargable.
+on:
+  workflow_dispatch:
+    inputs:
+      fuente:
+        description: "id de fuentes.yml (ej: defensa_civil_videci). Vacío = usar la URL de abajo"
+        default: ""
+      url:
+        description: "URL a probar (si no se indica fuente)"
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostico:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml playwright
+      - name: Navegador (si falla, se prueban las otras vías)
+        continue-on-error: true
+        run: python -m playwright install --with-deps chromium
+      - name: Probar vías
+        env:
+          FUENTE: ${{ github.event.inputs.fuente }}
+          URL: ${{ github.event.inputs.url }}
+        run: |
+          if [ -n "$FUENTE" ]; then python diagnostico.py --fuente "$FUENTE";
+          elif [ -n "$URL" ]; then python diagnostico.py --url "$URL";
+          else echo "indica fuente o url"; exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: diagnostico
+          path: diag_out/

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "esquema_evento_v1",
+  "title": "Evento de la Sala de Situación Bolivia (v1)",
+  "description": "Contrato único de un evento. Los campos del bloque 'nuevos en v1' son opcionales hasta la fase F3; después pasan a obligatorios.",
+  "type": "object",
+  "required": ["id", "origen", "categoria", "titulo", "ts", "fuente", "oficial", "departamentos", "cifras", "confianza"],
+  "properties": {
+    "id": {"type": "string", "minLength": 3},
+    "origen": {"enum": ["prensa", "foco", "senamhi", "sismo", "modelo", "epidemiologia", "usgs", "caudal", "gdacs", "sequia", "registro", "red"]},
+    "categoria": {"enum": ["geológica", "hidrológica", "meteorológica", "climatológica", "biológica", "tecnológica", "antropogénica", "otra"]},
+    "titulo": {"type": "string", "minLength": 3},
+    "ts": {"type": "integer", "minimum": 1262304000000, "description": "Milisegundos UTC. Hoy es la hora de captura en varias fuentes; ts_publicacion es la hora real de publicación."},
+    "ts_ult": {"type": "integer"},
+    "nivel": {"type": ["integer", "null"], "minimum": 0, "maximum": 3},
+    "nivel_txt": {"type": "string"},
+    "oficial": {"type": "boolean"},
+    "lugar": {"type": "string"},
+    "departamentos": {"type": "array", "items": {"enum": ["La Paz", "Cochabamba", "Santa Cruz", "Oruro", "Potosí", "Chuquisaca", "Tarija", "Beni", "Pando"]}},
+    "municipios": {"type": "array", "items": {"type": "string"}},
+    "lat": {"type": ["number", "null"], "minimum": -23.0, "maximum": -9.0},
+    "lon": {"type": ["number", "null"], "minimum": -70.0, "maximum": -57.0},
+    "bbox": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4},
+    "detalle": {"type": "string"},
+    "fuente": {"type": "string", "minLength": 1},
+    "url": {"type": "string"},
+    "medios": {"type": "array", "items": {"type": "string"}},
+    "alias": {"type": "array", "items": {"type": "string"}},
+    "metodo": {"type": "string", "description": "Cómo se obtuvo la ubicación (texto libre hasta F3)."},
+    "subtipo": {"type": "string"},
+    "fenomeno": {"type": "string"},
+    "periodo": {"type": "string"},
+    "internacional": {"type": "boolean"},
+    "menciona_bolivia": {"type": "boolean"},
+    "reclasificado": {"type": "boolean"},
+    "cifras": {
+      "type": "object",
+      "properties": {
+        "fallecidos": {"type": "integer", "minimum": 0},
+        "heridos": {"type": "integer", "minimum": 0},
+        "notas": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "confianza": {
+      "type": "object",
+      "required": ["nivel", "fuentes_independientes", "puntaje"],
+      "properties": {
+        "nivel": {"enum": ["Baja", "Media", "Alta"]},
+        "familias": {"type": "array", "items": {"type": "string"}},
+        "relacionados": {"type": "integer", "minimum": 0},
+        "medios": {"type": "integer", "minimum": 0},
+        "fuentes_independientes": {"type": "integer", "minimum": 0},
+        "puntaje": {"type": "number", "minimum": 0, "maximum": 100}
+      }
+    },
+
+    "schema_version": {"const": 1},
+    "ts_publicacion": {"type": ["integer", "null"], "description": "Hora de publicación leída de la nota; null si no consta."},
+    "precision_ubicacion": {"enum": ["punto", "municipio", "departamento", "ninguna"]},
+    "nivel_evidencia": {"enum": ["confirmado", "corroborado", "reportado", "parcial"]},
+    "cuerpo_leido": {"type": "boolean"},
+    "via_captacion": {"type": "string", "description": "Rama de la escalera que entregó el dato (api, rss, sitemap, html, navegador, pdf, archivo, correo, red)."},
+    "victimas": {
+      "type": "object",
+      "properties": {
+        "fallecidos": {"type": "object", "properties": {"min": {"type": "integer", "minimum": 0}, "max": {"type": "integer", "minimum": 0}}},
+        "heridos": {"type": "object", "properties": {"min": {"type": "integer", "minimum": 0}, "max": {"type": "integer", "minimum": 0}}},
+        "discrepancia": {"type": "boolean"}
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,155 @@
+# Catálogo de fuentes de la Sala de Situación Bolivia (v3).
+# Cada fuente declara su ESCALERA de vías: se prueban en orden y se registra cuál funcionó.
+# estado de cada vía:  activa = ya usada en producción · por_verificar = hay que probarla en Actions · manual = la llena una persona
+# Regla: ninguna fuente termina en blanco; la última vía es siempre 'red' (registro validado) o carga manual.
+version: 1
+
+fuentes:
+  - id: senamhi_alertas
+    institucion: SENAMHI
+    categorias: [meteorológica, hidrológica]
+    frecuencia_min: 30
+    vias:
+      - {via: api, url: "https://senab.senamhi.gob.bo/api/forecastweather/datatable", estado: activa}
+      - {via: pdf, url: "https://sena.senamhi.gob.bo/public/forecast-public-reports/", estado: activa, nota: "2 PDF dieron error en la corrida del 02/11/2026"}
+      - {via: html, url: "https://www.senamhi.gob.bo/alertas2.php", estado: activa}
+      - {via: red, estado: manual}
+
+  - id: senamhi_propagacion_fuego
+    institucion: SENAMHI
+    categorias: [climatológica]
+    frecuencia_min: 1440
+    vias:
+      - {via: pdf, url: "https://senamhi.gob.bo/index.php/meteorologia/focos-calor", estado: activa}
+      - {via: red, estado: manual}
+
+  - id: sismos_san_calixto
+    institucion: Observatorio San Calixto
+    categorias: [geológica]
+    frecuencia_min: 30
+    vias:
+      - {via: html, url: "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico", estado: activa}
+      - {via: api, url: "https://www.seismicportal.eu/fdsnws/event/1/query", estado: activa, nota: "EMSC, respaldo internacional"}
+      - {via: red, estado: manual}
+
+  - id: focos_firms
+    institucion: NASA FIRMS
+    categorias: [climatológica]
+    frecuencia_min: 60
+    vias:
+      - {via: api, url: "https://firms.modaps.eosdis.nasa.gov/api/area/csv/", estado: activa, nota: "requiere secreto FIRMS_KEY"}
+      - {via: csv, url: "https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/10min/", estado: activa, nota: "INPE Queimadas"}
+
+  - id: caudales_glofas
+    institucion: Copernicus EMS / Open-Meteo
+    categorias: [hidrológica]
+    frecuencia_min: 360
+    vias:
+      - {via: api, url: "https://flood-api.open-meteo.com/v1/flood", estado: activa}
+
+  - id: sequia_spi
+    institucion: Open-Meteo / ERA5
+    categorias: [climatológica]
+    frecuencia_min: 1440
+    vias:
+      - {via: api, url: "https://archive-api.open-meteo.com/v1/archive", estado: activa}
+
+  - id: vigilancia_epidemiologica
+    institucion: Ministerio de Salud y Deportes / OPS / OMS / ECDC
+    categorias: [biológica]
+    frecuencia_min: 360
+    vias:
+      - {via: html, url: "https://www.minsalud.gob.bo/9104-boletines-epidemiologicos-2026", estado: activa}
+      - {via: html, url: "https://www.paho.org/es/alertas-actualizaciones-epidemiologicas", estado: activa}
+      - {via: api, url: "https://www.who.int/api/news/diseaseoutbreaknews", estado: activa}
+      - {via: correo, estado: por_verificar, nota: "suscripción al boletín con la cuenta Gmail del sistema, lectura por IMAP"}
+      - {via: red, estado: manual}
+
+  - id: defensa_civil_videci
+    institucion: Viceministerio de Defensa Civil
+    categorias: [hidrológica, meteorológica, tecnológica, antropogénica]
+    frecuencia_min: 120
+    bloqueo_actual: "HTTP 403 desde las IP de GitHub (hipótesis: bloqueo por IP, sin confirmar)"
+    vias:
+      - {via: html, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403"}
+      - {via: navegador, url: "https://www.defensacivil.gob.bo", estado: por_verificar}
+      - {via: archivo, estado: por_verificar, nota: "copia archivada pública de la página"}
+      - {via: ejecutor_propio, estado: por_verificar, nota: "ejecutor en computadora con IP boliviana si el bloqueo es por IP"}
+      - {via: correo, estado: por_verificar}
+      - {via: red, estado: manual}
+
+  - id: sngr
+    institucion: Sistema Nacional de Gestión de Riesgos
+    categorias: [hidrológica, meteorológica, antropogénica]
+    frecuencia_min: 120
+    vias:
+      - {via: html, url: "https://www.sngr.gob.bo", estado: activa, resultado: "sin lectura"}
+      - {via: navegador, estado: por_verificar}
+      - {via: archivo, estado: por_verificar}
+      - {via: red, estado: manual}
+
+  - id: senasag
+    institucion: SENASAG
+    categorias: [biológica]
+    frecuencia_min: 720
+    vias:
+      - {via: html, url: "https://www.senasag.gob.bo", estado: activa, resultado: "sin acceso"}
+      - {via: navegador, estado: por_verificar}
+      - {via: archivo, estado: por_verificar}
+      - {via: red, estado: manual, nota: "zoonosis y sanidad animal: registro de la red"}
+
+  - id: abc_carreteras
+    institucion: Administradora Boliviana de Carreteras
+    categorias: [antropogénica]
+    frecuencia_min: 60
+    vias:
+      - {via: html, url: "https://www.abc.gob.bo", estado: activa}
+      - {via: navegador, estado: por_verificar}
+      - {via: red, estado: manual}
+
+  - id: policia_bomberos_suma
+    institucion: Policía Boliviana / Bomberos / SUMA 161
+    categorias: [antropogénica, tecnológica]
+    frecuencia_min: 30
+    vias:
+      - {via: canales_publicos, estado: por_verificar, nota: "comunicados en canales públicos; revisar términos de uso antes de leer"}
+      - {via: correo, estado: por_verificar}
+      - {via: red, estado: manual, nota: "formulario KoboToolbox validado por tu red"}
+
+  - id: prensa_boliviana
+    institucion: Medios de comunicación bolivianos
+    categorias: [hidrológica, meteorológica, geológica, climatológica, biológica, tecnológica, antropogénica]
+    frecuencia_min: 30
+    portales:
+      La Razón: "https://www.la-razon.com"
+      Opinión: "https://www.opinion.com.bo"
+      Los Tiempos: "https://www.lostiempos.com"
+      El Deber: "https://eldeber.com.bo"
+      Página Siete: "https://www.paginasiete.bo"
+      Visión 360: "https://www.vision360.bo"
+      Cambio: "https://www.cambio.bo"
+      Brújula Digital: "https://brujuladigital.net"
+      Eju.tv: "https://eju.tv"
+      Unitel: "https://unitel.bo"
+      Red Uno: "https://www.reduno.com.bo"
+      ATB: "https://www.atb.com.bo"
+      El Alteño: "https://elalteno.com.bo"
+      Radio Panamericana: "https://panamericana.bo"
+      Bolivia Verifica: "https://boliviaverifica.bo"
+      El Diario: "https://www.eldiario.net"
+      La Patria: "https://lapatriaenlinea.com"
+      Correo del Sur: "https://correodelsur.com"
+      El Día: "https://eldia.com.bo"
+      Erbol: "https://erbol.com.bo"
+      ABI: "https://abi.bo"
+      Oxígeno: "https://oxigeno.bo"
+      Urgente.bo: "https://urgente.bo"
+    vias:
+      - {via: rss, estado: activa}
+      - {via: sitemap, estado: activa}
+      - {via: api, estado: activa, nota: "API de WordPress donde existe"}
+      - {via: html, estado: activa, nota: "portada"}
+      - {via: navegador, estado: activa, nota: "Playwright para portales con JavaScript"}
+      - {via: buscador, estado: activa, nota: "Bing Noticias y Google Noticias"}
+      - {via: archivo, estado: por_verificar}
+      - {via: red, estado: manual}
