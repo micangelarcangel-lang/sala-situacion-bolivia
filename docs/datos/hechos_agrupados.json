@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:rdp2hs",
+  "fecha_hora_local": "2026-11-02 07:07",
+  "ts_ms": 1793617646000,
+  "titulo": "Incendio en un restaurante deja daños materiales en Santa Cruz - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "La Patria Bolivia; Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQazJxXzFPT2duQXo5TUpFWUxNcXNValQtaUtiWGV2ZExGTnFkUlh4aGM3UUZ0OXlHbk16TG05UDhrNjlVLVhLQXhCUTNlRlNBeTdRYVJoWUFJd3VkSTJFZjdaejF3WXRCYTNDbTdHcG5ieVRGSFY4b0VFSnhIT2c5Sy1LS2twMXYyNjlvcjh2NnBEcF9kazV5MlVQZG84QzZtTmVFQnpvOVNLb0pLSlE?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:1oyq4an",
   "fecha_hora_local": "2026-11-02 03:31",
   "ts_ms": 1793604681000,
@@ -10,7 +30,7 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 42,
+  "n_notas": 43,
   "fuentes": "24horas; ANF Agencia de Noticias Fides Bolivia; Amazon.com; América Económica; Asuntos Centrales; Canal N; Correo del Sur; Demócrata; Diario Extra; El Comercio Perú; El Informador; El Nuevo Diario; El Universo; Euronews.com; Federación de Periodistas del Perú; Infobae; Informat.ro; La Patria Bolivia; La iguana TV; Notimérica; Opinión Bolivia; Revista Caretas; TV Pública; Tribuna Económica; Uruguay Al Día; Vietnam.vn; Yahoo; eju.tv; lineadirectaportal.com",
   "lat": "",
   "lon": "",
@@ -38,6 +58,26 @@
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
   "enlaces": "https://open-meteo.com/"
+ },
+ {
+  "hecho_id": "noticia:38xc53",
+  "fecha_hora_local": "2026-11-01 21:39",
+  "ts_ms": 1793583562000,
+  "titulo": "Identifican a la víctima del fatal embarrancamiento en la avenida Los Leones de La Paz - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -16.169,
+  "lon": -68.09,
+  "lugar": "La Paz, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Nuestra Señora de La Paz",
+  "enlaces": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPSEVWcGctc1BHcXI1dU5uYmVjS2d6SHFfWFQwUGlLZ3NlcE9qTjJmZGNWbGtsVVdGWUZkNGJmaS1UWXZlNlFTUjVwNHI4QTNBWE9EX1B4bFpIYzRUNXF3ZFJOZ0hoOXo0YXlwa1lrWkZjNmNIQl9taEFqb2hlRGZkYkpiemx1U0ZRZlZRQXllT1UzbEpLcklYTld4S2t6RHAyZTQ2VWc2YU1sT0I1S2N2cl9KSTJ1Tk1LN004Zi1XUDFVbFpaRFl6OUtZaUl1UjlY?oc=5"
  },
  {
   "hecho_id": "noticia:ghib7p",
@@ -70,14 +110,14 @@
   "fallecidos_max": 1,
   "heridos_max": 1,
   "cifras_discrepantes": "no",
-  "n_notas": 3,
+  "n_notas": 2,
   "fuentes": "La Patria Bolivia; Red Uno",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQWEZ0NUZZaVMyNWtpM1ZRRGlHbGNpNjk4b0ZobkppUWdkempHdFNxNFRMMTRVUkhuU2xuYm43MmpOV2lvUmdqLWNlWjRoNXRrZmV2SHdPRVpuSHJXamszRUJjLUJUc3B6SU9Rang1SGhDRzRVT0gwZGRFdkhsVDhoVGZIQWhDZkVKS2pQOGFqallTdFVuS1Fn?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5 | https://news.google.com/rss/articles/CBMirwFBVV95cUxNNUROMzd1UDJRWVZZQ011cFd2c1FSdER1ZzdleU04cXpwYk5HaUZrLXoyU2NzdFk1dnNRUndhUWt0cG9DX09rSjlLcDItU0tzcmQtS3E4dDQ4ZF9HdGJLdk13ek9BNHJUWVlCcklrM25rZ01RbXhLalRBT1FGdDNReHdlTFZkNkJ5ZFd3N3NZVFVmOFUxbEhHN0RsaUxiSVZsM0lXVEFYSHVRQlhsOEtJ?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQWEZ0NUZZaVMyNWtpM1ZRRGlHbGNpNjk4b0ZobkppUWdkempHdFNxNFRMMTRVUkhuU2xuYm43MmpOV2lvUmdqLWNlWjRoNXRrZmV2SHdPRVpuSHJXamszRUJjLUJUc3B6SU9Rang1SGhDRzRVT0gwZGRFdkhsVDhoVGZIQWhDZkVKS2pQOGFqallTdFVuS1Fn?oc=5 | https://news.google.com/rss/articles/CBMirwFBVV95cUxNNUROMzd1UDJRWVZZQ011cFd2c1FSdER1ZzdleU04cXpwYk5HaUZrLXoyU2NzdFk1dnNRUndhUWt0cG9DX09rSjlLcDItU0tzcmQtS3E4dDQ4ZF9HdGJLdk13ek9BNHJUWVlCcklrM25rZ01RbXhLalRBT1FGdDNReHdlTFZkNkJ5ZFd3N3NZVFVmOFUxbEhHN0RsaUxiSVZsM0lXVEFYSHVRQlhsOEtJ?oc=5"
  },
  {
   "hecho_id": "clima:Oruro:2026-11-01:viento:1",
