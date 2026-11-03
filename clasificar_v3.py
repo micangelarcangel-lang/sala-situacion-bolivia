@@ -29,7 +29,12 @@ def norm(t):
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", t)).strip()
 
 
-def clasificar(titulo, cuerpo="", lugar_bolivia=False):
+DEPORTE = re.compile(r"\b(arbitr\w*|delantero|portero|futbol|partido|gol|goles|rival|liga|campeonato|torneo|equipo|jugador\w*|fichaje|entrenador)\b")
+RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo")
+EXTRA_EXT = ("florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
+
+
+def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
     tn, cn = norm(titulo), norm((cuerpo or "")[:1200])
     res = {"categoria": None, "subtipo": None, "ambito": "sin_lugar", "relevante": False, "razones": []}
     for cat, sub, pat in TAXONOMIA:
@@ -41,7 +46,10 @@ def clasificar(titulo, cuerpo="", lugar_bolivia=False):
         for cat, sub, pat in TAXONOMIA:
             if len(re.findall(pat, cn)) >= 2:  # en el cuerpo debe aparecer al menos dos veces para contar
                 res.update(categoria=cat, subtipo=sub); res["razones"].append("tipo repetido en el cuerpo"); break
-    ext = [p for p in EXTERIOR if re.search(r"\b" + p + r"\b", tn)]
+    if any(r in tn for r in RUIDO) or DEPORTE.search(tn):
+        res["subtipo"], res["categoria"] = None, None
+        res["razones"].append("ruido o deportes")
+    ext = [p for p in EXTERIOR + EXTRA_EXT if re.search(r"\b" + p + r"\b", tn)]
     bol = bool(BOLIVIA.search(tn)) or lugar_bolivia
     if ext and not bol:
         res["ambito"] = "exterior"; res["razones"].append("nombra: " + ext[0])
@@ -49,5 +57,6 @@ def clasificar(titulo, cuerpo="", lugar_bolivia=False):
         res["ambito"] = "bolivia"
     elif BOLIVIA.search(cn[:600]):
         res["ambito"] = "bolivia"; res["razones"].append("Bolivia solo en el cuerpo")
-    res["relevante"] = res["subtipo"] is not None and res["ambito"] != "exterior"
+    # estricto (notas nuevas de feeds, sin ubicación previa): exige evidencia de Bolivia, no solo ausencia de un país extranjero
+    res["relevante"] = res["subtipo"] is not None and (res["ambito"] == "bolivia" if estricto else res["ambito"] != "exterior")
     return res

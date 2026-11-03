@@ -85,7 +85,10 @@ def main():
                     if t:
                         n["cuerpo"] = t[:4000]
         for n in pendientes:
-            cl = clasificar_v3.clasificar(n["titulo"], n["cuerpo"])
+            cl = clasificar_v3.clasificar(n["titulo"], n["cuerpo"], False, True)  # con la página leída: ahora sí exige evidencia de Bolivia
+            if not cl["relevante"]:
+                descartadas += 1
+                continue
             cache_cuerpos[n["url"]] = {"texto": n["cuerpo"], "estado": "texto completo", "t": time.time()}
             eventos.append({"id": "noticia:v3:" + hashlib.sha1(n["url"].encode()).hexdigest()[:12], "origen": "prensa", "categoria": cl["categoria"], "titulo": n["titulo"], "ts": n["ts_publicacion"], "ts_publicacion": n["ts_publicacion"],
                             "fuente": n["medio"], "url": n["url"], "oficial": False, "departamentos": [], "cifras": {}, "lugar": "", "lat": None, "lon": None, "nivel_txt": "Sin nivel (prensa, sin verificar)", "nivel": 0,

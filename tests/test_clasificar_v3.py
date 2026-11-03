@@ -31,3 +31,11 @@ def test_mencion_pasajera_en_el_cuerpo_no_cuenta():
 def test_alerta_roja_de_interpol_no_es_clima():
     assert not c.clasificar("Bolivia pidió a Interpol alerta roja para dar con el paradero de exministro")["relevante"]
     assert c.clasificar("Senamhi emite alerta naranja por ráfagas de viento en Santa Cruz")["subtipo"] == "granizada / helada / viento"
+
+
+def test_estricto_exige_bolivia_y_descarta_deportes_y_exterior():
+    assert not c.clasificar("Investigan si el avión que cayó en Florida comenzó a desintegrarse", "", False, True)["relevante"]
+    assert not c.clasificar("Delantero del Tenerife está estable tras duro choque con un rival", "", False, True)["relevante"]
+    assert not c.clasificar("Agenda informativa: Cochabamba tiene sequía", "", False, True)["relevante"]
+    assert c.clasificar("Chuquisaca sufre intensa granizada que destruye techos", "", False, True)["relevante"]
+    assert c.clasificar("Caso de meningitis en cárcel de Palmasola", "El Sedes de Santa Cruz activó protocolos.", False, True)["relevante"]
