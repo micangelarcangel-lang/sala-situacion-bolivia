@@ -35,6 +35,10 @@ def agrupar(notas, ventana_h=48, umbral=0.45, umbral_mismo_lugar=0.30):
     """notas: lista de dicts con titulo, cuerpo (opcional), ts (ms), municipio, departamento, fallecidos (min o None).
     Devuelve lista de grupos: {'indices': [...], 'razones': [...]}."""
     vecs = _tfidf([_toks(n.get("titulo", "") + " " + n.get("titulo", "") + " " + (n.get("cuerpo") or "")[:600]) for n in notas])
+    # términos raros del titular (lugar, enfermedad, nombre propio): si dos notas comparten >= 2, hablan casi seguro del mismo hecho
+    tt = [set(w for w in _toks(n.get("titulo", "")) if len(w) >= 6) for n in notas]
+    dft = Counter(w for t in tt for w in t)
+    tope_raro = max(6, int(0.05 * len(notas)))
     padre = list(range(len(notas)))
     razon = {}
 
@@ -60,6 +64,11 @@ def agrupar(notas, ventana_h=48, umbral=0.45, umbral_mismo_lugar=0.30):
             if fa is not None and fb is not None and fa != fb and fa > 1 and fb > 1:
                 continue  # cifras de muertos incompatibles: hechos distintos
             sim = _coseno(vecs[i], vecs[j])
+            raros = [w for w in tt[i] & tt[j] if dft[w] <= tope_raro]
+            if len(raros) >= (2 if mismo else 4):  # sin el mismo municipio confirmado se exigen 4 términos raros compartidos
+                padre[raiz(j)] = raiz(i)
+                razon.setdefault(raiz(i), []).append(f"{i}~{j} términos raros: {', '.join(sorted(raros))[:50]}")
+                continue
             if sim >= (umbral_mismo_lugar if mismo else umbral):
                 padre[raiz(j)] = raiz(i)
                 razon.setdefault(raiz(i), []).append(f"{i}~{j} sim={sim:.2f}{' mismo municipio' if mismo else ''}")

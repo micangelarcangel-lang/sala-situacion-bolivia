@@ -26,3 +26,10 @@ def test_no_une_fuera_de_ventana():
 def test_no_une_cifras_de_muertos_distintas():
     r = g.agrupar([nota("Choque en la doble vía deja dos muertos", 0, "Oruro", "Oruro", 2), nota("Choque en la doble vía deja cuatro muertos", H, "Oruro", "Oruro", 4)])
     assert len(r) == 2
+
+
+def test_une_por_terminos_raros_compartidos():
+    r = g.agrupar([nota("Brote de meningitis en Palmasola: paciente está grave", 0, "Santa Cruz de la Sierra", "Santa Cruz"),
+                   nota("Sedes activa protocolos por caso de meningitis en cárcel de Palmasola", 3 * H, "Santa Cruz de la Sierra", "Santa Cruz"),
+                   nota("Choque en la doble vía deja heridos", 2 * H, "Santa Cruz de la Sierra", "Santa Cruz")])
+    assert sorted(len(x["indices"]) for x in r) == [1, 2]
