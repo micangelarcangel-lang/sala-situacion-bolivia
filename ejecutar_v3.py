@@ -80,8 +80,8 @@ def main():
             import informe_hecho
             from concurrent.futures import ThreadPoolExecutor
             with ThreadPoolExecutor(8) as ex:
-                for n, (t, estado, real) in zip(cortas, ex.map(lambda x: informe_hecho.leer_nota(x["url"]), cortas)):
-                    leidas[estado.split(" (")[0]] += 1
+                for n, (t, est_pag, real) in zip(cortas, ex.map(lambda x: informe_hecho.leer_nota(x["url"]), cortas)):
+                    leidas[est_pag.split(" (")[0]] += 1
                     if t:
                         n["cuerpo"] = t[:4000]
         for n in pendientes:
