@@ -39,7 +39,7 @@ jobs:
         run: |
           if [ -n "$FUENTE" ]; then python diagnostico.py --fuente $FUENTE;
           elif [ -n "$URL" ]; then python diagnostico.py --url "$URL";
-          elif [ -f diag_solicitud.txt ]; then python diagnostico.py --solicitud diag_solicitud.txt --escalera;
+          elif [ -f diag_solicitud.txt ]; then python diagnostico.py --solicitud diag_solicitud.txt --escalera --enlaces;
           else echo "indica fuente, url o diag_solicitud.txt"; exit 1; fi
       - uses: actions/upload-artifact@v4
         if: always()

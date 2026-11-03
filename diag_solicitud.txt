@@ -1,9 +1,4 @@
-https://lapatria.bo/
-https://lapatria.bo/feed/
-https://lapatria.bo/sitemap.xml
-https://lapatria.bo/wp-json/wp/v2/posts?per_page=5
-https://defensacivil.gob.bo/
 https://www.mindef.gob.bo/
-https://sngr.gob.bo/
-https://sinager.defensacivil.gob.bo/
-https://www.gob.bo/
+https://www.mindef.gob.bo/noticias
+https://www.mindef.gob.bo/index.php/noticias
+https://www.mindef.gob.bo/feed

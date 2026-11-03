@@ -9,7 +9,7 @@ PORTALES = {
     "La Razón": "https://www.la-razon.com", "Opinión": "https://www.opinion.com.bo", "Los Tiempos": "https://www.lostiempos.com", "El Deber": "https://eldeber.com.bo",
     "Página Siete": "https://www.paginasiete.bo", "Visión 360": "https://www.vision360.bo", "Cambio": "https://www.cambio.bo", "Brújula Digital": "https://brujuladigital.net",
     "Eju.tv": "https://eju.tv", "Unitel": "https://unitel.bo", "Red Uno": "https://www.reduno.com.bo", "ATB": "https://www.atb.com.bo", "El Alteño": "https://elalteno.com.bo",
-    "Radio Panamericana": "https://panamericana.bo", "Bolivia Verifica": "https://boliviaverifica.bo", "El Diario": "https://www.eldiario.net", "La Patria": "https://lapatriaenlinea.com",
+    "Radio Panamericana": "https://panamericana.bo", "Bolivia Verifica": "https://boliviaverifica.bo", "El Diario": "https://www.eldiario.net", "La Patria": "https://lapatria.bo",
     "Correo del Sur": "https://correodelsur.com", "El Día": "https://eldia.com.bo", "Erbol": "https://erbol.com.bo", "ABI": "https://abi.bo", "Bolivia.com": "https://www.bolivia.com",
     "Oxígeno": "https://oxigeno.bo", "Urgente.bo": "https://urgente.bo", "Infodeinteres": "https://infodeinteres.com",
     "SENAMHI": "https://www.senamhi.gob.bo", "Defensa Civil / VIDECI": "https://www.defensacivil.gob.bo", "Min. Defensa": "https://www.mindef.gob.bo", "ABC": "https://www.abc.gob.bo",

@@ -79,6 +79,7 @@ def main():
     ap.add_argument("--solicitud", help="archivo con ids de fuentes.yml y/o URL separados por espacios o líneas")
     ap.add_argument("--vias", nargs="+", default=["directa", "navegador", "archivo"], choices=list(VIAS))
     ap.add_argument("--captar", nargs="*", default=[], help="ids de fuentes.yml con vías rss/wp_json: baja y cuenta elementos")
+    ap.add_argument("--enlaces", action="store_true", help="con --escalera: imprime los enlaces de la página (con navegador si la directa falla)")
     ap.add_argument("--escalera", action="store_true", help="usa escalera.py: prueba las vías en orden y dice cuál funcionó")
     a = ap.parse_args()
     if a.captar:
@@ -110,6 +111,17 @@ def main():
             panel[u] = r
             ult = r["intentos"][-1] if r["intentos"] else {}
             print(f"ESCALERA ok={r['ok']} via={r['via']} desactualizado={r.get('desactualizado', '-')} edad_dias={r.get('edad_dias', '-')} intentos={[(i['via'], i['estado'], i.get('chars'), i.get('bloqueo')) for i in r['intentos']]} {u}")
+            if a.enlaces and r["ok"]:
+                import escalera as _e
+                bruto = _e.VIAS[r["via"]](u).get("crudo") or b""
+                html = bruto.decode("utf-8", "replace")
+                vistos = []
+                for href, txt in re.findall(r'(?is)<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', html):
+                    txt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", txt)).strip()
+                    if txt and len(txt) > 12 and (href, txt) not in vistos:
+                        vistos.append((href, txt))
+                for href, txt in vistos[:25]:
+                    print(f"   enlace {txt[:80]!r} -> {href[:110]}")
             if not r["ok"]:
                 for i in r["intentos"]:
                     print(f"   detalle {i['via']}: error={i.get('error', '')!r} muestra={i.get('muestra', '')!r}")
