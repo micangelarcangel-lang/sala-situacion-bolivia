@@ -26,3 +26,7 @@ def test_cuerpo_si_titular_no_trae():
 def test_combinar_marca_discrepancia():
     c = v.combinar([{"fallecidos": (2, 2), "heridos": None}, {"fallecidos": (3, 3), "heridos": None}])
     assert c["fallecidos_min"] == 2 and c["fallecidos_max"] == 3 and c["discrepancia"]
+
+
+def test_plural_sin_cifra_es_al_menos_dos():
+    assert v.extraer("vuelco deja heridos en ruta Oruro", "")["heridos"] == (2, None)

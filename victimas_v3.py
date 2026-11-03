@@ -47,6 +47,12 @@ def extraer(titulo, cuerpo="", max_cuerpo=2500):
         if res["fallecidos"] is None and re.search(r"\b(?:muere|murio|fallece|fallecio|pierde la vida|perdio la vida|perece)\b", texto) and etiqueta == "titular":
             res["fallecidos"] = (1, None)
             res["fuente"] = res["fuente"] or etiqueta
+    # plural sin cifra ("deja heridos"): al menos 2, sin máximo
+    t = _n(titulo or "")
+    for clave, pl in (("fallecidos", r"\b(?:muertos|fallecidos)\b"), ("heridos", r"\b(?:heridos|lesionados)\b")):
+        if res[clave] is None and re.search(pl, t):
+            res[clave] = (2, None)
+            res["fuente"] = res["fuente"] or "titular"
     return res
 
 
