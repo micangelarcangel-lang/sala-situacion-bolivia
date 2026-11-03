@@ -1,4 +1,2 @@
-https://www.mindef.gob.bo/
-https://www.mindef.gob.bo/noticias
-https://www.mindef.gob.bo/index.php/noticias
-https://www.mindef.gob.bo/feed
+https://www.bing.com/news/search?q=site%3Adefensacivil.gob.bo&format=rss&setlang=es-BO&cc=BO
+https://news.google.com/rss/search?q=%22Defensa%20Civil%22%20Bolivia%20when%3A2d&hl=es-419&gl=BO&ceid=BO%3Aes-419
