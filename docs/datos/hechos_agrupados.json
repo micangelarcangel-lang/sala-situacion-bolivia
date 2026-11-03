@@ -30,14 +30,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 15,
+  "n_notas": 16,
   "fuentes": "CRprensa.com; EL DÍA - Noticias de Bolivia para el mundo; El Tiempo | Diario de Piura; INFO7; La Nación Costa Rica; LatinUS; Omnia; Perú 21; Red Uno; Somos Jujuy; Visión 360; Xinhua Español",
   "lat": "",
   "lon": "",
   "lugar": "",
   "departamento": "",
   "municipio": "",
-  "enlaces": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNazRQSFB6X00xSzVxcm5JWk15REc0elJfUXY4YmpZYk9HUWtYMVM0TTZWYnlxSW1iTlhfM3VySDUxUV9EVEVFWTVJcUcyX2RVTGJ6NEh2VVR2TmtMVFZsXzhISUxyMWFaU1ZPV2JpRmNYcFVqVi1oTGVyTThWOTVWN2ZPdUVXVG5icXJIMHBSUFBvZ0hmR3BaY0tLeU9ERzVvc1JWeDRRLWpLWXZIUzhNU0pmM0FQeUtTdFZmRmtlYzd5RGJCR1M2bkt0YWpObVBCZnow0gHTAUFVX3lxTE1rNFBIUHpfTTFLNXFybklaTXlERzR6Ul9RdjhialliT0dRa1gxUzRNNlZieXFJbWJOWF8zdXJINTFRX0RURUVZNUlxRzJfZFVMYno0SHZVVHZOa0xUVmxfOEhJTHIxYVpTVk9XYmlGY1hwVWpWLWhMZXJNOFY5NVY3Zk91RVdUbmJxckgwcFJQUG9nSGZHcFpjS0t5T0RHNW9zUlZ4NFEtaktZdkhTOE1TSmYzQVB5S1N0VmZGa2VjN3lEYkJHUzZuS3Rhak5tUEJmejA?oc=5 | https://news.google.com/rss/articles/CBMivAFBVV95cUxOLU5Oek5LWkNqLTFta0ZEWVFobTVMX0I4RkFIQ3FXOFFhOFprMnhabmRIalpoTXkwM0dWOFFmbUtlN1VWS3l4Q2g5QWdnTEppWmZrTkpIdS1BeGphUTAtOU9NcG1ha1NBZ2ZTYWR1cy02amxnRm9aN3ZDUXFyODk1NGZJazM3elBYeWtoSW9TSUFQZ0J0eWt4YmkySGZlZHlmWnNxY0pqTmlqNXp3UTI5Y1hFQUthV0JyaTlhNQ?oc=5 | https://news.google.com/rss/articles/CBMiUEFVX3lxTE0td2ZnT0dZWlJ0NUlMaEJTVW9iZzhTZmV5LUVKQVZFU0dVam5tZGUwbGhWYUV3TGdDVHhkd3JmM1hwLUpPTkV5bzRZZFZ5N3Va?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNazRQSFB6X00xSzVxcm5JWk15REc0elJfUXY4YmpZYk9HUWtYMVM0TTZWYnlxSW1iTlhfM3VySDUxUV9EVEVFWTVJcUcyX2RVTGJ6NEh2VVR2TmtMVFZsXzhISUxyMWFaU1ZPV2JpRmNYcFVqVi1oTGVyTThWOTVWN2ZPdUVXVG5icXJIMHBSUFBvZ0hmR3BaY0tLeU9ERzVvc1JWeDRRLWpLWXZIUzhNU0pmM0FQeUtTdFZmRmtlYzd5RGJCR1M2bkt0YWpObVBCZnow0gHTAUFVX3lxTE1rNFBIUHpfTTFLNXFybklaTXlERzR6Ul9RdjhialliT0dRa1gxUzRNNlZieXFJbWJOWF8zdXJINTFRX0RURUVZNUlxRzJfZFVMYno0SHZVVHZOa0xUVmxfOEhJTHIxYVpTVk9XYmlGY1hwVWpWLWhMZXJNOFY5NVY3Zk91RVdUbmJxckgwcFJQUG9nSGZHcFpjS0t5T0RHNW9zUlZ4NFEtaktZdkhTOE1TSmYzQVB5S1N0VmZGa2VjN3lEYkJHUzZuS3Rhak5tUEJmejA?oc=5 | https://news.google.com/rss/articles/CBMizgFBVV95cUxQVENpODVJeGlzdTMzTGtRTGNSd1ZEb0NYSG5IUU55akcteTE0SnRBQmUwc0tWY21lN2tZVmszRzVYMThqdzhFMjU5enVld0xnWDAtbF90cHZ0LTV5ZkVMd2FDejduLWMyTUtQNkN1c3liMk1jdEVEeTlXV2RacmtiSmd2ckl1dGJveEFDZ1d4Szh4UHNUalRHNFhGLVluX05iVmRzdVVqWkNKRG1WbzVlU0hVUGVpYW5YSXZaaE9BQjBrTjJWclNLejdsbEJud9IB0wFBVV95cUxNazRQSFB6X00xSzVxcm5JWk15REc0elJfUXY4YmpZYk9HUWtYMVM0TTZWYnlxSW1iTlhfM3VySDUxUV9EVEVFWTVJcUcyX2RVTGJ6NEh2VVR2TmtMVFZsXzhISUxyMWFaU1ZPV2JpRmNYcFVqVi1oTGVyTThWOTVWN2ZPdUVXVG5icXJIMHBSUFBvZ0hmR3BaY0tLeU9ERzVvc1JWeDRRLWpLWXZIUzhNU0pmM0FQeUtTdFZmRmtlYzd5RGJCR1M2bkt0YWpObVBCZnow?oc=5 | https://news.google.com/rss/articles/CBMivAFBVV95cUxOLU5Oek5LWkNqLTFta0ZEWVFobTVMX0I4RkFIQ3FXOFFhOFprMnhabmRIalpoTXkwM0dWOFFmbUtlN1VWS3l4Q2g5QWdnTEppWmZrTkpIdS1BeGphUTAtOU9NcG1ha1NBZ2ZTYWR1cy02amxnRm9aN3ZDUXFyODk1NGZJazM3elBYeWtoSW9TSUFQZ0J0eWt4YmkySGZlZHlmWnNxY0pqTmlqNXp3UTI5Y1hFQUthV0JyaTlhNQ?oc=5"
  },
  {
   "hecho_id": "noticia:19gixxj",
@@ -50,8 +50,8 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 30,
-  "fuentes": "24horas; ABI - Agencia Boliviana de Información; Agencia Noticias Argentinas; Cadena 3 Argentina; Canal N; Correo del Sur; Demócrata; Diario El Norte - San Nicolás; El Informador; El Nuevo Diario; El Universo; Euronews.com; Federación de Periodistas del Perú; ICNDiario; Infobae; La Otra Versión; La Patria Bolivia; OPI Santa Cruz; Opinión Bolivia; Uruguay Al Día; Vietnam.vn",
+  "n_notas": 31,
+  "fuentes": "24horas; ABI - Agencia Boliviana de Información; Agencia Noticias Argentinas; AgroLatam; Cadena 3 Argentina; Canal N; Correo del Sur; Demócrata; Diario El Norte - San Nicolás; El Informador; El Nuevo Diario; El Universo; Euronews.com; Federación de Periodistas del Perú; ICNDiario; Infobae; La Otra Versión; La Patria Bolivia; OPI Santa Cruz; Opinión Bolivia; Uruguay Al Día; Vietnam.vn",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",

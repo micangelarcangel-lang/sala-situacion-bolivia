@@ -390,9 +390,9 @@
    "San Miguel (Santa Cruz)": 28
   }
  },
- "actualizado": "2026-11-02T23:12:10.118802Z",
+ "actualizado": "2026-11-03T00:03:51.401032Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1467,
- "slack_dia": "2026-11-02"
+ "detecciones_fuera_de_limites": 1206,
+ "slack_dia": "2026-11-03"
 }
