@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install jsonschema pyyaml pytest shapely
+      - run: pip install jsonschema pyyaml pytest shapely matplotlib reportlab openpyxl
       - name: Pruebas
         run: python -m pytest -q tests
       - name: Informe de calidad de los eventos actuales
