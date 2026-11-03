@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 2.3
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 10.3
+   "seg": 16.2
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 21.7
+   "seg": 20.7
   },
   "agrupar": {
    "ok": true,
@@ -34,13 +34,12 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   }
  },
  "antes": {
   "centroide_departamental": [
    "noticia:vivo:51324f5fce12",
-   "noticia:vivo:d1f7b988e2ea",
    "noticia:vivo:db49638e7ccb",
    "noticia:vivo:32a6bf63653d",
    "noticia:rss:a4870f595bab",
@@ -48,6 +47,7 @@
    "noticia:rss:60a6df29a571",
    "noticia:vivo:98ca4de33827",
    "noticia:rss:6ea33e84fae7",
+   "noticia:vivo:d1f7b988e2ea",
    "noticia:vivo:47ba4616c93d",
    "noticia:vivo:a51f324f86f6",
    "noticia:vivo:1490c58490f8",
@@ -75,8 +75,6 @@
    "noticia:vivo:13e2f853e0a2",
    "noticia:vivo:447b7d1369cd",
    "noticia:vivo:1ef42b51d7b2",
-   "noticia:vivo:7c23ab00cb5e",
-   "noticia:vivo:d1f7b988e2ea",
    "noticia:vivo:fb6bb52e1e80",
    "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:dadd3bf210b5",
@@ -90,6 +88,8 @@
    "noticia:vivo:0e856edd7d9b",
    "noticia:vivo:db49638e7ccb",
    "noticia:vivo:32a6bf63653d",
+   "noticia:vivo:6a4a25725809",
+   "noticia:vivo:7c23ab00cb5e",
    "noticia:vivo:75df11b9d4dc",
    "noticia:vivo:0037cb346e65",
    "noticia:vivo:0986d42bfd28",
@@ -109,6 +109,7 @@
    "noticia:vivo:5726aa581ee9",
    "noticia:vivo:99356454fcfd",
    "noticia:vivo:97b23df97aaf",
+   "noticia:vivo:d1f7b988e2ea",
    "noticia:vivo:47ba4616c93d",
    "noticia:vivo:82e62f1b902a",
    "noticia:vivo:07b4814303a0",
@@ -274,7 +275,6 @@
    "noticia:vivo:fc98a400342b",
    "noticia:vivo:13e2f853e0a2",
    "noticia:vivo:1ef42b51d7b2",
-   "noticia:vivo:7c23ab00cb5e",
    "noticia:vivo:fb6bb52e1e80",
    "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:dadd3bf210b5",
@@ -286,6 +286,11 @@
    "noticia:vivo:be92e5e3ac92",
    "noticia:vivo:aa6d02e335e5",
    "noticia:vivo:0e856edd7d9b",
+   "noticia:vivo:6a4a25725809",
+   "noticia:vivo:dcc4de01f82a",
+   "noticia:rss:bfe03bd5d7d4",
+   "noticia:vivo:3acf7eb40af6",
+   "noticia:vivo:7c23ab00cb5e",
    "noticia:vivo:75df11b9d4dc",
    "noticia:vivo:0037cb346e65",
    "noticia:vivo:0986d42bfd28",
@@ -455,96 +460,49 @@
   ]
  },
  "lectura_cuerpos": {
-  "leidas_ahora": 0,
-  "estados": {},
-  "en_cache": 254,
+  "leidas_ahora": 7,
+  "estados": {
+   "texto completo": 5,
+   "solo titular": 2
+  },
+  "en_cache": 261,
   "pendientes": 0
  },
  "captar_feeds": {
-  "feeds": {
-   "La Patria": {
-    "ok": true,
-    "notas": 100,
-    "seg": 1.3,
-    "con_fecha": 100,
-    "con_cuerpo": 100
-   },
-   "ABI": {
-    "ok": true,
-    "notas": 10,
-    "seg": 2.3,
-    "con_fecha": 10,
-    "con_cuerpo": 10
-   },
-   "La Razón": {
-    "ok": true,
-    "notas": 10,
-    "seg": 1.8,
-    "con_fecha": 10,
-    "con_cuerpo": 10
-   },
-   "Opinión": {
-    "ok": true,
-    "notas": 20,
-    "seg": 0.3,
-    "con_fecha": 20,
-    "con_cuerpo": 0
-   },
-   "El Deber": {
-    "ok": true,
-    "notas": 25,
-    "seg": 0.7,
-    "con_fecha": 25,
-    "con_cuerpo": 1
-   },
-   "Red Uno": {
-    "ok": true,
-    "notas": 25,
-    "seg": 0.4,
-    "con_fecha": 25,
-    "con_cuerpo": 24
-   },
-   "ATB": {
-    "ok": true,
-    "notas": 10,
-    "seg": 0.8,
-    "con_fecha": 10,
-    "con_cuerpo": 10
-   },
-   "Radio Panamericana": {
-    "ok": true,
-    "notas": 30,
-    "seg": 1.3,
-    "con_fecha": 30,
-    "con_cuerpo": 14
-   },
-   "Oxígeno": {
-    "ok": true,
-    "notas": 10,
-    "seg": 1.2,
-    "con_fecha": 10,
-    "con_cuerpo": 10
-   }
-  },
-  "notas_leidas": 240,
-  "eventos_nuevos": 17,
-  "descartadas_por_no_relevantes": 172
+  "feeds": "texto completo",
+  "notas_leidas": 745,
+  "eventos_nuevos": 31,
+  "descartadas_por_no_relevantes": 620,
+  "paginas_leidas": {
+   "texto completo": 19
+  }
  },
  "ubicacion": {
-  "ninguna": 129,
-  "relevante": 129,
+  "ninguna": 142,
+  "relevante": 147,
   "exterior": 6,
-  "departamento": 60,
+  "departamento": 67,
   "municipio": 90,
-  "por_lugar_conocido": 6,
+  "por_lugar_conocido": 13,
   "tramo": 8
  },
  "agrupacion": {
-  "grupos_con_mas_de_un_evento": 11,
+  "grupos_con_mas_de_un_evento": 15,
   "ejemplos": [
+   [
+    "Situación   La sequía golpea a 114 mil familias en Bolivia y “los ries",
+    "La sequía golpea a 114 mil familias en Bolivia y “los riesgos pueden a"
+   ],
    [
     "Privado de libertad en estado crítico por brote de meningitis",
     "Palmasola: privado de libertad diagnosticado con meningitis está en es"
+   ],
+   [
+    "Asamblea aprueba  Declaratoria de Emergencia por Sequia y autoriza uso",
+    "Gobernación de Cochabamba plantea ley para atender municipios afectado",
+    "Siete municipios de Cochabamba recibirán ayuda por la sequía",
+    "Siete municipios de Cochabamba enfrentan sequía extrema",
+    "Asamblea de Cochabamba aprueba proyecto de emergencia por sequía en si"
    ],
    [
     "La Paz registra casi 40 municipios afectados por sequías e inundacione",
@@ -554,21 +512,13 @@
    [
     "Defensa Civil explica los procedimientos que deben cumplir alcaldías y",
     "¿Cómo solicitar ayuda ante emergencias? Defensa Civil explica el proto"
-   ],
-   [
-    "¿Dónde tembló en Bolivia? Reportan dos sismos este 2 de noviembre",
-    "Reportan dos sismos: en Potosí y Cochabamba"
-   ],
-   [
-    "Colisión múltiple en la ruta Santa Cruz-Trinidad deja un muerto y un h",
-    "Colisión múltiple en la ruta Santa Cruz-Trinidad deja un muerto y un h"
    ]
   ]
  },
  "almacen": {
-  "nuevos": 6,
-  "cambiados": 4,
-  "total_indice": 678
+  "nuevos": 23,
+  "cambiados": 22,
+  "total_indice": 701
  },
  "despues": {
   "centroide_departamental": [],
@@ -601,10 +551,7 @@
    "noticia:10wq44x",
    "noticia:1xqv9m7",
    "noticia:11rddql",
-   "noticia:n32ahi",
-   "noticia:v3:fa9dd4d5a2b6",
-   "noticia:v3:57525c2354e5",
-   "noticia:v3:6cf00dfd5cfb"
+   "noticia:n32ahi"
   ],
   "prensa_sin_ubicar": [
    "noticia:vivo:5787bf4d5f11",
@@ -623,6 +570,9 @@
    "noticia:vivo:be92e5e3ac92",
    "noticia:vivo:aa6d02e335e5",
    "noticia:vivo:0e856edd7d9b",
+   "noticia:vivo:dcc4de01f82a",
+   "noticia:rss:bfe03bd5d7d4",
+   "noticia:vivo:3acf7eb40af6",
    "noticia:rss:a4870f595bab",
    "noticia:vivo:75df11b9d4dc",
    "noticia:vivo:0037cb346e65",
@@ -730,7 +680,13 @@
    "noticia:v3:2bacb4010dc0",
    "noticia:v3:fb03b7cec5ac",
    "noticia:v3:d8d303df1bc7",
-   "noticia:v3:88510599766a"
+   "noticia:v3:88510599766a",
+   "noticia:v3:82e823747bb9",
+   "noticia:v3:c22710f6b054",
+   "noticia:v3:710c2b6dfede",
+   "noticia:v3:a081c376677e",
+   "noticia:v3:ada49a5289ac",
+   "noticia:v3:b6354abe0053"
   ],
   "victimas_sin_ubicacion_precisa": [
    "noticia:vivo:1ef42b51d7b2",
