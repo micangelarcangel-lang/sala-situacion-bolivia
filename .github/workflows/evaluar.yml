@@ -1,0 +1,23 @@
+name: Evaluar ubicación v3
+
+# Se dispara al subir un cambio a eval_solicitud.txt en una rama que no sea main. Lee notas reales y compara la ubicación anterior con la v3.
+on:
+  push:
+    branches-ignore: [main]
+    paths: ["eval_solicitud.txt"]
+
+permissions:
+  contents: read
+
+jobs:
+  evaluar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install matplotlib reportlab shapely beautifulsoup4 lxml trafilatura googlenewsdecoder openpyxl pypdf numpy scipy
+      - name: Evaluar
+        run: python evaluar_ubicacion.py 40

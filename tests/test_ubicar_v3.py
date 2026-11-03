@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+import os, sys
+import pytest
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+pytest.importorskip("shapely")
+import ubicar_v3 as u
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+GEO = u.cargar_geo(os.path.join(RAIZ, "geo.json"))
+
+
+def U(titulo, cuerpo=""):
+    return u.ubicar(titulo, cuerpo, GEO)
+
+
+def test_municipio_del_cuerpo_gana_al_nombre_de_capital_del_titular():
+    r = U("Tragedia en Santa Cruz: un muerto tras accidente de tres vehículos",
+          "El hecho ocurrió este domingo en el municipio de Cuatro Cañadas, a la altura del kilómetro 30. Cuatro Cañadas está a 150 kilómetros de la capital.")
+    assert r["precision"] == "municipio" and r["municipio"] == "Cuatro Cañadas" and r["departamento"] == "Santa Cruz"
+
+
+def test_capital_sola_no_se_dibuja_como_punto():
+    r = U("Vehículo se embarranca más de 100 metros en La Paz y deja un muerto")
+    assert r["precision"] == "departamento" and r["departamento"] == "La Paz" and r["lat"] is None
+
+
+def test_ciudad_de_la_paz_si_es_punto():
+    r = U("Accidente en la ciudad de La Paz deja dos heridos")
+    assert r["precision"] == "municipio" and r["municipio"] == "Nuestra Señora de La Paz"
+
+
+def test_localidad_del_cuerpo():
+    r = U("Dos muertos tras choque de un vehículo contra un camión estacionado en una carretera de Oruro",
+          "El accidente ocurrió a la altura de Machacamarca, en la ruta que une Oruro con La Paz.")
+    assert r["municipio"] == "Machacamarca" and r["departamento"] == "Oruro"
+
+
+def test_ruta_entre_dos_ciudades_es_tramo():
+    r = U("Colisión en la vía Oruro-Cochabamba deja cinco heridos")
+    assert r["precision"] == "tramo" and r["lat"] is None
+
+
+def test_otro_departamento_en_el_cuerpo_no_gana_al_del_titulo():
+    r = U("Accidente en Santa Cruz deja dos heridos", "Uno de los heridos fue trasladado al hospital de Sucre para su atención.")
+    assert r["municipio"] != "Sucre"
+    assert r["departamento"] == "Santa Cruz"
+
+
+def test_destino_no_es_el_lugar_del_hecho():
+    r = U("Bus con destino a Cochabamba sufre accidente en Caracollo", "El minibús salió de Oruro con destino a Cochabamba y se accidentó en Caracollo.")
+    assert r["municipio"] == "Caracollo"
+
+
+def test_nombre_repetido_sin_departamento_no_se_ubica():
+    r = U("Choque en San Pedro deja un herido")
+    assert r["precision"] in ("ninguna", "departamento") and r["municipio"] is None
+
+
+def test_sin_pistas_no_inventa():
+    r = U("Choque entre moto y vagoneta deja una persona herida", "Los heridos fueron atendidos por personal de salud.")
+    assert r["precision"] == "ninguna" and r["lat"] is None
