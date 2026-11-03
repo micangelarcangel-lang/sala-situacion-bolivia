@@ -12,7 +12,7 @@ TAXONOMIA = [  # (categoria, subtipo, patrón sobre el texto normalizado)
     ("hidrológica", "inundación / riada", r"\b(inundacion\w*|riada|desborde|desbordamiento|crecida|anegad\w+|mazamorra)\b"),
     ("geológica", "deslizamiento", r"\b(deslizamiento|derrumbe|mazamorra|aluvion|socavon|hundimiento)\b"),
     ("geológica", "sismo", r"\b(sismo|temblor|terremoto)\b"),
-    ("meteorológica", "granizada / helada / viento", r"\b(granizada|helada|nevada|ventarron|vientos? de|tormenta|lluvias? intensa\w*|alerta (naranja|roja|amarilla))\b"),
+    ("meteorológica", "granizada / helada / viento", r"\b(granizada|helada|nevada|ventarron|vientos? de|tormenta|lluvias? intensa\w*|senamhi\b.*\balerta|alerta\b.*\b(viento|ventarron|lluvia|tormenta|granizo|helada|frio|nevada|rafagas)\w*)\b"),
     ("climatológica", "sequía", r"\b(sequia|deficit hidrico|escasez de agua)\b"),
     ("biológica", "brote / enfermedad transmisible", r"\b(brote|epidemia|casos de|dengue|chikungunya|sarampion|fiebre amarilla|malaria|leptospirosis|meningitis|influenza|covid|rabia|tos convulsiva|tuberculosis|hantavirus|ebola|mpox|viruela)\b"),
     ("biológica", "intoxicación / alimentos", r"\b(intoxicacion|intoxicad\w+|envenenamiento)\b"),

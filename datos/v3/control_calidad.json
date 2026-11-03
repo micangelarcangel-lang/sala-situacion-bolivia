@@ -2,7 +2,7 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.0
   },
   "cargar_geografia": {
    "ok": true,
@@ -327,16 +327,14 @@
   ]
  },
  "lectura_cuerpos": {
-  "leidas_ahora": 3,
-  "estados": {
-   "solo titular": 3
-  },
+  "leidas_ahora": 0,
+  "estados": {},
   "en_cache": 202,
   "pendientes": 0
  },
  "ubicacion": {
   "ninguna": 88,
-  "relevante": 95,
+  "relevante": 92,
   "exterior": 4,
   "departamento": 39,
   "municipio": 68,

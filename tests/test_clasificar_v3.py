@@ -26,3 +26,8 @@ def test_brote_y_lugar_por_ubicacion():
 def test_mencion_pasajera_en_el_cuerpo_no_cuenta():
     r = c.clasificar("Luto en la música", "Murió en un accidente. " + "El artista ... ", True)
     assert r["subtipo"] is None
+
+
+def test_alerta_roja_de_interpol_no_es_clima():
+    assert not c.clasificar("Bolivia pidió a Interpol alerta roja para dar con el paradero de exministro")["relevante"]
+    assert c.clasificar("Senamhi emite alerta naranja por ráfagas de viento en Santa Cruz")["subtipo"] == "granizada / helada / viento"
