@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml playwright
+      - run: pip install pyyaml playwright pypdf trafilatura
       - name: Navegador (si falla, se prueban las otras vías)
         continue-on-error: true
         run: python -m playwright install --with-deps chromium
@@ -39,7 +39,7 @@ jobs:
         run: |
           if [ -n "$FUENTE" ]; then python diagnostico.py --fuente $FUENTE;
           elif [ -n "$URL" ]; then python diagnostico.py --url "$URL";
-          elif [ -f diag_solicitud.txt ]; then python diagnostico.py --solicitud diag_solicitud.txt;
+          elif [ -f diag_solicitud.txt ]; then python diagnostico.py --solicitud diag_solicitud.txt --escalera;
           else echo "indica fuente, url o diag_solicitud.txt"; exit 1; fi
       - uses: actions/upload-artifact@v4
         if: always()

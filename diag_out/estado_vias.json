@@ -1,0 +1,29 @@
+{
+ "generado": 1793671456313,
+ "fuentes": {
+  "http://127.0.0.1:9": {
+   "ok": false,
+   "via": null,
+   "desactualizado": false,
+   "edad_dias": null,
+   "intentos": [
+    {
+     "via": "directa",
+     "estado": null,
+     "seg": 0.0,
+     "chars": 0,
+     "bloqueo": false,
+     "error": "URLError: <urlopen error [Errno 111] Connection refused>"
+    },
+    {
+     "via": "archivo",
+     "estado": null,
+     "seg": 0.2,
+     "chars": 0,
+     "bloqueo": false,
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+   ]
+  }
+ }
+}

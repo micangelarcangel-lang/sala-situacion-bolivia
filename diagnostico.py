@@ -78,6 +78,7 @@ def main():
     ap.add_argument("--fuente", nargs="*", default=[])
     ap.add_argument("--solicitud", help="archivo con ids de fuentes.yml y/o URL separados por espacios o líneas")
     ap.add_argument("--vias", nargs="+", default=["directa", "navegador", "archivo"], choices=list(VIAS))
+    ap.add_argument("--escalera", action="store_true", help="usa escalera.py: prueba las vías en orden y dice cuál funcionó")
     a = ap.parse_args()
     fuentes = list(a.fuente)
     urls = list(a.url)
@@ -90,6 +91,17 @@ def main():
     if not urls:
         raise SystemExit("indica --url o --fuente")
     res = []
+    if a.escalera:
+        import escalera
+        panel = {}
+        for u in urls:
+            r = escalera.obtener(u, vias=tuple(a.vias))
+            panel[u] = r
+            ult = r["intentos"][-1] if r["intentos"] else {}
+            print(f"ESCALERA ok={r['ok']} via={r['via']} desactualizado={r.get('desactualizado', '-')} edad_dias={r.get('edad_dias', '-')} intentos={[(i['via'], i['estado']) for i in r['intentos']]} {u}")
+        os.makedirs("diag_out", exist_ok=True)
+        escalera.registrar(panel, "diag_out/estado_vias.json")
+        return
     for u in urls:
         for v in a.vias:
             r = VIAS[v](u)
