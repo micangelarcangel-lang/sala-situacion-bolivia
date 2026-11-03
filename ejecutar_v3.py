@@ -29,6 +29,36 @@ def main():
     eventos = validar.cargar_eventos("docs/eventos_unificados.json")
     textos = json.load(open("docs/textos_hechos.json", encoding="utf-8")).get("hechos", {}) if os.path.exists("docs/textos_hechos.json") else {}
     ctl["antes"] = validar.reglas_calidad(eventos)
+    def leer_cuerpos(presupuesto_seg=240, hilos=8, tope=150):
+        """Lee la nota completa de la prensa que solo tiene titular. Guarda caché en datos/v3/cuerpos.json para no repetir."""
+        import informe_hecho
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        ruta = f"{SALIDA}/cuerpos.json"
+        cache = json.load(open(ruta, encoding="utf-8")) if os.path.exists(ruta) else {}
+        ahora = time.time()
+        cache = {u: c for u, c in cache.items() if ahora - c.get("t", 0) < 7 * 86400}
+        pend = [e for e in sorted((x for x in eventos if x.get("origen") == "prensa" and x.get("url")), key=reporte_v3.prioridad, reverse=True)
+                if e["url"] not in cache and not (textos.get(e["id"], {}).get("notas"))][:tope]
+        est = collections.Counter()
+        ini = time.time()
+        with ThreadPoolExecutor(hilos) as ex:
+            futs = {ex.submit(informe_hecho.leer_nota, e["url"]): e["url"] for e in pend}
+            for f in as_completed(futs):
+                u = futs[f]
+                try:
+                    t, estado, real = f.result()
+                except Exception as err:
+                    t, estado, real = "", f"error {type(err).__name__}", u
+                cache[u] = {"texto": t[:3500], "estado": estado.split(" (")[0], "t": ahora}
+                est[cache[u]["estado"]] += 1
+                if time.time() - ini > presupuesto_seg:
+                    for g in futs:
+                        g.cancel()
+                    break
+        json.dump(cache, open(ruta, "w", encoding="utf-8"), ensure_ascii=False)
+        return {"leidas_ahora": sum(est.values()), "estados": dict(est), "en_cache": len(cache), "pendientes": max(0, len(pend) - sum(est.values()))}
+    ctl["lectura_cuerpos"] = etapa("leer_cuerpos", leer_cuerpos, ctl)
+    cache_cuerpos = json.load(open(f"{SALIDA}/cuerpos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/cuerpos.json") else {}
     geo = etapa("cargar_geografia", lambda: ubicar_v3.cargar_geo("geo.json"), ctl)
 
     def enriquecer():
@@ -36,7 +66,7 @@ def main():
         for e in eventos:
             if e.get("origen") != "prensa":
                 continue
-            cuerpo = " ".join(nota.get("texto") or "" for nota in (textos.get(e["id"], {}).get("notas") or []))
+            cuerpo = " ".join(nota.get("texto") or "" for nota in (textos.get(e["id"], {}).get("notas") or [])) or (cache_cuerpos.get(e.get("url"), {}).get("texto") or "")
             e["cuerpo_leido"] = len(cuerpo) > 300
             r = ubicar_v3.ubicar(e["titulo"], cuerpo, geo)
             e["precision_ubicacion"] = r["precision"]
@@ -85,7 +115,7 @@ def main():
     etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson"), ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
-    print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion"))
+    print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion"))
 
 
 if __name__ == "__main__":

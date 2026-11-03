@@ -14,13 +14,13 @@ concurrency:
 jobs:
   v3:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - run: pip install jsonschema pyyaml shapely matplotlib reportlab
+      - run: pip install jsonschema pyyaml shapely matplotlib reportlab beautifulsoup4 lxml trafilatura googlenewsdecoder openpyxl pypdf numpy scipy
       - name: Traer los datos más recientes de producción (solo lectura)
         run: git checkout origin/main -- docs/eventos_unificados.json docs/textos_hechos.json
       - name: Etapas v3
