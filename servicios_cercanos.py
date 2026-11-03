@@ -10,6 +10,7 @@ CONSULTAS = {
     "salud": '["amenity"~"^(hospital|clinic|doctors)$"]',
     "policia": '["amenity"="police"]',
     "bomberos": '["amenity"="fire_station"]',
+    "bomberos2": '["emergency"="fire_station"]',  # algunas estaciones están etiquetadas así
 }
 SERVIDORES = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
 
@@ -18,7 +19,7 @@ def _consulta(filtro):
     return f'[out:json][timeout:120];area["ISO3166-1"="BO"]->.b;(nwr{filtro}(area.b););out center tags;'
 
 
-def bajar(ruta, reintentos=2):
+def bajar(ruta, reintentos=3):
     out, errores = [], {}
     for tipo, filtro in CONSULTAS.items():
         datos = None
@@ -38,7 +39,7 @@ def bajar(ruta, reintentos=2):
             if "lat" not in c:
                 continue
             t = el.get("tags", {})
-            out.append({"nombre": t.get("name") or t.get("name:es") or "(sin nombre en OSM)", "tipo": tipo, "lat": c["lat"], "lon": c["lon"],
+            out.append({"nombre": t.get("name") or t.get("name:es") or "(sin nombre en OSM)", "tipo": tipo.rstrip("2"), "lat": c["lat"], "lon": c["lon"],
                         "telefono": t.get("phone") or t.get("contact:phone") or "", "fuente": "OpenStreetMap", "osm": f"{el['type']}/{el['id']}"})
     os.makedirs(os.path.dirname(ruta) or ".", exist_ok=True)
     json.dump({"generado": int(time.time() * 1000), "n": len(out), "errores": errores, "servicios": out}, open(ruta, "w", encoding="utf-8"), ensure_ascii=False)
