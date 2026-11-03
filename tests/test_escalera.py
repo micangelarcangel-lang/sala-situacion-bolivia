@@ -56,3 +56,8 @@ def test_registrar_panel(tmp_path):
     escalera.registrar({"fuente_a": r}, str(ruta))
     d = json.loads(ruta.read_text(encoding="utf-8"))
     assert d["fuentes"]["fuente_a"]["via"] == "directa"
+
+
+def test_portada_con_poco_texto_extraido_usa_texto_plano():
+    portada = ("<html><body>" + "".join("<li><a href='/n%d'>Titular de emergencia número %d en Bolivia hoy</a></li>" % (i, i) for i in range(30)) + "</body></html>").encode()
+    assert len(escalera.texto_de(portada, "text/html", "https://x.bo")) >= 300

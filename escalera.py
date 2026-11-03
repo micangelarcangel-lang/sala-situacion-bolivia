@@ -87,14 +87,16 @@ def texto_de(crudo, tipo="", url=""):
         except Exception:
             return ""
     html = crudo.decode("utf-8", "replace")
+    plano = re.sub(r"\s+", " ", re.sub(r"(?is)<(script|style).*?</\1>|<[^>]+>", " ", html)).strip()
     try:
         import trafilatura
         t = trafilatura.extract(html, include_comments=False, include_tables=True)
-        if t:
+        # en una portada o un listado trafilatura devuelve poco: se usa el texto plano si es más completo
+        if t and len(t) >= 300:
             return t
     except Exception:
         pass
-    return re.sub(r"\s+", " ", re.sub(r"(?is)<(script|style).*?</\1>|<[^>]+>", " ", html)).strip()
+    return plano
 
 
 def _util(r, texto, min_chars):
