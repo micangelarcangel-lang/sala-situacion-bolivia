@@ -96,6 +96,12 @@ def texto_de(crudo, tipo="", url=""):
     """Convierte lo descargado en texto: PDF con pypdf, HTML con trafilatura (si está) o quitando etiquetas."""
     if not crudo:
         return ""
+    if crudo[:2] == b"\x1f\x8b":  # algunas copias archivadas llegan comprimidas
+        try:
+            import gzip
+            crudo = gzip.decompress(crudo)
+        except Exception:
+            return ""
     if "pdf" in (tipo or "").lower() or crudo[:5] == b"%PDF-" or url.lower().endswith(".pdf"):
         try:
             from pypdf import PdfReader

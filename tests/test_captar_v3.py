@@ -1,25 +1,20 @@
-import os, sys, json
+import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import captar_v3 as c
 
-RSS = b'<?xml version="1.0"?><rss><channel><item><title>Choque en Oruro</title><link>http://x/1</link><pubDate>Mon, 02 Nov 2026 10:00:00 +0000</pubDate><description>&lt;p&gt;Dos heridos&lt;/p&gt;</description></item></channel></rss>'
-WP = json.dumps([{"title": {"rendered": "Riada en Caranavi"}, "link": "http://x/2", "date_gmt": "2026-11-02T10:00:00", "excerpt": {"rendered": "<p>Daños</p>"}}]).encode()
+RSS = """<?xml version="1.0"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
+<item><title>Choque en Oruro deja dos heridos</title><link>https://x.bo/a</link><pubDate>Mon, 02 Nov 2026 14:30:00 +0000</pubDate>
+<description>resumen</description><content:encoded><![CDATA[<p>Un choque ocurrió en Oruro.</p><script>x()</script>]]></content:encoded></item>
+<item><title></title><link>https://x.bo/b</link></item></channel></rss>"""
 
 
-def test_rss_y_wp():
-    r = c.parsear_rss(RSS, "X")[0]
-    assert r["titulo"] == "Choque en Oruro" and r["ts_publicacion"] and r["resumen"] == "Dos heridos"
-    w = c.parsear_wp_json(WP, "X")[0]
-    assert w["titulo"] == "Riada en Caranavi" and w["ts_publicacion"]
+def test_parsea_rss_con_fecha_y_cuerpo():
+    n = c.parsear(RSS.encode(), "X")
+    assert len(n) == 1 and n[0]["cuerpo"] == "Un choque ocurrió en Oruro." and n[0]["ts_publicacion"] == 1793629800000
+    assert n[0]["via"] == "rss"
 
 
-def test_escalera_de_vias_cae_a_la_siguiente():
-    def fetch(u):
-        return {"ok": True, "via": "directa", "crudo": WP} if "wp-json" in u else {"ok": False}
-    r = c.captar("X", [{"via": "rss", "url": "http://x/feed"}, {"via": "wp_json", "url": "http://x/wp-json"}], fetch)
-    assert r["ok"] and r["via"] == "wp_json" and len(r["intentos"]) == 2
-
-
-def test_todo_falla_devuelve_intentos():
-    r = c.captar("X", [{"via": "rss", "url": "http://x/feed"}], lambda u: {"ok": False})
-    assert not r["ok"] and r["intentos"][0]["elementos"] == 0
+def test_feed_caido_no_frena_a_los_demas(monkeypatch):
+    monkeypatch.setattr(c, "bajar", lambda u, t=25: RSS.encode() if "ok" in u else (_ for _ in ()).throw(OSError("caído")))
+    notas, est = c.captar([{"medio": "A", "url": "https://ok"}, {"medio": "B", "url": "https://mal"}])
+    assert len(notas) == 1 and est["A"]["ok"] and not est["B"]["ok"]

@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import json, os, sys, time, collections, traceback
-import lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -57,8 +57,30 @@ def main():
                     break
         json.dump(cache, open(ruta, "w", encoding="utf-8"), ensure_ascii=False)
         return {"leidas_ahora": sum(est.values()), "estados": dict(est), "en_cache": len(cache), "pendientes": max(0, len(pend) - sum(est.values()))}
+    def captar_feeds(ventana_h=72):
+        """Notas nuevas desde feeds RSS verificados (fuentes.yml). Se agregan solo las que la v3 clasifica como relevantes de Bolivia."""
+        import yaml, hashlib
+        feeds = [f for fu in yaml.safe_load(open("fuentes.yml", encoding="utf-8"))["fuentes"] for f in fu.get("feeds", [])]
+        notas, estado = captar_v3.captar(feeds)
+        conocidas = {e.get("url") for e in eventos}
+        corte = int(time.time() * 1000) - ventana_h * 3600000
+        nuevas = descartadas = 0
+        for n in notas:
+            if n["url"] in conocidas or (n["ts_publicacion"] or 0) < corte:
+                continue
+            cl = clasificar_v3.clasificar(n["titulo"], n["cuerpo"])
+            if not cl["relevante"]:
+                descartadas += 1
+                continue
+            cache_cuerpos[n["url"]] = {"texto": n["cuerpo"], "estado": "texto completo", "t": time.time()}
+            eventos.append({"id": "noticia:v3:" + hashlib.sha1(n["url"].encode()).hexdigest()[:12], "origen": "prensa", "categoria": cl["categoria"], "titulo": n["titulo"], "ts": n["ts_publicacion"], "ts_publicacion": n["ts_publicacion"],
+                            "fuente": n["medio"], "url": n["url"], "oficial": False, "departamentos": [], "cifras": {}, "lugar": "", "lat": None, "lon": None, "nivel_txt": "Sin nivel (prensa, sin verificar)", "nivel": 0,
+                            "confianza": {"nivel": "Baja", "fuentes_independientes": 1, "puntaje": 20}, "via_captacion": "rss", "metodo": "sin ubicar"})
+            nuevas += 1
+        return {"feeds": estado, "notas_leidas": len(notas), "eventos_nuevos": nuevas, "descartadas_por_no_relevantes": descartadas}
     ctl["lectura_cuerpos"] = etapa("leer_cuerpos", leer_cuerpos, ctl)
     cache_cuerpos = json.load(open(f"{SALIDA}/cuerpos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/cuerpos.json") else {}
+    ctl["captar_feeds"] = etapa("captar_feeds", captar_feeds, ctl)
     geo = etapa("cargar_geografia", lambda: ubicar_v3.cargar_geo("geo.json"), ctl)
 
     indice_lugares = localizador = None
@@ -140,7 +162,7 @@ def main():
     etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson"), ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
-    print("ALMACEN", ctl.get("almacen")); print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion"))
+    print("ALMACEN", ctl.get("almacen")); print("FEEDS", ctl.get("captar_feeds")); print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion"))
 
 
 if __name__ == "__main__":

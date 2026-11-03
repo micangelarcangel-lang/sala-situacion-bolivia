@@ -74,7 +74,7 @@ fuentes:
       - {via: html, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403: página de seguridad (cortafuegos web) que bloquea la IP de GitHub (03/11/2026)"}
       - {via: html, url: "https://www.mindef.gob.bo/", estado: descartado_piloto, resultado: "MINDEF: portada solo JavaScript, sin listado leíble (03/11/2026)"}
       - {via: buscador, estado: por_verificar, nota: "Google/Bing Noticias con \"Defensa Civil\" y \"VIDECI\": la prensa replica sus comunicados; el sistema ya busca así otros temas"}
-      - {via: navegador, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403 también con navegador real (prueba en Actions, 02/11/2026)"}
+      - {via: navegador, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403 con navegador real: protección tipo WAF ('security service'), 03/11/2026"}
       - {via: rss, url: "https://reliefweb.int/updates/rss.xml?search=country.exact%3ABolivia", estado: activa, nota: "ruta alterna: ver fuente reliefweb_bolivia; filtrar por VIDECI/SINAGER en el título o la fuente"}
       - {via: archivo, estado: activa, resultado: "Wayback tiene captura de la portada, de hace 286 días (prueba 03/11/2026): sirve de contexto, no de dato reciente"}
       - {via: ejecutor_propio, estado: descartado_piloto, nota: "sin garantía de energía ni disponibilidad en el piloto; pasa a un servidor adecuado si el piloto funciona"}
@@ -164,9 +164,12 @@ fuentes:
       Correo del Sur: "https://correodelsur.com"
       El Día: "https://eldia.com.bo"
       Erbol: "https://erbol.com.bo"
-      ABI: "https://abi.bo"
+      ABI: "https://abi.bo"   # sin "www": www.abi.bo falla por certificado; abi.bo/feed responde 200 (03/11/2026)
       Oxígeno: "https://oxigeno.bo"
       Urgente.bo: "https://urgente.bo"
+    feeds:   # RSS verificados desde Actions el 03/11/2026 (HTTP 200 con notas completas); se leen en la etapa captar_feeds de la v3
+      - {medio: La Patria, url: "https://lapatria.bo/feed"}
+      - {medio: ABI, url: "https://abi.bo/feed"}
     vias:
       - {via: rss, estado: activa}
       - {via: sitemap, estado: activa}
