@@ -170,6 +170,13 @@ fuentes:
     feeds:   # RSS verificados desde Actions el 03/11/2026 (HTTP 200 con notas completas); se leen en la etapa captar_feeds de la v3
       - {medio: La Patria, url: "https://lapatria.bo/feed"}
       - {medio: ABI, url: "https://abi.bo/feed"}
+      - {medio: La Razón, url: "https://www.la-razon.com/feed"}
+      - {medio: Opinión, url: "https://www.opinion.com.bo/rss"}
+      - {medio: El Deber, url: "https://eldeber.com.bo/feed"}
+      - {medio: Red Uno, url: "https://www.reduno.com.bo/rss"}
+      - {medio: ATB, url: "https://www.atb.com.bo/feed"}
+      - {medio: Radio Panamericana, url: "https://panamericana.bo/rss"}
+      - {medio: Oxígeno, url: "https://oxigeno.bo/feed"}
     vias:
       - {via: rss, estado: activa}
       - {via: sitemap, estado: activa}
