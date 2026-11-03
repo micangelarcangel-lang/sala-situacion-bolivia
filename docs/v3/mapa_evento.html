@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evento y servicios cercanos</title>
+<link rel="stylesheet" href="leaflet/leaflet.css">
+<style>
+:root{--fondo:#fff;--texto:#1b2733;--borde:#d5dde5;--acento:#0b5cad}
+@media (prefers-color-scheme:dark){:root{--fondo:#12181f;--texto:#e6edf3;--borde:#2c3946;--acento:#6fb1ff}}
+body{margin:0;font:15px/1.4 system-ui,sans-serif;background:var(--fondo);color:var(--texto)}
+header{padding:10px 16px;border-bottom:1px solid var(--borde)}
+select{width:100%;max-width:640px;padding:6px;font-size:15px}
+main{display:grid;grid-template-columns:1fr 340px;height:calc(100vh - 100px)}
+#mapa{height:100%}
+aside{overflow:auto;padding:10px 14px;border-left:1px solid var(--borde)}
+h2{font-size:14px;margin:12px 0 4px;color:var(--acento)}
+li{margin:4px 0;list-style:none}
+ul{padding:0;margin:0}
+.km{font-weight:600}.aviso{font-size:12px;opacity:.75}
+@media (max-width:760px){main{grid-template-columns:1fr;height:auto}#mapa{height:55vh}aside{border-left:0}}
+</style></head><body>
+<header><b>Evento y servicios cercanos</b> <span class="aviso">(prototipo v3, datos de prensa sin verificar)</span><br>
+<select id="sel"></select></header>
+<main><div id="mapa"></div><aside id="panel">Cargando…</aside></main>
+<script src="leaflet/leaflet.js"></script>
+<script>
+const ICONO={salud:"🏥",policia:"🚓",bomberos:"🚒"},NOMBRE={salud:"Salud",policia:"Policía",bomberos:"Bomberos"};
+const mapa=L.map("mapa").setView([-16.5,-64.5],5);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap",maxZoom:18}).addTo(mapa);
+let capa=L.layerGroup().addTo(mapa),MUN,SERV,EV;
+const km=(a,b,c,d)=>{const p=Math.PI/180,x=Math.sin((c-a)*p/2)**2+Math.cos(a*p)*Math.cos(c*p)*Math.sin((d-b)*p/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+function dentro(pt,anillo){let r=false;for(let i=0,j=anillo.length-1;i<anillo.length;j=i++){const[xi,yi]=anillo[i],[xj,yj]=anillo[j];if((yi>pt[1])!==(yj>pt[1])&&pt[0]<(xj-xi)*(pt[1]-yi)/(yj-yi)+xi)r=!r}return r}
+function municipioDe(lat,lon){for(const f of MUN.features){const g=f.geometry,polis=g.type==="Polygon"?[g.coordinates]:g.coordinates;for(const p of polis)if(dentro([lon,lat],p[0]))return f}return null}
+function mostrar(e){
+  capa.clearLayers();
+  const m=municipioDe(e.lat,e.lon);
+  let lm=null;
+  if(m){lm=L.geoJSON(m,{style:{color:"#0b5cad",weight:2,fillOpacity:.08}}).addTo(capa)}
+  L.marker([e.lat,e.lon]).addTo(capa).bindPopup(e.titulo);
+  let html=`<b>${e.titulo}</b><div class="aviso">${m?`Municipio: ${m.properties.n} (${m.properties.d})`:"Fuera de los límites municipales"} · ${e.nivel_evidencia||"sin nivel de evidencia"}</div>`;
+  const pts=[[e.lat,e.lon]];
+  for(const t of ["salud","policia","bomberos"]){
+    const c=SERV.filter(s=>s.tipo===t).map(s=>({...s,d:km(e.lat,e.lon,s.lat,s.lon)})).sort((a,b)=>a.d-b.d).slice(0,3).filter(s=>s.d<=50);
+    html+=`<h2>${ICONO[t]} ${NOMBRE[t]}</h2><ul>`+(c.length?c.map(s=>`<li><span class="km">${s.d.toFixed(1)} km</span> ${s.nombre}${s.telefono?` · ${s.telefono}`:""}</li>`).join(""):"<li>Ninguno a menos de 50 km en los datos</li>")+"</ul>";
+    c.forEach(s=>{L.marker([s.lat,s.lon],{icon:L.divIcon({html:ICONO[t],className:"",iconSize:[22,22]})}).addTo(capa).bindPopup(`${s.nombre}<br>${s.d.toFixed(1)} km`);pts.push([s.lat,s.lon])});
+  }
+  html+=`<p class="aviso">Distancia en línea recta, no por ruta. Fuente: OpenStreetMap, incompleto en Bolivia.</p>`;
+  document.getElementById("panel").innerHTML=html;
+  const lim=L.latLngBounds(pts);if(lm)lim.extend(lm.getBounds());mapa.fitBounds(lim.pad(.1));
+}
+Promise.all([fetch("../geo_mun.geojson").then(r=>r.json()),fetch("servicios_osm.json").then(r=>r.json()),fetch("../eventos_unificados.json").then(r=>r.json())]).then(([m,s,e])=>{
+  MUN=m;SERV=s.servicios;EV=e.eventos.filter(x=>x.lat!=null&&x.lon!=null);
+  const sel=document.getElementById("sel");
+  EV.forEach((x,i)=>sel.add(new Option(`${x.categoria} · ${x.titulo.slice(0,90)}`,i)));
+  sel.onchange=()=>mostrar(EV[sel.value]);
+  EV.length?mostrar(EV[0]):document.getElementById("panel").textContent="No hay eventos con ubicación.";
+}).catch(err=>document.getElementById("panel").textContent="No se pudo cargar: "+err);
+</script></body></html>
