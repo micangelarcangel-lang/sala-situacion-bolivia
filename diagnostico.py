@@ -98,7 +98,10 @@ def main():
             r = escalera.obtener(u, vias=tuple(a.vias))
             panel[u] = r
             ult = r["intentos"][-1] if r["intentos"] else {}
-            print(f"ESCALERA ok={r['ok']} via={r['via']} desactualizado={r.get('desactualizado', '-')} edad_dias={r.get('edad_dias', '-')} intentos={[(i['via'], i['estado']) for i in r['intentos']]} {u}")
+            print(f"ESCALERA ok={r['ok']} via={r['via']} desactualizado={r.get('desactualizado', '-')} edad_dias={r.get('edad_dias', '-')} intentos={[(i['via'], i['estado'], i.get('chars'), i.get('bloqueo')) for i in r['intentos']]} {u}")
+            if not r["ok"]:
+                for i in r["intentos"]:
+                    print(f"   detalle {i['via']}: error={i.get('error', '')!r} muestra={i.get('muestra', '')!r}")
         os.makedirs("diag_out", exist_ok=True)
         escalera.registrar(panel, "diag_out/estado_vias.json")
         return

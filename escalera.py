@@ -115,7 +115,7 @@ def obtener(url, vias=VIAS_POR_DEFECTO, min_chars=300, max_dias=30, fetchers=Non
         r = fetchers[v](url)
         texto = texto_de(r.get("crudo"), r.get("tipo", ""), url) if r.get("crudo") else ""
         ok = _util(r, texto, min_chars)
-        reg = {"via": v, "estado": r.get("estado"), "seg": r.get("seg"), "chars": len(texto), "bloqueo": _bloqueo(texto) or r.get("estado") in (401, 403, 429), "error": r.get("error", "")}
+        reg = {"via": v, "estado": r.get("estado"), "seg": r.get("seg"), "chars": len(texto), "bloqueo": _bloqueo(texto) or r.get("estado") in (401, 403, 429), "error": r.get("error", ""), "muestra": texto[:120]}
         if "edad_dias" in r:
             reg["edad_dias"] = r["edad_dias"]
             reg["fecha_captura"] = r.get("fecha_captura")
