@@ -1,0 +1,34 @@
+name: Sala v3 (paralelo, sin correo)
+# Corre las etapas v3 sobre los datos más recientes de producción (main) y guarda el resultado en datos/v3 de esta rama.
+# No usa secretos, no envía correo y no escribe en docs/. Se dispara al cambiar v3_solicitud.txt o a mano desde la rama.
+on:
+  push:
+    branches-ignore: [main]
+    paths: [v3_solicitud.txt]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sala-v3
+  cancel-in-progress: false
+jobs:
+  v3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install jsonschema pyyaml shapely matplotlib reportlab
+      - name: Traer los datos más recientes de producción (solo lectura)
+        run: git checkout origin/main -- docs/eventos_unificados.json docs/textos_hechos.json
+      - name: Etapas v3
+        run: python ejecutar_v3.py
+      - name: Guardar resultado en la rama
+        run: |
+          git config user.name "sala-bot" && git config user.email "sala-bot@users.noreply.github.com"
+          git add datos/v3
+          git commit -m "datos v3: boletín y eventos" datos/v3 || echo "sin cambios"
+          git pull --rebase -q || true
+          git push || echo "no se pudo subir"
