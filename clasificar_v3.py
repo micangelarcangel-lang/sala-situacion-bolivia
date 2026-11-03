@@ -37,11 +37,11 @@ EXTRA_EXT = ("florida", "nueva york", "la guaira", "tenerife", "california", "te
 def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
     tn, cn = norm(titulo), norm((cuerpo or "")[:1200])
     res = {"categoria": None, "subtipo": None, "ambito": "sin_lugar", "relevante": False, "razones": []}
-    for cat, sub, pat in TAXONOMIA:
-        if re.search(pat, tn):
-            res.update(categoria=cat, subtipo=sub)
-            res["razones"].append("tipo en el titular")
-            break
+    hallados = [(m.start(), cat, sub) for cat, sub, pat in TAXONOMIA for m in [re.search(pat, tn)] if m]
+    if hallados:  # gana el tipo que aparece primero en el titular ("La sequía golpea… riadas" es sequía)
+        _, cat, sub = min(hallados)
+        res.update(categoria=cat, subtipo=sub)
+        res["razones"].append("tipo en el titular")
     if res["subtipo"] is None:
         for cat, sub, pat in TAXONOMIA:
             if len(re.findall(pat, cn)) >= 2:  # en el cuerpo debe aparecer al menos dos veces para contar

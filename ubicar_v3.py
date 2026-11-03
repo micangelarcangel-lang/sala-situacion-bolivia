@@ -141,6 +141,8 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
         c["extremo_ruta"] = c["nombre_norm"] in rutas and not c.get("cerca")  # "cerca a Poopó" es un punto aunque Poopó sea extremo de la ruta
         if c["extremo_ruta"]:
             c["puntaje"] -= 2; c["razones"].append("extremo de una ruta")
+    # varios municipios afectados ("siete municipios de Cochabamba", "casi 40 municipios"): el hecho es regional, no un punto
+    multiples = bool(re.search(r"\b(?:\d+|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|varios|decenas de|numerosos)\s+municipios\b", tn + " " + lead))
     orden = sorted(cands.values(), key=lambda c: -c["puntaje"])
     alt = [{"municipio": c["op"]["nombre"], "departamento": c["op"]["dep"], "puntaje": round(c["puntaje"], 1)} for c in orden[:3]]
     res = {"municipio": None, "departamento": None, "lat": None, "lon": None, "precision": "ninguna", "puntaje": 0, "razones": [], "alternativas": alt, "motivo": "sin candidatos"}
@@ -151,6 +153,11 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
         return res
     top = orden[0]
     res.update(puntaje=round(top["puntaje"], 1), razones=sorted(set(top["razones"])))
+    if multiples:
+        deps_c = {c["op"]["dep"] for c in orden if c["puntaje"] >= 4}
+        dep = dep_titulo or (next(iter(deps_c)) if len(deps_c) == 1 else None)
+        res.update(departamento=dep, precision="departamento" if dep else "ninguna", motivo="afecta a varios municipios: hecho regional")
+        return res
     if top["extremo_ruta"]:
         deps = {c["op"]["dep"] for c in orden if c["extremo_ruta"]}
         res.update(departamento=next(iter(deps)) if len(deps) == 1 else None, precision="tramo", motivo="el nombre es un extremo de una ruta")

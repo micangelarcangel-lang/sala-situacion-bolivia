@@ -39,3 +39,7 @@ def test_estricto_exige_bolivia_y_descarta_deportes_y_exterior():
     assert not c.clasificar("Agenda informativa: Cochabamba tiene sequía", "", False, True)["relevante"]
     assert c.clasificar("Chuquisaca sufre intensa granizada que destruye techos", "", False, True)["relevante"]
     assert c.clasificar("Caso de meningitis en cárcel de Palmasola", "El Sedes de Santa Cruz activó protocolos.", False, True)["relevante"]
+
+
+def test_gana_el_tipo_que_aparece_primero():
+    assert c.clasificar("La sequía golpea a 114 mil familias en Bolivia y las inundaciones agravan el riesgo")["subtipo"] == "sequía"

@@ -69,3 +69,8 @@ def test_alto_beni_no_es_el_departamento_beni():
 def test_cerca_a_es_punto_aunque_sea_extremo_de_ruta():
     r = u.ubicar("Dos muertos tras choque de auto contra camión cerca a Poopó", "En la carretera Oruro - Poopó ocurrió el choque cerca a Poopó.", GEO)
     assert r["precision"] == "municipio" and r["municipio"] == "Poopó"
+
+
+def test_varios_municipios_es_regional():
+    r = u.ubicar("Siete municipios de Cochabamba enfrentan sequía extrema", "Pasorapa y otros municipios sufren la sequía.", GEO)
+    assert r["precision"] == "departamento" and r["departamento"] == "Cochabamba"
