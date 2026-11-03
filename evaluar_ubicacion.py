@@ -33,6 +33,8 @@ def main():
     print("lectura de notas:", dict(est), flush=True)
     viejo, nuevo = collections.Counter(), collections.Counter()
     cambios = 0
+    import victimas_v3 as vi, agrupar_v3 as ag
+    fichas = []
     for h in hechos:
         notas = por_hecho.get(h["id"], [])
         cuerpo = " ".join(t for _, t, _ in notas if t)
@@ -42,7 +44,14 @@ def main():
         igual = (r["municipio"] or "") in (h.get("lugar") or "")
         cambios += 0 if igual else 1
         marca = "=" if igual else "≠"
+        vv = vi.extraer(h["titulo"], cuerpo)
+        fichas.append({"titulo": h["titulo"], "cuerpo": cuerpo, "ts": h.get("ts"), "municipio": r["municipio"], "departamento": r["departamento"], "fallecidos": (vv["fallecidos"] or (None,))[0]})
+        print(f"   VICTIMAS fallecidos={vv['fallecidos']} heridos={vv['heridos']} ({vv['fuente']}) | {h['titulo'][:50]!r}", flush=True)
         print(f"{marca} [{'cuerpo' if cuerpo else 'titular'}] {h['titulo'][:70]!r} | ANTES: {h.get('lugar') or '-'} | AHORA: {r['municipio'] or r['departamento'] or '-'} ({r['precision']}, {r['puntaje']}) {','.join(r['razones'])[:80]}", flush=True)
+    gr = [g for g in ag.agrupar(fichas) if len(g["indices"]) > 1]
+    print(f"AGRUPAR: {len(gr)} grupos con más de un hecho (posibles duplicados)", flush=True)
+    for g in gr:
+        print("   GRUPO", g["razones"][:2], [fichas[i]["titulo"][:60] for i in g["indices"]], flush=True)
     print("RESUMEN antes:", dict(viejo), "| ahora:", dict(nuevo), "| cambian:", cambios, "de", len(hechos), flush=True)
 
 
