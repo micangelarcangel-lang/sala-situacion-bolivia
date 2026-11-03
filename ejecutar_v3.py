@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import json, os, sys, time, collections, traceback
-import almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -61,6 +61,16 @@ def main():
     cache_cuerpos = json.load(open(f"{SALIDA}/cuerpos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/cuerpos.json") else {}
     geo = etapa("cargar_geografia", lambda: ubicar_v3.cargar_geo("geo.json"), ctl)
 
+    indice_lugares = localizador = None
+    def cargar_lugares():
+        nonlocal indice_lugares, localizador
+        L = json.load(open("datos/lugares_osm.json", encoding="utf-8"))["lugares"]
+        S = json.load(open("datos/servicios_osm.json", encoding="utf-8"))["servicios"]
+        localizador = ubicar_v3.crear_localizador("geo.json")
+        indice_lugares = lugares_v3.indexar(L, S, [m["n"] for m in json.load(open("geo.json", encoding="utf-8"))["mun"]])
+        return len(indice_lugares)
+    etapa("cargar_lugares", cargar_lugares, ctl)
+
     def enriquecer():
         n = collections.Counter()
         for e in eventos:
@@ -85,6 +95,12 @@ def main():
             if cl["categoria"]:
                 e["categoria"] = cl["categoria"]
             n["relevante"] += cl["relevante"]; n["exterior"] += cl["ambito"] == "exterior"
+            if cl["relevante"] and r["precision"] in ("ninguna", "departamento") and indice_lugares is not None:
+                hit = lugares_v3.buscar(e["titulo"], cuerpo, indice_lugares, localizador, (e.get("departamentos") or [None])[0])
+                if hit and hit.get("municipio"):
+                    e.update(lat=round(hit["lat"], 5), lon=round(hit["lon"], 5), departamentos=[hit["departamento"]], lugar=f'{hit["nombre"]}, {hit["municipio"]}', precision_ubicacion="punto",
+                             metodo=f'v3: lugar conocido ({hit["tipo"]}: {hit["nombre"]})')
+                    n["por_lugar_conocido"] += 1
             v = victimas_v3.extraer(e["titulo"], cuerpo)
             vic = {}
             for k in ("fallecidos", "heridos"):

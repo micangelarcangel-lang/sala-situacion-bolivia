@@ -48,12 +48,30 @@ def indexar(lugares, servicios=(), nombres_municipios=()):
     return idx
 
 
+def _sin_tildes(t):
+    return "".join(c for c in unicodedata.normalize("NFD", str(t or "")) if unicodedata.category(c) != "Mn")
+
+
+LOCATIVO = r"(?:\ben|\bcerca (?:de|a)|\bbarrio|\bzona|\bdistrito|\bavenida|\bcalle|\bpenal|\bcarcel|\burbanizacion|\bcomunidad)\s+(?:(?:de|del|la|el|los|las)\s+)?"
+
+
+def _mencionado_como_lugar(nombre, original):
+    """El nombre debe aparecer con mayúscula inicial y tras una preposición de lugar ('en Palmasola', 'barrio Villarroel'). Evita 'Internacional', 'Centro Médico'…"""
+    for m in re.finditer(LOCATIVO + "(" + re.escape(_sin_tildes(nombre)) + r")(?![A-Za-z0-9])", original, flags=re.I):
+        if m.group(1)[0].isupper():
+            return True
+    return False
+
+
 def buscar(titulo, cuerpo, idx, geo_fn=None, departamento=None, max_cuerpo=500):
     """Devuelve el lugar encontrado {nombre, lat, lon, tipo, departamento?} o None. geo_fn(lat, lon) -> (municipio, departamento) para validar el departamento."""
     t = norm(titulo) + " . " + norm((cuerpo or "")[:max_cuerpo])
+    original = _sin_tildes(str(titulo or "") + " . " + str(cuerpo or "")[:max_cuerpo])
     mejores = []
     for n, puntos in idx.items():
         if not re.search(r"(?<![a-z0-9])" + re.escape(n) + r"(?![a-z0-9])", t):
+            continue
+        if not _mencionado_como_lugar(puntos[0]["nombre"], original):
             continue
         cand = puntos
         if geo_fn:

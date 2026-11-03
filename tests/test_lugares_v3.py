@@ -21,3 +21,10 @@ def test_nombre_repetido_sin_pista_no_se_adivina():
 
 def test_genericos_se_ignoran():
     assert l.buscar("Marcha en el centro de la ciudad", "", l.indexar(L), GEO) is None
+
+
+def test_palabra_comun_sin_preposicion_de_lugar_no_cuenta():
+    idx = l.indexar([{"nombre": "Internacional", "tipo": "barrio", "lat": -17.8, "lon": -63.1}])
+    assert l.buscar("Emite decreto de emergencia nacional con apoyo internacional", "", idx, GEO) is None
+    assert l.buscar("Accidente en Internacional deja heridos", "", idx, GEO) is not None
+    assert l.buscar("Accidente en internacional deja heridos", "", idx, GEO) is None
