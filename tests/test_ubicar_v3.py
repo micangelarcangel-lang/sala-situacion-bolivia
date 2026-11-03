@@ -59,3 +59,13 @@ def test_nombre_repetido_sin_departamento_no_se_ubica():
 def test_sin_pistas_no_inventa():
     r = U("Choque entre moto y vagoneta deja una persona herida", "Los heridos fueron atendidos por personal de salud.")
     assert r["precision"] == "ninguna" and r["lat"] is None
+
+
+def test_alto_beni_no_es_el_departamento_beni():
+    r = u.ubicar("Accidente en la ruta hacia Alto Beni deja varios heridos", "", GEO)
+    assert r["departamento"] != "Beni"
+
+
+def test_cerca_a_es_punto_aunque_sea_extremo_de_ruta():
+    r = u.ubicar("Dos muertos tras choque de auto contra camión cerca a Poopó", "En la carretera Oruro - Poopó ocurrió el choque cerca a Poopó.", GEO)
+    assert r["precision"] == "municipio" and r["municipio"] == "Poopó"

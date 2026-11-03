@@ -25,7 +25,7 @@ CAPITALES = {  # nombre que usa la prensa -> (municipio del gazetteer, departame
     "cobija": ("Cobija", "Pando"),
 }
 DEPARTAMENTOS = ["Beni", "Chuquisaca", "Cochabamba", "La Paz", "Oruro", "Pando", "Potosí", "Santa Cruz", "Tarija"]
-LOCATIVOS = ("en", "cerca de", "municipio de", "localidad de", "poblacion de", "comunidad de", "a la altura de", "ciudad de", "provincia de")
+LOCATIVOS = ("en", "cerca de", "cerca a", "municipio de", "localidad de", "poblacion de", "comunidad de", "a la altura de", "ciudad de", "provincia de")
 DIRECCIONALES = ("hacia", "rumbo a", "con destino a", "procedente de", "proveniente de", "desde", "ruta a", "carretera a", "camino a", "via a", "dirigia a", "rumbo")
 VIAS = ("ruta", "carretera", "camino", "via", "tramo", "autopista")
 
@@ -67,7 +67,11 @@ def _previo(t, pos, n=3):
     return " ".join(t[:pos].split()[-n:])
 
 
-def _deptos_del_titulo(tn):
+def _deptos_del_titulo(tn, idx=None):
+    if idx:  # "Alto Beni" es un municipio de La Paz: no cuenta como el departamento Beni
+        for nombre, info in idx.items():
+            if " " in nombre and any(norm(d) in nombre and nombre != norm(d) and info["opciones"][0]["dep"] != d for d in DEPARTAMENTOS) and _apariciones(tn, nombre):
+                tn = re.sub(r"(?<![a-z0-9])" + re.escape(nombre) + r"(?![a-z0-9])", " ", tn)
     hallados = [d for d in DEPARTAMENTOS if _apariciones(tn, norm(d))]
     for alias, (_, dep) in CAPITALES.items():
         if dep not in hallados and _apariciones(tn, alias):
@@ -92,7 +96,7 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
     idx = _indice(geo)
     tn, cn = norm(titulo), norm((cuerpo or "")[:max_cuerpo])
     lead = cn[:400]
-    deps_titulo = _deptos_del_titulo(tn)
+    deps_titulo = _deptos_del_titulo(tn, idx)
     # los guiones del texto original separan los extremos de una ruta; norm() los vuelve espacio, por eso se mira el original
     texto_rutas = norm(re.sub(r"\s*[-–—]\s*", " a ", f"{titulo} . {(cuerpo or '')[:max_cuerpo]}"))
     cands = {}
@@ -117,6 +121,8 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
                         c["puntaje"] -= 3; c["razones"].append("destino u origen")
                     elif any(previo.endswith(x) for x in LOCATIVOS):
                         c["puntaje"] += 2; c["razones"].append("con preposición de lugar")
+                        if previo.endswith(("cerca de", "cerca a")):
+                            c["cerca"] = True
                     if previo.endswith("ciudad de"):
                         c["ciudad"] = True
     rutas = _extremos_de_ruta(texto_rutas, {c["nombre_norm"] for c in cands.values()})
@@ -132,7 +138,7 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
             c["puntaje"] -= 4
         if not c["capital"]:
             c["puntaje"] += 1  # un municipio menor es más específico que el "Santa Cruz:" de un titular
-        c["extremo_ruta"] = c["nombre_norm"] in rutas
+        c["extremo_ruta"] = c["nombre_norm"] in rutas and not c.get("cerca")  # "cerca a Poopó" es un punto aunque Poopó sea extremo de la ruta
         if c["extremo_ruta"]:
             c["puntaje"] -= 2; c["razones"].append("extremo de una ruta")
     orden = sorted(cands.values(), key=lambda c: -c["puntaje"])
