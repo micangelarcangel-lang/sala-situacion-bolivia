@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import json, os, sys, time, collections, traceback
-import ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -80,6 +80,11 @@ def main():
                 e.update(lat=None, lon=None, departamentos=[r["departamento"]], lugar=f'{r["departamento"]} ({r["precision"]})')
             else:
                 e.update(lat=None, lon=None)
+            cl = clasificar_v3.clasificar(e["titulo"], cuerpo, e["precision_ubicacion"] in ("municipio", "departamento", "tramo"))
+            e.update(subtipo=cl["subtipo"] or "sin clasificar", ambito=cl["ambito"], relevante_v3=cl["relevante"])
+            if cl["categoria"]:
+                e["categoria"] = cl["categoria"]
+            n["relevante"] += cl["relevante"]; n["exterior"] += cl["ambito"] == "exterior"
             v = victimas_v3.extraer(e["titulo"], cuerpo)
             vic = {}
             for k in ("fallecidos", "heridos"):

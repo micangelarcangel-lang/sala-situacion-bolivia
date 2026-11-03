@@ -308,6 +308,28 @@
     },
     "corroborado_propuesto": {
       "type": "boolean"
+    },
+    "ambito": {
+      "enum": [
+        "bolivia",
+        "exterior",
+        "sin_lugar"
+      ]
+    },
+    "relevante_v3": {
+      "type": "boolean"
+    },
+    "grupo_propuesto": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "servicios_cercanos": {
+      "type": "object"
+    },
+    "detalle_v3": {
+      "type": "string"
     }
   },
   "additionalProperties": false

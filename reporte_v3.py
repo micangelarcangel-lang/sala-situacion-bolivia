@@ -24,7 +24,11 @@ def nivel_de(e):
 def seleccionar(eventos, ahora, horas):
     ini = ahora - horas * 3600 * 1000
     # solo hechos de Bolivia: con departamento identificado o de una fuente oficial nacional; la prensa sin lugar en Bolivia (p. ej. noticias del exterior) se deja fuera
-    return [e for e in eventos if e.get("ts", 0) >= ini and e.get("origen") != "foco" and (e.get("departamentos") or e.get("origen") in ("senamhi", "sismo", "epidemiologia"))]
+    def vale(e):
+        if "relevante_v3" in e:  # ya clasificado por la v3: tipo de hecho reconocido y no es del exterior
+            return e["relevante_v3"] and e.get("ambito") != "exterior"
+        return bool(e.get("departamentos") or e.get("origen") in ("senamhi", "sismo", "epidemiologia"))
+    return [e for e in eventos if e.get("ts", 0) >= ini and e.get("origen") != "foco" and vale(e)]
 
 
 def prioridad(e):
