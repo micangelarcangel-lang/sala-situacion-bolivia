@@ -40,6 +40,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPR1VZQUlIQnYtSUh4bGJkSzNMaGRWeW5haml5ckRocnFtTEQ1ZGpiWFlpOWdCemVuakVJOGNUaUcyeUJpeFNJQzFaRkFzVk5ma3BwVzN3TjBIb0o1b2lBX3B0RzdKdmItWjFYRWFHSEx0b3g0aVVxaWI2ZUtvSXBWQTlZSE4wcXNoUW5ROXBNNjRaV3AyV3lZckd3dzdHVHB4cU9ZY0NSdjRraDBiMXZqMGxLSjZvQXduOEFtQWU2UG9PZWs?oc=5"
  },
  {
+  "hecho_id": "noticia:kmipy",
+  "fecha_hora_local": "2026-11-03 13:19",
+  "ts_ms": 1793726349000,
+  "titulo": "ABC restablece la transitabilidad en el subtramo Tarija – Entre Ríos tras derrumbe - ABI - Agencia Boliviana de Información",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "ABI - Agencia Boliviana de Información",
+  "lat": -21.53,
+  "lon": -64.73,
+  "lugar": "Tarija, Tarija",
+  "departamento": "Tarija",
+  "municipio": "Tarija",
+  "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPaVFGa3JCX0VBT2ZlOU5BT1VySjFqcmlaajc4a2tZQS1CLV9uN2RlaXZ6N0JlclhVRXFYS2JUUmlIVVZUSS1SX012b2ZBcTVsNm1qY1IzeHEwUkRIaFlBXzJoYThXeTlqWHQtQkU0aW1oNnREYmZ1cC1tWk9jMVNTMzVDNGlqcXpnMktDRURyWnFRdW14X01aQmNlZGI?oc=5"
+ },
+ {
   "hecho_id": "noticia:1b5b38w",
   "fecha_hora_local": "2026-11-03 12:42",
   "ts_ms": 1793724145000,
@@ -80,24 +100,24 @@
   "enlaces": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNR2xxTGoxZkh5MV9ueXFjbXNBNktXb1Vna01qVmYzZV9WNFBERDVVUkJMV25TNHJlb0tlSXV5UGwxWEJoeHR4c1NJRXVEaTNSZ29kNDVGUGp1U25hdVJzOU5tWDJMVHpJSHh6TklTS3pwQnlrcDROV2hHWmxLa3FodDRyeGRiSnhxbmRkd3paSkR3WkVteVJGcnc1MUgxUE82NlM0?oc=5 | https://news.google.com/rss/articles/CBMivgFBVV95cUxNbTVhakhqYTdxWkNwbC00aENBb0plUmpWelJSUEtvTFlfdXhsel9SXzUxenBGQVBEUmNlRmlsNmh0TFg0MFY3NXZvaWZBUzE0QzZsWG1OYlVQal9ENHhEaXUzM1V1MTF1TERpTWduZHRES0tsUGMzSVd4N0ItNE54X2E0VG9VdlpSLWg2eGpnSGpuc3VBU0szNW8zMVFQS29YMk8yME5KRXA4d1ZlTTNmOGFlenhBYzktd240MWVR?oc=5 | https://news.google.com/rss/articles/CBMiuwFBVV95cUxON1NZejBaeHlJQTNPUElyX1kwWlJKeFMxR1pWMFIySWpwUFpRLThEZ2RnQXItRkNubFVTbzJIOFVSZzVES3c2ejBvUm0xVE15MXBLS1JmN293QVF4Q0tTQzNhVjlLdlNIYWZ6Rk1DamZDNHNWd0thOW5YS09aZmY2ZDMxcGhDT3ZnRnZLcklzd1Q2YTBtWFZEa0ptQmpGT0J3eFRWVTZxbWZMTlV4R1BRbk1TYU9fTjYtRHJF?oc=5"
  },
  {
-  "hecho_id": "noticia:1oljdpx",
+  "hecho_id": "noticia:15g1lxl",
   "fecha_hora_local": "2026-11-03 12:34",
   "ts_ms": 1793723683000,
-  "titulo": "Asamblea de Cochabamba aprueba proyecto de emergencia por sequía en siete municipios - Red Uno",
+  "titulo": "Asamblea de Cochabamba aprueba proyecto de emergencia por sequía en siete municipios - eju.tv",
   "tipo_amenaza": "climatológica",
   "nivel_num": 1,
   "nivel_preliminar": "amarilla",
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 9,
-  "fuentes": "La Patria Bolivia; Opinión Bolivia; Red Uno; unitel.bo",
+  "n_notas": 10,
+  "fuentes": "La Patria Bolivia; Opinión Bolivia; Red Uno; eju.tv; unitel.bo",
   "lat": -17.39,
   "lon": -66.16,
   "lugar": "Cochabamba, Cochabamba",
   "departamento": "Cochabamba",
   "municipio": "Cochabamba",
-  "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNT1ZOQWJRcGh2aXFzTno5Y3lmZW1ObnQtZjg5S3pQQUJ6Z2hBcnczVU05ZmhEelFMc3lDUFhhaGpjVS1ZSURDTk1CT2VtbnFrMGNqU1dvaC1MbVc5LWFfTW14bDJNN3ZIR1NMT0xDQlJCYTQ5cDZGeHZMWk9lbkdsb05FVW5WWkZ3azEyVlNQRXBhakd1Z0JSRERZaHg?oc=5 | https://news.google.com/rss/articles/CBMizAFBVV95cUxNemtIMzZPRGw0N2tXSHFLSGtDUWFRVGtFQkw4Z0s4aDVBdDlSMjU3dGhrOGdkWW55cnctNzcwaEdFVXBfYmZPVll3Vm82VlkzVmNlS0VDZFlKZ0hiQlBJUmhRYUtZSjhoNVlueGhwUERFRDhfUnJTdUdtODBmdVFZeTd0OXA5dE5iTU1VYnNBVEFmQmxTNk0yZmpHOGhRbFNSbXhKalFFU05DMzI0Z3ZIajdQcW9nUlFlMGFrMzdXNmRlV25SOWJGeUc0clQ?oc=5 | https://news.google.com/rss/articles/CBMiygFBVV95cUxOVmdjWFBwcUNGTUF1UDlLVVFyeVgzOVVMQktxY1JmVDdzbHRHZ1BOVXFLbmszendKcEYtWjB2eFNNWEtNLVFjVEFPU2RvTHJCaGR3cTk2ZXVtdGF2M3Jmd3RubWRWTU54cTN6Ty05VnpINmtMVXRqM19EV1VaWEt0bjhPeThwWV93NzdtQ0Z2Zllwb2FXUWRoQXJEdlpVRXo4ZThqNlE0dUVDRUVRc013aXg0Sk9feTZLejJ1MlkxOXZoRU01UDhsRDhR?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNT1ZOQWJRcGh2aXFzTno5Y3lmZW1ObnQtZjg5S3pQQUJ6Z2hBcnczVU05ZmhEelFMc3lDUFhhaGpjVS1ZSURDTk1CT2VtbnFrMGNqU1dvaC1MbVc5LWFfTW14bDJNN3ZIR1NMT0xDQlJCYTQ5cDZGeHZMWk9lbkdsb05FVW5WWkZ3azEyVlNQRXBhakd1Z0JSRERZaHg?oc=5 | https://news.google.com/rss/articles/CBMirAFBVV95cUxPRE4tVkdQeGs0TXdxdkdJeW1nZzU3T0sxNm9LY2tRSW00bUlUNEF4TVZEWmx5dzBnSThWMnQ1MHJoYndHemVadVZWOEh2NXpXRDMyZDJfX2kzVzlINnQtLTFsWEJaemJQVjBmYnlXMU9aMHZSNjJQQ2plWmEtdUtyMEI5LUFvdUxTbmZ3T2FQOVJfTV9lZlFROW5kREdINC1xSm1QWkhMUGMzdkli?oc=5 | https://news.google.com/rss/articles/CBMizAFBVV95cUxNemtIMzZPRGw0N2tXSHFLSGtDUWFRVGtFQkw4Z0s4aDVBdDlSMjU3dGhrOGdkWW55cnctNzcwaEdFVXBfYmZPVll3Vm82VlkzVmNlS0VDZFlKZ0hiQlBJUmhRYUtZSjhoNVlueGhwUERFRDhfUnJTdUdtODBmdVFZeTd0OXA5dE5iTU1VYnNBVEFmQmxTNk0yZmpHOGhRbFNSbXhKalFFU05DMzI0Z3ZIajdQcW9nUlFlMGFrMzdXNmRlV25SOWJGeUc0clQ?oc=5"
  },
  {
   "hecho_id": "noticia:1elweuc",
