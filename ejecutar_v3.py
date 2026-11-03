@@ -65,19 +65,33 @@ def main():
         conocidas = {e.get("url") for e in eventos}
         corte = int(time.time() * 1000) - ventana_h * 3600000
         nuevas = descartadas = 0
+        pendientes = []
         for n in notas:
             if n["url"] in conocidas or (n["ts_publicacion"] or 0) < corte:
                 continue
-            cl = clasificar_v3.clasificar(n["titulo"], n["cuerpo"])
-            if not cl["relevante"]:
+            if not clasificar_v3.clasificar(n["titulo"], n["cuerpo"])["relevante"]:
                 descartadas += 1
                 continue
+            pendientes.append(n)
+        # los feeds con solo resumen: se lee la página completa, solo de las notas que ya parecen relevantes por el titular
+        cortas = [n for n in pendientes if len(n["cuerpo"]) < 300]
+        leidas = collections.Counter()
+        if cortas:
+            import informe_hecho
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(8) as ex:
+                for n, (t, estado, real) in zip(cortas, ex.map(lambda x: informe_hecho.leer_nota(x["url"]), cortas)):
+                    leidas[estado.split(" (")[0]] += 1
+                    if t:
+                        n["cuerpo"] = t[:4000]
+        for n in pendientes:
+            cl = clasificar_v3.clasificar(n["titulo"], n["cuerpo"])
             cache_cuerpos[n["url"]] = {"texto": n["cuerpo"], "estado": "texto completo", "t": time.time()}
             eventos.append({"id": "noticia:v3:" + hashlib.sha1(n["url"].encode()).hexdigest()[:12], "origen": "prensa", "categoria": cl["categoria"], "titulo": n["titulo"], "ts": n["ts_publicacion"], "ts_publicacion": n["ts_publicacion"],
                             "fuente": n["medio"], "url": n["url"], "oficial": False, "departamentos": [], "cifras": {}, "lugar": "", "lat": None, "lon": None, "nivel_txt": "Sin nivel (prensa, sin verificar)", "nivel": 0,
                             "confianza": {"nivel": "Baja", "fuentes_independientes": 1, "puntaje": 20}, "via_captacion": "rss", "metodo": "sin ubicar"})
             nuevas += 1
-        return {"feeds": estado, "notas_leidas": len(notas), "eventos_nuevos": nuevas, "descartadas_por_no_relevantes": descartadas}
+        return {"feeds": estado, "notas_leidas": len(notas), "eventos_nuevos": nuevas, "descartadas_por_no_relevantes": descartadas, "paginas_leidas": dict(leidas)}
     ctl["lectura_cuerpos"] = etapa("leer_cuerpos", leer_cuerpos, ctl)
     cache_cuerpos = json.load(open(f"{SALIDA}/cuerpos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/cuerpos.json") else {}
     ctl["captar_feeds"] = etapa("captar_feeds", captar_feeds, ctl)

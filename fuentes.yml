@@ -177,6 +177,13 @@ fuentes:
       - {medio: ATB, url: "https://www.atb.com.bo/feed"}
       - {medio: Radio Panamericana, url: "https://panamericana.bo/rss"}
       - {medio: Oxígeno, url: "https://oxigeno.bo/feed"}
+      # Medios sin RSS propio: titulares por Google Noticias (site:), cuerpo leído de la página (resuelve el enlace de Google)
+      - {medio: Unitel, url: "https://news.google.com/rss/search?q=site:unitel.bo+when:2d&hl=es-419&gl=BO&ceid=BO:es-419"}
+      - {medio: Los Tiempos, url: "https://news.google.com/rss/search?q=site:lostiempos.com+when:2d&hl=es-419&gl=BO&ceid=BO:es-419"}
+      - {medio: Brújula Digital, url: "https://news.google.com/rss/search?q=site:brujuladigital.net+when:2d&hl=es-419&gl=BO&ceid=BO:es-419"}
+      - {medio: Eju.tv, url: "https://news.google.com/rss/search?q=site:eju.tv+when:2d&hl=es-419&gl=BO&ceid=BO:es-419"}
+      - {medio: Visión 360, url: "https://news.google.com/rss/search?q=site:vision360.bo+when:2d&hl=es-419&gl=BO&ceid=BO:es-419"}
+      - {medio: Correo del Sur, url: "https://news.google.com/rss/search?q=site:correodelsur.com+when:2d&hl=es-419&gl=BO&ceid=BO:es-419"}
     vias:
       - {via: rss, estado: activa}
       - {via: sitemap, estado: activa}
