@@ -70,6 +70,9 @@ def main():
             e["cuerpo_leido"] = len(cuerpo) > 300
             r = ubicar_v3.ubicar(e["titulo"], cuerpo, geo)
             e["precision_ubicacion"] = r["precision"]
+            e["metodo"] = "sin ubicar" if r["precision"] == "ninguna" else "v3: " + r["motivo"] + (" (" + ", ".join(r["razones"][:3]) + ")" if r["razones"] else "")
+            if e["cuerpo_leido"] and not (e.get("detalle") or "").strip():
+                e["detalle"] = cuerpo[:700]
             n[r["precision"]] += 1
             if r["precision"] == "municipio":
                 e.update(lugar=f'{r["municipio"]}, {r["departamento"]}', lat=r["lat"], lon=r["lon"], departamentos=[r["departamento"]])
