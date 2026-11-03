@@ -72,7 +72,8 @@ fuentes:
     bloqueo_actual: "HTTP 403 desde las IP de GitHub, incluso con navegador real (02/11/2026). Hipótesis más probable: bloqueo por IP; falta confirmarla desde una IP boliviana"
     vias:
       - {via: html, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403: página de seguridad (cortafuegos web) que bloquea la IP de GitHub (03/11/2026)"}
-      - {via: html, url: "https://www.mindef.gob.bo/", estado: por_verificar, resultado: "Ministerio de Defensa responde con navegador; probar si publica los comunicados de Defensa Civil"}
+      - {via: html, url: "https://www.mindef.gob.bo/", estado: descartado_piloto, resultado: "MINDEF: portada solo JavaScript, sin listado leíble (03/11/2026)"}
+      - {via: buscador, estado: por_verificar, nota: "Google/Bing Noticias con \"Defensa Civil\" y \"VIDECI\": la prensa replica sus comunicados; el sistema ya busca así otros temas"}
       - {via: navegador, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403 también con navegador real (prueba en Actions, 02/11/2026)"}
       - {via: rss, url: "https://reliefweb.int/updates/rss.xml?search=country.exact%3ABolivia", estado: activa, nota: "ruta alterna: ver fuente reliefweb_bolivia; filtrar por VIDECI/SINAGER en el título o la fuente"}
       - {via: archivo, estado: activa, resultado: "Wayback tiene captura de la portada, de hace 286 días (prueba 03/11/2026): sirve de contexto, no de dato reciente"}
@@ -106,7 +107,7 @@ fuentes:
     frecuencia_min: 120
     vias:
       - {via: html, url: "https://www.sngr.gob.bo", estado: descartado_piloto, resultado: "el dominio no existe (sngr.gob.bo y sinager.defensacivil.gob.bo tampoco resuelven, prueba 03/11/2026)"}
-      - {via: html, url: "https://www.mindef.gob.bo/", estado: por_verificar, resultado: "responde con navegador (784 caracteres, portada con JavaScript, 03/11/2026); el Ministerio de Defensa publica noticias de Defensa Civil: falta confirmar si hay listado leíble"}
+      - {via: html, url: "https://www.mindef.gob.bo/", estado: descartado_piloto, resultado: "probada 03/11/2026: responde, pero la portada es solo JavaScript sin enlaces ni listado leíble (805 caracteres); no sirve como fuente"}
       - {via: red, estado: manual}
 
   - id: senasag
