@@ -20,9 +20,13 @@
    "ok": true,
    "seg": 0.1
   },
+  "almacen": {
+   "ok": true,
+   "seg": 0.0
+  },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   }
  },
  "antes": {
@@ -380,6 +384,11 @@
     "Rodrigo Paz anuncia Bs 200 millones para reconstruir El Torno tras la "
    ]
   ]
+ },
+ "almacen": {
+  "nuevos": 0,
+  "cambiados": 0,
+  "total_indice": 549
  },
  "despues": {
   "centroide_departamental": [],
