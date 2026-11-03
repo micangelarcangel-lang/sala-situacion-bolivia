@@ -170,3 +170,20 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
         res.update(puntaje=round(top["puntaje"], 1), razones=sorted(set(top["razones"])))
     res.update(municipio=top["op"]["nombre"], departamento=top["op"]["dep"], lat=round(top["op"]["lat"], 5), lon=round(top["op"]["lon"], 5), precision="municipio", motivo="mejor candidato")
     return res
+
+
+def crear_localizador(ruta):
+    """Devuelve f(lat, lon) -> (municipio, departamento) o None, usando los polígonos municipales de geo.json."""
+    from shapely.geometry import shape, Point
+    from shapely.strtree import STRtree
+    g = json.load(open(ruta, encoding="utf-8"))["mun"]
+    formas = [shape({"type": u["t"], "coordinates": u["g"]}) for u in g]
+    arbol = STRtree(formas)
+
+    def f(lat, lon):
+        p = Point(lon, lat)
+        for i in arbol.query(p):
+            if formas[int(i)].contains(p):
+                return g[int(i)]["n"], g[int(i)]["d"]
+        return None
+    return f
