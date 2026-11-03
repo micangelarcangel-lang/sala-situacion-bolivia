@@ -137,7 +137,7 @@ fuentes:
       Radio Panamericana: "https://panamericana.bo"
       Bolivia Verifica: "https://boliviaverifica.bo"
       El Diario: "https://www.eldiario.net"
-      La Patria: "https://lapatriaenlinea.com"
+      La Patria: "https://lapatriaenlinea.com"   # devuelve 200 pero vacío (prueba 02/11/2026); lapatria.bo respondió con texto: verificar si tiene las notas y cambiar el portal
       Correo del Sur: "https://correodelsur.com"
       El Día: "https://eldia.com.bo"
       Erbol: "https://erbol.com.bo"
