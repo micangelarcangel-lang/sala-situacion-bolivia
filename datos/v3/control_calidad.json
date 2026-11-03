@@ -2,7 +2,7 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.0
+   "seg": 0.1
   },
   "cargar_geografia": {
    "ok": true,
@@ -26,7 +26,7 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.2
+   "seg": 0.3
   }
  },
  "antes": {
@@ -386,9 +386,9 @@
   ]
  },
  "almacen": {
-  "nuevos": 0,
-  "cambiados": 0,
-  "total_indice": 549
+  "nuevos": 41,
+  "cambiados": 109,
+  "total_indice": 590
  },
  "despues": {
   "centroide_departamental": [],
