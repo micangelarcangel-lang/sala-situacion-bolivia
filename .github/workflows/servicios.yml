@@ -1,0 +1,26 @@
+name: Servicios cercanos (descarga OSM)
+on:
+  push:
+    branches-ignore: [main]
+    paths: [servicios_solicitud.txt]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bajar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: |
+          python - <<'PY'
+          import servicios_cercanos as s, collections
+          out, err = s.bajar("servicios_out/servicios.json")
+          print("SERVICIOS", dict(collections.Counter(x["tipo"] for x in out)), "sin nombre:", sum(1 for x in out if x["nombre"].startswith("(sin")))
+          print("ERRORES", err)
+          r = s.cercanos(-16.5, -68.15, out)
+          for t, l in r.items():
+              print("CERCA", t, [(x["nombre"], x["km"]) for x in l])
+          PY
