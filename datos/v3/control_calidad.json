@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.0
+   "seg": 0.1
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 19.6
+   "seg": 16.7
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,11 +18,11 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 29.1
+   "seg": 29.2
   },
   "agrupar": {
    "ok": true,
-   "seg": 0.0
+   "seg": 0.1
   },
   "servicios_cercanos": {
    "ok": true,
@@ -470,14 +470,14 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 2.8,
+    "seg": 1.2,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 4.2,
+    "seg": 2.5,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -491,14 +491,14 @@
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.6,
+    "seg": 0.5,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
@@ -512,14 +512,14 @@
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 1.1,
+    "seg": 0.7,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 0.9,
+    "seg": 1.1,
     "con_fecha": 30,
     "con_cuerpo": 14
    },
@@ -539,43 +539,43 @@
    },
    "Los Tiempos": {
     "ok": true,
-    "notas": 100,
-    "seg": 0.5,
-    "con_fecha": 100,
+    "notas": 78,
+    "seg": 0.6,
+    "con_fecha": 78,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
     "notas": 13,
-    "seg": 0.3,
+    "seg": 0.4,
     "con_fecha": 13,
     "con_cuerpo": 0
    },
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Visión 360": {
     "ok": true,
-    "notas": 85,
-    "seg": 0.4,
-    "con_fecha": 85,
+    "notas": 89,
+    "seg": 0.6,
+    "con_fecha": 89,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
-    "notas": 94,
-    "seg": 0.4,
-    "con_fecha": 94,
+    "notas": 97,
+    "seg": 0.5,
+    "con_fecha": 97,
     "con_cuerpo": 0
    }
   },
-  "notas_leidas": 732,
+  "notas_leidas": 717,
   "eventos_nuevos": 19,
-  "descartadas_por_no_relevantes": 619,
+  "descartadas_por_no_relevantes": 603,
   "paginas_leidas": {
    "texto completo": 12
   }
@@ -590,7 +590,7 @@
   "tramo": 8
  },
  "agrupacion": {
-  "grupos_con_mas_de_un_evento": 12,
+  "grupos_con_mas_de_un_evento": 14,
   "ejemplos": [
    [
     "Privado de libertad en estado crítico por brote de meningitis",
@@ -602,22 +602,22 @@
     "La Paz registra casi 40 municipios afectados por sequías e inundacione"
    ],
    [
+    "Vehículo incendiado en Santa Cruz genera denuncia por Conductor",
+    "“Ni para chatarra sirve”: Chofer de auto incendiado denuncia que no av"
+   ],
+   [
     "Defensa Civil explica los procedimientos que deben cumplir alcaldías y",
     "¿Cómo solicitar ayuda ante emergencias? Defensa Civil explica el proto"
    ],
    [
     "Chuquisaca: Intensa granizada destruye techos de viviendas y cultivos ",
     "Chuquisaca sufre intensa granizada que destruye techos y cultivos"
-   ],
-   [
-    "¿Dónde tembló en Bolivia? Reportan dos sismos este 2 de noviembre",
-    "Reportan dos sismos: en Potosí y Cochabamba"
    ]
   ]
  },
  "almacen": {
   "nuevos": 0,
-  "cambiados": 142,
+  "cambiados": 4,
   "total_indice": 702
  },
  "despues": {
