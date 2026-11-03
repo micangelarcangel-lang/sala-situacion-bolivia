@@ -6,7 +6,7 @@
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 16.8
+   "seg": 16.9
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 31.3
+   "seg": 18.2
   },
   "agrupar": {
    "ok": true,
@@ -34,7 +34,7 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.4
+   "seg": 0.2
   }
  },
  "antes": {
@@ -470,78 +470,78 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.5,
+    "seg": 0.9,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.5,
+    "seg": 2.7,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.0,
+    "seg": 2.3,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.5,
+    "seg": 0.6,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.5,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 0.6,
+    "seg": 0.9,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 0.8,
+    "seg": 1.1,
     "con_fecha": 30,
     "con_cuerpo": 14
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.3,
+    "seg": 0.7,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Unitel": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Los Tiempos": {
     "ok": true,
-    "notas": 78,
+    "notas": 79,
     "seg": 0.4,
-    "con_fecha": 78,
+    "con_fecha": 79,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
@@ -554,7 +554,7 @@
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
@@ -567,30 +567,30 @@
    },
    "Correo del Sur": {
     "ok": true,
-    "notas": 94,
+    "notas": 96,
     "seg": 0.4,
-    "con_fecha": 94,
+    "con_fecha": 96,
     "con_cuerpo": 0
    }
   },
-  "notas_leidas": 725,
-  "eventos_nuevos": 31,
-  "descartadas_por_no_relevantes": 593,
+  "notas_leidas": 728,
+  "eventos_nuevos": 20,
+  "descartadas_por_no_relevantes": 607,
   "paginas_leidas": {
-   "texto completo": 20
+   "texto completo": 13
   }
  },
  "ubicacion": {
-  "ninguna": 142,
-  "relevante": 147,
+  "ninguna": 132,
+  "relevante": 136,
   "exterior": 6,
-  "departamento": 67,
+  "departamento": 66,
   "municipio": 90,
-  "por_lugar_conocido": 13,
+  "por_lugar_conocido": 10,
   "tramo": 8
  },
  "agrupacion": {
-  "grupos_con_mas_de_un_evento": 15,
+  "grupos_con_mas_de_un_evento": 13,
   "ejemplos": [
    [
     "Situación   La sequía golpea a 114 mil familias en Bolivia y “los ries",
@@ -619,8 +619,8 @@
   ]
  },
  "almacen": {
-  "nuevos": 1,
-  "cambiados": 0,
+  "nuevos": 0,
+  "cambiados": 5,
   "total_indice": 702
  },
  "despues": {
@@ -781,14 +781,7 @@
    "noticia:fcm3nx",
    "noticia:wi18tm",
    "noticia:v3:2bacb4010dc0",
-   "noticia:v3:fb03b7cec5ac",
    "noticia:v3:88510599766a",
-   "noticia:v3:82e823747bb9",
-   "noticia:v3:c22710f6b054",
-   "noticia:v3:710c2b6dfede",
-   "noticia:v3:b401eca5cbcf",
-   "noticia:v3:a081c376677e",
-   "noticia:v3:ada49a5289ac",
    "noticia:v3:b6354abe0053"
   ],
   "victimas_sin_ubicacion_precisa": [
