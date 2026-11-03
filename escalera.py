@@ -52,12 +52,28 @@ def via_navegador(url, t=30):
         return {"via": "navegador", "estado": None, "seg": round(time.time() - ini, 1), "error": type(e).__name__ + ": " + str(e)[:140]}
 
 
+def _abrir_con_espera(req, t, intentos=3):
+    """Abre la petición; si el servidor pide esperar (429/503) espera y reintenta, sin saturarlo."""
+    for n in range(intentos):
+        try:
+            return urllib.request.urlopen(req, timeout=t)
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 503) and n < intentos - 1:
+                try:
+                    espera = min(30, int(e.headers.get("Retry-After", "")))
+                except Exception:
+                    espera = 6 * (n + 1)
+                time.sleep(espera)
+                continue
+            raise
+
+
 def via_archivo(url, t=25):
     """Última captura pública de la página en Wayback Machine. Devuelve también su antigüedad en días."""
     ini = time.time()
     api = "https://archive.org/wayback/available?url=" + urllib.parse.quote(url, safe="")
     try:
-        with urllib.request.urlopen(urllib.request.Request(api, headers={"User-Agent": UA}), timeout=t) as r:
+        with _abrir_con_espera(urllib.request.Request(api, headers={"User-Agent": UA}), t) as r:
             cap = (json.loads(r.read().decode("utf-8", "replace")).get("archived_snapshots") or {}).get("closest") or {}
         if not cap.get("available"):
             return {"via": "archivo", "estado": 404, "seg": round(time.time() - ini, 1), "error": "sin captura archivada"}
@@ -65,7 +81,7 @@ def via_archivo(url, t=25):
         fecha = dt.datetime.strptime(ts[:14], "%Y%m%d%H%M%S").replace(tzinfo=dt.timezone.utc)
         edad = (dt.datetime.now(dt.timezone.utc) - fecha).days
         crudo_url = cap["url"].replace("/web/" + ts, "/web/" + ts + "id_")  # 'id_' = contenido original sin barra de Wayback
-        with urllib.request.urlopen(urllib.request.Request(crudo_url, headers={"User-Agent": UA}), timeout=t) as r2:
+        with _abrir_con_espera(urllib.request.Request(crudo_url, headers={"User-Agent": UA}), t) as r2:
             crudo = r2.read(6_000_000)
             tipo = r2.headers.get("content-type", "")
         return {"via": "archivo", "estado": 200, "tipo": tipo, "crudo": crudo, "seg": round(time.time() - ini, 1), "fecha_captura": fecha.isoformat(), "edad_dias": edad}
