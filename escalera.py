@@ -119,7 +119,7 @@ def _util(r, texto, min_chars):
     return r.get("estado") == 200 and len(texto) >= min_chars and not _bloqueo(texto)
 
 
-def obtener(url, vias=VIAS_POR_DEFECTO, min_chars=300, max_dias=30, fetchers=None):
+def obtener(url, vias=VIAS_POR_DEFECTO, min_chars=300, max_dias=30, fetchers=None, con_crudo=False):
     """Prueba las vías en orden. Devuelve {ok, via, texto, url, intentos[], desactualizado?}.
     min_chars: texto mínimo para considerar útil la respuesta. max_dias: antigüedad máxima aceptada para una copia archivada."""
     fetchers = fetchers or VIAS
@@ -141,6 +141,8 @@ def obtener(url, vias=VIAS_POR_DEFECTO, min_chars=300, max_dias=30, fetchers=Non
             continue
         if ok:
             salida = {"ok": True, "via": v, "texto": texto, "url": url, "intentos": intentos}
+            if con_crudo:
+                salida["crudo"] = r.get("crudo")
             if v == "archivo":
                 salida.update(desactualizado=False, edad_dias=r.get("edad_dias"))
             return salida

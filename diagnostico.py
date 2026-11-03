@@ -78,8 +78,19 @@ def main():
     ap.add_argument("--fuente", nargs="*", default=[])
     ap.add_argument("--solicitud", help="archivo con ids de fuentes.yml y/o URL separados por espacios o líneas")
     ap.add_argument("--vias", nargs="+", default=["directa", "navegador", "archivo"], choices=list(VIAS))
+    ap.add_argument("--captar", nargs="*", default=[], help="ids de fuentes.yml con vías rss/wp_json: baja y cuenta elementos")
     ap.add_argument("--escalera", action="store_true", help="usa escalera.py: prueba las vías en orden y dice cuál funcionó")
     a = ap.parse_args()
+    if a.captar:
+        import yaml, captar_v3
+        cat = yaml.safe_load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "fuentes.yml"), encoding="utf-8"))["fuentes"]
+        for fid in a.captar:
+            f = next(x for x in cat if x["id"] == fid)
+            r = captar_v3.captar(fid, [v for v in f["vias"] if v["via"] in ("rss", "wp_json")])
+            print(f"CAPTAR {fid} ok={r['ok']} via={r['via']} elementos={len(r['elementos'])} intentos={r['intentos']}")
+            for e in r["elementos"][:5]:
+                print(f"   {e['ts_publicacion']} | {e['titulo'][:90]} | {e['url'][:70]}")
+        return
     fuentes = list(a.fuente)
     urls = list(a.url)
     if a.solicitud:

@@ -73,13 +73,34 @@ fuentes:
     vias:
       - {via: html, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403"}
       - {via: navegador, url: "https://www.defensacivil.gob.bo", estado: activa, resultado: "403 también con navegador real (prueba en Actions, 02/11/2026)"}
-      - {via: archivo, estado: por_verificar, nota: "Wayback tiene capturas (prueba 02/11/2026); falta medir qué tan recientes son"}
+      - {via: rss, url: "https://reliefweb.int/updates/rss.xml?search=country.exact%3ABolivia", estado: activa, nota: "ruta alterna: ver fuente reliefweb_bolivia; filtrar por VIDECI/SINAGER en el título o la fuente"}
+      - {via: archivo, estado: activa, resultado: "Wayback tiene captura de la portada, de hace 286 días (prueba 03/11/2026): sirve de contexto, no de dato reciente"}
       - {via: ejecutor_propio, estado: descartado_piloto, nota: "sin garantía de energía ni disponibilidad en el piloto; pasa a un servidor adecuado si el piloto funciona"}
       - {via: correo, estado: por_verificar}
       - {via: red, estado: manual}
 
+  - id: la_patria
+    institucion: La Patria (Oruro)
+    categorias: [antropogénica, hidrológica, meteorológica]
+    frecuencia_min: 60
+    vias:
+      - {via: wp_json, url: "https://lapatria.bo/wp-json/wp/v2/posts?per_page=30", estado: activa, resultado: "200 con 67 mil caracteres (prueba 03/11/2026)"}
+      - {via: rss, url: "https://lapatria.bo/feed/", estado: activa, resultado: "200 con 562 mil caracteres (prueba 03/11/2026)"}
+      - {via: red, estado: manual}
+
+  - id: reliefweb_bolivia
+    institucion: ReliefWeb (OCHA) — reenvía informes de VIDECI/SINAGER y de agencias de la ONU
+    categorias: [hidrológica, meteorológica, geológica, biológica, antropogénica]
+    frecuencia_min: 360
+    nota: "Ruta alterna para VIDECI, cuyo sitio bloquea (403). El RSS responde 202 a la vía directa y entrega el XML por navegador (prueba 03/11/2026)."
+    vias:
+      - {via: rss, url: "https://reliefweb.int/updates/rss.xml?search=country.exact%3ABolivia", estado: activa, resultado: "directa 202 vacío; navegador 200 con 84 mil caracteres"}
+      - {via: red, estado: manual}
+
   - id: sngr
     institucion: Sistema Nacional de Gestión de Riesgos
+    estado_fuente: sin_sitio_vigente
+    nota_estado: "Ninguna de las direcciones probadas resuelve (sngr.gob.bo, gestionderiesgos.gob.bo, sinager.defensacivil.gob.bo; 03/11/2026). Sus informes llegan hoy por VIDECI/SINAGER, vía ReliefWeb. Se mantiene aquí solo como registro."
     categorias: [hidrológica, meteorológica, antropogénica]
     frecuencia_min: 120
     vias:
@@ -137,7 +158,7 @@ fuentes:
       Radio Panamericana: "https://panamericana.bo"
       Bolivia Verifica: "https://boliviaverifica.bo"
       El Diario: "https://www.eldiario.net"
-      La Patria: "https://lapatriaenlinea.com"   # devuelve 200 pero vacío (prueba 02/11/2026); lapatria.bo respondió con texto: verificar si tiene las notas y cambiar el portal
+      La Patria: "https://lapatria.bo"   # lapatriaenlinea.com devolvía 200 vacío; lapatria.bo tiene feed WordPress y wp-json (prueba 03/11/2026)
       Correo del Sur: "https://correodelsur.com"
       El Día: "https://eldia.com.bo"
       Erbol: "https://erbol.com.bo"
