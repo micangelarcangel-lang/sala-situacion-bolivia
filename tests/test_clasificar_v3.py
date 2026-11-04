@@ -49,3 +49,9 @@ def test_quema_de_vehiculos_no_es_incendio_forestal_ni_la_guia_es_un_hecho():
     assert c.clasificar("Queman vehículos en pugna de transportistas en Santa Cruz")["subtipo"] == "incendio estructural"
     assert not c.clasificar("Que no cunda el pánico: Bomberos enseñan cómo actuar ante una fuga de gas", "", True)["relevante"]
     assert not c.clasificar("Guayaquil vuelve a inundarse por fuertes lluvias", "El Senamhi de Santa Cruz informa", True)["relevante"]
+
+
+def test_accidente_con_derrame_es_transito_e_incendio_en_restaurante_es_incendio():
+    assert c.clasificar("Accidente en El Sillar deja heridos y derrame de combustible", "", True)["subtipo"] == "accidente de tránsito"
+    assert c.clasificar("Incendio en un restaurante deja daños materiales en Santa Cruz")["subtipo"] == "incendio estructural"
+    assert c.clasificar("Accidente aéreo deja dos muertos en Beni")["subtipo"] == "accidente aéreo"

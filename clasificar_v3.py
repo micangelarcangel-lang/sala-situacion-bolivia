@@ -5,10 +5,10 @@ El titular pesa más que el cuerpo; un hecho que solo aparece de pasada en el cu
 import re, unicodedata
 
 TAXONOMIA = [  # (categoria, subtipo, patrón sobre el texto normalizado)
-    ("antropogénica", "accidente de tránsito", r"\b(choque|colision|vuelco|volco|atropell\w+|accidente de transito|accidente vehicular|embarranc\w+|cae a un barranco|ocupantes)\b"),
+    ("antropogénica", "accidente de tránsito", r"\baccidente (?!aereo|minero|laboral|domestico|de trabajo|cerebro)\w*|\b(choque|colision|vuelco|volco|atropell\w+|accidente de transito|accidente vehicular|embarranc\w+|cae a un barranco|ocupantes)\b"),
     ("antropogénica", "accidente aéreo", r"\b(avion|avioneta|aeronave|helicoptero)\b.*\b(cae|cayo|accidente|estrell\w+|desplom\w+)\b|\baccidente aereo\b"),
     ("climatológica", "incendio forestal", r"\b(incendios? forestal\w*|incendio de pastizal\w*|chaqueo|quemas? (?:de )?(?:pastiz\w+|chaco|campos?|rastrojos?|chaqueo)|focos de calor)\b"),
-    ("tecnológica", "incendio estructural", r"\b(incendio|incendi\w+)\b.*\b(vivienda|casa|mercado|edificio|fabrica|tienda|local|deposito|vehiculo|moto|bus)\b|\bqueman (?:\d+ )?vehiculos|\bquema de (?:\d+ |\w+ )?vehiculos"),
+    ("tecnológica", "incendio estructural", r"\b(incendio|incendi\w+)\b.*\b(vivienda|casa|mercado|edificio|fabrica|tienda|local|deposito|vehiculo|moto|bus|restaurante|negocio|comercio|hotel|taller|almacen|colegio|hospital)\b|\bincendio\b|\bqueman (?:\d+ )?vehiculos|\bquema de (?:\d+ |\w+ )?vehiculos"),
     ("hidrológica", "inundación / riada", r"\b(inundacion\w*|riada|desborde|desbordamiento|crecida|anegad\w+|mazamorra)\b"),
     ("geológica", "deslizamiento", r"\b(deslizamiento|derrumbe|mazamorra|aluvion|socavon|hundimiento)\b"),
     ("geológica", "sismo", r"\b(sismo|temblor|terremoto)\b"),
