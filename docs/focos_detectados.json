@@ -103,7 +103,7 @@
    "La Paz": 3
   },
   "2026-10-31": {
-   "Santa Cruz": 127,
+   "Santa Cruz": 126,
    "Cochabamba": 2,
    "La Paz": 34,
    "Beni": 155,
@@ -418,9 +418,9 @@
    "San Javier (Beni)": 30
   }
  },
- "actualizado": "2026-11-03T23:35:56.307505Z",
+ "actualizado": "2026-11-04T00:52:24.451557Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1519,
- "slack_dia": "2026-11-03"
+ "detecciones_fuera_de_limites": 1184,
+ "slack_dia": "2026-11-04"
 }
