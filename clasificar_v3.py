@@ -7,8 +7,8 @@ import re, unicodedata
 TAXONOMIA = [  # (categoria, subtipo, patrón sobre el texto normalizado)
     ("antropogénica", "accidente de tránsito", r"\b(choque|colision|vuelco|volco|atropell\w+|accidente de transito|accidente vehicular|embarranc\w+|cae a un barranco|ocupantes)\b"),
     ("antropogénica", "accidente aéreo", r"\b(avion|avioneta|aeronave|helicoptero)\b.*\b(cae|cayo|accidente|estrell\w+|desplom\w+)\b|\baccidente aereo\b"),
-    ("climatológica", "incendio forestal", r"\b(incendios? forestal\w*|incendio de pastizal\w*|chaqueo|quemas?|focos de calor)\b"),
-    ("tecnológica", "incendio estructural", r"\b(incendio|incendi\w+)\b.*\b(vivienda|casa|mercado|edificio|fabrica|tienda|local|deposito|vehiculo|moto|bus)\b"),
+    ("climatológica", "incendio forestal", r"\b(incendios? forestal\w*|incendio de pastizal\w*|chaqueo|quemas? (?:de )?(?:pastiz\w+|chaco|campos?|rastrojos?|chaqueo)|focos de calor)\b"),
+    ("tecnológica", "incendio estructural", r"\b(incendio|incendi\w+)\b.*\b(vivienda|casa|mercado|edificio|fabrica|tienda|local|deposito|vehiculo|moto|bus)\b|\bqueman (?:\d+ )?vehiculos|\bquema de (?:\d+ |\w+ )?vehiculos"),
     ("hidrológica", "inundación / riada", r"\b(inundacion\w*|riada|desborde|desbordamiento|crecida|anegad\w+|mazamorra)\b"),
     ("geológica", "deslizamiento", r"\b(deslizamiento|derrumbe|mazamorra|aluvion|socavon|hundimiento)\b"),
     ("geológica", "sismo", r"\b(sismo|temblor|terremoto)\b"),
@@ -30,8 +30,8 @@ def norm(t):
 
 
 DEPORTE = re.compile(r"\b(arbitr\w*|delantero|portero|futbol|partidos?|suspension|gol|goles|rival|liga|campeonato|torneo|equipo|jugador\w*|fichaje|entrenador)\b")
-RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo")
-EXTRA_EXT = ("florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
+RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo", "como actuar", "como identificar", "asi puedes", "consejos", "recomendaciones", "que no cunda", "que hacer ante", "como prevenir", "como evitar")
+EXTRA_EXT = ("guayaquil", "galapagos", "florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
 
 
 def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
@@ -51,7 +51,8 @@ def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
         res["razones"].append("ruido o deportes")
     ext = [p for p in EXTERIOR + EXTRA_EXT if re.search(r"\b" + p + r"\b", tn)]
     bol = bool(BOLIVIA.search(tn)) or lugar_bolivia
-    if ext and not bol:
+    bol_titulo = bool(BOLIVIA.search(tn))
+    if ext and not bol_titulo:  # el titular nombra otro país y ningún lugar de Bolivia: es del exterior aunque el cuerpo cite una ciudad homónima
         res["ambito"] = "exterior"; res["razones"].append("nombra: " + ext[0])
     elif bol:
         res["ambito"] = "bolivia"

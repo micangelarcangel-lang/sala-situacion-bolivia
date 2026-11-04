@@ -70,9 +70,22 @@ def _campo(t, sustantivo, vago_ok=True):
 SIN = r"(?:sin|no (?:se )?(?:reporto|reportaron|registro|registraron|hubo|dejo|dejaron|tuvo|causo|causaron|hay|habria)|ningun[ao]?|cero|ilesos?)"
 
 
+def _cifra_verbal(t, verbos):
+    """'Tres presuntos ladrones mueren…', 'mueren tres', 'fallecieron 4 personas'."""
+    m = re.search(r"\b(\d{1,3}|" + "|".join(NUM) + r")\s+(?:\w+\s+){0,4}(?:" + verbos + r")\b", t) or re.search(r"\b(?:" + verbos + r")\s+(\d{1,3}|" + "|".join(NUM) + r")\b", t)
+    if m:
+        v = _num(m.group(1))
+        return int(v) if v is not None and v < 500 else None
+    return None
+
+
 def _victima(t, sust_p, sust_s):
     """fallecidos/heridos: cifra, sin_victimas, no_precisado o no_informado."""
     v = _cifra(t, sust_p)
+    if v is None and sust_p.startswith("muert"):
+        v = _cifra_verbal(t, r"mueren|murieron|fallecen|fallecieron|pierden la vida|perdieron la vida")
+    if v is None and sust_p.startswith("herid"):
+        v = _cifra_verbal(t, r"resultaron heridos|resultan heridos|quedaron heridos|quedan heridos")
     if v is not None:
         return {"estado": "cifra", "valor": v}
     if re.search(SIN + r"\s+(?:\w+\s+){0,3}(?:victimas|" + sust_p + ")", t) or re.search(r"\bsin (?:victimas|" + sust_p + r")\b", t):

@@ -41,3 +41,10 @@ def test_mencion_generica_no_es_dato():
     assert est(r, "fallecidos")[0] == "no_informado"
     r = f.extraer("sequía", "Defensa Civil explica el protocolo ante familias de la zona", "")
     assert est(r, "familias_afectadas")[0] == "no_informado"
+
+
+def test_cifra_con_verbo():
+    r = f.extraer("intoxicación / alimentos", "Tres presuntos ladrones de mineral mueren por intoxicación en mina", "")
+    assert est(r, "fallecidos") == ("cifra", 3)
+    r = f.extraer("accidente de tránsito", "Colisión: murieron dos personas y resultaron heridos cuatro", "")
+    assert est(r, "fallecidos") == ("cifra", 2)

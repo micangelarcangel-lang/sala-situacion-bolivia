@@ -43,3 +43,9 @@ def test_estricto_exige_bolivia_y_descarta_deportes_y_exterior():
 
 def test_gana_el_tipo_que_aparece_primero():
     assert c.clasificar("La sequía golpea a 114 mil familias en Bolivia y las inundaciones agravan el riesgo")["subtipo"] == "sequía"
+
+
+def test_quema_de_vehiculos_no_es_incendio_forestal_ni_la_guia_es_un_hecho():
+    assert c.clasificar("Queman vehículos en pugna de transportistas en Santa Cruz")["subtipo"] == "incendio estructural"
+    assert not c.clasificar("Que no cunda el pánico: Bomberos enseñan cómo actuar ante una fuga de gas", "", True)["relevante"]
+    assert not c.clasificar("Guayaquil vuelve a inundarse por fuertes lluvias", "El Senamhi de Santa Cruz informa", True)["relevante"]
