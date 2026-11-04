@@ -1,0 +1,36 @@
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import ficha_v3 as f
+
+
+def est(r, c):
+    return r["campos"][c]["estado"], r["campos"][c].get("valor")
+
+
+def test_transito_tipo_vehiculos_y_victimas():
+    r = f.extraer("accidente de tránsito", "Choque frontal entre camión y ómnibus deja tres heridos graves", "")
+    assert est(r, "tipo_accidente") == ("dato", "choque frontal") and est(r, "heridos") == ("cifra", 3)
+    assert est(r, "fallecidos")[0] == "no_informado" and "fallecidos" in r["faltan"]
+
+
+def test_sin_victimas_es_distinto_de_no_informado():
+    r = f.extraer("incendio estructural", "Incendio consume una tienda", "No hubo víctimas. Bomberos controlaron el fuego.")
+    assert est(r, "fallecidos") == ("sin_victimas", 0) and est(r, "heridos") == ("sin_victimas", 0)
+
+
+def test_varios_heridos_no_se_convierte_en_cifra():
+    r = f.extraer("accidente de tránsito", "Vuelco deja varios heridos en la carretera", "")
+    assert est(r, "heridos")[0] == "no_precisado"
+
+
+def test_sequia_y_brote():
+    r = f.extraer("sequía", "Emergencia por sequía", "Afecta a 1.200 familias y 5.000 cabezas de ganado, con 300 hectáreas perdidas.")
+    assert est(r, "familias_afectadas") == ("cifra", 1200) and est(r, "ganado") == ("cifra", 5000) and est(r, "superficie_ha") == ("cifra", 300)
+    r = f.extraer("brote / enfermedad transmisible", "Meningitis en cárcel", "Hay un caso confirmado y dos sospechosos; 15 contactos en observación.")
+    assert est(r, "casos_confirmados") == ("cifra", 1) and est(r, "casos_sospechosos") == ("cifra", 2) and est(r, "expuestos") == ("cifra", 15)
+
+
+def test_mil_y_resumen():
+    r = f.extraer("sequía", "La sequía golpea a 114 mil familias", "")
+    assert est(r, "familias_afectadas") == ("cifra", 114000)
+    assert "114.000" in f.resumen(r) and "No informado" in f.resumen(r)

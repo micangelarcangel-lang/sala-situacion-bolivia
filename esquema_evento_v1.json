@@ -330,6 +330,15 @@
     },
     "detalle_v3": {
       "type": "string"
+    },
+    "ficha": {
+      "type": "object"
+    },
+    "ficha_resumen": {
+      "type": "string"
+    },
+    "informacion_insuficiente": {
+      "type": "boolean"
     }
   },
   "additionalProperties": false

@@ -25,8 +25,8 @@ def seleccionar(eventos, ahora, horas):
     ini = ahora - horas * 3600 * 1000
     # solo hechos de Bolivia: con departamento identificado o de una fuente oficial nacional; la prensa sin lugar en Bolivia (p. ej. noticias del exterior) se deja fuera
     def vale(e):
-        if "relevante_v3" in e:  # ya clasificado por la v3: tipo de hecho reconocido y no es del exterior
-            return e["relevante_v3"] and e.get("ambito") != "exterior"
+        if "relevante_v3" in e:  # ya clasificado por la v3: tipo de hecho reconocido, no es del exterior y tiene contenido
+            return e["relevante_v3"] and e.get("ambito") != "exterior" and not e.get("informacion_insuficiente")
         return bool(e.get("departamentos") or e.get("origen") in ("senamhi", "sismo", "epidemiologia"))
     return [e for e in eventos if e.get("ts", 0) >= ini and e.get("origen") != "foco" and vale(e)]
 
@@ -92,7 +92,7 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     filas = [["Nivel", "Evento", "Lugar", "Evidencia", "Fuente"]]
     for e in top:
         c = e.get("confianza") or {}
-        filas.append([Paragraph(f'<font color="{nivel_de(e)[0]}"><b>{(e.get("nivel_txt") or "sin nivel").split(" ")[0]}</b></font>', est["p"]), Paragraph(e["titulo"][:130].replace("&", "&amp;").replace("<", "&lt;"), est["p"]),
+        filas.append([Paragraph(f'<font color="{nivel_de(e)[0]}"><b>{(e.get("nivel_txt") or "sin nivel").split(" ")[0]}</b></font>', est["p"]), Paragraph(e["titulo"][:130].replace("&", "&amp;").replace("<", "&lt;") + (f'<br/><font size="7" color="{GRIS}">{e.get("subtipo", "")}: {e["ficha_resumen"]}</font>'.replace("&", "&amp;") if e.get("ficha_resumen") else ""), est["p"]),
                       Paragraph((e.get("lugar") or "—").replace("&", "&amp;"), est["c"]), Paragraph(f'{EV_ETIQ.get(c.get("nivel"), "—")} · {c.get("fuentes_independientes", 0)} fuentes', est["c"]), Paragraph((e.get("fuente") or "")[:30], est["c"])])
     tb = Table(filas, colWidths=[17 * mm, 80 * mm, 32 * mm, 28 * mm, 23 * mm], repeatRows=1)
     tb.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),

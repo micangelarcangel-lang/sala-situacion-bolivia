@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import json, os, sys, time, collections, traceback
-import captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -140,15 +140,19 @@ def main():
                     e.update(lat=round(hit["lat"], 5), lon=round(hit["lon"], 5), departamentos=[hit["departamento"]], lugar=f'{hit["nombre"]}, {hit["municipio"]}', precision_ubicacion="punto",
                              metodo=f'v3: lugar conocido ({hit["tipo"]}: {hit["nombre"]})')
                     n["por_lugar_conocido"] += 1
-            v = victimas_v3.extraer(e["titulo"], cuerpo)
+            ficha = ficha_v3.extraer(cl["subtipo"] or "sin clasificar", e["titulo"], cuerpo)
+            e["ficha"], e["ficha_resumen"] = ficha, ficha_v3.resumen(ficha)
+            # víctimas: solo cifras reales (nunca "2 o más"); sin_victimas queda como 0 explícito
             vic = {}
             for k in ("fallecidos", "heridos"):
-                if v[k]:
-                    vic[k + "_min"] = v[k][0]
-                    if v[k][1] is not None:
-                        vic[k + "_max"] = v[k][1]
+                c = ficha["campos"].get(k) or {}
+                if c.get("estado") in ("cifra", "sin_victimas"):
+                    vic[k + "_min"] = vic[k + "_max"] = c["valor"]
+            e.pop("victimas", None)
             if vic:
                 e["victimas"] = vic
+                e["cifras"] = dict(e.get("cifras") or {}, fallecidos=vic.get("fallecidos_min", 0), heridos=vic.get("heridos_min", 0))
+            e["informacion_insuficiente"] = bool(len(e["titulo"].split()) <= 3 and not cuerpo and r["precision"] == "ninguna")
             e["schema_version"] = 1
         return dict(n)
     ctl["ubicacion"] = etapa("enriquecer", enriquecer, ctl) if geo else None
