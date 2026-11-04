@@ -72,8 +72,15 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     focos = sum(1 for e in eventos if e.get("origen") == "foco" and e.get("ts", 0) >= ahora - horas * 3600000)
     oficiales = sum(1 for e in evs if e.get("oficial"))
     deps = {d for e in evs for d in e.get("departamentos", [])}
-    fall = sum((e.get("cifras") or {}).get("fallecidos", 0) for e in evs)
-    her = sum((e.get("cifras") or {}).get("heridos", 0) for e in evs)
+    # un hecho contado por varios medios cuenta una sola vez: de cada grupo propuesto se toma la cifra mayor
+    por_grupo = {}
+    for e in evs:
+        clave = tuple(sorted(e.get("grupo_propuesto") or [e["id"]]))
+        c = e.get("cifras") or {}
+        a = por_grupo.setdefault(clave, [0, 0])
+        a[0], a[1] = max(a[0], c.get("fallecidos", 0) or 0), max(a[1], c.get("heridos", 0) or 0)
+    fall = sum(a[0] for a in por_grupo.values())
+    her = sum(a[1] for a in por_grupo.values())
     S = lambda n, **k: ParagraphStyle(n, fontName=k.pop("f", "Helvetica"), fontSize=k.pop("s", 9), leading=k.pop("l", 12), **k)
     est = {"t": S("t", f="Helvetica-Bold", s=17, l=20, textColor=colors.HexColor(AZUL)), "p": S("p", s=9, l=12), "c": S("c", s=7.5, l=10, textColor=colors.HexColor(GRIS)),
            "h": S("h", f="Helvetica-Bold", s=10.5, l=14, textColor=colors.HexColor(AZUL), spaceBefore=6), "k": S("k", f="Helvetica-Bold", s=15, l=18, alignment=1), "kl": S("kl", s=7.5, l=9, alignment=1, textColor=colors.HexColor(GRIS))}

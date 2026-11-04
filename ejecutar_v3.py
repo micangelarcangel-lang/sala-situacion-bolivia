@@ -140,8 +140,14 @@ def main():
                     e.update(lat=round(hit["lat"], 5), lon=round(hit["lon"], 5), departamentos=[hit["departamento"]], lugar=f'{hit["nombre"]}, {hit["municipio"]}', precision_ubicacion="punto",
                              metodo=f'v3: lugar conocido ({hit["tipo"]}: {hit["nombre"]})')
                     n["por_lugar_conocido"] += 1
-            ficha = ficha_v3.extraer(cl["subtipo"] or "sin clasificar", e["titulo"], cuerpo)
-            e["ficha"], e["ficha_resumen"] = ficha, ficha_v3.resumen(ficha)
+            if not cl["subtipo"]:
+                e.pop("ficha", None); e.pop("ficha_resumen", None); e["informacion_insuficiente"] = False
+                continue_ficha = False
+            else:
+                continue_ficha = True
+            ficha = ficha_v3.extraer(cl["subtipo"] or "sin clasificar", e["titulo"], cuerpo) if continue_ficha else {"campos": {}, "faltan": [], "completitud": None}
+            if continue_ficha:
+                e["ficha"], e["ficha_resumen"] = ficha, ficha_v3.resumen(ficha)
             # víctimas: solo cifras reales (nunca "2 o más"); sin_victimas queda como 0 explícito
             vic = {}
             for k in ("fallecidos", "heridos"):

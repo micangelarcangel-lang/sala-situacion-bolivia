@@ -34,3 +34,10 @@ def test_mil_y_resumen():
     r = f.extraer("sequía", "La sequía golpea a 114 mil familias", "")
     assert est(r, "familias_afectadas") == ("cifra", 114000)
     assert "114.000" in f.resumen(r) and "No informado" in f.resumen(r)
+
+
+def test_mencion_generica_no_es_dato():
+    r = f.extraer("sequía", "Sangre y drogas: muertes por encargo se disparan", "")
+    assert est(r, "fallecidos")[0] == "no_informado"
+    r = f.extraer("sequía", "Defensa Civil explica el protocolo ante familias de la zona", "")
+    assert est(r, "familias_afectadas")[0] == "no_informado"

@@ -62,7 +62,7 @@ def _campo(t, sustantivo, vago_ok=True):
         return {"estado": "cifra", "valor": v}
     if vago_ok and re.search(VAGO + r"\s+(?:\w+\s+){0,2}(?:" + sustantivo + ")", t):
         return {"estado": "no_precisado"}
-    if re.search(r"\b(?:" + sustantivo + r")\b", t) and sustantivo and re.search(r"(afectad|damnificad)", t[max(0, t.find("afectad") - 40): t.find("afectad") + 40] or ""):
+    if re.search(r"(?:" + sustantivo + r")\W+(?:\w+\W+){0,3}(?:afectad|damnificad|perdid|destruid|danad)", t) or re.search(r"(?:afectad|damnificad)\w*\W+(?:\w+\W+){0,3}(?:" + sustantivo + ")", t):
         return {"estado": "no_precisado"}
     return {"estado": "no_informado"}
 
@@ -82,7 +82,7 @@ def _victima(t, sust_p, sust_s):
             return {"estado": "cifra", "valor": 1}
     if re.search(r"\b(?:herida|herido|lesionad[oa]|resulto herid[oa])\b", t) and sust_p.startswith("herid") and re.search(r"\b(?:un|una)\s+(?:persona\s+)?(?:herid|lesionad)", t):
         return {"estado": "cifra", "valor": 1}
-    if re.search(VAGO + r"\s+(?:\w+\s+){0,2}(?:" + sust_p + ")", t) or re.search(r"\b(?:deja|dejo|dejan)\s+(?:" + sust_p + ")", t) or re.search(r"\b(?:" + sust_p + r")\b", t):
+    if re.search(VAGO + r"\s+(?:\w+\s+){0,2}(?:" + sust_p + ")", t) or re.search(r"\b(?:deja|dejo|dejan|con)\s+(?:" + sust_p + ")", t):
         return {"estado": "no_precisado"}
     return {"estado": "no_informado"}
 

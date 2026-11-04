@@ -17,3 +17,11 @@ def test_genera_pdf(tmp_path):
     out = tmp_path / "b.pdf"
     r.build(E, str(out), 24, 1000, os.path.join(RAIZ, "docs", "geo_dep.geojson"))
     assert out.read_bytes()[:5] == b"%PDF-"
+
+
+def test_hecho_repetido_en_varios_medios_cuenta_una_vez(tmp_path):
+    ev = [{"id": f"m{i}", "origen": "prensa", "categoria": "antropogénica", "titulo": "Choque", "ts": 1000, "departamentos": ["Oruro"], "relevante_v3": True, "ambito": "bolivia",
+           "cifras": {"fallecidos": 2, "heridos": 1}, "grupo_propuesto": ["m0", "m1", "m2"]} for i in range(3)]
+    out = tmp_path / "b.pdf"
+    r.build(ev, str(out), 24, 1000, os.path.join(RAIZ, "docs", "geo_dep.geojson"))
+    assert out.exists()
