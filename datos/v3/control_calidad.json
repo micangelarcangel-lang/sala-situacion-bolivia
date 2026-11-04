@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 2.2
+   "seg": 0.1
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 15.9
+   "seg": 16.0
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 30.1
+   "seg": 25.4
   },
   "agrupar": {
    "ok": true,
@@ -34,7 +34,7 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   }
  },
  "antes": {
@@ -480,10 +480,8 @@
   ]
  },
  "lectura_cuerpos": {
-  "leidas_ahora": 3,
-  "estados": {
-   "texto completo": 3
-  },
+  "leidas_ahora": 0,
+  "estados": {},
   "en_cache": 283,
   "pendientes": 0
  },
@@ -492,21 +490,21 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.1,
+    "seg": 1.5,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 3.3,
+    "seg": 2.8,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.2,
+    "seg": 2.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -520,14 +518,14 @@
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.5,
+    "seg": 0.3,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.6,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
@@ -541,7 +539,7 @@
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.3,
+    "seg": 1.1,
     "con_fecha": 30,
     "con_cuerpo": 14
    },
@@ -561,9 +559,9 @@
    },
    "Los Tiempos": {
     "ok": true,
-    "notas": 100,
+    "notas": 79,
     "seg": 0.4,
-    "con_fecha": 100,
+    "con_fecha": 79,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
@@ -576,14 +574,14 @@
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.6,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.7,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
@@ -595,18 +593,18 @@
     "con_cuerpo": 0
    }
   },
-  "notas_leidas": 755,
-  "eventos_nuevos": 16,
-  "descartadas_por_no_relevantes": 648,
+  "notas_leidas": 734,
+  "eventos_nuevos": 17,
+  "descartadas_por_no_relevantes": 616,
   "paginas_leidas": {
    "texto completo": 9
   }
  },
  "ubicacion": {
   "ninguna": 135,
-  "relevante": 137,
+  "relevante": 138,
   "exterior": 8,
-  "departamento": 79,
+  "departamento": 80,
   "municipio": 86,
   "por_lugar_conocido": 6,
   "tramo": 8
@@ -638,9 +636,9 @@
   ]
  },
  "almacen": {
-  "nuevos": 3,
-  "cambiados": 71,
-  "total_indice": 725
+  "nuevos": 1,
+  "cambiados": 41,
+  "total_indice": 726
  },
  "despues": {
   "centroide_departamental": [],
@@ -810,10 +808,7 @@
    "noticia:v3:b6354abe0053"
   ],
   "victimas_sin_ubicacion_precisa": [
-   "noticia:vivo:e50008376484",
-   "noticia:vivo:fdc48f11293a",
    "noticia:vivo:2e49d9b3d040",
-   "noticia:vivo:96b92acd7373",
    "noticia:rss:b5232e58919a",
    "noticia:vivo:41eb8ced9880",
    "noticia:vivo:1ef42b51d7b2",
@@ -822,28 +817,18 @@
    "noticia:vivo:32a6bf63653d",
    "noticia:vivo:0037cb346e65",
    "noticia:vivo:0986d42bfd28",
-   "noticia:vivo:a362eacd92f2",
    "noticia:rss:817119c63ec6",
    "noticia:vivo:db208a61dbe3",
-   "noticia:rss:1439e35f94f7",
    "noticia:9wt63u",
    "noticia:vivo:87b184f279b9",
    "noticia:vivo:99356454fcfd",
    "noticia:vivo:97b23df97aaf",
-   "noticia:vivo:91ae7639d4f6",
    "noticia:vivo:5fa0c8a234e1",
    "noticia:vivo:b90ffdaa9c72",
    "noticia:vivo:918a37ef60ae",
    "noticia:lw1143",
-   "noticia:vivo:df8c2ecaaecd",
-   "noticia:vivo:bc1f57996a7f",
-   "noticia:vivo:63de026cfb2c",
-   "noticia:vivo:052ae34f4dc8",
    "noticia:vivo:01f54fe6831f",
-   "noticia:vivo:95125abb271d",
-   "noticia:vivo:aa8ee92e699e",
    "noticia:vivo:c563df287c6b",
-   "noticia:vivo:ef72dfb3864d",
    "noticia:vivo:b330036b5a8b",
    "noticia:rss:5c4b2d7e4eb1",
    "noticia:vivo:bd8c481ab5c5",
@@ -855,10 +840,8 @@
    "noticia:rss:4f8a6e2c3fe1",
    "noticia:vivo:2f2049d0ae51",
    "noticia:vivo:c3c1fa3d374a",
-   "noticia:rss:cf0a672cb627",
    "noticia:rss:fc9df5412332",
    "noticia:rss:9cf0149bdfc2",
-   "noticia:vivo:a90eecb44bba",
    "noticia:16b0cah",
    "noticia:1un6ep4",
    "noticia:1wc7pu3",
