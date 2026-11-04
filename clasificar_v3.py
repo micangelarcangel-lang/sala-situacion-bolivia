@@ -29,7 +29,7 @@ def norm(t):
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", t)).strip()
 
 
-DEPORTE = re.compile(r"\b(arbitr\w*|delantero|portero|futbol|partido|gol|goles|rival|liga|campeonato|torneo|equipo|jugador\w*|fichaje|entrenador)\b")
+DEPORTE = re.compile(r"\b(arbitr\w*|delantero|portero|futbol|partidos?|suspension|gol|goles|rival|liga|campeonato|torneo|equipo|jugador\w*|fichaje|entrenador)\b")
 RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo")
 EXTRA_EXT = ("florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
 

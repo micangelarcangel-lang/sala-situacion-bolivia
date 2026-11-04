@@ -129,7 +129,7 @@ def main():
                 e.update(lat=None, lon=None, departamentos=[r["departamento"]], lugar=f'{r["departamento"]} ({r["precision"]})')
             else:
                 e.update(lat=None, lon=None, lugar="", departamentos=[])  # sin ubicación confiable: no se deja el lugar que puso el sistema anterior
-            cl = clasificar_v3.clasificar(e["titulo"], cuerpo, e["precision_ubicacion"] in ("municipio", "departamento", "tramo"))
+            cl = clasificar_v3.clasificar(e["titulo"], cuerpo, e["precision_ubicacion"] in ("municipio", "departamento", "tramo"), True)
             e.update(subtipo=cl["subtipo"] or "sin clasificar", ambito=cl["ambito"], relevante_v3=cl["relevante"])
             if cl["categoria"]:
                 e["categoria"] = cl["categoria"]
@@ -155,9 +155,10 @@ def main():
                 if c.get("estado") in ("cifra", "sin_victimas"):
                     vic[k + "_min"] = vic[k + "_max"] = c["valor"]
             e.pop("victimas", None)
+            if continue_ficha:  # las cifras del sistema anterior no son confiables (p. ej. "30 viviendas" leído como 30 fallecidos): se reemplazan por las de la ficha
+                e["cifras"] = {"fallecidos": vic.get("fallecidos_min", 0), "heridos": vic.get("heridos_min", 0), "notas": (e.get("cifras") or {}).get("notas", 0)}
             if vic:
                 e["victimas"] = vic
-                e["cifras"] = dict(e.get("cifras") or {}, fallecidos=vic.get("fallecidos_min", 0), heridos=vic.get("heridos_min", 0))
             e["informacion_insuficiente"] = bool(len(e["titulo"].split()) <= 3 and not cuerpo and r["precision"] == "ninguna")
             e["schema_version"] = 1
         return dict(n)
