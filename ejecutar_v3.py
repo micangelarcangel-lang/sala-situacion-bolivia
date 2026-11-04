@@ -128,7 +128,7 @@ def main():
             elif r["precision"] in ("departamento", "tramo") and r["departamento"]:
                 e.update(lat=None, lon=None, departamentos=[r["departamento"]], lugar=f'{r["departamento"]} ({r["precision"]})')
             else:
-                e.update(lat=None, lon=None)
+                e.update(lat=None, lon=None, lugar="", departamentos=[])  # sin ubicación confiable: no se deja el lugar que puso el sistema anterior
             cl = clasificar_v3.clasificar(e["titulo"], cuerpo, e["precision_ubicacion"] in ("municipio", "departamento", "tramo"))
             e.update(subtipo=cl["subtipo"] or "sin clasificar", ambito=cl["ambito"], relevante_v3=cl["relevante"])
             if cl["categoria"]:
