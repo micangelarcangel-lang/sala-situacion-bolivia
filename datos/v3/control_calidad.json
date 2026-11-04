@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 0.0
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 16.0
+   "seg": 14.6
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,11 +18,11 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 25.4
+   "seg": 12.5
   },
   "agrupar": {
    "ok": true,
-   "seg": 0.1
+   "seg": 0.0
   },
   "servicios_cercanos": {
    "ok": true,
@@ -490,63 +490,63 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.5,
+    "seg": 1.2,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.8,
+    "seg": 3.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.0,
+    "seg": 2.3,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.6,
+    "seg": 0.5,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 0.8,
+    "seg": 0.5,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.1,
+    "seg": 0.9,
     "con_fecha": 30,
     "con_cuerpo": 14
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.1,
+    "seg": 1.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -559,15 +559,15 @@
    },
    "Los Tiempos": {
     "ok": true,
-    "notas": 79,
+    "notas": 77,
     "seg": 0.4,
-    "con_fecha": 79,
+    "con_fecha": 77,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
     "notas": 15,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 15,
     "con_cuerpo": 0
    },
@@ -581,32 +581,32 @@
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.7,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    }
   },
-  "notas_leidas": 734,
+  "notas_leidas": 732,
   "eventos_nuevos": 17,
-  "descartadas_por_no_relevantes": 616,
+  "descartadas_por_no_relevantes": 615,
   "paginas_leidas": {
    "texto completo": 9
   }
  },
  "ubicacion": {
   "ninguna": 135,
-  "relevante": 138,
+  "relevante": 112,
   "exterior": 8,
   "departamento": 80,
   "municipio": 86,
-  "por_lugar_conocido": 6,
+  "por_lugar_conocido": 3,
   "tramo": 8
  },
  "agrupacion": {
@@ -636,8 +636,8 @@
   ]
  },
  "almacen": {
-  "nuevos": 1,
-  "cambiados": 41,
+  "nuevos": 0,
+  "cambiados": 30,
   "total_indice": 726
  },
  "despues": {
@@ -715,6 +715,7 @@
    "noticia:rss:6ea33e84fae7",
    "noticia:vivo:adc1ae8cee21",
    "noticia:vivo:db208a61dbe3",
+   "noticia:rss:8d80b1814624",
    "noticia:rss:1439e35f94f7",
    "noticia:9wt63u",
    "noticia:vivo:87b184f279b9",
@@ -732,6 +733,7 @@
    "noticia:vivo:5229663ccc91",
    "noticia:vivo:ed25385bc0a8",
    "noticia:vivo:f2ea72530475",
+   "noticia:vivo:038b1f280f61",
    "noticia:vivo:064bf2ae78e9",
    "noticia:rss:b1f6649fe85d",
    "noticia:vivo:bb555154ee29",
@@ -742,6 +744,7 @@
    "noticia:rss:19590f58c728",
    "noticia:vivo:d7230469888f",
    "noticia:1jbdt44",
+   "noticia:vivo:10ea86dde5ee",
    "noticia:rss:be5565960219",
    "noticia:vivo:47f5637665ab",
    "noticia:vivo:052ae34f4dc8",
@@ -817,16 +820,13 @@
    "noticia:vivo:32a6bf63653d",
    "noticia:vivo:0037cb346e65",
    "noticia:vivo:0986d42bfd28",
-   "noticia:rss:817119c63ec6",
    "noticia:vivo:db208a61dbe3",
    "noticia:9wt63u",
    "noticia:vivo:87b184f279b9",
    "noticia:vivo:99356454fcfd",
    "noticia:vivo:97b23df97aaf",
-   "noticia:vivo:5fa0c8a234e1",
    "noticia:vivo:b90ffdaa9c72",
    "noticia:vivo:918a37ef60ae",
-   "noticia:lw1143",
    "noticia:vivo:01f54fe6831f",
    "noticia:vivo:c563df287c6b",
    "noticia:vivo:b330036b5a8b",
@@ -844,10 +844,8 @@
    "noticia:rss:9cf0149bdfc2",
    "noticia:16b0cah",
    "noticia:1un6ep4",
-   "noticia:1wc7pu3",
    "noticia:jslloq",
    "noticia:1llxxuw",
-   "noticia:r1uot6",
    "noticia:1ksmg5u",
    "noticia:1xqv9m7",
    "noticia:fcm3nx",
