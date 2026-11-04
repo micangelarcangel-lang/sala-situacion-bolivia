@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:i0eojb",
+  "fecha_hora_local": "2026-11-04 11:40",
+  "ts_ms": 1793806825000,
+  "titulo": "Bolivia — Gobernación destina Bs 15 millones para atender emergencias por lluvias y sequía en 40 municipios de La Paz - Prensa Mercosur",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 4,
+  "fuentes": "Informe Exclusivo; La Patria Bolivia; Prensa Mercosur; eju.tv",
+  "lat": -16.169,
+  "lon": -68.09,
+  "lugar": "La Paz, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Nuestra Señora de La Paz",
+  "enlaces": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQNy1QUHVIR0hKVVlpSl8tTUd5b21MODFNbDZzMjNodV9zSmMtY2NjeHlrTHJGVDVSZjExVy14cGlLTmZUTzVRSzdNbjZmY1cxbzdrN2tQeGlnQ3diVlVyc1BhcVhXNTM3aUNSZHZHWWswMndVR0Z3WnVubGlTY3JBVVZEclNBX0dwN0ZIcWhnTE1UM01pQ1VnSmFkbEZySUVuTjJiSDY4MVo1NC01VzFHQTd6LXNETG1GdDZlTTVRLUd6eU45eEVYUUZrUTRBajNVVmloU0I3XzBvNzRWaDJ5RzNoS1hqd2RhLXc?oc=5 | https://news.google.com/rss/articles/CBMi1wFBVV95cUxPMk1DTW5ieUYtZ19kQ3NRUDVXQnFxR2cyVHc0TTQ0eEZTNXJLQWVQRVFJNGU4R0JVNl91SFhlOHZ6OTBIS00zOU1sQVkySUJZMGpDckRBZDNnUUJSSkQ4Rnp5R0ctaFNCZ3dvT2xLaW5rSjBlWDdneGpGTnhxMGJQOUxGeHp3WVV6YnFseFZ3UVJJZWd3UlNXampXSzAyQTFKMHROTTA2MjBadmZtVU5GUU0xby1xN2VoU2tjYUZqT1BuQnBTRThuZ1dyMlN5c0huTmdCcVFvbw?oc=5 | https://news.google.com/rss/articles/CBMiogFBVV95cUxQdzJ1eGx4dHVxY0Y4a0lSYTBVWFFMLVhIOGZ2Z1BhdDBieWt6RmFNUDVieDZGTFl6OVpZVm5RSDNoMllQaHdIQjBRMWtMZlc3emJJZU9DWnBBWTgwclI4WFhpWm5KWXRtXzJjNXd2OURqUkVWSXh3MWp2VkY4d3BlcjFtR3JFaHByTjZwRTZoQlE3VkpYYmR3V1FxbEw2MTlDWnc?oc=5"
+ },
+ {
   "hecho_id": "noticia:fimcxl",
   "fecha_hora_local": "2026-11-04 08:39",
   "ts_ms": 1793795961000,
@@ -218,26 +238,6 @@
   "departamento": "",
   "municipio": "",
   "enlaces": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxNZXNDS2xhVVIwVkdPWHJSYU1BamhpU1NsNGI4X05NZTFUeDE4SDBucmtWeDB1SGdOUWdRZDBlaXNWRi1HQVo2bkp5ZXVfeTNoMW5EaHlWQjU5YWpPbGc5NHBKVFZTRDlaTi13ZlZ0VjB3NGQ0aDZfYm5qeEZqXzk3SktIZk14WjI0YUp5Y2ZyM0tUTWlvY2lGbHpXdWRCYllubFBrekstR24xY1NEd3FTTlk2TFd0eDdIbjlrUzBZeS1VOGp0REp6dVVPTTFtRFZvc2JDbDBna1AyWjTSAdsBQVVfeXFMTWVzQ0tsYVVSMFZHT1hyUmFNQWpoaVNTbDRiOF9OTWUxVHgxOEgwbnJrVngwdUhnTlFnUWQwZWlzVkYtR0FaNm5KeWV1X3kzaDFuRGh5VkI1OWFqT2xnOTRwSlRWU0Q5Wk4td2ZWdFYwdzRkNGg2X2JuanhGal85N0pLSGZNeFoyNGFKeWNmcjNLVE1pb2NpRmx6V3VkQmJZbmxQa3pLLUduMWNTRHdxU05ZNkxXdHg3SG45a1MwWXktVThqdERKenVVT00xbURWb3NiQ2wwZ2tQMlo0?oc=5"
- },
- {
-  "hecho_id": "noticia:jrr4up",
-  "fecha_hora_local": "2026-11-03 13:23",
-  "ts_ms": 1793726607000,
-  "titulo": "Gobernación destina Bs 15 millones para atender emergencias por lluvias y sequía en 40 municipios de La Paz - Informe Exclusivo",
-  "tipo_amenaza": "meteorológica",
-  "nivel_num": 1,
-  "nivel_preliminar": "amarilla",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 3,
-  "fuentes": "Informe Exclusivo; La Patria Bolivia; eju.tv",
-  "lat": -16.169,
-  "lon": -68.09,
-  "lugar": "La Paz, La Paz",
-  "departamento": "La Paz",
-  "municipio": "Nuestra Señora de La Paz",
-  "enlaces": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPMk1DTW5ieUYtZ19kQ3NRUDVXQnFxR2cyVHc0TTQ0eEZTNXJLQWVQRVFJNGU4R0JVNl91SFhlOHZ6OTBIS00zOU1sQVkySUJZMGpDckRBZDNnUUJSSkQ4Rnp5R0ctaFNCZ3dvT2xLaW5rSjBlWDdneGpGTnhxMGJQOUxGeHp3WVV6YnFseFZ3UVJJZWd3UlNXampXSzAyQTFKMHROTTA2MjBadmZtVU5GUU0xby1xN2VoU2tjYUZqT1BuQnBTRThuZ1dyMlN5c0huTmdCcVFvbw?oc=5 | https://news.google.com/rss/articles/CBMiogFBVV95cUxQdzJ1eGx4dHVxY0Y4a0lSYTBVWFFMLVhIOGZ2Z1BhdDBieWt6RmFNUDVieDZGTFl6OVpZVm5RSDNoMllQaHdIQjBRMWtMZlc3emJJZU9DWnBBWTgwclI4WFhpWm5KWXRtXzJjNXd2OURqUkVWSXh3MWp2VkY4d3BlcjFtR3JFaHByTjZwRTZoQlE3VkpYYmR3V1FxbEw2MTlDWnc?oc=5 | https://news.google.com/rss/articles/CBMifEFVX3lxTE52Qi03Z1J6OS1CR2liRVZ0VlhCcmVQWFV6RUdGNXdrbzZRNXFjTWRaRnc1b3VoV0xaY3RIdncxNlNnYkxyUXo5MTlJWmMwWDNSMDE4ZHI2VkpWajFPaUF2SmRVYkk2eDZYQ1RfUU9ieENrZG9UVVFiaXZSeGI?oc=5"
  },
  {
   "hecho_id": "noticia:1b5b38w",
