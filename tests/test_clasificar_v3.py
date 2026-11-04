@@ -55,3 +55,10 @@ def test_accidente_con_derrame_es_transito_e_incendio_en_restaurante_es_incendio
     assert c.clasificar("Accidente en El Sillar deja heridos y derrame de combustible", "", True)["subtipo"] == "accidente de tránsito"
     assert c.clasificar("Incendio en un restaurante deja daños materiales en Santa Cruz")["subtipo"] == "incendio estructural"
     assert c.clasificar("Accidente aéreo deja dos muertos en Beni")["subtipo"] == "accidente aéreo"
+
+
+def test_exterior_puerto_rico_y_seguimientos_judiciales_y_campanas():
+    assert not c.clasificar("Motorista fallece tras accidente en expreso de San Juan hacia Bayamón", "", True, True)["relevante"]
+    assert not c.clasificar("Detención preventiva por accidente de tránsito en Sucre", "", True, True)["relevante"]
+    assert not c.clasificar("Oruro contará con 170 mil vacunas en campaña antirrábica", "", True, True)["relevante"]
+    assert c.clasificar("Colapso de escenario musical deja tres heridos en Viacha", "", True, True)["subtipo"] == "colapso estructural"

@@ -17,6 +17,7 @@ TAXONOMIA = [  # (categoria, subtipo, patrón sobre el texto normalizado)
     ("biológica", "brote / enfermedad transmisible", r"\b(brote|epidemia|casos de|dengue|chikungunya|sarampion|fiebre amarilla|malaria|leptospirosis|meningitis|influenza|covid|rabia|tos convulsiva|tuberculosis|hantavirus|ebola|mpox|viruela)\b"),
     ("biológica", "intoxicación / alimentos", r"\b(intoxicacion|intoxicad\w+|envenenamiento)\b"),
     ("biológica", "sanidad animal", r"\b(aftosa|gripe aviar|peste porcina|brucelosis|newcastle|mortandad de (ganado|peces|aves))\b"),
+    ("tecnológica", "colapso estructural", r"\bcolapso\b|\bse desplomo\b|\bdesplome\b|derrumbe de (?:un |una |el |la )?(?:edificio|muro|techo|puente|escenario|casa|vivienda)"),
     ("tecnológica", "explosión / fuga", r"\b(explosion|explotar|fuga de gas|derrame|intoxicacion por gas)\b"),
 ]
 EXTERIOR = ("ucrania", "rusia", "zelenski", "putin", "israel", "gaza", "iran", "china", "japon", "espana", "espanol", "mexico", "argentina", "chile", "peru", "colombia", "brasil", "venezuela", "ecuador", "paraguay", "uruguay",
@@ -30,8 +31,8 @@ def norm(t):
 
 
 DEPORTE = re.compile(r"\b(arbitr\w*|delantero|portero|futbol|partidos?|suspension|gol|goles|rival|liga|campeonato|torneo|equipo|jugador\w*|fichaje|entrenador)\b")
-RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo", "como actuar", "como identificar", "asi puedes", "consejos", "recomendaciones", "que no cunda", "que hacer ante", "como prevenir", "como evitar")
-EXTRA_EXT = ("guayaquil", "galapagos", "florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
+RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo", "como actuar", "como identificar", "asi puedes", "consejos", "recomendaciones", "que no cunda", "que hacer ante", "como prevenir", "como evitar", "detencion preventiva", "sala penal", "condena", "sentencia", "imputad", "audiencia", "campana antirrabica", "vacunas", "vacunacion", "acciones preventivas", "campana de")
+EXTRA_EXT = ("puerto rico", "bayamon", "caguas", "ponce", "miami", "orlando", "los angeles", "nueva jersey", "guayaquil", "galapagos", "florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
 
 
 def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):

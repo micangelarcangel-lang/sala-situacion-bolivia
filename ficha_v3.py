@@ -23,6 +23,7 @@ ESPERADOS = {
     "intoxicación / alimentos": ["casos_confirmados", "casos_sospechosos", "expuestos", "fallecidos"],
     "sismo": ["magnitud", "fallecidos", "heridos"],
     "explosión / fuga": ["fallecidos", "heridos", "evacuados"],
+    "colapso estructural": ["clase_inmueble", "fallecidos", "heridos", "evacuados"],
     "sanidad animal": ["ganado", "casos_confirmados"],
 }
 TIPOS_ACCIDENTE = [("choque frontal", r"choque frontal"), ("colisión múltiple", r"colision multiple|choque multiple|accidente en cadena"), ("vuelco", r"vuelco|volco|volcadura"), ("atropello", r"atropell\w+"),
