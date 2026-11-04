@@ -4,133 +4,6 @@
  "items": [
   {
    "n": 1,
-   "id": "noticia:1y5s4pl",
-   "titulo": "Choque entre moto y vagoneta deja una persona herida",
-   "lugar": "Oruro, Oruro",
-   "precision": "municipio",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "motocicleta",
-       "vagoneta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "cifra",
-      "valor": 1
-     }
-    },
-    "faltan": [
-     "fallecidos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 2,
-   "id": "noticia:vivo:989fecac5554",
-   "titulo": "👉 https://r-1.tv/250c81 | Además, el informe señala 551 puntos calientes y dos incendios forestales, localizados estos últimos en Beni y el Chaco cruceño.",
-   "lugar": "Beni (departamento)",
-   "precision": "departamento",
-   "subtipo": "incendio forestal",
-   "ficha": {
-    "subtipo": "incendio forestal",
-    "campos": {
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     },
-     "evacuados": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "superficie_ha",
-     "fallecidos",
-     "heridos",
-     "evacuados"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 3,
-   "id": "noticia:43tofu",
-   "titulo": "¡Tembló en Cochabamba! Reportan sismo de magnitud 3,7 en la provincia Carrasco",
-   "lugar": "Cochabamba (departamento)",
-   "precision": "departamento",
-   "subtipo": "sismo",
-   "ficha": {
-    "subtipo": "sismo",
-    "campos": {
-     "magnitud": {
-      "estado": "dato",
-      "valor": 3.7
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.33
-   }
-  },
-  {
-   "n": 4,
-   "id": "noticia:1f1qb0",
-   "titulo": "Accidente en el tramo Locotal–Villa Tunari: la vía está transitable con precaución",
-   "lugar": "Villa Tunari, Cochabamba",
-   "precision": "municipio",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "no_informado"
-     },
-     "vehiculos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "tipo_accidente",
-     "vehiculos",
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 5,
    "id": "noticia:37m88o",
    "titulo": "Colapso de escenario musical deja tres heridos en Viacha",
    "lugar": "Viacha, La Paz",
@@ -162,17 +35,18 @@
    }
   },
   {
-   "n": 6,
-   "id": "noticia:139orfq",
-   "titulo": "Camargo realiza rogativas por lluvia ante la sequía y la falta de agua",
-   "lugar": "Camargo, Chuquisaca",
-   "precision": "municipio",
+   "n": 2,
+   "id": "noticia:v3:88510599766a",
+   "titulo": "Defensa convoca a los tres niveles del Estado ante emergencia que afecta a más de 114.000 familias",
+   "lugar": "Nacional (varios departamentos)",
+   "precision": "nacional",
    "subtipo": "sequía",
    "ficha": {
     "subtipo": "sequía",
     "campos": {
      "familias_afectadas": {
-      "estado": "no_informado"
+      "estado": "cifra",
+      "valor": 114000
      },
      "personas_afectadas": {
       "estado": "no_informado"
@@ -188,378 +62,8 @@
      }
     },
     "faltan": [
-     "familias_afectadas",
      "personas_afectadas",
      "ganado",
-     "superficie_ha",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 7,
-   "id": "noticia:14nkhi9",
-   "titulo": "¡Atención, transportistas! Un choque complica la circulación en vía Oruro-Challapata",
-   "lugar": "Oruro (tramo)",
-   "precision": "tramo",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "camión"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.5
-   }
-  },
-  {
-   "n": 8,
-   "id": "noticia:1ax0bpy",
-   "titulo": "Creció el Bermejo tras la tormenta: así está el puerto de chalanas en este momento",
-   "lugar": "Tarija (tramo)",
-   "precision": "tramo",
-   "subtipo": "granizada / helada / viento",
-   "ficha": {
-    "subtipo": "granizada / helada / viento",
-    "campos": {
-     "viviendas": {
-      "estado": "no_informado"
-     },
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "viviendas",
-     "superficie_ha",
-     "personas_afectadas",
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 9,
-   "id": "noticia:rss:5c4b2d7e4eb1",
-   "titulo": "Dos muertos tras el choque de un vehículo contra un camión estacionado en una carretera de Oruro",
-   "lugar": "Oruro (departamento)",
-   "precision": "departamento",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "camión"
-      ]
-     },
-     "fallecidos": {
-      "estado": "cifra",
-      "valor": 2
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "heridos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 10,
-   "id": "noticia:vivo:02f8c3661ce7",
-   "titulo": "Reportan sismo de magnitud 3,5 en la provincia Sud Lípez de Potosí",
-   "lugar": "Potosí (departamento)",
-   "precision": "departamento",
-   "subtipo": "sismo",
-   "ficha": {
-    "subtipo": "sismo",
-    "campos": {
-     "magnitud": {
-      "estado": "dato",
-      "valor": 3.5
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.33
-   }
-  },
-  {
-   "n": 11,
-   "id": "noticia:1bo6mll",
-   "titulo": "Colisión frontal deja un fallecido en ruta Pazña – Avicaya",
-   "lugar": "Pazña, Oruro",
-   "precision": "municipio",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "camión",
-       "vagoneta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "cifra",
-      "valor": 1
-     },
-     "heridos": {
-      "estado": "no_precisado"
-     }
-    },
-    "faltan": [
-     "heridos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 12,
-   "id": "noticia:1uil931",
-   "titulo": "Accidente de tránsito en la ruta hacia Alto Beni deja varios heridos",
-   "lugar": "Alto Beni, La Paz",
-   "precision": "municipio",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "embarrancamiento"
-     },
-     "vehiculos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_precisado"
-     }
-    },
-    "faltan": [
-     "vehiculos",
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.25
-   }
-  },
-  {
-   "n": 13,
-   "id": "noticia:vivo:08056a383b77",
-   "titulo": "Paso a paso   Chikungunya: qué es, cómo se transmite y por qué preocupa a las autoridades sanitarias",
-   "lugar": "",
-   "precision": "ninguna",
-   "subtipo": "brote / enfermedad transmisible",
-   "ficha": {
-    "subtipo": "brote / enfermedad transmisible",
-    "campos": {
-     "casos_confirmados": {
-      "estado": "cifra",
-      "valor": 1398
-     },
-     "casos_sospechosos": {
-      "estado": "no_informado"
-     },
-     "expuestos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "casos_sospechosos",
-     "expuestos",
-     "fallecidos"
-    ],
-    "completitud": 0.25
-   }
-  },
-  {
-   "n": 14,
-   "id": "noticia:rss:9cf0149bdfc2",
-   "titulo": "Motocicleta sin SOAT se accidentó en Santa Cruz, hay un fallecido",
-   "lugar": "Santa Cruz (departamento)",
-   "precision": "departamento",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "atropello"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "motocicleta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "cifra",
-      "valor": 1
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "heridos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 15,
-   "id": "noticia:rn8ogu",
-   "titulo": "Choque en ruta a Huanuni deja ocho heridos",
-   "lugar": "Huanuni, Oruro",
-   "precision": "municipio",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "minibús",
-       "camión",
-       "vagoneta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "cifra",
-      "valor": 8
-     }
-    },
-    "faltan": [
-     "fallecidos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 16,
-   "id": "noticia:171vqk3",
-   "titulo": "Santa Cruz vacunó a 656.833 perros y gatos y refuerza la lucha contra la rabia - EL DÍA",
-   "lugar": "Santa Cruz (departamento)",
-   "precision": "departamento",
-   "subtipo": "brote / enfermedad transmisible",
-   "ficha": {
-    "subtipo": "brote / enfermedad transmisible",
-    "campos": {
-     "casos_confirmados": {
-      "estado": "no_informado"
-     },
-     "casos_sospechosos": {
-      "estado": "no_informado"
-     },
-     "expuestos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "casos_confirmados",
-     "casos_sospechosos",
-     "expuestos",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 17,
-   "id": "noticia:v3:554764066bb2",
-   "titulo": "Asamblea de Cochabamba aprueba proyecto de emergencia por sequía en siete municipios - eju.tv",
-   "lugar": "Cochabamba (departamento)",
-   "precision": "departamento",
-   "subtipo": "sequía",
-   "ficha": {
-    "subtipo": "sequía",
-    "campos": {
-     "familias_afectadas": {
-      "estado": "no_precisado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "ganado": {
-      "estado": "cifra",
-      "valor": 457
-     },
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "familias_afectadas",
-     "personas_afectadas",
      "superficie_ha",
      "fallecidos"
     ],
@@ -567,704 +71,7 @@
    }
   },
   {
-   "n": 18,
-   "id": "noticia:dby0il",
-   "titulo": "Rodrigo Paz anuncia Bs 200 millones para reconstruir El Torno tras la devastadora riada de 2025",
-   "lugar": "El Torno, Santa Cruz",
-   "precision": "municipio",
-   "subtipo": "inundación / riada",
-   "ficha": {
-    "subtipo": "inundación / riada",
-    "campos": {
-     "familias_afectadas": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "viviendas": {
-      "estado": "no_informado"
-     },
-     "ganado": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_precisado"
-     }
-    },
-    "faltan": [
-     "familias_afectadas",
-     "personas_afectadas",
-     "viviendas",
-     "ganado",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 19,
-   "id": "noticia:1ghpzwk",
-   "titulo": "La Paz: 22 municipios se declararon en emergencia por sequía y 18 por lluvias",
-   "lugar": "La Paz (departamento)",
-   "precision": "departamento",
-   "subtipo": "sequía",
-   "ficha": {
-    "subtipo": "sequía",
-    "campos": {
-     "familias_afectadas": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "ganado": {
-      "estado": "no_informado"
-     },
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "familias_afectadas",
-     "personas_afectadas",
-     "ganado",
-     "superficie_ha",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 20,
-   "id": "noticia:lw1143",
-   "titulo": "Publican Lista de Heridos tras Explosión de Puesto de Pirotecnia en Panteón de San Luis Potosí",
-   "lugar": "Potosí (departamento)",
-   "precision": "departamento",
-   "subtipo": "explosión / fuga",
-   "ficha": {
-    "subtipo": "explosión / fuga",
-    "campos": {
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_precisado"
-     },
-     "evacuados": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos",
-     "evacuados"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 21,
-   "id": "noticia:1q4qmfq",
-   "titulo": "Tres presuntos ladrones de mineral mueren por intoxicación en mina de Huanuni",
-   "lugar": "Huanuni, Oruro",
-   "precision": "municipio",
-   "subtipo": "intoxicación / alimentos",
-   "ficha": {
-    "subtipo": "intoxicación / alimentos",
-    "campos": {
-     "casos_confirmados": {
-      "estado": "no_informado"
-     },
-     "casos_sospechosos": {
-      "estado": "no_informado"
-     },
-     "expuestos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "cifra",
-      "valor": 2
-     }
-    },
-    "faltan": [
-     "casos_confirmados",
-     "casos_sospechosos",
-     "expuestos"
-    ],
-    "completitud": 0.25
-   }
-  },
-  {
-   "n": 22,
-   "id": "noticia:1un6ep4",
-   "titulo": "Choque frontal entre camión y ómnibus deja tres heridos graves en la carretera Potosí–Oruro",
-   "lugar": "",
-   "precision": "tramo",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque frontal"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "bus",
-       "camión"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "cifra",
-      "valor": 3
-     }
-    },
-    "faltan": [
-     "fallecidos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 23,
-   "id": "noticia:vivo:98ca4de33827",
-   "titulo": "SISMO DE MAGNITUD 3,5 SE REGISTRA EN LA PROVINCIA VELASCO DE SANTA CRUZ",
-   "lugar": "Santa Cruz (departamento)",
-   "precision": "departamento",
-   "subtipo": "sismo",
-   "ficha": {
-    "subtipo": "sismo",
-    "campos": {
-     "magnitud": {
-      "estado": "dato",
-      "valor": 3.5
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.33
-   }
-  },
-  {
-   "n": 24,
-   "id": "noticia:v3:8d3af3c9109a",
-   "titulo": "No se descarta declaratoria de desastre departamental en Oruro",
-   "lugar": "Oruro (departamento)",
-   "precision": "departamento",
-   "subtipo": "sequía",
-   "ficha": {
-    "subtipo": "sequía",
-    "campos": {
-     "familias_afectadas": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "ganado": {
-      "estado": "no_informado"
-     },
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "familias_afectadas",
-     "personas_afectadas",
-     "ganado",
-     "superficie_ha",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 25,
-   "id": "noticia:19fsco3",
-   "titulo": "Choque y vuelco de tonel en la doble vía Oruro-La Paz",
-   "lugar": "",
-   "precision": "tramo",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "vuelco"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "camión"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_precisado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.5
-   }
-  },
-  {
-   "n": 26,
-   "id": "noticia:rss:b5232e58919a",
-   "titulo": "Choque a objeto fijo deja un herido",
-   "lugar": "Oruro (departamento)",
-   "precision": "departamento",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "vagoneta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "cifra",
-      "valor": 1
-     }
-    },
-    "faltan": [
-     "fallecidos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 27,
-   "id": "noticia:ix3l8o",
-   "titulo": "Oruro evalúa suspender clases presenciales por más de 200 casos de Coxsackie",
-   "lugar": "Oruro, Oruro",
-   "precision": "municipio",
-   "subtipo": "brote / enfermedad transmisible",
-   "ficha": {
-    "subtipo": "brote / enfermedad transmisible",
-    "campos": {
-     "casos_confirmados": {
-      "estado": "no_informado"
-     },
-     "casos_sospechosos": {
-      "estado": "no_informado"
-     },
-     "expuestos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "casos_confirmados",
-     "casos_sospechosos",
-     "expuestos",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 28,
-   "id": "noticia:ysneb7",
-   "titulo": "Restringen el paso en la ruta Caranavi-Guanay por derrumbe en Yacura (10:32) - El Diario",
-   "lugar": "La Paz (tramo)",
-   "precision": "tramo",
-   "subtipo": "deslizamiento",
-   "ficha": {
-    "subtipo": "deslizamiento",
-    "campos": {
-     "viviendas": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "viviendas",
-     "personas_afectadas",
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 29,
-   "id": "noticia:v3:e8c4fa07271f",
-   "titulo": "Chocan poste de alumbrado público en la urbanización Milenium",
-   "lugar": "Oruro (departamento)",
-   "precision": "departamento",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "vagoneta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.5
-   }
-  },
-  {
-   "n": 30,
-   "id": "noticia:vivo:d8ed263c3684",
-   "titulo": "“Yo no diría que escribo libros con rabia”: Blithz Lozada recorre décadas de pensamiento intelectual en O Stream",
-   "lugar": "",
-   "precision": "ninguna",
-   "subtipo": "brote / enfermedad transmisible",
-   "ficha": {
-    "subtipo": "brote / enfermedad transmisible",
-    "campos": {
-     "casos_confirmados": {
-      "estado": "no_informado"
-     },
-     "casos_sospechosos": {
-      "estado": "no_informado"
-     },
-     "expuestos": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "casos_confirmados",
-     "casos_sospechosos",
-     "expuestos",
-     "fallecidos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 31,
-   "id": "noticia:vivo:918a37ef60ae",
-   "titulo": "Murió tras un accidente y su familia quedó con una deuda de Bs 30 mil",
-   "lugar": "Santa Cruz (departamento)",
-   "precision": "departamento",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "motocicleta"
-      ]
-     },
-     "fallecidos": {
-      "estado": "cifra",
-      "valor": 1
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "heridos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 32,
-   "id": "noticia:bksnde",
-   "titulo": "Reportan un incendio cerca de la carretera a Cotoca",
-   "lugar": "Santa Cruz (departamento)",
-   "precision": "departamento",
-   "subtipo": "incendio estructural",
-   "ficha": {
-    "subtipo": "incendio estructural",
-    "campos": {
-     "clase_inmueble": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     },
-     "evacuados": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "clase_inmueble",
-     "fallecidos",
-     "heridos",
-     "evacuados"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 33,
-   "id": "noticia:vivo:82709a91d736",
-   "titulo": "Seis departamentos son azotados por la sequía y 114 familias están afectadas, reporta el Gobierno",
-   "lugar": "",
-   "precision": "ninguna",
-   "subtipo": "sequía",
-   "ficha": {
-    "subtipo": "sequía",
-    "campos": {
-     "familias_afectadas": {
-      "estado": "cifra",
-      "valor": 114
-     },
-     "personas_afectadas": {
-      "estado": "cifra",
-      "valor": 35000
-     },
-     "ganado": {
-      "estado": "no_informado"
-     },
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "ganado",
-     "superficie_ha",
-     "fallecidos"
-    ],
-    "completitud": 0.4
-   }
-  },
-  {
-   "n": 34,
-   "id": "noticia:rss:765af9bca9f3",
-   "titulo": "¿Dónde tembló en Bolivia? Reportan dos sismos este 2 de noviembre",
-   "lugar": "Cochabamba (departamento)",
-   "precision": "departamento",
-   "subtipo": "sismo",
-   "ficha": {
-    "subtipo": "sismo",
-    "campos": {
-     "magnitud": {
-      "estado": "dato",
-      "valor": 4.3
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.33
-   }
-  },
-  {
-   "n": 35,
-   "id": "noticia:wi18tm",
-   "titulo": "Accidente en El Sillar deja heridos y derrame de combustible: esto es lo último que se sabe",
-   "lugar": "",
-   "precision": "ninguna",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "bus",
-       "camión",
-       "cisterna"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "cifra",
-      "valor": 29
-     }
-    },
-    "faltan": [
-     "fallecidos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 36,
-   "id": "noticia:rz36ru",
-   "titulo": "Santa Cruz: Choque entre dos camiones en Cuatro Cañadas deja dos heridos y un chofer prófugo",
-   "lugar": "Santa Cruz de la Sierra, Santa Cruz",
-   "precision": "municipio",
-   "subtipo": "accidente de tránsito",
-   "ficha": {
-    "subtipo": "accidente de tránsito",
-    "campos": {
-     "tipo_accidente": {
-      "estado": "dato",
-      "valor": "choque"
-     },
-     "vehiculos": {
-      "estado": "dato",
-      "valor": [
-       "camión"
-      ]
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "cifra",
-      "valor": 2
-     }
-    },
-    "faltan": [
-     "fallecidos"
-    ],
-    "completitud": 0.75
-   }
-  },
-  {
-   "n": 37,
-   "id": "noticia:vivo:5b243087df6d",
-   "titulo": "Santa cruz abc moviliza maquinaria para despejar deslizamiento en la ruta la angostura bermejo",
-   "lugar": "Santa Cruz (departamento)",
-   "precision": "departamento",
-   "subtipo": "deslizamiento",
-   "ficha": {
-    "subtipo": "deslizamiento",
-    "campos": {
-     "viviendas": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "viviendas",
-     "personas_afectadas",
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.0
-   }
-  },
-  {
-   "n": 38,
-   "id": "noticia:vivo:5fa0c8a234e1",
-   "titulo": "Chuquisaca: Intensa granizada destruye techos de viviendas y cultivos en Azurduy y Tarvita",
-   "lugar": "Chuquisaca (departamento)",
-   "precision": "departamento",
-   "subtipo": "granizada / helada / viento",
-   "ficha": {
-    "subtipo": "granizada / helada / viento",
-    "campos": {
-     "viviendas": {
-      "estado": "cifra",
-      "valor": 30
-     },
-     "superficie_ha": {
-      "estado": "no_informado"
-     },
-     "personas_afectadas": {
-      "estado": "no_informado"
-     },
-     "fallecidos": {
-      "estado": "no_informado"
-     },
-     "heridos": {
-      "estado": "no_informado"
-     }
-    },
-    "faltan": [
-     "superficie_ha",
-     "personas_afectadas",
-     "fallecidos",
-     "heridos"
-    ],
-    "completitud": 0.2
-   }
-  },
-  {
-   "n": 39,
+   "n": 3,
    "id": "noticia:rss:6a7bf116c751",
    "titulo": "Emergencia: sequía en 6 departamentos afecta a 114 mil familias",
    "lugar": "Pasorapa, Cochabamba",
@@ -1300,10 +107,748 @@
    }
   },
   {
-   "n": 40,
-   "id": "noticia:1dqkznv",
-   "titulo": "Potosí soportará una jornada con fuertes vientos de hasta 70 km/h",
-   "lugar": "Potosí (departamento)",
+   "n": 4,
+   "id": "noticia:43tofu",
+   "titulo": "¡Tembló en Cochabamba! Reportan sismo de magnitud 3,7 en la provincia Carrasco",
+   "lugar": "Cochabamba (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "sismo",
+   "ficha": {
+    "subtipo": "sismo",
+    "campos": {
+     "magnitud": {
+      "estado": "dato",
+      "valor": 3.7
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.33
+   }
+  },
+  {
+   "n": 5,
+   "id": "noticia:rn8ogu",
+   "titulo": "Choque en ruta a Huanuni deja ocho heridos",
+   "lugar": "Huanuni, Oruro",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "choque"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "minibús",
+       "camión",
+       "vagoneta"
+      ]
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "cifra",
+      "valor": 8
+     }
+    },
+    "faltan": [
+     "fallecidos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 6,
+   "id": "noticia:16b0cah",
+   "titulo": "Colisión frontal en carretera Oruro-Pisiga deja un herido",
+   "lugar": "Oruro (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "choque"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "camión",
+       "vagoneta"
+      ]
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "cifra",
+      "valor": 1
+     }
+    },
+    "faltan": [
+     "fallecidos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 7,
+   "id": "noticia:vivo:e68ed11f4284",
+   "titulo": "Situación   La sequía golpea a 114 mil familias en Bolivia y “los riesgos pueden agravarse” con inundaciones y heladas",
+   "lugar": "Nacional (varios departamentos)",
+   "precision": "nacional",
+   "subtipo": "sequía",
+   "ficha": {
+    "subtipo": "sequía",
+    "campos": {
+     "familias_afectadas": {
+      "estado": "cifra",
+      "valor": 114000
+     },
+     "personas_afectadas": {
+      "estado": "cifra",
+      "valor": 35831
+     },
+     "ganado": {
+      "estado": "no_informado"
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "ganado",
+     "superficie_ha",
+     "fallecidos"
+    ],
+    "completitud": 0.4
+   }
+  },
+  {
+   "n": 8,
+   "id": "noticia:vivo:51324f5fce12",
+   "titulo": "¿Fiebre repentina?: 7 de cada 10 casos de resfrío en La Paz son de la influenza B",
+   "lugar": "La Paz (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "brote / enfermedad transmisible",
+   "ficha": {
+    "subtipo": "brote / enfermedad transmisible",
+    "campos": {
+     "casos_notificados": {
+      "estado": "cifra",
+      "valor": 10
+     },
+     "casos_confirmados": {
+      "estado": "no_informado"
+     },
+     "casos_sospechosos": {
+      "estado": "no_informado"
+     },
+     "expuestos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "casos_confirmados",
+     "casos_sospechosos",
+     "expuestos",
+     "fallecidos"
+    ],
+    "completitud": 0.2
+   }
+  },
+  {
+   "n": 9,
+   "id": "noticia:1caa41u",
+   "titulo": "Gobernación realizará trabajos en el río San Julián para prevenir nuevas inundaciones y proteger cultivos - EL DÍA",
+   "lugar": "San Julián, Santa Cruz",
+   "precision": "municipio",
+   "subtipo": "inundación / riada",
+   "ficha": {
+    "subtipo": "inundación / riada",
+    "campos": {
+     "familias_afectadas": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "viviendas": {
+      "estado": "no_informado"
+     },
+     "ganado": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "familias_afectadas",
+     "personas_afectadas",
+     "viviendas",
+     "ganado",
+     "fallecidos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 10,
+   "id": "noticia:v3:27868ea0045f",
+   "titulo": "Siete municipios de Cochabamba recibirán ayuda por la sequía",
+   "lugar": "Cochabamba (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "sequía",
+   "ficha": {
+    "subtipo": "sequía",
+    "campos": {
+     "familias_afectadas": {
+      "estado": "no_precisado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "ganado": {
+      "estado": "cifra",
+      "valor": 457
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "familias_afectadas",
+     "personas_afectadas",
+     "superficie_ha",
+     "fallecidos"
+    ],
+    "completitud": 0.2
+   }
+  },
+  {
+   "n": 11,
+   "id": "noticia:19fsco3",
+   "titulo": "Choque y vuelco de tonel en la doble vía Oruro-La Paz",
+   "lugar": "Tramo Oruro – Nuestra Señora de La Paz",
+   "precision": "tramo",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "vuelco"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "camión"
+      ]
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_precisado"
+     }
+    },
+    "faltan": [
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.5
+   }
+  },
+  {
+   "n": 12,
+   "id": "noticia:v3:38512af6a0c9",
+   "titulo": "Meningitis en Palmasola: interno de 24 años está grave y activan protocolos para evitar contagios - Visión 360",
+   "lugar": "Palmasola, Santa Cruz de la Sierra",
+   "precision": "punto",
+   "subtipo": "brote / enfermedad transmisible",
+   "ficha": {
+    "subtipo": "brote / enfermedad transmisible",
+    "campos": {
+     "casos_notificados": {
+      "estado": "cifra",
+      "valor": 1
+     },
+     "casos_confirmados": {
+      "estado": "cifra",
+      "valor": 1
+     },
+     "casos_sospechosos": {
+      "estado": "no_informado"
+     },
+     "expuestos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "casos_sospechosos",
+     "expuestos",
+     "fallecidos"
+    ],
+    "completitud": 0.4
+   }
+  },
+  {
+   "n": 13,
+   "id": "noticia:rss:d4468d853c4e",
+   "titulo": "Tarija: Reportan dos incendios en un día, ambos fueron sofocados",
+   "lugar": "Tarija (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "incendio estructural",
+   "ficha": {
+    "subtipo": "incendio estructural",
+    "campos": {
+     "clase_inmueble": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     },
+     "evacuados": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "clase_inmueble",
+     "fallecidos",
+     "heridos",
+     "evacuados"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 14,
+   "id": "noticia:mrhvs6",
+   "titulo": "A una cuadra de su trabajo, mujer sufrió un accidente que la dejó con fracturas y herida en la cabeza",
+   "lugar": "Santa Cruz de la Sierra, Santa Cruz",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "choque"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "minibús",
+       "camión"
+      ]
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "cifra",
+      "valor": 1
+     }
+    },
+    "faltan": [
+     "fallecidos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 15,
+   "id": "noticia:1at00ey",
+   "titulo": "Dos cisternas chocan y provocan voraz incendio en la ruta a Camiri",
+   "lugar": "Santa Cruz de la Sierra, Santa Cruz",
+   "precision": "municipio",
+   "subtipo": "incendio estructural",
+   "ficha": {
+    "subtipo": "incendio estructural",
+    "campos": {
+     "clase_inmueble": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     },
+     "evacuados": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "clase_inmueble",
+     "fallecidos",
+     "heridos",
+     "evacuados"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 16,
+   "id": "noticia:vivo:02f8c3661ce7",
+   "titulo": "Reportan sismo de magnitud 3,5 en la provincia Sud Lípez de Potosí",
+   "lugar": "Potosí (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "sismo",
+   "ficha": {
+    "subtipo": "sismo",
+    "campos": {
+     "magnitud": {
+      "estado": "dato",
+      "valor": 3.5
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.33
+   }
+  },
+  {
+   "n": 17,
+   "id": "noticia:v3:65886d2d34e5",
+   "titulo": "Vehículo cae en canal de drenaje en Santa Cruz por alta velocidad",
+   "lugar": "Santa Cruz de la Sierra, Santa Cruz",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "colisión múltiple"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "motocicleta",
+       "automóvil"
+      ]
+     },
+     "fallecidos": {
+      "estado": "cifra",
+      "valor": 1
+     },
+     "heridos": {
+      "estado": "cifra",
+      "valor": 1
+     }
+    },
+    "faltan": [],
+    "completitud": 1.0
+   }
+  },
+  {
+   "n": 18,
+   "id": "noticia:r1uot6",
+   "titulo": "vuelco deja heridos en ruta Oruro – Huanuni",
+   "lugar": "Tramo Oruro – Huanuni",
+   "precision": "tramo",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "vuelco"
+     },
+     "vehiculos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_precisado"
+     }
+    },
+    "faltan": [
+     "vehiculos",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.25
+   }
+  },
+  {
+   "n": 19,
+   "id": "noticia:rdp2hs",
+   "titulo": "Incendio en un restaurante deja daños materiales en Santa Cruz",
+   "lugar": "Santa Cruz de la Sierra, Santa Cruz",
+   "precision": "municipio",
+   "subtipo": "incendio estructural",
+   "ficha": {
+    "subtipo": "incendio estructural",
+    "campos": {
+     "clase_inmueble": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "sin_victimas",
+      "valor": 0
+     },
+     "evacuados": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "clase_inmueble",
+     "fallecidos",
+     "evacuados"
+    ],
+    "completitud": 0.25
+   }
+  },
+  {
+   "n": 20,
+   "id": "noticia:1f7sr05",
+   "titulo": "Choque a objeto fijo deja un herido",
+   "lugar": "Oruro, Oruro",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "choque"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "vagoneta"
+      ]
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "cifra",
+      "valor": 1
+     }
+    },
+    "faltan": [
+     "fallecidos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 21,
+   "id": "noticia:1acjgzw",
+   "titulo": "Desborde del río San Julián afecta a siete municipios de Santa Cruz",
+   "lugar": "Santa Cruz (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "inundación / riada",
+   "ficha": {
+    "subtipo": "inundación / riada",
+    "campos": {
+     "familias_afectadas": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "viviendas": {
+      "estado": "no_informado"
+     },
+     "ganado": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "familias_afectadas",
+     "personas_afectadas",
+     "viviendas",
+     "ganado",
+     "fallecidos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 22,
+   "id": "noticia:vivo:919635ac24d0",
+   "titulo": "La paz un accidente deja un muerto en pongo en los yungas",
+   "lugar": "Nuestra Señora de La Paz, La Paz",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "choque"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "camión"
+      ]
+     },
+     "fallecidos": {
+      "estado": "cifra",
+      "valor": 1
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "heridos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 23,
+   "id": "noticia:1uus4m",
+   "titulo": "Confirma la policía dos muertos y siete desaparecidos en explosión en cuartel en Bolivia",
+   "lugar": "Nuestra Señora de La Paz, La Paz",
+   "precision": "municipio",
+   "subtipo": "explosión / fuga",
+   "ficha": {
+    "subtipo": "explosión / fuga",
+    "campos": {
+     "fallecidos": {
+      "estado": "cifra",
+      "valor": 2
+     },
+     "heridos": {
+      "estado": "no_informado"
+     },
+     "evacuados": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "heridos",
+     "evacuados"
+    ],
+    "completitud": 0.33
+   }
+  },
+  {
+   "n": 24,
+   "id": "noticia:ysneb7",
+   "titulo": "Restringen el paso en la ruta Caranavi-Guanay por derrumbe en Yacura (10:32) - El Diario",
+   "lugar": "Tramo Caranavi – Guanay",
+   "precision": "tramo",
+   "subtipo": "deslizamiento",
+   "ficha": {
+    "subtipo": "deslizamiento",
+    "campos": {
+     "viviendas": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "viviendas",
+     "personas_afectadas",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 25,
+   "id": "noticia:9ge0q3",
+   "titulo": "Tarija: Evalúan daños tras intensa granizada en Chocloca",
+   "lugar": "Tarija (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "granizada / helada / viento",
+   "ficha": {
+    "subtipo": "granizada / helada / viento",
+    "campos": {
+     "viviendas": {
+      "estado": "no_informado"
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_precisado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "viviendas",
+     "superficie_ha",
+     "personas_afectadas",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 26,
+   "id": "noticia:19vbiyi",
+   "titulo": "Santa Cruz: Senamhi emite alerta naranja por ráfagas de hasta 90 km/h",
+   "lugar": "Santa Cruz (solo departamento)",
    "precision": "departamento",
    "subtipo": "granizada / helada / viento",
    "ficha": {
@@ -1331,6 +876,484 @@
      "personas_afectadas",
      "fallecidos",
      "heridos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 27,
+   "id": "noticia:vivo:5b243087df6d",
+   "titulo": "Santa cruz abc moviliza maquinaria para despejar deslizamiento en la ruta la angostura bermejo",
+   "lugar": "Santa Cruz (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "deslizamiento",
+   "ficha": {
+    "subtipo": "deslizamiento",
+    "campos": {
+     "viviendas": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "viviendas",
+     "personas_afectadas",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 28,
+   "id": "noticia:171vqk3",
+   "titulo": "Santa Cruz vacunó a 656.833 perros y gatos y refuerza la lucha contra la rabia - EL DÍA",
+   "lugar": "Santa Cruz (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "brote / enfermedad transmisible",
+   "ficha": {
+    "subtipo": "brote / enfermedad transmisible",
+    "campos": {
+     "casos_notificados": {
+      "estado": "cifra",
+      "valor": 15
+     },
+     "casos_confirmados": {
+      "estado": "no_informado"
+     },
+     "casos_sospechosos": {
+      "estado": "no_informado"
+     },
+     "expuestos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "casos_confirmados",
+     "casos_sospechosos",
+     "expuestos",
+     "fallecidos"
+    ],
+    "completitud": 0.2
+   }
+  },
+  {
+   "n": 29,
+   "id": "noticia:18byey7",
+   "titulo": "Tragedia en La Paz: Reportan tres muertos y varios heridos tras accidente de tránsito",
+   "lugar": "Nuestra Señora de La Paz, La Paz",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "choque"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "minibús",
+       "camión"
+      ]
+     },
+     "fallecidos": {
+      "estado": "cifra",
+      "valor": 3
+     },
+     "heridos": {
+      "estado": "cifra",
+      "valor": 9
+     }
+    },
+    "faltan": [],
+    "completitud": 1.0
+   }
+  },
+  {
+   "n": 30,
+   "id": "noticia:1dqkznv",
+   "titulo": "Potosí soportará una jornada con fuertes vientos de hasta 70 km/h",
+   "lugar": "Potosí (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "granizada / helada / viento",
+   "ficha": {
+    "subtipo": "granizada / helada / viento",
+    "campos": {
+     "viviendas": {
+      "estado": "no_informado"
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "viviendas",
+     "superficie_ha",
+     "personas_afectadas",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 31,
+   "id": "noticia:v3:09979b35f846",
+   "titulo": "Súper Niño: La sequía golpea a la mayoría de los 41 municipios de Potosí; urgen ayuda - unitel.bo",
+   "lugar": "Potosí (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "sequía",
+   "ficha": {
+    "subtipo": "sequía",
+    "campos": {
+     "familias_afectadas": {
+      "estado": "cifra",
+      "valor": 114048
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "ganado": {
+      "estado": "no_informado"
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "personas_afectadas",
+     "ganado",
+     "superficie_ha",
+     "fallecidos"
+    ],
+    "completitud": 0.2
+   }
+  },
+  {
+   "n": 32,
+   "id": "noticia:vivo:989fecac5554",
+   "titulo": "👉 https://r-1.tv/250c81 | Además, el informe señala 551 puntos calientes y dos incendios forestales, localizados estos últimos en Beni y el Chaco cruceño.",
+   "lugar": "Beni y Santa Cruz (solo departamentos)",
+   "precision": "departamento",
+   "subtipo": "incendio forestal",
+   "ficha": {
+    "subtipo": "incendio forestal",
+    "campos": {
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     },
+     "evacuados": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "superficie_ha",
+     "fallecidos",
+     "heridos",
+     "evacuados"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 33,
+   "id": "noticia:vivo:5fa0c8a234e1",
+   "titulo": "Chuquisaca: Intensa granizada destruye techos de viviendas y cultivos en Azurduy y Tarvita",
+   "lugar": "Chuquisaca (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "granizada / helada / viento",
+   "ficha": {
+    "subtipo": "granizada / helada / viento",
+    "campos": {
+     "viviendas": {
+      "estado": "cifra",
+      "valor": 30
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "superficie_ha",
+     "personas_afectadas",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.2
+   }
+  },
+  {
+   "n": 34,
+   "id": "noticia:rss:89703da315ef",
+   "titulo": "Muere en un accidente de tránsito uno de los cadetes que sobrevivió al “salto de la muerte”",
+   "lugar": "Nuestra Señora de La Paz, La Paz",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "embarrancamiento"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "automóvil"
+      ]
+     },
+     "fallecidos": {
+      "estado": "cifra",
+      "valor": 1
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "heridos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 35,
+   "id": "noticia:1labrzx",
+   "titulo": "Camión volcó en la carretera Oruro-La Paz cerca a Quemalla",
+   "lugar": "Tramo Oruro – Nuestra Señora de La Paz",
+   "precision": "tramo",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "dato",
+      "valor": "vuelco"
+     },
+     "vehiculos": {
+      "estado": "dato",
+      "valor": [
+       "camión"
+      ]
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "sin_victimas",
+      "valor": 0
+     }
+    },
+    "faltan": [
+     "fallecidos"
+    ],
+    "completitud": 0.75
+   }
+  },
+  {
+   "n": 36,
+   "id": "noticia:1q4qmfq",
+   "titulo": "Tres presuntos ladrones de mineral mueren por intoxicación en mina de Huanuni",
+   "lugar": "Huanuni, Oruro",
+   "precision": "municipio",
+   "subtipo": "intoxicación / alimentos",
+   "ficha": {
+    "subtipo": "intoxicación / alimentos",
+    "campos": {
+     "casos_notificados": {
+      "estado": "cifra",
+      "valor": 4
+     },
+     "casos_confirmados": {
+      "estado": "no_informado"
+     },
+     "casos_sospechosos": {
+      "estado": "no_informado"
+     },
+     "expuestos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "cifra",
+      "valor": 2
+     }
+    },
+    "faltan": [
+     "casos_confirmados",
+     "casos_sospechosos",
+     "expuestos"
+    ],
+    "completitud": 0.4
+   }
+  },
+  {
+   "n": 37,
+   "id": "noticia:ix3l8o",
+   "titulo": "Oruro evalúa suspender clases presenciales por más de 200 casos de Coxsackie",
+   "lugar": "Oruro, Oruro",
+   "precision": "municipio",
+   "subtipo": "brote / enfermedad transmisible",
+   "ficha": {
+    "subtipo": "brote / enfermedad transmisible",
+    "campos": {
+     "casos_notificados": {
+      "estado": "cifra",
+      "valor": 200
+     },
+     "casos_confirmados": {
+      "estado": "no_informado"
+     },
+     "casos_sospechosos": {
+      "estado": "no_informado"
+     },
+     "expuestos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "casos_confirmados",
+     "casos_sospechosos",
+     "expuestos",
+     "fallecidos"
+    ],
+    "completitud": 0.2
+   }
+  },
+  {
+   "n": 38,
+   "id": "noticia:vivo:868bd17c86ad",
+   "titulo": "Bolivia registra un nuevo sismo, ¿dónde fue el epicentro?",
+   "lugar": "Potosí (solo departamento)",
+   "precision": "departamento",
+   "subtipo": "sismo",
+   "ficha": {
+    "subtipo": "sismo",
+    "campos": {
+     "magnitud": {
+      "estado": "dato",
+      "valor": 3.5
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.33
+   }
+  },
+  {
+   "n": 39,
+   "id": "noticia:1f1qb0",
+   "titulo": "Accidente en el tramo Locotal–Villa Tunari: la vía está transitable con precaución",
+   "lugar": "Villa Tunari, Cochabamba",
+   "precision": "municipio",
+   "subtipo": "accidente de tránsito",
+   "ficha": {
+    "subtipo": "accidente de tránsito",
+    "campos": {
+     "tipo_accidente": {
+      "estado": "no_informado"
+     },
+     "vehiculos": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     },
+     "heridos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "tipo_accidente",
+     "vehiculos",
+     "fallecidos",
+     "heridos"
+    ],
+    "completitud": 0.0
+   }
+  },
+  {
+   "n": 40,
+   "id": "noticia:vivo:fb6bb52e1e80",
+   "titulo": "Los bofedales son aliados para enfrentar la sequía y mitigar el cambio climático, según experta",
+   "lugar": "San Andrés, Beni",
+   "precision": "municipio",
+   "subtipo": "sequía",
+   "ficha": {
+    "subtipo": "sequía",
+    "campos": {
+     "familias_afectadas": {
+      "estado": "no_informado"
+     },
+     "personas_afectadas": {
+      "estado": "no_informado"
+     },
+     "ganado": {
+      "estado": "no_informado"
+     },
+     "superficie_ha": {
+      "estado": "no_informado"
+     },
+     "fallecidos": {
+      "estado": "no_informado"
+     }
+    },
+    "faltan": [
+     "familias_afectadas",
+     "personas_afectadas",
+     "ganado",
+     "superficie_ha",
+     "fallecidos"
     ],
     "completitud": 0.0
    }
