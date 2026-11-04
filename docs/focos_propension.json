@@ -1,20 +1,226 @@
 {
- "boletin": "20261030",
- "url": "https://senamhi.gob.bo/focoscalor/2026/FC_10_OCTUBRE_2026/Pron_Focos_Bolivia_20261030.pdf",
- "actualizado": "2026-10-30T15:45:04.047483Z",
+ "boletin": "20261104",
+ "url": "https://senamhi.gob.bo/focoscalor/2026/FC_11_NOVIEMBRE_2026/Pron_Focos_Bolivia_20261104.pdf",
+ "actualizado": "2026-11-04T13:42:13.699411Z",
  "pagina": "https://senamhi.gob.bo/index.php/meteorologia/focos-calor",
  "dias": {
-  "2026-10-30": [
+  "2026-11-04": [
    {
     "departamento": "Pando",
     "region": "Amazonia",
     "propension": "Propensa",
     "tmax": [
-     31,
-     34
+     35,
+     37
+    ],
+    "hr": [
+     50,
+     60
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Beni",
+    "region": "Amazonia",
+    "propension": "Propensa",
+    "tmax": [
+     36,
+     37
+    ],
+    "hr": [
+     50,
+     60
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Beni",
+    "region": "Llanuras",
+    "propension": "Propensa",
+    "tmax": [
+     36,
+     39
+    ],
+    "hr": [
+     50,
+     60
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Beni",
+    "region": "Piedemonte",
+    "propension": "Propensa",
+    "tmax": [
+     35,
+     38
+    ],
+    "hr": [
+     50,
+     60
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Santa Cruz",
+    "region": "Chiquitania",
+    "propension": "Propensa",
+    "tmax": [
+     36,
+     40
+    ],
+    "hr": [
+     50,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Santa Cruz",
+    "region": "Norte Integrado",
+    "propension": "Muy Propensa",
+    "tmax": [
+     34,
+     38
+    ],
+    "hr": [
+     50,
+     70
+    ],
+    "viento_kmh": [
+     60,
+     90
+    ]
+   },
+   {
+    "departamento": "Santa Cruz",
+    "region": "Valles",
+    "propension": "Propensa",
+    "tmax": [
+     29,
+     29
+    ],
+    "hr": [
+     30,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Santa Cruz",
+    "region": "Chaco",
+    "propension": "Poco Propensa",
+    "tmax": [
+     40,
+     40
     ],
     "hr": [
      60,
+     90
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "La Paz",
+    "region": "Amazonia",
+    "propension": "Propensa",
+    "tmax": [
+     33,
+     34
+    ],
+    "hr": [
+     40,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Tarija",
+    "region": "Valles",
+    "propension": "Poco Propensa",
+    "tmax": [
+     30,
+     38
+    ],
+    "hr": [
+     60,
+     90
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Chuquisaca",
+    "region": "Valles",
+    "propension": "Propensa",
+    "tmax": [
+     31,
+     31
+    ],
+    "hr": [
+     50,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Cochabamba",
+    "region": "Trópico de Cochabamba",
+    "propension": "Propensa",
+    "tmax": [
+     35,
+     36
+    ],
+    "hr": [
+     50,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   }
+  ],
+  "2026-11-05": [
+   {
+    "departamento": "Pando",
+    "region": "Amazonia",
+    "propension": "Propensa",
+    "tmax": [
+     34,
+     36
+    ],
+    "hr": [
+     50,
      70
     ],
     "viento_kmh": [
@@ -31,7 +237,7 @@
      36
     ],
     "hr": [
-     60,
+     50,
      70
     ],
     "viento_kmh": [
@@ -44,7 +250,24 @@
     "region": "Llanuras",
     "propension": "Propensa",
     "tmax": [
-     30,
+     32,
+     35
+    ],
+    "hr": [
+     50,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Beni",
+    "region": "Piedemonte",
+    "propension": "Propensa",
+    "tmax": [
+     33,
      35
     ],
     "hr": [
@@ -57,15 +280,15 @@
     ]
    },
    {
-    "departamento": "Beni",
-    "region": "Piedemonte",
+    "departamento": "Santa Cruz",
+    "region": "Chiquitania",
     "propension": "Propensa",
     "tmax": [
-     28,
-     31
+     35,
+     39
     ],
     "hr": [
-     60,
+     50,
      70
     ],
     "viento_kmh": [
@@ -75,30 +298,13 @@
    },
    {
     "departamento": "Santa Cruz",
-    "region": "Chiquitania",
-    "propension": "Poco Propensa",
+    "region": "Norte Integrado",
+    "propension": "Propensa",
     "tmax": [
-     30,
+     29,
      33
     ],
     "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Santa Cruz",
-    "region": "Norte Integrado",
-    "propension": "Propensa",
-    "tmax": [
-     29,
-     30
-    ],
-    "hr": [
      50,
      70
     ],
@@ -109,280 +315,6 @@
    },
    {
     "departamento": "Santa Cruz",
-    "region": "Valles",
-    "propension": "Poco Propensa",
-    "tmax": [
-     22,
-     22
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Santa Cruz",
-    "region": "Chaco",
-    "propension": "Poco Propensa",
-    "tmax": [
-     27,
-     27
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "La Paz",
-    "region": "Amazonia",
-    "propension": "Poco Propensa",
-    "tmax": [
-     28,
-     29
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Tarija",
-    "region": "Valles",
-    "propension": "Propensa",
-    "tmax": [
-     23,
-     27
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Chuquisaca",
-    "region": "Valles",
-    "propension": "Propensa",
-    "tmax": [
-     23,
-     25
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Cochabamba",
-    "region": "Trópico de Cochabamba",
-    "propension": "Poco Propensa",
-    "tmax": [
-     29,
-     29
-    ],
-    "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   }
-  ],
-  "2026-10-31": [
-   {
-    "departamento": "Pando",
-    "region": "Amazonia",
-    "propension": "Poco Propensa",
-    "tmax": [
-     33,
-     36
-    ],
-    "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Beni",
-    "region": "Amazonia",
-    "propension": "Poco Propensa",
-    "tmax": [
-     36,
-     37
-    ],
-    "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Beni",
-    "region": "Llanuras",
-    "propension": "Poco Propensa",
-    "tmax": [
-     31,
-     34
-    ],
-    "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Beni",
-    "region": "Piedemonte",
-    "propension": "Poco Propensa",
-    "tmax": [
-     29,
-     32
-    ],
-    "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Santa Cruz",
-    "region": "Chiquitania",
-    "propension": "Poco Propensa",
-    "tmax": [
-     29,
-     32
-    ],
-    "hr": [
-     70,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Santa Cruz",
-    "region": "Norte Integrado",
-    "propension": "Poco Propensa",
-    "tmax": [
-     28,
-     29
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Santa Cruz",
-    "region": "Valles",
-    "propension": "Poco Propensa",
-    "tmax": [
-     23,
-     23
-    ],
-    "hr": [
-     60,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Santa Cruz",
-    "region": "Chaco",
-    "propension": "Poco Propensa",
-    "tmax": [
-     28,
-     28
-    ],
-    "hr": [
-     50,
-     70
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "La Paz",
-    "region": "Amazonia",
-    "propension": "Poco Propensa",
-    "tmax": [
-     30,
-     31
-    ],
-    "hr": [
-     60,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Tarija",
-    "region": "Valles",
-    "propension": "Propensa",
-    "tmax": [
-     23,
-     29
-    ],
-    "hr": [
-     60,
-     90
-    ],
-    "viento_kmh": [
-     10,
-     20
-    ]
-   },
-   {
-    "departamento": "Chuquisaca",
     "region": "Valles",
     "propension": "Poco Propensa",
     "tmax": [
@@ -390,8 +322,8 @@
      24
     ],
     "hr": [
-     40,
-     60
+     50,
+     70
     ],
     "viento_kmh": [
      10,
@@ -399,12 +331,29 @@
     ]
    },
    {
-    "departamento": "Cochabamba",
-    "region": "Trópico de Cochabamba",
-    "propension": "Propensa",
+    "departamento": "Santa Cruz",
+    "region": "Chaco",
+    "propension": "Poco Propensa",
     "tmax": [
      30,
      30
+    ],
+    "hr": [
+     70,
+     90
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "La Paz",
+    "region": "Amazonia",
+    "propension": "Poco Propensa",
+    "tmax": [
+     32,
+     33
     ],
     "hr": [
      50,
@@ -414,16 +363,14 @@
      10,
      20
     ]
-   }
-  ],
-  "2026-11-01": [
+   },
    {
-    "departamento": "Pando",
-    "region": "Amazonia",
+    "departamento": "Tarija",
+    "region": "Valles",
     "propension": "Poco Propensa",
     "tmax": [
-     33,
-     36
+     25,
+     33
     ],
     "hr": [
      70,
@@ -435,16 +382,69 @@
     ]
    },
    {
-    "departamento": "Beni",
-    "region": "Amazonia",
+    "departamento": "Chuquisaca",
+    "region": "Valles",
     "propension": "Poco Propensa",
     "tmax": [
-     36,
-     37
+     26,
+     26
     ],
     "hr": [
      70,
      90
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Cochabamba",
+    "region": "Trópico de Cochabamba",
+    "propension": "Poco Propensa",
+    "tmax": [
+     30,
+     31
+    ],
+    "hr": [
+     70,
+     90
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   }
+  ],
+  "2026-11-06": [
+   {
+    "departamento": "Pando",
+    "region": "Amazonia",
+    "propension": "Propensa",
+    "tmax": [
+     32,
+     34
+    ],
+    "hr": [
+     50,
+     70
+    ],
+    "viento_kmh": [
+     10,
+     20
+    ]
+   },
+   {
+    "departamento": "Beni",
+    "region": "Amazonia",
+    "propension": "Propensa",
+    "tmax": [
+     32,
+     33
+    ],
+    "hr": [
+     50,
+     70
     ],
     "viento_kmh": [
      10,
@@ -456,8 +456,8 @@
     "region": "Llanuras",
     "propension": "Propensa",
     "tmax": [
-     31,
-     34
+     34,
+     37
     ],
     "hr": [
      50,
@@ -473,11 +473,11 @@
     "region": "Piedemonte",
     "propension": "Propensa",
     "tmax": [
-     30,
-     32
+     33,
+     36
     ],
     "hr": [
-     50,
+     60,
      70
     ],
     "viento_kmh": [
@@ -490,11 +490,11 @@
     "region": "Chiquitania",
     "propension": "Propensa",
     "tmax": [
-     30,
-     33
+     35,
+     38
     ],
     "hr": [
-     50,
+     60,
      70
     ],
     "viento_kmh": [
@@ -505,18 +505,18 @@
    {
     "departamento": "Santa Cruz",
     "region": "Norte Integrado",
-    "propension": "Propensa",
+    "propension": "Muy Propensa",
     "tmax": [
-     29,
-     30
+     32,
+     36
     ],
     "hr": [
      50,
      70
     ],
     "viento_kmh": [
-     10,
-     20
+     30,
+     50
     ]
    },
    {
@@ -524,8 +524,8 @@
     "region": "Valles",
     "propension": "Poco Propensa",
     "tmax": [
-     25,
-     25
+     26,
+     26
     ],
     "hr": [
      50,
@@ -545,7 +545,7 @@
      33
     ],
     "hr": [
-     50,
+     60,
      70
     ],
     "viento_kmh": [
@@ -558,8 +558,8 @@
     "region": "Amazonia",
     "propension": "Propensa",
     "tmax": [
-     30,
-     31
+     32,
+     33
     ],
     "hr": [
      50,
@@ -575,12 +575,12 @@
     "region": "Valles",
     "propension": "Propensa",
     "tmax": [
-     27,
-     31
+     28,
+     36
     ],
     "hr": [
-     60,
-     90
+     70,
+     80
     ],
     "viento_kmh": [
      10,
@@ -592,12 +592,12 @@
     "region": "Valles",
     "propension": "Propensa",
     "tmax": [
-     28,
-     29
+     27,
+     27
     ],
     "hr": [
-     40,
-     60
+     60,
+     90
     ],
     "viento_kmh": [
      10,
@@ -607,14 +607,14 @@
    {
     "departamento": "Cochabamba",
     "region": "Trópico de Cochabamba",
-    "propension": "Poco Propensa",
+    "propension": "Propensa",
     "tmax": [
-     34,
+     33,
      34
     ],
     "hr": [
-     70,
-     90
+     60,
+     70
     ],
     "viento_kmh": [
      10,
@@ -624,9 +624,13 @@
   ]
  },
  "muy_propensa": {
-  "2026-10-30": [],
-  "2026-10-31": [],
-  "2026-11-01": []
+  "2026-11-04": [
+   "Norte Integrado (Santa Cruz)"
+  ],
+  "2026-11-05": [],
+  "2026-11-06": [
+   "Norte Integrado (Santa Cruz)"
+  ]
  },
  "aclaracion": "Pronóstico de condiciones favorables a la propagación; no es conteo de incendios ni declaratoria oficial (SENAMHI)."
 }
