@@ -67,6 +67,33 @@ def _previo(t, pos, n=3):
     return " ".join(t[:pos].split()[-n:])
 
 
+GENTILICIOS = {"Santa Cruz": r"cruceno\w*", "La Paz": r"pacen[oa]\w*|alteno\w*|alten[oa]\w*", "Cochabamba": r"cochabambin\w*", "Oruro": r"oruren\w*", "Potosí": r"potosin\w*",
+               "Chuquisaca": r"chuquisaquen\w*", "Tarija": r"tarijen\w*", "Beni": r"benian\w*", "Pando": r"pandin\w*"}  # ya en forma normalizada (sin tildes, ñ -> n)
+REGIONES = {"chaco cruceno": ["Santa Cruz"], "chaco": ["Santa Cruz", "Chuquisaca", "Tarija"], "chiquitania": ["Santa Cruz"], "yungas": ["La Paz"], "chapare": ["Cochabamba"]}
+
+
+def _enmascarar(tn, idx):
+    """'Alto Beni' es un municipio de La Paz: no cuenta como el departamento Beni."""
+    if idx:
+        for nombre, info in idx.items():
+            if " " in nombre and any(norm(d) in nombre and nombre != norm(d) and info["opciones"][0]["dep"] != d for d in DEPARTAMENTOS) and _apariciones(tn, nombre):
+                tn = re.sub(r"(?<![a-z0-9])" + re.escape(nombre) + r"(?![a-z0-9])", " ", tn)
+    return tn
+
+
+def _deptos_del_texto(t, idx=None):
+    """Departamentos nombrados en un texto normalizado: por nombre, gentilicio ('el departamento cruceño') o región ('Chaco cruceño')."""
+    t = _enmascarar(t, idx)
+    out = []
+    for d in DEPARTAMENTOS:
+        if _apariciones(t, norm(d)) or re.search(r"(?<![a-z0-9])(?:" + GENTILICIOS[d] + r")(?![a-z0-9])", t):
+            out.append(d)
+    for reg, deps in REGIONES.items():
+        if _apariciones(t, reg):
+            out += [d for d in deps[:1] if d not in out]
+    return out
+
+
 def _deptos_del_titulo(tn, idx=None):
     if idx:  # "Alto Beni" es un municipio de La Paz: no cuenta como el departamento Beni
         for nombre, info in idx.items():
@@ -86,13 +113,14 @@ def _extremos_de_ruta(texto_n, nombres):
     vias = "|".join(VIAS)
     for n1 in nombres:
         for n2 in nombres:
-            if n1 != n2 and re.search(r"(?:" + vias + r")\s+(?:de\s+|entre\s+)?" + re.escape(n1) + r"\s+(?:a|al|hacia|y)\s+" + re.escape(n2) + r"(?![a-z0-9])", texto_n):
+            if n1 != n2 and (re.search(r"(?:" + vias + r")\s+(?:de\s+|entre\s+)?" + re.escape(n1) + r"\s+(?:a|al|hacia|y)\s+" + re.escape(n2) + r"(?![a-z0-9])", texto_n)
+                             or re.search(r"(?:" + vias + r")\s+(?:\w+\s+){0,2}entre\s+" + re.escape(n1) + r"\s+y\s+" + re.escape(n2) + r"(?![a-z0-9])", texto_n)):
                 out.update([n1, n2])
     return out
 
 
-def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
-    """Devuelve dict: municipio, departamento, lat, lon, precision, puntaje, razones, alternativas, motivo."""
+def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
+    """Núcleo: puntúa municipios candidatos. Devuelve dict: municipio, departamento, lat, lon, precision, puntaje, razones, alternativas, motivo."""
     idx = _indice(geo)
     tn, cn = norm(titulo), norm((cuerpo or "")[:max_cuerpo])
     lead = cn[:400]
@@ -125,6 +153,11 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
                             c["cerca"] = True
                     if previo.endswith("ciudad de"):
                         c["ciudad"] = True
+                    # un lugar dentro de la ciudad antes del nombre ("urbanización Milenium, Oruro"), o un hecho puntual con "en <capital>": es la ciudad, no el departamento
+                    if c["capital"] and (re.search(r"(urbanizacion|avenida|calle|zona|barrio|plaza|mercado|rotonda|puente|terminal|distrito|av)\W+(?:\w+\W+){0,4}$", texto[max(0, p - 60):p]) or (puntual and previo.endswith(" en") or (puntual and previo == "en"))):
+                        c["ciudad"] = True
+                    if texto is tn and any(previo.endswith(x) for x in LOCATIVOS):
+                        c["loc_titulo"] = True
     rutas = _extremos_de_ruta(texto_rutas, {c["nombre_norm"] for c in cands.values()})
     for (_, dep), c in cands.items():
         if deps_titulo:
@@ -158,9 +191,15 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
         dep = dep_titulo or (next(iter(deps_c)) if len(deps_c) == 1 else None)
         res.update(departamento=dep, precision="departamento" if dep else "ninguna", motivo="afecta a varios municipios: hecho regional")
         return res
+    en_titulo = [c for c in orden if "en el título" in c["razones"] and not c["capital"] and c["puntaje"] >= 5 and not c["extremo_ruta"]]
+    if len(en_titulo) >= 2 and len({c["op"]["dep"] for c in en_titulo}) == 1:
+        res.update(departamento=en_titulo[0]["op"]["dep"], precision="varios", lugares=[c["op"]["nombre"] for c in en_titulo], motivo="el titular nombra varios municipios del mismo departamento")
+        return res
     if top["extremo_ruta"]:
         deps = {c["op"]["dep"] for c in orden if c["extremo_ruta"]}
-        res.update(departamento=next(iter(deps)) if len(deps) == 1 else None, precision="tramo", motivo="el nombre es un extremo de una ruta")
+        ext = sorted((c for c in orden if c["extremo_ruta"]), key=lambda c: texto_rutas.find(c["nombre_norm"]))
+        res.update(departamento=next(iter(deps)) if len(deps) == 1 else None, precision="tramo", motivo="el nombre es un extremo de una ruta",
+                   tramo=" – ".join(dict.fromkeys(c["op"]["nombre"] for c in ext)), departamentos=sorted(deps))
         return res
     if top["puntaje"] < 4:
         res.update(departamento=dep_titulo, precision="departamento" if dep_titulo else "ninguna", motivo="puntaje bajo")
@@ -168,6 +207,13 @@ def ubicar(titulo, cuerpo, geo, max_cuerpo=3500):
     if len(orden) > 1 and top["puntaje"] - orden[1]["puntaje"] < 2 and orden[1]["op"]["dep"] != top["op"]["dep"]:
         res.update(precision="ninguna", motivo="dos candidatos de distinto departamento casi iguales")
         return res
+    if top["capital"] and not top.get("loc_titulo"):
+        esp = [c for c in orden[1:] if not c["capital"] and c.get("loc_titulo") and c["puntaje"] >= 6 and not c["extremo_ruta"] and c["op"]["dep"] == top["op"]["dep"]]
+        if esp:
+            top = esp[0]
+            res.update(puntaje=round(top["puntaje"], 1), razones=sorted(set(top["razones"])), motivo="municipio específico del titular frente al nombre de la capital")
+            res.update(municipio=top["op"]["nombre"], departamento=top["op"]["dep"], lat=round(top["op"]["lat"], 5), lon=round(top["op"]["lon"], 5), precision="municipio")
+            return res
     if top["capital"] and not top["ciudad"]:
         otros = [c for c in orden[1:] if not c["capital"] and c["puntaje"] >= 4 and not c["extremo_ruta"]]
         if not otros:
@@ -194,3 +240,27 @@ def crear_localizador(ruta):
                 return g[int(i)]["n"], g[int(i)]["d"]
         return None
     return f
+
+
+NACIONAL = re.compile(r"\b(?:\d+|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)\s+departamentos\b|a nivel nacional|todo el pais|en todo el territorio|en todo el pais|todo el territorio nacional|emergencia nacional")
+
+
+def ubicar(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
+    """Ubicación completa: núcleo por puntaje + departamentos mencionados (nombre, gentilicio, región), tramos con extremos, varios lugares y alcance nacional.
+    puntual=True para hechos de un lugar concreto (choque, incendio de un inmueble, colapso): 'en Oruro' se toma como la ciudad y no como el departamento."""
+    r = _ubicar_base(titulo, cuerpo, geo, max_cuerpo, puntual)
+    tn, cn = norm(titulo), norm((cuerpo or "")[:max_cuerpo])
+    texto = tn + " . " + cn[:600]
+    idx = _indice(geo)
+    deps = _deptos_del_texto(tn, idx) or _deptos_del_texto(cn[:600], idx)
+    if NACIONAL.search(tn + " " + cn[:400]) and r["precision"] in ("ninguna", "departamento"):
+        r.update(precision="nacional", motivo="alcance nacional según el texto", departamentos=deps)
+        return r
+    if r["precision"] in ("ninguna", "departamento") and deps:
+        if len(deps) == 1:
+            r.update(departamento=deps[0], precision="departamento", motivo=(r["motivo"] + "; departamento por el texto").strip("; "), departamentos=deps)
+        else:
+            r.update(departamento=None, precision="departamento", motivo="varios departamentos en el texto", departamentos=deps)
+    if "departamentos" not in r and r.get("departamento"):
+        r["departamentos"] = [r["departamento"]]
+    return r

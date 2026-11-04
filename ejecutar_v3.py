@@ -5,7 +5,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   boletin.pdf      (boletín breve)
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
-import json, os, sys, time, collections, traceback
+import re, json, os, sys, time, collections, traceback
 import ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
@@ -23,12 +23,26 @@ def etapa(nombre, f, ctl):
         return None
 
 
+PUNTUALES = ("accidente de tránsito", "incendio estructural", "colapso estructural", "explosión / fuga", "accidente aéreo", "intoxicación por gases (mina)")
+
+
+def norm_t(t):
+    return clasificar_v3.norm(t)
+
+
 def main():
     os.makedirs(SALIDA, exist_ok=True)
     ctl = {"etapas": {}}
     eventos = validar.cargar_eventos("docs/eventos_unificados.json")
     textos = json.load(open("docs/textos_hechos.json", encoding="utf-8")).get("hechos", {}) if os.path.exists("docs/textos_hechos.json") else {}
     ctl["antes"] = validar.reglas_calidad(eventos)
+    def _texto_disp(e):
+        notas = " ".join(n.get("texto") or "" for n in (textos.get(e["id"], {}).get("notas") or []))
+        det = e.get("detalle") or ""
+        if re.match(r"^\d+ notas? de \d+ fuente", det.strip()):
+            det = ""
+        return max(len(notas), len(det))
+
     def leer_cuerpos(presupuesto_seg=240, hilos=8, tope=150):
         """Lee la nota completa de la prensa que solo tiene titular. Guarda caché en datos/v3/cuerpos.json para no repetir."""
         import informe_hecho
@@ -38,7 +52,7 @@ def main():
         ahora = time.time()
         cache = {u: c for u, c in cache.items() if ahora - c.get("t", 0) < 7 * 86400}
         pend = [e for e in sorted((x for x in eventos if x.get("origen") == "prensa" and x.get("url")), key=reporte_v3.prioridad, reverse=True)
-                if e["url"] not in cache and not (textos.get(e["id"], {}).get("notas"))][:tope]
+                if e["url"] not in cache and _texto_disp(e) < 1200][:tope]
         est = collections.Counter()
         ini = time.time()
         with ThreadPoolExecutor(hilos) as ex:
@@ -115,9 +129,12 @@ def main():
         for e in eventos:
             if e.get("origen") != "prensa":
                 continue
-            cuerpo = " ".join(nota.get("texto") or "" for nota in (textos.get(e["id"], {}).get("notas") or [])) or (cache_cuerpos.get(e.get("url"), {}).get("texto") or "")
+            c_notas = " ".join(nota.get("texto") or "" for nota in (textos.get(e["id"], {}).get("notas") or []))
+            c_cache = cache_cuerpos.get(e.get("url"), {}).get("texto") or ""
+            cuerpo = max([c_notas, c_cache], key=len)
             e["cuerpo_leido"] = len(cuerpo) > 300
-            r = ubicar_v3.ubicar(e["titulo"], cuerpo, geo)
+            pre = clasificar_v3.clasificar(e["titulo"], cuerpo)
+            r = ubicar_v3.ubicar(e["titulo"], cuerpo, geo, puntual=pre["subtipo"] in PUNTUALES)
             e["precision_ubicacion"] = r["precision"]
             e["metodo"] = "sin ubicar" if r["precision"] == "ninguna" else "v3: " + r["motivo"] + (" (" + ", ".join(r["razones"][:3]) + ")" if r["razones"] else "")
             if e["cuerpo_leido"] and not (e.get("detalle") or "").strip():
@@ -125,11 +142,18 @@ def main():
             n[r["precision"]] += 1
             if r["precision"] == "municipio":
                 e.update(lugar=f'{r["municipio"]}, {r["departamento"]}', lat=r["lat"], lon=r["lon"], departamentos=[r["departamento"]])
-            elif r["precision"] in ("departamento", "tramo") and r["departamento"]:
-                e.update(lat=None, lon=None, departamentos=[r["departamento"]], lugar=f'{r["departamento"]} ({r["precision"]})')
+            elif r["precision"] == "tramo":
+                e.update(lat=None, lon=None, departamentos=r.get("departamentos") or [r["departamento"]], lugar="Tramo " + (r.get("tramo") or ""))
+            elif r["precision"] == "varios":
+                e.update(lat=None, lon=None, departamentos=[d for d in [r.get("departamento")] if d], lugar=", ".join(r.get("lugares") or []) + (f', {r["departamento"]}' if r.get("departamento") else ""), lugares=r.get("lugares"))
+            elif r["precision"] == "nacional":
+                e.update(lat=None, lon=None, departamentos=[], lugar="Nacional (varios departamentos)")
+            elif r["precision"] == "departamento" and (r.get("departamentos") or r.get("departamento")):
+                deps = r.get("departamentos") or [r["departamento"]]
+                e.update(lat=None, lon=None, departamentos=deps, lugar=" y ".join(deps) + (" (solo departamento)" if len(deps) == 1 else " (solo departamentos)"))
             else:
                 e.update(lat=None, lon=None, lugar="", departamentos=[])  # sin ubicación confiable: no se deja el lugar que puso el sistema anterior
-            cl = clasificar_v3.clasificar(e["titulo"], cuerpo, e["precision_ubicacion"] in ("municipio", "departamento", "tramo"), True)
+            cl = clasificar_v3.clasificar(e["titulo"], cuerpo, e["precision_ubicacion"] in ("municipio", "departamento", "tramo", "varios", "nacional"), True)
             e.update(subtipo=cl["subtipo"] or "sin clasificar", ambito=cl["ambito"], relevante_v3=cl["relevante"])
             if cl["categoria"]:
                 e["categoria"] = cl["categoria"]
@@ -159,6 +183,14 @@ def main():
                 e["cifras"] = {"fallecidos": vic.get("fallecidos_min", 0), "heridos": vic.get("heridos_min", 0), "notas": (e.get("cifras") or {}).get("notas", 0)}
             if vic:
                 e["victimas"] = vic
+            adv = []
+            if e["precision_ubicacion"] in ("ninguna", "departamento", "nacional") and cl["subtipo"] in PUNTUALES:
+                adv.append("hecho puntual sin lugar exacto")
+            if re.search(r"\b(gobierno|ministr\w+|viceministr\w+|presidente|autoridades nacionales)\b", norm_t(e["titulo"])) or e["precision_ubicacion"] == "nacional":
+                e["requiere_corroboracion"] = True; adv.append("alcance nacional o dato oficial: corroborar en otros medios")
+            if cl["subtipo"] and len(cuerpo) < 300 and not any(v.get("estado") in ("cifra", "sin_victimas") for v in ficha["campos"].values()):
+                adv.append("reporte vago: verificar antes de usar")
+            e["advertencia"] = "; ".join(adv) if adv else None
             e["informacion_insuficiente"] = bool(len(e["titulo"].split()) <= 3 and not cuerpo and r["precision"] == "ninguna")
             e["schema_version"] = 1
         return dict(n)
@@ -174,6 +206,13 @@ def main():
             ids = [eventos[idx[i]]["id"] for i in g["indices"]]
             for i in g["indices"]:
                 eventos[idx[i]]["grupo_propuesto"] = ids
+        por_id = {e["id"]: e for e in eventos}
+        for e in eventos:
+            if e.get("requiere_corroboracion"):
+                fuentes = {por_id[i].get("fuente") for i in (e.get("grupo_propuesto") or [e["id"]]) if i in por_id}
+                e["corroborada"] = len(fuentes) >= 2
+                if e["corroborada"]:
+                    e["advertencia"] = "; ".join(x for x in (e.get("advertencia") or "").split("; ") if "corroborar" not in x) or None
         return {"grupos_con_mas_de_un_evento": len(gs), "ejemplos": [[eventos[idx[i]]["titulo"][:70] for i in g["indices"]] for g in gs[:5]]}
     ctl["agrupacion"] = etapa("agrupar", grupos, ctl)
 

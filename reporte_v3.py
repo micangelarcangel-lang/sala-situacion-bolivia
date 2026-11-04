@@ -99,7 +99,7 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     filas = [["Nivel", "Evento", "Lugar", "Evidencia", "Fuente"]]
     for e in top:
         c = e.get("confianza") or {}
-        filas.append([Paragraph(f'<font color="{nivel_de(e)[0]}"><b>{(e.get("nivel_txt") or "sin nivel").split(" ")[0]}</b></font>', est["p"]), Paragraph(e["titulo"][:130].replace("&", "&amp;").replace("<", "&lt;") + (f'<br/><font size="7" color="{GRIS}">{e.get("subtipo", "")}: {e["ficha_resumen"]}</font>'.replace("&", "&amp;") if e.get("ficha_resumen") else ""), est["p"]),
+        filas.append([Paragraph(f'<font color="{nivel_de(e)[0]}"><b>{(e.get("nivel_txt") or "sin nivel").split(" ")[0]}</b></font>', est["p"]), Paragraph(e["titulo"][:130].replace("&", "&amp;").replace("<", "&lt;") + (f'<br/><font size="7" color="{GRIS}">{e.get("subtipo", "")}: {e["ficha_resumen"]}</font>'.replace("&", "&amp;") if e.get("ficha_resumen") else "") + (f'<br/><font size="7" color="#b00020">Atención: {e["advertencia"]}</font>'.replace("&", "&amp;") if e.get("advertencia") else ""), est["p"]),
                       Paragraph((e.get("lugar") or "—").replace("&", "&amp;"), est["c"]), Paragraph(f'{EV_ETIQ.get(c.get("nivel"), "—")} · {c.get("fuentes_independientes", 0)} fuentes', est["c"]), Paragraph((e.get("fuente") or "")[:30], est["c"])])
     tb = Table(filas, colWidths=[17 * mm, 80 * mm, 32 * mm, 28 * mm, 23 * mm], repeatRows=1)
     tb.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),

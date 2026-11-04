@@ -241,7 +241,10 @@
         "punto",
         "municipio",
         "departamento",
-        "ninguna"
+        "ninguna",
+        "varios",
+        "nacional",
+        "tramo"
       ]
     },
     "nivel_evidencia": {
@@ -339,6 +342,30 @@
     },
     "informacion_insuficiente": {
       "type": "boolean"
+    },
+    "lugares": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "advertencia": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requiere_corroboracion": {
+      "type": "boolean"
+    },
+    "corroborada": {
+      "type": [
+        "boolean",
+        "null"
+      ]
     }
   },
   "additionalProperties": false

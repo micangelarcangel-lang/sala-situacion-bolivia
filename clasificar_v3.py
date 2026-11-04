@@ -9,14 +9,15 @@ TAXONOMIA = [  # (categoria, subtipo, patrón sobre el texto normalizado)
     ("antropogénica", "accidente aéreo", r"\b(avion|avioneta|aeronave|helicoptero)\b.*\b(cae|cayo|accidente|estrell\w+|desplom\w+)\b|\baccidente aereo\b"),
     ("climatológica", "incendio forestal", r"\b(incendios? forestal\w*|incendio de pastizal\w*|chaqueo|quemas? (?:de )?(?:pastiz\w+|chaco|campos?|rastrojos?|chaqueo)|focos de calor)\b"),
     ("tecnológica", "incendio estructural", r"\b(incendio|incendi\w+)\b.*\b(vivienda|casa|mercado|edificio|fabrica|tienda|local|deposito|vehiculo|moto|bus|restaurante|negocio|comercio|hotel|taller|almacen|colegio|hospital)\b|\bincendio\b|\bqueman (?:\d+ )?vehiculos|\bquema de (?:\d+ |\w+ )?vehiculos"),
-    ("hidrológica", "inundación / riada", r"\b(inundacion\w*|riada|desborde|desbordamiento|crecida|anegad\w+|mazamorra)\b"),
+    ("hidrológica", "inundación / riada", r"\b(inundacion\w*|riada|desborde|desbordamiento|crecida|crecio|anegad\w+|mazamorra)\b"),
     ("geológica", "deslizamiento", r"\b(deslizamiento|derrumbe|mazamorra|aluvion|socavon|hundimiento)\b"),
     ("geológica", "sismo", r"\b(sismo|temblor|terremoto)\b"),
     ("meteorológica", "granizada / helada / viento", r"\b(granizada|helada|nevada|ventarron|vientos? de|tormenta|lluvias? intensa\w*|senamhi\b.*\balerta|alerta\b.*\b(viento|ventarron|lluvia|tormenta|granizo|helada|frio|nevada|rafagas)\w*)\b"),
     ("climatológica", "sequía", r"\b(sequia|deficit hidrico|escasez de agua)\b"),
-    ("biológica", "brote / enfermedad transmisible", r"\b(brote|epidemia|casos de|dengue|chikungunya|sarampion|fiebre amarilla|malaria|leptospirosis|meningitis|influenza|covid|rabia|tos convulsiva|tuberculosis|hantavirus|ebola|mpox|viruela)\b"),
+    ("biológica", "brote / enfermedad transmisible", r"\b(brote|epidemia|casos de|dengue|chikungunya|sarampion|fiebre amarilla|malaria|leptospirosis|meningitis|influenza|covid|virus de la rabia|casos de rabia|rabia (?:canina|humana|silvestre|bovina)|tos convulsiva|tuberculosis|hantavirus|ebola|mpox|viruela)\b"),
     ("biológica", "intoxicación / alimentos", r"\b(intoxicacion|intoxicad\w+|envenenamiento)\b"),
     ("biológica", "sanidad animal", r"\b(aftosa|gripe aviar|peste porcina|brucelosis|newcastle|mortandad de (ganado|peces|aves))\b"),
+    ("tecnológica", "intoxicación por gases (mina)", r"\b(gas|gases|inhalacion|intoxic\w+|asfixi\w+)\b.{0,70}\b(mina|minas|socavon|minero|mineros|cooperativa minera)\b|\b(mina|socavon|minero|mineros)\b.{0,70}\b(gas|gases|inhalacion|intoxic\w+|asfixi\w+)\b"),
     ("tecnológica", "colapso estructural", r"\bcolapso\b|\bse desplomo\b|\bdesplome\b|derrumbe de (?:un |una |el |la )?(?:edificio|muro|techo|puente|escenario|casa|vivienda)"),
     ("tecnológica", "explosión / fuga", r"\b(explosion|explotar|fuga de gas|derrame|intoxicacion por gas)\b"),
 ]
@@ -31,12 +32,13 @@ def norm(t):
 
 
 DEPORTE = re.compile(r"\b(arbitr\w*|delantero|portero|futbol|partidos?|suspension|gol|goles|rival|liga|campeonato|torneo|equipo|jugador\w*|fichaje|entrenador)\b")
-RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo", "como actuar", "como identificar", "asi puedes", "consejos", "recomendaciones", "que no cunda", "que hacer ante", "como prevenir", "como evitar", "detencion preventiva", "sala penal", "condena", "sentencia", "imputad", "audiencia", "campana antirrabica", "vacunas", "vacunacion", "acciones preventivas", "campana de")
+RUIDO = ("agenda informativa", "resumen de noticias", "titulares del dia", "lo mas leido", "horoscopo", "como actuar", "como identificar", "asi puedes", "consejos", "recomendaciones", "que no cunda", "que hacer ante", "como prevenir", "como evitar", "detencion preventiva", "sala penal", "condena", "sentencia", "imputad", "audiencia", "campana antirrabica", "vacunas", "vacunacion", "acciones preventivas", "campana de", "rogativa", "ruego", "promulga", "anuncia", "convenio", "inaugura", "posesiona", "feria")
+LEAD_EXT = ("mexico", "san luis potosi", "xilitla", "estados unidos", "espana", "ucrania", "gaza", "venezuela", "cuba")
 EXTRA_EXT = ("puerto rico", "bayamon", "caguas", "ponce", "miami", "orlando", "los angeles", "nueva jersey", "guayaquil", "galapagos", "florida", "nueva york", "la guaira", "tenerife", "california", "texas", "londres", "paris", "madrid", "barcelona", "lima", "buenos aires", "santiago de chile", "bogota", "caracas", "quito", "asuncion", "brasilia", "sao paulo", "rio de janeiro")
 
 
 def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
-    tn, cn = norm(titulo), norm((cuerpo or "")[:1200])
+    tn, cn = norm(titulo).replace("san luis potosi", "mexico san luis"), norm((cuerpo or "")[:1200]).replace("san luis potosi", "mexico san luis")
     res = {"categoria": None, "subtipo": None, "ambito": "sin_lugar", "relevante": False, "razones": []}
     hallados = [(m.start(), cat, sub) for cat, sub, pat in TAXONOMIA for m in [re.search(pat, tn)] if m]
     if hallados:  # gana el tipo que aparece primero en el titular ("La sequía golpea… riadas" es sequía)
@@ -55,6 +57,8 @@ def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
     bol_titulo = bool(BOLIVIA.search(tn))
     if ext and not bol_titulo:  # el titular nombra otro país y ningún lugar de Bolivia: es del exterior aunque el cuerpo cite una ciudad homónima
         res["ambito"] = "exterior"; res["razones"].append("nombra: " + ext[0])
+    elif not bol_titulo and not lugar_bolivia and any(re.search(r"\b" + p + r"\b", cn[:300]) for p in LEAD_EXT) and not BOLIVIA.search(cn[:300]):
+        res["ambito"] = "exterior"; res["razones"].append("el inicio de la nota nombra un lugar del exterior")
     elif bol:
         res["ambito"] = "bolivia"
     elif BOLIVIA.search(cn[:600]):

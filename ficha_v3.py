@@ -19,12 +19,13 @@ ESPERADOS = {
     "sequía": ["familias_afectadas", "personas_afectadas", "ganado", "superficie_ha", "fallecidos"],
     "inundación / riada": ["familias_afectadas", "personas_afectadas", "viviendas", "ganado", "fallecidos"],
     "deslizamiento": ["viviendas", "personas_afectadas", "fallecidos", "heridos"],
-    "brote / enfermedad transmisible": ["casos_confirmados", "casos_sospechosos", "expuestos", "fallecidos"],
-    "intoxicación / alimentos": ["casos_confirmados", "casos_sospechosos", "expuestos", "fallecidos"],
+    "brote / enfermedad transmisible": ["casos_notificados", "casos_confirmados", "casos_sospechosos", "expuestos", "fallecidos"],
+    "intoxicación / alimentos": ["casos_notificados", "casos_confirmados", "casos_sospechosos", "expuestos", "fallecidos"],
     "sismo": ["magnitud", "fallecidos", "heridos"],
     "explosión / fuga": ["fallecidos", "heridos", "evacuados"],
     "colapso estructural": ["clase_inmueble", "fallecidos", "heridos", "evacuados"],
     "sanidad animal": ["ganado", "casos_confirmados"],
+    "intoxicación por gases (mina)": ["casos_notificados", "fallecidos", "heridos"],
 }
 TIPOS_ACCIDENTE = [("choque frontal", r"choque frontal"), ("colisión múltiple", r"colision multiple|choque multiple|accidente en cadena"), ("vuelco", r"vuelco|volco|volcadura"), ("atropello", r"atropell\w+"),
                    ("embarrancamiento", r"embarranc\w+|cae a un barranco|cayo a un barranco|precipit\w+"), ("choque", r"choque|colision|colisiono|choco|impact\w+"), ("despiste", r"despist\w+|se salio de la via")]
@@ -131,6 +132,8 @@ def extraer(subtipo, titulo, cuerpo="", max_cuerpo=3500):
             f[campo] = _campo(t, r"cabezas de ganado|reses|animales|ovinos|camelidos|llamas|bovinos|vacunos|aves|peces")
         elif campo == "evacuados":
             f[campo] = _campo(t, r"evacuad\w+|desalojad\w+|albergad\w+")
+        elif campo == "casos_notificados":
+            f[campo] = _campo(t, r"casos?|enfermos|pacientes|contagiad\w+|infectad\w+|intoxicad\w+|afectad[oa]s por (?:el|la) \w+|personas afectadas|afectados")
         elif campo == "casos_confirmados":
             f[campo] = _campo(t, r"casos? (?:confirmad\w+|positiv\w+)|(?:confirmad\w+|positiv\w+)\b|caso\b")
         elif campo == "casos_sospechosos":
@@ -148,7 +151,7 @@ def extraer(subtipo, titulo, cuerpo="", max_cuerpo=3500):
 
 
 def etiqueta(campo):
-    return {"tipo_accidente": "tipo de accidente", "superficie_ha": "superficie (ha)", "familias_afectadas": "familias afectadas", "personas_afectadas": "personas afectadas", "casos_confirmados": "casos confirmados",
+    return {"tipo_accidente": "tipo de accidente", "superficie_ha": "superficie (ha)", "familias_afectadas": "familias afectadas", "personas_afectadas": "personas afectadas", "casos_confirmados": "casos confirmados", "casos_notificados": "casos notificados",
             "casos_sospechosos": "casos sospechosos", "clase_inmueble": "inmueble", "vehiculos": "vehículos"}.get(campo, campo)
 
 
