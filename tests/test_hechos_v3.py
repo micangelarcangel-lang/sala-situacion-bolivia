@@ -60,3 +60,19 @@ def test_error_de_unidad_no_entra_en_la_serie():
     x = h._nuevo([h.huella(ev("a", "Sequía", t0, None, sub="sequía")) for _ in range(1)])
     x["notas"] = [{"id": str(i), "ts": t0 + i, "fuente": "f", "oficial": False, "cifras": {"familias_afectadas": v}} for i, v in enumerate((114000, 114, 78000))]
     assert [v for _, v in h.cifra_vigente(x)["familias_afectadas"]["serie"]] == [114000, 78000]
+
+
+def test_misma_emergencia_en_un_departamento_es_un_solo_hecho():
+    t0 = 1_800_000_000_000
+    a = ev("a", "Pasorapa pide ayuda por la sequía", t0, None, sub="sequía", mun="Pasorapa"); a["departamentos"] = ["Cochabamba"]; a["lugar"] = "Pasorapa, Cochabamba"
+    b = ev("b", "Declaran emergencia por sequía en 7 municipios de Cochabamba", t0 + 2 * D, None, sub="sequía", mun="Omereque"); b["departamentos"] = ["Cochabamba"]; b["lugar"] = "Omereque, Cochabamba"
+    c = ev("c", "Gobernación plantea ley para atender la sequía", t0 + 3 * D, None, sub="sequía", mun="Cochabamba"); c["departamentos"] = ["Cochabamba"]; c["lugar"] = "Cochabamba (solo departamento)"; c["precision_ubicacion"] = "departamento"
+    hs = h.actualizar([a, b, c], {}, t0 + 4 * D)
+    assert len(hs) == 1
+
+
+def test_brotes_de_distinta_enfermedad_no_se_unen():
+    t0 = 1_800_000_000_000
+    a = ev("a", "Brote de influenza B en La Paz", t0, None, sub="brote / enfermedad transmisible"); a["departamentos"] = ["La Paz"]
+    b = ev("b", "Casos de coxsackie en La Paz", t0 + D, None, sub="brote / enfermedad transmisible"); b["departamentos"] = ["La Paz"]
+    assert len(h.actualizar([a, b], {}, t0 + 2 * D)) == 2

@@ -33,3 +33,9 @@ Rama: `v3-prueba-de-valor` (`main` no se tocó). Flujo paralelo: `.github/workfl
 5. Crear el formulario Kobo (`formularios/reporte_ciudadano.xlsx`) y guardar `KOBO_TOKEN` como secreto.
 6. Unir la rama a `main` y vigilar 3 días con el flujo viejo como respaldo.
 7. Servidor adecuado para VIDECI/SENASAG/Cambio (IP boliviana) cuando el piloto se apruebe.
+
+## Emisión de los boletines (acordado 04/11/2026)
+- **Diario**: todos los días 7:00 (hora de Bolivia = 11:00 UTC), últimas 24 h; operativo, con servicios cercanos y anexo de hechos.
+- **Semanal**: domingos 7:00 (11:00 UTC), semana de domingo a sábado numerada como la semana epidemiológica (SE); cubre la semana recién cerrada. No se menciona «epidemiológica» salvo en eventos biológicos.
+- **Mensual**: día 1 de cada mes 7:00 (11:00 UTC), mes calendario anterior; tendencia por semana, balance por tipo.
+- Los tres se construyen sobre hechos (una noticia = un hecho). Las programaciones (cron) solo se activan desde `main`: se agregan en el paso 2 de producción, con aprobación.

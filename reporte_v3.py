@@ -8,12 +8,16 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.units import mm
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, KeepTogether
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, KeepTogether, PageBreak
 
 BO = dt.timezone(dt.timedelta(hours=-4))
 AZUL, GRIS = "#0b3d6e", "#5b6b7a"
 NIVEL = {"Roja": ("#c0392b", 4), "Rojo": ("#c0392b", 4), "Naranja": ("#e67e22", 3), "Amarilla": ("#d4ac0d", 2), "Amarillo": ("#d4ac0d", 2), "Verde": ("#2e8b57", 1)}
 EV_ETIQ = {"Alta": "alta", "Media": "media", "Baja": "baja"}
+
+
+def _esc(t):
+    return str(t).replace("&", "&amp;").replace("<", "&lt;")
 
 
 def nivel_de(e):
@@ -67,7 +71,11 @@ def mapa(evs, geo_dep):
 
 def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geojson", hechos=None):
     ahora = ahora or max(e.get("ts", 0) for e in eventos)
-    evs = seleccionar(eventos, ahora, horas)
+    evs_todos = seleccionar(eventos, ahora, horas)
+    mejor_por_hecho = {}
+    for e in sorted(evs_todos, key=prioridad, reverse=True):  # un hecho cubierto por varios medios aparece una sola vez
+        mejor_por_hecho.setdefault(e.get("hecho_id") or e["id"], e)
+    evs = list(mejor_por_hecho.values())
     top = sorted(evs, key=prioridad, reverse=True)[:8]
     focos = sum(1 for e in eventos if e.get("origen") == "foco" and e.get("ts", 0) >= ahora - horas * 3600000)
     oficiales = sum(1 for e in evs if e.get("oficial"))
@@ -126,6 +134,24 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
            Paragraph("* Las cifras de víctimas vienen de titulares y notas de prensa y pueden cambiar; sin fuente institucional no pasan de nivel «corroborado». Los puntos del mapa son solo hechos ubicados con precisión de municipio o punto. "
                      "Nivel y evidencia se calculan con reglas publicadas (ver README del repositorio). Fuentes más frecuentes: " + ", ".join(f"{n} ({c})" for n, c in fuentes if n) + ".", est["c"]),
            Paragraph(f"Generado {dt.datetime.now(BO).strftime('%d/%m/%Y %H:%M')} · {len(eventos)} eventos en el período de captura · esquema de evento v1.", est["c"])]
+    srv = [e for e in top if e.get("servicios_cercanos")][:3]
+    el += [PageBreak(), Paragraph("Servicios cercanos a los hechos prioritarios", est["h"]), Paragraph("Del catálogo de OpenStreetMap (puede estar incompleto o desactualizado): verificar por teléfono antes de derivar pacientes.", est["c"])]
+    if not srv:
+        el.append(Paragraph("Ningún hecho prioritario del período tiene ubicación precisa (municipio o punto) para buscar servicios cercanos.", est["p"]))
+    for e in srv:
+        cols = []
+        for clave, rot in (("salud", "Salud"), ("policia", "Policía"), ("bomberos", "Bomberos")):
+            lin = [f'<b>{rot}</b>'] + [f'{_esc(x["nombre"])} · {x["km"]} km' + (f' · {x["telefono"]}' if x.get("telefono") else "") for x in (e["servicios_cercanos"].get(clave) or [])[:3]]
+            cols.append(Paragraph("<br/>".join(lin) if len(lin) > 1 else f"<b>{rot}</b><br/>sin datos cercanos", est["c"]))
+        el += [Spacer(1, 4), Paragraph(_esc(e["titulo"][:110]) + f' <font size="8" color="{GRIS}">· {_esc(e.get("lugar") or "")}</font>', est["p"]), Table([cols], colWidths=[58 * mm] * 3)]
+    el += [Paragraph("Anexo: todos los hechos del período", est["h"])]
+    filas_a = [["Hecho", "Lugar", "Tipo y cifras", "Fuente"]]
+    for e in sorted(evs, key=prioridad, reverse=True):
+        filas_a.append([Paragraph(_esc(e["titulo"][:100]), est["c"]), Paragraph(_esc(e.get("lugar") or "—"), est["c"]), Paragraph(_esc((e.get("subtipo") or "") + (": " + e["ficha_resumen"] if e.get("ficha_resumen") else "")), est["c"]), Paragraph(_esc((e.get("fuente") or "")[:24]), est["c"])])
+    ta = Table(filas_a, colWidths=[60 * mm, 32 * mm, 62 * mm, 21 * mm], repeatRows=1)
+    ta.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
+    el.append(ta)
     doc.build(el)
     return {"eventos": len(evs), "top": len(top)}
 

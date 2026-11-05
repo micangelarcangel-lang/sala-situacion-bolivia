@@ -31,12 +31,57 @@ def huella(e):
     return {"id": e["id"], "ts": e.get("ts") or 0, "fuente": e.get("fuente") or "", "url": e.get("url"), "titulo": (e.get("titulo") or "")[:140],
             "oficial": bool(e.get("oficial")), "cifras": cifras, "subtipo": e.get("subtipo"), "departamento": (e.get("departamentos") or [None])[0],
             "municipio": (e.get("lugar") or "").split(",")[0] if e.get("precision_ubicacion") == "municipio" else None,
-            "lugar": e.get("lugar") or "", "precision": e.get("precision_ubicacion"), "grandes": e.get("_grandes") or []}
+            "lugar": e.get("lugar") or "", "precision": e.get("precision_ubicacion"), "lat": e.get("lat"), "lon": e.get("lon"), "grandes": e.get("_grandes") or []}
 
 
 def _pool_item(n):
     return {"titulo": n["titulo"], "ts": n["ts"], "departamento": n.get("departamento"), "municipio": n.get("municipio"),
             "fallecidos": n["cifras"].get("fallecidos"), "subtipo": n.get("subtipo"), "grandes": n.get("grandes")}
+
+
+import re, unicodedata
+
+AGENTES = r"dengue|chikungunya|sarampion|fiebre amarilla|malaria|leptospirosis|meningitis|influenza|covid|rabia|tos convulsiva|tuberculosis|hantavirus|ebola|mpox|viruela|coxsackie|diarrea|infecciones respiratorias|varicela|fiebre|brucelosis|aftosa|gripe aviar"
+ASUNTO = ("sequía", "incendio forestal", "brote / enfermedad transmisible")
+
+
+def _norm(t):
+    return "".join(c for c in unicodedata.normalize("NFD", str(t or "").lower()) if unicodedata.category(c) != "Mn")
+
+
+def clave_asunto(h):
+    """(subtipo, departamento, agente): todo lo que trata de la misma emergencia en un departamento (p. ej. la sequía de Cochabamba) es un solo asunto noticioso."""
+    if h["subtipo"] not in ASUNTO or not h.get("departamento") or "solo departamentos" in (h.get("lugar") or ""):
+        return None
+    agente = None
+    if h["subtipo"].startswith("brote"):
+        m = re.search(AGENTES, " ".join(_norm(n["titulo"]) for n in h["notas"]))
+        if not m:
+            return None
+        agente = m.group(0)
+    return (h["subtipo"], h["departamento"], agente)
+
+
+def fusionar_asuntos(hechos):
+    """Une los hechos con la misma clave de asunto cuyos períodos de seguimiento están a menos de 14 días. Devuelve cuántos se unieron."""
+    por = collections.defaultdict(list)
+    for h in hechos.values():
+        k = clave_asunto(h)
+        if k:
+            por[k].append(h)
+    n = 0
+    for k, hs in por.items():
+        hs.sort(key=lambda x: x["primera"])
+        base = hs[0]
+        for h in hs[1:]:
+            if h["primera"] - base["ultima"] <= 14 * D:
+                base["notas"] += [x for x in h["notas"] if x["id"] not in {y["id"] for y in base["notas"]}]
+                base["notas"].sort(key=lambda x: x["ts"]); base["primera"], base["ultima"] = base["notas"][0]["ts"], base["notas"][-1]["ts"]
+                base["reaperturas"] = max(base["reaperturas"], h["reaperturas"]); base["fusionados"] = sorted(set(base.get("fusionados", [])) | {h["id"]})
+                hechos.pop(h["id"], None); n += 1
+            else:
+                base = h
+    return n
 
 
 def ventana_ms(h):
@@ -119,11 +164,22 @@ def actualizar(eventos, previos, ahora):
     for n in libres:  # lo que no se unió a nada es un hecho nuevo
         h = _nuevo([n]); hechos[h["id"]] = h
     for h in hechos.values():
+        con0 = [n for n in h["notas"] if n.get("lugar")]
+        if con0:
+            m0 = max(con0, key=lambda n: ({"municipio": 3, "punto": 3, "tramo": 2, "varios": 2, "departamento": 1}.get(n.get("precision"), 0), n["ts"]))
+            h.update(lugar=m0["lugar"], departamento=m0.get("departamento"), precision=m0.get("precision"))
+    fusionar_asuntos(hechos)
+    for h in hechos.values():  # una emergencia de varios municipios se nombra por sus municipios, no por uno solo
+        if clave_asunto(h):
+            muns = list(dict.fromkeys(n["municipio"] for n in h["notas"] if n.get("municipio")))
+            if len(muns) > 1:
+                h["lugar"] = ", ".join(muns[:4]) + (f" y {len(muns) - 4} más" if len(muns) > 4 else "") + f", {h['departamento']}"; h["precision"] = "varios"
+    for h in hechos.values():
         h["notas"].sort(key=lambda n: n["ts"]); h["primera"], h["ultima"] = h["notas"][0]["ts"], h["notas"][-1]["ts"]
         con = [n for n in h["notas"] if n.get("lugar")]
         if con:
             mejor = max(con, key=lambda n: ({"municipio": 3, "punto": 3, "tramo": 2, "varios": 2, "departamento": 1}.get(n.get("precision"), 0), n["ts"]))
-            h.update(lugar=mejor["lugar"], departamento=mejor.get("departamento"), precision=mejor.get("precision"))
+            h.update(lugar=mejor["lugar"], departamento=mejor.get("departamento"), precision=mejor.get("precision"), lat=mejor.get("lat"), lon=mejor.get("lon"))
         h["estado"] = estado(h, ahora)
     return hechos
 

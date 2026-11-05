@@ -274,7 +274,8 @@ def main():
     def periodicos():
         hs = json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8"))
         ahora = int(time.time() * 1000)
-        return {n: reporte_periodico_v3.build(hs, ahora, d, f"{SALIDA}/boletin_{n}.pdf", f"Boletín {n}") for n, d in (("semanal", 7), ("mensual", 30))}
+        geo_dep = json.load(open("docs/geo_dep.geojson", encoding="utf-8"))
+        return {"semanal": reporte_periodico_v3.build_semanal(hs, ahora, f"{SALIDA}/boletin_semanal.pdf", geo_dep), "mensual": reporte_periodico_v3.build_mensual(hs, ahora, f"{SALIDA}/boletin_mensual.pdf", geo_dep)}
     etapa("periodicos", periodicos, ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
