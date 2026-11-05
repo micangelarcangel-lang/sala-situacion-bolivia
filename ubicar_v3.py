@@ -261,12 +261,24 @@ NACIONAL = re.compile(r"\b(?:\d+|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)\s+
 DATELINE = re.compile(r"^\s*(?:Por:\s*\w+\s*)?[A-Za-zÁÉÍÓÚÑáéíóúñ ]{3,25},\s*Bolivia;[^.]{0,30}\.-?\s*")
 
 
+def _curados():
+    import yaml, os
+    ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lugares_curados.yml")
+    return yaml.safe_load(open(ruta, encoding="utf-8")) if os.path.exists(ruta) else {}
+
+
 def ubicar(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
     """Ubicación completa: núcleo por puntaje + departamentos mencionados (nombre, gentilicio, región), tramos con extremos, varios lugares y alcance nacional.
     puntual=True para hechos de un lugar concreto (choque, incendio de un inmueble, colapso): 'en Oruro' se toma como la ciudad y no como el departamento."""
     cuerpo = DATELINE.sub("", cuerpo or "", count=1)  # 'La Paz, Bolivia; 5 de septiembre.-' es donde se redacta la nota, no donde ocurrió
     r = _ubicar_base(titulo, cuerpo, geo, max_cuerpo, puntual)
     tn, cn = norm(titulo), norm((cuerpo or "")[:max_cuerpo])
+    for nombre, (mun, dep) in _curados().items():  # lugares confirmados a mano que el catálogo no tiene
+        if _apariciones(tn, nombre) or _apariciones(cn[:600], nombre):
+            op = next((o for info in _indice(geo).values() for o in info["opciones"] if o["nombre"] == mun and o["dep"] == dep), None)
+            if op:
+                r.update(municipio=mun, departamento=dep, lat=round(op["lat"], 5), lon=round(op["lon"], 5), precision="municipio", motivo=f"lugar curado: {nombre}", razones=["lugar curado"], departamentos=[dep])
+                return r
     texto = tn + " . " + cn[:600]
     idx = _indice(geo)
     deps = _deptos_del_texto(tn, idx) or _deptos_del_texto(cn[:600], idx)

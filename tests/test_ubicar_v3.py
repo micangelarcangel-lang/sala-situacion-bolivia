@@ -97,3 +97,8 @@ def test_distancia_de_referencia_no_es_el_lugar():
 def test_la_paz_en_carretera_yungas_no_es_la_ciudad():
     r = u.ubicar("Accidente en la carretera a los Yungas deja heridos", "Ocurrió en la carretera que conecta la ciudad de La Paz con los Yungas", GEO, puntual=True)
     assert r["municipio"] != "Nuestra Señora de La Paz"
+
+
+def test_lugar_curado_pongo():
+    r = u.ubicar("Accidente en Pongo deja un muerto", "Ocurrió en inmediaciones de Pongo, en la carretera a los Yungas", GEO, puntual=True)
+    assert r["municipio"] == "Nuestra Señora de La Paz"
