@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 1.7
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 17.1
+   "seg": 17.3
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 13.3
+   "seg": 13.6
   },
   "agrupar": {
    "ok": true,
@@ -26,7 +26,7 @@
   },
   "hechos": {
    "ok": true,
-   "seg": 0.0
+   "seg": 0.1
   },
   "servicios_cercanos": {
    "ok": true,
@@ -42,7 +42,7 @@
   },
   "periodicos": {
    "ok": true,
-   "seg": 0.4
+   "seg": 1.0
   }
  },
  "antes": {
@@ -83,37 +83,41 @@
    "noticia:vivo:08056a383b77",
    "noticia:vivo:e50008376484",
    "noticia:vivo:d76de803f55d",
-   "noticia:vivo:fdc48f11293a",
-   "noticia:vivo:fc98a400342b",
    "noticia:vivo:c4fc0997483b",
    "noticia:vivo:447b7d1369cd",
-   "noticia:vivo:0922c91f6ae0",
    "noticia:vivo:033e9ad119cc",
    "noticia:vivo:75a5d6e4482b",
-   "noticia:vivo:32748621f001",
    "noticia:vivo:30d03787fbbb",
+   "noticia:vivo:151a388c10d9",
+   "noticia:vivo:85b49173be7f",
+   "noticia:vivo:41eb8ced9880",
+   "noticia:vivo:99d304cdc4b0",
+   "noticia:vivo:fc98a400342b",
+   "noticia:vivo:807aecabf29d",
+   "noticia:vivo:0e87ab504507",
+   "noticia:vivo:32748621f001",
+   "noticia:vivo:ebd1497e1ccb",
+   "noticia:vivo:bbcdcd661c2f",
+   "noticia:vivo:cfb369b2bbd8",
+   "noticia:vivo:fdc48f11293a",
+   "noticia:vivo:0922c91f6ae0",
    "noticia:vivo:e68ed11f4284",
    "noticia:vivo:b5e32240c5ce",
    "noticia:rss:b7b34597dcf9",
-   "noticia:vivo:ebd1497e1ccb",
    "noticia:94stdt",
    "noticia:vivo:c58f91516678",
    "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:b35a9008c292",
-   "noticia:vivo:bbcdcd661c2f",
    "noticia:vivo:51324f5fce12",
+   "noticia:vivo:b770c285543a",
    "noticia:vivo:1e75da59a81f",
-   "noticia:vivo:41eb8ced9880",
-   "noticia:vivo:99d304cdc4b0",
    "noticia:vivo:4fdb5efd29c3",
    "noticia:vivo:f3716821bb55",
-   "noticia:vivo:151a388c10d9",
    "noticia:vivo:0e40169466c3",
    "noticia:vivo:7d13aabdfe56",
    "noticia:vivo:5d4c71e9f445",
    "noticia:vivo:97b23df97aaf",
    "noticia:vivo:98c3d338e572",
-   "noticia:vivo:f478088b6929",
    "noticia:fimcxl",
    "noticia:vivo:be92e5e3ac92",
    "noticia:vivo:a2861f0ff7c6",
@@ -126,7 +130,6 @@
    "noticia:vivo:96b92acd7373",
    "noticia:vivo:5f0f6a62b0bd",
    "noticia:vivo:41a1c2907cd2",
-   "noticia:vivo:807aecabf29d",
    "noticia:vivo:c2cd3f35cb66",
    "noticia:vivo:75e21de947ab",
    "noticia:1f7sr05",
@@ -320,35 +323,39 @@
    "noticia:vivo:08056a383b77",
    "noticia:vivo:e50008376484",
    "noticia:vivo:d76de803f55d",
-   "noticia:vivo:fdc48f11293a",
-   "noticia:vivo:fc98a400342b",
-   "noticia:vivo:0922c91f6ae0",
    "noticia:vivo:75a5d6e4482b",
-   "noticia:vivo:32748621f001",
    "noticia:vivo:30d03787fbbb",
+   "noticia:vivo:151a388c10d9",
+   "noticia:vivo:41eb8ced9880",
+   "noticia:vivo:99d304cdc4b0",
+   "noticia:vivo:fc98a400342b",
+   "noticia:vivo:807aecabf29d",
+   "noticia:vivo:0e87ab504507",
+   "noticia:vivo:32748621f001",
+   "noticia:vivo:ebd1497e1ccb",
+   "noticia:vivo:bbcdcd661c2f",
+   "noticia:vivo:fdc48f11293a",
+   "noticia:vivo:0922c91f6ae0",
    "noticia:rss:91af1088f076",
    "noticia:rss:b1340d5bc01c",
+   "noticia:vivo:80899fdd63e5",
    "noticia:vivo:e68ed11f4284",
+   "noticia:vivo:89dfa1fbe8fb",
    "noticia:rss:c710ab96a6a6",
    "noticia:rss:b7b34597dcf9",
    "noticia:vivo:b66d02e461e9",
-   "noticia:vivo:ebd1497e1ccb",
-   "noticia:rss:9ae38e13a419",
+   "noticia:vivo:218e4d317f7c",
    "noticia:vivo:2e49d9b3d040",
-   "noticia:vivo:bbcdcd661c2f",
    "noticia:rss:838b8b9bc4ed",
    "noticia:vivo:e1e3269b3693",
-   "noticia:vivo:41eb8ced9880",
-   "noticia:vivo:99d304cdc4b0",
+   "noticia:vivo:b770c285543a",
    "noticia:vivo:4fdb5efd29c3",
    "noticia:rss:e6de70b8116f",
-   "noticia:vivo:151a388c10d9",
    "noticia:vivo:0e40169466c3",
    "noticia:rss:cecd06cd2017",
    "noticia:vivo:5d4c71e9f445",
    "noticia:vivo:97b23df97aaf",
    "noticia:vivo:98c3d338e572",
-   "noticia:vivo:f478088b6929",
    "noticia:vivo:be92e5e3ac92",
    "noticia:vivo:a2861f0ff7c6",
    "noticia:vivo:00e223feb232",
@@ -359,7 +366,6 @@
    "noticia:vivo:96b92acd7373",
    "noticia:vivo:5f0f6a62b0bd",
    "noticia:vivo:41a1c2907cd2",
-   "noticia:vivo:807aecabf29d",
    "noticia:vivo:c2cd3f35cb66",
    "noticia:vivo:b3b326fa9801",
    "noticia:vivo:75e21de947ab",
@@ -509,8 +515,8 @@
   ],
   "victimas_sin_ubicacion_precisa": [
    "noticia:vivo:30d03787fbbb",
-   "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:41eb8ced9880",
+   "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:0e40169466c3",
    "noticia:vivo:97b23df97aaf",
    "noticia:vivo:a2861f0ff7c6",
@@ -555,9 +561,12 @@
   ]
  },
  "lectura_cuerpos": {
-  "leidas_ahora": 0,
-  "estados": {},
-  "en_cache": 350,
+  "leidas_ahora": 6,
+  "estados": {
+   "texto completo": 4,
+   "solo titular": 2
+  },
+  "en_cache": 356,
   "pendientes": 0
  },
  "captar_feeds": {
@@ -565,135 +574,143 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.0,
+    "seg": 0.9,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 3.4,
+    "seg": 2.3,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.1,
+    "seg": 4.4,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.6,
+    "seg": 0.3,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.2,
+    "seg": 0.3,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 1.0,
+    "seg": 0.7,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.0,
+    "seg": 0.8,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.1,
+    "seg": 1.2,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Unitel": {
     "ok": true,
     "notas": 100,
-    "seg": 0.6,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Los Tiempos": {
     "ok": true,
-    "notas": 100,
-    "seg": 0.5,
-    "con_fecha": 100,
+    "notas": 95,
+    "seg": 0.4,
+    "con_fecha": 95,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
-    "notas": 13,
+    "notas": 11,
     "seg": 0.3,
-    "con_fecha": 13,
+    "con_fecha": 11,
     "con_cuerpo": 0
    },
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    }
   },
-  "notas_leidas": 753,
-  "eventos_nuevos": 14,
-  "descartadas_por_no_relevantes": 654,
+  "notas_leidas": 746,
+  "eventos_nuevos": 15,
+  "descartadas_por_no_relevantes": 663,
   "paginas_leidas": {
-   "texto completo": 9
+   "texto completo": 11
   }
  },
  "ubicacion": {
-  "ninguna": 127,
-  "relevante": 123,
+  "ninguna": 131,
+  "relevante": 124,
   "exterior": 16,
-  "departamento": 99,
-  "municipio": 105,
+  "departamento": 98,
+  "municipio": 108,
   "nacional": 12,
   "tramo": 10,
   "varios": 2,
   "por_lugar_conocido": 1
  },
  "agrupacion": {
-  "grupos_con_mas_de_un_evento": 14,
+  "grupos_con_mas_de_un_evento": 15,
   "ejemplos": [
    [
+    "Alcaldía de Cochabamba controla el incendio en el botadero de Cotapach",
+    "Alcaldía de Cochabamba controla el incendio en el botadero de Cotapach"
+   ],
+   [
     "Situación   La sequía golpea a 114 mil familias en Bolivia y “los ries",
-    "Sequía en Bolivia: 58 municipios en desastre y más de 114 mil familias",
     "Seis departamentos son azotados por la sequía y 114 familias están afe",
+    "Sequía en Bolivia: 58 municipios en desastre y más de 114 mil familias",
     "Gobierno llama a gobernaciones y alcaldías contra sequía e inundación "
+   ],
+   [
+    "https://correodelsur.com/seguridad/20261104/fiscalia-tramita-alerta-ro",
+    "https://correodelsur.com/mundo/20261104/marte-no-esta-muerto-en-su-int"
    ],
    [
     "Voraz incendio en una cerrajería moviliza a vecinos de Pucarita Chica ",
@@ -702,27 +719,25 @@
    [
     "Choque a objeto fijo deja un herido",
     "Choque a objeto fijo deja un herido"
-   ],
-   [
-    "Colisión frontal deja un fallecido en ruta Pazña – Avicaya",
-    "Colisión frontal deja un fallecido en ruta Pazña – Avicaya"
-   ],
-   [
-    "Vehículo incendiado en Santa Cruz genera denuncia por Conductor",
-    "“Ni para chatarra sirve”: Chofer de auto incendiado denuncia que no av"
    ]
   ]
  },
  "hechos": {
-  "hechos": 106,
-  "abiertos": 65,
-  "con_varias_notas": 13,
+  "hechos": 98,
+  "abiertos": 55,
+  "con_varias_notas": 14,
   "reabiertos": 0,
   "ejemplos": [
    [
     "sequía",
+    "Omereque, Cochabamba",
+    11,
+    "Fallecidos: 1 (prensa, sin confirmar) [revisar: una nota posterior da una cifra "
+   ],
+   [
+    "sequía",
     "Nacional (varios departamentos)",
-    6,
+    7,
     "Familias afectadas: 114.000 (prensa, sin confirmar) · Ganado: 75.013 (prensa, si"
    ],
    [
@@ -736,19 +751,13 @@
     "Oruro, Oruro",
     2,
     "Heridos: 1 (prensa, sin confirmar)"
-   ],
-   [
-    "accidente de tránsito",
-    "Pazña, Oruro",
-    2,
-    "Fallecidos: 1 (prensa, sin confirmar)"
    ]
   ]
  },
  "almacen": {
-  "nuevos": 0,
-  "cambiados": 1,
-  "total_indice": 832
+  "nuevos": 11,
+  "cambiados": 59,
+  "total_indice": 843
  },
  "despues": {
   "centroide_departamental": [],
@@ -789,26 +798,30 @@
   ],
   "prensa_sin_ubicar": [
    "noticia:vivo:5787bf4d5f11",
-   "noticia:vivo:fc98a400342b",
    "noticia:vivo:75a5d6e4482b",
    "noticia:vivo:30d03787fbbb",
-   "noticia:rss:91af1088f076",
-   "noticia:vivo:b66d02e461e9",
+   "noticia:vivo:151a388c10d9",
+   "noticia:vivo:41eb8ced9880",
+   "noticia:vivo:fc98a400342b",
+   "noticia:vivo:807aecabf29d",
+   "noticia:vivo:0e87ab504507",
    "noticia:vivo:ebd1497e1ccb",
-   "noticia:rss:9ae38e13a419",
-   "noticia:vivo:fb19195d3b23",
-   "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:bbcdcd661c2f",
+   "noticia:rss:91af1088f076",
+   "noticia:vivo:80899fdd63e5",
+   "noticia:vivo:89dfa1fbe8fb",
+   "noticia:vivo:b66d02e461e9",
+   "noticia:vivo:fb19195d3b23",
+   "noticia:vivo:218e4d317f7c",
+   "noticia:vivo:2e49d9b3d040",
    "noticia:rss:838b8b9bc4ed",
    "noticia:vivo:e1e3269b3693",
-   "noticia:vivo:41eb8ced9880",
+   "noticia:vivo:b770c285543a",
    "noticia:vivo:4fdb5efd29c3",
    "noticia:rss:e6de70b8116f",
-   "noticia:vivo:151a388c10d9",
    "noticia:vivo:0e40169466c3",
    "noticia:vivo:97b23df97aaf",
    "noticia:vivo:98c3d338e572",
-   "noticia:vivo:f478088b6929",
    "noticia:vivo:be92e5e3ac92",
    "noticia:vivo:a2861f0ff7c6",
    "noticia:vivo:00e223feb232",
@@ -818,7 +831,6 @@
    "noticia:vivo:0e856edd7d9b",
    "noticia:vivo:96b92acd7373",
    "noticia:vivo:41a1c2907cd2",
-   "noticia:vivo:807aecabf29d",
    "noticia:vivo:b3b326fa9801",
    "noticia:vivo:1ef42b51d7b2",
    "noticia:vivo:dadd3bf210b5",
@@ -914,12 +926,13 @@
    "noticia:jslloq",
    "noticia:bzr7eh",
    "noticia:1xqv9m7",
-   "noticia:fcm3nx"
+   "noticia:fcm3nx",
+   "noticia:v3:4d9c5d34b142"
   ],
   "victimas_sin_ubicacion_precisa": [
    "noticia:vivo:30d03787fbbb",
-   "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:41eb8ced9880",
+   "noticia:vivo:2e49d9b3d040",
    "noticia:vivo:0e40169466c3",
    "noticia:vivo:97b23df97aaf",
    "noticia:vivo:a2861f0ff7c6",
