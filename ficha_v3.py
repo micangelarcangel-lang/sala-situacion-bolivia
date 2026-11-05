@@ -105,15 +105,17 @@ def _victima(t, sust_p, sust_s):
 def extraer(subtipo, titulo, cuerpo="", max_cuerpo=3500):
     t = norm((titulo or "") + " . " + (cuerpo or "")[:max_cuerpo])
     tt = norm(titulo)
+    PROP = r"\b(?:\d+|\w+) de cada \d+\b"  # '7 de cada 10 casos' es una proporción, no una cifra de casos
+    t, tt = re.sub(PROP, "proporcion", t), re.sub(PROP, "proporcion", tt)
     f = {}
     M = r"muertos?|fallecid[oa]s?|fallecimientos?|victimas mortales"
     H = r"herid[oa]s?|lesionad[oa]s?"
     esperados = ESPERADOS.get(subtipo, ["fallecidos", "heridos"])
     for campo in esperados:
         if campo == "fallecidos":
-            f[campo] = _victima(t, M, "muerto")
+            f[campo] = next((r for r in (_victima(tt, M, "muerto"),) if r["estado"] == "cifra"), None) or _victima(t, M, "muerto")  # la cifra del titular manda
         elif campo == "heridos":
-            f[campo] = _victima(t, H, "herido")
+            f[campo] = next((r for r in (_victima(tt, H, "herido"),) if r["estado"] == "cifra"), None) or _victima(t, H, "herido")
         elif campo == "tipo_accidente":
             val = next((n for n, pat in TIPOS_ACCIDENTE if re.search(pat, tt)), None) or next((n for n, pat in TIPOS_ACCIDENTE if re.search(pat, t)), None)
             f[campo] = {"estado": "dato", "valor": val} if val else {"estado": "no_informado"}

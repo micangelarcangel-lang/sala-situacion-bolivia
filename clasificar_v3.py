@@ -42,7 +42,7 @@ def clasificar(titulo, cuerpo="", lugar_bolivia=False, estricto=False):
     res = {"categoria": None, "subtipo": None, "ambito": "sin_lugar", "relevante": False, "razones": []}
     hallados = [(m.start(), cat, sub) for cat, sub, pat in TAXONOMIA for m in [re.search(pat, tn)] if m]
     if hallados:  # gana el tipo que aparece primero en el titular ("La sequía golpea… riadas" es sequía)
-        _, cat, sub = min(hallados)
+        _, cat, sub = min(hallados, key=lambda h: (h[0], h[2] != 'intoxicación por gases (mina)'))
         res.update(categoria=cat, subtipo=sub)
         res["razones"].append("tipo en el titular")
     if res["subtipo"] is None:

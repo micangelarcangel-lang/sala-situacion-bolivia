@@ -56,6 +56,11 @@ def agrupar(notas, ventana_h=48, umbral=0.45, umbral_mismo_lugar=0.30):
             da, db = a.get("departamento"), b.get("departamento")
             if da and db and da != db:
                 continue
+            ga, gb = a.get("grandes") or (), b.get("grandes") or ()
+            if a.get("subtipo") and a.get("subtipo") == b.get("subtipo") and any(abs(x - y) <= 0.01 * max(x, y) for x in ga for y in gb):
+                padre[raiz(j)] = raiz(i)  # misma cifra grande y mismo tipo (p. ej. 114.000 familias por sequía): es el mismo hecho
+                razon.setdefault(raiz(i), []).append(f"{i}~{j} misma cifra: {ga[0]}")
+                continue
             ma, mb = a.get("municipio"), b.get("municipio")
             if ma and mb and ma != mb:
                 continue

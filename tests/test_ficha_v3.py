@@ -48,3 +48,13 @@ def test_cifra_con_verbo():
     assert est(r, "fallecidos") == ("cifra", 3)
     r = f.extraer("accidente de tránsito", "Colisión: murieron dos personas y resultaron heridos cuatro", "")
     assert est(r, "fallecidos") == ("cifra", 2)
+
+
+def test_proporcion_no_es_cifra_de_casos():
+    r = f.extraer("brote / enfermedad transmisible", "7 de cada 10 casos de resfrío en La Paz son de influenza B", "")
+    assert r["campos"]["casos_notificados"]["estado"] != "cifra"
+
+
+def test_cifra_del_titular_manda_sobre_el_cuerpo():
+    r = f.extraer("intoxicación por gases (mina)", "Tres presuntos ladrones mueren por intoxicación en mina", "Dos cuerpos fueron hallados; murieron dos")
+    assert r["campos"]["fallecidos"]["valor"] == 3

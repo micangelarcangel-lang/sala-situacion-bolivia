@@ -74,3 +74,16 @@ def test_cerca_a_es_punto_aunque_sea_extremo_de_ruta():
 def test_varios_municipios_es_regional():
     r = u.ubicar("Siete municipios de Cochabamba enfrentan sequía extrema", "Pasorapa y otros municipios sufren la sequía.", GEO)
     assert r["precision"] == "departamento" and r["departamento"] == "Cochabamba"
+
+
+def test_la_paz_departamento_no_es_el_municipio():
+    cu = "La Paz, Bolivia; 5 de septiembre.- La explosión en un cuartel militar en el departamento de La Paz deja dos fallecidos"
+    r = u.ubicar("Explosión en cuartel deja dos muertos", cu, GEO, puntual=True)
+    assert r["precision"] == "departamento" and r["departamento"] == "La Paz"
+    r = u.ubicar("Accidente en la carretera a los Yungas deja siete heridos", "", GEO, puntual=True)
+    assert r["precision"] != "municipio"
+
+
+def test_alcance_nacional_del_titular_manda():
+    r = u.ubicar("Sequía en 6 departamentos afecta a 114 mil familias", "Pasorapa, Cochabamba", GEO)
+    assert r["precision"] == "nacional" and not r["municipio"]

@@ -26,6 +26,20 @@ def etapa(nombre, f, ctl):
 PUNTUALES = ("accidente de tránsito", "incendio estructural", "colapso estructural", "explosión / fuga", "accidente aéreo", "intoxicación por gases (mina)")
 
 
+def _grandes(e):
+    """Cifras >= 10.000 del titular y del primer párrafo ('114 mil', '114.048'): sirven para unir notas del mismo hecho."""
+    t = clasificar_v3.norm((e.get("titulo") or "") + " . " + (e.get("detalle") or "")[:500])
+    out = set()
+    for m in re.finditer(r"\b(\d{1,3}(?:[.,]\d{3})+|\d+)\s*(mil\b)?", t):
+        try:
+            v = float(m.group(1).replace(".", "").replace(",", "")) * (1000 if m.group(2) else 1)
+        except ValueError:
+            continue
+        if 10000 <= v <= 50_000_000 and not (1900 <= v <= 2100):
+            out.add(v)
+    return sorted(out)
+
+
 def norm_t(t):
     return clasificar_v3.norm(t)
 
@@ -200,7 +214,7 @@ def main():
         idx = [i for i, e in enumerate(eventos) if e.get("origen") == "prensa"]
         fichas = [{"titulo": eventos[i]["titulo"], "ts": eventos[i].get("ts"), "departamento": (eventos[i].get("departamentos") or [None])[0],
                    "municipio": (eventos[i].get("lugar") or "").split(",")[0] if eventos[i].get("precision_ubicacion") == "municipio" else None,
-                   "fallecidos": (eventos[i].get("victimas") or {}).get("fallecidos_min")} for i in idx]
+                   "fallecidos": (eventos[i].get("victimas") or {}).get("fallecidos_min"), "subtipo": eventos[i].get("subtipo"), "grandes": _grandes(eventos[i])} for i in idx]
         gs = [g for g in agrupar_v3.agrupar(fichas) if len(g["indices"]) > 1]
         for g in gs:
             ids = [eventos[idx[i]]["id"] for i in g["indices"]]

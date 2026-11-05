@@ -119,6 +119,9 @@ def _extremos_de_ruta(texto_n, nombres):
     return out
 
 
+AMBIGUAS_CAPITAL = ("la paz", "nuestra senora de la paz", "santa cruz", "santa cruz de la sierra")
+
+
 def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
     """Núcleo: puntúa municipios candidatos. Devuelve dict: municipio, departamento, lat, lon, precision, puntaje, razones, alternativas, motivo."""
     idx = _indice(geo)
@@ -154,8 +157,10 @@ def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
                     if previo.endswith("ciudad de"):
                         c["ciudad"] = True
                     # un lugar dentro de la ciudad antes del nombre ("urbanización Milenium, Oruro"), o un hecho puntual con "en <capital>": es la ciudad, no el departamento
-                    if c["capital"] and (re.search(r"(urbanizacion|avenida|calle|zona|barrio|plaza|mercado|rotonda|puente|terminal|distrito|av)\W+(?:\w+\W+){0,4}$", texto[max(0, p - 60):p]) or (puntual and previo.endswith(" en") or (puntual and previo == "en"))):
+                    if c["capital"] and (re.search(r"\b(urbanizacion|avenida|calle|zona|barrio|plaza|mercado|rotonda|puente|terminal|distrito|av)\W+(?:\w+\W+){0,4}$", texto[max(0, p - 60):p]) or (puntual and c["nombre_norm"] not in AMBIGUAS_CAPITAL and (previo.endswith(" en") or previo == "en"))):
                         c["ciudad"] = True
+                    if previo.endswith(("departamento de", "departamento", "yungas de", "provincia de")):
+                        c["depto_explicito"] = True
                     if texto is tn and any(previo.endswith(x) for x in LOCATIVOS):
                         c["loc_titulo"] = True
     rutas = _extremos_de_ruta(texto_rutas, {c["nombre_norm"] for c in cands.values()})
@@ -214,6 +219,8 @@ def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
             res.update(puntaje=round(top["puntaje"], 1), razones=sorted(set(top["razones"])), motivo="municipio específico del titular frente al nombre de la capital")
             res.update(municipio=top["op"]["nombre"], departamento=top["op"]["dep"], lat=round(top["op"]["lat"], 5), lon=round(top["op"]["lon"], 5), precision="municipio")
             return res
+    if top["capital"] and top.get("depto_explicito") and not re.search(r"\bciudad de " + re.escape(top["nombre_norm"]), cn + " " + tn):
+        top["ciudad"] = False
     if top["capital"] and not top["ciudad"]:
         otros = [c for c in orden[1:] if not c["capital"] and c["puntaje"] >= 4 and not c["extremo_ruta"]]
         if not otros:
@@ -245,16 +252,20 @@ def crear_localizador(ruta):
 NACIONAL = re.compile(r"\b(?:\d+|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)\s+departamentos\b|a nivel nacional|todo el pais|en todo el territorio|en todo el pais|todo el territorio nacional|emergencia nacional")
 
 
+DATELINE = re.compile(r"^\s*(?:Por:\s*\w+\s*)?[A-Za-zÁÉÍÓÚÑáéíóúñ ]{3,25},\s*Bolivia;[^.]{0,30}\.-?\s*")
+
+
 def ubicar(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
     """Ubicación completa: núcleo por puntaje + departamentos mencionados (nombre, gentilicio, región), tramos con extremos, varios lugares y alcance nacional.
     puntual=True para hechos de un lugar concreto (choque, incendio de un inmueble, colapso): 'en Oruro' se toma como la ciudad y no como el departamento."""
+    cuerpo = DATELINE.sub("", cuerpo or "", count=1)  # 'La Paz, Bolivia; 5 de septiembre.-' es donde se redacta la nota, no donde ocurrió
     r = _ubicar_base(titulo, cuerpo, geo, max_cuerpo, puntual)
     tn, cn = norm(titulo), norm((cuerpo or "")[:max_cuerpo])
     texto = tn + " . " + cn[:600]
     idx = _indice(geo)
     deps = _deptos_del_texto(tn, idx) or _deptos_del_texto(cn[:600], idx)
-    if NACIONAL.search(tn + " " + cn[:400]) and r["precision"] in ("ninguna", "departamento"):
-        r.update(precision="nacional", motivo="alcance nacional según el texto", departamentos=deps)
+    if (NACIONAL.search(tn) and r["precision"] != "tramo") or (NACIONAL.search(tn + " " + cn[:400]) and r["precision"] in ("ninguna", "departamento")):
+        r.update(precision="nacional", motivo="alcance nacional según el texto", departamentos=deps, municipio=None, departamento=None, lat=None, lon=None)
         return r
     if r["precision"] in ("ninguna", "departamento") and deps:
         if len(deps) == 1:
