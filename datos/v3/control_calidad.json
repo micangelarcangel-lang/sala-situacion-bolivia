@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 0.0
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 16.3
+   "seg": 16.5
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,11 +18,15 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 23.6
+   "seg": 12.3
   },
   "agrupar": {
    "ok": true,
    "seg": 0.1
+  },
+  "hechos": {
+   "ok": true,
+   "seg": 0.0
   },
   "servicios_cercanos": {
    "ok": true,
@@ -34,7 +38,7 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   }
  },
  "antes": {
@@ -557,35 +561,35 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.1,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 3.4,
+    "seg": 2.8,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 1.9,
+    "seg": 2.2,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.3,
+    "seg": 0.7,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.2,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
@@ -599,21 +603,21 @@
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 0.8,
+    "seg": 1.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.4,
+    "seg": 1.3,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.1,
+    "seg": 0.9,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -627,14 +631,14 @@
    "Los Tiempos": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
     "notas": 13,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 13,
     "con_cuerpo": 0
    },
@@ -648,30 +652,30 @@
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.6,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    }
   },
   "notas_leidas": 753,
-  "eventos_nuevos": 13,
-  "descartadas_por_no_relevantes": 656,
+  "eventos_nuevos": 14,
+  "descartadas_por_no_relevantes": 655,
   "paginas_leidas": {
    "texto completo": 9
   }
  },
  "ubicacion": {
   "ninguna": 127,
-  "relevante": 122,
+  "relevante": 123,
   "exterior": 16,
-  "departamento": 98,
+  "departamento": 99,
   "municipio": 106,
   "nacional": 12,
   "tramo": 10,
@@ -705,10 +709,42 @@
    ]
   ]
  },
+ "hechos": {
+  "hechos": 106,
+  "abiertos": 65,
+  "con_varias_notas": 13,
+  "reabiertos": 0,
+  "ejemplos": [
+   [
+    "sequía",
+    "Nacional (varios departamentos)",
+    6,
+    "Familias afectadas: 114.000 (prensa, sin confirmar) · Ganado: 75.013 (prensa, si"
+   ],
+   [
+    "incendio estructural",
+    "Cochabamba, Cochabamba",
+    2,
+    ""
+   ],
+   [
+    "accidente de tránsito",
+    "Oruro, Oruro",
+    2,
+    "Heridos: 1 (prensa, sin confirmar)"
+   ],
+   [
+    "accidente de tránsito",
+    "Pazña, Oruro",
+    2,
+    "Fallecidos: 1 (prensa, sin confirmar)"
+   ]
+  ]
+ },
  "almacen": {
-  "nuevos": 0,
-  "cambiados": 3,
-  "total_indice": 831
+  "nuevos": 1,
+  "cambiados": 1,
+  "total_indice": 832
  },
  "despues": {
   "centroide_departamental": [],
