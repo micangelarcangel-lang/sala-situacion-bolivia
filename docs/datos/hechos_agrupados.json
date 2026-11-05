@@ -40,6 +40,26 @@
   "enlaces": "http://www.gdacs.org/report.aspx?eventtype=WF&eventid=1033500"
  },
  {
+  "hecho_id": "noticia:1sh091g",
+  "fecha_hora_local": "2026-11-04 21:26",
+  "ts_ms": 1793841985000,
+  "titulo": "Fiscalía tramita alerta roja de Interpol contra Romer Saucedo - El Potosí",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 3,
+  "nivel_preliminar": "roja",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "Correo del Sur; El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPQ250TXVKLXdHcXlCbVZtbVBsYWttT2hEd0kteVBYXzJ1M0didkgtdTRLLUdTN29lVXp6MHk0QkVQZ3VSWm9Hb1JwVWM3clkzM0ltRWxRWXpFRXVZTE1TU1c1emdNcHMtMzhrWXotU3ZQSUNxVUw2MlBpdW5VZmRzZkRna2Q4ZHFqUW90MUl5a2U0SGpOR1RGVzZZaGZ1bUloVzRUS0RlbV8?oc=5 | https://news.google.com/rss/articles/CBMirwFBVV95cUxOaE4wT0F2blNNX001Qmo0LXdrMVRHcVZSUmN2Q3BpbzF4Uk5wOUYyTmxaVnBlNkpPTjBkQld0Wi1QYWUtcjlod0ZQMFlTekhNZ0tsZHFoZWdYdEhhaHlqcFE2bUkyYXI0Z1pIZkdOWDB4TWtLLWlzLUVweG54UjdrMXN1dEZfeUpSR0hiZ1F2bHhDZ2U4OUdyV3lZU1h3NFcxU2ZFR2lydGZwbVVTRDVr?oc=5"
+ },
+ {
   "hecho_id": "noticia:2avehj",
   "fecha_hora_local": "2026-11-04 21:25",
   "ts_ms": 1793841936000,
@@ -118,26 +138,6 @@
   "departamento": "Tarija",
   "municipio": "Tarija",
   "enlaces": "https://open-meteo.com/"
- },
- {
-  "hecho_id": "noticia:u1zvrt",
-  "fecha_hora_local": "2026-11-04 17:59",
-  "ts_ms": 1793829582000,
-  "titulo": "Fiscalía tramita alerta roja de Interpol contra Romer Saucedo - Correo del Sur",
-  "tipo_amenaza": "meteorológica",
-  "nivel_num": 3,
-  "nivel_preliminar": "roja",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Correo del Sur",
-  "lat": "",
-  "lon": "",
-  "lugar": "",
-  "departamento": "",
-  "municipio": "",
-  "enlaces": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOaE4wT0F2blNNX001Qmo0LXdrMVRHcVZSUmN2Q3BpbzF4Uk5wOUYyTmxaVnBlNkpPTjBkQld0Wi1QYWUtcjlod0ZQMFlTekhNZ0tsZHFoZWdYdEhhaHlqcFE2bUkyYXI0Z1pIZkdOWDB4TWtLLWlzLUVweG54UjdrMXN1dEZfeUpSR0hiZ1F2bHhDZ2U4OUdyV3lZU1h3NFcxU2ZFR2lydGZwbVVTRDVr?oc=5"
  },
  {
   "hecho_id": "noticia:94stdt",
