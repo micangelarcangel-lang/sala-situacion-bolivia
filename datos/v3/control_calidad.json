@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 0.0
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 19.1
+   "seg": 17.3
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 21.6
+   "seg": 15.3
   },
   "agrupar": {
    "ok": true,
@@ -38,11 +38,11 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   },
   "periodicos": {
    "ok": true,
-   "seg": 1.5
+   "seg": 1.0
   }
  },
  "antes": {
@@ -571,28 +571,28 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.1,
+    "seg": 1.0,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.3,
+    "seg": 4.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 6.5,
+    "seg": 3.2,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.3,
+    "seg": 0.5,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
@@ -606,28 +606,28 @@
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 0.7,
+    "seg": 0.9,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 0.8,
+    "seg": 0.7,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.0,
+    "seg": 0.8,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -648,7 +648,7 @@
    "Brújula Digital": {
     "ok": true,
     "notas": 11,
-    "seg": 0.3,
+    "seg": 0.2,
     "con_fecha": 11,
     "con_cuerpo": 0
    },
@@ -676,7 +676,7 @@
   },
   "notas_leidas": 746,
   "eventos_nuevos": 15,
-  "descartadas_por_no_relevantes": 663,
+  "descartadas_por_no_relevantes": 664,
   "paginas_leidas": {
    "texto completo": 11
   }
