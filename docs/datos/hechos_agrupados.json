@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:fu1qhf",
+  "fecha_hora_local": "2026-11-04 19:50",
+  "ts_ms": 1793836231000,
+  "titulo": "ABC restableció la transitabilidad de la vía Tarija-Entre Ríos tras derrumbe - eju.tv",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 3,
+  "fuentes": "ABI - Agencia Boliviana de Información; eju.tv; elperiodico.com.bo",
+  "lat": -21.53,
+  "lon": -64.73,
+  "lugar": "Tarija, Tarija",
+  "departamento": "Tarija",
+  "municipio": "Tarija",
+  "enlaces": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNUmhya3B5TjA1VVFjbGtrbWNBZXVRcXdTOER2b3BsM3VYOHoxaUVNejE3NE0tdk1KM0haQkNpRTdCbWY2aUpRSHVsNm9OR0hTNTBpSUQ5RmhWVDZrVW5TZF85SnhYUDNxTFR1a25tTDhtTG5CYjlJWFA0OWJWZHdvZ1FzRFliU0Q2U0d4MDdJdkx3d0NmOTVlbEl1N1R5ZWZaaGc?oc=5 | https://news.google.com/rss/articles/CBMiqAFBVV95cUxOWmZwenRsMldMZTlieGQyNzVGUHA1V2R2NWp6TUpzRmZLcURwOXFISnlab0NoczloT0t1VXhET1hPbzBMdDd6YjR1dEx4RTZsMDVOQ0N2LVFRVUtyX25XejZPbzVCMFhQdVB3bGNxLUs5ZGtlMUNyTm1GMWI4Z2xoVzRCWjZPTUJfRF9MdDBYTGxqT2xuSWZpUjB2aFRycEo0aHZ4WEVKX0U?oc=5 | https://news.google.com/rss/articles/CBMinAFBVV95cUxPaVFGa3JCX0VBT2ZlOU5BT1VySjFqcmlaajc4a2tZQS1CLV9uN2RlaXZ6N0JlclhVRXFYS2JUUmlIVVZUSS1SX012b2ZBcTVsNm1qY1IzeHEwUkRIaFlBXzJoYThXeTlqWHQtQkU0aW1oNnREYmZ1cC1tWk9jMVNTMzVDNGlqcXpnMktDRURyWnFRdW14X01aQmNlZGI?oc=5"
+ },
+ {
   "hecho_id": "clima:Tarija:2026-11-04:viento:1",
   "fecha_hora_local": "2026-11-04 19:05",
   "ts_ms": 1793833531971,
@@ -178,26 +198,6 @@
   "departamento": "Chuquisaca",
   "municipio": "Tarvita",
   "enlaces": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNYkNORWtXTXhybWdqRGJ5cHFDR3p0Qjc4NTBtbU1qMVV3OU5UYUZyNkxDZmZ1aE03M1VCYXFQTUp0b0hRaFBrWFg5MXRBVjRLQ29TbTF2M3ZwZmhrVFdYVUZjbnpEdnFxaHI0c2VUNk5qejFDNHZpS2k3V3B2ZGhQQnAwQ3h6MGtDNG1zWkc3RXN5NXd4RVlyck52QngxclhuUS04?oc=5 | https://news.google.com/rss/articles/CBMioAFBVV95cUxOamlaLVNRSFFOXy1SQWVzUHdXUzg4YzhKUzlFNVVLNW5CeTRWZ2l3T29VZXlDUTVWUVNnenNvbWdaVEFDYzRQV1M1Y3A1NnpTRVhpQTFUY2ZabG01TExMNmpVdWp0NE5JX1JvcG41b3dRZTF5YkJJeWFSU0hJN2ZlRW0za19nRW11bHpzU1pKQXE0X1Zpbk9JdThjVFhneTBv?oc=5"
- },
- {
-  "hecho_id": "noticia:1vdtvmf",
-  "fecha_hora_local": "2026-11-04 04:09",
-  "ts_ms": 1793779740000,
-  "titulo": "ABC restableció la transitabilidad de Tarija-Entre Ríos tras derrumbe y corte - elperiodico.com.bo",
-  "tipo_amenaza": "geológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 2,
-  "fuentes": "ABI - Agencia Boliviana de Información; elperiodico.com.bo",
-  "lat": -21.53,
-  "lon": -64.73,
-  "lugar": "Tarija, Tarija",
-  "departamento": "Tarija",
-  "municipio": "Tarija",
-  "enlaces": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOWmZwenRsMldMZTlieGQyNzVGUHA1V2R2NWp6TUpzRmZLcURwOXFISnlab0NoczloT0t1VXhET1hPbzBMdDd6YjR1dEx4RTZsMDVOQ0N2LVFRVUtyX25XejZPbzVCMFhQdVB3bGNxLUs5ZGtlMUNyTm1GMWI4Z2xoVzRCWjZPTUJfRF9MdDBYTGxqT2xuSWZpUjB2aFRycEo0aHZ4WEVKX0U?oc=5 | https://news.google.com/rss/articles/CBMinAFBVV95cUxPaVFGa3JCX0VBT2ZlOU5BT1VySjFqcmlaajc4a2tZQS1CLV9uN2RlaXZ6N0JlclhVRXFYS2JUUmlIVVZUSS1SX012b2ZBcTVsNm1qY1IzeHEwUkRIaFlBXzJoYThXeTlqWHQtQkU0aW1oNnREYmZ1cC1tWk9jMVNTMzVDNGlqcXpnMktDRURyWnFRdW14X01aQmNlZGI?oc=5"
  },
  {
   "hecho_id": "noticia:1f7sr05",

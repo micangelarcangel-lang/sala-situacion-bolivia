@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-04T23:39:06.255368Z",
+ "actualizado": "2026-11-05T00:54:55.407624Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -72,7 +72,7 @@
    "n_municipios": 27,
    "texto": "SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DE DIRECCIÓN NOROESTE, CON VELOCIDADES ENTRE 60 Y 90 km/h, A REGISTRARSE DESDE EL DÍA DOMINGO 01 HASTA EL DÍA MIÉRCOLES 04 DE NOVIEMBRE DE 2026, AFECTANDO A:",
    "numero": "90/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
