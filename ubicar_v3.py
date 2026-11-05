@@ -11,7 +11,7 @@ Diferencias con la ubicación anterior (elegía el nombre de municipio más larg
   5. Devuelve la precisión (municipio, departamento, tramo, ninguna), las razones y las alternativas.
 Solo reglas explícitas y revisables; la salida es información de prensa, no verificada.
 """
-import json, re, unicodedata
+import collections, json, re, unicodedata
 
 CAPITALES = {  # nombre que usa la prensa -> (municipio del gazetteer, departamento)
     "santa cruz": ("Santa Cruz de la Sierra", "Santa Cruz"),
@@ -204,6 +204,14 @@ def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
     if len(en_titulo) >= 2 and len({c["op"]["dep"] for c in en_titulo}) == 1:
         res.update(departamento=en_titulo[0]["op"]["dep"], precision="varios", lugares=[c["op"]["nombre"] for c in en_titulo], motivo="el titular nombra varios municipios del mismo departamento")
         return res
+    lista = re.search(r"municipios (?:de|como|:)\s+([^.]{10,260})", lead + " " + cn[400:900])  # "los municipios de Pasorapa, Omereque, Aiquile…": hecho de varios municipios
+    if lista:
+        enlista = [c for c in orden if not c["capital"] and _apariciones(lista.group(1), c["nombre_norm"])]
+        por_dep = collections.Counter(c["op"]["dep"] for c in enlista)
+        if por_dep and por_dep.most_common(1)[0][1] >= 3 and (len(por_dep) == 1 or por_dep.most_common(2)[1][1] < por_dep.most_common(1)[0][1] - 1):  # los homónimos de otro departamento (Totora) no cuentan
+            dep = por_dep.most_common(1)[0][0]
+            res.update(departamento=dep, precision="varios", lugares=[c["op"]["nombre"] for c in enlista if c["op"]["dep"] == dep], motivo="el texto lista varios municipios del mismo departamento")
+            return res
     if top["extremo_ruta"]:
         deps = {c["op"]["dep"] for c in orden if c["extremo_ruta"]}
         ext = sorted((c for c in orden if c["extremo_ruta"]), key=lambda c: texto_rutas.find(c["nombre_norm"]))

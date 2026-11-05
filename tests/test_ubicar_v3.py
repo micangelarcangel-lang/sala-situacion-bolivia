@@ -102,3 +102,8 @@ def test_la_paz_en_carretera_yungas_no_es_la_ciudad():
 def test_lugar_curado_pongo():
     r = u.ubicar("Accidente en Pongo deja un muerto", "Ocurrió en inmediaciones de Pongo, en la carretera a los Yungas", GEO, puntual=True)
     assert r["municipio"] == "Nuestra Señora de La Paz"
+
+
+def test_lista_de_municipios_es_varios():
+    r = u.ubicar("Asamblea aprueba emergencia por sequía", "La normativa establece la atención a los municipios de Pasorapa, Omereque, Aiquile, Totora, Pojo, Mizque y Sacabamba.", GEO)
+    assert r["precision"] == "varios" and len(r["lugares"]) >= 3
