@@ -53,3 +53,10 @@ def test_evolucion_en_texto():
     t0 = 1_800_000_000_000
     x = h._nuevo([h.huella(ev("a", "Accidente en Viacha", t0, 2)), h.huella(ev("b", "Accidente en Viacha", t0 + 3600000, 3)), h.huella(ev("c", "Accidente en Viacha", t0 + 7200000, 3))])
     assert h.evolucion(x) == "Fallecidos 2 → 3"
+
+
+def test_error_de_unidad_no_entra_en_la_serie():
+    t0 = 1_800_000_000_000
+    x = h._nuevo([h.huella(ev("a", "Sequía", t0, None, sub="sequía")) for _ in range(1)])
+    x["notas"] = [{"id": str(i), "ts": t0 + i, "fuente": "f", "oficial": False, "cifras": {"familias_afectadas": v}} for i, v in enumerate((114000, 114, 78000))]
+    assert [v for _, v in h.cifra_vigente(x)["familias_afectadas"]["serie"]] == [114000, 78000]

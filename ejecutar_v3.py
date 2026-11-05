@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import re, json, os, sys, time, collections, traceback
-import fecha_v3, hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import reporte_periodico_v3, fecha_v3, hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -271,6 +271,11 @@ def main():
     json.dump({"generado": int(time.time() * 1000), "n": len(eventos), "eventos": eventos}, open(f"{SALIDA}/eventos_v3.json", "w", encoding="utf-8"), ensure_ascii=False)
     ctl["despues"] = validar.reglas_calidad(eventos)
     etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson", json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/hechos.json") else None), ctl)
+    def periodicos():
+        hs = json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8"))
+        ahora = int(time.time() * 1000)
+        return {n: reporte_periodico_v3.build(hs, ahora, d, f"{SALIDA}/boletin_{n}.pdf", f"Boletín {n}") for n, d in (("semanal", 7), ("mensual", 30))}
+    etapa("periodicos", periodicos, ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
     print("ALMACEN", ctl.get("almacen")); print("FEEDS", ctl.get("captar_feeds")); print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion")); print("HECHOS", ctl.get("hechos"))

@@ -134,6 +134,9 @@ def cifra_vigente(h, corte=None):
     out = {}
     for campo in sorted({c for n in notas for c in n["cifras"]}):
         serie = [(n["ts"], n["cifras"][campo], n["oficial"], n["fuente"]) for n in notas if campo in n["cifras"]]
+        tope = max((s[1] for s in serie), default=0)
+        if tope >= 10000:  # "114 familias" por "114 mil familias": una cifra menor al 1% de la mayor es un error de unidad, no una etapa del hecho
+            serie = [s for s in serie if s[1] >= tope / 100]
         of = [s for s in serie if s[2]]
         base = of or serie
         mejor = max(base, key=lambda s: (s[1], s[0]))
