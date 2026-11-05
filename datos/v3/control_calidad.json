@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 5.3
+   "seg": 0.1
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 15.6
+   "seg": 15.3
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 26.1
+   "seg": 23.3
   },
   "agrupar": {
    "ok": true,
@@ -26,7 +26,7 @@
   },
   "hechos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 5.1
   },
   "servicios_cercanos": {
    "ok": true,
@@ -38,19 +38,20 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 1.0
+   "seg": 0.9
   },
   "periodicos": {
    "ok": true,
-   "seg": 3.1
+   "seg": 2.6
   }
  },
  "antes": {
   "centroide_departamental": [
-   "noticia:vivo:77f6b2a6ac74",
+   "noticia:vivo:98ca4de33827",
    "noticia:rss:135b083c6924",
    "noticia:vivo:7e455e98f2ae",
    "noticia:vivo:1e3434a21fac",
+   "noticia:vivo:77f6b2a6ac74",
    "noticia:vivo:64f2ef5b607c",
    "noticia:vivo:33883b2b0193",
    "noticia:vivo:14bc98bfd55b",
@@ -67,7 +68,6 @@
    "noticia:rss:a4870f595bab",
    "noticia:rss:4d83df1dcb06",
    "noticia:rss:60a6df29a571",
-   "noticia:vivo:98ca4de33827",
    "noticia:rss:6ea33e84fae7",
    "noticia:vivo:47ba4616c93d",
    "noticia:vivo:bee145a59029",
@@ -93,9 +93,9 @@
    "noticia:vivo:447b7d1369cd",
    "noticia:vivo:fc98a400342b",
    "noticia:vivo:75a5d6e4482b",
-   "noticia:vivo:a49e4a368641",
    "noticia:vivo:38424a0239cb",
-   "noticia:vivo:77f6b2a6ac74",
+   "noticia:vivo:98ca4de33827",
+   "noticia:vivo:a49e4a368641",
    "noticia:vivo:9c9f7abdfdd4",
    "noticia:vivo:be92e5e3ac92",
    "noticia:vivo:5eb33fc34156",
@@ -109,9 +109,9 @@
    "noticia:136yji7",
    "noticia:vivo:c58f91516678",
    "noticia:vivo:8fa32c2bd764",
-   "noticia:vivo:ca996ffbcf9b",
    "noticia:vivo:ff5e6b055b9e",
    "noticia:vivo:1e3434a21fac",
+   "noticia:vivo:77f6b2a6ac74",
    "noticia:vivo:3cf3c875caa7",
    "noticia:vivo:151a388c10d9",
    "noticia:vivo:41eb8ced9880",
@@ -123,6 +123,7 @@
    "noticia:vivo:14bc98bfd55b",
    "noticia:vivo:99d304cdc4b0",
    "noticia:vivo:807aecabf29d",
+   "noticia:vivo:ca996ffbcf9b",
    "noticia:vivo:1fc5f2460688",
    "noticia:vivo:32748621f001",
    "noticia:vivo:ebd1497e1ccb",
@@ -133,7 +134,6 @@
    "noticia:vivo:cfb369b2bbd8",
    "noticia:vivo:fdc48f11293a",
    "noticia:vivo:0922c91f6ae0",
-   "noticia:vivo:e68ed11f4284",
    "noticia:vivo:b5e32240c5ce",
    "noticia:rss:b7b34597dcf9",
    "noticia:94stdt",
@@ -174,6 +174,7 @@
    "noticia:vivo:fb6bb52e1e80",
    "noticia:vivo:32a6bf63653d",
    "noticia:vivo:7c23ab00cb5e",
+   "noticia:vivo:e68ed11f4284",
    "noticia:vivo:75df11b9d4dc",
    "noticia:vivo:0037cb346e65",
    "noticia:vivo:0986d42bfd28",
@@ -183,7 +184,6 @@
    "noticia:vivo:82709a91d736",
    "noticia:vvxvuj",
    "noticia:vivo:327918774bbf",
-   "noticia:vivo:98ca4de33827",
    "noticia:vivo:ad24af7a11a7",
    "noticia:vivo:b6d812d7f7d8",
    "noticia:vivo:a4c953a4c679",
@@ -357,8 +357,8 @@
    "noticia:vivo:447b7d1369cd",
    "noticia:vivo:fc98a400342b",
    "noticia:vivo:75a5d6e4482b",
-   "noticia:vivo:a49e4a368641",
    "noticia:vivo:38424a0239cb",
+   "noticia:vivo:a49e4a368641",
    "noticia:vivo:9c9f7abdfdd4",
    "noticia:vivo:be92e5e3ac92",
    "noticia:rss:d9d98b8054bb",
@@ -369,7 +369,6 @@
    "noticia:vivo:628fe9e7e648",
    "noticia:vivo:75eb52fd1faf",
    "noticia:vivo:8fa32c2bd764",
-   "noticia:vivo:ca996ffbcf9b",
    "noticia:vivo:ff5e6b055b9e",
    "noticia:rss:da1b70265a25",
    "noticia:vivo:8ee184b8a4bb",
@@ -381,6 +380,7 @@
    "noticia:vivo:97f267fe1057",
    "noticia:vivo:99d304cdc4b0",
    "noticia:vivo:807aecabf29d",
+   "noticia:vivo:ca996ffbcf9b",
    "noticia:vivo:1fc5f2460688",
    "noticia:vivo:32748621f001",
    "noticia:vivo:ebd1497e1ccb",
@@ -392,7 +392,6 @@
    "noticia:rss:91af1088f076",
    "noticia:rss:b1340d5bc01c",
    "noticia:vivo:80899fdd63e5",
-   "noticia:vivo:e68ed11f4284",
    "noticia:vivo:89dfa1fbe8fb",
    "noticia:rss:c710ab96a6a6",
    "noticia:rss:b7b34597dcf9",
@@ -440,6 +439,7 @@
    "noticia:rss:bfe03bd5d7d4",
    "noticia:vivo:3acf7eb40af6",
    "noticia:vivo:7c23ab00cb5e",
+   "noticia:vivo:e68ed11f4284",
    "noticia:vivo:75df11b9d4dc",
    "noticia:vivo:0037cb346e65",
    "noticia:vivo:0986d42bfd28",
@@ -617,11 +617,8 @@
   ]
  },
  "lectura_cuerpos": {
-  "leidas_ahora": 44,
-  "estados": {
-   "solo titular": 15,
-   "texto completo": 29
-  },
+  "leidas_ahora": 0,
+  "estados": {},
   "en_cache": 400,
   "pendientes": 0
  },
@@ -637,56 +634,56 @@
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.7,
+    "seg": 2.4,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 1.8,
+    "seg": 1.7,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.2,
+    "seg": 0.3,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.1,
+    "seg": 0.3,
     "con_fecha": 25,
     "con_cuerpo": 4
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.1,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 1.2,
+    "seg": 0.5,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.4,
+    "seg": 0.8,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.1,
+    "seg": 1.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -700,15 +697,15 @@
    "Los Tiempos": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
-    "notas": 15,
-    "seg": 0.3,
-    "con_fecha": 15,
+    "notas": 16,
+    "seg": 0.2,
+    "con_fecha": 16,
     "con_cuerpo": 0
    },
    "Eju.tv": {
@@ -733,9 +730,9 @@
     "con_cuerpo": 0
    }
   },
-  "notas_leidas": 755,
+  "notas_leidas": 756,
   "eventos_nuevos": 15,
-  "descartadas_por_no_relevantes": 668,
+  "descartadas_por_no_relevantes": 669,
   "paginas_leidas": {
    "texto completo": 12
   }
@@ -744,6 +741,7 @@
   "ninguna": 147,
   "relevante": 129,
   "exterior": 18,
+  "con_acto_oficial": 12,
   "departamento": 111,
   "municipio": 115,
   "tramo": 12,
@@ -752,15 +750,11 @@
   "por_lugar_conocido": 2
  },
  "agrupacion": {
-  "grupos_con_mas_de_un_evento": 17,
+  "grupos_con_mas_de_un_evento": 16,
   "ejemplos": [
    [
     "Identifican a ciclista coreano que murió atropellado por un camión en ",
     "El Alto: Ciclista extranjero muere atropellado por un camión; el condu"
-   ],
-   [
-    "75804 la ola democrata aviva la disputa para ganar la casa blanca prog",
-    "75786 delhi vuelve a intentar lluvia artificial contra la contaminacio"
    ],
    [
     "UASB encabezará novedoso proyecto contra el dengue",
@@ -773,11 +767,17 @@
    [
     "Senamhi alerta por posibles desbordes de ríos en Cochabamba y Santa Cr",
     "Senamhi alerta por posibles desbordes de ríos en Cochabamba y Santa Cr"
+   ],
+   [
+    "https://correodelsur.com/seguridad/20261104/fiscalia-tramita-alerta-ro",
+    "https://correodelsur.com/mundo/20261104/marte-no-esta-muerto-en-su-int"
    ]
   ]
  },
  "hechos": {
   "hechos": 106,
+  "con_acto_oficial": 8,
+  "actos_verificados": 2,
   "abiertos": 59,
   "con_varias_notas": 18,
   "reabiertos": 0,
@@ -809,9 +809,9 @@
   ]
  },
  "almacen": {
-  "nuevos": 74,
-  "cambiados": 133,
-  "total_indice": 917
+  "nuevos": 1,
+  "cambiados": 10,
+  "total_indice": 918
  },
  "despues": {
   "centroide_departamental": [],
@@ -871,12 +871,12 @@
    "noticia:rss:135b083c6924",
    "noticia:vivo:75eb52fd1faf",
    "noticia:vivo:7e455e98f2ae",
-   "noticia:vivo:ca996ffbcf9b",
    "noticia:vivo:ff5e6b055b9e",
    "noticia:vivo:151a388c10d9",
    "noticia:vivo:41eb8ced9880",
    "noticia:vivo:97f267fe1057",
    "noticia:vivo:807aecabf29d",
+   "noticia:vivo:ca996ffbcf9b",
    "noticia:vivo:1fc5f2460688",
    "noticia:vivo:ebd1497e1ccb",
    "noticia:vivo:bbcdcd661c2f",
