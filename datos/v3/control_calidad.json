@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 0.0
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 18.1
+   "seg": 15.9
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 24.6
+   "seg": 17.3
   },
   "agrupar": {
    "ok": true,
@@ -38,7 +38,7 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   }
  },
  "antes": {
@@ -561,84 +561,84 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 0.7,
+    "seg": 1.0,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.7,
+    "seg": 2.5,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.5,
+    "seg": 2.1,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.8,
+    "seg": 0.4,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.9,
+    "seg": 0.3,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 1.0,
+    "seg": 0.8,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.4,
+    "seg": 1.1,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 0.9,
+    "seg": 1.1,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Unitel": {
     "ok": true,
     "notas": 100,
-    "seg": 0.8,
+    "seg": 0.6,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Los Tiempos": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
     "notas": 13,
-    "seg": 0.3,
+    "seg": 0.4,
     "con_fecha": 13,
     "con_cuerpo": 0
    },
@@ -666,7 +666,7 @@
   },
   "notas_leidas": 753,
   "eventos_nuevos": 14,
-  "descartadas_por_no_relevantes": 655,
+  "descartadas_por_no_relevantes": 654,
   "paginas_leidas": {
    "texto completo": 9
   }
@@ -711,7 +711,7 @@
  },
  "hechos": {
   "hechos": 106,
-  "abiertos": 61,
+  "abiertos": 65,
   "con_varias_notas": 13,
   "reabiertos": 0,
   "ejemplos": [
