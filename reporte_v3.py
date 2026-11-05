@@ -8,7 +8,9 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.units import mm
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, KeepTogether, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, KeepTogether, PageBreak
+import estilo_graficos
+Image = lambda b, w, h=None: estilo_graficos.imagen(b, w)
 
 BO = dt.timezone(dt.timedelta(hours=-4))
 AZUL, GRIS = "#0b3d6e", "#5b6b7a"
@@ -44,29 +46,22 @@ def _png(fig, dpi=170):
 
 
 def g_categorias(evs):
+    import estilo_graficos
     c = collections.Counter(e.get("categoria", "otra") for e in evs).most_common()
-    fig, ax = plt.subplots(figsize=(3.4, 2.2))
-    ax.barh([k for k, _ in c][::-1], [v for _, v in c][::-1], color=AZUL)
-    for i, v in enumerate([v for _, v in c][::-1]):
-        ax.text(v, i, f" {v}", va="center", fontsize=8)
-    ax.set_title("Eventos por categoría", fontsize=9, loc="left"); ax.tick_params(labelsize=8)
-    for s in ("top", "right"): ax.spines[s].set_visible(False)
-    ax.set_xticks([])
-    return _png(fig)
+    return estilo_graficos.barras_h([(k, v) for k, v in c], "Eventos por categoría")
 
 
 def mapa(evs, geo_dep):
-    fig, ax = plt.subplots(figsize=(3.4, 3.4))
-    for f in geo_dep["features"]:
-        g = f["geometry"]; polis = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
-        for p in polis:
-            ax.fill(*zip(*p[0]), facecolor="#eef2f6", edgecolor="#9aa7b4", linewidth=.5)
-    n = 0
+    import estilo_graficos
+    ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "geo_mun.geojson")
+    gm = json.load(open(ruta, encoding="utf-8"))
+    cm, pts = collections.Counter(), []
     for e in evs:
-        if e.get("lat") is not None and e.get("precision_ubicacion", "departamento" if "(departamento)" in (e.get("lugar") or "") else "municipio") in ("punto", "municipio"):
-            ax.scatter(e["lon"], e["lat"], s=26, color=nivel_de(e)[0], edgecolor="white", linewidth=.5, zorder=3); n += 1
-    ax.set_aspect("equal"); ax.axis("off"); ax.set_title(f"Hechos ubicados con precisión ({n})", fontsize=9, loc="left")
-    return _png(fig)
+        if e.get("lat") is not None and e.get("precision_ubicacion", "municipio") in ("punto", "municipio"):
+            pts.append((e["lon"], e["lat"]))
+            if e.get("precision_ubicacion") == "municipio" and e.get("lugar"):
+                cm[(e["lugar"].split(",")[0], (e.get("departamentos") or [None])[0])] += 1
+    return estilo_graficos.mapa(gm, geo_dep, cm, pts, "Dónde ocurrieron los hechos", "Hechos ubicados con precisión de municipio o punto")
 
 
 def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geojson", hechos=None):
@@ -97,7 +92,7 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     el = [Paragraph("Sala de Situación Bolivia · Boletín breve", est["t"]), Paragraph(f"Últimas {horas} horas hasta {f_} (hora de Bolivia). Información de prensa y fuentes oficiales; la de prensa no está verificada.", est["c"]), Spacer(1, 5)]
     tiles = [[Paragraph(str(len(evs)), est["k"]), Paragraph(str(oficiales), est["k"]), Paragraph(str(len(deps)), est["k"]), Paragraph(f"{fall} / {her}", est["k"]), Paragraph(str(focos), est["k"])],
              [Paragraph(x, est["kl"]) for x in ("eventos", "de fuente oficial", "departamentos", "fallecidos / heridos*", "focos de calor")]]
-    t = Table(tiles, colWidths=[36 * mm] * 5); t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), .5, colors.HexColor("#c7d0d9")), ("LINEAFTER", (0, 0), (-2, -1), .3, colors.HexColor("#c7d0d9")), ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f5f8fb")), ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 3)]))
+    t = Table(tiles, colWidths=[36 * mm] * 5); t.setStyle(TableStyle([("LINEABOVE", (0, 0), (-1, 0), 1.6, colors.HexColor("#2a78d6")), ("LINEBELOW", (0, 1), (-1, 1), .4, colors.HexColor("#e1e0dc")), ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
     el += [t, Spacer(1, 6)]
     if os.path.exists(geo_dep_ruta):
         geo = json.load(open(geo_dep_ruta, encoding="utf-8"))
@@ -110,8 +105,8 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
         filas.append([Paragraph(f'<font color="{nivel_de(e)[0]}"><b>{(e.get("nivel_txt") or "sin nivel").split(" ")[0]}</b></font>', est["p"]), Paragraph(e["titulo"][:130].replace("&", "&amp;").replace("<", "&lt;") + (f'<br/><font size="7" color="{GRIS}">{e.get("subtipo", "")}: {e["ficha_resumen"]}</font>'.replace("&", "&amp;") if e.get("ficha_resumen") else "") + (f'<br/><font size="7" color="#b00020">Atención: {e["advertencia"]}</font>'.replace("&", "&amp;") if e.get("advertencia") else ""), est["p"]),
                       Paragraph((e.get("lugar") or "—").replace("&", "&amp;"), est["c"]), Paragraph(f'{EV_ETIQ.get(c.get("nivel"), "—")} · {c.get("fuentes_independientes", 0)} fuentes', est["c"]), Paragraph((e.get("fuente") or "")[:30], est["c"])])
     tb = Table(filas, colWidths=[17 * mm, 80 * mm, 32 * mm, 28 * mm, 23 * mm], repeatRows=1)
-    tb.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
+    tb.setStyle(TableStyle([("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#52514e")), ("FONTSIZE", (0, 0), (-1, 0), 7.5), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("LINEBELOW", (0, 0), (-1, 0), .8, colors.HexColor("#0b0b0b")), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                            ("LINEBELOW", (0, 1), (-1, -1), .25, colors.HexColor("#e1e0dc"))]))
     el.append(tb)
     if hechos:
         import hechos_v3
@@ -126,8 +121,8 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
                            Paragraph((h.get("lugar") or "—").replace("&", "&amp;"), est["c"]), Paragraph(f"{f1} → {f2}<br/>{len(h['notas'])} notas, {medios} medios", est["c"]),
                            Paragraph((hechos_v3.evolucion(h) or "sin cifras en las notas").replace("&", "&amp;") + (" (prensa, sin confirmar)" if not any(n["oficial"] for n in h["notas"]) else ""), est["c"])])
             tf = Table(fh, colWidths=[62 * mm, 30 * mm, 30 * mm, 58 * mm], repeatRows=1)
-            tf.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                                    ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
+            tf.setStyle(TableStyle([("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#52514e")), ("FONTSIZE", (0, 0), (-1, 0), 7.5), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("LINEBELOW", (0, 0), (-1, 0), .8, colors.HexColor("#0b0b0b")), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                                    ("LINEBELOW", (0, 1), (-1, -1), .25, colors.HexColor("#e1e0dc"))]))
             el.append(tf)
     fuentes = collections.Counter(e.get("fuente", "") for e in evs).most_common(6)
     el += [Paragraph("Método y trazabilidad", est["h"]),
@@ -149,8 +144,8 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     for e in sorted(evs, key=prioridad, reverse=True):
         filas_a.append([Paragraph(_esc(e["titulo"][:100]), est["c"]), Paragraph(_esc(e.get("lugar") or "—"), est["c"]), Paragraph(_esc((e.get("subtipo") or "") + (": " + e["ficha_resumen"] if e.get("ficha_resumen") else "")), est["c"]), Paragraph(_esc((e.get("fuente") or "")[:24]), est["c"])])
     ta = Table(filas_a, colWidths=[60 * mm, 32 * mm, 62 * mm, 21 * mm], repeatRows=1)
-    ta.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
+    ta.setStyle(TableStyle([("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#52514e")), ("FONTSIZE", (0, 0), (-1, 0), 7.5), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("LINEBELOW", (0, 0), (-1, 0), .8, colors.HexColor("#0b0b0b")), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                            ("LINEBELOW", (0, 1), (-1, -1), .25, colors.HexColor("#e1e0dc"))]))
     el.append(ta)
     doc.build(el)
     return {"eventos": len(evs), "top": len(top)}

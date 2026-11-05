@@ -8,8 +8,9 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.units import mm
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak
-import hechos_v3, periodos
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+import hechos_v3, periodos, estilo_graficos, json as _json
+Image = lambda b, w, h=None: estilo_graficos.imagen(b, w)
 from reporte_v3 import _png, AZUL, GRIS, BO
 
 D = 24 * 3600 * 1000
@@ -34,63 +35,39 @@ def _ahora_cifras(hs, corte):
     return f, h_
 
 
+def _etq(t):
+    return t.replace(" transmisible", "")
+
+
 def g_serie(hs, ini, n, paso_dias, etiquetas, titulo, por_tipo=True):
     """Hechos nuevos por día (o por semana) apilados por los 5 tipos más frecuentes + otros."""
     tipos = [t for t, _ in collections.Counter(h["subtipo"] for h in hs).most_common(5)]
-    mat = {t: [0] * n for t in tipos + ["otros"]}
+    mat = {_etq(t): [0] * n for t in tipos}; mat["otros"] = [0] * n
     for h in hs:
         i = int((h["primera"] - ini) // (paso_dias * D))
         if 0 <= i < n:
-            mat[h["subtipo"] if h["subtipo"] in tipos else "otros"][i] += 1
-    fig, ax = plt.subplots(figsize=(7.2, 2.4))
-    base = [0] * n
-    for k, t in enumerate(tipos + ["otros"]):
-        ax.bar(range(n), mat[t], bottom=base, color=PAL[k % len(PAL)], label=t[:26], width=.7); base = [a + b for a, b in zip(base, mat[t])]
-    ax.set_xticks(range(n)); ax.set_xticklabels(etiquetas, fontsize=7)
-    ax.set_title(titulo, fontsize=9, loc="left"); ax.tick_params(labelsize=7); _sp(ax)
-    ax.set_ylim(0, max(1, max(base)) * 1.45)
-    ax.legend(fontsize=6, frameon=False, ncol=3, loc="upper left")
-    return _png(fig)
+            mat[_etq(h["subtipo"]) if h["subtipo"] in tipos else "otros"][i] += 1
+    return estilo_graficos.apiladas(mat, etiquetas, titulo)
 
 
 def g_tipos(hs, titulo="Hechos por tipo"):
-    c = collections.Counter(h["subtipo"] for h in hs).most_common(8)
-    fig, ax = plt.subplots(figsize=(3.6, 2.4))
-    ax.barh([k[:28] for k, _ in c][::-1], [v for _, v in c][::-1], color=AZUL)
-    for i, v in enumerate([v for _, v in c][::-1]):
-        ax.text(v, i, f" {v}", va="center", fontsize=7)
-    ax.set_title(titulo, fontsize=9, loc="left"); ax.tick_params(labelsize=7); ax.set_xticks([]); _sp(ax)
-    return _png(fig)
+    return estilo_graficos.barras_h(collections.Counter(h["subtipo"] for h in hs).most_common(), titulo)
 
 
 def g_deptos(hs):
     c = collections.Counter(h.get("departamento") for h in hs if h.get("departamento"))
-    xs = [d for d in DEPS if c.get(d)]; xs.sort(key=lambda d: c[d])
-    fig, ax = plt.subplots(figsize=(3.6, 2.4))
-    ax.barh(xs, [c[d] for d in xs], color=AZUL)
-    for i, d in enumerate(xs):
-        ax.text(c[d], i, f" {c[d]}", va="center", fontsize=7)
-    ax.set_title("Hechos por departamento", fontsize=9, loc="left"); ax.tick_params(labelsize=7); ax.set_xticks([]); _sp(ax)
-    return _png(fig)
+    return estilo_graficos.barras_h(sorted(c.items(), key=lambda kv: -kv[1]), "Hechos por departamento")
 
 
-def g_mapa(hs, geo_dep):
-    """Mapa departamental (cantidad de hechos, un solo color en tres intensidades) con los hechos de municipio o punto encima."""
-    c = collections.Counter(h.get("departamento") for h in hs if h.get("departamento"))
-    mx = max(c.values(), default=1)
-    fig, ax = plt.subplots(figsize=(4.2, 4.6))
-    for f in geo_dep["features"]:
-        g = f["geometry"]; polis = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
-        a = c.get(f["properties"]["n"], 0) / mx
-        col = "#eef2f6" if a == 0 else ("#c9d9ea" if a < .34 else ("#8fb0d3" if a < .67 else "#4f7fb3"))
-        for p in polis:
-            ax.fill(*zip(*p[0]), facecolor=col, edgecolor="#9aa7b4", linewidth=.5)
-    n = 0
+def g_mapa(hs, geo_dep, geo_mun=None):
+    """Mapa de municipios con hechos (una tonalidad, más oscuro = más hechos), límites departamentales y puntos de hechos ubicados."""
+    cm = collections.Counter()
     for h in hs:
-        if h.get("lat") is not None and h.get("precision") in ("municipio", "punto"):
-            ax.scatter(h["lon"], h["lat"], s=18, color="#c0392b", edgecolor="white", linewidth=.4, zorder=3); n += 1
-    ax.set_aspect("equal"); ax.axis("off"); ax.set_title(f"Hechos por departamento (tono) y hechos ubicados en su municipio ({n}, puntos)", fontsize=7.5, loc="left")
-    return _png(fig)
+        vistos = {(n["municipio"], n["departamento"]) for n in h["notas"] if n.get("municipio") and n.get("precision") in ("municipio", "punto")}
+        for k in vistos:
+            cm[k] += 1
+    pts = [(h["lon"], h["lat"]) for h in hs if h.get("lat") is not None and h.get("precision") in ("municipio", "punto")]
+    return estilo_graficos.mapa(geo_mun, geo_dep, cm, pts, "Dónde ocurrieron los hechos", "Municipios con hechos en el período")
 
 
 def g_evolucion(h):
@@ -98,17 +75,7 @@ def g_evolucion(h):
     campo = next((c for c in ("fallecidos", "familias_afectadas", "personas_afectadas", "casos_notificados", "heridos") if c in cv and len({v for _, v in cv[c]["serie"]}) > 1 and cv[c]["valor"] >= 2 and not cv[c]["revisar"]), None)
     if not campo:
         return None
-    s = cv[campo]["serie"]
-    fig, ax = plt.subplots(figsize=(7.2, 1.9))
-    ax.step([dt.datetime.fromtimestamp(t / 1000, BO) for t, _ in s], [v for _, v in s], where="post", color=AZUL, marker="o", ms=3)
-    ax.set_title(f"Evolución de {campo.replace('_', ' ')}: {h['subtipo']}, {h.get('lugar') or ''}"[:110], fontsize=8, loc="left"); ax.tick_params(labelsize=7); fig.autofmt_xdate(); _sp(ax)
-    return _png(fig)
-
-
-def _desde(hechos, ahora):
-    """Desde cuándo hay datos: se ignoran los 2 hechos más antiguos (notas viejas reubicadas por su fecha) para no creer que hay semanas completas que no existen."""
-    ts = sorted(n["ts"] for h in hechos.values() for n in h["notas"] if not h.get("fusionados") or True)
-    return ts[min(len(ts) - 1, 4)] if ts else ahora
+    return estilo_graficos.linea_escalon(cv[campo]["serie"], f"Evolución de {campo.replace('_', ' ')}", f"{h['subtipo']} · {h.get('lugar') or ''}"[:100])
 
 
 def _estilos():
@@ -120,14 +87,14 @@ def _estilos():
 
 def _tabla(filas, anchos):
     t = Table(filas, colWidths=[a * mm for a in anchos], repeatRows=1)
-    t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                           ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
+    t.setStyle(TableStyle([("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#52514e")), ("FONTSIZE", (0, 0), (-1, 0), 7.5), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                           ("LINEBELOW", (0, 0), (-1, 0), .8, colors.HexColor("#0b0b0b")), ("LINEBELOW", (0, 1), (-1, -1), .25, colors.HexColor("#e1e0dc")), ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
     return t
 
 
 def _kpis(est, datos):
     t = Table([[Paragraph(str(v), est["k"]) for v, _ in datos], [Paragraph(l, est["kl"]) for _, l in datos]], colWidths=[170 / len(datos) * mm] * len(datos))
-    t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), .5, colors.HexColor("#c7d0d9")), ("LINEAFTER", (0, 0), (-2, -1), .3, colors.HexColor("#c7d0d9")), ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f5f8fb")), ("TOPPADDING", (0, 0), (-1, -1), 4)]))
+    t.setStyle(TableStyle([("LINEABOVE", (0, 0), (-1, 0), 1.6, colors.HexColor("#2a78d6")), ("LINEBELOW", (0, 1), (-1, 1), .4, colors.HexColor("#e1e0dc")), ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
     return t
 
 
@@ -194,6 +161,12 @@ def _doc(salida, titulo, el):
     SimpleDocTemplate(salida, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=13 * mm, bottomMargin=13 * mm, title=titulo, author="Sala de Situación Bolivia").build(el)
 
 
+def _geo_mun():
+    import os
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "geo_mun.geojson")
+    return _json.load(open(p, encoding="utf-8"))
+
+
 def build_semanal(hechos, ahora, salida, geo_dep=None, inicio=None):
     ini, fin, s, cerrada = periodos.ventana_semanal(ahora)
     est = _estilos()
@@ -219,7 +192,7 @@ def build_semanal(hechos, ahora, salida, geo_dep=None, inicio=None):
         for h in hs:
             por_dep[h.get("departamento") or "Varios / nacional"].append(h)
         filas = [["Departamento", "Hechos", "Principales tipos"]] + [[d, str(len(v)), ", ".join(f"{t} ({n})" for t, n in collections.Counter(x["subtipo"] for x in v).most_common(3))] for d, v in sorted(por_dep.items(), key=lambda kv: -len(kv[1]))]
-        el.append(Table([[Image(g_mapa(hs, geo_dep), 78 * mm, 85 * mm), _tabla([filas[0]] + [[Paragraph(_e(c), est["c"]) for c in f] for f in filas[1:]], [26, 14, 52])]], colWidths=[82 * mm, 92 * mm]))
+        el.append(Table([[Image(g_mapa(hs, geo_dep, _geo_mun()), 80 * mm, 88 * mm), _tabla([filas[0]] + [[Paragraph(_e(c), est["c"]) for c in f] for f in filas[1:]], [26, 14, 52])]], colWidths=[82 * mm, 92 * mm]))
     if hs:
         _bloque_hechos(el, est, hs, ahora, 10)
     _metodo(el, est, hs, desde, ini, "boletín")
@@ -255,7 +228,7 @@ def build_mensual(hechos, ahora, salida, geo_dep=None, inicio=None):
             filas.append([tp, str(n), str(sum(h["estado"] == "abierto" for h in g)), str(ff), str(hh)])
         el += [Paragraph("Balance del mes por tipo", est["h"]), _tabla([filas[0]] + [[Paragraph(_e(c), est["c"]) for c in f] for f in filas[1:]], [62, 22, 24, 34, 28])]
         if geo_dep:
-            el += [PageBreak(), Paragraph("Dónde ocurrió", est["h"]), Table([[Image(g_mapa(hs, geo_dep), 78 * mm, 85 * mm), Paragraph("Tono más fuerte = más hechos en el departamento. Los puntos son hechos ubicados hasta municipio; los hechos de varios municipios, de alcance nacional o solo con departamento no tienen punto.", est["c"])]], colWidths=[82 * mm, 92 * mm])]
+            el += [PageBreak(), Paragraph("Dónde ocurrió", est["h"]), Table([[Image(g_mapa(hs, geo_dep, _geo_mun()), 80 * mm, 88 * mm), Paragraph("Tono más fuerte = más hechos en el departamento. Los puntos son hechos ubicados hasta municipio; los hechos de varios municipios, de alcance nacional o solo con departamento no tienen punto.", est["c"])]], colWidths=[82 * mm, 92 * mm])]
         _bloque_hechos(el, est, hs, ahora, 15)
     _metodo(el, est, hs, desde, ini, "mes")
     el.append(Paragraph("* Suma de la cifra vigente de cada hecho. Los hechos que cruzan dos meses se cuentan en ambos (aparecen en el mes en que tuvieron notas).", est["c"]))
