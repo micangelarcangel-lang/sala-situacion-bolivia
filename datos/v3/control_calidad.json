@@ -6,7 +6,7 @@
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 17.5
+   "seg": 15.8
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 25.3
+   "seg": 25.8
   },
   "agrupar": {
    "ok": true,
@@ -26,7 +26,7 @@
   },
   "hechos": {
    "ok": true,
-   "seg": 1.3
+   "seg": 7.1
   },
   "servicios_cercanos": {
    "ok": true,
@@ -42,7 +42,7 @@
   },
   "periodicos": {
    "ok": true,
-   "seg": 2.8
+   "seg": 2.9
   }
  },
  "antes": {
@@ -627,21 +627,21 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.4,
+    "seg": 0.9,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.5,
+    "seg": 2.7,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.0,
+    "seg": 1.8,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -655,21 +655,21 @@
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.4,
+    "seg": 0.2,
     "con_fecha": 25,
     "con_cuerpo": 4
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.6,
+    "seg": 0.2,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 0.7,
+    "seg": 1.1,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -683,56 +683,56 @@
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.0,
+    "seg": 1.2,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Unitel": {
     "ok": true,
     "notas": 100,
-    "seg": 0.6,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Los Tiempos": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
     "notas": 16,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 16,
     "con_cuerpo": 0
    },
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.6,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    }
   },
   "notas_leidas": 756,
   "eventos_nuevos": 15,
-  "descartadas_por_no_relevantes": 669,
+  "descartadas_por_no_relevantes": 670,
   "paginas_leidas": {
    "texto completo": 12
   }
