@@ -1,7 +1,53 @@
 {
- "actualizado": "2026-11-05T12:59:05.181126Z",
+ "actualizado": "2026-11-05T15:27:03.948847Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
+  {
+   "publicada": "2026-11-05 09:34:02",
+   "inicio": "2026-11-05",
+   "fin": "2026-11-09",
+   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 45/2026",
+   "nivel": "AMARILLO",
+   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1545.pdf",
+   "departamentos": [
+    "Cochabamba",
+    "Santa Cruz"
+   ],
+   "rios": [
+    "Chapare",
+    "Chimoré",
+    "Grande",
+    "Ichilo",
+    "Ivirgarzama",
+    "Magareño",
+    "Mamorecillo",
+    "Mizque",
+    "Piraí",
+    "Pojo",
+    "Rocha",
+    "Siches",
+    "Surutú",
+    "Taquiña",
+    "Yapacaní"
+   ],
+   "poblaciones": [
+    "Porongo, Warnes, Montero, General Saavedra, Mineros, Santa Cruz de la Sierra y poblados cercanos. DEL 05 AL 09/11/2026:",
+    "Puerto Villarroel, Puerto Grethel, Entre Ríos, Bulo Bulo y comunidades cercanas",
+    "Ivirgarzama y poblados cercanos",
+    "Ivirgarzama y poblados cercanos",
+    "Chimoré y comunidades cercanas",
+    "Villa Tunari, Puerto San Pedro, Santa Rosa del Chapare y comunidades cercanas",
+    "Mizque, Pojo y comunidades cercanas. DEL 05 AL 06 Y DEL 07 AL 08/11/2026:",
+    "Cochabamba Ciudad, Tiraque y poblaciones cercanas",
+    "Tiquipaya y poblaciones cercanas",
+    "Siches y poblaciones cercanas. SENAMHI, MIÉRCOLES 04 DE NOVIEMBRE DEL 2026 UNIDAD DE ANÁLISIS Y PRONÓSTICOS HIDROLÓGICOS DIRECCIÓN DE HIDROLOGÍA DEFINICION DE LA ALERTA ALERTA AMARILLA: Posible incremento de niveles y desbordamientos puntuales. Se recomienda vigilancia de las zonas próximas a ríos"
+   ],
+   "definicion": "",
+   "texto": " AAVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 45/2026 ALERTA AMARILLA PARA EL PERIODO: 05 AL 09 NOVIEMBRE 2026 POSIBLE INCREMENTO DE NIVELES Y DESBORDAMIENTOS PUNTUALES, EN LA CUENCA DEL RÍO PIRAÍ, YAPACANÍ, ICHILO, CHAPARE, MIZQUE, CAINE y ROCHA AFECTANDO A: DEL 05 AL 09/11/2026: ✓ Departamento de Santa Cruz (Cuenca Río Grande): ➢ Río Ichilo, y afluentes secundarios ascensos de nivel con posibles desbordes en áreas próximas a los poblados de San Germán, Puerto Avaroa, Los Yuquis y comunidades cercanas. ➢ Río Yapacaní, y afluentes secundarios ascensos de nivel con posibles desbordes en áreas próximas a los poblados de San Juan de Yapacaní y comunidades cercanas Faja Norte. ➢ Río Surutú, ascensos de nivel con posibles desbordes en áreas próximas a los poblados de San Carlos y comunidades cercanas. ➢ Río Piraí, y afluentes secundarios ascensos con posibles desbordes de nivel en áreas próximas a los poblados de: Porongo, Warnes, Montero, General Saavedra, Mineros, Santa Cruz de la Sierra y poblados cercanos. DEL 05 AL 09/11/2026: ✓ Departamento de Cochabamba (Cuenca Chapare, Ichilo, Mizque, Caine y Rocha): ➢ Río Ichilo, y afluentes secundarios , crecidas con posibles desbordes para los poblados de: Puerto Villarroel, Puerto Grethel, Entre Ríos, Bulo Bulo y comunidades cercanas. ➢ Río Ivirgarzama, y afluentes secundarios , crecidas repentinas con posibles desbordes que afectarán a poblados de: Ivirgarzama y poblados cercanos. ➢ Río Magareño, y afluentes secundarios, crecidas repentinas con posibles desbordes que afectarán a poblados de: Ivirgarzama y poblados cercanos. ➢ Río Chimoré, y afluentes secundarios , crecidas con posibles desbordes que afectarán a poblados de: Chimoré y comunidades cercanas. ➢ Río Mamorecillo , y afluentes secundarios , ascensos con posibles desbordes en poblaciones cercanas. ➢ Río Chapare, y afluentes secundarios , ascensos con posibles desbordes en las poblaciones de: Villa Tunari, Puerto San Pedro, Santa Rosa del Chapare y comunidades cercanas. ➢ Río Pojo, y tributarios secundarios , ascensos de nivel con desbordes que afectarán a poblaciones cercanas. ➢ Río Mizque, y afluentes secundarios , ascensos con posibles desbordes en las poblaciones de: Mizque, Pojo y comunidades cercanas. DEL 05 AL 06 Y DEL 07 AL 08/11/2026: ➢ Río Rocha, y afluentes secundarios , ascensos con posibles desbordes en las poblaciones de: Cochabamba Ciudad, Tiraque y poblaciones cercanas. ➢ Río Taquiña, y afluentes secundarios , ascensos con posibles desbordes en las poblaciones de: Tiquipaya y poblaciones cercanas. ➢ Río Siches, y afluentes secundarios , ascensos con posibles desbordes en las poblaciones de: Siches y poblaciones cercanas. SENAMHI, MIÉRCOLES 04 DE NOVIEMBRE DEL 2026 UNIDAD DE ANÁLISIS Y PRONÓSTICOS HIDROLÓGICOS DIRECCIÓN DE HIDROLOGÍA DEFINICION DE LA ALERTA ALERTA AMARILLA: Posible incremento de niveles y desbordamientos puntuales. Se recomienda vigilancia de las zonas próximas a ríos y áreas vulnerables. ",
+   "numero": "45/2026",
+   "vigente": true,
+   "nivel_num": 1
+  },
   {
    "publicada": "2026-11-04 19:08:48",
    "inicio": "2026-11-04",
@@ -12,19 +58,20 @@
    "error_pdf": "HTTPError: HTTP Error 404: Not Found",
    "numero": "46/2026",
    "vigente": true,
-   "nivel_num": 2
-  },
-  {
-   "publicada": "2026-11-04 19:07:02",
-   "inicio": "2026-11-04",
-   "fin": "2026-11-09",
-   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 45/2026",
-   "nivel": "AMARILLO",
-   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1543.pdf",
-   "error_pdf": "HTTPError: HTTP Error 404: Not Found",
-   "numero": "45/2026",
-   "vigente": true,
-   "nivel_num": 1
+   "nivel_num": 2,
+   "departamentos": [
+    "Santa Cruz"
+   ],
+   "rios": [
+    "Piraí",
+    "Yapacaní"
+   ],
+   "poblaciones": [
+    "Trigal, Mairana, Quirusillas y comunidades cercanas a las nacientes de la cuenca",
+    "San Luis, La Angostura, El Torno, La Guardia, Samaipata, Cuevas, San Pedro, Hardeman y poblados cercanos cabecera y cuenca baja. SENAMHI, MIÉRCOLES 04 DE NOVIEMBRE DEL 2026 DIRECCIÓN DE HIDROLOGÍA UNIDAD DE ANÁLISIS Y PRONÓSTICOS HIDROLÓGICOS DEFINICION DE LA AMENAZA AMENAZA NARANJA: Se considera c"
+   ],
+   "definicion": "AMENAZA NARANJA: Se considera cuando la tendencia ascendente de los niveles de los ríos y la persistencia e intensidad de las lluvias indican la posibilidad de presentar desbordes en las próximas horas. (Para el uso de navegación esta alerta significa que aún es posible navegar).",
+   "texto": " AAVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 46/2026 ALERTA NARANJA PARA EL PERIODO: 05 AL 09 NOVIEMBRE DE 2026 PROBABLES ASCENSOS REPENTINOS Y PROGRESIVOS DE NIVEL, CON POSIBLES DESBORDES EN LAS CUENCAS PIRAÍ (cabecera), YAPACANÍ (cabecera) CON AFECTACIONES EN: DEL 05 AL 09/11/2026: ✓ Departamento de Santa Cruz (Cuenca Río Piraí, Yapacaní): ➢ Río Yapacaní, y afluentes secundarios ascensos con posibles desbordes en las poblaciones de: Trigal, Mairana, Quirusillas y comunidades cercanas a las nacientes de la cuenca. ➢ Río Piraí, y afluentes secundarios ascensos con posibles desbordes de nivel en áreas próximas a los poblados de : San Luis, La Angostura, El Torno, La Guardia, Samaipata, Cuevas, San Pedro, Hardeman y poblados cercanos cabecera y cuenca baja. SENAMHI, MIÉRCOLES 04 DE NOVIEMBRE DEL 2026 DIRECCIÓN DE HIDROLOGÍA UNIDAD DE ANÁLISIS Y PRONÓSTICOS HIDROLÓGICOS DEFINICION DE LA AMENAZA AMENAZA NARANJA: Se considera cuando la tendencia ascendente de los niveles de los ríos y la persistencia e intensidad de las lluvias indican la posibilidad de presentar desbordes en las próximas horas. (Para el uso de navegación esta alerta significa que aún es posible navegar). "
   },
   {
    "tipo": "meteorológica",
