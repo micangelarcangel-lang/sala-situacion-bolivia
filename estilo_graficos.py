@@ -40,8 +40,8 @@ def imagen(buf, ancho):
     return RI(buf, ancho, ancho * h / w)
 
 
-def png(fig, dpi=220):
-    b = io.BytesIO(); fig.savefig(b, format="png", dpi=dpi, bbox_inches="tight", facecolor=SUP); plt.close(fig); b.seek(0); return b
+def png(fig, dpi=220, tight=True):
+    b = io.BytesIO(); fig.savefig(b, format="png", dpi=dpi, bbox_inches="tight" if tight else None, facecolor=SUP); plt.close(fig); b.seek(0); return b
 
 
 def titulo(ax, t, sub=None):
@@ -69,7 +69,8 @@ def barras_h(datos, titulo_txt, sub=None, w=3.5, h=2.3, color=CAT[0], max_n=8):
     ax.set_yticks(range(len(datos))); ax.set_yticklabels([k.replace(" transmisible", "")[:34] for k, _ in datos], fontsize=7.5)
     ax.set_xlim(0, mx * 1.18); ax.set_ylim(-.6, len(datos) - .4); ax.set_xticks([]); ax.spines["bottom"].set_visible(False)
     titulo(ax, titulo_txt, sub)
-    return png(fig)
+    fig.subplots_adjust(left=.43, right=.96, top=.84 if sub else .88, bottom=.04)  # mismo marco en todos los gráficos de barras: así tienen el mismo tamaño en la página
+    return png(fig, tight=False)
 
 
 def apiladas(mat, etiquetas_x, titulo_txt, sub=None, w=7.2, h=2.5):
@@ -86,6 +87,8 @@ def apiladas(mat, etiquetas_x, titulo_txt, sub=None, w=7.2, h=2.5):
         if t:
             ax.text(i, t + max(base) * .03, str(t), ha="center", fontsize=7.5, color=TXT, fontweight=600)
     ax.set_xticks(range(n)); ax.set_xticklabels(etiquetas_x, fontsize=7.5)
+    from matplotlib.ticker import MaxNLocator
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
     ax.set_ylim(0, max(1, max(base)) * 1.25); ax.yaxis.grid(True, color=GRILLA, linewidth=.8); ax.set_axisbelow(True)
     ax.tick_params(axis="y", labelsize=7, colors=TXT3)
     ax.legend(fontsize=7, frameon=False, ncol=3, loc="upper left", bbox_to_anchor=(0, 1.0), handlelength=1, handleheight=1, labelcolor=TXT2)
