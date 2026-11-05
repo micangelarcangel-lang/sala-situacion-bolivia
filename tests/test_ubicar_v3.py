@@ -92,3 +92,8 @@ def test_alcance_nacional_del_titular_manda():
 def test_distancia_de_referencia_no_es_el_lugar():
     r = u.ubicar("Explosión en cuartel deja dos muertos", "La explosión ocurrió en Viacha, un municipio situado a unos 35 kilometros de la ciudad de La Paz", GEO, puntual=True)
     assert r["municipio"] == "Viacha"
+
+
+def test_la_paz_en_carretera_yungas_no_es_la_ciudad():
+    r = u.ubicar("Accidente en la carretera a los Yungas deja heridos", "Ocurrió en la carretera que conecta la ciudad de La Paz con los Yungas", GEO, puntual=True)
+    assert r["municipio"] != "Nuestra Señora de La Paz"

@@ -159,6 +159,8 @@ def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
                     if previo.endswith("ciudad de"):
                         c["ciudad"] = True
                     # un lugar dentro de la ciudad antes del nombre ("urbanización Milenium, Oruro"), o un hecho puntual con "en <capital>": es la ciudad, no el departamento
+                    if c["capital"] and re.search(r"\b(urbanizacion|avenida|calle|zona|barrio|plaza|mercado|rotonda|puente|terminal|distrito|av)\W+(?:\w+\W+){0,4}$", texto[max(0, p - 60):p]):
+                        c["zona_urbana"] = True
                     if c["capital"] and (re.search(r"\b(urbanizacion|avenida|calle|zona|barrio|plaza|mercado|rotonda|puente|terminal|distrito|av)\W+(?:\w+\W+){0,4}$", texto[max(0, p - 60):p]) or (puntual and c["nombre_norm"] not in AMBIGUAS_CAPITAL and (previo.endswith(" en") or previo == "en"))):
                         c["ciudad"] = True
                     if previo.endswith(("departamento de", "departamento", "yungas de", "provincia de")):
@@ -223,6 +225,8 @@ def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
             return res
     if top["capital"] and top.get("depto_explicito") and not re.search(r"\bciudad de " + re.escape(top["nombre_norm"]), cn + " " + tn):
         top["ciudad"] = False
+    if top["capital"] and top["nombre_norm"] in AMBIGUAS_CAPITAL and not top.get("zona_urbana") and re.search(r"\b(yungas|carretera|ruta|camino|tramo|norte paceno|altiplano|provincia)\b", tn + " " + lead):
+        top["ciudad"] = False  # accidente en carretera/Yungas: 'La Paz' es el departamento, no la ciudad
     if top["capital"] and not top["ciudad"]:
         otros = [c for c in orden[1:] if not c["capital"] and c["puntaje"] >= 4 and not c["extremo_ruta"]]
         if not otros:
