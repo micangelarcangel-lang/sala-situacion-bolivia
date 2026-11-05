@@ -17,7 +17,7 @@ CAPAS = [
     ("2 · Extracción", [("Tipo → subtipo", HECHO), ("Ficha por tipo (víctimas, casos, afectados)", HECHO), ("Lugar (municipio, tramo, varios)", PARCIAL), ("Fecha del hecho", HECHO)]),
     ("3 · Inteligencia", [("Un hecho = una ficha viva", HECHO), ("Cifra vigente y evolución", HECHO), ("Respaldo oficial por alcance", PARCIAL), ("Aprendizaje con tus validaciones", PARCIAL)]),
     ("4 · Almacén e indicadores", [("Historial versionado", HECHO), ("Línea de base histórica por tipo", FALTA), ("Indicadores por tipo (tasas, canales, umbrales)", FALTA)]),
-    ("5 · Salidas", [("Boletines diario/semanal/mensual (PDF)", PARCIAL), ("Correo 7:00 (Gmail)", PARCIAL), ("Web v3 (general + módulo por tipo + mapas)", FALTA), ("Consulta de un hecho con 3 datos", FALTA)]),
+    ("5 · Salidas", [("Boletines diario/semanal/mensual (PDF)", PARCIAL), ("Correo 7:00 (Gmail)", PARCIAL), ("Web actual (main): existe, con datos antiguos", PARCIAL), ("Conectar la web a los hechos v3 + módulos por tipo", FALTA), ("Consulta de un hecho con 3 datos", FALTA)]),
     ("6 · Operación", [("GitHub Actions, costo cero", HECHO), ("Programación 7:00 (solo desde main)", FALTA), ("Servidor con IP boliviana (Gaceta, VIDECI)", FALTA)]),
 ]
 
@@ -38,7 +38,7 @@ TIPOS = [
 FASES = [
     ("F1 · Captación completa", "Portales de las 9 gobernaciones, SEDES departamentales y alcaldías (con respaldo oficial) + PDF institucionales.", "Tabla de portales por departamento: responde / bloquea / sin página. Cobertura medida."),
     ("F2 · Líneas de base e indicadores", "Series históricas abiertas por tipo (sismos, focos, lluvia, caudales, epidemiología) y cálculo de indicadores.", "Cada tipo con su indicador y su base histórica verificada."),
-    ("F3 · Módulos por tipo", "Una página web por tipo con su gráfica y su mapa propios. Piloto: tránsito, sequía y brotes; luego el resto.", "3 módulos funcionando; tú los revisas."),
+    ("F3 · Módulos por tipo", "Conectar la web actual a los hechos v3 (sin rehacerla) y agregar una página por tipo con su gráfica y su mapa propios. Piloto: tránsito, sequía y brotes; luego el resto.", "3 módulos funcionando; tú los revisas."),
     ("F4 · Boletines definitivos", "Diario, semanal (domingo 7:00) y mensual con tendencias y los módulos anteriores; envío por Gmail.", "PDF de cada período revisado por ti."),
     ("F5 · Consulta y red ciudadana", "Pedir un hecho con 3 datos o más; formulario Kobo y su lectura.", "Una consulta real respondida de punta a punta."),
     ("F6 · Producción", "Unir a main, programación, vigilancia de 3 días con el flujo viejo de respaldo; servidor adecuado si el piloto se aprueba.", "Tres días seguidos sin fallas."),
@@ -79,7 +79,7 @@ def pdf(salida="docs/arquitectura.pdf"):
           Paragraph("Dónde estamos", h),
           Paragraph("Pediste desde el 02/11 una arquitectura completa. El esquema v3 quedó aprobado, pero no lo dejé escrito ni con estado por componente, y trabajé corrigiendo caso por caso. Esta hoja corrige eso: es el mapa único del proyecto y se actualiza en cada entrega.", b),
           Spacer(1, 3),
-          Paragraph("En estos días se construyó el núcleo de inteligencia (lugar, tipo, ficha, un hecho = una ficha, cifra vigente, respaldo oficial) y los tres boletines. No se han construido todavía: la web v3, las líneas de base históricas, los módulos por tipo, los portales institucionales ni la producción. Por eso no ves la forma final.", b),
+          Paragraph("En estos días se construyó el núcleo de inteligencia (lugar, tipo, ficha, un hecho = una ficha, cifra vigente, respaldo oficial) y los tres boletines. La web que ves en pantalla (rama principal) existe y sigue funcionando con el sistema anterior; no está conectada todavía a lo nuevo. No se han construido: las líneas de base históricas, los módulos por tipo, los portales institucionales ni la producción.", b),
           Spacer(1, 6)]
     from reportlab.platypus import Image
     from estilo_graficos import imagen
