@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 0.0
+   "seg": 0.1
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 15.9
+   "seg": 15.3
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 17.3
+   "seg": 22.0
   },
   "agrupar": {
    "ok": true,
@@ -38,7 +38,11 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.2
+   "seg": 0.3
+  },
+  "periodicos": {
+   "ok": true,
+   "seg": 0.7
   }
  },
  "antes": {
@@ -561,7 +565,7 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.0,
+    "seg": 1.2,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
@@ -575,14 +579,14 @@
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 2.1,
+    "seg": 1.9,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
@@ -603,14 +607,14 @@
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 0.8,
+    "seg": 1.2,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 1.1,
+    "seg": 0.9,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
@@ -624,42 +628,42 @@
    "Unitel": {
     "ok": true,
     "notas": 100,
-    "seg": 0.6,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Los Tiempos": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Brújula Digital": {
     "ok": true,
     "notas": 13,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 13,
     "con_cuerpo": 0
    },
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.4,
     "con_fecha": 100,
     "con_cuerpo": 0
    }
