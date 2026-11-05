@@ -233,8 +233,7 @@
       "type": [
         "integer",
         "null"
-      ],
-      "description": "Hora de publicación leída de la nota; null si no consta."
+      ]
     },
     "precision_ubicacion": {
       "enum": [
@@ -372,6 +371,15 @@
         "string",
         "null"
       ]
+    },
+    "fecha_hecho": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "hecho_antiguo": {
+      "type": "boolean"
     }
   },
   "additionalProperties": false

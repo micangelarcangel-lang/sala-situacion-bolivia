@@ -48,3 +48,38 @@ def desde_texto(texto, hoy=None):
 
 def fecha_publicacion(html="", texto=""):
     return desde_html(html) or desde_texto(texto)
+
+
+DIAS = {"lunes": 0, "martes": 1, "miercoles": 2, "miércoles": 2, "jueves": 3, "viernes": 4, "sabado": 5, "sábado": 5, "domingo": 6}
+
+
+def fecha_hecho(texto, ts_pub):
+    """Fecha en que ocurrió el hecho según el texto ('5 de septiembre', 'este viernes') en los primeros 500 caracteres. Devuelve ms o None.
+    Sin año explícito: se toma el año más reciente que no sea posterior a la publicación y, si el texto nombra un día de la semana, el que coincida con ese día."""
+    if not ts_pub:
+        return None
+    t = (texto or "")[:500].lower()
+    pub = dt.datetime.fromtimestamp(ts_pub / 1000, BO)
+    m = re.search(r"\b(\d{1,2})\s+de\s+(" + "|".join(MESES) + r")(?:\s+(?:de|del)\s+(20\d{2}))?", t)
+    if not m:
+        return None
+    dia, mes = int(m.group(1)), MESES[m.group(2)]
+    anios = [int(m.group(3))] if m.group(3) else [pub.year, pub.year - 1, pub.year - 2]
+    sem = next((v for k, v in DIAS.items() if re.search(r"\b" + k + r"\b", t)), None)
+    cand = []
+    for a in anios:
+        try:
+            d = dt.datetime(a, mes, dia, 12, tzinfo=BO)
+        except ValueError:
+            continue
+        if d <= pub + dt.timedelta(days=1):
+            cand.append(d)
+    if not cand:
+        return None
+    if sem is not None:
+        ok = [d for d in cand if d.weekday() == sem]
+        if ok:
+            return _ms(max(ok))
+        if not m.group(3):
+            return None  # el día de la semana no cuadra con ningún año: no se arriesga una fecha
+    return _ms(max(cand))

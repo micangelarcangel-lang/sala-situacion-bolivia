@@ -65,7 +65,7 @@ def mapa(evs, geo_dep):
     return _png(fig)
 
 
-def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geojson"):
+def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geojson", hechos=None):
     ahora = ahora or max(e.get("ts", 0) for e in eventos)
     evs = seleccionar(eventos, ahora, horas)
     top = sorted(evs, key=prioridad, reverse=True)[:8]
@@ -105,6 +105,22 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     tb.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
                             ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
     el.append(tb)
+    if hechos:
+        import hechos_v3
+        ev_h = sorted((h for h in hechos.values() if h["estado"] == "abierto" and len(h["notas"]) > 1 and h["ultima"] >= ahora - horas * 3600000 * 3), key=lambda h: -len(h["notas"]))[:6]
+        if ev_h:
+            el.append(Paragraph("Hechos en evolución", est["h"]))
+            fh = [["Hecho", "Lugar", "Seguimiento", "Cómo cambiaron las cifras"]]
+            for h in ev_h:
+                medios = len({n["fuente"] for n in h["notas"]})
+                f1, f2 = (dt.datetime.fromtimestamp(h[k] / 1000, BO).strftime("%d/%m %H:%M") for k in ("primera", "ultima"))
+                fh.append([Paragraph(h["notas"][-1]["titulo"][:90].replace("&", "&amp;").replace("<", "&lt;") + f'<br/><font size="7" color="{GRIS}">{h["subtipo"]}{" · reabierto" if h["reaperturas"] else ""}</font>', est["p"]),
+                           Paragraph((h.get("lugar") or "—").replace("&", "&amp;"), est["c"]), Paragraph(f"{f1} → {f2}<br/>{len(h['notas'])} notas, {medios} medios", est["c"]),
+                           Paragraph((hechos_v3.evolucion(h) or "sin cifras en las notas").replace("&", "&amp;") + (" (prensa, sin confirmar)" if not any(n["oficial"] for n in h["notas"]) else ""), est["c"])])
+            tf = Table(fh, colWidths=[62 * mm, 30 * mm, 30 * mm, 58 * mm], repeatRows=1)
+            tf.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(AZUL)), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("FONTSIZE", (0, 0), (-1, 0), 8), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                                    ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f5f8fb")]), ("LINEBELOW", (0, 0), (-1, -1), .25, colors.HexColor("#d5dde5"))]))
+            el.append(tf)
     fuentes = collections.Counter(e.get("fuente", "") for e in evs).most_common(6)
     el += [Paragraph("Método y trazabilidad", est["h"]),
            Paragraph("* Las cifras de víctimas vienen de titulares y notas de prensa y pueden cambiar; sin fuente institucional no pasan de nivel «corroborado». Los puntos del mapa son solo hechos ubicados con precisión de municipio o punto. "

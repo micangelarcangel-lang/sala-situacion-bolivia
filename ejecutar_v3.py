@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import re, json, os, sys, time, collections, traceback
-import hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import fecha_v3, hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -147,6 +147,12 @@ def main():
             c_cache = cache_cuerpos.get(e.get("url"), {}).get("texto") or ""
             cuerpo = max([c_notas, c_cache], key=len)
             e["cuerpo_leido"] = len(cuerpo) > 300
+            pub = e.get("ts_publicacion") or e.get("ts") or 0
+            fh = fecha_v3.fecha_hecho(cuerpo, pub)
+            if fh:
+                e["fecha_hecho"] = fh
+                if pub - fh > 5 * 86400000:  # la nota publica un hecho viejo: el hecho vale por su fecha, no por la de publicación
+                    e.update(ts_publicacion=pub, ts=fh, hecho_antiguo=True)
             pre = clasificar_v3.clasificar(e["titulo"], cuerpo)
             r = ubicar_v3.ubicar(e["titulo"], cuerpo, geo, puntual=pre["subtipo"] in PUNTUALES)
             e["precision_ubicacion"] = r["precision"]
@@ -261,7 +267,7 @@ def main():
     ctl["almacen"] = etapa("almacen", lambda: almacen_v3.actualizar(eventos, SALIDA), ctl)
     json.dump({"generado": int(time.time() * 1000), "n": len(eventos), "eventos": eventos}, open(f"{SALIDA}/eventos_v3.json", "w", encoding="utf-8"), ensure_ascii=False)
     ctl["despues"] = validar.reglas_calidad(eventos)
-    etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson"), ctl)
+    etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson", json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/hechos.json") else None), ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
     print("ALMACEN", ctl.get("almacen")); print("FEEDS", ctl.get("captar_feeds")); print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion")); print("HECHOS", ctl.get("hechos"))

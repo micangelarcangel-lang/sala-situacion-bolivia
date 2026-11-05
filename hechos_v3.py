@@ -119,6 +119,7 @@ def actualizar(eventos, previos, ahora):
     for n in libres:  # lo que no se unió a nada es un hecho nuevo
         h = _nuevo([n]); hechos[h["id"]] = h
     for h in hechos.values():
+        h["notas"].sort(key=lambda n: n["ts"]); h["primera"], h["ultima"] = h["notas"][0]["ts"], h["notas"][-1]["ts"]
         con = [n for n in h["notas"] if n.get("lugar")]
         if con:
             mejor = max(con, key=lambda n: ({"municipio": 3, "punto": 3, "tramo": 2, "varios": 2, "departamento": 1}.get(n.get("precision"), 0), n["ts"]))
@@ -153,3 +154,17 @@ def resumen(h, corte=None):
             txt += " [revisar: una nota posterior da una cifra menor]"
         partes.append(txt)
     return " · ".join(partes)
+
+
+def evolucion(h, campos=("fallecidos", "heridos", "familias_afectadas", "personas_afectadas", "casos_notificados", "viviendas", "ganado")):
+    """Texto de la evolución de cifras: 'Fallecidos 2 → 3 → 4'. Solo campos con al menos un cambio o una cifra."""
+    out = []
+    for c, v in cifra_vigente(h).items():
+        if c not in campos:
+            continue
+        vals = []
+        for _, x in v["serie"]:
+            if not vals or vals[-1] != x:
+                vals.append(x)
+        out.append(f"{c.replace('_', ' ').capitalize()} " + " → ".join(f"{x:,}".replace(",", ".") for x in vals))
+    return " · ".join(out)

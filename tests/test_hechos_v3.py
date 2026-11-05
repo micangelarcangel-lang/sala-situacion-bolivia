@@ -47,3 +47,9 @@ def test_marca_revisar_si_la_cifra_baja():
     t0 = 1_800_000_000_000
     x = h._nuevo([h.huella(ev("a", "Accidente en Viacha", t0, 4)), h.huella(ev("b", "Accidente en Viacha", t0 + 3600000, 3))])
     assert h.cifra_vigente(x)["fallecidos"]["revisar"] is True
+
+
+def test_evolucion_en_texto():
+    t0 = 1_800_000_000_000
+    x = h._nuevo([h.huella(ev("a", "Accidente en Viacha", t0, 2)), h.huella(ev("b", "Accidente en Viacha", t0 + 3600000, 3)), h.huella(ev("c", "Accidente en Viacha", t0 + 7200000, 3))])
+    assert h.evolucion(x) == "Fallecidos 2 → 3"
