@@ -148,12 +148,15 @@ def main():
             cuerpo = max([c_notas, c_cache], key=len)
             e["cuerpo_leido"] = len(cuerpo) > 300
             pub = e.get("ts_publicacion") or e.get("ts") or 0
+            pre = clasificar_v3.clasificar(e["titulo"], cuerpo)
             fh = fecha_v3.fecha_hecho(cuerpo, pub)
             if fh:
                 e["fecha_hecho"] = fh
-                if pub - fh > 5 * 86400000:  # la nota publica un hecho viejo: el hecho vale por su fecha, no por la de publicación
-                    e.update(ts_publicacion=pub, ts=fh, hecho_antiguo=True)
-            pre = clasificar_v3.clasificar(e["titulo"], cuerpo)
+            fh0 = fecha_v3.fecha_hecho(cuerpo[:200], pub)  # fecha pegada al inicio de la nota (fechado o primera frase)
+            if fh0 and pub - fh0 > 7 * 86400000 and pre["subtipo"] in PUNTUALES:  # solo hechos puntuales; en brotes o sequías una fecha del texto suele ser otra cosa (inicio, plazo)
+                e.update(ts_publicacion=pub, ts=fh0, hecho_antiguo=True)
+            elif e.get("hecho_antiguo"):  # corrida anterior con una regla más amplia: se devuelve la fecha de publicación
+                e.update(ts=pub, hecho_antiguo=False)
             r = ubicar_v3.ubicar(e["titulo"], cuerpo, geo, puntual=pre["subtipo"] in PUNTUALES)
             e["precision_ubicacion"] = r["precision"]
             e["metodo"] = "sin ubicar" if r["precision"] == "ninguna" else "v3: " + r["motivo"] + (" (" + ", ".join(r["razones"][:3]) + ")" if r["razones"] else "")
