@@ -87,3 +87,8 @@ def test_la_paz_departamento_no_es_el_municipio():
 def test_alcance_nacional_del_titular_manda():
     r = u.ubicar("Sequía en 6 departamentos afecta a 114 mil familias", "Pasorapa, Cochabamba", GEO)
     assert r["precision"] == "nacional" and not r["municipio"]
+
+
+def test_distancia_de_referencia_no_es_el_lugar():
+    r = u.ubicar("Explosión en cuartel deja dos muertos", "La explosión ocurrió en Viacha, un municipio situado a unos 35 kilometros de la ciudad de La Paz", GEO, puntual=True)
+    assert r["municipio"] == "Viacha"

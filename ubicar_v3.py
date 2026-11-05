@@ -148,6 +148,8 @@ def _ubicar_base(titulo, cuerpo, geo, max_cuerpo=3500, puntual=False):
             for texto, posiciones in ((tn, en_t), (cn, en_c)):
                 for p in posiciones:
                     previo = _previo(texto, p)
+                    if re.search(r"(kilometros|km|metros|minutos|horas) de (?:la |el )?(?:ciudad de)?$", texto[max(0, p - 50):p].rstrip()):
+                        c["puntaje"] -= 3; c["razones"].append("distancia de referencia"); continue  # 'a 35 km de la ciudad de La Paz': referencia, no el lugar del hecho
                     if any(previo.endswith(x) for x in DIRECCIONALES):
                         c["puntaje"] -= 3; c["razones"].append("destino u origen")
                     elif any(previo.endswith(x) for x in LOCATIVOS):
