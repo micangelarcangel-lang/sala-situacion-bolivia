@@ -225,5 +225,5 @@ def evolucion(h, campos=("fallecidos", "heridos", "familias_afectadas", "persona
         for _, x in v["serie"]:
             if not vals or vals[-1] != x:
                 vals.append(x)
-        out.append(f"{c.replace('_', ' ').capitalize()} " + " → ".join(f"{x:,}".replace(",", ".") for x in vals))
+        out.append(f"{c.replace('_', ' ').capitalize()} " + " → ".join(f"{x:,}".replace(",", ".") for x in vals) + (" [revisar]" if v["revisar"] else ""))
     return " · ".join(out)

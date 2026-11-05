@@ -105,6 +105,12 @@ def g_evolucion(h):
     return _png(fig)
 
 
+def _desde(hechos, ahora):
+    """Desde cuándo hay datos: se ignoran los 2 hechos más antiguos (notas viejas reubicadas por su fecha) para no creer que hay semanas completas que no existen."""
+    ts = sorted(n["ts"] for h in hechos.values() for n in h["notas"] if not h.get("fusionados") or True)
+    return ts[min(len(ts) - 1, 4)] if ts else ahora
+
+
 def _estilos():
     S = lambda n, **k: ParagraphStyle(n, fontName=k.pop("f", "Helvetica"), fontSize=k.pop("s", 9), leading=k.pop("l", 12), **k)
     return {"t": S("t", f="Helvetica-Bold", s=17, l=20, textColor=colors.HexColor(AZUL)), "p": S("p"), "c": S("c", s=7.5, l=10, textColor=colors.HexColor(GRIS)), "b": S("b", s=9.5, l=13),
@@ -194,7 +200,7 @@ def build_semanal(hechos, ahora, salida, geo_dep=None):
     hs, nuevos = _hechos_periodo(hechos, ini, fin)
     prev_ini, prev_fin = ini - 7 * D, ini - 1
     hp, nuevos_p = _hechos_periodo(hechos, prev_ini, prev_fin)
-    desde = min((h["primera"] for h in hechos.values()), default=ahora)
+    desde = _desde(hechos, ahora)
     hay_prev = desde <= prev_ini  # solo se compara si la semana anterior está completa en los datos
     f_, her = _ahora_cifras(hs, fin)
     fp, herp = _ahora_cifras(hp, prev_fin)
@@ -226,7 +232,7 @@ def build_mensual(hechos, ahora, salida, geo_dep=None):
     ini, fin, etiqueta, cerrado = periodos.ventana_mensual(ahora)
     est = _estilos()
     hs, nuevos = _hechos_periodo(hechos, ini, fin)
-    desde = min((h["primera"] for h in hechos.values()), default=ahora)
+    desde = _desde(hechos, ahora)
     f_, her = _ahora_cifras(hs, fin)
     # tendencia por semana epidemiológica (domingo a sábado) dentro del mes
     sems, t = [], ini
