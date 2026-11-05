@@ -270,7 +270,7 @@ def main():
             if (h.get("lugar") or "").startswith("Nacional") and any(a["alcance"] == "nacional" for a in ac):
                 alc = [("nacional", 1)]  # un hecho de alcance nacional se verifica en el nivel nacional
             top = next(a for a in ac if a["alcance"] == alc[0][0])
-            clave = "|".join(str(x) for x in (top["alcance"], top["tipo"], top.get("numero"), h["subtipo"], h.get("departamento"), (h["notas"][-1].get("municipio"))))
+            clave = "|".join(str(x) for x in ("v2", top["alcance"], top["tipo"], top.get("numero"), h["subtipo"], h.get("departamento"), (h["notas"][-1].get("municipio"))))
             if clave not in cache and verif < 10:
                 cache[clave] = {"t": ahora, "r": oficial_v3.verificar(top, h["subtipo"], h.get("departamento"), h["notas"][-1].get("municipio"))}; verif += 1
             if clave in cache:
