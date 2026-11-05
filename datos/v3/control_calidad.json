@@ -6,7 +6,7 @@
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 15.3
+   "seg": 17.1
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 22.0
+   "seg": 13.3
   },
   "agrupar": {
    "ok": true,
@@ -26,7 +26,7 @@
   },
   "hechos": {
    "ok": true,
-   "seg": 0.1
+   "seg": 0.0
   },
   "servicios_cercanos": {
    "ok": true,
@@ -38,11 +38,11 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.3
+   "seg": 0.2
   },
   "periodicos": {
    "ok": true,
-   "seg": 0.7
+   "seg": 0.4
   }
  },
  "antes": {
@@ -565,56 +565,56 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 1.2,
+    "seg": 1.0,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
    "ABI": {
     "ok": true,
     "notas": 10,
-    "seg": 2.5,
+    "seg": 3.4,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 1.9,
+    "seg": 2.1,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Opinión": {
     "ok": true,
     "notas": 20,
-    "seg": 0.3,
+    "seg": 0.6,
     "con_fecha": 20,
     "con_cuerpo": 0
    },
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.2,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
    "ATB": {
     "ok": true,
     "notas": 10,
-    "seg": 1.2,
+    "seg": 1.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
    "Radio Panamericana": {
     "ok": true,
     "notas": 30,
-    "seg": 0.9,
+    "seg": 1.0,
     "con_fecha": 30,
     "con_cuerpo": 16
    },
@@ -628,14 +628,14 @@
    "Unitel": {
     "ok": true,
     "notas": 100,
-    "seg": 0.5,
+    "seg": 0.6,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Los Tiempos": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
@@ -649,21 +649,21 @@
    "Eju.tv": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Visión 360": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    },
    "Correo del Sur": {
     "ok": true,
     "notas": 100,
-    "seg": 0.4,
+    "seg": 0.5,
     "con_fecha": 100,
     "con_cuerpo": 0
    }
@@ -680,11 +680,11 @@
   "relevante": 123,
   "exterior": 16,
   "departamento": 99,
-  "municipio": 106,
+  "municipio": 105,
   "nacional": 12,
   "tramo": 10,
-  "por_lugar_conocido": 1,
-  "varios": 1
+  "varios": 2,
+  "por_lugar_conocido": 1
  },
  "agrupacion": {
   "grupos_con_mas_de_un_evento": 14,
@@ -747,7 +747,7 @@
  },
  "almacen": {
   "nuevos": 0,
-  "cambiados": 0,
+  "cambiados": 1,
   "total_indice": 832
  },
  "despues": {
