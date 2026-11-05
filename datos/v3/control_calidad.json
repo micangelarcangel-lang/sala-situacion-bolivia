@@ -2,11 +2,11 @@
  "etapas": {
   "leer_cuerpos": {
    "ok": true,
-   "seg": 1.7
+   "seg": 0.1
   },
   "captar_feeds": {
    "ok": true,
-   "seg": 17.3
+   "seg": 19.1
   },
   "cargar_geografia": {
    "ok": true,
@@ -18,7 +18,7 @@
   },
   "enriquecer": {
    "ok": true,
-   "seg": 13.6
+   "seg": 21.6
   },
   "agrupar": {
    "ok": true,
@@ -38,11 +38,11 @@
   },
   "boletin": {
    "ok": true,
-   "seg": 0.2
+   "seg": 0.3
   },
   "periodicos": {
    "ok": true,
-   "seg": 1.0
+   "seg": 1.5
   }
  },
  "antes": {
@@ -561,11 +561,8 @@
   ]
  },
  "lectura_cuerpos": {
-  "leidas_ahora": 6,
-  "estados": {
-   "texto completo": 4,
-   "solo titular": 2
-  },
+  "leidas_ahora": 0,
+  "estados": {},
   "en_cache": 356,
   "pendientes": 0
  },
@@ -574,7 +571,7 @@
    "La Patria": {
     "ok": true,
     "notas": 100,
-    "seg": 0.9,
+    "seg": 1.1,
     "con_fecha": 100,
     "con_cuerpo": 100
    },
@@ -588,7 +585,7 @@
    "La Razón": {
     "ok": true,
     "notas": 10,
-    "seg": 4.4,
+    "seg": 6.5,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -602,14 +599,14 @@
    "El Deber": {
     "ok": true,
     "notas": 25,
-    "seg": 0.3,
+    "seg": 0.2,
     "con_fecha": 25,
     "con_cuerpo": 1
    },
    "Red Uno": {
     "ok": true,
     "notas": 25,
-    "seg": 0.4,
+    "seg": 0.3,
     "con_fecha": 25,
     "con_cuerpo": 24
    },
@@ -630,7 +627,7 @@
    "Oxígeno": {
     "ok": true,
     "notas": 10,
-    "seg": 1.2,
+    "seg": 1.0,
     "con_fecha": 10,
     "con_cuerpo": 10
    },
@@ -755,8 +752,8 @@
   ]
  },
  "almacen": {
-  "nuevos": 11,
-  "cambiados": 59,
+  "nuevos": 0,
+  "cambiados": 0,
   "total_indice": 843
  },
  "despues": {
