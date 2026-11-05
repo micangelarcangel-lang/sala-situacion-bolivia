@@ -125,9 +125,10 @@ def _norma(h):
     if not a:
         return ""
     base = f'{a["tipo"]} {a["alcance"]}' + (f' N° {a["numero"]}' if a.get("numero") else "")
-    if a["estado"] == "verificado":
+    if a["estado"] in ("verificado", "respaldo_probable"):
         l = a["enlaces"][0]
-        return f'<br/><font size="7" color="#1b6b3a">Norma ({_e(base)}): respaldo oficial en {_e(l.get("entidad") or "")} ({_e(l.get("fecha") or "")})</font>'
+        etq = "respaldo oficial" if a["estado"] == "verificado" else "posible respaldo oficial (confirmar)"
+        return f'<br/><font size="7" color="#1b6b3a">Norma ({_e(base)}): {etq} en {_e(l.get("entidad") or "")} ({_e(l.get("fecha") or "")})</font>'
     if a["estado"] == "pendiente_de_verificar":
         return f'<br/><font size="7" color="#b36b00">Norma ({_e(base)}): pendiente de verificar</font>'
     return f'<br/><font size="7" color="#b00020">Norma ({_e(base)}): no se encontró respaldo oficial; verificar en la Gaceta Oficial</font>'

@@ -267,12 +267,14 @@ def main():
             if not ac:
                 h.pop("acto_oficial", None); continue
             alc = collections.Counter(a["alcance"] for a in ac).most_common()
+            if (h.get("lugar") or "").startswith("Nacional") and any(a["alcance"] == "nacional" for a in ac):
+                alc = [("nacional", 1)]  # un hecho de alcance nacional se verifica en el nivel nacional
             top = next(a for a in ac if a["alcance"] == alc[0][0])
             clave = "|".join(str(x) for x in (top["alcance"], top["tipo"], top.get("numero"), h["subtipo"], h.get("departamento"), (h["notas"][-1].get("municipio"))))
             if clave not in cache and verif < 10:
                 cache[clave] = {"t": ahora, "r": oficial_v3.verificar(top, h["subtipo"], h.get("departamento"), h["notas"][-1].get("municipio"))}; verif += 1
             if clave in cache:
-                h["acto_oficial"] = cache[clave]["r"]; col += cache[clave]["r"]["estado"] == "verificado"
+                h["acto_oficial"] = cache[clave]["r"]; col += cache[clave]["r"]["estado"] in ("verificado", "respaldo_probable")
             else:
                 h["acto_oficial"] = dict(top, estado="pendiente_de_verificar")
         json.dump(cache, open(ruta_c, "w", encoding="utf-8"), ensure_ascii=False)

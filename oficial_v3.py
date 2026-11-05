@@ -2,7 +2,7 @@
 """Triangulación con fuentes oficiales (v3): cuando una nota habla de una declaratoria, decreto, ley, resolución u ordenanza, se busca el respaldo en medios
 oficiales según el alcance (nacional, departamental, municipal). La Gaceta Oficial de Bolivia bloquea las conexiones desde fuera del país (ERR_CONNECTION_RESET,
 probado 05/11/2026 con las tres vías); mientras tanto se usa lo que sí responde: presidencia.gob.bo (WordPress, API pública) y los portales .gob.bo vía Google News.
-Resultado: acto_oficial = {alcance, tipo, numero, estado, enlaces}. Estados: verificado | sin_respaldo_oficial_encontrado | solo_gaceta (verificar a mano)."""
+Resultado: acto_oficial = {alcance, tipo, numero, estado, enlaces}. Estados: verificado (coincide el número de la norma) | respaldo_probable (hay una publicación oficial sobre el tema; confirmar a mano) | sin_respaldo_oficial_encontrado."""
 import re, json, unicodedata, urllib.parse, urllib.request, time
 
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
@@ -92,7 +92,10 @@ def verificar(acto, subtipo, dep=None, mun=None, presupuesto_seg=20):
         except Exception as e:
             errores.append(f"{nombre}: {type(e).__name__}")
     out = dict(acto)
-    out["estado"] = "verificado" if enlaces else "sin_respaldo_oficial_encontrado"
+    # «verificado» solo si el número de la norma aparece en el título o la dirección del documento oficial; si no, es un respaldo probable que hay que confirmar a mano
+    num = acto.get("numero")
+    exacto = bool(num) and any(num in (e.get("titulo") or "") or num in (e.get("url") or "") for e in enlaces)
+    out["estado"] = "verificado" if exacto else ("respaldo_probable" if enlaces else "sin_respaldo_oficial_encontrado")
     out["enlaces"] = enlaces[:3]
     if errores:
         out["vias_con_error"] = errores

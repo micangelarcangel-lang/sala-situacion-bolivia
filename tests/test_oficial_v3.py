@@ -23,3 +23,10 @@ def test_verificar_tolera_fallos_de_red(monkeypatch):
     monkeypatch.setattr(o, "_wp", falla); monkeypatch.setattr(o, "_gnews", falla)
     r = o.verificar({"alcance": "nacional", "tipo": "declaratoria", "numero": None}, "sequía")
     assert r["estado"] == "sin_respaldo_oficial_encontrado" and r["vias_con_error"]
+
+
+def test_verificado_solo_si_coincide_el_numero(monkeypatch):
+    monkeypatch.setattr(o, "_wp", lambda d, q: [{"titulo": "Decreto Supremo 5123 declara emergencia por sequía", "url": "u", "fecha": "2026-11-01", "entidad": "presidencia.gob.bo"}])
+    monkeypatch.setattr(o, "_gnews", lambda q: [])
+    assert o.verificar({"alcance": "nacional", "tipo": "decreto", "numero": "5123"}, "sequía")["estado"] == "verificado"
+    assert o.verificar({"alcance": "nacional", "tipo": "declaratoria", "numero": None}, "sequía")["estado"] == "respaldo_probable"
