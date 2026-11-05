@@ -75,7 +75,7 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
     # un hecho contado por varios medios cuenta una sola vez: de cada grupo propuesto se toma la cifra mayor
     por_grupo = {}
     for e in evs:
-        clave = tuple(sorted(e.get("grupo_propuesto") or [e["id"]]))
+        clave = e.get("hecho_id") or tuple(sorted(e.get("grupo_propuesto") or [e["id"]]))
         c = e.get("cifras") or {}
         a = por_grupo.setdefault(clave, [0, 0])
         a[0], a[1] = max(a[0], c.get("fallecidos", 0) or 0), max(a[1], c.get("heridos", 0) or 0)

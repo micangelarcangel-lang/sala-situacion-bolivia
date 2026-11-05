@@ -366,6 +366,12 @@
         "boolean",
         "null"
       ]
+    },
+    "hecho_id": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
   },
   "additionalProperties": false

@@ -23,8 +23,13 @@ def test_no_une_fuera_de_ventana():
     assert len(r) == 2
 
 
-def test_no_une_cifras_de_muertos_distintas():
+def test_une_cifra_creciente_en_el_mismo_municipio():
     r = g.agrupar([nota("Choque en la doble vía deja dos muertos", 0, "Oruro", "Oruro", 2), nota("Choque en la doble vía deja cuatro muertos", H, "Oruro", "Oruro", 4)])
+    assert len(r) == 1  # el hecho se actualiza: 2 -> 4
+
+
+def test_no_une_cifras_distintas_sin_municipio_confirmado():
+    r = g.agrupar([nota("Choque en la doble vía deja dos muertos", 0, None, "Oruro", 2), nota("Choque en la doble vía deja cuatro muertos", H, None, "Oruro", 4)])
     assert len(r) == 2
 
 

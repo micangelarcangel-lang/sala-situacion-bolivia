@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import re, json, os, sys, time, collections, traceback
-import ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -230,6 +230,27 @@ def main():
         return {"grupos_con_mas_de_un_evento": len(gs), "ejemplos": [[eventos[idx[i]]["titulo"][:70] for i in g["indices"]] for g in gs[:5]]}
     ctl["agrupacion"] = etapa("agrupar", grupos, ctl)
 
+    def hechos():
+        ruta = f"{SALIDA}/hechos.json"
+        previos = json.load(open(ruta, encoding="utf-8")) if os.path.exists(ruta) else {}
+        ahora = int(time.time() * 1000)
+        for ev in eventos:
+            ev["_grandes"] = _grandes(ev)
+        hs = hechos_v3.actualizar(eventos, previos, ahora)
+        por_nota = {n["id"]: h for h in hs.values() for n in h["notas"]}
+        for ev in eventos:
+            ev.pop("_grandes", None)
+            if ev["id"] in por_nota:
+                ev["hecho_id"] = por_nota[ev["id"]]["id"]
+        for h in hs.values():
+            for n in h["notas"]:
+                n.pop("grandes", None)
+        json.dump(hs, open(ruta, "w", encoding="utf-8"), ensure_ascii=False)
+        ab = [h for h in hs.values() if h["estado"] == "abierto"]
+        return {"hechos": len(hs), "abiertos": len(ab), "con_varias_notas": sum(len(h["notas"]) > 1 for h in hs.values()), "reabiertos": sum(h["reaperturas"] > 0 for h in hs.values()),
+                "ejemplos": [[h["subtipo"], h["lugar"], len(h["notas"]), hechos_v3.resumen(h)[:80]] for h in sorted(hs.values(), key=lambda h: -len(h["notas"]))[:4]]}
+    ctl["hechos"] = etapa("hechos", hechos, ctl)
+
     def servicios():
         s = json.load(open("datos/servicios_osm.json", encoding="utf-8"))["servicios"]
         top = sorted([e for e in eventos if e.get("lat") is not None], key=reporte_v3.prioridad, reverse=True)[:20]
@@ -243,7 +264,7 @@ def main():
     etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson"), ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
-    print("ALMACEN", ctl.get("almacen")); print("FEEDS", ctl.get("captar_feeds")); print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion"))
+    print("ALMACEN", ctl.get("almacen")); print("FEEDS", ctl.get("captar_feeds")); print("CUERPOS", ctl.get("lectura_cuerpos")); print("UBICACION", ctl.get("ubicacion")); print("AGRUPACION", ctl.get("agrupacion")); print("HECHOS", ctl.get("hechos"))
 
 
 if __name__ == "__main__":

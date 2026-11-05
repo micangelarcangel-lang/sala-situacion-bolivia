@@ -66,8 +66,8 @@ def agrupar(notas, ventana_h=48, umbral=0.45, umbral_mismo_lugar=0.30):
                 continue
             mismo = bool(ma and ma == mb)
             fa, fb = a.get("fallecidos"), b.get("fallecidos")
-            if fa is not None and fb is not None and fa != fb and fa > 1 and fb > 1:
-                continue  # cifras de muertos incompatibles: hechos distintos
+            if fa is not None and fb is not None and fa != fb and fa > 1 and fb > 1 and not mismo:
+                continue  # cifras de muertos distintas en lugares no confirmados iguales: hechos distintos (en el mismo municipio la cifra puede crecer)
             sim = _coseno(vecs[i], vecs[j])
             raros = [w for w in tt[i] & tt[j] if dft[w] <= tope_raro]
             if len(raros) >= (2 if mismo else 4):  # sin el mismo municipio confirmado se exigen 4 términos raros compartidos
