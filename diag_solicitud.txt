@@ -1,14 +1,1 @@
-https://www.gacetaoficialdebolivia.gob.bo
-https://www.gacetaoficialdebolivia.gob.bo/normas/listadonor/9
-https://www.presidencia.gob.bo
-https://www.mindef.gob.bo
-https://www.minsalud.gob.bo
-https://www.mmaya.gob.bo
-https://www.lapaz.bo
-https://www.santacruz.gob.bo
-https://www.cochabamba.gob.bo
-https://www.gobernaciondeoruro.gob.bo
-https://www.sedeslapaz.gob.bo
-https://www.sedescochabamba.gob.bo
-https://news.google.com/rss/search?q=site:gacetaoficialdebolivia.gob.bo&hl=es-419&gl=BO&ceid=BO:es-419
-https://news.google.com/rss/search?q=decreto+supremo+declaratoria+emergencia+sequ%C3%ADa&hl=es-419&gl=BO&ceid=BO:es-419
+https://www.gacetaoficialdebolivia.gob.bo/ https://www.gacetaoficialdebolivia.gob.bo/normas/listadonor/9 https://www.lexivox.org/ https://normativa.cepb.org.bo/ https://www.presidencia.gob.bo/ https://www.diputados.bo/ https://www.senado.bo/ https://www.mingobierno.gob.bo/ https://www.minpresidencia.gob.bo/
