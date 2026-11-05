@@ -194,13 +194,13 @@ def _doc(salida, titulo, el):
     SimpleDocTemplate(salida, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=13 * mm, bottomMargin=13 * mm, title=titulo, author="Sala de Situación Bolivia").build(el)
 
 
-def build_semanal(hechos, ahora, salida, geo_dep=None):
+def build_semanal(hechos, ahora, salida, geo_dep=None, inicio=None):
     ini, fin, s, cerrada = periodos.ventana_semanal(ahora)
     est = _estilos()
     hs, nuevos = _hechos_periodo(hechos, ini, fin)
     prev_ini, prev_fin = ini - 7 * D, ini - 1
     hp, nuevos_p = _hechos_periodo(hechos, prev_ini, prev_fin)
-    desde = _desde(hechos, ahora)
+    desde = inicio or _desde(hechos, ahora)
     hay_prev = desde <= prev_ini  # solo se compara si la semana anterior está completa en los datos
     f_, her = _ahora_cifras(hs, fin)
     fp, herp = _ahora_cifras(hp, prev_fin)
@@ -228,11 +228,11 @@ def build_semanal(hechos, ahora, salida, geo_dep=None):
     return {"hechos": len(hs), "se": s["nro"], "cerrada": cerrada}
 
 
-def build_mensual(hechos, ahora, salida, geo_dep=None):
+def build_mensual(hechos, ahora, salida, geo_dep=None, inicio=None):
     ini, fin, etiqueta, cerrado = periodos.ventana_mensual(ahora)
     est = _estilos()
     hs, nuevos = _hechos_periodo(hechos, ini, fin)
-    desde = _desde(hechos, ahora)
+    desde = inicio or _desde(hechos, ahora)
     f_, her = _ahora_cifras(hs, fin)
     # tendencia por semana epidemiológica (domingo a sábado) dentro del mes
     sems, t = [], ini

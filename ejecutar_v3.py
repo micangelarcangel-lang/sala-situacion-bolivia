@@ -275,7 +275,11 @@ def main():
         hs = json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8"))
         ahora = int(time.time() * 1000)
         geo_dep = json.load(open("docs/geo_dep.geojson", encoding="utf-8"))
-        return {"semanal": reporte_periodico_v3.build_semanal(hs, ahora, f"{SALIDA}/boletin_semanal.pdf", geo_dep), "mensual": reporte_periodico_v3.build_mensual(hs, ahora, f"{SALIDA}/boletin_mensual.pdf", geo_dep)}
+        ruta_i = f"{SALIDA}/inicio_captura.json"  # desde cuándo el sistema captura de forma continua: los boletines no comparan contra períodos anteriores a esta fecha
+        if not os.path.exists(ruta_i):
+            json.dump({"desde": ahora - 72 * 3600000}, open(ruta_i, "w", encoding="utf-8"))
+        ini_c = json.load(open(ruta_i, encoding="utf-8"))["desde"]
+        return {"semanal": reporte_periodico_v3.build_semanal(hs, ahora, f"{SALIDA}/boletin_semanal.pdf", geo_dep, ini_c), "mensual": reporte_periodico_v3.build_mensual(hs, ahora, f"{SALIDA}/boletin_mensual.pdf", geo_dep, ini_c)}
     etapa("periodicos", periodicos, ctl)
     json.dump(ctl, open(f"{SALIDA}/control_calidad.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("CALIDAD (antes -> después)", {k: (len(ctl["antes"][k]), len(ctl["despues"][k])) for k in ctl["antes"]}); print("ETAPAS", {k: (v["ok"], v["seg"]) for k, v in ctl["etapas"].items()})
