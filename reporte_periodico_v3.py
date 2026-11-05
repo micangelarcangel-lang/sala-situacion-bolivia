@@ -119,6 +119,20 @@ def _calidad(hs):
     return {"lugar_preciso": round(100 * muni / n), "con_cifras": round(100 * cif / n), "varios_medios": round(100 * multi / n)}
 
 
+def _norma(h):
+    """Línea sobre el respaldo oficial del acto (declaratoria, decreto, ley, ordenanza) que mencionan las notas."""
+    a = h.get("acto_oficial")
+    if not a:
+        return ""
+    base = f'{a["tipo"]} {a["alcance"]}' + (f' N° {a["numero"]}' if a.get("numero") else "")
+    if a["estado"] == "verificado":
+        l = a["enlaces"][0]
+        return f'<br/><font size="7" color="#1b6b3a">Norma ({_e(base)}): respaldo oficial en {_e(l.get("entidad") or "")} ({_e(l.get("fecha") or "")})</font>'
+    if a["estado"] == "pendiente_de_verificar":
+        return f'<br/><font size="7" color="#b36b00">Norma ({_e(base)}): pendiente de verificar</font>'
+    return f'<br/><font size="7" color="#b00020">Norma ({_e(base)}): no se encontró respaldo oficial; verificar en la Gaceta Oficial</font>'
+
+
 def _bloque_hechos(el, est, hs, ahora, n=10, con_grafica=True):
     mayores = sorted(hs, key=lambda h: (-len(h["notas"]), -h["ultima"]))[:n]
     if con_grafica:
@@ -128,7 +142,7 @@ def _bloque_hechos(el, est, hs, ahora, n=10, con_grafica=True):
     filas = [["Hecho", "Lugar", "Seguimiento", "Cifras (evolución)"]]
     for h in mayores:
         a, b = (dt.datetime.fromtimestamp(h[k] / 1000, BO).strftime("%d/%m") for k in ("primera", "ultima"))
-        filas.append([Paragraph(_e(h["notas"][-1]["titulo"][:90]) + f'<br/><font size="7" color="{GRIS}">{h["subtipo"]} · {h["estado"]}{" · reabierto" if h["reaperturas"] else ""}</font>', est["p"]), Paragraph(_e(h.get("lugar") or "—"), est["c"]),
+        filas.append([Paragraph(_e(h["notas"][-1]["titulo"][:90]) + f'<br/><font size="7" color="{GRIS}">{h["subtipo"]} · {h["estado"]}{" · reabierto" if h["reaperturas"] else ""}</font>' + _norma(h), est["p"]), Paragraph(_e(h.get("lugar") or "—"), est["c"]),
                       Paragraph(f"{a} → {b}<br/>{len(h['notas'])} notas, {len({x['fuente'] for x in h['notas']})} medios", est["c"]),
                       Paragraph(_e(hechos_v3.evolucion(h) or "sin cifras en las notas") + ("" if any(x["oficial"] for x in h["notas"]) else " (prensa, sin confirmar)"), est["c"])])
     el += [Paragraph("Hechos con más seguimiento", est["h"]), _tabla(filas, [62, 30, 30, 58])]

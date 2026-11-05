@@ -6,7 +6,7 @@ Lee los eventos que ya genera el sistema actual (docs/eventos_unificados.json), 
   control_calidad.json (reglas de calidad antes y después, tiempos por etapa)
 Cada etapa mide su tiempo: si una falla, las demás siguen y el fallo queda en control_calidad.json."""
 import re, json, os, sys, time, collections, traceback
-import reporte_periodico_v3, fecha_v3, hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
+import oficial_v3, reporte_periodico_v3, fecha_v3, hechos_v3, ficha_v3, captar_v3, lugares_v3, almacen_v3, clasificar_v3, ubicar_v3, victimas_v3, agrupar_v3, servicios_cercanos, reporte_v3, validar
 
 SALIDA = "datos/v3"
 
@@ -181,6 +181,8 @@ def main():
             if cl["categoria"]:
                 e["categoria"] = cl["categoria"]
             n["relevante"] += cl["relevante"]; n["exterior"] += cl["ambito"] == "exterior"
+            e["acto_oficial"] = oficial_v3.detectar_acto(e["titulo"], cuerpo) if cl["relevante"] else None
+            n["con_acto_oficial"] += bool(e["acto_oficial"])
             if cl["relevante"] and r["precision"] in ("ninguna", "departamento") and indice_lugares is not None:
                 hit = lugares_v3.buscar(e["titulo"], cuerpo, indice_lugares, localizador, (e.get("departamentos") or [None])[0])
                 if hit and hit.get("municipio"):
@@ -254,9 +256,29 @@ def main():
         for h in hs.values():
             for n in h["notas"]:
                 n.pop("grandes", None)
+        # triangulación con medios oficiales: un acto (declaratoria, decreto, ley, ordenanza) por hecho, buscado según su alcance; caché de 24 h
+        actos = {ev["id"]: ev.get("acto_oficial") for ev in eventos if ev.get("acto_oficial")}
+        ruta_c = f"{SALIDA}/oficial_cache.json"
+        cache = json.load(open(ruta_c, encoding="utf-8")) if os.path.exists(ruta_c) else {}
+        cache = {k: v for k, v in cache.items() if ahora - v.get("t", 0) < 24 * 3600000}
+        verif = col = 0
+        for h in sorted(hs.values(), key=lambda x: -len(x["notas"])):
+            ac = [actos[n["id"]] for n in h["notas"] if n["id"] in actos]
+            if not ac:
+                h.pop("acto_oficial", None); continue
+            alc = collections.Counter(a["alcance"] for a in ac).most_common()
+            top = next(a for a in ac if a["alcance"] == alc[0][0])
+            clave = "|".join(str(x) for x in (top["alcance"], top["tipo"], top.get("numero"), h["subtipo"], h.get("departamento"), (h["notas"][-1].get("municipio"))))
+            if clave not in cache and verif < 10:
+                cache[clave] = {"t": ahora, "r": oficial_v3.verificar(top, h["subtipo"], h.get("departamento"), h["notas"][-1].get("municipio"))}; verif += 1
+            if clave in cache:
+                h["acto_oficial"] = cache[clave]["r"]; col += cache[clave]["r"]["estado"] == "verificado"
+            else:
+                h["acto_oficial"] = dict(top, estado="pendiente_de_verificar")
+        json.dump(cache, open(ruta_c, "w", encoding="utf-8"), ensure_ascii=False)
         json.dump(hs, open(ruta, "w", encoding="utf-8"), ensure_ascii=False)
         ab = [h for h in hs.values() if h["estado"] == "abierto"]
-        return {"hechos": len(hs), "abiertos": len(ab), "con_varias_notas": sum(len(h["notas"]) > 1 for h in hs.values()), "reabiertos": sum(h["reaperturas"] > 0 for h in hs.values()),
+        return {"hechos": len(hs), "con_acto_oficial": sum(1 for h in hs.values() if h.get("acto_oficial")), "actos_verificados": col, "abiertos": len(ab), "con_varias_notas": sum(len(h["notas"]) > 1 for h in hs.values()), "reabiertos": sum(h["reaperturas"] > 0 for h in hs.values()),
                 "ejemplos": [[h["subtipo"], h["lugar"], len(h["notas"]), hechos_v3.resumen(h)[:80]] for h in sorted(hs.values(), key=lambda h: -len(h["notas"]))[:4]]}
     ctl["hechos"] = etapa("hechos", hechos, ctl)
 
