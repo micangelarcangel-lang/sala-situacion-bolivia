@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "gdacs:WF1033500:0",
+  "fecha_hora_local": "2026-11-05 00:04",
+  "ts_ms": 1793851495000,
+  "titulo": "Green forest fire notification in Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "GDACS",
+  "lat": -13.27616,
+  "lon": -65.12678,
+  "lugar": "Bolivia",
+  "departamento": "Beni",
+  "municipio": "San Joaquín",
+  "enlaces": "http://www.gdacs.org/report.aspx?eventtype=WF&eventid=1033500"
+ },
+ {
   "hecho_id": "noticia:2avehj",
   "fecha_hora_local": "2026-11-04 21:25",
   "ts_ms": 1793841936000,
