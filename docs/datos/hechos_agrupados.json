@@ -1,23 +1,23 @@
 [
  {
-  "hecho_id": "noticia:vrpjzd",
-  "fecha_hora_local": "2026-11-05 10:38",
-  "ts_ms": 1793889507000,
-  "titulo": "Alcaldía de La Paz monitorea grietas en Kupini y evalúa posibles riesgos de deslizamiento - Red Uno",
+  "hecho_id": "noticia:mshcs0",
+  "fecha_hora_local": "2026-11-05 11:11",
+  "ts_ms": 1793891509000,
+  "titulo": "Alcaldía de La Paz monitorea grietas en Kupini y evalúa posibles riesgos de deslizamiento - eju.tv",
   "tipo_amenaza": "geológica",
   "nivel_num": 0,
   "nivel_preliminar": "verde",
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Red Uno",
+  "n_notas": 2,
+  "fuentes": "Red Uno; eju.tv",
   "lat": -16.169,
   "lon": -68.09,
   "lugar": "La Paz, La Paz",
   "departamento": "La Paz",
   "municipio": "Nuestra Señora de La Paz",
-  "enlaces": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTkpJM2FVc2l5Sl9sb1pyR3Jpck9rNERYVG1jNm5ud2JlZWtkbWVVdUh3WS1handKYU4wenR4cWpmYlUxLVlwQ21NNXZaOUZjV3BpRUpNazRJTFg2Q3lfbDFBdEc1TWVrNVNiN2NwSU56YjhKbjNvV0R1NFl6NWRxLURqT3NiWWJCSS1acW1nSU5NTEhxb3JwUnJ0MG1SNkRLQmJTZTZIU0VpR1NSczlKeEUwUV9Zenk4UUlwRjA5NnZ0blpQbDZjaW0wNndTWnY2eGpR?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQTU15R3JOUm1EalRLazBXdGZSdTVYS1dnYnQwSVhabVB6VDZiblljd2p0b1RVSzBjQ3lwTE9ZdjJsYXlWZ0ZZU0JJbmdkdUpwTHhUb3ItWFg0OGV1MThGNUZVZTY4VUhrcjZMZUh5dmRXX2psVW5KNHU3VDVNaUE5QzRVQVBacWt5VmhSSHBqdm9oNDZvUTNGaTBoTG1scVpTWXpwQ2RTZ1V4d0NDc1JWQ2hKdw?oc=5 | https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTkpJM2FVc2l5Sl9sb1pyR3Jpck9rNERYVG1jNm5ud2JlZWtkbWVVdUh3WS1handKYU4wenR4cWpmYlUxLVlwQ21NNXZaOUZjV3BpRUpNazRJTFg2Q3lfbDFBdEc1TWVrNVNiN2NwSU56YjhKbjNvV0R1NFl6NWRxLURqT3NiWWJCSS1acW1nSU5NTEhxb3JwUnJ0MG1SNkRLQmJTZTZIU0VpR1NSczlKeEUwUV9Zenk4UUlwRjA5NnZ0blpQbDZjaW0wNndTWnY2eGpR?oc=5"
  },
  {
   "hecho_id": "noticia:2sb53f",
