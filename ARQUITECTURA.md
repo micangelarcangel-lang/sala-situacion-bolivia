@@ -1,5 +1,5 @@
 # Sala de Situación Bolivia · Arquitectura y plan de trabajo
-_Actualizado 05/11/2026_
+_Actualizado 06/11/2026_
 
 ## Capas y estado
 **1 · Captación**: Prensa (15 medios, RSS) (hecho); Lectura de la nota completa (hecho); SENAMHI, sismos, focos, Open-Meteo (parcial); Portales de gobernaciones, SEDES, alcaldías (falta); PDF institucionales (falta); Red ciudadana (Kobo) (parcial)
