@@ -114,7 +114,7 @@
    "Oruro": 4
   },
   "2026-11-01": {
-   "Santa Cruz": 418,
+   "Santa Cruz": 419,
    "Beni": 338,
    "Pando": 97,
    "Tarija": 22,
@@ -385,7 +385,7 @@
   },
   "2026-11-01": {
    "Exaltación (Beni)": 148,
-   "San Ignacio (Santa Cruz)": 74,
+   "San Ignacio (Santa Cruz)": 75,
    "Concepción (Santa Cruz)": 70,
    "San Miguel (Santa Cruz)": 48,
    "Filadelfia (Pando)": 38,
@@ -469,9 +469,9 @@
    "Porvenir (Pando)": 7
   }
  },
- "actualizado": "2026-11-05T23:41:16.818831Z",
+ "actualizado": "2026-11-06T00:55:23.447240Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1217,
- "slack_dia": "2026-11-05"
+ "detecciones_fuera_de_limites": 1206,
+ "slack_dia": "2026-11-06"
 }
