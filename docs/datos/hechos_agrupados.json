@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:ygc1a5",
+  "fecha_hora_local": "2026-11-06 05:55",
+  "ts_ms": 1793958946000,
+  "titulo": "Mantienen cisterna y apoyo en Pasorapa por la sequía - El Diario - Bolivia",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 5,
+  "fuentes": "El Diario - Bolivia; Red Uno",
+  "lat": -18.38,
+  "lon": -64.649,
+  "lugar": "Pasorapa, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Pasorapa",
+  "enlaces": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOQVA3LW9rZkZVYjhGVV8weXE0a2RYcDJydW1QTXlCUnlFN0ZGN2FyV05sc2VOSkk5aEVlVEdpV1YyX2E4aVEwRlp2bWQ1VzVzWnZKMnBscS1Qa2xmQ2loVkprUVRwdzlkeUFxNGM0QXlnbkZNVldnelhSWlpqNzdnMWN0M3I3WmM5UUhDVTQ0OHlHSXcyWU85c1o4TXpUVG8?oc=5 | https://news.google.com/rss/articles/CBMinAFBVV95cUxNYmthLTJCT2pzek9LLTJKZ1FEMk5NV0wzNFlnUXhXd1FDVl93UTVwOVZPUWQwQ1pXOVRNMHE3aTl4cGdIdUstT1YwM0hlTUhpUEswU1dOd3JzdDNMYVVsQU5YS0plTi1MVV9TTC1RQ2NVcmJlX1NhQ1JXUzVsdEZCc1ZqRnE0VC1RQXVONkZJWVlESjdyTDFENXlPTEo?oc=5 | https://news.google.com/rss/articles/CBMizAFBVV95cUxQeW5LTVUxSzg5MU90UDFWQmZpUWF0WG1HY3k2VkI4UmdIUFpyb0RFOXFfTHozbmdWXzBuWnpNVzZ3bmxPOF9aSFJ5MkY2NHh6SUh5azluVTBuTEpZajZCT0lRSElwZGdHUmJUT2JENXlhcDV4SnlFQi1WaWVoRXNja0ZBQlRQQ0xCa3BNenpKeE0tSmpXMjRvZ1FVeHctSXdnT3BPN2lKaXRVd2tiNWdVUXFtRXFJUGUzQ3o2X0VYRDNUWlNDZGY4V3dodEQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:1oje8bi",
   "fecha_hora_local": "2026-11-06 03:29",
   "ts_ms": 1793950152000,
@@ -118,26 +138,6 @@
   "departamento": "Tarija",
   "municipio": "Tarija",
   "enlaces": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQRldScEY2U3pwbTYtcGlWVEc2STVUenpLRHo2WUFSdlNRckJxaEFBa3hjUW10eG1vNHlBSnZZNUc3LUNpYk9kcEw2X05sMW1MbUlVYWxibVFId3lkU0tTT0VRUDdUdGRueW9nOTlaS09ZYmdEcjJmTi1xemRYRWx1eVhldHhMc2JjQjhodWV5UXgzZ1ByaUtrZEdmQWoxZXEx?oc=5"
- },
- {
-  "hecho_id": "noticia:1js8iup",
-  "fecha_hora_local": "2026-11-05 14:16",
-  "ts_ms": 1793902578000,
-  "titulo": "Mantienen cisterna y apoyo en Pasorapa por la sequía - El Diario - Bolivia",
-  "tipo_amenaza": "climatológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 4,
-  "fuentes": "El Diario - Bolivia; Red Uno",
-  "lat": -18.38,
-  "lon": -64.649,
-  "lugar": "Pasorapa, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Pasorapa",
-  "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNYmthLTJCT2pzek9LLTJKZ1FEMk5NV0wzNFlnUXhXd1FDVl93UTVwOVZPUWQwQ1pXOVRNMHE3aTl4cGdIdUstT1YwM0hlTUhpUEswU1dOd3JzdDNMYVVsQU5YS0plTi1MVV9TTC1RQ2NVcmJlX1NhQ1JXUzVsdEZCc1ZqRnE0VC1RQXVONkZJWVlESjdyTDFENXlPTEo?oc=5 | https://news.google.com/rss/articles/CBMizAFBVV95cUxQeW5LTVUxSzg5MU90UDFWQmZpUWF0WG1HY3k2VkI4UmdIUFpyb0RFOXFfTHozbmdWXzBuWnpNVzZ3bmxPOF9aSFJ5MkY2NHh6SUh5azluVTBuTEpZajZCT0lRSElwZGdHUmJUT2JENXlhcDV4SnlFQi1WaWVoRXNja0ZBQlRQQ0xCa3BNenpKeE0tSmpXMjRvZ1FVeHctSXdnT3BPN2lKaXRVd2tiNWdVUXFtRXFJUGUzQ3o2X0VYRDNUWlNDZGY4V3dodEQ?oc=5 | https://news.google.com/rss/articles/CBMingFBVV95cUxNZ2NROGhzTjJyU09CcjY3YlUwQTkyRmp6cWVHZ3cxQlFDakd4MUx4S0VVRU9rbXJ5LVExdklmVll0N096RENMUE9ZZXpacUppaDBGZ3JvelZaQkdlVmpsZV9YbTdOcERWZUl3ZVRUNkdJS1NKejhDcUJuamxHb09uZzdlVjltcTA0UzBsbkpmajl3N19vWVZWX1k1Rzd6dw?oc=5"
  },
  {
   "hecho_id": "noticia:1yih7ie",
