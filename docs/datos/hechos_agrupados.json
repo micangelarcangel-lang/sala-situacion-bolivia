@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1k49wxr",
+  "fecha_hora_local": "2026-11-06 14:32",
+  "ts_ms": 1793989972000,
+  "titulo": "Chuquisaca enfrenta sequía y solicita Bs 62 millones al Gobierno - La Patria Bolivia",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Patria Bolivia",
+  "lat": -19.03,
+  "lon": -65.26,
+  "lugar": "Chuquisaca (departamento)",
+  "departamento": "Chuquisaca",
+  "municipio": "Sucre",
+  "enlaces": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPdDNzYkRELU92d28tYjJtd2Q0dnl3SDlzbVlQT19YQ245WWM5NVFKRjFsbXNFTTd5ZTc0Q0h1d3B0VExTS1ExbDNiQnFhX19fSldJWTdqazZlMHczaldiS19UUVFiV2ZrZExyajBNeUZubnMySzZ6QldkZzAtNlh2cThZQndSQy1mVF9vTVBLYlJnb1Y0NTFXN3EwOTBydlV4RmM2ZzR3?oc=5"
+ },
+ {
   "hecho_id": "noticia:ygc1a5",
   "fecha_hora_local": "2026-11-06 05:55",
   "ts_ms": 1793958946000,
