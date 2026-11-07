@@ -13,7 +13,7 @@ import informe_hecho as ih
 UA = "Mozilla/5.0 (X11; Linux x86_64) sala-situacion-bolivia/3"
 SALIDA = "datos/v3/investigacion"
 SIN = set("el la los las de del en y a un una por con para que se su sus al lo como más pero es fue han ha este esta ese esa ayer hoy según tras sobre entre cuando también".split())
-LUGARES_COMUNES = {"Bolivia", "El Alto", "La Paz", "Santa Cruz", "Cochabamba", "Oruro", "Potosí", "Tarija", "Beni", "Pando", "Chuquisaca", "Policía", "Fiscalía", "Cancillería", "Embajada", "Ministerio", "Gobierno", "Red Uno", "Unitel", "El Deber", "Corea", "Sudamérica", "Perú", "México"}
+LUGARES_COMUNES = {"YouTube", "Instagram", "Facebook", "Bolivia", "El Alto", "La Paz", "Santa Cruz", "Cochabamba", "Oruro", "Potosí", "Tarija", "Beni", "Pando", "Chuquisaca", "Policía", "Fiscalía", "Cancillería", "Embajada", "Ministerio", "Gobierno", "Red Uno", "Unitel", "El Deber", "Corea", "Sudamérica", "Perú", "México"}
 
 
 def _get(url, t=30):
@@ -141,11 +141,13 @@ SISTEMA = ("Eres analista de un centro coordinador de emergencias. Recibes artí
            "Si un dato no aparece, escribe null. No inventes nombres, cifras ni cargos. Distingue lo que afirma el medio de lo que atribuye a una autoridad. Responde en JSON.")
 
 
-def analizar(fuentes):
+def analizar(fuentes, nombres=()):
     def del_hecho(f):
         t = _n(f["titulo"] + " " + f["texto"][:3000])
+        if any(_n(n) in t for n in nombres):
+            return True
         return ("el alto" in t or "bolivia" in t) and any(k in t for k in ("coreano", "jinstravel", "ciclista", "youtuber"))
-    fuentes = [f for f in fuentes if f.get("texto") and del_hecho(f)][:14]
+    fuentes = [f for f in fuentes if f.get("texto") and del_hecho(f)][:18]
     arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:3000]}" for i, f in enumerate(fuentes))[:45000]
     pedido = ("Con estos artículos devuelve JSON con: hecho{fecha,hora,lugar_versiones[{texto,fuentes}],victima{nombre,edad,nacionalidad},vehiculo,conductor{estado,declaraciones[{texto,atribuido_a,fuente}]}}, "
               "instituciones[{nombre,que_hizo,fuente}], cronologia[{cuando,que,fuentes}], afirmaciones[{dato,valor,fuentes,estado('coincide'|'fuente_unica'|'discrepa'),detalle}], "
@@ -189,13 +191,14 @@ def investigar(hecho, max_leer=24, log=print):
     for f in fuentes:
         f["relevante"] = relevante(f, comunes, lugar)
     rel1 = [f for f in fuentes if f["relevante"]]
-    nombres = nombres_propios([f["texto"] for f in rel1] + [f["titulo"] for f in rel1], minimo=2)[:4]
+    tabu = set(re.findall(r"[a-z]{4,}", lugar)) | set(comunes) | {"alto"}
+    nombres = [n for n in nombres_propios([f["texto"] for f in rel1] + [f["titulo"] for f in rel1], minimo=2) if not (set(re.findall(r"[a-z]{4,}", _n(n))) & tabu)][:3]
     log("anclas:", comunes, lugar, "| relevantes ronda 1:", len(rel1), "de", len(fuentes), "| nombres:", nombres)
     # ronda 2: con los nombres hallados, en español y en inglés
     for nm in nombres:
         for hl, gl, ceid, etq in (("es-419", "BO", "BO:es-419", "es"), ("en-US", "US", "US:en", "en")):
             n = agregar([dict(x, ronda=2) for x in rss(nm, hl, gl, ceid)], 2); qlog.append((2, f"{nm} [{etq}]", n))
-    nuevos = [v for v in vistos.values() if v["ronda"] == 2][:max_leer]
+    nuevos = [v for v in vistos.values() if v["ronda"] == 2][:max_leer + 12]
     for it in nuevos:
         f = leer(it); f["relevante"] = relevante(f, comunes, lugar, nombres); fuentes.append(f)
     # lugares y coordenadas
@@ -209,7 +212,7 @@ def investigar(hecho, max_leer=24, log=print):
         if ref[0] is not None:
             g["km_al_centro_municipio"] = distancia_km((g["lat"], g["lon"]), ref)
     total = len(vistos)
-    analisis, prov = analizar([f for f in fuentes if f["leida"]])
+    analisis, prov = analizar([f for f in fuentes if f["leida"]], nombres)
     res = {"hecho_id": hecho["id"], "generado": dt.datetime.now(dt.timezone.utc).isoformat(), "segundos": round(time.time() - t0),
            "consultas": qlog, "descartadas_por_ruido": total - len(fuentes), "n_fuentes": len(fuentes), "n_leidas": sum(f["leida"] for f in fuentes), "nombres_propios": nombres, "lugares": geo, "ia": prov, "analisis": analisis,
            "fuentes": [{k: v for k, v in f.items() if k != "texto"} for f in fuentes]}
