@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:ddc06eb45e",
- "generado": "2026-11-07T22:02:40.404565+00:00",
- "segundos": 92,
+ "generado": "2026-11-07T22:18:03.762628+00:00",
+ "segundos": 526,
  "consultas": [
   [
    1,
@@ -34,19 +34,19 @@
   },
   {
    "consulta": "avenida Cívica",
-   "lat": -16.5225769,
-   "lon": -68.1578555,
-   "nombre": "Avenida Cívica, PLAN 405, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "lat": -16.5184983,
+   "lon": -68.1564908,
+   "nombre": "Avenida Cívica, Tejada Rectangular, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 10.28
+   "km_al_centro_municipio": 10.01
   },
   {
    "consulta": "avenida Litoral",
-   "lat": -16.5514754,
-   "lon": -68.1865275,
+   "lat": -16.5537367,
+   "lon": -68.1826498,
    "nombre": "Avenida Litoral, Wara, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 11.86
+   "km_al_centro_municipio": 12.22
   },
   {
    "consulta": "zona Franca",
@@ -65,189 +65,8 @@
    "sin_resultado": true
   }
  ],
- "ia": "gemini/gemini-3.8-flash",
- "analisis": {
-  "hecho": {
-   "fecha": "04/11/2026 (miércoles)",
-   "hora": "09:15 según Red Uno / 09:30 según eju.tv",
-   "lugar_versiones": [
-    {
-     "texto": "Ciudad de El Alto",
-     "fuentes": [
-      "eju.tv",
-      "Jornada"
-     ]
-    },
-    {
-     "texto": "Inmediaciones de la avenida Cívica, en el ingreso a la avenida Litoral, cerca de la rotonda de la zona Franca, ciudad de El Alto",
-     "fuentes": [
-      "Red Uno"
-     ]
-    },
-    {
-     "texto": "Una de las principales avenidas de la urbe de El Alto",
-     "fuentes": [
-      "Jornada"
-     ]
-    }
-   ],
-   "victima": {
-    "nombre": "Cho H. (Red Uno 05/11) / Cho Jin-woo (Red Uno 06/11) / Jo Jin-woo (Jornada)",
-    "edad": 33,
-    "nacionalidad": "Coreana / Surcoreana"
-   },
-   "vehiculo": "Camión de transporte pesado / de alto tonelaje / vehículo de carga / camión de gran tamaño",
-   "conductor": {
-    "estado": "Aprehendido en celdas, puesto a disposición del Ministerio Público, a la espera de comparecer ante un juez por investigación de homicidio en accidente de tránsito; alcotest arrojó 0 grados de alcohol; hombre de aproximadamente 50 años",
-    "declaraciones": [
-     {
-      "texto": "No habría visto al ciclista",
-      "atribuido_a": "Mayor Nelson Medina, citando la versión preliminar del conductor",
-      "fuente": "eju.tv, Red Uno"
-     }
-    ]
-   }
-  },
-  "instituciones": [
-   {
-    "nombre": "División de Accidentes de la Unidad de Tránsito de El Alto / Policía",
-    "que_hizo": "Aprehendió al conductor tras el hecho, aplicó prueba de alcotest (resultado 0), tomó declaración informativa, retuvo el camión, remitió el caso al Ministerio Público y contactó al consulado de Corea",
-    "fuente": "eju.tv, Red Uno, Jornada"
-   },
-   {
-    "nombre": "Ministerio Público / Fiscalía",
-    "que_hizo": "Recibió el caso y tiene a cargo esclarecer las circunstancias, determinar responsabilidades e investigar la presunta fuga",
-    "fuente": "Red Uno"
-   },
-   {
-    "nombre": "Consulado de Corea / Embajada de Corea en Bolivia",
-    "que_hizo": "Sus representantes se hicieron presentes para coordinar gestiones, contactar a la familia y apoyar en su traslado y repatriación de los restos",
-    "fuente": "Red Uno, Jornada"
-   },
-   {
-    "nombre": "Cancillería de Bolivia",
-    "que_hizo": "Emitió un comunicado de pesar, anunció seguimiento institucional a la investigación y garantizó apoyo y acompañamiento para la repatriación",
-    "fuente": "Jornada"
-   }
-  ],
-  "cronologia": [
-   {
-    "cuando": "04/11/2026 ~09:15 - 09:30",
-    "que": "Ocurre el atropello al ciclista surcoreano por parte de un camión en El Alto; la víctima fallece en el lugar",
-    "fuentes": [
-     "eju.tv",
-     "Red Uno"
-    ]
-   },
-   {
-    "cuando": "04/11/2026 (horas después del hecho)",
-    "que": "El conductor del camión es interceptado/aprehendido por la Policía, sometido a alcotest (cero grados) y presta declaración informativa",
-    "fuentes": [
-     "eju.tv",
-     "Red Uno",
-     "Jornada"
-    ]
-   },
-   {
-    "cuando": "05/11/2026",
-    "que": "Tránsito confirma la identidad preliminar (Cho H., 33 años), deriva actuaciones a Fiscalía e inicia coordinación con autoridades consulares de Corea",
-    "fuentes": [
-     "Red Uno"
-    ]
-   },
-   {
-    "cuando": "06/11/2026",
-    "que": "El hermano mayor de Cho Jin-woo publica un pronunciamiento en Instagram pidiendo respeto y confirmando viaje a Bolivia con apoyo de la Embajada; Cancillería de Bolivia emite comunicado garantizando apoyo",
-    "fuentes": [
-     "Red Uno",
-     "Jornada"
-    ]
-   }
-  ],
-  "afirmaciones": [
-   {
-    "dato": "Hora exacta del suceso",
-    "valor": "09:30 vs 09:15",
-    "fuentes": [
-     "eju.tv",
-     "Red Uno"
-    ],
-    "estado": "discrepa",
-    "detalle": "eju.tv cita a Medina señalando las 9:30; Red Uno indica aproximadamente a las 09:15"
-   },
-   {
-    "dato": "Edad de la víctima",
-    "valor": "33 años",
-    "fuentes": [
-     "eju.tv",
-     "Red Uno",
-     "Jornada"
-    ],
-    "estado": "coincide",
-    "detalle": "Todos los medios reportan unánimemente que tenía 33 años"
-   },
-   {
-    "dato": "Grafía del nombre de la víctima",
-    "valor": "Cho H. / Cho Jin-woo / Jo Jin-woo",
-    "fuentes": [
-     "Red Uno",
-     "Jornada"
-    ],
-    "estado": "discrepa",
-    "detalle": "Red Uno usa inicialmente Cho H. y luego Cho Jin-woo; Jornada escribe Jo Jin-woo"
-   },
-   {
-    "dato": "Fuga del conductor",
-    "valor": "Huyó/perseguido vs presunción/en investigación",
-    "fuentes": [
-     "eju.tv",
-     "Red Uno",
-     "Jornada"
-    ],
-    "estado": "discrepa",
-    "detalle": "eju.tv y Jornada afirman que huyó y fue capturado/perseguido; Red Uno cita a Tránsito indicando que según vecinos intentó darse a la fuga pero es materia sujeta a determinación de Fiscalía"
-   },
-   {
-    "dato": "Resultado de alcotest",
-    "valor": "0 grados de alcohol",
-    "fuentes": [
-     "eju.tv"
-    ],
-    "estado": "fuente_unica",
-    "detalle": "Únicamente reportado por eju.tv a través de declaración del mayor Medina"
-   },
-   {
-    "dato": "Edad aproximada del conductor",
-    "valor": "Aproximadamente 50 años",
-    "fuentes": [
-     "Red Uno"
-    ],
-    "estado": "fuente_unica",
-    "detalle": "Solo Red Uno precisa la edad aproximada del conductor aprehendido"
-   },
-   {
-    "dato": "Pronunciamiento y apoyo de Cancillería boliviana",
-    "valor": "Comunicado de pésame, seguimiento a investigación y acompañamiento en repatriación",
-    "fuentes": [
-     "Jornada"
-    ],
-    "estado": "fuente_unica",
-    "detalle": "Mencionado únicamente en el artículo de Jornada"
-   }
-  ],
-  "vacios": [
-   "Identidad (nombre y apellidos) del conductor aprehendido",
-   "Placa, marca y características de registro del camión de transporte pesado involucrado",
-   "Resolución cautelar del juez respecto a la situación jurídica del conductor",
-   "Resultado de peritajes técnicos y de accidentología vial que confirmen la mecánica exacta del impacto",
-   "Conclusión fiscal sobre si existió o no delito de omisión de socorro / fuga comprobada"
-  ],
-  "novedades_ultimas_24h": [
-   "El hermano de Cho Jin-woo (Jo Jin-woo) publicó un mensaje en la cuenta de Instagram del 'youtuber' solicitando cesar especulaciones y confirmando el viaje de la familia a Bolivia con asistencia consular.",
-   "La Cancillería de Bolivia emitió un pronunciamiento institucional lamentando el suceso, asegurando seguimiento a la investigación y comprometiendo auxilio para la repatriación de los restos.",
-   "Se confirmó que la imputación que afrontará el chofer ante el juez cautelar es por el presunto delito de homicidio en accidente de tránsito."
-  ]
- },
+ "ia": "intento 1 gemini/gemini-3.8-flash: HTTP 503; intento 1 gemini/gemini-flash-latest: HTTP 503; intento 2 gemini/gemini-3.8-flash: HTTP 503; intento 2 gemini/gemini-flash-latest: HTTP 503; intento 3 gemini/gemini-3.8-flash: HTTP 429; intento 3 gemini/gemini-flash-latest: HTTP 429; intento 4 gemini/gemini-3.8-flash: HTTP 429; intento 4 gemini/gemini-flash-latest: HTTP 429; intento 5 gemini/gemini-3.8-flash: HTTP 429; intento 5 gemini/gemini-flash-latest: HTTP 429",
+ "analisis": null,
  "fuentes": [
   {
    "medio": "eju.tv",
