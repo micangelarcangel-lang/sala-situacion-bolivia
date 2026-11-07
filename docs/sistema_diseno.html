@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de diseño · Sala de Situación Bolivia</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#14202e;--mut:#5b6a7c;--line:#e0e6ee;--grid:#e8edf3;--acc:#1f6fd1;--map:#eaeff5;--mapl:#cbd5e1;
+--geo:#8a6a4f;--met:#2a78d6;--hid:#12a39a;--cli:#e8761f;--bio:#7a4fd0;--tec:#5d7186;--ant:#d4403a;--sal:#c2255c;
+--s1:#fff4cc;--s2:#ffd27a;--s3:#f59a3d;--s4:#d9552b;--s5:#8c1c13;--ok:#1baf7a;--warn:#eda100;--bad:#d4403a}
+@media(prefers-color-scheme:dark){:root:not([data-t=l]){--bg:#0c141e;--card:#13202f;--ink:#e9eef5;--mut:#92a3b6;--line:#22344a;--grid:#1b2b3f;--acc:#5aa0f2;--map:#192a3d;--mapl:#2c445e;
+--geo:#b58b6a;--met:#5aa0f2;--hid:#2ccbc0;--cli:#f59a4d;--bio:#a283f0;--tec:#8ea3b8;--ant:#f0716b;--sal:#ee6a9a;
+--s1:#4a4430;--s2:#7a6224;--s3:#c07a2c;--s4:#e8693f;--s5:#ff9b86}}
+:root[data-t=d]{--bg:#0c141e;--card:#13202f;--ink:#e9eef5;--mut:#92a3b6;--line:#22344a;--grid:#1b2b3f;--acc:#5aa0f2;--map:#192a3d;--mapl:#2c445e;--geo:#b58b6a;--met:#5aa0f2;--hid:#2ccbc0;--cli:#f59a4d;--bio:#a283f0;--tec:#8ea3b8;--ant:#f0716b;--sal:#ee6a9a;--s1:#4a4430;--s2:#7a6224;--s3:#c07a2c;--s4:#e8693f;--s5:#ff9b86}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,Segoe UI,Roboto,sans-serif}
+header{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end}
+h1{margin:0;font-size:24px;font-weight:700;letter-spacing:-.01em}header p{margin:2px 0 0;color:var(--mut);font-size:13px}
+.aviso{background:color-mix(in srgb,var(--warn) 18%,transparent);border:1px solid var(--warn);color:var(--ink);border-radius:10px;padding:8px 12px;font-size:12.5px;margin:16px 24px 0}
+main{max-width:1240px;margin:0 auto;padding:18px 24px 40px}
+h2.s{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);margin:26px 0 10px;font-weight:600}
+.g{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+@media(max-width:900px){.chips{grid-template-columns:repeat(2,1fr)}}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.c3{grid-column:span 3}
+@media(max-width:900px){.c8,.c7,.c6,.c5,.c4,.c3{grid-column:span 12}}
+h3{margin:0;font-size:15px;font-weight:650}.q{color:var(--mut);font-size:12.5px;margin:1px 0 8px}.lee{font-size:12px;color:var(--mut);border-left:3px solid var(--line);padding:2px 0 2px 10px;margin-top:8px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.chip{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}.chip i{width:14px;height:14px;border-radius:5px;background:var(--c)}.chip b{display:block;font-size:13px}.chip span{font-size:11.5px;color:var(--mut)}
+.kpi small{color:var(--mut);font-size:12px}.kpi b{display:block;font-size:34px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}.kpi .d{font-size:12px;color:var(--mut)}.kpi .d u{text-decoration:none;font-weight:650}
+svg{width:100%;height:auto;display:block}svg text{fill:var(--mut);font-size:11px;font-family:inherit}svg text.v{fill:var(--ink)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:6px}.leg span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--k);vertical-align:-1px}
+.ficha dl{display:grid;grid-template-columns:130px 1fr;gap:5px 12px;margin:8px 0 0;font-size:13px}.ficha dt{color:var(--mut)}.ficha dd{margin:0}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:0 8px;font-size:11px;color:var(--mut)}
+button.t{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:5px 12px;cursor:pointer}
+</style></head><body>
+<header><div><h1>Sistema de diseño</h1><p>Lenguaje visual único para todos los tipos de evento · Sala de Situación Bolivia</p></div><div><button class="t" id="tema">Cambiar claro / oscuro</button></div></header>
+<div class="aviso"><b>Datos de ejemplo.</b> Todo lo que se dibuja aquí es inventado para mostrar el diseño; no son cifras reales de Bolivia.</div>
+<main>
+<h2 class="s">1 · Un color por tipo de evento (el mismo en mapas, gráficos, tarjetas y PDF)</h2>
+<div class="chips" id="chips"></div>
+
+<h2 class="s">2 · Cifras clave y mapa</h2>
+<div class="g"><div class="card c4"><div class="kpi"><small>Casos confirmados · semana 44</small><b>128</b><div class="d"><u style="color:var(--bad)">▲ 23 %</u> frente a la semana previa (104)</div></div><div id="spark"></div><div class="lee">Cada cifra lleva su comparación y una mini-curva de las últimas 12 semanas.</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px"><div class="kpi"><small>Fallecidos</small><b style="font-size:26px">3</b><div class="d"><u>= </u>igual que la semana previa</div></div><div class="kpi"><small>Municipios con casos</small><b style="font-size:26px">17</b><div class="d"><u style="color:var(--bad)">▲ 4</u> nuevos</div></div></div><div class="lee" style="margin-top:14px">La comparación va escrita en la cifra y la forma de la curva muestra la tendencia.</div></div>
+<div class="card c8"><h3>Mapa coroplético: ¿dónde es más alta la incidencia?</h3><p class="q">Casos por 100 000 habitantes, por departamento (ejemplo).</p><div id="mapa"></div><div class="lee">Cómo leer: cuanto más intenso el color, mayor la incidencia; la barra inferior da la escala. Sin color = sin dato.</div></div></div>
+
+<h2 class="s">3 · Gramática de gráficos: cada pregunta tiene su forma</h2>
+<div class="g">
+<div class="card c7"><h3>Canal endémico · brotes</h3><p class="q">¿Este año está dentro de lo esperado o ya es epidemia?</p><div id="canal"></div><div class="leg" id="lcanal"></div><div class="lee">Las bandas resumen años previos; la línea es el año en curso. Sobre la banda roja = zona de epidemia.</div></div>
+<div class="card c5"><h3>Áreas apiladas · sequía</h3><p class="q">¿Qué porcentaje del territorio está en cada categoría y cómo cambia?</p><div id="sequia"></div><div class="leg" id="lseq"></div><div class="lee">El grosor de cada franja es el % del territorio. Más rojo = sequía más intensa.</div></div>
+<div class="card c7"><h3>Hidrograma · ríos</h3><p class="q">¿Cuándo el nivel alcanza el umbral de alerta?</p><div id="hidro"></div><div class="leg" id="lhid"></div><div class="lee">Línea llena = observado; punteada = pronóstico con su incertidumbre. Las líneas horizontales son los umbrales.</div></div>
+<div class="card c5"><h3>Matriz día × hora · tránsito</h3><p class="q">¿Cuándo ocurren más accidentes?</p><div id="matriz"></div><div class="lee">Cada celda es un día y una franja horaria; más intensa = más hechos.</div></div>
+</div>
+
+<h2 class="s">4 · Un hecho: línea de tiempo con trazabilidad</h2>
+<div class="g"><div class="card c7"><h3>Evolución de las cifras de un hecho</h3><p class="q">Cada punto es una nota; la cifra vigente es la mayor oficial o, si no hay, la mayor de prensa (sin confirmar).</p><div id="hecho"></div><div class="leg" id="lh"></div></div>
+<div class="card c5 ficha"><h3>Ficha del hecho</h3><p class="q">Misma estructura para todo tipo de evento.</p><dl><dt>Tipo → subtipo</dt><dd>Biológica → brote</dd><dt>Lugar</dt><dd>Municipio ejemplo, Departamento</dd><dt>Víctimas</dt><dd>12 fallecidos <span class="tag">prensa · sin confirmar</span></dd><dt>Respaldo oficial</dt><dd><span class="tag">respaldo probable</span> boletín del Ministerio</dd><dt>Notas unidas</dt><dd>5 notas · 3 medios</dd><dt>Estado</dt><dd>Abierto (se cierra a los 14 días)</dd><dt>Trazabilidad</dt><dd>fuente · fecha de captura · método de ubicación</dd></dl></div></div>
+</main>
+<script>
+(function(){
+var NS="http://www.w3.org/2000/svg",$=function(i){return document.getElementById(i)};
+function cs(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function sv(w,h){var s=document.createElementNS(NS,"svg");s.setAttribute("viewBox","0 0 "+w+" "+h);return s}
+function el(p,t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function tx(p,x,y,t,a){var e=el(p,"text",Object.assign({x:x,y:y},a||{}));e.textContent=t;return e}
+function R(seed){var s=seed;return function(){s=(s*9301+49297)%233280;return s/233280}}
+function leg(id,L){$(id).innerHTML=L.map(function(l){return'<span style="--k:'+l[1]+'">'+l[0]+'</span>'}).join("")}
+function ejes(s,m,W,H,ymax,nx,fx,paso){var ih=H-m.t-m.b,y=function(v){return m.t+ih-v/ymax*ih};for(var v=0;v<=ymax;v+=paso){el(s,"line",{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:cs("--grid")});tx(s,m.l-6,y(v)+4,v,{"text-anchor":"end"})}fx.forEach(function(f){tx(s,f[0],H-8,f[1],{"text-anchor":"middle"})});return y}
+var TIPOS=[["Geológica","--geo","sismo, deslizamiento"],["Meteorológica","--met","granizo, helada, viento"],["Hidrológica","--hid","inundación, riada"],["Climatológica","--cli","sequía, incendio forestal"],["Biológica","--bio","brotes, sanidad animal"],["Tecnológica","--tec","explosión, colapso"],["Antropogénica","--ant","tránsito, bloqueo"],["Salud humana","--sal","intoxicación, víctimas"]];
+function pintar(){
+$("chips").innerHTML=TIPOS.map(function(t){return'<div class="chip" style="--c:var('+t[1]+')"><i></i><div><b>'+t[0]+'</b><span>'+t[2]+'</span></div></div>'}).join("");
+// sparkline
+var r=R(3),v=[],i;for(i=0;i<12;i++)v.push(60+i*5+r()*18);var s=sv(300,56),mx=Math.max.apply(null,v),mn=Math.min.apply(null,v),px=function(j){return 4+j*(292/11)},py=function(x){return 50-(x-mn)/(mx-mn)*40};
+el(s,"polyline",{points:v.map(function(x,j){return px(j)+","+py(x)}).join(" "),fill:"none",stroke:cs("--bio"),"stroke-width":2.2,"stroke-linecap":"round","stroke-linejoin":"round"});el(s,"circle",{cx:px(11),cy:py(v[11]),r:4,fill:cs("--bio")});$("spark").innerHTML="";$("spark").appendChild(s);
+// canal endemico
+var W=640,H=250,m={l:34,r:10,t:10,b:26},n=52,ih=H-m.t-m.b,iw=W-m.l-m.r,rr=R(11),base=[],j;for(j=0;j<n;j++)base.push(20+18*Math.sin((j-6)/n*Math.PI*2)+14);
+var ymax=80,sc=sv(W,H),y=ejes(sc,m,W,H,ymax,n,[[m.l+iw*0.02,"SE1"],[m.l+iw*.25,"SE13"],[m.l+iw*.5,"SE26"],[m.l+iw*.75,"SE39"],[m.l+iw*.98,"SE52"]],20),x=function(k){return m.l+k*iw/(n-1)};
+var zon=[["--ok",0,.6],["--ok",.6,.85],["--warn",.85,1.1],["--bad",1.1,2]],tops=[.6,.85,1.1,1.6];
+function banda(a,b,col,op){var p="";for(j=0;j<n;j++)p+=(j?"L":"M")+x(j)+" "+y(Math.min(base[j]*b,ymax));for(j=n-1;j>=0;j--)p+="L"+x(j)+" "+y(base[j]*a);el(sc,"path",{d:p+"Z",fill:cs(col),"fill-opacity":op})}
+banda(0,.6,"--ok",.28);banda(.6,.85,"--ok",.16);banda(.85,1.1,"--warn",.28);banda(1.1,2.2,"--bad",.24);
+var actual=[];for(j=0;j<44;j++){var f=j>34?1+(j-34)*.12:1;actual.push(base[j]*f*(.82+rr()*.3))}
+el(sc,"polyline",{points:actual.map(function(a,k){return x(k)+","+y(Math.min(a,ymax))}).join(" "),fill:"none",stroke:cs("--ink"),"stroke-width":2.2,"stroke-linejoin":"round"});el(sc,"circle",{cx:x(43),cy:y(Math.min(actual[43],ymax)),r:4,fill:cs("--ink")});
+$("canal").innerHTML="";$("canal").appendChild(sc);leg("lcanal",[["Éxito",cs("--ok")],["Seguridad",cs("--ok")],["Alerta",cs("--warn")],["Epidemia",cs("--bad")],["Año en curso",cs("--ink")]]);
+// sequia areas apiladas
+var W2=420,H2=250,m2={l:34,r:8,t:10,b:26},iw2=W2-m2.l-m2.r,ih2=H2-m2.t-m2.b,N=40,s2=sv(W2,H2),y2=ejes(s2,m2,W2,H2,100,N,[[m2.l,"jul"],[m2.l+iw2*.33,"ago"],[m2.l+iw2*.66,"sep"],[m2.l+iw2,"oct"]],25),cats=["--s1","--s2","--s3","--s4","--s5"],lab=["D0","D1","D2","D3","D4"],rs=R(5);
+var data=[],k;for(k=0;k<N;k++){var g=k/N,row=[10+g*10,6+g*16,2+g*13,0+g*8,0+g*4].map(function(a){return a+rs()*2});data.push(row)}
+for(var c=cats.length-1;c>=0;c--){var top="",bot="";for(k=0;k<N;k++){var acc=0,q;for(q=0;q<=c;q++)acc+=data[k][q];top+=(k?"L":"M")+(m2.l+k*iw2/(N-1))+" "+y2(acc)}
+ var low=[];for(k=N-1;k>=0;k--){var a2=0,q2;for(q2=0;q2<c;q2++)a2+=data[k][q2];low.push("L"+(m2.l+k*iw2/(N-1))+" "+y2(a2))}
+ el(s2,"path",{d:top+low.join("")+"Z",fill:cs(cats[c]),stroke:cs("--card"),"stroke-width":1})}
+$("sequia").innerHTML="";$("sequia").appendChild(s2);leg("lseq",lab.map(function(l,i){return[l,cs(cats[i])]}));
+// hidrograma
+var W3=640,H3=250,m3={l:34,r:10,t:18,b:26},iw3=W3-m3.l-m3.r,s3=sv(W3,H3),y3=ejes(s3,m3,W3,H3,6,0,[[m3.l,"-7 d"],[m3.l+iw3*.5,"hoy"],[m3.l+iw3,"+7 d"]],1),M=70,hx=function(k){return m3.l+k*iw3/(M-1)},rh=R(9),qv=[],k2;
+for(k2=0;k2<M;k2++){var t=k2/M;qv.push(1.2+3.6*Math.exp(-Math.pow((t-.62)/.14,2))+.15*Math.sin(k2/3)+rh()*.12)}
+[[4.2,"--warn","Alerta"],[5.2,"--bad","Inundación"]].forEach(function(u){el(s3,"line",{x1:m3.l,x2:W3-m3.r,y1:y3(u[0]),y2:y3(u[0]),stroke:cs(u[1]),"stroke-dasharray":"5 4","stroke-width":1.4});tx(s3,W3-m3.r-2,y3(u[0])-4,u[2],{"text-anchor":"end"})});
+var hoy=34,up="",lo="";for(k2=hoy;k2<M;k2++){var w=(k2-hoy)*.012;up+=(k2>hoy?"L":"M")+hx(k2)+" "+y3(qv[k2]+w*6);}for(k2=M-1;k2>=hoy;k2--){lo+="L"+hx(k2)+" "+y3(qv[k2]-(k2-hoy)*.012*6)}
+el(s3,"path",{d:up+lo+"Z",fill:cs("--hid"),"fill-opacity":.2});
+el(s3,"polyline",{points:qv.slice(0,hoy+1).map(function(a,k){return hx(k)+","+y3(a)}).join(" "),fill:"none",stroke:cs("--hid"),"stroke-width":2.4,"stroke-linejoin":"round"});
+el(s3,"polyline",{points:qv.slice(hoy).map(function(a,k){return hx(hoy+k)+","+y3(a)}).join(" "),fill:"none",stroke:cs("--hid"),"stroke-width":2.4,"stroke-dasharray":"2 5","stroke-linecap":"round"});
+el(s3,"line",{x1:hx(hoy),x2:hx(hoy),y1:m3.t,y2:H3-m3.b,stroke:cs("--mut"),"stroke-dasharray":"2 3"});tx(s3,m3.l,m3.t-1,"nivel (m)",{});
+$("hidro").innerHTML="";$("hidro").appendChild(s3);leg("lhid",[["Observado",cs("--hid")],["Pronóstico",cs("--hid")],["Umbral de alerta",cs("--warn")],["Umbral de inundación",cs("--bad")]]);
+// matriz
+var W4=420,H4=250,s4=sv(W4,H4),dias=["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],fr=["0–4","4–8","8–12","12–16","16–20","20–24"],rm=R(21),cw=(W4-60)/6,ch=(H4-40)/7;
+dias.forEach(function(d,a){tx(s4,50,22+a*ch+ch/2+4,d,{"text-anchor":"end"});fr.forEach(function(f,b){var v=rm()*(b==3||b==4?1:.45)*(a>=4?1.3:1);var o=Math.min(v,1);var cel=el(s4,"rect",{x:58+b*cw,y:18+a*ch,width:cw-3,height:ch-3,rx:5,fill:cs("--ant"),"fill-opacity":.08+o*.85})});});
+fr.forEach(function(f,b){tx(s4,58+b*cw+cw/2,H4-8,f,{"text-anchor":"middle"})});$("matriz").innerHTML="";$("matriz").appendChild(s4);$("matriz").insertAdjacentHTML("beforeend","<div class=leg><span style=\"--k:color-mix(in srgb,var(--ant) 15%,transparent)\">menos hechos</span><span style=\"--k:var(--ant)\">más hechos</span></div>");
+// hecho
+var W5=640,H5=220,m5={l:34,r:14,t:12,b:26},iw5=W5-m5.l-m5.r,s5=sv(W5,H5),y5=ejes(s5,m5,W5,H5,16,0,[[m5.l+6,"1 nov"],[m5.l+iw5*.4,"3 nov"],[m5.l+iw5*.8,"5 nov"]],4),notas=[[0.02,4,"p"],[0.12,6,"p"],[0.3,6,"p"],[0.45,9,"p"],[0.62,12,"o"],[0.85,12,"p"]];
+var d="";notas.forEach(function(n,k){var X=m5.l+n[0]*iw5;d+=(k?"L"+X+" "+y5(notas[k-1][1]):"M"+X+" "+y5(n[1]))+"L"+X+" "+y5(n[1])});d+="L"+(W5-m5.r)+" "+y5(12);
+el(s5,"path",{d:d,fill:"none",stroke:cs("--bio"),"stroke-width":2.4,"stroke-linejoin":"round"});
+notas.forEach(function(n){el(s5,"circle",{cx:m5.l+n[0]*iw5,cy:y5(n[1]),r:5.5,fill:n[2]=="o"?cs("--bio"):cs("--card"),stroke:cs("--bio"),"stroke-width":2})});
+tx(s5,m5.l+.62*iw5,y5(12)-12,"Boletín oficial: 12",{"text-anchor":"middle"}).setAttribute("class","v");
+$("hecho").innerHTML="";$("hecho").appendChild(s5);leg("lh",[["Nota de prensa",cs("--bio")],["Nota con fuente oficial",cs("--bio")]]);
+// mapa
+fetch("geo_dep.geojson").then(function(r){return r.json()}).then(function(G){
+ var W6=640,H6=420,b=[-69.7,-57.4,-23,-9.6],k=Math.min((W6-20)/(b[1]-b[0]),(H6-40)/(b[3]-b[2])),px=function(o){return(o-b[0])*k+(W6-(b[1]-b[0])*k)/2},py=function(a){return(b[3]-a)*k+8},sm=sv(W6,H6),ETQ=[],val={"La Paz":8,"Santa Cruz":6,"Cochabamba":5,"Oruro":3,"Potosí":2,"Chuquisaca":4,"Tarija":7,"Beni":9,"Pando":1},rampa=["--s1","--s2","--s3","--s4","--s5"];
+ G.features.forEach(function(f){var g=f.geometry,Rg=g.type==="Polygon"?[g.coordinates]:g.coordinates,d="",v=val[f.properties.n],cx=0,cy=0,cnt=0;Rg.forEach(function(P){P.forEach(function(r){d+="M"+r.map(function(c){cx+=c[0];cy+=c[1];cnt++;return px(c[0]).toFixed(1)+" "+py(c[1]).toFixed(1)}).join("L")+"Z"})});
+  el(sm,"path",{d:d,fill:v==null?cs("--map"):cs(rampa[Math.min(4,Math.floor(v/2))]),stroke:cs("--card"),"stroke-width":1.5,"stroke-linejoin":"round"});
+  var ab={"Cochabamba":"Cbba.","Chuquisaca":"Chuq."},ci=v==null?0:Math.min(4,Math.floor(v/2)),oscuro=document.documentElement.dataset.t?document.documentElement.dataset.t==="d":matchMedia("(prefers-color-scheme:dark)").matches,claro=oscuro?ci>=3:ci<=2;ETQ.push([px(cx/cnt),py(cy/cnt)+3,ab[f.properties.n]||f.properties.n,claro])});
+ ETQ.forEach(function(e){var tt=tx(sm,e[0],e[1],e[2],{"text-anchor":"middle"});tt.style.fill=e[3]?"#1b2430":"#fff";tt.style.fontWeight=600});
+ var lx=W6-210;rampa.forEach(function(c,i){el(sm,"rect",{x:lx+i*38,y:H6-26,width:38,height:8,fill:cs(c)});});tx(sm,lx,H6-4,"0",{});tx(sm,lx+190,H6-4,"≥ 200",{"text-anchor":"end"});tx(sm,lx-8,H6-18,"casos/100 000",{"text-anchor":"end"});
+ $("mapa").innerHTML="";$("mapa").appendChild(sm)})
+}
+pintar();
+$("tema").onclick=function(){var r=document.documentElement,dark=r.dataset.t?r.dataset.t==="d":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.t=dark?"l":"d";pintar()}
+})();
+</script></body></html>
