@@ -295,6 +295,7 @@ def main():
     json.dump({"generado": int(time.time() * 1000), "n": len(eventos), "eventos": eventos}, open(f"{SALIDA}/eventos_v3.json", "w", encoding="utf-8"), ensure_ascii=False)
     ctl["despues"] = validar.reglas_calidad(eventos)
     etapa("boletin", lambda: reporte_v3.build(eventos, f"{SALIDA}/boletin.pdf", 24, None, "docs/geo_dep.geojson", json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8")) if os.path.exists(f"{SALIDA}/hechos.json") else None), ctl)
+    etapa("exportar", lambda: __import__("exportar_v3").exportar(json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8")), SALIDA, int(time.time() * 1000)), ctl)
     def periodicos():
         hs = json.load(open(f"{SALIDA}/hechos.json", encoding="utf-8"))
         ahora = int(time.time() * 1000)

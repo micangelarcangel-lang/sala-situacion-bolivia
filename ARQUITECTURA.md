@@ -31,3 +31,17 @@ _Actualizado 06/11/2026_
 - **F4 · Boletines definitivos**: Diario, semanal (domingo 7:00) y mensual con tendencias y los módulos anteriores; envío por Gmail. _Aceptación:_ PDF de cada período revisado por ti.
 - **F5 · Consulta y red ciudadana**: Pedir un hecho con 3 datos o más; formulario Kobo y su lectura. _Aceptación:_ Una consulta real respondida de punta a punta.
 - **F6 · Producción**: Unir a main, programación, vigilancia de 3 días con el flujo viejo de respaldo; servidor adecuado si el piloto se aprueba. _Aceptación:_ Tres días seguidos sin fallas.
+
+## Estándares abiertos e interoperabilidad (regla de diseño)
+
+Referentes revisados: OMS EIOS 2.0 (vigilancia por fuentes abiertas, panel colaborativo, multilingüe), CAP 1.2 de OASIS (formato de alertas usado por OMM y sistemas de alerta temprana), GeoJSON RFC 7946 (SIG).
+Regla: todo dato sale en un formato abierto y versionado; la interfaz solo consume esa capa.
+
+| Salida | Estándar | Archivo |
+|---|---|---|
+| Hechos geolocalizados | GeoJSON (RFC 7946) | `datos/v3/hechos.geojson` |
+| Alertas por hecho | CAP 1.2 + feed Atom | `datos/v3/cap/` |
+| Eventos y hechos | JSON con esquema versionado | `esquema_evento_v1.json` |
+| Pendiente | OGC API Features / OpenAPI, HXL (datos humanitarios) | F6 |
+
+Límite: la severidad y urgencia CAP quedan en "Unknown" hasta definir criterios validados por la autoridad; solo 49 de 106 hechos tienen punto, el resto son municipio o departamento.
