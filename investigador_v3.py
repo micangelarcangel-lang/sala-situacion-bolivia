@@ -228,8 +228,8 @@ kpis [[valor, etiqueta] x5] (fallecidos, heridos, aprehendidos, medios que lo re
 hitos [{dia:int día de noviembre, hora:número 0-24, texto:máx 28 car., hecho:true|false}] (6 a 7; los pendientes hecho:false con dia >= hoy),
 ficha [[campo, valor]] (Fecha y hora, Lugar, Víctima, Vehículo, Conductor, Causa, Estado del caso, Respaldo oficial, Confianza),
 lugares_citados: nombres de la lista %s que son versiones del lugar del hecho.""" % lug),
-        ("""JSON con EXACTAMENTE: areas [[nombre, estado ('ÁMBAR'|'ROJO'|'VERDE'|'GRIS'), situacion (qué hizo o dijo, con dato concreto), responsable (institución o cargo real citado en el análisis), falta (documento o decisión concreta que falta)]] x4 (Policía/Tránsito, Fiscalía, Cancillería/Consular, Salud/Morgue), 
-acciones [[accion (una línea, verbo + objeto concreto), responsable_sugerido, plazo]] x5 de un centro coordinador del Ministerio de Salud: confirmar el estado del caso con fuente oficial, solicitar parte policial/informe forense, coordinar con Cancillería el traslado, fijar un mensaje oficial único, seguir la audiencia cautelar. Nada de apoyo psicológico ni infraestructura vial.,
+        ("""JSON con EXACTAMENTE: areas: lista de 4 OBJETOS {nombre, estado ('ÁMBAR'|'ROJO'|'VERDE'|'GRIS'), situacion (qué hizo o dijo, con dato concreto), responsable (institución o cargo real citado en el análisis), falta (documento o decisión concreta que falta)} (Policía/Tránsito, Fiscalía, Cancillería/Consular, Salud/Morgue), 
+acciones: lista de 5 OBJETOS {accion (una línea, verbo + objeto concreto), responsable_sugerido (cargo/unidad), plazo ('24 h','48 h','72 h','Continuo')} de un centro coordinador del Ministerio de Salud: confirmar el estado del caso con fuente oficial, solicitar parte policial/informe forense, coordinar con Cancillería el traslado, fijar un mensaje oficial único, seguir la audiencia cautelar. Nada de apoyo psicológico ni infraestructura vial.,
 riesgos [[titulo, explicacion con base en el análisis]] x3."""),
         ("""JSON con EXACTAMENTE: triangulacion [[dato, fuentes_y_valores (cada medio con lo que dice), estado ('Coincide'|'Fuente única'|'DISCREPA'|'Sin confirmar')]] (8 a 12 filas: hora, lugar, nombre, edad, fuga, alcotest, estado del conductor, comunicados oficiales...), cronologia [[cuando, que]] (8 a 12), no_se_sabe [strings], seguimiento [strings]."""),
     ]
@@ -259,6 +259,33 @@ def armar_informe(hecho, res, fuentes, red):
               "cobertura": cob, "sin_fecha": ("Sin fecha verificada: " + ", ".join(sinf[:8]) + ".") if sinf else "", "medios_nacionales": nac, "medios_internacionales": intl, "leidos_completos": [f["medio"] for f in lei],
               "mapa": {"puntos": pts}, "fuentes": [[f["medio"], f["url"], f["fecha"]] for f in sorted(lei, key=lambda f: f.get("pub") or 0)][:24]})
     A["kpis"] = [list(map(str, k)) for k in A.get("kpis", [])][:5]
+    def txt(x):
+        if isinstance(x, dict):
+            return "; ".join(f"{k}: {txt(v)}" for k, v in x.items())
+        if isinstance(x, (list, tuple)):
+            return "; ".join(txt(i) for i in x)
+        return {"no_se_sabe": "Sin confirmar"}.get(str(x), str(x))
+    def fila(r, n, claves):
+        if isinstance(r, str):
+            r = [r]
+        elif isinstance(r, dict):
+            r = [r.get(k, "") for k in claves] if any(k in r for k in claves) else list(r.values())
+        r = [txt(x) for x in r][:n]
+        return r + [""] * (n - len(r))
+    CL = {"acciones": ("accion", "responsable_sugerido", "plazo"), "riesgos": ("titulo", "explicacion"), "ficha": ("campo", "valor"),
+          "triangulacion": ("dato", "fuentes_y_valores", "estado"), "cronologia": ("cuando", "que"),
+          "areas": ("nombre", "estado", "situacion", "responsable", "falta")}
+    for clave, n in (("acciones", 3), ("riesgos", 2), ("ficha", 2), ("triangulacion", 3), ("cronologia", 2), ("areas", 5)):
+        A[clave] = [fila(r, n, CL[clave]) for r in A.get(clave, [])]
+    for r in A["acciones"]:
+        if not r[1]:
+            r[1] = "Centro Coordinador de Emergencias"
+        if not r[2]:
+            m = re.search(r"antes del (\d{4})-(\d\d)-(\d\d)", r[0]); r[2] = f"{m.group(3)}/{m.group(2)}" if m else "Por definir"
+            r[0] = re.sub(r"\s*antes del \d{4}-\d\d-\d\d\.?", ".", r[0])
+    for r in A["triangulacion"]:
+        r[0] = r[0].replace("_", " ").capitalize()
+        r[2] = {"coincide": "Coincide", "fuente_unica": "Fuente única", "discrepa": "DISCREPA"}.get(r[2].lower(), r[2])
     return A
 
 
