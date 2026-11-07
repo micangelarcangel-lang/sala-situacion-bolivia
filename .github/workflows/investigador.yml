@@ -16,7 +16,7 @@ jobs:
         with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - run: pip install trafilatura googlenewsdecoder beautifulsoup4 lxml
+      - run: pip install trafilatura googlenewsdecoder beautifulsoup4 lxml reportlab matplotlib shapely pyyaml jsonschema numpy
       - name: Investigar
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
