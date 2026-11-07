@@ -115,15 +115,17 @@ def llamar_ia(sistema, usuario, max_tokens=4000):
     k = os.environ.get("GEMINI_API_KEY", "").strip()
     errores = []
     if k:
-        for modelo in ("gemini-3.8-flash", "gemini-flash-latest"):
-            try:
-                cuerpo = {"systemInstruction": {"parts": [{"text": sistema}]}, "contents": [{"role": "user", "parts": [{"text": usuario}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": max_tokens, "thinkingConfig": {"thinkingBudget": 0}}}
-                r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={k}", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json"}), timeout=240))
-                return r["candidates"][0]["content"]["parts"][0]["text"], "gemini/" + modelo
-            except urllib.error.HTTPError as e:
-                errores.append(f"gemini/{modelo}: HTTP {e.code} " + e.read()[:300].decode("utf8", "replace"))
-            except Exception as e:
-                errores.append(f"gemini/{modelo}: " + type(e).__name__ + " " + str(e)[:150])
+        for intento in range(5):
+            for modelo in ("gemini-3.8-flash", "gemini-flash-latest"):
+                try:
+                    cuerpo = {"systemInstruction": {"parts": [{"text": sistema}]}, "contents": [{"role": "user", "parts": [{"text": usuario}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": max_tokens, "thinkingConfig": {"thinkingBudget": 0}}}
+                    r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={k}", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json"}), timeout=240))
+                    return r["candidates"][0]["content"]["parts"][0]["text"], "gemini/" + modelo
+                except urllib.error.HTTPError as e:
+                    errores.append(f"intento {intento + 1} gemini/{modelo}: HTTP {e.code}")
+                except Exception as e:
+                    errores.append(f"intento {intento + 1} gemini/{modelo}: " + type(e).__name__)
+            time.sleep(15 * (intento + 1))  # el servicio gratuito a veces responde 503 por alta demanda: se reintenta
     k = os.environ.get("GROQ_API_KEY", "").strip()
     if k:
         try:
