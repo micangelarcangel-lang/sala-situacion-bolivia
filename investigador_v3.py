@@ -153,7 +153,7 @@ def analizar(fuentes, nombres=()):
             return True
         return ("el alto" in t or "bolivia" in t) and any(k in t for k in ("coreano", "jinstravel", "ciclista", "youtuber"))
     fuentes = [f for f in fuentes if f.get("texto") and del_hecho(f)][:18]
-    arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:3000]}" for i, f in enumerate(fuentes))[:45000]
+    arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:2200]}" for i, f in enumerate(fuentes))[:30000]
     pedido = ("Con estos artículos devuelve JSON con: hecho{fecha,hora,lugar_versiones[{texto,fuentes}],victima{nombre,edad,nacionalidad},vehiculo,conductor{estado,declaraciones[{texto,atribuido_a,fuente}]}}, "
               "instituciones[{nombre,que_hizo,fuente}], cronologia[{cuando,que,fuentes}], afirmaciones[{dato,valor,fuentes,estado('coincide'|'fuente_unica'|'discrepa'),detalle}], "
               "vacios[strings: lo que NO se sabe y debería saberse], novedades_ultimas_24h[strings].\n\nARTÍCULOS:\n" + arts)
@@ -209,34 +209,38 @@ SIS_RED = ("Eres analista senior de un centro coordinador de emergencias del Min
            "PROHIBIDO proponer apoyo psicológico, restos biológicos, ciclorrutas, campañas o infraestructura vial generales. Si algo no está en las fuentes, dilo en no_se_sabe; no lo rellenes. Máximo 5 acciones, cada una de una sola línea.")
 
 
-def redactar(hecho, analisis, fuentes, lugares):
-    comp = json.dumps(analisis, ensure_ascii=False)[:30000]
-    pedido = f"""Hecho del sistema: {hecho['subtipo']} en {hecho.get('lugar')}.
-Análisis estructurado (con citas de medio):
-{comp}
-
-Ubicaciones halladas en OpenStreetMap: {json.dumps([{k: g[k] for k in ('consulta','lat','lon') if k in g} for g in lugares if 'lat' in g], ensure_ascii=False)}
-
-Devuelve JSON con EXACTAMENTE estas claves:
-titulo (máx. 70 caracteres), clasificacion (tipo → subtipo · repercusión), nivel_atencion,
-esencial{{paso, resuelto, abierto, requiere}} (cada una 1-3 frases),
-kpis [[valor, etiqueta] x5] (fallecidos, heridos, detenidos/aprehendidos, número de medios, alcance de la repercusión),
-hitos [{{dia:int (día de noviembre), hora:número 0-24, texto:máx 28 caracteres, hecho:true/false}}] (6 a 7 hitos; los pendientes con hecho:false y dia entre 7 y 9),
-areas [[nombre, estado ('ÁMBAR'|'ROJO'|'VERDE'|'GRIS'), situacion, responsable, falta]] x4,
-acciones [[accion, responsable_sugerido, plazo]] x5,
-riesgos [[titulo, explicacion]] x3,
-ficha [[campo, valor]] (Fecha y hora, Lugar, Víctima, Vehículo, Conductor, Causa, Estado del caso, Respaldo oficial, Confianza),
-triangulacion [[dato, fuentes_y_valores, estado ('Coincide'|'Fuente única'|'DISCREPA'|'Sin confirmar')]],
-cronologia [[cuando, que]],
-no_se_sabe [strings], seguimiento [strings],
-lugares_citados [nombres de lugares de la lista de OpenStreetMap que corresponden a versiones del lugar del hecho]."""
-    txt, prov = llamar_ia(SIS_RED, pedido, max_tokens=7000)
-    if not txt:
-        return None, prov
+def _json(txt):
     try:
-        return json.loads(txt), prov
-    except Exception as e:
-        return None, "JSON inválido: " + str(e)[:80]
+        return json.loads(txt) if txt else None
+    except Exception:
+        return None
+
+
+def redactar(hecho, analisis, fuentes, lugares):
+    """Tres pedidos cortos (en vez de uno largo) para que también un modelo pequeño responda con precisión."""
+    comp = json.dumps(analisis, ensure_ascii=False)[:14000]
+    base = f"Hecho del sistema: {hecho['subtipo']} en {hecho.get('lugar')}. Hoy es {dt.date.today().isoformat()}.\nANÁLISIS CON CITAS:\n{comp}\n\n"
+    lug = json.dumps([g["consulta"] for g in lugares if "lat" in g], ensure_ascii=False)
+    pedidos = [
+        ("""JSON con EXACTAMENTE: titulo (máx 70 car., describe el hecho concreto: quién, qué, dónde), clasificacion, nivel_atencion ('Bajo'|'Medio'|'Alto'),
+esencial{paso: QUÉ OCURRIÓ en 2 frases con datos del análisis (no una acción), resuelto: qué ya está establecido, abierto: qué sigue sin saberse, requiere: la decisión o gestión que se pide a la MAE},
+kpis [[valor, etiqueta] x5] (fallecidos, heridos, aprehendidos, medios que lo reportan, alcance 'Local'|'Nacional'|'Internacional'),
+hitos [{dia:int día de noviembre, hora:número 0-24, texto:máx 28 car., hecho:true|false}] (6 a 7; los pendientes hecho:false con dia >= hoy),
+ficha [[campo, valor]] (Fecha y hora, Lugar, Víctima, Vehículo, Conductor, Causa, Estado del caso, Respaldo oficial, Confianza),
+lugares_citados: nombres de la lista %s que son versiones del lugar del hecho.""" % lug),
+        ("""JSON con EXACTAMENTE: areas [[nombre, estado ('ÁMBAR'|'ROJO'|'VERDE'|'GRIS'), situacion (qué hizo o dijo, con dato concreto), responsable (institución o cargo real citado en el análisis), falta (documento o decisión concreta que falta)]] x4 (Policía/Tránsito, Fiscalía, Cancillería/Consular, Salud/Morgue), 
+acciones [[accion (una línea, verbo + objeto concreto), responsable_sugerido, plazo]] x5 de un centro coordinador del Ministerio de Salud: confirmar el estado del caso con fuente oficial, solicitar parte policial/informe forense, coordinar con Cancillería el traslado, fijar un mensaje oficial único, seguir la audiencia cautelar. Nada de apoyo psicológico ni infraestructura vial.,
+riesgos [[titulo, explicacion con base en el análisis]] x3."""),
+        ("""JSON con EXACTAMENTE: triangulacion [[dato, fuentes_y_valores (cada medio con lo que dice), estado ('Coincide'|'Fuente única'|'DISCREPA'|'Sin confirmar')]] (8 a 12 filas: hora, lugar, nombre, edad, fuga, alcotest, estado del conductor, comunicados oficiales...), cronologia [[cuando, que]] (8 a 12), no_se_sabe [strings], seguimiento [strings]."""),
+    ]
+    out = {}; prov = ""
+    for p in pedidos:
+        txt, prov = llamar_ia(SIS_RED, base + p, max_tokens=3500)
+        d = _json(txt)
+        if not d:
+            return None, "redacción incompleta: " + str(prov)[:200]
+        out.update(d)
+    return out, prov
 
 
 def armar_informe(hecho, res, fuentes, red):
