@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:ddc06eb45e",
- "generado": "2026-11-07T17:08:47.516350+00:00",
- "segundos": 102,
+ "generado": "2026-11-07T17:11:58.712930+00:00",
+ "segundos": 131,
  "consultas": [
   [
    1,
@@ -16,7 +16,7 @@
   [
    1,
    "accidente de tránsito El Alto",
-   27
+   28
   ],
   [
    2,
@@ -30,26 +30,6 @@
   ],
   [
    2,
-   "José María Carrasco [es]",
-   24
-  ],
-  [
-   2,
-   "José María Carrasco [en]",
-   0
-  ],
-  [
-   2,
-   "Pucarita Chica [es]",
-   1
-  ],
-  [
-   2,
-   "Pucarita Chica [en]",
-   0
-  ],
-  [
-   2,
    "Cho Jin-woo [es]",
    21
   ],
@@ -57,62 +37,85 @@
    2,
    "Cho Jin-woo [en]",
    29
+  ],
+  [
+   2,
+   "YouTube [es]",
+   98
+  ],
+  [
+   2,
+   "YouTube [en]",
+   100
+  ],
+  [
+   2,
+   "Puente Alto [es]",
+   98
+  ],
+  [
+   2,
+   "Puente Alto [en]",
+   7
   ]
  ],
- "n_fuentes": 48,
- "n_leidas": 33,
+ "descartadas_por_ruido": 393,
+ "n_fuentes": 23,
+ "n_leidas": 22,
  "nombres_propios": [
   "Alto Alegre",
-  "José María Carrasco",
-  "Pucarita Chica",
   "Cho Jin-woo",
   "YouTube",
-  "Puente Alto",
-  "TransMilenio",
-  "Ruta Provincial",
-  "Toyota Yaris",
-  "JinsTravel"
+  "Puente Alto"
  ],
  "lugares": [
   {
-   "consulta": "avenida Juan Pablo II",
-   "lat": -16.5023408,
-   "lon": -68.1662688,
-   "nombre": "Avenida Juan Pablo II, Ampliación Ferroviaria 2da. Sección, 16 de Julio, Distrito 6, El Alto, Provincia Pedro Domingo Mu",
-   "tipo": "trunk",
-   "km_al_centro_municipio": 7.97
-  },
-  {
-   "consulta": "zona de Chacaltaya",
-   "sin_resultado": true
-  },
-  {
    "consulta": "Puente Alto",
-   "lat": -16.5456239,
-   "lon": -68.1751931,
-   "nombre": "WaynaBus - Rotonda Puente Bolivia, Rotonda Bolivia-Arica-Cívica, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, L",
-   "tipo": "bus_stop",
-   "km_al_centro_municipio": 11.63
+   "lat": -16.5449385,
+   "lon": -68.1765699,
+   "nombre": "Puente Bolivia, Avenida Bolivia, Victoria, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "bridge",
+   "km_al_centro_municipio": 11.5
   },
   {
-   "consulta": "avenida El Dorado",
+   "consulta": "avenida General Savio",
    "sin_resultado": true
   },
   {
-   "consulta": "avenida Caracas",
-   "lat": -16.5318234,
-   "lon": -68.1618817,
-   "nombre": "Avenida Caracas, Exaltación 1ª Sección, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "consulta": "avenida Cívica",
+   "lat": -16.5225769,
+   "lon": -68.1578555,
+   "nombre": "Avenida Cívica, PLAN 405, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "primary",
+   "km_al_centro_municipio": 10.28
+  },
+  {
+   "consulta": "avenida Litoral",
+   "lat": -16.5329888,
+   "lon": -68.2093996,
+   "nombre": "Avenida Litoral, San Luis II Charapaqui, Distrito 3, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "primary",
+   "km_al_centro_municipio": 9.42
+  },
+  {
+   "consulta": "zona Franca",
+   "lat": -16.545961,
+   "lon": -68.2282541,
+   "nombre": "Zona Franca Industrial La Paz, Distrito 12, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "industrial",
+   "km_al_centro_municipio": 10.92
+  },
+  {
+   "consulta": "avenida Camilo Enríquez",
+   "sin_resultado": true
+  },
+  {
+   "consulta": "avenida Circunvalación",
+   "lat": -16.5404302,
+   "lon": -68.1541809,
+   "nombre": "Avenida Circunvalación, Tejada Alpacoma Bajo, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "residential",
-   "km_al_centro_municipio": 10.89
-  },
-  {
-   "consulta": "avenida Cali",
-   "sin_resultado": true
-  },
-  {
-   "consulta": "Avenida Cali",
-   "sin_resultado": true
+   "km_al_centro_municipio": 12.14
   }
  ],
  "ia": "sin clave de IA en los secretos (GEMINI_API_KEY o GROQ_API_KEY)",
@@ -126,67 +129,8 @@
    "pub": 1793830112000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "“La gente que debe llevar el pan del día a sus hogares lo sufre”: Reportan filas por gas en El Alto",
-   "url": "https://eju.tv/2026/11/la-gente-que-debe-llevar-el-pan-del-dia-a-sus-hogares-lo-sufre-reportan-filas-por-gas-en-el-alto/",
-   "fecha": "04/11 18:01",
-   "pub": 1793829707000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Productores de queso se declaran en emergencia por sobreoferta y baja del precio",
-   "url": "https://eju.tv/2026/11/productores-de-queso-se-declaran-en-emergencia-por-sobreoferta-y-baja-del-precio/",
-   "fecha": "04/11 18:14",
-   "pub": 1793830460000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Blooming: José María Carrasco fue operado con éxito",
-   "url": "https://eju.tv/2026/11/blooming-jose-maria-carrasco-fue-operado-con-exito/",
-   "fecha": "04/11 07:50",
-   "pub": 1793793001000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Voraz incendio en una cerrajería moviliza a vecinos de Pucarita Chica en Cochabamba",
-   "url": "https://eju.tv/2026/11/voraz-incendio-en-una-cerrajeria-moviliza-a-vecinos-de-pucarita-chica-en-cochabamba/",
-   "fecha": "04/11 18:26",
-   "pub": 1793831189000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Gobernadores se reúnen virtualmente para analizar coparticipación y negociar un incremento gradual",
-   "url": "https://eju.tv/2026/11/gobernadores-se-reunen-virtualmente-para-analizar-coparticipacion-y-negociar-un-incremento-gradual/",
-   "fecha": "04/11 18:39",
-   "pub": 1793831959000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Vicegobernadora de Santa Cruz exige a Saucedo que dé nombres y apellidos de quiénes lo persiguen",
-   "url": "https://eju.tv/2026/11/vicegobernadora-de-santa-cruz-exige-a-saucedo-que-de-nombres-y-apellidos-de-quienes-lo-persiguen/",
-   "fecha": "04/11 18:28",
-   "pub": 1793831335000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Red Uno",
@@ -196,7 +140,8 @@
    "pub": 1793888907000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Red Uno",
@@ -206,17 +151,8 @@
    "pub": 1793975309000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "Red Uno",
-   "titulo": "Choque múltiple en El Alto: conductor en aparente estado de ebriedad",
-   "url": "https://www.reduno.com.bo/noticias/choque-multiple-en-el-alto-conductor-en-aparente-estado-de-ebriedad-2026114175215",
-   "fecha": "04/11 19:04",
-   "pub": 1793833462000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Jornada",
@@ -226,17 +162,8 @@
    "pub": 1794006088000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "Última Hora",
-   "titulo": "Cinco accidentes de tránsito dejaron heridos y daños materiales en Alto Paraná",
-   "url": "https://www.ultimahora.com/cinco-accidentes-de-transito-dejaron-heridos-y-danos-materiales-en-alto-parana",
-   "fecha": "01/11 09:44",
-   "pub": 1793540640000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Meganoticias",
@@ -246,7 +173,8 @@
    "pub": 1793533980000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "TN8",
@@ -256,27 +184,8 @@
    "pub": 1793922833000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "EL PAÍS",
-   "titulo": "El corredor Madrid-Sevilla de alta velocidad ha doblado su volumen de tráfico desde su liberalización en 2023",
-   "url": "https://elpais.com/economia/2026-10-29/el-corredor-madrid-sevilla-de-alta-velocidad-ha-doblado-su-volumen-de-trafico-desde-su-liberalizacion-en-2023.html",
-   "fecha": "29/10 03:00",
-   "pub": 1793257200000,
-   "ronda": 1,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "Bogota.gov.co",
-   "titulo": "Alta congestión en calle 80: movilidad en Bogotá y rutas de TransMilenio hoy jueves 5 de noviembre",
-   "url": "https://bogota.gov.co/mi-ciudad/movilidad/2026-11/en-vivo-movilidad-bogota-y-rutas-transmilenio-hoy-5-de-noviembre-2026",
-   "fecha": "05/11 22:10",
-   "pub": 1793931001000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "eldoce",
@@ -286,57 +195,8 @@
    "pub": 1793488722000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "Villa María VIVO",
-   "titulo": "Fatal accidente en la Ruta 2: murió una motociclista entre Alto Alegre y Cintra",
-   "url": "https://villamariavivo.com/accidente-fatal-ruta-2-motociclista-alto-alegre-cintra/",
-   "fecha": "31/10 20:19",
-   "pub": 1793492370000,
-   "ronda": 1,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "El Sol de México",
-   "titulo": "Respetar una señal de alto, la diferencia entre evitar un accidente y poner en riesgo una vida",
-   "url": "https://oem.com.mx/elsoldelalaguna/local/respetar-una-senal-de-alto-la-diferencia-entre-evitar-un-accidente-y-poner-en-riesgo-una-vida-32997949",
-   "fecha": "06/11 19:36",
-   "pub": 1794008217000,
-   "ronda": 1,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "Telefe Noticias",
-   "titulo": "Renunció el ministro de Transporte de España tras los accidentes de trenes de alta velocidad que causaron 115 muertos",
-   "url": "https://noticias.mitelefe.com/internacionales/renuncio-el-ministro-de-transporte-de-espana-tras-los-accidentes-de-trenes-de-alta-velocidad-que-causaron-115-muertos-pid2571288",
-   "fecha": "03/11 19:45",
-   "pub": 1793749512000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "Pulzo",
-   "titulo": "Murió famoso 'influencer': sufrió trágico accidente en moto de alto cilindraje",
-   "url": "https://www.pulzo.com/entretenimiento/murio-famoso-influencer-sufrio-tragico-accidente-moto-alto-cilindraje-PP5346502",
-   "fecha": "02/11 12:51",
-   "pub": 1793638288000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "MVS Noticias",
-   "titulo": "Conductor de vehículo se pasa el alto, choca con Metrobús y pierde la vida",
-   "url": "https://mvsnoticias.com/nacional/cdmx/2026/11/2/conductor-de-vehiculo-se-pasa-el-alto-choca-contra-metrobus-y-pierde-la-vida-752018.html",
-   "fecha": "02/11 13:00",
-   "pub": 1793638859000,
-   "ronda": 1,
-   "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "puntal.com.ar",
@@ -346,7 +206,8 @@
    "pub": 1793555058000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "La Patria Bolivia",
@@ -356,7 +217,8 @@
    "pub": 1793982473000,
    "ronda": 1,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Villa Maria Ya",
@@ -366,7 +228,8 @@
    "pub": 1793821705000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "La Nueva Mañana",
@@ -376,7 +239,8 @@
    "pub": 1793487300000,
    "ronda": 2,
    "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "La Voz del Interior",
@@ -386,7 +250,8 @@
    "pub": 1793487337000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Infobae",
@@ -396,7 +261,8 @@
    "pub": 1793516760000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Telefe Córdoba",
@@ -406,17 +272,8 @@
    "pub": 1793487310000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "villamarianoticias.com",
-   "titulo": "Unión Central es el primer semifinalista del Clausura: venció 4-1 a Unión Social",
-   "url": "https://villamarianoticias.com/union-central-es-el-primer-semifinalista-del-clausura-vencio-4-1-a-union-social/",
-   "fecha": "05/11 00:03",
-   "pub": 1793851439000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "puntalvillamaria.com.ar",
@@ -426,7 +283,8 @@
    "pub": 1793965860000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Villa Maria Ya",
@@ -436,7 +294,8 @@
    "pub": 1793628556000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "puntalvillamaria.com.ar",
@@ -446,7 +305,8 @@
    "pub": 1793622060000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Villa Maria Ya",
@@ -456,17 +316,8 @@
    "pub": 1793491485000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario del centro del país",
-   "titulo": "Se viene la Expo IPEA",
-   "url": "https://www.eldiariocba.com.ar/regionales/2026/11/1/se-viene-la-expo-ipea-142796.html",
-   "fecha": "01/11 07:42",
-   "pub": 1793533357000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "puntalvillamaria.com.ar",
@@ -476,7 +327,8 @@
    "pub": 1793792209000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Villa Maria Ya",
@@ -486,17 +338,8 @@
    "pub": 1793886561000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario del centro del país",
-   "titulo": "Unión Central, a semifinales",
-   "url": "https://www.eldiariocba.com.ar/el-equipo/futbol/2026/11/6/union-central-a-semifinales-143016.html",
-   "fecha": "06/11 07:30",
-   "pub": 1793964600000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Villa Maria Ya",
@@ -506,7 +349,8 @@
    "pub": 1793712078000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Villa Maria Ya",
@@ -516,17 +360,8 @@
    "pub": 1793973924000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "Diario La Mañana - La verdad en tus manos",
-   "titulo": "Apareció “Lobito”: el perro robado por dos hombres “estaba a 20 kilómetros de su casa” - Diario La Mañana",
-   "url": "https://www.xn--lamaanaonline-lkb.com.ar/noticia/108461/apareci-lobito-el-perro-robado-por-dos-hombres-estaba-a-20-kilmetros-de-su-casa/",
-   "fecha": "06/11 20:10",
-   "pub": 1794010204000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   },
   {
    "medio": "Otro Punto",
@@ -536,67 +371,8 @@
    "pub": 1793576809000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true
-  },
-  {
-   "medio": "Opinion Ciudadana",
-   "titulo": "Detuvieron a dos hombres acusados de atar a un perro, meterlo vivo en una bolsa y llevárselo de una vivienda",
-   "url": "https://www.diariopinion.com.ar/11837-detuvieron-a-dos-hombres-acusados-de-atar-a-un-perro-meterlo-vivo-en-una-bolsa-y-llevarselo-de-una-vivienda",
-   "fecha": "04/11 20:16",
-   "pub": 1793837797000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario de Carlos Paz",
-   "titulo": "Sin rastros de un hombre de 47 años desaparecido en barrio Alto Alberdi",
-   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/1/buscan-a-un-hombre-de-47-anos-desaparecido-en-barrio-alto-alberdi-263371.html",
-   "fecha": "01/11 10:33",
-   "pub": 1793543586000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario de Carlos Paz",
-   "titulo": "Un auto terminó contra un árbol en la colectora de la autopista Córdoba-Carlos Paz",
-   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/1/un-auto-termino-contra-un-arbol-en-la-colectora-de-la-autopista-cordoba-carlos-paz-263370.html",
-   "fecha": "01/11 10:06",
-   "pub": 1793542017000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario de Carlos Paz",
-   "titulo": "Condenaron a bandas que traficaban drogas desde Bouwer y robaban viviendas",
-   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/1/condenaron-a-bandas-que-traficaban-drogas-desde-bouwer-y-robaban-viviendas-263372.html",
-   "fecha": "01/11 10:35",
-   "pub": 1793543706000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario de Carlos Paz",
-   "titulo": "Una mujer cayó de un monopatín eléctrico y sufrió un traumatismo de cráneo",
-   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/6/una-mujer-cayo-de-un-monopatin-electrico-y-sufrio-un-traumatismo-de-craneo-263820.html",
-   "fecha": "06/11 20:26",
-   "pub": 1794011161000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
-  },
-  {
-   "medio": "El Diario de Carlos Paz",
-   "titulo": "Villa Carlos Paz: Así fueron los operativos para frenar las hordas de motos",
-   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/2/villa-carlos-paz-asi-fueron-los-operativos-para-frenar-las-hordas-de-motos-263408.html",
-   "fecha": "02/11 07:28",
-   "pub": 1793618929000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true
+   "resolvio": true,
+   "relevante": true
   }
  ]
 }
