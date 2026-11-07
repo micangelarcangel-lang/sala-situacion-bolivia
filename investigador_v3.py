@@ -174,9 +174,34 @@ def pais(f):
     return "OT"
 
 
+IDIOMAS = {"es": ("es-419", "BO", "BO:es-419"), "en": ("en-US", "US", "US:en"), "ko": ("ko", "KR", "KR:ko")}
+
+
+def plan_busqueda(hecho, rel1, log=print):
+    """La IA lee lo ya hallado y propone qué más buscar (nombres, otros idiomas, medios del país de la víctima). Si falla, queda el método por reglas."""
+    vacio = {"nombres": [], "consultas": []}
+    try:
+        res = "\n".join(f"- {f['medio']}: {f['titulo']} :: {f.get('texto','')[:350]}" for f in rel1[:12])
+        txt, _ = llamar_ia("Eres analista de vigilancia por eventos. Respondes SOLO JSON.",
+                           f"Hecho: {hecho['subtipo']} en {hecho.get('lugar')}. Lo hallado hasta ahora:\n{res}\n\nPropón búsquedas para encontrar OTROS medios (nacionales, del país de origen de las personas, agencias, comunicados oficiales). "
+                           'JSON: {"nombres":[hasta 4 nombres completos de personas/organizaciones/canales clave, tal como los escriben los medios y variantes de grafía],'
+                           '"consultas":[hasta 8 {"q":texto corto de búsqueda,"idioma":"es"|"en"|"ko"}]}. Incluye consultas en el idioma del país de origen de la víctima si es extranjera.', max_tokens=1500)
+        d = json.loads(txt) if txt else {}
+        cons = []
+        for c in d.get("consultas", [])[:8]:
+            h = IDIOMAS.get(c.get("idioma", "es"), IDIOMAS["es"]); q = str(c.get("q", "")).strip()
+            if q:
+                cons.append((q[:120], *h))
+        return {"nombres": [str(n) for n in d.get("nombres", [])[:4] if len(str(n)) > 3], "consultas": cons}
+    except Exception as e:
+        log("plan IA falló:", str(e)[:80]); return vacio
+
+
 SIS_RED = ("Eres analista senior de un centro coordinador de emergencias del Ministerio de Salud de Bolivia. Redactas un INFORME DE SITUACIÓN para la máxima autoridad. "
            "Usa EXCLUSIVAMENTE el análisis y las fuentes que se te dan; no inventes cifras, nombres, cargos ni plazos de la prensa. Las acciones, responsables y plazos son propuestas tuyas y deben ser razonables y concretas. "
-           "No nombres al conductor y no lo califiques: presunción de inocencia. Estilo directo, frases cortas, sin adornos. Responde SOLO JSON.")
+           "No nombres al conductor y no lo califiques: presunción de inocencia. Estilo directo, frases cortas, sin adornos. Responde SOLO JSON. "
+           "El lector es la MAE del Ministerio de Salud y Deportes. Las acciones deben ser de un centro coordinador de emergencias y concretas: verificar el estado del caso con Policía/Fiscalía/Cancillería (fuente oficial), pedir el parte policial, coordinar con Cancillería la repatriación, fijar UN mensaje oficial único y quién lo emite, vigilar la cobertura mediática y seguir la audiencia cautelar. "
+           "PROHIBIDO proponer apoyo psicológico, restos biológicos, ciclorrutas, campañas o infraestructura vial generales. Si algo no está en las fuentes, dilo en no_se_sabe; no lo rellenes. Máximo 5 acciones, cada una de una sola línea.")
 
 
 def redactar(hecho, analisis, fuentes, lugares):
@@ -260,12 +285,15 @@ def investigar(hecho, max_leer=24, log=print):
     rel1 = [f for f in fuentes if f["relevante"]]
     tabu = set(re.findall(r"[a-z]{4,}", lugar)) | set(comunes) | {"alto"}
     nombres = [n for n in nombres_propios([f["texto"] for f in rel1] + [f["titulo"] for f in rel1], minimo=2) if not (set(re.findall(r"[a-z]{4,}", _n(n))) & tabu)][:3]
-    log("anclas:", comunes, lugar, "| relevantes ronda 1:", len(rel1), "de", len(fuentes), "| nombres:", nombres)
-    # ronda 2: con los nombres hallados, en español y en inglés
-    for nm in nombres:
+    plan = plan_busqueda(hecho, rel1 or fuentes[:8], log)
+    nombres = list(dict.fromkeys(plan["nombres"] + nombres))[:6]
+    log("anclas:", comunes, lugar, "| relevantes ronda 1:", len(rel1), "de", len(fuentes), "| nombres:", nombres, "| consultas IA:", plan["consultas"])
+    for q, hl, gl, ceid in plan["consultas"]:
+        n = agregar([dict(x, ronda=2) for x in rss(q, hl, gl, ceid)], 2); qlog.append((2, f"{q} [{hl}]", n))
+    for nm in nombres[:3]:
         for hl, gl, ceid, etq in (("es-419", "BO", "BO:es-419", "es"), ("en-US", "US", "US:en", "en")):
             n = agregar([dict(x, ronda=2) for x in rss(nm, hl, gl, ceid)], 2); qlog.append((2, f"{nm} [{etq}]", n))
-    nuevos = [v for v in vistos.values() if v["ronda"] == 2][:max_leer + 12]
+    nuevos = [v for v in vistos.values() if v["ronda"] == 2][:max_leer + 20]
     for it in nuevos:
         f = leer(it); f["relevante"] = relevante(f, comunes, lugar, nombres); fuentes.append(f)
     # lugares y coordenadas

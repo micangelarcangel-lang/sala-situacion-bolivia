@@ -36,19 +36,20 @@ def linea_tiempo(A):
     fig, (a, b) = plt.subplots(2, 1, figsize=(7.2, 3.3), sharex=True, gridspec_kw={"height_ratios": [1.25, 1]}); fig.patch.set_facecolor("white")
     X = lambda dia, h=0: dia + h / 24
     if A.get("hitos"):
-        hechos = [(X(h["dia"], h.get("hora", 0)), textwrap.fill(h["texto"], 16), 1 if h.get("hecho") else 0, 1 if i % 2 == 0 else -1) for i, h in enumerate(sorted(A["hitos"], key=lambda h: (h["dia"], h.get("hora", 0))))]
+        hechos = [(X(h["dia"], h.get("hora", 0)), textwrap.fill(h["texto"], 16), 1 if h.get("hecho") else 0, (1 if i % 2 == 0 else -1) * (1.0 if i % 4 < 2 else 1.55)) for i, h in enumerate(sorted(A["hitos"], key=lambda h: (h["dia"], h.get("hora", 0))))]
     else:
         hechos = [(X(4, 9.5), "Atropello\n~9:30", 1, 1), (X(4, 15), "Conductor\naprehendido\n(horas después)", 1, -1), (X(5, 12), "Familia y amigo\nconfirman la muerte", 1, 1),
                   (X(6, 21.4), "Cancillería: coordina\nrepatriación", 1, -1), (X(7.9), "Imputación y\nmedidas cautelares", 0, 1), (X(8.5), "Traslado de\nlos restos", 0, -1)]
-    hoy = X(7, 8.75)
+    ahora = d.datetime.now(d.timezone(d.timedelta(hours=-4)))
+    hoy = X(ahora.day, ahora.hour + ahora.minute / 60)
     a.axvspan(hoy, 9.2, color="#f3f1ec", zorder=0); a.axvline(hoy, color="#555", lw=.8, ls=(0, (3, 3)))
-    a.text(hoy + .05, 1.62, "hoy 7/11", fontsize=7, color="#444"); a.text(9.15, 1.62, "por confirmar", fontsize=7, color="#7a7a7a", ha="right")
+    a.text(hoy - .05, 1.72, f"hoy {ahora.day}/{ahora.month}", fontsize=7, color="#444", ha="right"); a.text(9.15, 1.72, "por confirmar", fontsize=7, color="#7a7a7a", ha="right")
     a.axhline(0, color="#9aa5b1", lw=1)
     for x, t, ok, up in hechos:
         a.scatter([x], [0], s=62, zorder=3, facecolor=AZUL if ok else "white", edgecolor=AZUL, lw=1.6)
         a.annotate(t, (x, 0), xytext=(x, .75 * up), fontsize=7.2, ha="center", va="bottom" if up > 0 else "top", color="#1b2430" if ok else "#6b7785",
                    arrowprops=dict(arrowstyle="-", color="#b4bcc6", lw=.7))
-    a.set_ylim(-1.75, 1.9); a.axis("off"); a.set_title("Hecho y proceso", fontsize=8.8, loc="left", fontweight=600)
+    a.set_ylim(-2.6, 2.6); a.axis("off"); a.set_title("Hecho y proceso", fontsize=8.8, loc="left", fontweight=600)
     col = {"BO": AZUL, "KR": ROJO, "OT": "#8a96a3"}; por = {}
     for f, n, p in A["cobertura"]:
         dia = int(f[-2:]); k = por.setdefault(dia, []); k.append((n, p))
@@ -133,7 +134,7 @@ def build(analisis_ruta, hechos_ruta, salida):
     S += [t, Paragraph("Línea de tiempo: qué pasó, qué falta y cómo creció la noticia", H2), eg.imagen(linea_tiempo(A), W),
           Paragraph("Cómo leer: arriba, lo ocurrido (relleno) y lo pendiente (hueco, a la derecha de «hoy»). Abajo, cuándo apareció la noticia en cada medio con fecha verificada. " + e(A["sin_fecha"]), TS), Paragraph("Acciones recomendadas", H2)]
     t, st = tabla([[Paragraph(str(i + 1), TB), Paragraph(e(a), TB), Paragraph(e(r), TB), Paragraph("<b>" + e(pz) + "</b>", TB)] for i, (a, r, pz) in enumerate(A["acciones"])], [7 * mm, W - 7 * mm - 42 * mm - 18 * mm, 42 * mm, 18 * mm], cab=["#", "Acción", "Responsable sugerido", "Plazo"])
-    t.setStyle(TableStyle(st)); S += [t, Paragraph("Responsables y plazos son propuestos por la Sala; los confirma la MAE.", TS), PageBreak()]
+    t.setStyle(TableStyle(st)); S += [t, Paragraph("Responsables y plazos son propuestos por la Sala; los confirma la MAE.", TS), Spacer(1, 4 * mm)]
     # ---- página 2: análisis
     S += [Paragraph("Situación por área", H2)]
     filas = []
@@ -146,7 +147,7 @@ def build(analisis_ruta, hechos_ruta, salida):
         S += [Paragraph("Dónde: las versiones del lugar, ubicadas", H2), eg.imagen(mapa_lugar(mp), W * .8)]
     S += [Paragraph("Riesgos", H2)]
     t, st = tabla([[Paragraph("<b>" + e(a) + "</b>", TB), Paragraph(e(b), TB)] for a, b in A["riesgos"]], [40 * mm, W - 40 * mm]); t.setStyle(TableStyle(st)); S += [t]
-    S += [Paragraph("<b>Sin mapa:</b> no hay un punto verificado (dos versiones del lugar dentro de El Alto) y el sistema no tiene otros hechos de la zona para comparar. Se agregará un mapa del corredor cuando la Policía confirme el punto. <b>Sin fotografía:</b> las de los medios tienen derechos de autor y la familia pidió privacidad; se pedirá el registro fotográfico del parte policial.", TS), PageBreak()]
+    S += [Paragraph("<b>Mapa:</b> solo se dibuja con lugares ubicados en OpenStreetMap; si el punto exacto no está confirmado por la Policía, se muestra como referencia. <b>Fotografía:</b> las de los medios tienen derechos de autor; se solicitará el registro fotográfico oficial.", TS), PageBreak()]
     # ---- anexo A: triangulación
     S += [Paragraph("Anexo A · Triangulación dato por dato", H2), Paragraph("«Coincide» = al menos dos medios independientes; «Fuente única» = un solo medio; «DISCREPA» = versiones distintas.", TS), Spacer(1, 2 * mm)]
     col = {"Coincide": VERDE, "Coincide (indirecta)": VERDE, "DISCREPA": ROJO, "DISCREPA (secundario)": AMBAR, "Fuente única": AMBAR, "Sin confirmar": AMBAR}
