@@ -47,17 +47,17 @@
   "tipo_amenaza": "antropogénica",
   "nivel_num": 1,
   "nivel_preliminar": "amarilla",
-  "fallecidos_max": 0,
+  "fallecidos_max": 2,
   "heridos_max": 1,
   "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Red Uno",
+  "n_notas": 2,
+  "fuentes": "El Potosí; Red Uno",
   "lat": -16.63,
   "lon": -68.969,
   "lugar": "Desaguadero, La Paz",
   "departamento": "La Paz",
   "municipio": "Desaguadero",
-  "enlaces": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOc3VBSTNvM3c4Sm15S1ZCVWRORXJuTXh3azFPbDdUVGF0R2dKM214aE9OdkZKU3JFamNWZU9pcmVCajVNMURkdDhUTWVRQjJ6VHVFT0RFQ2dxXzFGeGlVQzZNYV82NTBQLWF0T3F2cFR3YXozOVlUTlJwNUI0dFh0R1YyYW8tR0M2Nkh5b1pBQ0tNV25MbkJmMFZsQ05BTkF5cDNPc0YxSjBhdFYtYTNfOVJib0kwLWRKRGdmSFRLakFNN0w0UHBzWnQxQklqUUhIbDY5cTBWUUI1VlJfM19POA?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOc3VBSTNvM3c4Sm15S1ZCVWRORXJuTXh3azFPbDdUVGF0R2dKM214aE9OdkZKU3JFamNWZU9pcmVCajVNMURkdDhUTWVRQjJ6VHVFT0RFQ2dxXzFGeGlVQzZNYV82NTBQLWF0T3F2cFR3YXozOVlUTlJwNUI0dFh0R1YyYW8tR0M2Nkh5b1pBQ0tNV25MbkJmMFZsQ05BTkF5cDNPc0YxSjBhdFYtYTNfOVJib0kwLWRKRGdmSFRLakFNN0w0UHBzWnQxQklqUUhIbDY5cTBWUUI1VlJfM19POA?oc=5 | https://news.google.com/rss/articles/CBMiywFBVV95cUxOU2xrOWgxbmJ3V1dhSFl6anFRTWlfWm9jOFJVaWVyVVNfU0E3Vy1FVlpjalFHNGFkWVhZNHNkc2Q4X1NJcUhSLWhtdmJaX1Z4OFFyOVhYTHE2cjJfOFlsNWJWd3cwNFd2ZHFZak1UX1dacWtndjJNaDd3RUpoczVSMDRyRmlQUmlZNVg5ZnFEN1duT0xEVXVDaHd3aHFHSlJHekRid1pqenVxYVpxNE1SX1E1RlR3eGRSUUx2Q1UwUzc3TVN2Y1IyZFFnZw?oc=5"
  },
  {
   "hecho_id": "clima:Santa Cruz:2026-11-08:viento:1",
