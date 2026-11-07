@@ -125,15 +125,20 @@ def llamar_ia(sistema, usuario, max_tokens=4000):
                     errores.append(f"intento {intento + 1} gemini/{modelo}: HTTP {e.code}")
                 except Exception as e:
                     errores.append(f"intento {intento + 1} gemini/{modelo}: " + type(e).__name__)
-            time.sleep(15 * (intento + 1))  # el servicio gratuito a veces responde 503 por alta demanda: se reintenta
+            time.sleep(15 * (intento + 1) if not os.environ.get('GROQ_API_KEY') else 3)  # el servicio gratuito a veces responde 503 por alta demanda: se reintenta
     k = os.environ.get("GROQ_API_KEY", "").strip()
     if k:
-        try:
-            cuerpo = {"model": "llama-3.3-70b-versatile", "temperature": 0, "response_format": {"type": "json_object"}, "max_tokens": min(max_tokens, 6000), "messages": [{"role": "system", "content": sistema}, {"role": "user", "content": usuario}]}
-            r = json.load(urllib.request.urlopen(urllib.request.Request("https://api.groq.com/openai/v1/chat/completions", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json", "Authorization": "Bearer " + k, "User-Agent": UA}), timeout=120))
-            return r["choices"][0]["message"]["content"], "groq/llama-3.3-70b"
-        except Exception as e:
-            return None, "groq: " + type(e).__name__ + str(e)[:80]
+        for modelo in ("llama-3.3-70b-versatile", "openai/gpt-oss-120b", "openai/gpt-oss-20b", "llama-3.1-8b-instant"):
+            try:
+                cuerpo = {"model": modelo, "temperature": 0, "response_format": {"type": "json_object"}, "max_tokens": min(max_tokens, 5000), "messages": [{"role": "system", "content": sistema}, {"role": "user", "content": usuario[:26000]}]}
+                r = json.load(urllib.request.urlopen(urllib.request.Request("https://api.groq.com/openai/v1/chat/completions", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json", "Authorization": "Bearer " + k, "User-Agent": UA}), timeout=120))
+                return r["choices"][0]["message"]["content"], "groq/" + modelo
+            except urllib.error.HTTPError as e:
+                try: cuerpo_err = e.read().decode()[:160]
+                except Exception: cuerpo_err = ""
+                errores.append(f"groq/{modelo}: HTTP {e.code} {cuerpo_err}")
+            except Exception as e:
+                errores.append(f"groq/{modelo}: " + type(e).__name__)
     return None, ("; ".join(errores) if errores else "sin clave de IA en los secretos (GEMINI_API_KEY o GROQ_API_KEY)")
 
 
