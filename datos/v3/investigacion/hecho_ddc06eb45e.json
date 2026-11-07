@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:ddc06eb45e",
- "generado": "2026-11-07T17:38:30.549509+00:00",
- "segundos": 337,
+ "generado": "2026-11-07T17:42:18.318555+00:00",
+ "segundos": 170,
  "consultas": [
   [
    1,
@@ -17,16 +17,6 @@
    1,
    "accidente de tránsito El Alto",
    27
-  ],
-  [
-   2,
-   "Alto Alegre [es]",
-   26
-  ],
-  [
-   2,
-   "Alto Alegre [en]",
-   0
   ],
   [
    2,
@@ -56,29 +46,31 @@
   [
    2,
    "Puente Alto [en]",
-   6
+   7
+  ],
+  [
+   2,
+   "JinsTravel [es]",
+   16
+  ],
+  [
+   2,
+   "JinsTravel [en]",
+   3
   ]
  ],
- "descartadas_por_ruido": 392,
- "n_fuentes": 23,
- "n_leidas": 22,
+ "descartadas_por_ruido": 377,
+ "n_fuentes": 32,
+ "n_leidas": 27,
  "nombres_propios": [
-  "Alto Alegre",
   "Cho Jin-woo",
   "YouTube",
-  "Puente Alto"
+  "Puente Alto",
+  "JinsTravel"
  ],
  "lugares": [
   {
-   "consulta": "Puente Alto",
-   "lat": -16.5449385,
-   "lon": -68.1765699,
-   "nombre": "Puente Bolivia, Avenida Bolivia, Victoria, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
-   "tipo": "bridge",
-   "km_al_centro_municipio": 11.5
-  },
-  {
-   "consulta": "avenida General Savio",
+   "consulta": "sector Molino Andino",
    "sin_resultado": true
   },
   {
@@ -91,11 +83,11 @@
   },
   {
    "consulta": "avenida Litoral",
-   "lat": -16.5537367,
-   "lon": -68.1826498,
+   "lat": -16.5514754,
+   "lon": -68.1865275,
    "nombre": "Avenida Litoral, Wara, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 12.22
+   "km_al_centro_municipio": 11.86
   },
   {
    "consulta": "zona Franca",
@@ -106,19 +98,27 @@
    "km_al_centro_municipio": 10.92
   },
   {
-   "consulta": "avenida Camilo Enríquez",
-   "sin_resultado": true
+   "consulta": "Puente Alto",
+   "lat": -16.5449385,
+   "lon": -68.1765699,
+   "nombre": "Puente Bolivia, Avenida Bolivia, Victoria, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "bridge",
+   "km_al_centro_municipio": 11.5
   },
   {
-   "consulta": "avenida Circunvalación",
-   "lat": -16.5404302,
-   "lon": -68.1541809,
-   "nombre": "Avenida Circunvalación, Tejada Alpacoma Bajo, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
-   "tipo": "residential",
-   "km_al_centro_municipio": 12.14
+   "consulta": "Zona Franca",
+   "lat": -16.545961,
+   "lon": -68.2282541,
+   "nombre": "Zona Franca Industrial La Paz, Distrito 12, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "industrial",
+   "km_al_centro_municipio": 10.92
+  },
+  {
+   "consulta": "avenida Camilo Enríquez",
+   "sin_resultado": true
   }
  ],
- "ia": "gemini/gemini-3.8-flash: TimeoutError The read operation timed out; gemini/gemini-flash-latest: TimeoutError The read operation timed out",
+ "ia": "gemini/gemini-3.8-flash: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n; gemini/gemini-flash-latest: HTTP 503 {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n",
  "analisis": null,
  "fuentes": [
   {
@@ -166,22 +166,22 @@
    "relevante": true
   },
   {
-   "medio": "Meganoticias",
-   "titulo": "Choque de alta energía en Puente Alto deja a todo un sector sin electricidad: Denuncian carrera clandestina",
-   "url": "https://www.meganoticias.cl/nacional/535283-choque-de-alta-energia-puente-alto-sector-sin-electricidad-denuncian-carrera-clandestina-01-11-2026.html",
-   "fecha": "01/11 07:53",
-   "pub": 1793533980000,
+   "medio": "TN8",
+   "titulo": "Motociclista muere tras presuntamente irrespetar señal de alto en Managua",
+   "url": "https://www.tn8.ni/sucesos/motociclista-muere-tras-presuntamente-irrespetar-senal-de-alto-en-managua/",
+   "fecha": "05/11 19:53",
+   "pub": 1793922833000,
    "ronda": 1,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "TN8",
-   "titulo": "Motociclista muere tras presuntamente irrespetar señal de alto en Managua",
-   "url": "https://www.tn8.ni/sucesos/motociclista-muere-tras-presuntamente-irrespetar-senal-de-alto-en-managua/",
-   "fecha": "05/11 19:53",
-   "pub": 1793922833000,
+   "medio": "Meganoticias",
+   "titulo": "Choque de alta energía en Puente Alto deja a todo un sector sin electricidad: Denuncian carrera clandestina",
+   "url": "https://www.meganoticias.cl/nacional/535283-choque-de-alta-energia-puente-alto-sector-sin-electricidad-denuncian-carrera-clandestina-01-11-2026.html",
+   "fecha": "01/11 07:53",
+   "pub": 1793533980000,
    "ronda": 1,
    "leida": true,
    "resolvio": true,
@@ -199,17 +199,6 @@
    "relevante": true
   },
   {
-   "medio": "puntal.com.ar",
-   "titulo": "Tragedia en la Ruta 2: murió una motociclista en un accidente cerca de Alto Alegre",
-   "url": "https://www.puntal.com.ar/accidente/tragedia-la-ruta-2-murio-una-motociclista-un-accidente-cerca-alto-alegre-n267537",
-   "fecha": "01/11 13:44",
-   "pub": 1793555058000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
    "medio": "La Patria Bolivia",
    "titulo": "Fallece el youtuber JinsTravel en Bolivia tras accidente",
    "url": "https://lapatria.bo/enfoque-nacional/denuncia/fallece-youtuber-jinstravel-bolivia-accidente/",
@@ -221,156 +210,266 @@
    "relevante": true
   },
   {
-   "medio": "Villa Maria Ya",
-   "titulo": "¡Ejemplar! La promo de Alto Alegre junta fondos para que un compañero los acompañe a Brasil",
-   "url": "https://villamariaya.com/sociedad/ejemplar-la-promo-de-alto-alegre-junta-fondos-para-que-un-companero-los-acompane-a-brasil_1793802954",
-   "fecha": "04/11 15:48",
-   "pub": 1793821705000,
+   "medio": "Infobae",
+   "titulo": "Murió JinsTravel, el youtuber que recorría el mundo en bicicleta, tras ser atropellado por un camión de carga en Bolivia",
+   "url": "https://www.infobae.com/entretenimiento/2026/11/05/murio-jinstravel-el-youtuber-que-recorria-el-mundo-en-bicicleta-tras-ser-atropellado-por-un-camion-de-carga-en-bolivia/",
+   "fecha": "05/11 17:58",
+   "pub": 1793915880000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "La Nueva Mañana",
-   "titulo": "Una motociclista muerta tras colisionar con un automóvil en Alto Alegre",
-   "url": "https://lmdiario.com.ar/contenido/532597/una-motociclista-muerta-tras-colisionar-con-un-automovil-en-alto-alegre",
-   "fecha": "31/10 18:55",
-   "pub": 1793487300000,
+   "medio": "MILENIO",
+   "titulo": "Muere Cho Jin-woo, famoso youtuber que viajaba por el mundo en bicicleta y este año estuvo en México; fue atro",
+   "url": "https://amp.milenio.com/espectaculos/famosos/muere-bolivia-cho-jin-woo-youtuber-viajo-bicicleta-mexico",
+   "fecha": "07/11 09:35",
+   "pub": 1794058500000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "La República",
+   "titulo": "Muere Cho Jin Woo, querido influencer coreano, tras ser atropellado por camión en Bolivia: conductor de vehículo pesado habría intentado huir",
+   "url": "https://larepublica.pe/entretenimiento/2026/11/05/muere-querido-influencer-coreano-tras-ser-atropellado-por-camion-en-bolivia-conductor-de-vehiculo-pesado-habria-intentado-huir-318840",
+   "fecha": "05/11 20:21",
+   "pub": 1793924479000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Telecinco",
+   "titulo": "Muere el youtuber Cho Jin-woo atropellado por un camión en Bolivia",
+   "url": "https://www.telecinco.es/noticias/sucesos/20261107/muere-youtuber-surcoreano-cho-jin-atropellado-bici-camion-bolivia_18_020649249.html",
+   "fecha": "07/11 11:03",
+   "pub": 1794063822000,
    "ronda": 2,
    "leida": false,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "La Voz del Interior",
-   "titulo": "Tragedia. Córdoba: una motociclista de 38 años murió tras chocar con un auto en una ruta",
-   "url": "https://www.lavoz.com.ar/sucesos/cordoba-motociclista-38-anos-murio-chocar-auto-ruta_0_bhwAAAkk67.html",
-   "fecha": "31/10 18:55",
-   "pub": 1793487337000,
+   "medio": "El Potosí",
+   "titulo": "Conductor que @tr*p3lló al youtuber surcoreano Cho Jin-woo cumplirá detención domiciliaria",
+   "url": "https://elpotosi.net/nacional/20261106_conductor-que-tr-p3llo-al-youtuber-surcoreano-cho-jin-woo-cumplira-detencion-domiciliaria.html",
+   "fecha": "07/11 04:03",
+   "pub": 1794038584000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Bolivia.com",
+   "titulo": "Tragedia en Bolivia: el youtuber Cho Jim-woo falleció tras ser atropellado mientras viajaba en 'bici'",
+   "url": "https://www.bolivia.com/entretenimiento/destacados/muere-en-bolivia-el-youtuber-surcoreano-cho-jin-woo-tras-ser-atropellado-por-un-camion-610494",
+   "fecha": "06/11 13:39",
+   "pub": 1793986748000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Infobae",
-   "titulo": "En menos de 24 horas, murieron cuatro motociclistas en distintos accidentes en Córdoba",
-   "url": "https://www.infobae.com/sociedad/policiales/2026/11/01/en-menos-de-24-horas-murieron-cuatro-motociclistas-en-distintos-accidentes-en-cordoba/",
-   "fecha": "01/11 03:06",
-   "pub": 1793516760000,
+   "medio": "스타뉴스",
+   "titulo": "YouTuber de viajes coreano, víctima fatal de un atropello con huida en Bolivia: \"Declaró que no vio la bicicleta\"",
+   "url": "https://www.starnewskorea.com/es/star/2026/11/05/2026110513480620651",
+   "fecha": "05/11 00:58",
+   "pub": 1793854736000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Telefe Córdoba",
-   "titulo": "Trágico choque entre auto y moto deja una mujer fallecida en Ruta Provincial N° 2",
-   "url": "https://cordoba.mitelefe.com/cordoba/tragico-choque-entre-auto-y-moto-deja-una-mujer-fallecida-en-ruta-provincial-n0-2-pid2571034",
-   "fecha": "31/10 18:55",
-   "pub": 1793487310000,
+   "medio": "Récord",
+   "titulo": "¿Cómo murió Cho Jin-woo? El youtuber que recorrió el mundo y México en su bicicleta",
+   "url": "https://www.record.com.mx/historia/como-murio-cho-jin-woo-el-youtuber-que-recorrio-el-mundo-y-mexico-en-su-bicicleta-2026110716525013529",
+   "fecha": "07/11 12:52",
+   "pub": 1794070320000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "puntalvillamaria.com.ar",
-   "titulo": "Unión Central es semifinalista, luego de golear a Unión Social",
-   "url": "https://www.puntalvillamaria.com.ar/union-central/union-central-es-semifinalista-luego-golear-union-social-n267849",
-   "fecha": "06/11 07:51",
-   "pub": 1793965860000,
+   "medio": "EL DÍA - Noticias de Bolivia para el mundo",
+   "titulo": "El Alto: muere atropellado un creador de contenido surcoreano que viajaba en bicicleta por el mundo - EL DÍA",
+   "url": "https://www.eldia.com.bo/2026-11-06/pais/el-alto-muere-atropellado-un-creador-de-contenido-surcoreano-que-viajaba-en-bicicleta-por-el-mundo.html",
+   "fecha": "06/11 15:52",
+   "pub": 1793994736000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Villa Maria Ya",
-   "titulo": "La motociclista fallecida tras el choque entre Alto Alegre y Cintra era villamariense",
-   "url": "https://villamariaya.com/policiales/la-motociclista-fallecida-tras-el-choque-entre-alto-alegre-y-cintra-era-villamariense_1793628523",
-   "fecha": "02/11 10:09",
-   "pub": 1793628556000,
+   "medio": "Correo del Sur",
+   "titulo": "Youtuber surcoreano muere atropellado por un camión mientras recorría Bolivia en bicicleta",
+   "url": "https://correodelsur.com/seguridad/20261106/youtuber-surcoreano-muere-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta.html",
+   "fecha": "04/11 04:00",
+   "pub": 1793779200000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "puntalvillamaria.com.ar",
-   "titulo": "Una motociclista de 38 años murió tras chocar con un automóvil en la ruta provincial 2",
-   "url": "https://www.puntalvillamaria.com.ar/motociclista/una-motociclista-38-anos-murio-chocar-un-automovil-la-ruta-provincial-2-n267576",
-   "fecha": "02/11 08:21",
-   "pub": 1793622060000,
+   "medio": "La Vanguardia",
+   "titulo": "El conductor investigado por la muerte del youtuber surcoreano Jo Jin-woo comparecerá ante un juez en Bolivia",
+   "url": "https://www.lavanguardia.com/gente/20261107/11678702/conductor-investigado-muerte-youtuber-surcoreano-jo-jin-woo-comparecera-juez-bolivia.html",
+   "fecha": "07/11 06:29",
+   "pub": 1794047375000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Villa Maria Ya",
-   "titulo": "Una mujer perdió la vida al chocar sobre la Ruta 2 cerca de Alto Alegre",
-   "url": "https://villamariaya.com/policiales/una-mujer-perdio-la-vida-al-chocar-sobre-la-ruta-2-cerca-de-alto-alegre_1793488816",
-   "fecha": "31/10 20:04",
-   "pub": 1793491485000,
+   "medio": "ABI - Agencia Boliviana de Información",
+   "titulo": "Cancillería brindará apoyo a la familia del fallecido youtuber surcoreano JinsTravel y gestionará su repatriación - ABI",
+   "url": "https://abi.bo/cancilleria-brindara-apoyo-a-la-familia-del-fallecido-youtuber-surcoreano-jinstravel-y-gestionara-su-repatriacion/",
+   "fecha": "06/11 20:09",
+   "pub": 1794010174000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "puntalvillamaria.com.ar",
-   "titulo": "El fútbol local adelanta por la visita del Papa",
-   "url": "https://www.puntalvillamaria.com.ar/futbol/el-futbol-local-adelanta-la-visita-del-papa-n267697",
-   "fecha": "04/11 07:36",
-   "pub": 1793792209000,
+   "medio": "Red Uno",
+   "titulo": "Dan detención domiciliaria al conductor que atropelló al youtuber surcoreano JinsTravel en El Alto",
+   "url": "https://www.reduno.com.bo/noticias/dan-detencion-domiciliaria-al-conductor-que-atropello-al-youtuber-surcoreano-jinstravel-en-el-alto-2026116135610",
+   "fecha": "06/11 16:02",
+   "pub": 1793995356000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Villa Maria Ya",
-   "titulo": "Un campeón intratable: Unión Central goleó y está en semis de la \"B\"",
-   "url": "https://villamariaya.com/deportes/un-campeon-intratable-union-central-goleo-y-esta-en-semis-de-la-b_1793886538",
-   "fecha": "05/11 09:49",
-   "pub": 1793886561000,
+   "medio": "eju.tv",
+   "titulo": "El último viaje de Jin’sTravel: el youtuber que recorría el mundo y murió en Bolivia",
+   "url": "https://eju.tv/2026/11/el-ultimo-viaje-de-jinstravel-el-youtuber-que-recorria-el-mundo-y-murio-en-bolivia/",
+   "fecha": "06/11 08:10",
+   "pub": 1793967023000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Villa Maria Ya",
-   "titulo": "Liga: con el clásico cabralense como plato principal, programaron los cuartos de la A y la B",
-   "url": "https://villamariaya.com/deportes/liga-con-el-clasico-cabralense-como-plato-principal-programaron-los-cuartos-de-la-a-y-la-b_1793711932",
-   "fecha": "03/11 09:21",
-   "pub": 1793712078000,
+   "medio": "Red Uno",
+   "titulo": "La familia del youtuber Jin's Travels prepara su regreso a Corea del Sur para despedirlo",
+   "url": "https://www.reduno.com.bo/noticias/la-familia-del-youtuber-jin-s-travels-prepara-su-regreso-a-corea-del-sur-para-despedirlo-20261176316",
+   "fecha": "07/11 07:18",
+   "pub": 1794050312000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Villa Maria Ya",
-   "titulo": "Liga Villamariense: Alumni cayó ante San Lorenzo en el inicio de los cuartos",
-   "url": "https://villamariaya.com/deportes/liga-villamariense-alumni-cayo-ante-san-lorenzo-en-el-inicio-de-los-cuartos_1793973627",
-   "fecha": "06/11 10:05",
-   "pub": 1793973924000,
+   "medio": "unitel.bo",
+   "titulo": "El youtuber coreano Jin’s Travel pierde la vida atropellado por un camión en Bolivia",
+   "url": "https://unitel.bo/noticias/seguridad/el-youtuber-coreano-jin-s-travel-pierde-la-vida-atropellado-por-un-camion-en-bolivia-JC24629550",
+   "fecha": "06/11 11:53",
+   "pub": 1793980424000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Otro Punto",
-   "titulo": "Córdoba: cuatro motociclistas murieron este sábado en siniestros viales, el último en la Ruta 2",
-   "url": "https://www.otropunto.com.ar/cordoba/motociclistas-muertos-sabado-cordoba-ruta-2/1283/",
-   "fecha": "01/11 19:46",
-   "pub": 1793576809000,
+   "medio": "Vanguardia",
+   "titulo": "Tragedia en Bolivia: murió 'JinsTravel', el youtuber que recorría el mundo en bicicleta",
+   "url": "https://www.vanguardia.com/entretenimiento/tendencias/2026/11/06/youtuber-surcoreano-jinstravel-murio-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta/",
+   "fecha": "06/11 10:48",
+   "pub": 1793976480000,
    "ronda": 2,
    "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "FmBolivia",
+   "titulo": "Ciclista surcoreano Cho Jin-woo muere atropellado en El Alto: conductor declaró que \"no había visto la bicicleta\"",
+   "url": "https://fmbolivia.com.bo/seguridad/ciclista-surcoreano-cho-jin-woo-muere-atropellado-en-el-alto-conductor-declaro-que-no-habia-visto-la-bicicleta-21700",
+   "fecha": "06/11 06:16",
+   "pub": 1793960160000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "El Diario Ecuador",
+   "titulo": "Youtuber surcoreano que recorría el mundo en bicicleta murió arrollado por un camión en Bolivia",
+   "url": "https://www.eldiario.ec/mundo/youtuber-surcoreano-que-recorria-el-mundo-en-bicicleta-murio-arrollado-por-un-camion-en-bolivia-06112026/",
+   "fecha": "06/11 15:27",
+   "pub": 1793993250000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "El Diario de Sonora",
+   "titulo": "Fallece a los 33 años el creador de contenido surcoreano 'JinsTravel' tras ser atropellado",
+   "url": "https://eldiariodesonora.com.mx/espectaculos/2026/11/05/fallece-33-anos-creador-contenido-surcoreano-jinstravel-atropellado.html",
+   "fecha": "05/11 19:13",
+   "pub": 1793920411000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Asuntos Centrales",
+   "titulo": "Conductor del camión que mató al ciclista Cho Jin-woo cumplirá detención domiciliaria",
+   "url": "https://asuntoscentrales.com/conductor-del-camion-que-mato-al-ciclista-cho-jin-woo-cumplira-detencion-domiciliaria/",
+   "fecha": "06/11 14:28",
+   "pub": 1793989715000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "xeu.mx",
+   "titulo": "Muere famoso youtuber durante recorrido en bicicleta; tenía 33 años",
+   "url": "https://xeu.mx/internacional/1439493/muere-famoso-youtuber-durante-recorrido-en-bicicleta-tenia-33-anos",
+   "fecha": "07/11 13:15",
+   "pub": 1794071700000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "The Korea Herald",
+   "titulo": "Korean YouTuber 'Jin's Travel' dies in hit-and-run during Bolivia cycling trip",
+   "url": "https://www.koreaherald.com/article/10928859",
+   "fecha": "06/11 03:49",
+   "pub": 1793951368000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "NDTV Sports",
+   "titulo": "Who Was Cho Jin-Woo? South Korean Travel YouTuber Dies At 33 In Bolivia Truck Crash",
+   "url": "https://sports.ndtv.com/us/us-streamers/who-was-cho-jin-woo-south-korean-travel-youtuber-dies-at-33-in-bolivia-truck-crash-12292137",
+   "fecha": "06/11 05:02",
+   "pub": 1793955773000,
+   "ronda": 2,
+   "leida": false,
    "resolvio": true,
    "relevante": true
   }
