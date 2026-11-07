@@ -161,6 +161,73 @@ def analizar(fuentes, nombres=()):
         return {"error_json": str(e)[:100], "crudo": txt[:500]}, prov
 
 
+# ---------------------------------------------------------------- informe de situación a partir del análisis
+BO_MEDIOS = ("eju", "red uno", "jornada", "la patria", "bolivia.com", "correo del sur", "abi", "agencia boliviana", "el día", "unitel", "erbol", "el deber", "los tiempos", "página siete", "brújula", "urgente", "opinión", "visión 360", "ATB".lower(), "la razón", "el potosí", "el diario", "red patria", "bolivia tv", "radio fides", "cambio")
+
+
+def pais(f):
+    m, u = f["medio"].lower(), (f.get("url") or "").lower()
+    if re.search(r"[\uac00-\ud7af]", f["medio"]) or "korea" in m or "chosun" in m or "sbs" in m or "starnews" in m or ".kr" in u:
+        return "KR"
+    if ".bo/" in u or u.endswith(".bo") or any(b in m for b in BO_MEDIOS):
+        return "BO"
+    return "OT"
+
+
+SIS_RED = ("Eres analista senior de un centro coordinador de emergencias del Ministerio de Salud de Bolivia. Redactas un INFORME DE SITUACIÓN para la máxima autoridad. "
+           "Usa EXCLUSIVAMENTE el análisis y las fuentes que se te dan; no inventes cifras, nombres, cargos ni plazos de la prensa. Las acciones, responsables y plazos son propuestas tuyas y deben ser razonables y concretas. "
+           "No nombres al conductor y no lo califiques: presunción de inocencia. Estilo directo, frases cortas, sin adornos. Responde SOLO JSON.")
+
+
+def redactar(hecho, analisis, fuentes, lugares):
+    comp = json.dumps(analisis, ensure_ascii=False)[:30000]
+    pedido = f"""Hecho del sistema: {hecho['subtipo']} en {hecho.get('lugar')}.
+Análisis estructurado (con citas de medio):
+{comp}
+
+Ubicaciones halladas en OpenStreetMap: {json.dumps([{k: g[k] for k in ('consulta','lat','lon') if k in g} for g in lugares if 'lat' in g], ensure_ascii=False)}
+
+Devuelve JSON con EXACTAMENTE estas claves:
+titulo (máx. 70 caracteres), clasificacion (tipo → subtipo · repercusión), nivel_atencion,
+esencial{{paso, resuelto, abierto, requiere}} (cada una 1-3 frases),
+kpis [[valor, etiqueta] x5] (fallecidos, heridos, detenidos/aprehendidos, número de medios, alcance de la repercusión),
+hitos [{{dia:int (día de noviembre), hora:número 0-24, texto:máx 28 caracteres, hecho:true/false}}] (6 a 7 hitos; los pendientes con hecho:false y dia entre 7 y 9),
+areas [[nombre, estado ('ÁMBAR'|'ROJO'|'VERDE'|'GRIS'), situacion, responsable, falta]] x4,
+acciones [[accion, responsable_sugerido, plazo]] x5,
+riesgos [[titulo, explicacion]] x3,
+ficha [[campo, valor]] (Fecha y hora, Lugar, Víctima, Vehículo, Conductor, Causa, Estado del caso, Respaldo oficial, Confianza),
+triangulacion [[dato, fuentes_y_valores, estado ('Coincide'|'Fuente única'|'DISCREPA'|'Sin confirmar')]],
+cronologia [[cuando, que]],
+no_se_sabe [strings], seguimiento [strings],
+lugares_citados [nombres de lugares de la lista de OpenStreetMap que corresponden a versiones del lugar del hecho]."""
+    txt, prov = llamar_ia(SIS_RED, pedido, max_tokens=7000)
+    if not txt:
+        return None, prov
+    try:
+        return json.loads(txt), prov
+    except Exception as e:
+        return None, "JSON inválido: " + str(e)[:80]
+
+
+def armar_informe(hecho, res, fuentes, red):
+    lei = [f for f in fuentes if f.get("leida") and f.get("relevante")]
+    nac = sorted({f["medio"] for f in lei if pais(f) == "BO"}); intl = sorted({f["medio"] for f in lei if pais(f) != "BO"})
+    cob = [[dt.datetime.fromtimestamp(f["pub"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%Y-%m-%d"), f["medio"][:22], pais(f)] for f in lei if f.get("pub")]
+    cob = [c for c in cob if "2026-11-04" <= c[0] <= "2026-11-09"]
+    sinf = sorted({f["medio"] for f in lei if not f.get("pub")})
+    pts = []
+    cit = [_n(x) for x in red.get("lugares_citados", [])]
+    for g in res["lugares"]:
+        if "lat" in g and any(_n(c) in _n(g["consulta"]) or _n(g["consulta"]) in _n(c) for c in cit):
+            pts.append({"nombre": g["consulta"], "lat": g["lat"], "lon": g["lon"]})
+    A = dict(red)
+    A.update({"hecho_id": hecho["id"], "codigo": "SITREP-AUTO-" + hecho["id"][-6:], "solicitado_por": "Máxima Autoridad Ejecutiva (MAE)", "corte": dt.datetime.now(dt.timezone(dt.timedelta(hours=-4))).strftime("%Y-%m-%d %H:%M (hora de Bolivia)"),
+              "cobertura": cob, "sin_fecha": ("Sin fecha verificada: " + ", ".join(sinf[:8]) + ".") if sinf else "", "medios_nacionales": nac, "medios_internacionales": intl, "leidos_completos": [f["medio"] for f in lei],
+              "mapa": {"puntos": pts}, "fuentes": [[f["medio"], f["url"], f["fecha"]] for f in sorted(lei, key=lambda f: f.get("pub") or 0)][:24]})
+    A["kpis"] = [list(map(str, k)) for k in A.get("kpis", [])][:5]
+    return A
+
+
 # ---------------------------------------------------------------- orquestación
 def investigar(hecho, max_leer=24, log=print):
     t0 = time.time(); vistos = {}; qlog = []
@@ -225,6 +292,19 @@ if __name__ == "__main__":
     res, fuentes = investigar(H)
     os.makedirs(SALIDA, exist_ok=True)
     json.dump(res, open(f"{SALIDA}/{hid.replace(':', '_')}.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    if isinstance(res["analisis"], dict) and "error_json" not in res["analisis"]:
+        try:
+            red, prov = redactar(H, res["analisis"], fuentes, res["lugares"])
+            print("REDACCION:", "ok" if red else prov)
+            if red:
+                A = armar_informe(H, res, fuentes, red)
+                ruta = f"{SALIDA}/{hid.replace(':', '_')}_informe.json"
+                json.dump(A, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+                import informe_ampliatorio_v3 as ia
+                ia.build(ruta, "datos/v3/hechos.json", f"{SALIDA}/{hid.replace(':', '_')}_SITREP.pdf")
+                print("PDF generado")
+        except Exception:
+            import traceback; traceback.print_exc()
     print("RESUMEN fuentes:", res["n_fuentes"], "leídas:", res["n_leidas"], "segundos:", res["segundos"], "IA:", res["ia"])
     por = collections.Counter(f["medio"] for f in fuentes if f["leida"]); print("MEDIOS LEÍDOS:", dict(por))
     for f in sorted(fuentes, key=lambda f: f["pub"] or 0): print("  ", f["fecha"], "|", f["medio"], "|", "LEÍDA" if f["leida"] else "titular", "| r", f["ronda"], "|", f["titulo"][:80])

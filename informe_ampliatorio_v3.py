@@ -3,7 +3,7 @@
 Entrada: un JSON de análisis (informes_ampliatorios/<id>.json) + datos del hecho en datos/v3/hechos.json.
 Salida: PDF de 4 páginas: ficha y resumen · cronología y ubicación · triangulación y repercusión · trazabilidad y seguimiento.
 No incluye fotografías de personas tomadas de medios (derechos y respeto a la familia); enlaza el material original."""
-import json, sys, datetime as dt
+import json, sys, textwrap, datetime as dt
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
@@ -35,8 +35,11 @@ def linea_tiempo(A):
     import datetime as d
     fig, (a, b) = plt.subplots(2, 1, figsize=(7.2, 3.3), sharex=True, gridspec_kw={"height_ratios": [1.25, 1]}); fig.patch.set_facecolor("white")
     X = lambda dia, h=0: dia + h / 24
-    hechos = [(X(4, 9.5), "Atropello\n~9:30", 1, 1), (X(4, 15), "Conductor\naprehendido\n(horas después)", 1, -1), (X(5, 12), "Familia y amigo\nconfirman la muerte", 1, 1),
-              (X(6, 21.4), "Cancillería: coordina\nrepatriación", 1, -1), (X(7.9), "Imputación y\nmedidas cautelares", 0, 1), (X(8.5), "Traslado de\nlos restos", 0, -1)]
+    if A.get("hitos"):
+        hechos = [(X(h["dia"], h.get("hora", 0)), textwrap.fill(h["texto"], 16), 1 if h.get("hecho") else 0, 1 if i % 2 == 0 else -1) for i, h in enumerate(sorted(A["hitos"], key=lambda h: (h["dia"], h.get("hora", 0))))]
+    else:
+        hechos = [(X(4, 9.5), "Atropello\n~9:30", 1, 1), (X(4, 15), "Conductor\naprehendido\n(horas después)", 1, -1), (X(5, 12), "Familia y amigo\nconfirman la muerte", 1, 1),
+                  (X(6, 21.4), "Cancillería: coordina\nrepatriación", 1, -1), (X(7.9), "Imputación y\nmedidas cautelares", 0, 1), (X(8.5), "Traslado de\nlos restos", 0, -1)]
     hoy = X(7, 8.75)
     a.axvspan(hoy, 9.2, color="#f3f1ec", zorder=0); a.axvline(hoy, color="#555", lw=.8, ls=(0, (3, 3)))
     a.text(hoy + .05, 1.62, "hoy 7/11", fontsize=7, color="#444"); a.text(9.15, 1.62, "por confirmar", fontsize=7, color="#7a7a7a", ha="right")
@@ -50,15 +53,48 @@ def linea_tiempo(A):
     for f, n, p in A["cobertura"]:
         dia = int(f[-2:]); k = por.setdefault(dia, []); k.append((n, p))
     for dia, L in por.items():
-        for r, (n, p) in enumerate(L):
-            b.scatter([dia + .5], [r], s=78, color=col[p], zorder=3, edgecolor="white", lw=1.2)
-            b.text(dia + .62, r, n, fontsize=6.6, va="center", color="#33404e")
-    b.set_ylim(-.7, 5); b.set_xlim(4, 9.2)
+        L = sorted(L, key=lambda x: x[1])
+        for r, (n, p) in enumerate(L[:7]):
+            b.scatter([dia + .5], [r], s=70, color=col[p], zorder=3, edgecolor="white", lw=1.2)
+            b.text(dia + .62, r, n, fontsize=6.4, va="center", color="#33404e")
+        if len(L) > 7:
+            b.text(dia + .5, 7, f"+{len(L) - 7} medios más", fontsize=6.4, ha="left", color="#33404e")
+    b.set_ylim(-.7, 8); b.set_xlim(4, 9.2)
     for sp in ("top", "right", "left"): b.spines[sp].set_visible(False)
     b.set_yticks([]); b.set_xticks([4.5, 5.5, 6.5, 7.5, 8.5]); b.set_xticklabels(["mié 4/11", "jue 5/11", "vie 6/11", "sáb 7/11", "dom 8/11"], fontsize=7.6, color="#5b6b7a")
     b.tick_params(length=0); b.set_title("Repercusión: un punto por medio con fecha verificada", fontsize=8.8, loc="left", fontweight=600)
     from matplotlib.lines import Line2D
     b.legend(handles=[Line2D([0], [0], marker="o", color="w", markerfacecolor=c, markersize=7, label=l) for l, c in (("Bolivia", AZUL), ("Corea del Sur", ROJO), ("Otros países", "#8a96a3"))], fontsize=7, frameon=False, loc="upper right")
+    fig.tight_layout(); return eg.png(fig, dpi=200, tight=False)
+
+
+def _hav(a, b):
+    import math
+    R = 6371; p1, p2 = math.radians(a[0]), math.radians(b[0]); dl = math.radians(b[1] - a[1]); dp = p2 - p1
+    h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * R * math.asin(math.sqrt(h))
+
+
+def mapa_lugar(pts):
+    """Las referencias de lugar que dan las fuentes, con coordenadas de OpenStreetMap y su separación: sirve para ver si las versiones son la misma zona."""
+    gm = json.load(open("docs/geo_mun.geojson", encoding="utf-8"))
+    fig, ax = plt.subplots(figsize=(6.4, 3.6)); fig.patch.set_facecolor("white")
+    la = [p["lat"] for p in pts]; lo = [p["lon"] for p in pts]; pad = .018
+    x0, x1, y0, y1 = min(lo) - pad, max(lo) + pad, min(la) - pad * .9, max(la) + pad * .9
+    pol = lambda g: [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
+    for f in gm["features"]:
+        for p in pol(f["geometry"]):
+            ax.add_patch(Polygon(p[0], closed=True, fc="#e9eef5", ec="#9aa8b8", lw=.8))
+    cx, cy = sum(lo) / len(lo), sum(la) / len(la)
+    import numpy as np
+    r = max(_hav((cy, cx), (p["lat"], p["lon"])) for p in pts)
+    th = np.linspace(0, 2 * np.pi, 120); dlat = r / 111.0; dlon = r / (111.0 * np.cos(np.radians(cy)))
+    ax.plot(cx + dlon * np.cos(th), cy + dlat * np.sin(th), color="#c0392b", lw=1.1, ls=(0, (4, 3)), zorder=3)
+    for i, p in enumerate(pts):
+        ax.scatter([p["lon"]], [p["lat"]], s=48, c=AZUL, edgecolor="white", lw=1.4, zorder=5)
+        ax.annotate(p["nombre"].capitalize(), (p["lon"], p["lat"]), xytext=(6, 5 if i % 2 == 0 else -12), textcoords="offset points", fontsize=7.2, color="#1b2430", zorder=6)
+    ax.set_xlim(x0, x1); ax.set_ylim(y0, y1); ax.set_aspect(1 / np.cos(np.radians(cy))); ax.axis("off")
+    ax.set_title(f"Todas las referencias caben en un círculo de {r:.1f} km de radio (círculo rojo)", fontsize=8.4, loc="left", fontweight=600)
     fig.tight_layout(); return eg.png(fig, dpi=200, tight=False)
 
 
@@ -105,6 +141,9 @@ def build(analisis_ruta, hechos_ruta, salida):
         c, tx_ = SEM[sem]
         filas.append([Paragraph("<b>" + e(nom) + "</b>", TB), Paragraph(f'<font color="{c}"><b>{tx_}</b></font>', TB), Paragraph(e(sit), TB), Paragraph(e(resp), TB), Paragraph(e(pend), TB)])
     t, st = tabla(filas, [26 * mm, 24 * mm, W - 26 * mm - 24 * mm - 33 * mm - 36 * mm, 33 * mm, 36 * mm], cab=["Área", "Estado", "Situación", "Responsable", "Falta"]); t.setStyle(TableStyle(st)); S += [t]
+    mp = (A.get("mapa") or {}).get("puntos") or []
+    if len(mp) >= 2:
+        S += [Paragraph("Dónde: las versiones del lugar, ubicadas", H2), eg.imagen(mapa_lugar(mp), W * .8)]
     S += [Paragraph("Riesgos", H2)]
     t, st = tabla([[Paragraph("<b>" + e(a) + "</b>", TB), Paragraph(e(b), TB)] for a, b in A["riesgos"]], [40 * mm, W - 40 * mm]); t.setStyle(TableStyle(st)); S += [t]
     S += [Paragraph("<b>Sin mapa:</b> no hay un punto verificado (dos versiones del lugar dentro de El Alto) y el sistema no tiene otros hechos de la zona para comparar. Se agregará un mapa del corredor cuando la Policía confirme el punto. <b>Sin fotografía:</b> las de los medios tienen derechos de autor y la familia pidió privacidad; se pedirá el registro fotográfico del parte policial.", TS), PageBreak()]
