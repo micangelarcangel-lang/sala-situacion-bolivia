@@ -6,7 +6,7 @@ Etapas (las 1-3 no necesitan IA; la 4 usa un modelo si hay clave gratuita en los
  3. Lugares: se extraen avenidas/sectores/zonas de los textos y se ubican con Nominatim (OpenStreetMap); el resultado queda con su distancia entre versiones.
  4. Análisis con modelo (afirmaciones con fuente, coincidencias, discrepancias, vacíos): Gemini o Groq si hay clave; si no, se deja constancia y no se inventa nada.
 Salida: datos/v3/investigacion/<hecho>.json"""
-import collections, datetime as dt, email.utils, json, math, os, re, sys, time, urllib.parse, urllib.request
+import collections, datetime as dt, email.utils, json, math, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 from xml.etree import ElementTree as ET
 import informe_hecho as ih
 
@@ -113,14 +113,17 @@ def nominatim(q, ciudad):
 def llamar_ia(sistema, usuario, max_tokens=4000):
     """Gemini (AI Studio) o Groq, el que tenga clave en el entorno. Devuelve (texto_json, proveedor) o (None, motivo)."""
     k = os.environ.get("GEMINI_API_KEY", "").strip()
+    errores = []
     if k:
         for modelo in ("gemini-2.5-flash", "gemini-2.0-flash"):
             try:
                 cuerpo = {"systemInstruction": {"parts": [{"text": sistema}]}, "contents": [{"role": "user", "parts": [{"text": usuario}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": max_tokens}}
                 r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={k}", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json"}), timeout=120))
                 return r["candidates"][0]["content"]["parts"][0]["text"], "gemini/" + modelo
+            except urllib.error.HTTPError as e:
+                errores.append(f"gemini/{modelo}: HTTP {e.code} " + e.read()[:300].decode("utf8", "replace"))
             except Exception as e:
-                err = type(e).__name__ + str(e)[:80]
+                errores.append(f"gemini/{modelo}: " + type(e).__name__ + " " + str(e)[:150])
     k = os.environ.get("GROQ_API_KEY", "").strip()
     if k:
         try:
@@ -129,7 +132,7 @@ def llamar_ia(sistema, usuario, max_tokens=4000):
             return r["choices"][0]["message"]["content"], "groq/llama-3.3-70b"
         except Exception as e:
             return None, "groq: " + type(e).__name__ + str(e)[:80]
-    return None, "sin clave de IA en los secretos (GEMINI_API_KEY o GROQ_API_KEY)"
+    return None, ("; ".join(errores) if errores else "sin clave de IA en los secretos (GEMINI_API_KEY o GROQ_API_KEY)")
 
 
 SISTEMA = ("Eres analista de un centro coordinador de emergencias. Recibes artículos de prensa sobre UN hecho. Usa SOLO lo que dicen los artículos; cada afirmación debe citar el medio. "
