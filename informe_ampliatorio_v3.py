@@ -30,27 +30,36 @@ def e(t):
     return str(t).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def mapa(geo_mun, geo_dep, lat, lon):
-    pol = lambda g: [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
-    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 3.3), gridspec_kw={"width_ratios": [1, 1.05]}); fig.patch.set_facecolor("white")
-    for f in geo_dep["features"]:
-        for p in pol(f["geometry"]):
-            a.add_patch(Polygon(p[0], closed=True, fc="#0b3d6e" if f["properties"]["n"] == "La Paz" else "#eceae5", ec="white", lw=.8))
-    a.autoscale_view(); a.set_aspect("equal"); a.axis("off"); a.set_title("Bolivia · departamento de La Paz", fontsize=8.5, loc="left", fontweight=600)
-    xs, ys = [], []
-    for f in geo_mun["features"]:
-        if f["properties"]["d"] != "La Paz":
-            continue
-        ea = f["properties"]["n"] == "El Alto"
-        for p in pol(f["geometry"]):
-            b.add_patch(Polygon(p[0], closed=True, fc="#c0392b" if ea else "#e6edf5", ec="white", lw=.5, zorder=3 if ea else 2))
-            xs += [q[0] for q in p[0]]; ys += [q[1] for q in p[0]]
-    b.scatter([lon], [lat], s=34, c="#111", edgecolor="white", lw=1.4, zorder=5)
-    b.annotate("El Alto\n(ubicación aproximada:\nmunicipio)", (lon, lat), xytext=(lon + 1.7, lat + 1.9), fontsize=7, arrowprops=dict(arrowstyle="-", color="#555", lw=.7), color="#222", zorder=6)
-    b.set_xlim(min(xs) - .1, max(xs) + .1); b.set_ylim(min(ys) - .1, max(ys) + .1); b.set_aspect("equal"); b.axis("off")
-    b.set_title("Municipios de La Paz", fontsize=8.5, loc="left", fontweight=600)
-    fig.tight_layout()
-    return eg.png(fig, dpi=200, tight=False)
+def linea_tiempo(A):
+    """Hecho y proceso (arriba) y repercusión (abajo) en el mismo eje de tiempo; lo pendiente va hueco y a la derecha de «hoy»."""
+    import datetime as d
+    fig, (a, b) = plt.subplots(2, 1, figsize=(7.2, 3.3), sharex=True, gridspec_kw={"height_ratios": [1.25, 1]}); fig.patch.set_facecolor("white")
+    X = lambda dia, h=0: dia + h / 24
+    hechos = [(X(4, 9.5), "Atropello\n~9:30", 1, 1), (X(4, 15), "Conductor\naprehendido\n(horas después)", 1, -1), (X(5, 12), "Familia y amigo\nconfirman la muerte", 1, 1),
+              (X(6, 21.4), "Cancillería: coordina\nrepatriación", 1, -1), (X(7.9), "Imputación y\nmedidas cautelares", 0, 1), (X(8.5), "Traslado de\nlos restos", 0, -1)]
+    hoy = X(7, 8.75)
+    a.axvspan(hoy, 9.2, color="#f3f1ec", zorder=0); a.axvline(hoy, color="#555", lw=.8, ls=(0, (3, 3)))
+    a.text(hoy + .05, 1.62, "hoy 7/11", fontsize=7, color="#444"); a.text(9.15, 1.62, "por confirmar", fontsize=7, color="#7a7a7a", ha="right")
+    a.axhline(0, color="#9aa5b1", lw=1)
+    for x, t, ok, up in hechos:
+        a.scatter([x], [0], s=62, zorder=3, facecolor=AZUL if ok else "white", edgecolor=AZUL, lw=1.6)
+        a.annotate(t, (x, 0), xytext=(x, .75 * up), fontsize=7.2, ha="center", va="bottom" if up > 0 else "top", color="#1b2430" if ok else "#6b7785",
+                   arrowprops=dict(arrowstyle="-", color="#b4bcc6", lw=.7))
+    a.set_ylim(-1.75, 1.9); a.axis("off"); a.set_title("Hecho y proceso", fontsize=8.8, loc="left", fontweight=600)
+    col = {"BO": AZUL, "KR": ROJO, "OT": "#8a96a3"}; por = {}
+    for f, n, p in A["cobertura"]:
+        dia = int(f[-2:]); k = por.setdefault(dia, []); k.append((n, p))
+    for dia, L in por.items():
+        for r, (n, p) in enumerate(L):
+            b.scatter([dia + .5], [r], s=78, color=col[p], zorder=3, edgecolor="white", lw=1.2)
+            b.text(dia + .62, r, n, fontsize=6.6, va="center", color="#33404e")
+    b.set_ylim(-.7, 5); b.set_xlim(4, 9.2)
+    for sp in ("top", "right", "left"): b.spines[sp].set_visible(False)
+    b.set_yticks([]); b.set_xticks([4.5, 5.5, 6.5, 7.5, 8.5]); b.set_xticklabels(["mié 4/11", "jue 5/11", "vie 6/11", "sáb 7/11", "dom 8/11"], fontsize=7.6, color="#5b6b7a")
+    b.tick_params(length=0); b.set_title("Repercusión: un punto por medio con fecha verificada", fontsize=8.8, loc="left", fontweight=600)
+    from matplotlib.lines import Line2D
+    b.legend(handles=[Line2D([0], [0], marker="o", color="w", markerfacecolor=c, markersize=7, label=l) for l, c in (("Bolivia", AZUL), ("Corea del Sur", ROJO), ("Otros países", "#8a96a3"))], fontsize=7, frameon=False, loc="upper right")
+    fig.tight_layout(); return eg.png(fig, dpi=200, tight=False)
 
 
 def tabla(filas, anchos, cab=None, estados=None, zebra=True):
@@ -64,44 +73,56 @@ def tabla(filas, anchos, cab=None, estados=None, zebra=True):
 
 def build(analisis_ruta, hechos_ruta, salida):
     A = json.load(open(analisis_ruta, encoding="utf-8")); H = json.load(open(hechos_ruta, encoding="utf-8"))[A["hecho_id"]]
-    gm, gd = json.load(open("docs/geo_mun.geojson", encoding="utf-8")), json.load(open("docs/geo_dep.geojson", encoding="utf-8"))
     W = A4[0] - 30 * mm; S = []
+    SEM = {"ÁMBAR": ("#b7791f", "ATENCIÓN"), "ROJO": (ROJO, "CRÍTICO"), "VERDE": (VERDE, "CONTROLADO"), "GRIS": ("#6b7785", "SIN DATOS")}
 
     def pie(c, d):
         c.saveState(); c.setFont("Helvetica", 7); c.setFillColor(colors.HexColor(GRIS))
-        c.drawString(15 * mm, 9 * mm, f"{A['codigo']} · Informe preliminar basado en fuentes abiertas · Sala de Situación Bolivia · corte {A['corte']}")
+        c.drawString(15 * mm, 9 * mm, f"{A['codigo']} · Informe preliminar con fuentes abiertas · corte {A['corte']} · circulación restringida")
         c.drawRightString(A4[0] - 15 * mm, 9 * mm, f"Pág. {d.page}"); c.restoreState()
         c.setFillColor(colors.HexColor(AZUL)); c.rect(0, A4[1] - 7 * mm, A4[0], 7 * mm, fill=1, stroke=0)
-        c.setFillColor(colors.white); c.setFont("Helvetica-Bold", 7.5); c.drawString(15 * mm, A4[1] - 4.8 * mm, "SALA DE SITUACIÓN BOLIVIA · INFORME AMPLIATORIO")
-        c.setFont("Helvetica", 7.5); c.drawRightString(A4[0] - 15 * mm, A4[1] - 4.8 * mm, f"Solicitado por: {A['solicitado_por']}")
-    # ---- página 1
-    S += [Spacer(1, 4 * mm), Paragraph(A["codigo"] + " · " + e(A["clasificacion"]), TS), Paragraph(e(A["titulo"]), H1), Spacer(1, 3 * mm)]
-    S += [Paragraph("Resumen", H2), Paragraph(e(A["resumen"]), LEAD), Paragraph("Ficha del hecho", H2)]
-    t, st = tabla([[Paragraph("<b>" + e(k) + "</b>", TB), Paragraph(e(v), TB)] for k, v in A["ficha"]], [32 * mm, W - 32 * mm])
-    t.setStyle(TableStyle(st)); S += [t]
-    S += [Spacer(1, 3 * mm), Paragraph("<b>Imágenes.</b> Este informe no incorpora fotografías del fallecido tomadas de medios: la familia pidió respeto y privacidad y las imágenes tienen derechos de autor. El material gráfico original se enlaza en la página 4. Si se requiere una foto para uso institucional, debe pedirse a la Policía, la Fiscalía o la Embajada.", TS), PageBreak()]
-    # ---- página 2
-    S += [Paragraph("Cronología", H2)]
-    t, st = tabla([[Paragraph("<b>" + e(a) + "</b>", TB), Paragraph(e(b), TB)] for a, b in A["cronologia"]], [34 * mm, W - 34 * mm]); t.setStyle(TableStyle(st)); S += [t]
-    S += [Paragraph("Dónde ocurrió", H2), eg.imagen(mapa(gm, gd, H["lat"], H["lon"]), W)]
-    S += [Paragraph("Cómo leer: el punto marca el municipio de El Alto, que es la ubicación que da el sistema. Las fuentes dan dos puntos distintos dentro de El Alto (ver triangulación), por eso no se dibuja un punto más exacto.", TS)]
-    S += [Paragraph("Qué todavía no se sabe", H2)] + [Paragraph("• " + e(x), TB) for x in A["no_se_sabe"]] + [PageBreak()]
-    # ---- página 3
-    S += [Paragraph("Triangulación: qué dice cada fuente", H2), Paragraph("Cada dato se contrastó entre las notas leídas completas. «Coincide» = al menos dos medios independientes; «Fuente única» = un solo medio; «DISCREPA» = versiones distintas.", TS), Spacer(1, 2 * mm)]
+        c.setFillColor(colors.white); c.setFont("Helvetica-Bold", 7.5); c.drawString(15 * mm, A4[1] - 4.8 * mm, "CENTRO COORDINADOR DE EMERGENCIAS · SALA DE SITUACIÓN · INFORME DE SITUACIÓN")
+        c.setFont("Helvetica", 7.5); c.drawRightString(A4[0] - 15 * mm, A4[1] - 4.8 * mm, f"Para: {A['solicitado_por']}")
+    # ---- página 1: lo que se lee y se decide
+    S += [Spacer(1, 3 * mm), Paragraph(A["codigo"] + " · " + e(A["clasificacion"]), TS), Paragraph(e(A["titulo"]), H1),
+          Paragraph("<b>Nivel de atención:</b> " + e(A["nivel_atencion"]), TB), Spacer(1, 3 * mm)]
+    E = A["esencial"]
+    filas = [[Paragraph("<b>Qué pasó</b>", TB), Paragraph(e(E["paso"]), TB)], [Paragraph("<b>Ya resuelto</b>", TB), Paragraph(e(E["resuelto"]), TB)],
+             [Paragraph("<b>Sigue abierto</b>", TB), Paragraph(e(E["abierto"]), TB)], [Paragraph("<b>Se requiere</b>", TB), Paragraph("<b>" + e(E["requiere"]) + "</b>", TB)]]
+    t = Table(filas, colWidths=[27 * mm, W - 27 * mm]); t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#eef3f9")), ("LINEBELOW", (0, 0), (-1, -2), .5, colors.white), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5), ("LINEBEFORE", (0, 0), (0, -1), 3, colors.HexColor(AZUL))]))
+    S += [t, Spacer(1, 4 * mm)]
+    kp = [[Paragraph(f'<font size="{16 if len(a) < 4 else 11}" color="{AZUL}"><b>{e(a)}</b></font>', P("k", fontSize=14, leading=18, alignment=1)) for a, _ in A["kpis"]],
+          [Paragraph(e(b), P("kl", fontSize=7.4, leading=9, textColor=colors.HexColor(GRIS), alignment=1)) for _, b in A["kpis"]]]
+    t = Table(kp, colWidths=[W / len(A["kpis"])] * len(A["kpis"])); t.setStyle(TableStyle([("LINEBELOW", (0, 1), (-1, 1), .6, colors.HexColor("#d9dee4")), ("LINEABOVE", (0, 0), (-1, 0), .6, colors.HexColor("#d9dee4")), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
+    S += [t, Paragraph("Línea de tiempo: qué pasó, qué falta y cómo creció la noticia", H2), eg.imagen(linea_tiempo(A), W),
+          Paragraph("Cómo leer: arriba, lo ocurrido (relleno) y lo pendiente (hueco, a la derecha de «hoy»). Abajo, cuándo apareció la noticia en cada medio con fecha verificada. " + e(A["sin_fecha"]), TS), Paragraph("Acciones recomendadas", H2)]
+    t, st = tabla([[Paragraph(str(i + 1), TB), Paragraph(e(a), TB), Paragraph(e(r), TB), Paragraph("<b>" + e(pz) + "</b>", TB)] for i, (a, r, pz) in enumerate(A["acciones"])], [7 * mm, W - 7 * mm - 42 * mm - 18 * mm, 42 * mm, 18 * mm], cab=["#", "Acción", "Responsable sugerido", "Plazo"])
+    t.setStyle(TableStyle(st)); S += [t, Paragraph("Responsables y plazos son propuestos por la Sala; los confirma la MAE.", TS), PageBreak()]
+    # ---- página 2: análisis
+    S += [Paragraph("Situación por área", H2)]
+    filas = []
+    for nom, sem, sit, resp, pend in A["areas"]:
+        c, tx_ = SEM[sem]
+        filas.append([Paragraph("<b>" + e(nom) + "</b>", TB), Paragraph(f'<font color="{c}"><b>{tx_}</b></font>', TB), Paragraph(e(sit), TB), Paragraph(e(resp), TB), Paragraph(e(pend), TB)])
+    t, st = tabla(filas, [26 * mm, 24 * mm, W - 26 * mm - 24 * mm - 33 * mm - 36 * mm, 33 * mm, 36 * mm], cab=["Área", "Estado", "Situación", "Responsable", "Falta"]); t.setStyle(TableStyle(st)); S += [t]
+    S += [Paragraph("Riesgos", H2)]
+    t, st = tabla([[Paragraph("<b>" + e(a) + "</b>", TB), Paragraph(e(b), TB)] for a, b in A["riesgos"]], [40 * mm, W - 40 * mm]); t.setStyle(TableStyle(st)); S += [t]
+    S += [Paragraph("<b>Sin mapa:</b> no hay un punto verificado (dos versiones del lugar dentro de El Alto) y el sistema no tiene otros hechos de la zona para comparar. Se agregará un mapa del corredor cuando la Policía confirme el punto. <b>Sin fotografía:</b> las de los medios tienen derechos de autor y la familia pidió privacidad; se pedirá el registro fotográfico del parte policial.", TS), PageBreak()]
+    # ---- anexo A: triangulación
+    S += [Paragraph("Anexo A · Triangulación dato por dato", H2), Paragraph("«Coincide» = al menos dos medios independientes; «Fuente única» = un solo medio; «DISCREPA» = versiones distintas.", TS), Spacer(1, 2 * mm)]
     col = {"Coincide": VERDE, "Coincide (indirecta)": VERDE, "DISCREPA": ROJO, "DISCREPA (secundario)": AMBAR, "Fuente única": AMBAR, "Sin confirmar": AMBAR}
     filas = [[Paragraph("<b>" + e(a) + "</b>", TB), Paragraph(e(b), TB), Paragraph(f'<font color="{col.get(c, GRIS)}"><b>{e(c)}</b></font>', TB)] for a, b, c in A["triangulacion"]]
     t, st = tabla(filas, [32 * mm, W - 32 * mm - 27 * mm, 27 * mm], cab=["Dato", "Lo que dice cada fuente", "Estado"]); t.setStyle(TableStyle(st)); S += [t]
-    S += [Paragraph("Repercusión", H2), Paragraph("<b>Nacional (%d):</b> %s" % (len(A["medios_nacionales"]), e(", ".join(A["medios_nacionales"]))), TB),
-          Paragraph("<b>Internacional (%d):</b> %s" % (len(A["medios_internacionales"]), e(", ".join(A["medios_internacionales"]))), TB),
-          Paragraph("<b>Leídos completos (%d):</b> %s. El resto, solo por titular." % (len(A["leidos_completos"]), e(", ".join(A["leidos_completos"]))), TB), PageBreak()]
-    # ---- página 4
-    S += [Paragraph("Seguimiento sugerido", H2)] + [Paragraph("• " + e(x), TB) for x in A["seguimiento"]]
-    S += [Paragraph("Trazabilidad", H2)]
+    S += [Paragraph("Respaldo oficial", H2), Paragraph("Cancillería (vía El Deber) y Tránsito de El Alto (vía Starnews). No se localizó comunicado oficial directo. Fiscalía y Embajada aparecen solo citadas por medios.", TB)]
+    S += [Paragraph("Ficha completa", H2)]
+    t, st = tabla([[Paragraph("<b>" + e(k) + "</b>", TB), Paragraph(e(v), TB)] for k, v in A["ficha"]], [32 * mm, W - 32 * mm]); t.setStyle(TableStyle(st)); S += [t, PageBreak()]
+    # ---- anexo B: trazabilidad
     ts = lambda ms: dt.datetime.fromtimestamp(ms / 1000, BO).strftime("%d/%m/%Y %H:%M")
-    S += [Paragraph(f"<b>Hecho en el sistema:</b> {e(H['id'])} · {e(H['subtipo'])} · {len(H['notas'])} notas capturadas automáticamente ({ts(H['primera'])} a {ts(H['ultima'])} hora de Bolivia) · ubicación: precisión «{e(H['precision'])}».", TB),
-          Paragraph("<b>Límite del sistema automático:</b> capturó 2 notas (Eju.tv y Red Uno) y le dio confianza baja por tener una sola fuente independiente. La búsqueda ampliada que sustenta este informe halló al menos 17 medios. La ampliación de la captura a más fuentes es la fase 1 del plan.", TB),
-          Paragraph("<b>Método:</b> lectura completa de 7 notas, comparación dato por dato, y atribución de cada cifra a su fuente. Cuando una nota cita a otra (por ejemplo Unitel), se anota «vía». No se usó ningún dato sin fuente.", TB),
-          Paragraph("<b>Cifras:</b> 1 fallecido (confirmado por familia y por todos los medios). Heridos: ninguno reportado.", TB), Paragraph("Fuentes consultadas", H2)]
+    S += [Paragraph("Anexo B · Cronología detallada", H2)]
+    t, st = tabla([[Paragraph("<b>" + e(a) + "</b>", TB), Paragraph(e(b), TB)] for a, b in A["cronologia"]], [34 * mm, W - 34 * mm]); t.setStyle(TableStyle(st)); S += [t]
+    S += [Paragraph("Anexo C · Trazabilidad", H2),
+          Paragraph(f"<b>Hecho en el sistema:</b> {e(H['id'])} · {e(H['subtipo'])} · {len(H['notas'])} notas capturadas automáticamente ({ts(H['primera'])} a {ts(H['ultima'])}) · ubicación: precisión «{e(H['precision'])}». El sistema automático le dio confianza baja por una sola fuente independiente; la búsqueda ampliada halló al menos 17 medios. Ampliar la captura es la fase 1 del plan.", TB),
+          Paragraph("<b>Método:</b> lectura completa de 7 notas (El Deber, Erbol, Red Uno, Bolivia.com, Korea Herald, Starnews, SBS), comparación dato por dato y atribución de cada cifra a su fuente. No se usó ningún dato sin fuente. El conductor no se identifica: ninguna fuente publica su nombre.", TB), Paragraph("Fuentes", H2)]
     t, st = tabla([[Paragraph(e(n), TB), Paragraph('<font size="6.5">' + e(u) + "</font>", TB), Paragraph(e(f), TS)] for n, u, f in A["fuentes"]], [38 * mm, W - 38 * mm - 20 * mm, 20 * mm], cab=["Medio", "Enlace", "Nota"]); t.setStyle(TableStyle(st)); S += [t]
     SimpleDocTemplate(salida, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=14 * mm, bottomMargin=16 * mm, title=A["titulo"], author="Sala de Situación Bolivia").build(S, onFirstPage=pie, onLaterPages=pie)
 
