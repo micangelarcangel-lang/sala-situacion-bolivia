@@ -1,0 +1,602 @@
+{
+ "hecho_id": "hecho:ddc06eb45e",
+ "generado": "2026-11-07T17:08:47.516350+00:00",
+ "segundos": 102,
+ "consultas": [
+  [
+   1,
+   "El Alto: Ciclista extranjero muere atropellado por un camión; el conductor huyó, pero fue capturado - eju.tv",
+   7
+  ],
+  [
+   1,
+   "Identifican a ciclista coreano que murió atropellado por un camión en El Alto",
+   2
+  ],
+  [
+   1,
+   "accidente de tránsito El Alto",
+   27
+  ],
+  [
+   2,
+   "Alto Alegre [es]",
+   26
+  ],
+  [
+   2,
+   "Alto Alegre [en]",
+   0
+  ],
+  [
+   2,
+   "José María Carrasco [es]",
+   24
+  ],
+  [
+   2,
+   "José María Carrasco [en]",
+   0
+  ],
+  [
+   2,
+   "Pucarita Chica [es]",
+   1
+  ],
+  [
+   2,
+   "Pucarita Chica [en]",
+   0
+  ],
+  [
+   2,
+   "Cho Jin-woo [es]",
+   21
+  ],
+  [
+   2,
+   "Cho Jin-woo [en]",
+   29
+  ]
+ ],
+ "n_fuentes": 48,
+ "n_leidas": 33,
+ "nombres_propios": [
+  "Alto Alegre",
+  "José María Carrasco",
+  "Pucarita Chica",
+  "Cho Jin-woo",
+  "YouTube",
+  "Puente Alto",
+  "TransMilenio",
+  "Ruta Provincial",
+  "Toyota Yaris",
+  "JinsTravel"
+ ],
+ "lugares": [
+  {
+   "consulta": "avenida Juan Pablo II",
+   "lat": -16.5023408,
+   "lon": -68.1662688,
+   "nombre": "Avenida Juan Pablo II, Ampliación Ferroviaria 2da. Sección, 16 de Julio, Distrito 6, El Alto, Provincia Pedro Domingo Mu",
+   "tipo": "trunk",
+   "km_al_centro_municipio": 7.97
+  },
+  {
+   "consulta": "zona de Chacaltaya",
+   "sin_resultado": true
+  },
+  {
+   "consulta": "Puente Alto",
+   "lat": -16.5456239,
+   "lon": -68.1751931,
+   "nombre": "WaynaBus - Rotonda Puente Bolivia, Rotonda Bolivia-Arica-Cívica, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, L",
+   "tipo": "bus_stop",
+   "km_al_centro_municipio": 11.63
+  },
+  {
+   "consulta": "avenida El Dorado",
+   "sin_resultado": true
+  },
+  {
+   "consulta": "avenida Caracas",
+   "lat": -16.5318234,
+   "lon": -68.1618817,
+   "nombre": "Avenida Caracas, Exaltación 1ª Sección, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "residential",
+   "km_al_centro_municipio": 10.89
+  },
+  {
+   "consulta": "avenida Cali",
+   "sin_resultado": true
+  },
+  {
+   "consulta": "Avenida Cali",
+   "sin_resultado": true
+  }
+ ],
+ "ia": "sin clave de IA en los secretos (GEMINI_API_KEY o GROQ_API_KEY)",
+ "analisis": null,
+ "fuentes": [
+  {
+   "medio": "eju.tv",
+   "titulo": "El Alto: Ciclista extranjero muere atropellado por un camión; el conductor huyó, pero fue capturado",
+   "url": "https://eju.tv/2026/11/el-alto-ciclista-extranjero-muere-atropellado-por-un-camion-el-conductor-huyo-pero-fue-capturado/",
+   "fecha": "04/11 18:08",
+   "pub": 1793830112000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "“La gente que debe llevar el pan del día a sus hogares lo sufre”: Reportan filas por gas en El Alto",
+   "url": "https://eju.tv/2026/11/la-gente-que-debe-llevar-el-pan-del-dia-a-sus-hogares-lo-sufre-reportan-filas-por-gas-en-el-alto/",
+   "fecha": "04/11 18:01",
+   "pub": 1793829707000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "Productores de queso se declaran en emergencia por sobreoferta y baja del precio",
+   "url": "https://eju.tv/2026/11/productores-de-queso-se-declaran-en-emergencia-por-sobreoferta-y-baja-del-precio/",
+   "fecha": "04/11 18:14",
+   "pub": 1793830460000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "Blooming: José María Carrasco fue operado con éxito",
+   "url": "https://eju.tv/2026/11/blooming-jose-maria-carrasco-fue-operado-con-exito/",
+   "fecha": "04/11 07:50",
+   "pub": 1793793001000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "Voraz incendio en una cerrajería moviliza a vecinos de Pucarita Chica en Cochabamba",
+   "url": "https://eju.tv/2026/11/voraz-incendio-en-una-cerrajeria-moviliza-a-vecinos-de-pucarita-chica-en-cochabamba/",
+   "fecha": "04/11 18:26",
+   "pub": 1793831189000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "Gobernadores se reúnen virtualmente para analizar coparticipación y negociar un incremento gradual",
+   "url": "https://eju.tv/2026/11/gobernadores-se-reunen-virtualmente-para-analizar-coparticipacion-y-negociar-un-incremento-gradual/",
+   "fecha": "04/11 18:39",
+   "pub": 1793831959000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "Vicegobernadora de Santa Cruz exige a Saucedo que dé nombres y apellidos de quiénes lo persiguen",
+   "url": "https://eju.tv/2026/11/vicegobernadora-de-santa-cruz-exige-a-saucedo-que-de-nombres-y-apellidos-de-quienes-lo-persiguen/",
+   "fecha": "04/11 18:28",
+   "pub": 1793831335000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Red Uno",
+   "titulo": "Identifican a ciclista coreano que murió atropellado por un camión en El Alto",
+   "url": "https://www.reduno.com.bo/noticias/identifican-a-ciclista-coreano-que-murio-atropellado-por-un-camion-en-el-alto-2026115907",
+   "fecha": "05/11 10:28",
+   "pub": 1793888907000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Red Uno",
+   "titulo": "“Necesitamos tiempo”: el pedido de la familia del youtuber coreano atropellado en Bolivia",
+   "url": "https://www.reduno.com.bo/tendencias/hermano-del-youtuber-coreano-fallecido-en-bolivia-pide-respeto-y-frenar-las-especulaciones-2026116102726",
+   "fecha": "06/11 10:28",
+   "pub": 1793975309000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Red Uno",
+   "titulo": "Choque múltiple en El Alto: conductor en aparente estado de ebriedad",
+   "url": "https://www.reduno.com.bo/noticias/choque-multiple-en-el-alto-conductor-en-aparente-estado-de-ebriedad-2026114175215",
+   "fecha": "04/11 19:04",
+   "pub": 1793833462000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Jornada",
+   "titulo": "Muere en accidente en El Alto un ‘youtuber’ surcoreano que recorría el mundo en bicicleta",
+   "url": "https://jornada.com.bo/muere-en-accidente-en-el-alto-un-youtuber-surcoreano-que-recorria-el-mundo-en-bicicleta/",
+   "fecha": "06/11 19:01",
+   "pub": 1794006088000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Última Hora",
+   "titulo": "Cinco accidentes de tránsito dejaron heridos y daños materiales en Alto Paraná",
+   "url": "https://www.ultimahora.com/cinco-accidentes-de-transito-dejaron-heridos-y-danos-materiales-en-alto-parana",
+   "fecha": "01/11 09:44",
+   "pub": 1793540640000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Meganoticias",
+   "titulo": "Choque de alta energía en Puente Alto deja a todo un sector sin electricidad: Denuncian carrera clandestina",
+   "url": "https://www.meganoticias.cl/nacional/535283-choque-de-alta-energia-puente-alto-sector-sin-electricidad-denuncian-carrera-clandestina-01-11-2026.html",
+   "fecha": "01/11 07:53",
+   "pub": 1793533980000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "TN8",
+   "titulo": "Motociclista muere tras presuntamente irrespetar señal de alto en Managua",
+   "url": "https://www.tn8.ni/sucesos/motociclista-muere-tras-presuntamente-irrespetar-senal-de-alto-en-managua/",
+   "fecha": "05/11 19:53",
+   "pub": 1793922833000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "EL PAÍS",
+   "titulo": "El corredor Madrid-Sevilla de alta velocidad ha doblado su volumen de tráfico desde su liberalización en 2023",
+   "url": "https://elpais.com/economia/2026-10-29/el-corredor-madrid-sevilla-de-alta-velocidad-ha-doblado-su-volumen-de-trafico-desde-su-liberalizacion-en-2023.html",
+   "fecha": "29/10 03:00",
+   "pub": 1793257200000,
+   "ronda": 1,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "Bogota.gov.co",
+   "titulo": "Alta congestión en calle 80: movilidad en Bogotá y rutas de TransMilenio hoy jueves 5 de noviembre",
+   "url": "https://bogota.gov.co/mi-ciudad/movilidad/2026-11/en-vivo-movilidad-bogota-y-rutas-transmilenio-hoy-5-de-noviembre-2026",
+   "fecha": "05/11 22:10",
+   "pub": 1793931001000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "eldoce",
+   "titulo": "Murió otra motociclista en un accidente en Córdoba",
+   "url": "https://eldoce.tv/actualidad/2026/10/31/murio-otro-motociclista-en-un-accidente-en-cordoba-ya-son-4-en-lo-que-va-del-sabado/",
+   "fecha": "31/10 19:18",
+   "pub": 1793488722000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa María VIVO",
+   "titulo": "Fatal accidente en la Ruta 2: murió una motociclista entre Alto Alegre y Cintra",
+   "url": "https://villamariavivo.com/accidente-fatal-ruta-2-motociclista-alto-alegre-cintra/",
+   "fecha": "31/10 20:19",
+   "pub": 1793492370000,
+   "ronda": 1,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "El Sol de México",
+   "titulo": "Respetar una señal de alto, la diferencia entre evitar un accidente y poner en riesgo una vida",
+   "url": "https://oem.com.mx/elsoldelalaguna/local/respetar-una-senal-de-alto-la-diferencia-entre-evitar-un-accidente-y-poner-en-riesgo-una-vida-32997949",
+   "fecha": "06/11 19:36",
+   "pub": 1794008217000,
+   "ronda": 1,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "Telefe Noticias",
+   "titulo": "Renunció el ministro de Transporte de España tras los accidentes de trenes de alta velocidad que causaron 115 muertos",
+   "url": "https://noticias.mitelefe.com/internacionales/renuncio-el-ministro-de-transporte-de-espana-tras-los-accidentes-de-trenes-de-alta-velocidad-que-causaron-115-muertos-pid2571288",
+   "fecha": "03/11 19:45",
+   "pub": 1793749512000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Pulzo",
+   "titulo": "Murió famoso 'influencer': sufrió trágico accidente en moto de alto cilindraje",
+   "url": "https://www.pulzo.com/entretenimiento/murio-famoso-influencer-sufrio-tragico-accidente-moto-alto-cilindraje-PP5346502",
+   "fecha": "02/11 12:51",
+   "pub": 1793638288000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "MVS Noticias",
+   "titulo": "Conductor de vehículo se pasa el alto, choca con Metrobús y pierde la vida",
+   "url": "https://mvsnoticias.com/nacional/cdmx/2026/11/2/conductor-de-vehiculo-se-pasa-el-alto-choca-contra-metrobus-y-pierde-la-vida-752018.html",
+   "fecha": "02/11 13:00",
+   "pub": 1793638859000,
+   "ronda": 1,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "puntal.com.ar",
+   "titulo": "Tragedia en la Ruta 2: murió una motociclista en un accidente cerca de Alto Alegre",
+   "url": "https://www.puntal.com.ar/accidente/tragedia-la-ruta-2-murio-una-motociclista-un-accidente-cerca-alto-alegre-n267537",
+   "fecha": "01/11 13:44",
+   "pub": 1793555058000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "La Patria Bolivia",
+   "titulo": "Fallece el youtuber JinsTravel en Bolivia tras accidente",
+   "url": "https://lapatria.bo/enfoque-nacional/denuncia/fallece-youtuber-jinstravel-bolivia-accidente/",
+   "fecha": "06/11 12:27",
+   "pub": 1793982473000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa Maria Ya",
+   "titulo": "¡Ejemplar! La promo de Alto Alegre junta fondos para que un compañero los acompañe a Brasil",
+   "url": "https://villamariaya.com/sociedad/ejemplar-la-promo-de-alto-alegre-junta-fondos-para-que-un-companero-los-acompane-a-brasil_1793802954",
+   "fecha": "04/11 15:48",
+   "pub": 1793821705000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "La Nueva Mañana",
+   "titulo": "Una motociclista muerta tras colisionar con un automóvil en Alto Alegre",
+   "url": "https://lmdiario.com.ar/contenido/532597/una-motociclista-muerta-tras-colisionar-con-un-automovil-en-alto-alegre",
+   "fecha": "31/10 18:55",
+   "pub": 1793487300000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "La Voz del Interior",
+   "titulo": "Tragedia. Córdoba: una motociclista de 38 años murió tras chocar con un auto en una ruta",
+   "url": "https://www.lavoz.com.ar/sucesos/cordoba-motociclista-38-anos-murio-chocar-auto-ruta_0_bhwAAAkk67.html",
+   "fecha": "31/10 18:55",
+   "pub": 1793487337000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Infobae",
+   "titulo": "En menos de 24 horas, murieron cuatro motociclistas en distintos accidentes en Córdoba",
+   "url": "https://www.infobae.com/sociedad/policiales/2026/11/01/en-menos-de-24-horas-murieron-cuatro-motociclistas-en-distintos-accidentes-en-cordoba/",
+   "fecha": "01/11 03:06",
+   "pub": 1793516760000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Telefe Córdoba",
+   "titulo": "Trágico choque entre auto y moto deja una mujer fallecida en Ruta Provincial N° 2",
+   "url": "https://cordoba.mitelefe.com/cordoba/tragico-choque-entre-auto-y-moto-deja-una-mujer-fallecida-en-ruta-provincial-n0-2-pid2571034",
+   "fecha": "31/10 18:55",
+   "pub": 1793487310000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "villamarianoticias.com",
+   "titulo": "Unión Central es el primer semifinalista del Clausura: venció 4-1 a Unión Social",
+   "url": "https://villamarianoticias.com/union-central-es-el-primer-semifinalista-del-clausura-vencio-4-1-a-union-social/",
+   "fecha": "05/11 00:03",
+   "pub": 1793851439000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "puntalvillamaria.com.ar",
+   "titulo": "Unión Central es semifinalista, luego de golear a Unión Social",
+   "url": "https://www.puntalvillamaria.com.ar/union-central/union-central-es-semifinalista-luego-golear-union-social-n267849",
+   "fecha": "06/11 07:51",
+   "pub": 1793965860000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa Maria Ya",
+   "titulo": "La motociclista fallecida tras el choque entre Alto Alegre y Cintra era villamariense",
+   "url": "https://villamariaya.com/policiales/la-motociclista-fallecida-tras-el-choque-entre-alto-alegre-y-cintra-era-villamariense_1793628523",
+   "fecha": "02/11 10:09",
+   "pub": 1793628556000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "puntalvillamaria.com.ar",
+   "titulo": "Una motociclista de 38 años murió tras chocar con un automóvil en la ruta provincial 2",
+   "url": "https://www.puntalvillamaria.com.ar/motociclista/una-motociclista-38-anos-murio-chocar-un-automovil-la-ruta-provincial-2-n267576",
+   "fecha": "02/11 08:21",
+   "pub": 1793622060000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa Maria Ya",
+   "titulo": "Una mujer perdió la vida al chocar sobre la Ruta 2 cerca de Alto Alegre",
+   "url": "https://villamariaya.com/policiales/una-mujer-perdio-la-vida-al-chocar-sobre-la-ruta-2-cerca-de-alto-alegre_1793488816",
+   "fecha": "31/10 20:04",
+   "pub": 1793491485000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario del centro del país",
+   "titulo": "Se viene la Expo IPEA",
+   "url": "https://www.eldiariocba.com.ar/regionales/2026/11/1/se-viene-la-expo-ipea-142796.html",
+   "fecha": "01/11 07:42",
+   "pub": 1793533357000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "puntalvillamaria.com.ar",
+   "titulo": "El fútbol local adelanta por la visita del Papa",
+   "url": "https://www.puntalvillamaria.com.ar/futbol/el-futbol-local-adelanta-la-visita-del-papa-n267697",
+   "fecha": "04/11 07:36",
+   "pub": 1793792209000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa Maria Ya",
+   "titulo": "Un campeón intratable: Unión Central goleó y está en semis de la \"B\"",
+   "url": "https://villamariaya.com/deportes/un-campeon-intratable-union-central-goleo-y-esta-en-semis-de-la-b_1793886538",
+   "fecha": "05/11 09:49",
+   "pub": 1793886561000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario del centro del país",
+   "titulo": "Unión Central, a semifinales",
+   "url": "https://www.eldiariocba.com.ar/el-equipo/futbol/2026/11/6/union-central-a-semifinales-143016.html",
+   "fecha": "06/11 07:30",
+   "pub": 1793964600000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa Maria Ya",
+   "titulo": "Liga: con el clásico cabralense como plato principal, programaron los cuartos de la A y la B",
+   "url": "https://villamariaya.com/deportes/liga-con-el-clasico-cabralense-como-plato-principal-programaron-los-cuartos-de-la-a-y-la-b_1793711932",
+   "fecha": "03/11 09:21",
+   "pub": 1793712078000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Villa Maria Ya",
+   "titulo": "Liga Villamariense: Alumni cayó ante San Lorenzo en el inicio de los cuartos",
+   "url": "https://villamariaya.com/deportes/liga-villamariense-alumni-cayo-ante-san-lorenzo-en-el-inicio-de-los-cuartos_1793973627",
+   "fecha": "06/11 10:05",
+   "pub": 1793973924000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Diario La Mañana - La verdad en tus manos",
+   "titulo": "Apareció “Lobito”: el perro robado por dos hombres “estaba a 20 kilómetros de su casa” - Diario La Mañana",
+   "url": "https://www.xn--lamaanaonline-lkb.com.ar/noticia/108461/apareci-lobito-el-perro-robado-por-dos-hombres-estaba-a-20-kilmetros-de-su-casa/",
+   "fecha": "06/11 20:10",
+   "pub": 1794010204000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "Otro Punto",
+   "titulo": "Córdoba: cuatro motociclistas murieron este sábado en siniestros viales, el último en la Ruta 2",
+   "url": "https://www.otropunto.com.ar/cordoba/motociclistas-muertos-sabado-cordoba-ruta-2/1283/",
+   "fecha": "01/11 19:46",
+   "pub": 1793576809000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true
+  },
+  {
+   "medio": "Opinion Ciudadana",
+   "titulo": "Detuvieron a dos hombres acusados de atar a un perro, meterlo vivo en una bolsa y llevárselo de una vivienda",
+   "url": "https://www.diariopinion.com.ar/11837-detuvieron-a-dos-hombres-acusados-de-atar-a-un-perro-meterlo-vivo-en-una-bolsa-y-llevarselo-de-una-vivienda",
+   "fecha": "04/11 20:16",
+   "pub": 1793837797000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario de Carlos Paz",
+   "titulo": "Sin rastros de un hombre de 47 años desaparecido en barrio Alto Alberdi",
+   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/1/buscan-a-un-hombre-de-47-anos-desaparecido-en-barrio-alto-alberdi-263371.html",
+   "fecha": "01/11 10:33",
+   "pub": 1793543586000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario de Carlos Paz",
+   "titulo": "Un auto terminó contra un árbol en la colectora de la autopista Córdoba-Carlos Paz",
+   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/1/un-auto-termino-contra-un-arbol-en-la-colectora-de-la-autopista-cordoba-carlos-paz-263370.html",
+   "fecha": "01/11 10:06",
+   "pub": 1793542017000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario de Carlos Paz",
+   "titulo": "Condenaron a bandas que traficaban drogas desde Bouwer y robaban viviendas",
+   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/1/condenaron-a-bandas-que-traficaban-drogas-desde-bouwer-y-robaban-viviendas-263372.html",
+   "fecha": "01/11 10:35",
+   "pub": 1793543706000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario de Carlos Paz",
+   "titulo": "Una mujer cayó de un monopatín eléctrico y sufrió un traumatismo de cráneo",
+   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/6/una-mujer-cayo-de-un-monopatin-electrico-y-sufrio-un-traumatismo-de-craneo-263820.html",
+   "fecha": "06/11 20:26",
+   "pub": 1794011161000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  },
+  {
+   "medio": "El Diario de Carlos Paz",
+   "titulo": "Villa Carlos Paz: Así fueron los operativos para frenar las hordas de motos",
+   "url": "https://www.eldiariodecarlospaz.com.ar/sucesos/2026/11/2/villa-carlos-paz-asi-fueron-los-operativos-para-frenar-las-hordas-de-motos-263408.html",
+   "fecha": "02/11 07:28",
+   "pub": 1793618929000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true
+  }
+ ]
+}
