@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:ddc06eb45e",
- "generado": "2026-11-07T23:28:31.168539+00:00",
- "segundos": 220,
+ "generado": "2026-11-07T23:44:56.060575+00:00",
+ "segundos": 487,
  "consultas": [
   [
    1,
@@ -20,93 +20,92 @@
   ],
   [
    2,
-   "Cho Jin-woo accidente El Alto [es-419]",
+   "Cho Jin-woo ciclista El Alto camion [es-419]",
    11
   ],
   [
    2,
-   "Cho Jin-woo traffic accident Bolivia [en-US]",
-   18
+   "youtuber coreano atropellado Bolivia policia [es-419]",
+   4
   ],
   [
    2,
-   "조진우 사고 엘알토 [ko]",
-   18
+   "Korean cyclist truck accident El Alto Bolivia [en-US]",
+   7
   ],
   [
    2,
-   "Consulado de Corea Bolivia accidente ciclista [es-419]",
-   5
+   "YouTuber Jin's Travel accident Bolivia [en-US]",
+   11
   ],
   [
    2,
-   "Korean embassy Bolivia cyclist accident [en-US]",
-   10
+   "볼리비아 자전거 유튜버 사망 [ko]",
+   63
   ],
   [
    2,
-   "Policía Nacional Bolivia informe accidente camión El Alto [es-419]",
-   5
+   "조진우 유튜버 엘알토 교통사고 [ko]",
+   4
   ],
   [
    2,
-   "Bolivia truck driver arrested El Alto [en-US]",
+   "Jin's Travel 볼리비아 사고 [ko]",
    1
   ],
   [
    2,
-   "JinsTravel muerte Bolivia [es-419]",
-   7
+   "볼리비아 대사관 한국인 자전거 사망 [ko]",
+   0
   ],
   [
    2,
    "Cho Jin-woo [es]",
-   14
+   10
   ],
   [
    2,
    "Cho Jin-woo [en]",
-   7
+   15
   ],
   [
    2,
-   "Cho H. [es]",
-   9
+   "Jo Jin-woo [es]",
+   8
   ],
   [
    2,
-   "Cho H. [en]",
-   18
+   "Jo Jin-woo [en]",
+   16
   ],
   [
    2,
    "Jin's Travel [es]",
-   13
+   10
   ],
   [
    2,
    "Jin's Travel [en]",
-   8
+   7
   ]
  ],
- "descartadas_por_ruido": 147,
- "n_fuentes": 33,
- "n_leidas": 30,
+ "descartadas_por_ruido": 164,
+ "n_fuentes": 39,
+ "n_leidas": 34,
  "nombres_propios": [
   "Cho Jin-woo",
-  "Cho H.",
+  "Jo Jin-woo",
   "Jin's Travel",
-  "Consulado de Corea en Bolivia",
-  "JinsTravel"
+  "Policía Boliviana"
  ],
  "lugares": [
   {
    "consulta": "avenida Cívica",
-   "lat": -16.5184983,
-   "lon": -68.1564908,
-   "nombre": "Avenida Cívica, Tejada Rectangular, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "lat": -16.5233412,
+   "lon": -68.1581881,
+   "nombre": "Avenida Cívica, Tejada Triangular, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 10.01
+   "km_al_centro_municipio": 10.33
   },
   {
    "consulta": "avenida Litoral",
@@ -126,26 +125,22 @@
   },
   {
    "consulta": "Puente Alto",
-   "lat": -16.5449385,
-   "lon": -68.1765699,
-   "nombre": "Puente Bolivia, Avenida Bolivia, Victoria, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
-   "tipo": "bridge",
-   "km_al_centro_municipio": 11.5
+   "lat": -16.5456239,
+   "lon": -68.1751931,
+   "nombre": "WaynaBus - Rotonda Puente Bolivia, Rotonda Bolivia-Arica-Cívica, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, L",
+   "tipo": "bus_stop",
+   "km_al_centro_municipio": 11.63
   },
   {
    "consulta": "sector Molino Andino",
    "sin_resultado": true
   },
   {
-   "consulta": "Zona Franca",
-   "lat": -16.545961,
-   "lon": -68.2282541,
-   "nombre": "Zona Franca Industrial La Paz, Distrito 12, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
-   "tipo": "industrial",
-   "km_al_centro_municipio": 10.92
+   "consulta": "avenida Camilo Enríquez",
+   "sin_resultado": true
   },
   {
-   "consulta": "avenida Camilo Enríquez",
+   "consulta": "avenida Alto Biobío",
    "sin_resultado": true
   }
  ],
@@ -153,24 +148,26 @@
  "analisis": {
   "hecho": {
    "fecha": "2026-11-04",
-   "hora": "09:30",
+   "hora": null,
    "lugar_versiones": [
     {
-     "texto": "El accidente ocurrió en la ciudad de El Alto, en la avenida Cívica, ingreso a la avenida Litoral, cerca de la rotonda de la zona Franca",
+     "texto": "El Alto, avenida Cívica, ingreso a avenida Litoral, cerca de la rotonda zona Franca",
      "fuentes": [
-      "Red Uno"
+      "Red Uno (05/11)"
      ]
     },
     {
-     "texto": "El accidente ocurrió en la Avenida 6 de Marzo, sector Molino Andino",
+     "texto": "El Alto, avenida 6 de Marzo, sector Molino Andino",
      "fuentes": [
-      "Bolivia.com"
+      "Bolivia.com (06/11)",
+      "unitel.bo (06/11)"
      ]
     },
     {
-     "texto": "El accidente ocurrió en una de las principales avenidas de El Alto",
+     "texto": "El Alto, ciudad (general)",
      "fuentes": [
-      "Jornada"
+      "eju.tv (04/11)",
+      "Infobae (05/11)"
      ]
     }
    ],
@@ -179,93 +176,146 @@
     "edad": 33,
     "nacionalidad": "Coreana"
    },
-   "vehiculo": "camión de carga",
+   "vehiculo": "Camión de carga de gran tonelaje",
    "conductor": {
-    "estado": "aprehendido y puesto a disposición del Ministerio Público",
+    "estado": "aprehendido y puesto a disposición del Ministerio Público; posteriormente bajo detención domiciliaria",
     "declaraciones": [
      {
-      "texto": "No habría visto al ciclista",
-      "atribuido_a": "Nelson Medina, jefe de la División de Accidentes de Tránsito de El Alto",
-      "fuente": "eju.tv"
+      "texto": "No había visto al ciclista antes de la colisión",
+      "atribuido_a": "Conductor",
+      "fuente": "eju.tv (04/11)"
      },
      {
-      "texto": "No había visto la bicicleta",
-      "atribuido_a": "Teniente Medina",
-      "fuente": "Starnews"
+      "texto": "No había visto al ciclista antes de la colisión",
+      "atribuido_a": "Conductor",
+      "fuente": "Infobae (05/11) (cita SBS News)"
      },
      {
-      "texto": "No había visto al ciclista (versión preliminar del conductor)",
-      "atribuido_a": "Nelson Medina",
-      "fuente": "Red Uno"
+      "texto": "Prueba de alcoholemia dio negativo",
+      "atribuido_a": "Policía",
+      "fuente": "eju.tv (04/11)"
      },
      {
-      "texto": "El conductor intentó darse a la fuga (versión de vecinos)",
-      "atribuido_a": "Nelson Medina (cita de vecinos)",
-      "fuente": "Red Uno"
+      "texto": "Prueba de alcoholemia dio negativo",
+      "atribuido_a": "Policía",
+      "fuente": "Bolivia.com (06/11)"
      },
      {
-      "texto": "Prueba de alcoholemia negativa",
-      "atribuido_a": "Policía de Tránsito",
-      "fuente": "Red Uno"
+      "texto": "Intentó darse a la fuga según vecinos",
+      "atribuido_a": "Vecinos (versión preliminar)",
+      "fuente": "Red Uno (05/11)"
      }
     ]
    }
   },
   "instituciones": [
    {
-    "nombre": "Policía de Tránsito de El Alto",
-    "que_hizo": "aprehendió al conductor, tomó declaración, realizó prueba de alcoholemia",
-    "fuente": "eju.tv"
+    "nombre": "Policía Boliviana",
+    "que_hizo": "Capturó al conductor, realizó prueba de alcoholemia, remitió caso al Ministerio Público",
+    "fuente": "eju.tv (04/11)"
+   },
+   {
+    "nombre": "Unidad de Tránsito de El Alto",
+    "que_hizo": "Informó datos del hecho, comunicó al Ministerio Público",
+    "fuente": "Red Uno (05/11)"
    },
    {
     "nombre": "Ministerio Público",
-    "que_hizo": "recibió al conductor, puso el caso en conocimiento",
-    "fuente": "Red Uno"
+    "que_hizo": "Recibió al conductor, inició diligencias",
+    "fuente": "Red Uno (05/11)"
    },
    {
     "nombre": "Fiscalía",
-    "que_hizo": "asignó investigador y está investigando el caso",
-    "fuente": "Red Uno"
+    "que_hizo": "Investiga responsabilidades, determinó medidas cautelares (detención domiciliaria)",
+    "fuente": "Correo del Sur (04/11)"
+   },
+   {
+    "nombre": "Consulado de Corea del Sur",
+    "que_hizo": "Contactado para localizar familiares y coordinar repatriación",
+    "fuente": "Red Uno (05/11)"
    },
    {
     "nombre": "Embajada de Corea del Sur en Bolivia",
-    "que_hizo": "asistió en trámites de repatriación de restos",
-    "fuente": [
-     "Red Uno",
-     "Jornada",
-     "Correo del Sur"
-    ]
+    "que_hizo": "Apoya trámites de repatriación y funeral",
+    "fuente": "Jornada (06/11)"
    },
    {
     "nombre": "Cancillería de Bolivia",
-    "que_hizo": "expresó pesar y anunció seguimiento institucional a la investigación",
-    "fuente": "Jornada"
+    "que_hizo": "Emitió comunicado de pesar y seguimiento institucional",
+    "fuente": "Jornada (06/11)"
    }
   ],
   "cronologia": [
    {
-    "cuando": "2026-11-04 09:15",
-    "que": "Accidente: ciclista atropellado por camión",
+    "cuando": "2026-11-04 09:15 approx",
+    "que": "Atropello a ciclista extranjero por camión de carga en El Alto",
     "fuentes": [
-     "Red Uno"
+     "Red Uno (05/11)"
     ]
    },
    {
-    "cuando": "2026-11-04 09:30",
-    "que": "Accidente reportado en varias fuentes",
+    "cuando": "2026-11-04 09:30 approx",
+    "que": "Atropello a ciclista extranjero por camión de carga en El Alto",
     "fuentes": [
-     "La Patria",
-     "Starnews",
-     "Infobae"
+     "eju.tv (04/11)",
+     "Infobae (05/11)",
+     "Bolivia.com (06/11)"
     ]
    },
    {
-    "cuando": "2026-11-04 10:00",
-    "que": "Vecinos y testigos intentan auxiliar al ciclista; fallece en el lugar",
+    "cuando": "2026-11-04 ~ horas después",
+    "que": "Conductor huye del lugar y es aprehendido por la policía",
     "fuentes": [
-     "eju.tv",
-     "Red Uno"
+     "eju.tv (04/11)",
+     "Red Uno (05/11)",
+     "Bolivia.com (06/11)"
     ]
+   },
+   {
+    "cuando": "2026-11-05",
+    "que": "Policía informa captura y traslado a dependencias policiales; declaración informativa del conductor",
+    "fuentes": [
+     "eju.tv (04/11)"
+    ]
+   },
+   {
+    "cuando": "2026-11-05",
+    "que": "Familia y representantes consulares inician gestiones de repatriación",
+    "fuentes": [
+     "Red Uno (05/11)",
+     "Jornada (06/11)"
+    ]
+   },
+   {
+    "cuando": "2026-11-06",
+    "que": "Detención domiciliaria del conductor ordenada por autoridad judicial",
+    "fuentes": [
+     "Correo del Sur (04/11)"
+    ]
+   }
+  ],
+  "afirmaciones": [
+   {
+    "dato": "Nombre de la víctima",
+    "valor": "Cho Jin-woo",
+    "fuentes": [
+     "Red Uno (05/11)",
+     "Jornada (06/11)",
+     "Infobae (05/11)"
+    ],
+    "estado": "coincide",
+    "detalle": "Variaciones en algunos fuentes usan Cho H. o Jo Jin-woo pero la mayoría coincide en Cho Jin-woo"
+   },
+   {
+    "dato": "Edad de la víctima",
+    "valor": 33,
+    "fuentes": [
+     "Red Uno (05/11)",
+     "Infobae (05/11)",
+     "Jornada (06/11)"
+    ],
+    "estado": "coincide",
+    "detalle": null
    }
   ]
  },
@@ -315,22 +365,22 @@
    "relevante": true
   },
   {
-   "medio": "TN8",
-   "titulo": "Motociclista muere tras presuntamente irrespetar señal de alto en Managua",
-   "url": "https://www.tn8.ni/sucesos/motociclista-muere-tras-presuntamente-irrespetar-senal-de-alto-en-managua/",
-   "fecha": "05/11 19:53",
-   "pub": 1793922833000,
+   "medio": "Meganoticias",
+   "titulo": "Choque de alta energía en Puente Alto deja a todo un sector sin electricidad: Denuncian carrera clandestina",
+   "url": "https://www.meganoticias.cl/nacional/535283-choque-de-alta-energia-puente-alto-sector-sin-electricidad-denuncian-carrera-clandestina-01-11-2026.html",
+   "fecha": "01/11 07:53",
+   "pub": 1793533980000,
    "ronda": 1,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Meganoticias",
-   "titulo": "Choque de alta energía en Puente Alto deja a todo un sector sin electricidad: Denuncian carrera clandestina",
-   "url": "https://www.meganoticias.cl/nacional/535283-choque-de-alta-energia-puente-alto-sector-sin-electricidad-denuncian-carrera-clandestina-01-11-2026.html",
-   "fecha": "01/11 07:53",
-   "pub": 1793533980000,
+   "medio": "TN8",
+   "titulo": "Motociclista muere tras presuntamente irrespetar señal de alto en Managua",
+   "url": "https://www.tn8.ni/sucesos/motociclista-muere-tras-presuntamente-irrespetar-senal-de-alto-en-managua/",
+   "fecha": "05/11 19:53",
+   "pub": 1793922833000,
    "ronda": 1,
    "leida": true,
    "resolvio": true,
@@ -359,44 +409,11 @@
    "relevante": true
   },
   {
-   "medio": "La Patria Bolivia",
-   "titulo": "Fallece el youtuber JinsTravel en Bolivia tras accidente",
-   "url": "https://lapatria.bo/enfoque-nacional/denuncia/fallece-youtuber-jinstravel-bolivia-accidente/",
-   "fecha": "06/11 12:27",
-   "pub": 1793982473000,
-   "ronda": 1,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "스타뉴스",
-   "titulo": "YouTuber de viajes coreano, víctima fatal de un atropello con huida en Bolivia: \"Declaró que no vio la bicicleta\"",
-   "url": "https://www.starnewskorea.com/es/star/2026/11/05/2026110513480620651",
-   "fecha": "05/11 00:58",
-   "pub": 1793854736000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
    "medio": "Infobae",
    "titulo": "Murió JinsTravel, el youtuber que recorría el mundo en bicicleta, tras ser atropellado por un camión de carga en Bolivia",
    "url": "https://www.infobae.com/entretenimiento/2026/11/05/murio-jinstravel-el-youtuber-que-recorria-el-mundo-en-bicicleta-tras-ser-atropellado-por-un-camion-de-carga-en-bolivia/",
    "fecha": "05/11 17:58",
    "pub": 1793915880000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Correo del Sur",
-   "titulo": "Youtuber surcoreano muere atropellado por un camión mientras recorría Bolivia en bicicleta",
-   "url": "https://correodelsur.com/seguridad/20261106/youtuber-surcoreano-muere-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta.html",
-   "fecha": "04/11 04:00",
-   "pub": 1793779200000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -414,6 +431,17 @@
    "relevante": true
   },
   {
+   "medio": "Correo del Sur",
+   "titulo": "Youtuber surcoreano muere atropellado por un camión mientras recorría Bolivia en bicicleta",
+   "url": "https://correodelsur.com/seguridad/20261106/youtuber-surcoreano-muere-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta.html",
+   "fecha": "04/11 04:00",
+   "pub": 1793779200000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
    "medio": "Bolivia.com",
    "titulo": "Tragedia en Bolivia: el youtuber Cho Jim-woo falleció tras ser atropellado mientras viajaba en 'bici'",
    "url": "https://www.bolivia.com/entretenimiento/destacados/muere-en-bolivia-el-youtuber-surcoreano-cho-jin-woo-tras-ser-atropellado-por-un-camion-610494",
@@ -425,22 +453,22 @@
    "relevante": true
   },
   {
-   "medio": "Red Uno",
-   "titulo": "Dan detención domiciliaria al conductor que atropelló al youtuber surcoreano JinsTravel en El Alto",
-   "url": "https://www.reduno.com.bo/noticias/dan-detencion-domiciliaria-al-conductor-que-atropello-al-youtuber-surcoreano-jinstravel-en-el-alto-2026116135610",
-   "fecha": "06/11 16:02",
-   "pub": 1793995356000,
+   "medio": "unitel.bo",
+   "titulo": "El youtuber coreano Jin’s Travel pierde la vida atropellado por un camión en Bolivia",
+   "url": "https://unitel.bo/noticias/seguridad/el-youtuber-coreano-jin-s-travel-pierde-la-vida-atropellado-por-un-camion-en-bolivia-JC24629550",
+   "fecha": "06/11 11:53",
+   "pub": 1793980424000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "Vanguardia",
-   "titulo": "Tragedia en Bolivia: murió 'JinsTravel', el youtuber que recorría el mundo en bicicleta",
-   "url": "https://www.vanguardia.com/entretenimiento/tendencias/2026/11/06/youtuber-surcoreano-jinstravel-murio-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta/",
-   "fecha": "06/11 10:48",
-   "pub": 1793976480000,
+   "medio": "Red Uno",
+   "titulo": "El último viaje de JinsTravel: el youtuber que recorría el mundo y murió en Bolivia",
+   "url": "https://www.reduno.com.bo/noticias/el-ultimo-viaje-de-jinstravel-el-youtuber-que-recorria-el-mundo-y-murio-en-bolivia-202611664348",
+   "fecha": "06/11 07:28",
+   "pub": 1793964516000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -458,22 +486,77 @@
    "relevante": true
   },
   {
-   "medio": "Red Uno",
-   "titulo": "Cancillería anuncia apoyo para trasladar restos youtuber asiático",
-   "url": "https://www.reduno.com.bo/noticias/cancilleria-anuncia-apoyo-para-trasladar-restos-youtuber-asiatico-202611620414",
-   "fecha": "06/11 20:48",
-   "pub": 1794012513000,
+   "medio": "FmBolivia",
+   "titulo": "Ciclista surcoreano Cho Jin-woo muere atropellado en El Alto: conductor declaró que \"no había visto la bicicleta\"",
+   "url": "https://fmbolivia.com.bo/seguridad/ciclista-surcoreano-cho-jin-woo-muere-atropellado-en-el-alto-conductor-declaro-que-no-habia-visto-la-bicicleta-21700",
+   "fecha": "06/11 06:16",
+   "pub": 1793960160000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "El Diario Ecuador",
+   "titulo": "Youtuber surcoreano que recorría el mundo en bicicleta murió arrollado por un camión en Bolivia",
+   "url": "https://www.eldiario.ec/mundo/youtuber-surcoreano-que-recorria-el-mundo-en-bicicleta-murio-arrollado-por-un-camion-en-bolivia-06112026/",
+   "fecha": "06/11 15:27",
+   "pub": 1793993250000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "todotexcoco.com",
-   "titulo": "Fallece youtuber surcoreano Jo Jin-woo en accidente en Bolivia",
-   "url": "https://todotexcoco.com/fallece_youtuber_surcoreano_jo_jin_woo_en_accidente_en_bolivia-e3TAwe3zczNDe3.html",
-   "fecha": "07/11 03:22",
-   "pub": 1794036133000,
+   "medio": "Asuntos Centrales",
+   "titulo": "Conductor del camión que mató al ciclista Cho Jin-woo cumplirá detención domiciliaria",
+   "url": "https://asuntoscentrales.com/conductor-del-camion-que-mato-al-ciclista-cho-jin-woo-cumplira-detencion-domiciliaria/",
+   "fecha": "06/11 14:28",
+   "pub": 1793989715000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "스타뉴스",
+   "titulo": "YouTuber de viajes coreano, víctima fatal de un atropello con huida en Bolivia: \"Declaró que no vio la bicicleta\"",
+   "url": "https://www.starnewskorea.com/es/star/2026/11/05/2026110513480620651",
+   "fecha": "05/11 00:58",
+   "pub": 1793854736000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "La República",
+   "titulo": "Muere Cho Jin Woo, querido influencer coreano, tras ser atropellado por camión en Bolivia: conductor de vehículo pesado habría intentado huir",
+   "url": "https://larepublica.pe/entretenimiento/2026/11/05/muere-querido-influencer-coreano-tras-ser-atropellado-por-camion-en-bolivia-conductor-de-vehiculo-pesado-habria-intentado-huir-318840",
+   "fecha": "05/11 20:21",
+   "pub": 1793924479000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Red Uno",
+   "titulo": "La familia del youtuber Jin's Travels prepara su regreso a Corea del Sur para despedirlo",
+   "url": "https://www.reduno.com.bo/noticias/la-familia-del-youtuber-jin-s-travels-prepara-su-regreso-a-corea-del-sur-para-despedirlo-20261176316",
+   "fecha": "07/11 07:18",
+   "pub": 1794050312000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "unitel.bo",
+   "titulo": "Dictan detención domiciliaria para el conductor que atropelló al youtuber coreano en El Alto",
+   "url": "https://unitel.bo/noticias/seguridad/dictan-detencion-domiciliaria-para-el-conductor-que-atropello-al-youtuber-coreano-en-el-alto-FD24636201",
+   "fecha": "06/11 13:13",
+   "pub": 1793985239000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -491,17 +574,6 @@
    "relevante": true
   },
   {
-   "medio": "NDTV Sports",
-   "titulo": "Who Was Cho Jin-Woo? South Korean Travel YouTuber Dies At 33 In Bolivia Truck Crash",
-   "url": "https://sports.ndtv.com/us/us-streamers/who-was-cho-jin-woo-south-korean-travel-youtuber-dies-at-33-in-bolivia-truck-crash-12292137",
-   "fecha": "06/11 05:02",
-   "pub": 1793955773000,
-   "ronda": 2,
-   "leida": false,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
    "medio": "Chosunbiz",
    "titulo": "South Korean cyclist YouTuber Cho Jin-woo dies after truck hit-and-run in Bolivia",
    "url": "https://biz.chosun.com/en/en-entertainment/2026/11/05/D4S6PMTKLVGQJID7464OPPMGBE/",
@@ -513,11 +585,44 @@
    "relevante": true
   },
   {
+   "medio": "NDTV Sports",
+   "titulo": "Who Was Cho Jin-Woo? South Korean Travel YouTuber Dies At 33 In Bolivia Truck Crash",
+   "url": "https://sports.ndtv.com/us/us-streamers/who-was-cho-jin-woo-south-korean-travel-youtuber-dies-at-33-in-bolivia-truck-crash-12292137",
+   "fecha": "06/11 05:02",
+   "pub": 1793955773000,
+   "ronda": 2,
+   "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "파이낸셜뉴스",
+   "titulo": "“33-year-old Korean man dies while cycling in Bolivia” ... Obituary posted for YouTuber ‘Jin Sseurebeul’",
+   "url": "https://en.fnnews.com/news/202611051435118744",
+   "fecha": "05/11 02:54",
+   "pub": 1793861681000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Indiatimes",
+   "titulo": "Who was JinsTravel? South Korean YouTuber found dead at 33 in El Alto after truck crash",
+   "url": "https://www.indiatimes.com/trending/who-was-jinstravel-south-korean-youtuber-found-dead-at-33-in-el-alto-after-truck-crash/amp_articleshow/135584699.html",
+   "fecha": "05/11 15:28",
+   "pub": 1793906915000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
    "medio": "스타뉴스",
-   "titulo": "Bolivia: Travel YouTuber Jin Tseblev, who died in a traffic accident, leaves behind his final video… \"Please remember me\" [Star Issue]",
-   "url": "https://www.starnewskorea.com/en/star/2026/11/06/2026110614051587445",
-   "fecha": "06/11 01:10",
-   "pub": 1793941858000,
+   "titulo": "Korean travel YouTuber killed in hit-and-run accident in Bolivia: \"Driver stated he did not see the bicycle\"",
+   "url": "https://www.starnewskorea.com/en/star/2026/11/05/2026110513480620651",
+   "fecha": "05/11 00:58",
+   "pub": 1793854736000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -536,21 +641,21 @@
   },
   {
    "medio": "헤럴드경제",
-   "titulo": "South Korean travel YouTuber, 33, dies in hit-and-run in Bolivia",
-   "url": "https://biz.heraldcorp.com/article/10927489",
-   "fecha": "05/11 03:39",
-   "pub": 1793864364000,
+   "titulo": "Family of travel YouTuber Jin Sseurebul, killed in Bolivia hit-and-run, asks public to refrain from malicious comments",
+   "url": "https://mbiz.heraldcorp.com/article/10928227",
+   "fecha": "05/11 21:34",
+   "pub": 1793928889000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "매일경제",
-   "titulo": "While Cho Jin-woo, a travel YouTuber who has revealed his journey to travel around the world by bicy..",
-   "url": "https://www.mk.co.kr/en/society/12200367",
-   "fecha": "05/11 23:28",
-   "pub": 1793935726000,
+   "medio": "스타뉴스",
+   "titulo": "\"May he rest in peace.\" Travel YouTuber Jin Ttorebel, 33, killed after being struck by a hit-and-run cargo truck.. Wave of condolences [Star Issue]",
+   "url": "https://www.starnewskorea.com/en/star/2026/11/05/2026110514454241489",
+   "fecha": "05/11 02:56",
+   "pub": 1793861811000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -568,44 +673,33 @@
    "relevante": true
   },
   {
+   "medio": "Chosunbiz",
+   "titulo": "Travel YouTuber Jin Sseurebeul dies after truck hits bicycle in Bolivia",
+   "url": "https://biz.chosun.com/en/en-entertainment/2026/11/05/QJOJPQBOZJDURFP4UA77N6C5NE/",
+   "fecha": "05/11 02:00",
+   "pub": 1793858400000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "스타뉴스",
+   "titulo": "Bolivia: Travel YouTuber Jin Tseblev, who died in a traffic accident, leaves behind his final video… \"Please remember me\" [Star Issue]",
+   "url": "https://www.starnewskorea.com/en/star/2026/11/06/2026110614051587445",
+   "fecha": "06/11 01:10",
+   "pub": 1793941858000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
    "medio": "스타뉴스",
    "titulo": "Leaving Only a Smile Behind… Family of Late Travel YouTuber Jin Tureble, Who Died in Hit-and-Run Accident, Departs for Bolivia Amid Grief [Star Issue]",
    "url": "https://www.starnewskorea.com/en/star/2026/11/06/2026110607234045649",
    "fecha": "05/11 18:44",
    "pub": 1793918649000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "매일경제",
-   "titulo": "Travel YouTuber \"Jinsseble\" (real name Cho Jin-woo), who was loved for traveling around the world by..",
-   "url": "https://www.mk.co.kr/en/entertain/12198521",
-   "fecha": "05/11 03:15",
-   "pub": 1793862956000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Must Share News",
-   "titulo": "South Korean travel YouTuber dies at age 33 after being hit by truck in Bolivia",
-   "url": "https://mustsharenews.com/korean-travel-youtuber-dies/amp/",
-   "fecha": "06/11 22:49",
-   "pub": 1794019761000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Indiatimes",
-   "titulo": "Who was JinsTravel? South Korean YouTuber found dead at 33 in El Alto after truck crash",
-   "url": "https://www.indiatimes.com/trending/who-was-jinstravel-south-korean-youtuber-found-dead-at-33-in-el-alto-after-truck-crash/articleshow/135584699.html",
-   "fecha": "05/11 15:28",
-   "pub": 1793906915000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -623,13 +717,35 @@
    "relevante": true
   },
   {
-   "medio": "Hypefresh Magazine, Inc.",
-   "titulo": "Travel YouTuber JinsTravel Dies at 33 After Fatal Cycling Accident in Bolivia",
-   "url": "https://www.hypefresh.com/travel-youtuber-jinstravel-dies-at-33-after-fatal-cycling-accident-in-bolivia/",
-   "fecha": "06/11 12:02",
-   "pub": 1793980976000,
+   "medio": "미디어파인",
+   "titulo": "Family of travel YouTuber Jin's Travel appeals for privacy following fatal accident in Bolivia",
+   "url": "https://global.mediafine.co.kr/news/jins-travel-youtuber-bolivia-accident-death",
+   "fecha": "05/11 21:29",
+   "pub": 1793928580000,
    "ronda": 2,
    "leida": false,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "연합뉴스",
+   "titulo": "[영상] 태극기 휘날리던 자전거 유튜버…\"볼리비아서 교통 사고로 사망\"",
+   "url": "https://www.yna.co.kr/view/MYH20261106011700704",
+   "fecha": "06/11 01:30",
+   "pub": 1793943032000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "경기일보",
+   "titulo": "자전거로 세계 누비던 33세 韓 유튜버…볼리비아서 교통사고 사망",
+   "url": "https://www.kyeonggi.com/article/20261105580442",
+   "fecha": "05/11 04:11",
+   "pub": 1793866300000,
+   "ronda": 2,
+   "leida": true,
    "resolvio": true,
    "relevante": true
   }

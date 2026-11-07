@@ -1,12 +1,12 @@
 {
- "titulo": "Accidente de tránsito en El Alto",
- "clasificacion": "Accidente → Tránsito · Nacional",
+ "titulo": "Cho Jin-woo atropellado por camión en El Alto",
+ "clasificacion": "Accidente de tránsito",
  "nivel_atencion": "Alto",
  "esencial": {
-  "paso": "Verificar estado del caso con Policía, Fiscalía y Cancillería",
-  "resuelto": "No",
-  "abierto": "Sí",
-  "requiere": "Coordinación inmediata"
+  "paso": "Cho Jin-woo, 33 años, coreano, fue atropellado por camión de carga en El Alto. Conductor aprehendido y puesto a disposición del Ministerio Público.",
+  "resuelto": "Conductor detenido y bajo detención domiciliaria; caso remitido al Ministerio Público y Fiscalía.",
+  "abierto": "Estado de la repatriación y coordinación con Consulado de Corea del Sur.",
+  "requiere": "Decisión de la MAE sobre coordinación de repatriación y emisión de mensaje oficial."
  },
  "kpis": [
   [
@@ -19,214 +19,271 @@
   ],
   [
    "1",
-   "detenidos/aprehendidos"
+   "aprehendidos"
   ],
   [
-   "8",
-   "número de medios"
+   "7",
+   "medios"
   ],
   [
-   "Nacional",
-   "alcance de la repercusión"
+   "Internacional",
+   "alcance"
   ]
  ],
  "hitos": [
   {
    "dia": 4,
    "hora": 9,
-   "texto": "Accidente reportado",
+   "texto": "Atropello ciclista",
    "hecho": true
   },
   {
    "dia": 4,
    "hora": 10,
-   "texto": "Fallecimiento confirmado",
+   "texto": "Conductor aprehendido",
    "hecho": true
   },
   {
    "dia": 5,
-   "hora": 0,
-   "texto": "Parte policial solicitado",
-   "hecho": false
+   "hora": 9,
+   "texto": "Policía informa captura",
+   "hecho": true
+  },
+  {
+   "dia": 5,
+   "hora": 9,
+   "texto": "Consulado gestiona repatriación",
+   "hecho": true
   },
   {
    "dia": 6,
    "hora": 0,
-   "texto": "Repatriación coordinada",
-   "hecho": false
+   "texto": "Detención domiciliaria",
+   "hecho": true
   },
   {
    "dia": 7,
    "hora": 0,
-   "texto": "Mensaje oficial emitido",
+   "texto": "Coordinación repatriación",
    "hecho": false
   },
   {
    "dia": 8,
    "hora": 0,
-   "texto": "Cobertura mediática monitoreada",
-   "hecho": false
-  },
-  {
-   "dia": 9,
-   "hora": 0,
-   "texto": "Audiencia cautelar programada",
+   "texto": "Emisión mensaje oficial",
    "hecho": false
   }
- ],
- "areas": [
-  [
-   "Policía de Tránsito",
-   "ROJO",
-   "Investigación en curso",
-   "Jefe de División de Accidentes",
-   "Parte policial"
-  ],
-  [
-   "Fiscalía",
-   "ÁMBAR",
-   "Investigación en curso",
-   "Fiscal",
-   "Parte policial"
-  ],
-  [
-   "Embajada Corea del Sur",
-   "VERDE",
-   "Repatriación en curso",
-   "Embajador",
-   "Parte policial"
-  ],
-  [
-   "Cancillería",
-   "VERDE",
-   "Seguimiento institucional",
-   "Canciller",
-   "Parte policial"
-  ]
- ],
- "acciones": [
-  [
-   "Verificar estado del caso con Policía, Fiscalía y Cancillería",
-   "Centro Coordinador de Emergencias",
-   "24h"
-  ],
-  [
-   "Solicitar parte policial",
-   "Centro Coordinador de Emergencias",
-   "48h"
-  ],
-  [
-   "Coordinar repatriación con Embajada",
-   "Centro Coordinador de Emergencias",
-   "72h"
-  ],
-  [
-   "Emitir mensaje oficial único",
-   "Centro Coordinador de Emergencias",
-   "24h"
-  ],
-  [
-   "Monitorear cobertura mediática y seguir audiencia cautelar",
-   "Centro Coordinador de Emergencias",
-   "Continuo"
-  ]
- ],
- "riesgos": [
-  [
-   "Repatriación retrasada",
-   "Posible demora en la entrega de restos y documentación"
-  ],
-  [
-   "Falta de información pública",
-   "Desconfianza de la comunidad y medios"
-  ],
-  [
-   "Posible litigio internacional",
-   "Demandas por negligencia o mala gestión"
-  ]
  ],
  "ficha": [
   [
    "Fecha y hora",
-   "2026-11-04 09:30"
+   "2026-11-04 09:15"
   ],
   [
    "Lugar",
-   "Avenida Cívica, ingreso a la avenida Litoral, zona Franca"
+   "El Alto, avenida Cívica, ingreso a avenida Litoral, zona Franca"
   ],
   [
    "Víctima",
-   "Cho Jin-woo"
+   "Cho Jin-woo, 33, coreano"
   ],
   [
    "Vehículo",
-   "Camión de carga"
+   "Camión de carga de gran tonelaje"
   ],
   [
    "Conductor",
-   "Aprehendido"
+   "aprehendido, bajo detención domiciliaria"
   ],
   [
    "Causa",
-   "Atropello de ciclista"
+   "Colisión con ciclista"
   ],
   [
    "Estado del caso",
-   "En investigación"
+   "En curso, repatriación pendiente"
   ],
   [
    "Respaldo oficial",
-   "Policía de Tránsito, Ministerio Público, Fiscalía, Embajada de Corea del Sur, Cancillería"
+   "Policía, Fiscalía, Consulado de Corea del Sur"
   ],
   [
    "Confianza",
-   "Moderada"
+   "no_se_sabe"
   ]
- ],
- "triangulacion": [
-  [
-   "Lugar del accidente",
-   "Red Uno, Bolivia.com, Jornada",
-   "Coincide"
-  ],
-  [
-   "Conductor aprehendido",
-   "Policía de Tránsito, Ministerio Público, Fiscalía",
-   "Coincide"
-  ],
-  [
-   "Víctima fallecida",
-   "Red Uno, eju.tv, Starnews",
-   "Coincide"
-  ]
- ],
- "cronologia": [
-  {
-   "cuando": "2026-11-04 09:15",
-   "que": "Accidente: ciclista atropellado por camión"
-  },
-  {
-   "cuando": "2026-11-04 09:30",
-   "que": "Accidente reportado en varias fuentes"
-  },
-  {
-   "cuando": "2026-11-04 10:00",
-   "que": "Vecinos y testigos intentan auxiliar al ciclista; fallece en el lugar"
-  }
- ],
- "no_se_sabe": [],
- "seguimiento": [
-  "Audiencia cautelar"
  ],
  "lugares_citados": [
   "avenida Cívica",
   "avenida Litoral",
   "zona Franca"
  ],
+ "areas": [
+  {
+   "nombre": "Policía/Tránsito",
+   "estado": "VERDE",
+   "situacion": "Capturó al conductor, realizó prueba de alcoholemia negativa, remitió caso al Ministerio Público",
+   "responsable": "Policía Boliviana",
+   "falta": "Parte policial con detalle de la escena"
+  },
+  {
+   "nombre": "Fiscalía",
+   "estado": "ÁMBAR",
+   "situacion": "Investiga responsabilidades, determinó medidas cautelares (detención domiciliaria)",
+   "responsable": "Fiscalía",
+   "falta": "Informe de diligencias"
+  },
+  {
+   "nombre": "Cancillería/Consular",
+   "estado": "ÁMBAR",
+   "situacion": "Contactado para localizar familiares y coordinar repatriación",
+   "responsable": "Consulado de Corea del Sur",
+   "falta": "Documento de repatriación"
+  },
+  {
+   "nombre": "Salud/Morgue",
+   "estado": "GRIS",
+   "situacion": "No se dispone de información",
+   "responsable": "Centro de Salud de El Alto",
+   "falta": "Datos de autopsia"
+  }
+ ],
+ "acciones": [
+  "Verificar estado del caso con Policía, Fiscalía y Cancillería antes del 2026-11-09.",
+  "Solicitar parte policial y expediente al Ministerio Público para revisión inmediata.",
+  "Coordinar con Cancillería la repatriación del cuerpo del ciudadano coreano.",
+  "Definir y difundir un mensaje oficial único, emitido por el Ministro de Salud.",
+  "Vigilar la cobertura mediática y registrar la audiencia cautelar programada."
+ ],
+ "riesgos": [
+  {
+   "titulo": "Pérdida de información sobre la escena del accidente",
+   "explicacion": "La falta de un parte policial detallado dificulta la reconstrucción del hecho y la identificación de responsabilidades."
+  },
+  {
+   "titulo": "Retraso en la repatriación del cuerpo",
+   "explicacion": "La coordinación insuficiente con la Cancillería y el consulado puede demorar la repatriación, afectando la dignidad de la víctima y la percepción pública."
+  },
+  {
+   "titulo": "Desinformación mediática",
+   "explicacion": "La cobertura mediática sin un mensaje oficial único puede generar rumores y confusión, afectando la imagen institucional."
+  }
+ ],
+ "triangulacion": [
+  [
+   "hora",
+   {
+    "Red Uno": "09:15 approx",
+    "eju.tv": "09:30 approx"
+   },
+   "DISCREPA"
+  ],
+  [
+   "lugar",
+   {
+    "Red Uno": "Avenida Cívica, ingreso a avenida Litoral, cerca de rotonda zona Franca",
+    "Bolivia.com": "Avenida 6 de Marzo, sector Molino Andino",
+    "eju.tv": "El Alto, ciudad (general)"
+   },
+   "DISCREPA"
+  ],
+  [
+   "nombre_victima",
+   {
+    "Red Uno": "Cho Jin-woo",
+    "Jornada": "Cho Jin-woo",
+    "Infobae": "Cho Jin-woo"
+   },
+   "Coincide"
+  ],
+  [
+   "edad_victima",
+   {
+    "Red Uno": 33,
+    "Infobae": 33,
+    "Jornada": 33
+   },
+   "Coincide"
+  ],
+  [
+   "fuga_conductor",
+   {
+    "Vecinos": "Intentó darse a la fuga"
+   },
+   "Fuente única"
+  ],
+  [
+   "alcotest",
+   {
+    "Policía": "Negativo"
+   },
+   "Coincide"
+  ],
+  [
+   "estado_conductor",
+   {
+    "Policía": "Aprehendido y puesto a disposición del Ministerio Público",
+    "Fiscalía": "Detención domiciliaria"
+   },
+   "Coincide"
+  ],
+  [
+   "comunicado_oficial",
+   {
+    "Cancillería": "Emitió comunicado de pesar y seguimiento institucional"
+   },
+   "Fuente única"
+  ]
+ ],
+ "cronologia": [
+  [
+   "2026-11-04 09:15 approx",
+   "Atropello a ciclista extranjero por camión de carga en El Alto (Red Uno)"
+  ],
+  [
+   "2026-11-04 09:30 approx",
+   "Atropello a ciclista extranjero por camión de carga en El Alto (eju.tv, Infobae, Bolivia.com)"
+  ],
+  [
+   "2026-11-04 ~ horas después",
+   "Conductor huye del lugar y es aprehendido por la policía (eju.tv, Red Uno, Bolivia.com)"
+  ],
+  [
+   "2026-11-04 10:00 approx",
+   "Prueba de alcoholemia realizada, resultado negativo (Policía)"
+  ],
+  [
+   "2026-11-05",
+   "Policía informa captura y traslado a dependencias policiales; declaración informativa del conductor (eju.tv)"
+  ],
+  [
+   "2026-11-05",
+   "Familia y representantes consulares inician gestiones de repatriación (Red Uno, Jornada)"
+  ],
+  [
+   "2026-11-06",
+   "Detención domiciliaria del conductor ordenada por autoridad judicial (Correo del Sur)"
+  ],
+  [
+   "2026-11-06",
+   "Cancillería emitió comunicado de pesar y seguimiento institucional (Jornada)"
+  ]
+ ],
+ "no_se_sabe": [
+  "Hora exacta del accidente",
+  "Ubicación precisa del punto de colisión",
+  "Identidad completa del conductor",
+  "Fecha y hora de la audiencia cautelar"
+ ],
+ "seguimiento": [
+  "Monitorear cobertura mediática nacional e internacional",
+  "Confirmar fecha de audiencia cautelar y resultados",
+  "Mantener contacto con Consulado y Embajada de Corea del Sur",
+  "Actualizar al Ministerio de Salud sobre avances del caso"
+ ],
  "hecho_id": "hecho:ddc06eb45e",
  "codigo": "SITREP-AUTO-6eb45e",
  "solicitado_por": "Máxima Autoridad Ejecutiva (MAE)",
- "corte": "2026-11-07 19:28 (hora de Bolivia)",
+ "corte": "2026-11-07 19:45 (hora de Bolivia)",
  "cobertura": [
   [
    "2026-11-04",
@@ -259,28 +316,18 @@
    "OT"
   ],
   [
-   "2026-11-06",
-   "La Patria Bolivia",
-   "BO"
-  ],
-  [
-   "2026-11-05",
-   "스타뉴스",
-   "KR"
-  ],
-  [
    "2026-11-05",
    "Infobae",
    "OT"
   ],
   [
-   "2026-11-04",
-   "Correo del Sur",
+   "2026-11-06",
+   "EL DÍA - Noticias de B",
    "BO"
   ],
   [
-   "2026-11-06",
-   "EL DÍA - Noticias de B",
+   "2026-11-04",
+   "Correo del Sur",
    "BO"
   ],
   [
@@ -290,13 +337,13 @@
   ],
   [
    "2026-11-06",
-   "Red Uno",
+   "unitel.bo",
    "BO"
   ],
   [
    "2026-11-06",
-   "Vanguardia",
-   "OT"
+   "Red Uno",
+   "BO"
   ],
   [
    "2026-11-04",
@@ -305,13 +352,28 @@
   ],
   [
    "2026-11-06",
+   "El Diario Ecuador",
+   "BO"
+  ],
+  [
+   "2026-11-06",
+   "Asuntos Centrales",
+   "OT"
+  ],
+  [
+   "2026-11-05",
+   "스타뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-07",
    "Red Uno",
    "BO"
   ],
   [
-   "2026-11-07",
-   "todotexcoco.com",
-   "OT"
+   "2026-11-06",
+   "unitel.bo",
+   "BO"
   ],
   [
    "2026-11-06",
@@ -324,7 +386,17 @@
    "KR"
   ],
   [
-   "2026-11-06",
+   "2026-11-05",
+   "파이낸셜뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "Indiatimes",
+   "OT"
+  ],
+  [
+   "2026-11-05",
    "스타뉴스",
    "KR"
   ],
@@ -340,16 +412,6 @@
   ],
   [
    "2026-11-05",
-   "매일경제",
-   "KR"
-  ],
-  [
-   "2026-11-05",
-   "매일경제",
-   "KR"
-  ],
-  [
-   "2026-11-05",
    "스타뉴스",
    "KR"
   ],
@@ -359,14 +421,29 @@
    "KR"
   ],
   [
+   "2026-11-05",
+   "Chosunbiz",
+   "KR"
+  ],
+  [
    "2026-11-06",
-   "Must Share News",
-   "OT"
+   "스타뉴스",
+   "KR"
   ],
   [
    "2026-11-05",
-   "Indiatimes",
-   "OT"
+   "스타뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-06",
+   "연합뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "경기일보",
+   "KR"
   ]
  ],
  "sin_fecha": "",
@@ -374,25 +451,27 @@
   "Bolivia.com",
   "Correo del Sur",
   "EL DÍA - Noticias de Bolivia para el mundo",
+  "El Diario Ecuador",
   "Jornada",
-  "La Patria Bolivia",
   "Red Uno",
-  "eju.tv"
+  "eju.tv",
+  "unitel.bo"
  ],
  "medios_internacionales": [
+  "Asuntos Centrales",
   "Chosunbiz",
   "Indiatimes",
   "Infobae",
   "La Tribuna",
   "Meganoticias",
-  "Must Share News",
   "TN8",
   "The Korea Herald",
-  "Vanguardia",
   "eldoce",
-  "todotexcoco.com",
+  "경기일보",
   "매일경제",
   "스타뉴스",
+  "연합뉴스",
+  "파이낸셜뉴스",
   "헤럴드경제"
  ],
  "leidos_completos": [
@@ -400,39 +479,43 @@
   "Red Uno",
   "Red Uno",
   "Jornada",
-  "TN8",
   "Meganoticias",
+  "TN8",
   "eldoce",
   "La Tribuna",
-  "La Patria Bolivia",
-  "스타뉴스",
   "Infobae",
-  "Correo del Sur",
   "EL DÍA - Noticias de Bolivia para el mundo",
-  "Bolivia.com",
-  "Red Uno",
-  "Vanguardia",
   "Correo del Sur",
+  "Bolivia.com",
+  "unitel.bo",
   "Red Uno",
-  "todotexcoco.com",
+  "Correo del Sur",
+  "El Diario Ecuador",
+  "Asuntos Centrales",
+  "스타뉴스",
+  "Red Uno",
+  "unitel.bo",
   "The Korea Herald",
   "Chosunbiz",
+  "파이낸셜뉴스",
+  "Indiatimes",
   "스타뉴스",
   "매일경제",
   "헤럴드경제",
-  "매일경제",
-  "매일경제",
   "스타뉴스",
   "매일경제",
-  "Must Share News",
-  "Indiatimes"
+  "Chosunbiz",
+  "스타뉴스",
+  "스타뉴스",
+  "연합뉴스",
+  "경기일보"
  ],
  "mapa": {
   "puntos": [
    {
     "nombre": "avenida Cívica",
-    "lat": -16.5184983,
-    "lon": -68.1564908
+    "lat": -16.5233412,
+    "lon": -68.1581881
    },
    {
     "nombre": "avenida Litoral",
@@ -441,11 +524,6 @@
    },
    {
     "nombre": "zona Franca",
-    "lat": -16.545961,
-    "lon": -68.2282541
-   },
-   {
-    "nombre": "Zona Franca",
     "lat": -16.545961,
     "lon": -68.2282541
    }
@@ -483,19 +561,34 @@
    "05/11 00:58"
   ],
   [
+   "스타뉴스",
+   "https://www.starnewskorea.com/en/star/2026/11/05/2026110513480620651",
+   "05/11 00:58"
+  ],
+  [
    "매일경제",
    "https://www.mk.co.kr/en/society/12198283",
    "05/11 01:09"
   ],
   [
-   "매일경제",
-   "https://www.mk.co.kr/en/entertain/12198521",
-   "05/11 03:15"
+   "Chosunbiz",
+   "https://biz.chosun.com/en/en-entertainment/2026/11/05/QJOJPQBOZJDURFP4UA77N6C5NE/",
+   "05/11 02:00"
   ],
   [
-   "헤럴드경제",
-   "https://biz.heraldcorp.com/article/10927489",
-   "05/11 03:39"
+   "파이낸셜뉴스",
+   "https://en.fnnews.com/news/202611051435118744",
+   "05/11 02:54"
+  ],
+  [
+   "스타뉴스",
+   "https://www.starnewskorea.com/en/star/2026/11/05/2026110514454241489",
+   "05/11 02:56"
+  ],
+  [
+   "경기일보",
+   "https://www.kyeonggi.com/article/20261105580442",
+   "05/11 04:11"
   ],
   [
    "Chosunbiz",
@@ -509,7 +602,7 @@
   ],
   [
    "Indiatimes",
-   "https://www.indiatimes.com/trending/who-was-jinstravel-south-korean-youtuber-found-dead-at-33-in-el-alto-after-truck-crash/articleshow/135584699.html",
+   "https://www.indiatimes.com/trending/who-was-jinstravel-south-korean-youtuber-found-dead-at-33-in-el-alto-after-truck-crash/amp_articleshow/135584699.html",
    "05/11 15:28"
   ],
   [
@@ -528,14 +621,19 @@
    "05/11 19:53"
   ],
   [
-   "매일경제",
-   "https://www.mk.co.kr/en/society/12200367",
-   "05/11 23:28"
+   "헤럴드경제",
+   "https://mbiz.heraldcorp.com/article/10928227",
+   "05/11 21:34"
   ],
   [
    "스타뉴스",
    "https://www.starnewskorea.com/en/star/2026/11/06/2026110614051587445",
    "06/11 01:10"
+  ],
+  [
+   "연합뉴스",
+   "https://www.yna.co.kr/view/MYH20261106011700704",
+   "06/11 01:30"
   ],
   [
    "The Korea Herald",
@@ -544,33 +642,13 @@
   ],
   [
    "Red Uno",
-   "https://www.reduno.com.bo/tendencias/hermano-del-youtuber-coreano-fallecido-en-bolivia-pide-respeto-y-frenar-las-especulaciones-2026116102726",
-   "06/11 10:28"
-  ],
-  [
-   "Vanguardia",
-   "https://www.vanguardia.com/entretenimiento/tendencias/2026/11/06/youtuber-surcoreano-jinstravel-murio-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta/",
-   "06/11 10:48"
-  ],
-  [
-   "La Patria Bolivia",
-   "https://lapatria.bo/enfoque-nacional/denuncia/fallece-youtuber-jinstravel-bolivia-accidente/",
-   "06/11 12:27"
-  ],
-  [
-   "Bolivia.com",
-   "https://www.bolivia.com/entretenimiento/destacados/muere-en-bolivia-el-youtuber-surcoreano-cho-jin-woo-tras-ser-atropellado-por-un-camion-610494",
-   "06/11 13:39"
-  ],
-  [
-   "EL DÍA - Noticias de Bolivia para el mundo",
-   "https://www.eldia.com.bo/2026-11-06/pais/el-alto-muere-atropellado-un-creador-de-contenido-surcoreano-que-viajaba-en-bicicleta-por-el-mundo.html",
-   "06/11 15:52"
+   "https://www.reduno.com.bo/noticias/el-ultimo-viaje-de-jinstravel-el-youtuber-que-recorria-el-mundo-y-murio-en-bolivia-202611664348",
+   "06/11 07:28"
   ],
   [
    "Red Uno",
-   "https://www.reduno.com.bo/noticias/dan-detencion-domiciliaria-al-conductor-que-atropello-al-youtuber-surcoreano-jinstravel-en-el-alto-2026116135610",
-   "06/11 16:02"
+   "https://www.reduno.com.bo/tendencias/hermano-del-youtuber-coreano-fallecido-en-bolivia-pide-respeto-y-frenar-las-especulaciones-2026116102726",
+   "06/11 10:28"
   ]
  ]
 }
