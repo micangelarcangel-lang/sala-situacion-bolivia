@@ -1,0 +1,22 @@
+name: Prueba de modelo de lenguaje gratuito
+
+# Solo en ramas distintas de main: se activa subiendo un cambio a llm_prueba_solicitud.txt. No guarda nada.
+on:
+  push:
+    branches-ignore: [main]
+    paths: ["llm_prueba_solicitud.txt"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  models: read
+
+jobs:
+  prueba:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: python llm_prueba.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
