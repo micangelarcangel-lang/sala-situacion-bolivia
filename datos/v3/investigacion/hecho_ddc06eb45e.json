@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:ddc06eb45e",
- "generado": "2026-11-07T17:11:58.712930+00:00",
- "segundos": 131,
+ "generado": "2026-11-07T17:29:39.640871+00:00",
+ "segundos": 89,
  "consultas": [
   [
    1,
@@ -16,7 +16,7 @@
   [
    1,
    "accidente de tránsito El Alto",
-   28
+   27
   ],
   [
    2,
@@ -31,7 +31,7 @@
   [
    2,
    "Cho Jin-woo [es]",
-   21
+   22
   ],
   [
    2,
@@ -56,10 +56,10 @@
   [
    2,
    "Puente Alto [en]",
-   7
+   6
   ]
  ],
- "descartadas_por_ruido": 393,
+ "descartadas_por_ruido": 392,
  "n_fuentes": 23,
  "n_leidas": 22,
  "nombres_propios": [
@@ -91,11 +91,11 @@
   },
   {
    "consulta": "avenida Litoral",
-   "lat": -16.5329888,
-   "lon": -68.2093996,
-   "nombre": "Avenida Litoral, San Luis II Charapaqui, Distrito 3, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "lat": -16.5514754,
+   "lon": -68.1865275,
+   "nombre": "Avenida Litoral, Wara, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 9.42
+   "km_al_centro_municipio": 11.86
   },
   {
    "consulta": "zona Franca",
