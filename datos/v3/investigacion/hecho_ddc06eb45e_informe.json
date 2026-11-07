@@ -1,253 +1,222 @@
 {
- "titulo": "SITREP: Atropello fatal de ciclista surcoreano en El Alto",
- "clasificacion": "Tránsito → Atropello con muerte · Internacional",
- "nivel_atencion": "ALTO",
+ "titulo": "Accidente de tránsito en El Alto",
+ "clasificacion": "Accidente → Tránsito · Nacional",
+ "nivel_atencion": "Alto",
  "esencial": {
-  "paso": "Un ciclista de 33 años de nacionalidad surcoreana falleció tras ser embestido por un camión de carga pesada en El Alto. El hecho ocurrió la mañana del 04/11/2026 en inmediaciones de la avenida Cívica y Litoral.",
-  "resuelto": "El conductor de aproximadamente 50 años fue aprehendido con alcotest cero y puesto a disposición fiscal. Cancillería y Embajada de Corea activaron canales para la repatriación de los restos.",
-  "abierto": "Resta definir la situación jurídica del conductor en audiencia cautelar y la mecánica final del impacto. La Fiscalía investiga la presunta fuga tras el choque.",
-  "requiere": "Monitoreo médico-legal de la custodia de restos biológicos y coordinación interinstitucional para emisión ágil de certificados consulares de defunción."
+  "paso": "Verificar estado del caso con Policía, Fiscalía y Cancillería",
+  "resuelto": "No",
+  "abierto": "Sí",
+  "requiere": "Coordinación inmediata"
  },
  "kpis": [
   [
    "1",
-   "Fallecidos"
+   "fallecidos"
   ],
   [
    "0",
-   "Heridos"
+   "heridos"
   ],
   [
    "1",
-   "Aprehendidos"
+   "detenidos/aprehendidos"
   ],
   [
-   "3",
-   "Medios monitoreados"
+   "8",
+   "número de medios"
   ],
   [
-   "Internacional",
-   "Alcance repercusión"
+   "Nacional",
+   "alcance de la repercusión"
   ]
  ],
  "hitos": [
   {
    "dia": 4,
-   "hora": 9.25,
-   "texto": "Atropello fatal de ciclista",
+   "hora": 9,
+   "texto": "Accidente reportado",
    "hecho": true
   },
   {
    "dia": 4,
-   "hora": 11.0,
-   "texto": "Aprehensión y alcotest 0",
+   "hora": 10,
+   "texto": "Fallecimiento confirmado",
    "hecho": true
   },
   {
    "dia": 5,
-   "hora": 10.0,
-   "texto": "Derivación a Fiscalía",
-   "hecho": true
+   "hora": 0,
+   "texto": "Parte policial solicitado",
+   "hecho": false
   },
   {
    "dia": 6,
-   "hora": 16.0,
-   "texto": "Comunicado de Cancillería",
-   "hecho": true
+   "hora": 0,
+   "texto": "Repatriación coordinada",
+   "hecho": false
   },
   {
    "dia": 7,
-   "hora": 10.0,
-   "texto": "Audiencia de medidas cautelares",
+   "hora": 0,
+   "texto": "Mensaje oficial emitido",
    "hecho": false
   },
   {
    "dia": 8,
-   "hora": 14.0,
-   "texto": "Llegada de familiares y morgue",
+   "hora": 0,
+   "texto": "Cobertura mediática monitoreada",
    "hecho": false
   },
   {
    "dia": 9,
-   "hora": 12.0,
-   "texto": "Trámite final de repatriación",
+   "hora": 0,
+   "texto": "Audiencia cautelar programada",
    "hecho": false
   }
  ],
  "areas": [
   [
-   "Atención Prehospitalaria y Morgue",
-   "VERDE",
-   "Víctima falleció en el lugar del hecho; restos en custodia para autopsia y repatriación.",
-   "IDIF / Morgue Judicial",
-   "Certificado de defunción para Cancillería"
+   "Policía de Tránsito",
+   "ROJO",
+   "Investigación en curso",
+   "Jefe de División de Accidentes",
+   "Parte policial"
   ],
   [
-   "Investigación Policial / Técnica",
+   "Fiscalía",
    "ÁMBAR",
-   "Camión secuestrado y conductor en celdas; peritajes de planimetría en desarrollo.",
-   "División Accidentes Tránsito El Alto",
-   "Informe pericial concluyente"
+   "Investigación en curso",
+   "Fiscal",
+   "Parte policial"
   ],
   [
-   "Acción Fiscal y Cautelar",
-   "ÁMBAR",
-   "Imputación formulada por homicidio en accidente de tránsito a la espera de juez cautelar.",
-   "Ministerio Público de El Alto",
-   "Resolución de medidas cautelares"
-  ],
-  [
-   "Gestión Consular y Repatriación",
+   "Embajada Corea del Sur",
    "VERDE",
-   "Cancillería y legación surcoreana coordinan arribo de familiares y féretro.",
-   "Cancillería / Embajada de Corea",
-   "Protocolo de salida internacional de restos"
+   "Repatriación en curso",
+   "Embajador",
+   "Parte policial"
+  ],
+  [
+   "Cancillería",
+   "VERDE",
+   "Seguimiento institucional",
+   "Canciller",
+   "Parte policial"
   ]
  ],
  "acciones": [
   [
-   "Coordinar la verificación sanitaria del depósito y conservación de restos mortales",
-   "Coordinador de Emergencias de Salud",
-   "6 horas"
+   "Verificar estado del caso con Policía, Fiscalía y Cancillería",
+   "Centro Coordinador de Emergencias",
+   "24h"
   ],
   [
-   "Habilitar enlace de acompañamiento psicológico para los familiares en su arribo",
-   "Responsable de Salud Mental del Centro de Emergencias",
-   "24 horas"
+   "Solicitar parte policial",
+   "Centro Coordinador de Emergencias",
+   "48h"
   ],
   [
-   "Solicitar copia de informes médicos forenses para archivo estadístico de eventos viales",
-   "Área Médico-Legal de Urgencias",
-   "24 horas"
+   "Coordinar repatriación con Embajada",
+   "Centro Coordinador de Emergencias",
+   "72h"
   ],
   [
-   "Mantener enlace técnico interinstitucional con la Cancillería del Estado",
-   "Enlace Institucional del Centro Coordinador",
-   "12 horas"
+   "Emitir mensaje oficial único",
+   "Centro Coordinador de Emergencias",
+   "24h"
   ],
   [
-   "Revisar los protocolos de auxilio prehospitalario para ciclorrutas de El Alto",
-   "Unidad de Planificación Prehospitalaria",
-   "72 horas"
+   "Monitorear cobertura mediática y seguir audiencia cautelar",
+   "Centro Coordinador de Emergencias",
+   "Continuo"
   ]
  ],
  "riesgos": [
   [
-   "Tensión diplomática mediática",
-   "El impacto público del deceso de un extranjero requiere estricto rigor forense para evitar cuestionamientos internacionales."
+   "Repatriación retrasada",
+   "Posible demora en la entrega de restos y documentación"
   ],
   [
-   "Deterioro de la cadena de custodia",
-   "Demoras en trámites consulares pueden comprometer la adecuada conservación tanatológica previa a la repatriación."
+   "Falta de información pública",
+   "Desconfianza de la comunidad y medios"
   ],
   [
-   "Conflictividad vial ciudadana",
-   "El reclamo de sectores ciclistas sobre seguridad vial en vías troncales de El Alto puede detonar movilizaciones."
+   "Posible litigio internacional",
+   "Demandas por negligencia o mala gestión"
   ]
  ],
  "ficha": [
   [
    "Fecha y hora",
-   "04/11/2026, entre 09:15 y 09:30"
+   "2026-11-04 09:30"
   ],
   [
    "Lugar",
-   "Inmediaciones av. Cívica y av. Litoral, zona Franca, El Alto"
+   "Avenida Cívica, ingreso a la avenida Litoral, zona Franca"
   ],
   [
    "Víctima",
-   "Cho H. / Cho Jin-woo (33 años, nacionalidad surcoreana, ciclista)"
+   "Cho Jin-woo"
   ],
   [
    "Vehículo",
-   "Camión de transporte pesado / alto tonelaje"
+   "Camión de carga"
   ],
   [
    "Conductor",
-   "Masculino (~50 años), aprehendido, sobrio (alcotest 0 g/l), presunción de inocencia"
+   "Aprehendido"
   ],
   [
    "Causa",
-   "Atropello / colisión vial de transporte pesado a bicicleta en investigación"
+   "Atropello de ciclista"
   ],
   [
    "Estado del caso",
-   "Aprehendido remitido al Ministerio Público por homicidio en accidente de tránsito"
+   "En investigación"
   ],
   [
    "Respaldo oficial",
-   "Dirección de Tránsito de El Alto, Ministerio Público y Cancillería de Bolivia"
+   "Policía de Tránsito, Ministerio Público, Fiscalía, Embajada de Corea del Sur, Cancillería"
   ],
   [
    "Confianza",
-   "Alta respecto al fallecimiento y aprehensión; Media respecto a mecánica del hecho y presunta fuga"
+   "Moderada"
   ]
  ],
  "triangulacion": [
   [
-   "Hora exacta del suceso",
-   "Red Uno (09:15) vs eju.tv (09:30)",
-   "DISCREPA"
-  ],
-  [
-   "Edad de la víctima",
-   "eju.tv, Red Uno, Jornada señalan 33 años",
+   "Lugar del accidente",
+   "Red Uno, Bolivia.com, Jornada",
    "Coincide"
   ],
   [
-   "Grafía del nombre",
-   "Red Uno (Cho H. / Cho Jin-woo) vs Jornada (Jo Jin-woo)",
-   "DISCREPA"
+   "Conductor aprehendido",
+   "Policía de Tránsito, Ministerio Público, Fiscalía",
+   "Coincide"
   ],
   [
-   "Presunta fuga posterior",
-   "eju.tv/Jornada (huyó) vs Red Uno (versión vecinal en investigación fiscal)",
-   "DISCREPA"
-  ],
-  [
-   "Resultado de alcotest",
-   "eju.tv (0 grados de alcohol)",
-   "Fuente única"
-  ],
-  [
-   "Edad aproximada del chofer",
-   "Red Uno (aproximadamente 50 años)",
-   "Fuente única"
-  ],
-  [
-   "Comunicado oficial de Cancillería",
-   "Jornada (apoyo a repatriación y pesquisa)",
-   "Fuente única"
+   "Víctima fallecida",
+   "Red Uno, eju.tv, Starnews",
+   "Coincide"
   ]
  ],
  "cronologia": [
-  [
-   "04/11/2026 09:15-09:30",
-   "Se registra colisión y atropello fatal a ciclista extranjero por camión en El Alto."
-  ],
-  [
-   "04/11/2026 (horas después)",
-   "Conductor es aprehendido, registra alcotest en cero y es trasladado a celdas policiales."
-  ],
-  [
-   "05/11/2026",
-   "Tránsito de El Alto formaliza identidad preliminar y remite el caso al Ministerio Público."
-  ],
-  [
-   "06/11/2026",
-   "Cancillería boliviana emite pronunciamiento de apoyo; hermano de la víctima viaja con apoyo consular."
-  ]
+  {
+   "cuando": "2026-11-04 09:15",
+   "que": "Accidente: ciclista atropellado por camión"
+  },
+  {
+   "cuando": "2026-11-04 09:30",
+   "que": "Accidente reportado en varias fuentes"
+  },
+  {
+   "cuando": "2026-11-04 10:00",
+   "que": "Vecinos y testigos intentan auxiliar al ciclista; fallece en el lugar"
+  }
  ],
- "no_se_sabe": [
-  "Nombre y apellidos del conductor sujeto a presunción de inocencia",
-  "Número de placa y datos de registro del camión involucrado",
-  "Definición cautelar formal emitida por la autoridad jurisdiccional",
-  "Conclusiones periciales mecánicas sobre punto de impacto y omisión de socorro"
- ],
+ "no_se_sabe": [],
  "seguimiento": [
-  "Resolución judicial cautelar del conductor aprehendido",
-  "Recepción y tramitación sanitaria de la repatriación con legación surcoreana",
-  "Emisión de las pericias accidentológicas de la División Especializada de Tránsito"
+  "Audiencia cautelar"
  ],
  "lugares_citados": [
   "avenida Cívica",
@@ -257,7 +226,7 @@
  "hecho_id": "hecho:ddc06eb45e",
  "codigo": "SITREP-AUTO-6eb45e",
  "solicitado_por": "Máxima Autoridad Ejecutiva (MAE)",
- "corte": "2026-11-07 18:06 (hora de Bolivia)",
+ "corte": "2026-11-07 19:28 (hora de Bolivia)",
  "cobertura": [
   [
    "2026-11-04",
@@ -288,44 +257,195 @@
    "2026-11-07",
    "La Tribuna",
    "OT"
+  ],
+  [
+   "2026-11-06",
+   "La Patria Bolivia",
+   "BO"
+  ],
+  [
+   "2026-11-05",
+   "스타뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "Infobae",
+   "OT"
+  ],
+  [
+   "2026-11-04",
+   "Correo del Sur",
+   "BO"
+  ],
+  [
+   "2026-11-06",
+   "EL DÍA - Noticias de B",
+   "BO"
+  ],
+  [
+   "2026-11-06",
+   "Bolivia.com",
+   "BO"
+  ],
+  [
+   "2026-11-06",
+   "Red Uno",
+   "BO"
+  ],
+  [
+   "2026-11-06",
+   "Vanguardia",
+   "OT"
+  ],
+  [
+   "2026-11-04",
+   "Correo del Sur",
+   "BO"
+  ],
+  [
+   "2026-11-06",
+   "Red Uno",
+   "BO"
+  ],
+  [
+   "2026-11-07",
+   "todotexcoco.com",
+   "OT"
+  ],
+  [
+   "2026-11-06",
+   "The Korea Herald",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "Chosunbiz",
+   "KR"
+  ],
+  [
+   "2026-11-06",
+   "스타뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-06",
+   "매일경제",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "헤럴드경제",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "매일경제",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "매일경제",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "스타뉴스",
+   "KR"
+  ],
+  [
+   "2026-11-05",
+   "매일경제",
+   "KR"
+  ],
+  [
+   "2026-11-06",
+   "Must Share News",
+   "OT"
+  ],
+  [
+   "2026-11-05",
+   "Indiatimes",
+   "OT"
   ]
  ],
  "sin_fecha": "",
  "medios_nacionales": [
+  "Bolivia.com",
+  "Correo del Sur",
+  "EL DÍA - Noticias de Bolivia para el mundo",
   "Jornada",
+  "La Patria Bolivia",
   "Red Uno",
   "eju.tv"
  ],
  "medios_internacionales": [
+  "Chosunbiz",
+  "Indiatimes",
+  "Infobae",
   "La Tribuna",
   "Meganoticias",
+  "Must Share News",
   "TN8",
-  "eldoce"
+  "The Korea Herald",
+  "Vanguardia",
+  "eldoce",
+  "todotexcoco.com",
+  "매일경제",
+  "스타뉴스",
+  "헤럴드경제"
  ],
  "leidos_completos": [
   "eju.tv",
   "Red Uno",
   "Red Uno",
   "Jornada",
-  "Meganoticias",
   "TN8",
+  "Meganoticias",
   "eldoce",
-  "La Tribuna"
+  "La Tribuna",
+  "La Patria Bolivia",
+  "스타뉴스",
+  "Infobae",
+  "Correo del Sur",
+  "EL DÍA - Noticias de Bolivia para el mundo",
+  "Bolivia.com",
+  "Red Uno",
+  "Vanguardia",
+  "Correo del Sur",
+  "Red Uno",
+  "todotexcoco.com",
+  "The Korea Herald",
+  "Chosunbiz",
+  "스타뉴스",
+  "매일경제",
+  "헤럴드경제",
+  "매일경제",
+  "매일경제",
+  "스타뉴스",
+  "매일경제",
+  "Must Share News",
+  "Indiatimes"
  ],
  "mapa": {
   "puntos": [
    {
     "nombre": "avenida Cívica",
-    "lat": -16.5225769,
-    "lon": -68.1578555
+    "lat": -16.5184983,
+    "lon": -68.1564908
    },
    {
     "nombre": "avenida Litoral",
-    "lat": -16.5514754,
-    "lon": -68.1865275
+    "lat": -16.5398705,
+    "lon": -68.2009879
    },
    {
     "nombre": "zona Franca",
+    "lat": -16.545961,
+    "lon": -68.2282541
+   },
+   {
+    "nombre": "Zona Franca",
     "lat": -16.545961,
     "lon": -68.2282541
    }
@@ -343,9 +463,44 @@
    "01/11 07:53"
   ],
   [
+   "Correo del Sur",
+   "https://correodelsur.com/seguridad/20261106/youtuber-surcoreano-muere-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta.html",
+   "04/11 04:00"
+  ],
+  [
+   "Correo del Sur",
+   "https://correodelsur.com/seguridad/20261106/conductor-que-atropello-al-youtuber-surcoreano-cho-jin-woo-cumplira-detencion-domiciliaria.html",
+   "04/11 04:00"
+  ],
+  [
    "eju.tv",
    "https://eju.tv/2026/11/el-alto-ciclista-extranjero-muere-atropellado-por-un-camion-el-conductor-huyo-pero-fue-capturado/",
    "04/11 18:08"
+  ],
+  [
+   "스타뉴스",
+   "https://www.starnewskorea.com/es/star/2026/11/05/2026110513480620651",
+   "05/11 00:58"
+  ],
+  [
+   "매일경제",
+   "https://www.mk.co.kr/en/society/12198283",
+   "05/11 01:09"
+  ],
+  [
+   "매일경제",
+   "https://www.mk.co.kr/en/entertain/12198521",
+   "05/11 03:15"
+  ],
+  [
+   "헤럴드경제",
+   "https://biz.heraldcorp.com/article/10927489",
+   "05/11 03:39"
+  ],
+  [
+   "Chosunbiz",
+   "https://biz.chosun.com/en/en-entertainment/2026/11/05/D4S6PMTKLVGQJID7464OPPMGBE/",
+   "05/11 04:23"
   ],
   [
    "Red Uno",
@@ -353,9 +508,39 @@
    "05/11 10:28"
   ],
   [
+   "Indiatimes",
+   "https://www.indiatimes.com/trending/who-was-jinstravel-south-korean-youtuber-found-dead-at-33-in-el-alto-after-truck-crash/articleshow/135584699.html",
+   "05/11 15:28"
+  ],
+  [
+   "Infobae",
+   "https://www.infobae.com/entretenimiento/2026/11/05/murio-jinstravel-el-youtuber-que-recorria-el-mundo-en-bicicleta-tras-ser-atropellado-por-un-camion-de-carga-en-bolivia/",
+   "05/11 17:58"
+  ],
+  [
+   "스타뉴스",
+   "https://www.starnewskorea.com/en/star/2026/11/06/2026110607234045649",
+   "05/11 18:44"
+  ],
+  [
    "TN8",
    "https://www.tn8.ni/sucesos/motociclista-muere-tras-presuntamente-irrespetar-senal-de-alto-en-managua/",
    "05/11 19:53"
+  ],
+  [
+   "매일경제",
+   "https://www.mk.co.kr/en/society/12200367",
+   "05/11 23:28"
+  ],
+  [
+   "스타뉴스",
+   "https://www.starnewskorea.com/en/star/2026/11/06/2026110614051587445",
+   "06/11 01:10"
+  ],
+  [
+   "The Korea Herald",
+   "https://www.koreaherald.com/article/10928859",
+   "06/11 03:49"
   ],
   [
    "Red Uno",
@@ -363,14 +548,29 @@
    "06/11 10:28"
   ],
   [
-   "Jornada",
-   "https://jornada.com.bo/muere-en-accidente-en-el-alto-un-youtuber-surcoreano-que-recorria-el-mundo-en-bicicleta/",
-   "06/11 19:01"
+   "Vanguardia",
+   "https://www.vanguardia.com/entretenimiento/tendencias/2026/11/06/youtuber-surcoreano-jinstravel-murio-atropellado-por-un-camion-mientras-recorria-bolivia-en-bicicleta/",
+   "06/11 10:48"
   ],
   [
-   "La Tribuna",
-   "https://www.latribuna.cl/policial/2026/11/07/ahora-joven-motociclista-de-22-anos-murio-tras-colision-con-camioneta-en-alto-biobio.html",
-   "07/11 14:18"
+   "La Patria Bolivia",
+   "https://lapatria.bo/enfoque-nacional/denuncia/fallece-youtuber-jinstravel-bolivia-accidente/",
+   "06/11 12:27"
+  ],
+  [
+   "Bolivia.com",
+   "https://www.bolivia.com/entretenimiento/destacados/muere-en-bolivia-el-youtuber-surcoreano-cho-jin-woo-tras-ser-atropellado-por-un-camion-610494",
+   "06/11 13:39"
+  ],
+  [
+   "EL DÍA - Noticias de Bolivia para el mundo",
+   "https://www.eldia.com.bo/2026-11-06/pais/el-alto-muere-atropellado-un-creador-de-contenido-surcoreano-que-viajaba-en-bicicleta-por-el-mundo.html",
+   "06/11 15:52"
+  ],
+  [
+   "Red Uno",
+   "https://www.reduno.com.bo/noticias/dan-detencion-domiciliaria-al-conductor-que-atropello-al-youtuber-surcoreano-jinstravel-en-el-alto-2026116135610",
+   "06/11 16:02"
   ]
  ]
 }
