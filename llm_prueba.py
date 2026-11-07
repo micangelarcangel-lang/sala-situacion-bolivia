@@ -6,6 +6,18 @@ TOKEN = os.environ.get("GITHUB_TOKEN", "")
 H = {"Authorization": f"Bearer {TOKEN}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "Content-Type": "application/json"}
 
 
+def crudo(url, data=None, h=None):
+    """Muestra tal cual lo que responde el servidor (código, cabeceras clave y cuerpo) para diagnosticar."""
+    try:
+        r = urllib.request.urlopen(urllib.request.Request(url, data=data, headers=h or H), timeout=90)
+        b = r.read()
+        return {"http": r.status, "final": r.geturl(), "tipo": r.headers.get("content-type"), "bytes": len(b), "cuerpo": b[:300].decode("utf8", "replace")}
+    except urllib.error.HTTPError as e:
+        return {"http": e.code, "cuerpo": e.read()[:300].decode("utf8", "replace")}
+    except Exception as e:
+        return {"error": f"{type(e).__name__}: {e}"}
+
+
 def get(url):
     try:
         r = urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=60)
@@ -33,6 +45,10 @@ def chat(modelo, texto):
 
 if __name__ == "__main__":
     print("TOKEN presente:", bool(TOKEN))
+    print("CRUDO catalogo:", crudo("https://models.github.ai/catalog/models"))
+    cuerpo = json.dumps({"model": "openai/gpt-4.1-mini", "messages": [{"role": "user", "content": "Responde solo: ok"}], "max_tokens": 5}).encode()
+    print("CRUDO chat models.github.ai:", crudo("https://models.github.ai/inference/chat/completions", cuerpo))
+    print("CRUDO chat azure:", crudo("https://models.inference.ai.azure.com/chat/completions", json.dumps({"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "Responde solo: ok"}], "max_tokens": 5}).encode(), {"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"}))
     st, cat = get("https://models.github.ai/catalog/models")
     print("CATALOGO http", st)
     if isinstance(cat, list):
