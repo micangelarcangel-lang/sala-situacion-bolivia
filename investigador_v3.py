@@ -115,7 +115,7 @@ def llamar_ia(sistema, usuario, max_tokens=4000):
     k = os.environ.get("GEMINI_API_KEY", "").strip()
     errores = []
     if k:
-        for modelo in ("gemini-2.5-flash", "gemini-2.0-flash"):
+        for modelo in ("gemini-3.8-flash", "gemini-flash-latest"):
             try:
                 cuerpo = {"systemInstruction": {"parts": [{"text": sistema}]}, "contents": [{"role": "user", "parts": [{"text": usuario}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": max_tokens}}
                 r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={k}", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json"}), timeout=120))
