@@ -1,0 +1,31 @@
+name: Investigador v3 (rama de prueba)
+# Se dispara al subir un cambio a investigar_solicitud.txt (formato: id del hecho). No toca main ni el correo.
+on:
+  push:
+    branches-ignore: [main]
+    paths: [investigar_solicitud.txt]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  investigar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install trafilatura googlenewsdecoder beautifulsoup4 lxml
+      - name: Investigar
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python investigador_v3.py "$(head -1 investigar_solicitud.txt | awk '{print $1}')"
+      - name: Guardar
+        run: |
+          git config user.name "sala-bot" && git config user.email "sala-bot@users.noreply.github.com"
+          git add datos/v3/investigacion
+          git commit -m "investigación v3" datos/v3/investigacion || echo "sin cambios"
+          git pull --rebase -q -X ours || true
+          git push || echo "no se pudo subir"
