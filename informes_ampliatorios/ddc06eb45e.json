@@ -1,0 +1,61 @@
+{
+ "hecho_id": "hecho:ddc06eb45e",
+ "codigo": "IA-2026-001",
+ "titulo": "Muerte de ciclista surcoreano atropellado por un camión en El Alto",
+ "solicitado_por": "Máxima Autoridad Ejecutiva (MAE)",
+ "corte": "2026-11-07 08:45 (hora de Bolivia)",
+ "clasificacion": "Antropogénica → accidente de tránsito (atropello de ciclista) · repercusión nacional e internacional",
+ "resumen": "El miércoles 4 de noviembre, alrededor de las 9:30, un camión de carga atropelló y mató en El Alto al ciclista y youtuber surcoreano Cho Jin-woo («JinsTravel», 33 años), que recorría Sudamérica. El conductor se fue del lugar y fue aprehendido horas después. Dijo no haber visto la bicicleta y la prueba de alcohol fue negativa, según medios y un mando policial citado por un medio coreano. La Cancillería informó que coordinará con la Embajada de Corea del Sur la repatriación de los restos. La causa y la situación procesal del conductor siguen sin confirmación oficial directa.",
+ "ficha": [
+  ["Fecha y hora", "Miércoles 4/11/2026, ~09:30 (Erbol; Unitel vía Starnews y SBS)"],
+  ["Lugar", "El Alto, La Paz. Av. 6 de Marzo, sector Molino Andino (El Deber, Red Uno, Bolivia.com) · otra versión: inmediaciones de la Av. Cívica, ingreso a la Av. Litoral, rotonda de la Zona Franca (Erbol). Por verificar."],
+  ["Víctima", "1 fallecido: Cho Jin-woo, 33 años, ciudadano surcoreano, creador de contenido de viajes en bicicleta (canal desde 2020; ~66 000 suscriptores según Korea Herald, Starnews y SBS)"],
+  ["Vehículo", "Camión de carga de gran tamaño (todas las fuentes)"],
+  ["Conductor", "Se retiró del lugar; aprehendido horas después. Su identidad no ha sido publicada por ninguna fuente consultada y no se incluye en este informe (presunción de inocencia)."],
+  ["Causa", "No informada oficialmente; el conductor dice que «no vio la bicicleta». Alcoholemia negativa. Bajo investigación."],
+  ["Estado del caso", "Policía puso el caso en conocimiento del Ministerio Público (Erbol). Imputación y medidas cautelares: no informadas."],
+  ["Repercusión", "Nacional: 7 medios bolivianos. Internacional: Corea del Sur (Korea Herald, SBS, Starnews, FNnews) y medios de México, Perú, Colombia y otros."],
+  ["Respaldo oficial", "Cancillería de Bolivia (vía El Deber) y mando policial de Tránsito de El Alto (vía Starnews). No se localizó comunicado oficial directo."],
+  ["Confianza", "Alta en el hecho central (varias fuentes independientes coinciden). Media en los detalles de lugar y proceso."]
+ ],
+ "cronologia": [
+  ["Mié 4/11 · ~09:30", "Atropello en El Alto. Según Unitel (vía Starnews y SBS), la víctima murió en el lugar y vecinos intentaron auxiliarla."],
+  ["Mié 4/11 · mañana", "El conductor se retira. Conductores de trufis lo habrían perseguido y entregado a la Policía (solo Bolivia.com lo afirma). Aprehendido horas después (7 fuentes)."],
+  ["Mié 4/11", "Primeras declaraciones: «no había visto la bicicleta»; alcoholemia negativa. El caso pasa al Ministerio Público (Erbol)."],
+  ["Jue 5/11", "Un amigo comunica la muerte en el canal de YouTube, con autorización de la familia. El hermano mayor lo confirma en Instagram y pide respeto y privacidad. Red Uno identifica a la víctima (captura del sistema, 5/11 10:28); Eju.tv ya había reportado el 4/11 un «ciclista extranjero» (18:08)."],
+  ["Jue 5/11 – vie 6/11", "Cobertura en Corea del Sur (FNnews, Starnews, SBS, Korea Herald) y en medios de México, Perú y Colombia."],
+  ["Vie 6/11", "Cancillería de Bolivia: coordinará con la Embajada de Corea del Sur la repatriación de los restos y dará «todo el apoyo» a la familia (El Deber, 21:22)."]
+ ],
+ "triangulacion": [
+  ["Identidad", "Cho Jin-woo, «JinsTravel» (El Deber, Erbol, Red Uno, Bolivia.com, Korea Herald). Starnews escribe «Jo Jin-woo»; un título de Bolivia.com dice «Jim-woo» (error).", "Coincide"],
+  ["Edad", "33 años (5 fuentes). Starnews resume «30» pero cita 33 de Unitel.", "Coincide"],
+  ["Fecha y hora", "Mié 4/11, ~09:30 (Erbol; Unitel vía Starnews y SBS). Red Uno y Korea Herald: «miércoles por la mañana». El Deber no la indica.", "Coincide"],
+  ["Lugar exacto", "Av. 6 de Marzo / Molino Andino (3 fuentes) frente a Av. Cívica / ingreso a Av. Litoral / rotonda Zona Franca (Erbol).", "DISCREPA"],
+  ["Vehículo", "Camión de carga (todas).", "Coincide"],
+  ["Conductor huyó y fue aprehendido", "El Deber, Erbol, Red Uno, Bolivia.com, Korea Herald, Starnews (Unitel), SBS.", "Coincide"],
+  ["Interceptado por conductores de trufis", "Solo Bolivia.com.", "Fuente única"],
+  ["«No vio la bicicleta»", "Erbol, Korea Herald, Bolivia.com, SBS; Starnews lo atribuye al Cap. Medina (Tránsito El Alto).", "Coincide"],
+  ["Alcoholemia negativa", "Erbol, Korea Herald; Starnews (Cap. Medina); Bolivia.com (medios nacionales).", "Coincide (indirecta)"],
+  ["Situación procesal", "Remitido a Fiscalía (Erbol); «permanece detenido» (Bolivia.com, sin fuente). El Deber y Red Uno: no informan.", "Sin confirmar"],
+  ["Repatriación", "Cancillería + Embajada de Corea del Sur (El Deber, Erbol, Red Uno, Bolivia.com). Familia viaja a Bolivia (Korea Herald, Red Uno).", "Coincide"],
+  ["Inicio del viaje por Latinoamérica", "México (El Deber, Red Uno) frente a Guatemala, en marzo (Korea Herald).", "DISCREPA (secundario)"]
+ ],
+ "medios_nacionales": ["Eju.tv", "Unitel", "Red Uno", "El Deber", "Erbol", "Bolivia.com", "Jornada"],
+ "medios_internacionales": ["Korea Herald (KR)", "SBS (KR)", "Starnews (KR)", "FNnews (KR)", "Dexerto", "RT", "La República (PE)", "Vanguardia (CO)", "El Frente (CO)", "Viva la Noticia (MX)"],
+ "leidos_completos": ["El Deber", "Erbol", "Red Uno", "Bolivia.com", "Korea Herald", "Starnews", "SBS"],
+ "no_se_sabe": ["Causa pericial y dinámica exacta del atropello", "Punto exacto (hay dos versiones)", "Imputación, medidas cautelares y delito atribuido", "Comunicado oficial directo de Policía, Fiscalía o Cancillería", "Fecha del traslado de los restos"],
+ "seguimiento": ["Pedir a Tránsito de El Alto el parte policial y el punto exacto (contacto citado en prensa: Cap. Medina)", "Solicitar a Fiscalía el estado de la causa y las medidas cautelares", "Obtener el texto del comunicado de Cancillería y de la Embajada", "Revisar este informe en 24 y 72 horas; reabrir el hecho si hay novedades"],
+ "fuentes": [
+  ["El Deber", "https://eldeber.com.bo/pais/jinstravel-youtuber-viajaba-mundo-bicicleta-fallecio-atropellado-alto_1794013326", "6/11 21:22"],
+  ["Erbol", "https://www.erbol.com.bo/seguridad/muere-en-el-alto-un-youtuber-surcoreano-que-recorr%C3%ADa-el-mundo-en-bicicleta", ""],
+  ["Red Uno (¿Quién era JinsTravel?)", "https://reduno.com.bo/noticias/quien-era-jinstravel-el-youtuber-surcoreano-que-murio-atropellado-en-bolivia-202611685421", ""],
+  ["Bolivia.com", "https://www.bolivia.com/entretenimiento/destacados/muere-en-bolivia-el-youtuber-surcoreano-cho-jin-woo-tras-ser-atropellado-por-un-camion-610494", "6/11"],
+  ["Korea Herald", "https://www.koreaherald.com/article/10928859", "6/11"],
+  ["Starnews Korea", "https://www.starnewskorea.com/en/star/2026/11/05/2026110513480620651", "5/11"],
+  ["SBS News", "https://news.sbs.co.kr/english/article.do?news_id=N1008832712", ""],
+  ["Jornada", "https://jornada.com.bo/muere-en-accidente-en-el-alto-un-youtuber-surcoreano-que-recorria-el-mundo-en-bicicleta/", "solo titular"],
+  ["FNnews", "https://en.fnnews.com/news/202611051435118744", "solo titular"],
+  ["La República (PE)", "https://larepublica.pe/entretenimiento/2026/11/05/muere-querido-influencer-coreano-tras-ser-atropellado-por-camion-en-bolivia-conductor-de-vehiculo-pesado-habria-intentado-huir-318840", "solo titular"],
+  ["Dexerto", "https://www.dexerto.com/youtube/travel-youtuber-dies-after-being-struck-by-truck-in-hit-and-run-during-overseas-trip-3425186/", "solo titular"]
+ ]
+}
