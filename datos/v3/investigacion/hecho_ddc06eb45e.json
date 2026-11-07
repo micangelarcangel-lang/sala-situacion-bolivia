@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:ddc06eb45e",
- "generado": "2026-11-07T17:32:07.142785+00:00",
- "segundos": 104,
+ "generado": "2026-11-07T17:38:30.549509+00:00",
+ "segundos": 337,
  "consultas": [
   [
    1,
@@ -56,10 +56,10 @@
   [
    2,
    "Puente Alto [en]",
-   7
+   6
   ]
  ],
- "descartadas_por_ruido": 393,
+ "descartadas_por_ruido": 392,
  "n_fuentes": 23,
  "n_leidas": 22,
  "nombres_propios": [
@@ -71,11 +71,11 @@
  "lugares": [
   {
    "consulta": "Puente Alto",
-   "lat": -16.5456239,
-   "lon": -68.1751931,
-   "nombre": "WaynaBus - Rotonda Puente Bolivia, Rotonda Bolivia-Arica-Cívica, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, L",
-   "tipo": "bus_stop",
-   "km_al_centro_municipio": 11.63
+   "lat": -16.5449385,
+   "lon": -68.1765699,
+   "nombre": "Puente Bolivia, Avenida Bolivia, Victoria, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "tipo": "bridge",
+   "km_al_centro_municipio": 11.5
   },
   {
    "consulta": "avenida General Savio",
@@ -83,19 +83,19 @@
   },
   {
    "consulta": "avenida Cívica",
-   "lat": -16.5184983,
-   "lon": -68.1564908,
-   "nombre": "Avenida Cívica, Tejada Rectangular, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "lat": -16.5225769,
+   "lon": -68.1578555,
+   "nombre": "Avenida Cívica, PLAN 405, Distrito 1, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 10.01
+   "km_al_centro_municipio": 10.28
   },
   {
    "consulta": "avenida Litoral",
-   "lat": -16.5398705,
-   "lon": -68.2009879,
-   "nombre": "Avenida Litoral, San Luis Pampa, Distrito 3, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
+   "lat": -16.5537367,
+   "lon": -68.1826498,
+   "nombre": "Avenida Litoral, Wara, Distrito 2, El Alto, Provincia Pedro Domingo Murillo, La Paz, Bolivia",
    "tipo": "primary",
-   "km_al_centro_municipio": 10.28
+   "km_al_centro_municipio": 12.22
   },
   {
    "consulta": "zona Franca",
@@ -118,7 +118,7 @@
    "km_al_centro_municipio": 12.14
   }
  ],
- "ia": "gemini/gemini-2.5-flash: HTTP 404 {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-; gemini/gemini-2.0-flash: HTTP 404 {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).\",\n ",
+ "ia": "gemini/gemini-3.8-flash: TimeoutError The read operation timed out; gemini/gemini-flash-latest: TimeoutError The read operation timed out",
  "analisis": null,
  "fuentes": [
   {
