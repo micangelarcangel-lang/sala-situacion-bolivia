@@ -61,6 +61,28 @@ def nombres_propios(textos, minimo=2):
     return [n for n, k in c.most_common(12) if k >= minimo]
 
 
+def _n(t):
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", str(t).lower()) if unicodedata.category(c) != "Mn")
+
+
+def anclas(hecho):
+    """Palabras que definen el hecho: las que comparten al menos la mitad de sus notas, más el lugar. Sirven para descartar ruido."""
+    toks = [set(w for w in re.findall(r"[a-z]{5,}", _n(n["titulo"])) if w not in SIN) for n in hecho["notas"]]
+    c = collections.Counter(w for t in toks for w in t)
+    comunes = [w for w, k in c.items() if k >= max(1, len(toks) / 2)]
+    lugar = _n((hecho.get("lugar") or "").split(",")[0])
+    return comunes, lugar
+
+
+def relevante(f, comunes, lugar, nombres=()):
+    base = _n(f["titulo"] + " " + f.get("texto", "")[:2500])
+    if nombres and any(_n(n) in base for n in nombres):
+        return True
+    hit = sum(1 for w in comunes if w[:6] in base) + (1 if lugar and lugar in base else 0)
+    return hit >= min(3, len(comunes) + 1)
+
+
 def distancia_km(a, b):
     R = 6371; p1, p2 = math.radians(a[0]), math.radians(b[0]); dl = math.radians(b[1] - a[1]); dp = p2 - p1
     h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
@@ -154,16 +176,21 @@ def investigar(hecho, max_leer=24, log=print):
         return {"medio": it["medio"], "titulo": it["titulo"], "url": url or it["link"], "fecha": dt.datetime.fromtimestamp(it["pub"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d/%m %H:%M") if it["pub"] else "", "pub": it["pub"], "ronda": it["ronda"], "leida": len(txt) > 300, "texto": txt[:8000], "resolvio": bool(url)}
     for it in lista:
         fuentes.append(leer(it))
-    nombres = nombres_propios([f["texto"] for f in fuentes if f["texto"]] + [f["titulo"] for f in fuentes])
-    log("nombres propios hallados:", nombres[:8])
+    comunes, lugar = anclas(hecho)
+    for f in fuentes:
+        f["relevante"] = relevante(f, comunes, lugar)
+    rel1 = [f for f in fuentes if f["relevante"]]
+    nombres = nombres_propios([f["texto"] for f in rel1] + [f["titulo"] for f in rel1], minimo=2)[:4]
+    log("anclas:", comunes, lugar, "| relevantes ronda 1:", len(rel1), "de", len(fuentes), "| nombres:", nombres)
     # ronda 2: con los nombres hallados, en español y en inglés
-    for nm in nombres[:4]:
+    for nm in nombres:
         for hl, gl, ceid, etq in (("es-419", "BO", "BO:es-419", "es"), ("en-US", "US", "US:en", "en")):
             n = agregar([dict(x, ronda=2) for x in rss(nm, hl, gl, ceid)], 2); qlog.append((2, f"{nm} [{etq}]", n))
     nuevos = [v for v in vistos.values() if v["ronda"] == 2][:max_leer]
     for it in nuevos:
-        fuentes.append(leer(it))
+        f = leer(it); f["relevante"] = relevante(f, comunes, lugar, nombres); fuentes.append(f)
     # lugares y coordenadas
+    fuentes = [f for f in fuentes if f.get("relevante")]
     textos = [f["texto"] for f in fuentes if f["leida"]]
     ciudad = (hecho.get("lugar") or "El Alto").split(",")[0]
     geo = [nominatim(l, ciudad) for l in lugares_en(textos)[:7]]
@@ -172,9 +199,10 @@ def investigar(hecho, max_leer=24, log=print):
     for g in pts:
         if ref[0] is not None:
             g["km_al_centro_municipio"] = distancia_km((g["lat"], g["lon"]), ref)
+    total = len(vistos)
     analisis, prov = analizar([f for f in fuentes if f["leida"]])
     res = {"hecho_id": hecho["id"], "generado": dt.datetime.now(dt.timezone.utc).isoformat(), "segundos": round(time.time() - t0),
-           "consultas": qlog, "n_fuentes": len(fuentes), "n_leidas": sum(f["leida"] for f in fuentes), "nombres_propios": nombres, "lugares": geo, "ia": prov, "analisis": analisis,
+           "consultas": qlog, "descartadas_por_ruido": total - len(fuentes), "n_fuentes": len(fuentes), "n_leidas": sum(f["leida"] for f in fuentes), "nombres_propios": nombres, "lugares": geo, "ia": prov, "analisis": analisis,
            "fuentes": [{k: v for k, v in f.items() if k != "texto"} for f in fuentes]}
     return res, fuentes
 
