@@ -117,8 +117,8 @@ def llamar_ia(sistema, usuario, max_tokens=4000):
     if k:
         for modelo in ("gemini-3.8-flash", "gemini-flash-latest"):
             try:
-                cuerpo = {"systemInstruction": {"parts": [{"text": sistema}]}, "contents": [{"role": "user", "parts": [{"text": usuario}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": max_tokens}}
-                r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={k}", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json"}), timeout=120))
+                cuerpo = {"systemInstruction": {"parts": [{"text": sistema}]}, "contents": [{"role": "user", "parts": [{"text": usuario}]}], "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "maxOutputTokens": max_tokens, "thinkingConfig": {"thinkingBudget": 0}}}
+                r = json.load(urllib.request.urlopen(urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{modelo}:generateContent?key={k}", data=json.dumps(cuerpo).encode(), headers={"Content-Type": "application/json"}), timeout=240))
                 return r["candidates"][0]["content"]["parts"][0]["text"], "gemini/" + modelo
             except urllib.error.HTTPError as e:
                 errores.append(f"gemini/{modelo}: HTTP {e.code} " + e.read()[:300].decode("utf8", "replace"))
@@ -140,7 +140,11 @@ SISTEMA = ("Eres analista de un centro coordinador de emergencias. Recibes artí
 
 
 def analizar(fuentes):
-    arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:3500]}" for i, f in enumerate(fuentes) if f.get("texto"))[:60000]
+    def del_hecho(f):
+        t = _n(f["titulo"] + " " + f["texto"][:3000])
+        return ("el alto" in t or "bolivia" in t) and any(k in t for k in ("coreano", "jinstravel", "ciclista", "youtuber"))
+    fuentes = [f for f in fuentes if f.get("texto") and del_hecho(f)][:14]
+    arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:3000]}" for i, f in enumerate(fuentes))[:45000]
     pedido = ("Con estos artículos devuelve JSON con: hecho{fecha,hora,lugar_versiones[{texto,fuentes}],victima{nombre,edad,nacionalidad},vehiculo,conductor{estado,declaraciones[{texto,atribuido_a,fuente}]}}, "
               "instituciones[{nombre,que_hizo,fuente}], cronologia[{cuando,que,fuentes}], afirmaciones[{dato,valor,fuentes,estado('coincide'|'fuente_unica'|'discrepa'),detalle}], "
               "vacios[strings: lo que NO se sabe y debería saberse], novedades_ultimas_24h[strings].\n\nARTÍCULOS:\n" + arts)
