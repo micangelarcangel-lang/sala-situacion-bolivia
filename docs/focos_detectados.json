@@ -179,6 +179,9 @@
    "Pando": 39,
    "Tarija": 1,
    "Chuquisaca": 15
+  },
+  "2026-11-08": {
+   "Beni": 10
   }
  },
  "municipios": {
@@ -520,11 +523,15 @@
    "Exaltación (Beni)": 56,
    "San Javier (Beni)": 52,
    "Magdalena (Beni)": 48
+  },
+  "2026-11-08": {
+   "Magdalena (Beni)": 6,
+   "San Joaquín (Beni)": 4
   }
  },
- "actualizado": "2026-11-08T05:44:48.374834Z",
+ "actualizado": "2026-11-08T06:50:30.164129Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1700,
+ "detecciones_fuera_de_limites": 1736,
  "slack_dia": "2026-11-08"
 }
