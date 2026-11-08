@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-07T23:06:16.721870Z",
+ "actualizado": "2026-11-08T00:03:01.261986Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -86,7 +86,7 @@
    "n_municipios": 9,
    "texto": "SE PREVÉ LLUVIAS MODERADAS, TEMPORALMENTE FUERTES Y TORMENTAS ELÉCTRICAS AISLADAS CON MONTOS ACUMULADOS ENTRE 30 mm Y 50 MM A OCURRIR DESDE LA MAÑANA HASTA LA NOCHE DEL SÁBADO 07 DE NOVIEMBRE DE 2026, EN:",
    "numero": "93/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
