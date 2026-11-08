@@ -289,6 +289,82 @@ def armar_informe(hecho, res, fuentes, red):
     return A
 
 
+# ---------------------------------------------------------------- boletín (producto final)
+SIS_BOL = ("Eres analista senior del Centro Coordinador de Emergencias en Salud del Ministerio de Salud y Deportes de Bolivia. Escribes un BOLETÍN DE SITUACIÓN para la máxima autoridad: "
+           "solo lo que se sabe, dónde, qué falta y qué se pide. Usa EXCLUSIVAMENTE el análisis dado; no inventes datos. Frases cortas y directas. No nombres ni califiques al conductor (presunción de inocencia). "
+           "Cuando los medios discrepan en un dato, dilo en la misma celda ('Discrepa: A según X; B según Y'). Nada de apoyo psicológico ni infraestructura vial. Responde SOLO JSON.")
+
+
+def og_imagen(fuentes, nombre, log=print):
+    """Primer medio que cita a la persona y publica un retrato (og:image). Se enlaza, no se copia."""
+    clave = _n(nombre.split()[0]) if nombre else ""
+    for f in fuentes[:14]:
+        if not f.get("leida") or not f.get("url", "").startswith("http") or (clave and clave not in _n(f["titulo"] + f["texto"][:1500])):
+            continue
+        try:
+            html = _get(f["url"], 15)
+            html = html.decode("utf-8", "ignore") if isinstance(html, bytes) else str(html)
+            m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', html) or re.search(r'content=["\']([^"\']+)["\'][^>]+property=["\']og:image', html)
+            if m and "logo" not in m.group(1).lower():
+                return f["url"], f["medio"]
+        except Exception as ex:
+            log("og:image falló", f["medio"], str(ex)[:60])
+    return None, None
+
+
+def redactar_boletin(hecho, analisis, log=print):
+    comp = json.dumps(analisis, ensure_ascii=False)[:15000]
+    base = f"Hecho: {hecho['subtipo']} en {hecho.get('lugar')}. Hoy es {dt.date.today().isoformat()}.\nANÁLISIS CON CITAS:\n{comp}\n\n"
+    pedidos = [
+        """JSON con EXACTAMENTE: titulo (máx 80 car., tipo de evento · lugar), sintesis (4-5 frases: quién, qué, cuándo, dónde, estado del caso, qué se discute o falta; sin acciones),
+kpis [[valor, etiqueta] x4] (personas fallecidas, aprehendidos, fecha del evento, alcance 'Local'|'Nacional'|'Internacional'),
+victima{nombre, detalle (edad · nacionalidad · cómo se le conoce)}, vehiculo (en mayúsculas, p. ej. 'CAMIÓN DE CARGA'),
+versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior)}] (máx 4),
+operativa (2-3 frases: dónde está el caso y qué decisión se pide a la MAE),
+acciones [objetos {accion (una línea concreta), responsable_sugerido, plazo ('24 h','48 h','72 h','Continuo')}] x4: confirmar estado del caso con Policía/Fiscalía, pedir parte policial y forense, coordinar con Cancillería, fijar un mensaje oficial único.""",
+        """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 (Identificación, Auxilio en el lugar, Fallecimiento/traslado, Lugar del hecho, Conductor/proceso, Repatriación o gestión consular, Respaldo oficial), con 'estado' = 'Coincide en N medios' | 'Fuente única: X' | 'Discrepa: …' | 'Sin dato en fuentes abiertas',
+cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconstruccion (2-3 frases, informativa no pericial), vacios [strings: 5 documentos o datos que faltan y quién los tiene]."""]
+    out = {}
+    for ped in pedidos:
+        txt, prov = llamar_ia(SIS_BOL, base + ped, max_tokens=3500)
+        d = _json(txt)
+        if not d:
+            return None, "redacción incompleta: " + str(prov)[:200]
+        out.update(d); out["_prov"] = prov
+    return out, out["_prov"]
+
+
+def armar_boletin(hecho, res, fuentes, R, log=print):
+    ahora = dt.datetime.now(dt.timezone(dt.timedelta(hours=-4)))
+    pts = []
+    for v in R.get("versiones_lugar", [])[:4]:
+        g = nominatim(str(v.get("consulta", "")), (hecho.get("lugar") or "El Alto").split(",")[0])
+        if "lat" in g:
+            pts.append({"nombre": str(v.get("nombre_corto", v.get("consulta")))[:40], "lat": g["lat"], "lon": g["lon"], "version": "B" if str(v.get("version")).upper() == "B" else "A"})
+    if len(pts) < 2:  # respaldo: lugares hallados por reglas
+        pts = [{"nombre": g["consulta"][:40], "lat": g["lat"], "lon": g["lon"], "version": "A"} for g in res["lugares"] if "lat" in g][:4]
+    vic = R.get("victima", {}) or {}
+    furl, fmedio = og_imagen(fuentes, vic.get("nombre", ""), log)
+    lei = [f for f in fuentes if f.get("leida")]
+    lat = [f for f in lei if not re.search(r"[\uac00-\ud7af]", f["medio"])]
+    otros = len(lei) - len(lat)
+    fu = [[f["medio"][:34], f["fecha"][:5] or "s/f"] for f in sorted(lat, key=lambda f: f.get("pub") or 0)][:30]
+    if otros:
+        fu.append([f"+{otros} notas de medios en coreano", ""])
+    def fila(x, ks):
+        return [str(x.get(k, "")) for k in ks] if isinstance(x, dict) else [str(i) for i in (list(x) + ["", "", ""])[:len(ks)]]
+    return {"codigo": "BOL-" + hecho["id"][-6:].upper(), "titulo": R.get("titulo", ""),
+            "meta": [["BOLETÍN", "001"], ["FECHA DEL HECHO", dt.datetime.fromtimestamp(hecho["primera"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y").upper()],
+                     ["CORTE", ahora.strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Seguimiento"]],
+            "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts,
+            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"),
+            "operativa": R.get("operativa", ""), "acciones": [fila(a, ("accion", "responsable_sugerido", "plazo")) for a in R.get("acciones", [])][:4],
+            "trazabilidad": [fila(t, ("dimension", "hallazgo", "estado")) for t in R.get("trazabilidad", [])], "cronologia": [fila(c, ("cuando", "que"))[:2] for c in R.get("cronologia", [])],
+            "reconstruccion": R.get("reconstruccion", ""), "vacios": [str(v) for v in R.get("vacios", [])],
+            "metodo": f"Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países ({len(res['fuentes'])} notas halladas, {len(lei)} leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA ({res['ia']}); requiere revisión humana antes de circular.",
+            "fuentes": fu}
+
+
 # ---------------------------------------------------------------- orquestación
 def investigar(hecho, max_leer=24, log=print):
     t0 = time.time(); vistos = {}; qlog = []
@@ -358,14 +434,14 @@ if __name__ == "__main__":
     json.dump(res, open(f"{SALIDA}/{hid.replace(':', '_')}.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     if isinstance(res["analisis"], dict) and "error_json" not in res["analisis"]:
         try:
-            red, prov = redactar(H, res["analisis"], fuentes, res["lugares"])
-            print("REDACCION:", "ok" if red else prov)
-            if red:
-                A = armar_informe(H, res, fuentes, red)
-                ruta = f"{SALIDA}/{hid.replace(':', '_')}_informe.json"
-                json.dump(A, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-                import informe_ampliatorio_v3 as ia
-                ia.build(ruta, "datos/v3/hechos.json", f"{SALIDA}/{hid.replace(':', '_')}_SITREP.pdf")
+            R, prov = redactar_boletin(H, res["analisis"])
+            print("REDACCION:", "ok" if R else prov)
+            if R:
+                B = armar_boletin(H, res, fuentes, R)
+                ruta = f"{SALIDA}/{hid.replace(':', '_')}_boletin.json"
+                json.dump(B, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+                import boletin_v3
+                boletin_v3.build(B, f"{SALIDA}/{hid.replace(':', '_')}_BOLETIN.pdf")
                 print("PDF generado")
         except Exception:
             import traceback; traceback.print_exc()
