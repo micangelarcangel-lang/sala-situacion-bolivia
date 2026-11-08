@@ -1,0 +1,192 @@
+{
+ "tipo": "epi_ira",
+ "codigo": "EPI-IRA-SE40",
+ "titulo": "Infecciones respiratorias agudas e influenza · Bolivia · SE 40",
+ "meta": [
+  [
+   "BOLETÍN",
+   "SE 40"
+  ],
+  [
+   "PERIODO",
+   "4 de octubre al 10 de octubre 2026"
+  ],
+  [
+   "CORTE",
+   "08 NOV 2026 · 08:15 BOT"
+  ],
+  [
+   "ESTADO",
+   "Vigilancia activa"
+  ]
+ ],
+ "sintesis": "En la SE 40 (4 de octubre al 10 de octubre 2026) el país notificó 87.877 casos de infecciones respiratorias agudas. +20.6% respecto de la semana anterior (72.881). Las tasas semanales más altas están en Chuquisaca (13,3‰), Potosí (13,1‰), Oruro (10,7‰) por 1.000 habitantes. La circulación viral predominante es por influenza tipo AH3N2. Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.",
+ "kpis": [
+  [
+   "87.877",
+   "casos de IRA, SE 40"
+  ],
+  [
+   "+20,6%",
+   "frente a la semana anterior"
+  ],
+  [
+   "7,3‰",
+   "tasa semanal por 1.000 hab."
+  ],
+  [
+   "S/D",
+   "dosis de vacuna antiinfluenza esta semana"
+  ]
+ ],
+ "curva": [
+  [
+   34,
+   79823.0
+  ],
+  [
+   36,
+   78153.0
+  ],
+  [
+   38,
+   74483.0
+  ],
+  [
+   39,
+   72881.0
+  ],
+  [
+   40,
+   87877.0
+  ]
+ ],
+ "deptos": [
+  {
+   "depto": "Chuquisaca",
+   "acum": 253042.0,
+   "tasa_acum": 405.0,
+   "casos39": 7357.0,
+   "tasa39": 11.8,
+   "casos40": 5586.0,
+   "tasa40": 8.9,
+   "casos41": 8314.0,
+   "tasa41": 13.3
+  },
+  {
+   "depto": "Potosí",
+   "acum": 373750.0,
+   "tasa_acum": 419.0,
+   "casos39": 9615.0,
+   "tasa39": 10.8,
+   "casos40": 7928.0,
+   "tasa40": 8.9,
+   "casos41": 11695.0,
+   "tasa41": 13.1
+  },
+  {
+   "depto": "Oruro",
+   "acum": 202343.0,
+   "tasa_acum": 340.0,
+   "casos39": 6023.0,
+   "tasa39": 10.1,
+   "casos40": 5953.0,
+   "tasa40": 10.0,
+   "casos41": 6380.0,
+   "tasa41": 10.7
+  },
+  {
+   "depto": "Tarija",
+   "acum": 250072.0,
+   "tasa_acum": 450.0,
+   "casos39": 6632.0,
+   "tasa39": 11.9,
+   "casos40": 5978.0,
+   "tasa40": 10.7,
+   "casos41": 5609.0,
+   "tasa41": 10.1
+  },
+  {
+   "depto": "La Paz",
+   "acum": 657508.0,
+   "tasa_acum": 210.0,
+   "casos39": 17919.0,
+   "tasa39": 5.7,
+   "casos40": 18859.0,
+   "tasa40": 6.0,
+   "casos41": 24233.0,
+   "tasa41": 7.8
+  },
+  {
+   "depto": "Cochabamba",
+   "acum": 578494.0,
+   "tasa_acum": 270.0,
+   "casos39": 12284.0,
+   "tasa39": 5.7,
+   "casos40": 11828.0,
+   "tasa40": 5.5,
+   "casos41": 14787.0,
+   "tasa41": 6.9
+  },
+  {
+   "depto": "Pando",
+   "acum": 40499.0,
+   "tasa_acum": 271.0,
+   "casos39": 825.0,
+   "tasa39": 5.5,
+   "casos40": 976.0,
+   "tasa40": 6.5,
+   "casos41": 1002.0,
+   "tasa41": 6.7
+  },
+  {
+   "depto": "Santa Cruz",
+   "acum": 723881.0,
+   "tasa_acum": 216.0,
+   "casos39": 11120.0,
+   "tasa39": 3.3,
+   "casos40": 13295.0,
+   "tasa40": 4.0,
+   "casos41": 13687.0,
+   "tasa41": 4.1
+  },
+  {
+   "depto": "Beni",
+   "acum": 132414.0,
+   "tasa_acum": 243.0,
+   "casos39": 2708.0,
+   "tasa39": 5.0,
+   "casos40": 2478.0,
+   "tasa40": 4.6,
+   "casos41": 2170.0,
+   "tasa41": 4.0
+  }
+ ],
+ "vacuna": null,
+ "edad": null,
+ "virus": "La circulación viral predominante es por influenza tipo AH3N2.",
+ "url": "https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1059-boletin-epidemiologico-semana-epidemiologica-no-40?Itemid=465",
+ "metodo": "Cifras leídas automáticamente del Boletín Epidemiológico N° 40 (PDF público del Ministerio de Salud y Deportes) y de las 7 ediciones anteriores para la curva semanal. No hay estimaciones propias; verificar contra el PDF original.",
+ "fuentes": [
+  [
+   "Boletín epidemiológico SE 34",
+   ""
+  ],
+  [
+   "Boletín epidemiológico SE 36",
+   ""
+  ],
+  [
+   "Boletín epidemiológico SE 38",
+   ""
+  ],
+  [
+   "Boletín epidemiológico SE 39",
+   ""
+  ],
+  [
+   "Boletín epidemiológico SE 40",
+   ""
+  ]
+ ]
+}
