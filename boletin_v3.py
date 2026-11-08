@@ -33,7 +33,7 @@ def _hav(a, b):
 def mapa(pts):
     """Cada versión del lugar que dan las fuentes, ubicada; la distancia entre versiones dice si hablan de la misma zona."""
     gm = json.load(open("docs/geo_mun.geojson", encoding="utf-8"))
-    fig, ax = plt.subplots(figsize=(4.6, 3.0)); fig.patch.set_facecolor("white")
+    fig, ax = plt.subplots(figsize=(4.6, 2.35)); fig.patch.set_facecolor("white")
     la = [p["lat"] for p in pts]; lo = [p["lon"] for p in pts]; pad = max(.006, (max(la) - min(la)) * .35, (max(lo) - min(lo)) * .35)
     cx, cy = sum(lo) / len(lo), sum(la) / len(la)
     pol = lambda g: [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
@@ -62,13 +62,13 @@ def mapa(pts):
 
 def esquema(vehiculo="CAMIÓN DE CARGA", victima="CICLISTA"):
     """Esquema ilustrativo de la interacción vial (no reproduce la escena)."""
-    fig, ax = plt.subplots(figsize=(7.2, 1.7)); fig.patch.set_facecolor("white")
+    fig, ax = plt.subplots(figsize=(7.2, 1.25)); fig.patch.set_facecolor("white")
     ax.set_xlim(0, 100); ax.set_ylim(0, 24); ax.axis("off")
     ax.add_patch(Rectangle((0, 3), 100, 18, fc="#e4e7ec", ec="none"))
     for x in range(2, 100, 10): ax.plot([x, x + 5], [12, 12], color="white", lw=2)
     ax.add_patch(Rectangle((0, 3), 100, 1.2, fc="#aab4c0", ec="none")); ax.add_patch(Rectangle((0, 19.8), 100, 1.2, fc="#aab4c0", ec="none"))
     ax.add_patch(Rectangle((8, 13.6), 30, 5.2, fc="#5d7186", ec="white", lw=1.2)); ax.add_patch(Rectangle((8, 13.6), 8, 5.2, fc="#3c4c5c", ec="white", lw=1.2))
-    ax.text(27, 16.2, vehiculo, color="white", fontsize=7, ha="center", va="center", fontweight="bold")
+    ax.text(27, 16.2, vehiculo, color="white", fontsize=7 if len(vehiculo) < 17 else 5.6, ha="center", va="center", fontweight="bold")
     ax.add_patch(FancyArrowPatch((39, 16.2), (58, 16.2), arrowstyle="-|>", mutation_scale=10, color="#5d7186", lw=1.4))
     ax.add_patch(Circle((70, 7.2), 1.6, fc="none", ec=AZUL, lw=1.6)); ax.add_patch(Circle((77, 7.2), 1.6, fc="none", ec=AZUL, lw=1.6)); ax.plot([70, 73.5, 77], [7.2, 9.6, 7.2], color=AZUL, lw=1.6)
     ax.text(73.5, 4.6, victima, color=AZUL, fontsize=7, ha="center", fontweight="bold")
@@ -113,7 +113,7 @@ def build(B, salida):
     # mapa + identificación
     izq = [Paragraph("LOCALIZACIÓN: VERSIONES DE LOS REPORTES", H2)]
     if len(B.get("puntos", [])) >= 2:
-        izq += [eg.imagen(mapa(B["puntos"]), W * .60), Paragraph("<font color='%s'><b>Azul</b></font>: versión inicial · <font color='%s'><b>rojo</b></font>: versión posterior. Ubicación de referencia por OpenStreetMap, no coordenada confirmada del impacto. " % (AZUL, ROJO) + e(B.get("nota_mapa", "")), TS)]
+        izq += [eg.imagen(mapa(B["puntos"]), W * .58), Paragraph(("<font color='%s'><b>Azul</b></font>: versión inicial · <font color='%s'><b>rojo</b></font>: versión posterior. " % (AZUL, ROJO) if any(p.get("version") == "B" for p in B["puntos"]) else "") + "Ubicación de referencia por OpenStreetMap, no coordenada confirmada del impacto. " + e(B.get("nota_mapa", "")), TS)]
     else:
         izq += [Paragraph("No hay dos o más lugares ubicados con precisión; el punto exacto requiere croquis policial.", TS)]
     der = [Paragraph("IDENTIFICACIÓN", H2), Paragraph("<b>%s</b>" % e(B["victima"]["nombre"]), P("n", fontSize=10, leading=12.5, textColor=colors.HexColor(AZUL))), Paragraph(e(B["victima"]["detalle"]), TB), Spacer(1, 2 * mm)]
@@ -127,21 +127,18 @@ def build(B, salida):
     S += [_tab([[Paragraph(str(i + 1), TB), Paragraph(e(a[0]), TB), Paragraph(e(a[1]), TB), Paragraph("<b>%s</b>" % e(a[2]), TB)] for i, a in enumerate(B["acciones"])], [6 * mm, W - 6 * mm - 44 * mm - 16 * mm, 44 * mm, 16 * mm], ["#", "Acción", "Responsable sugerido", "Plazo"])]
     # página 2
     S += [PageBreak(), Paragraph("TRAZABILIDAD DEL HECHO", H2)]
-    S += [_tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB), Paragraph('<font color="%s">%s</font>' % (estado_color(c), e(c)), TB)] for a, b, c in B["trazabilidad"]], [28 * mm, W - 28 * mm - 55 * mm, 55 * mm], ["DIMENSIÓN", "HALLAZGO CONSOLIDADO", "ESTADO / VACÍO"])]
+    S += [_tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB), Paragraph('<font color="%s">%s</font>' % (estado_color(c), e(c)), TB)] for a, b, c in B["trazabilidad"]], [33 * mm, W - 33 * mm - 58 * mm, 58 * mm], ["DIMENSIÓN", "HALLAZGO CONSOLIDADO", "ESTADO / VACÍO"])]
     S += [Paragraph("RECONSTRUCCIÓN CRONOLÓGICA", H2), _tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB)] for a, b in B["cronologia"]], [30 * mm, W - 30 * mm], ["CUÁNDO", "QUÉ"])]
     S += [Paragraph("RECONSTRUCCIÓN PRELIMINAR", H2), Paragraph(e(B["reconstruccion"]), T), Paragraph("<b>Vacíos prioritarios:</b> " + e("; ".join(B["vacios"])) + ".", T)]
     # fuentes y método reducidos
-    fu = B.get("fuentes", [])
-    mitad = (len(fu) + 1) // 2
-    filas = []
-    for i in range(mitad):
-        r = []
-        for k in (i, i + mitad):
-            r.append(Paragraph("%s · %s" % (e(fu[k][0]), e(fu[k][1])), ROT) if k < len(fu) else Paragraph("", ROT))
-        filas.append(r)
+    vis = {}
+    for n, f in B.get("fuentes", []):
+        vis.setdefault(n, f)
+    fu = list(vis.items()); nc = 3; filas_n = (len(fu) + nc - 1) // nc
+    filas = [[Paragraph("%s · %s" % (e(fu[k][0]), e(fu[k][1])) if k < len(fu) else "", ROT) for k in (i, i + filas_n, i + 2 * filas_n)] for i in range(filas_n)]
     S += [Paragraph("FUENTES Y MÉTODO", H2), Paragraph(e(B["metodo"]), TS)]
     if filas:
-        t = Table(filas, colWidths=[W / 2] * 2); t.setStyle(TableStyle([("TOPPADDING", (0, 0), (-1, -1), 1), ("BOTTOMPADDING", (0, 0), (-1, -1), 1), ("LEFTPADDING", (0, 0), (-1, -1), 0)])); S += [t]
+        t = Table(filas, colWidths=[W / 3] * 3); t.setStyle(TableStyle([("TOPPADDING", (0, 0), (-1, -1), 1), ("BOTTOMPADDING", (0, 0), (-1, -1), 1), ("LEFTPADDING", (0, 0), (-1, -1), 0)])); S += [t]
     doc = SimpleDocTemplate(salida, pagesize=A4, leftMargin=13 * mm, rightMargin=13 * mm, topMargin=12 * mm, bottomMargin=13 * mm, title=B["titulo"], author="Sala de Situación Bolivia")
     doc.build(S, onFirstPage=pie, onLaterPages=pie)
 

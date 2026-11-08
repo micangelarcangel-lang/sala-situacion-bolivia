@@ -338,12 +338,19 @@ def armar_boletin(hecho, res, fuentes, R, log=print):
     ahora = dt.datetime.now(dt.timezone(dt.timedelta(hours=-4)))
     pts = []
     for v in R.get("versiones_lugar", [])[:4]:
-        g = nominatim(str(v.get("consulta", "")), (hecho.get("lugar") or "El Alto").split(",")[0])
-        if "lat" in g:
-            pts.append({"nombre": str(v.get("nombre_corto", v.get("consulta")))[:40], "lat": g["lat"], "lon": g["lon"], "version": "B" if str(v.get("version")).upper() == "B" else "A"})
-    if len(pts) < 2:  # respaldo: lugares hallados por reglas
+        ciudad = (hecho.get("lugar") or "El Alto").split(",")[0]
+        cand = [str(v.get("consulta", "")), str(v.get("nombre_corto", "")), re.sub(r"(?i)^(av\.?|avenida|calle|sector|zona)\s+", "", str(v.get("nombre_corto", "")))]
+        for q in dict.fromkeys(c for c in cand if len(c) > 3):
+            g = nominatim(q, ciudad)
+            if "lat" in g and distancia_km((g["lat"], g["lon"]), (hecho.get("lat") or g["lat"], hecho.get("lon") or g["lon"])) < 25:
+                pts.append({"nombre": str(v.get("nombre_corto", q))[:40], "lat": g["lat"], "lon": g["lon"], "version": "B" if str(v.get("version")).upper() == "B" else "A"}); break
+    if len(pts) < 1:  # respaldo: lugares hallados por reglas
         pts = [{"nombre": g["consulta"][:40], "lat": g["lat"], "lon": g["lon"], "version": "A"} for g in res["lugares"] if "lat" in g][:4]
     vic = R.get("victima", {}) or {}
+    conductor = json.dumps((res.get("analisis") or {}).get("hecho", {}).get("conductor", {}), ensure_ascii=False).lower()
+    if any(w in conductor for w in ("aprehend", "detenci", "detenid")):
+        R["kpis"] = [[("1" if (k[0] == "0" and "prehend" in str(k[1]).lower()) else k[0]), k[1]] for k in R.get("kpis", [])]
+    sin_ubicar = [str(v.get("nombre_corto", "")) for v in R.get("versiones_lugar", []) if str(v.get("nombre_corto", "")) not in [p["nombre"] for p in pts]]
     furl, fmedio = og_imagen(fuentes, vic.get("nombre", ""), log)
     lei = [f for f in fuentes if f.get("leida")]
     lat = [f for f in lei if not re.search(r"[\uac00-\ud7af]", f["medio"])]
@@ -356,7 +363,7 @@ def armar_boletin(hecho, res, fuentes, R, log=print):
     return {"codigo": "BOL-" + hecho["id"][-6:].upper(), "titulo": R.get("titulo", ""),
             "meta": [["BOLETÍN", "001"], ["FECHA DEL HECHO", dt.datetime.fromtimestamp(hecho["primera"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y").upper()],
                      ["CORTE", ahora.strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Seguimiento"]],
-            "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts,
+            "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts, "nota_mapa": ("No se pudo ubicar en OpenStreetMap: " + ", ".join(sin_ubicar) + ".") if sin_ubicar else "",
             "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"),
             "operativa": R.get("operativa", ""), "acciones": [fila(a, ("accion", "responsable_sugerido", "plazo")) for a in R.get("acciones", [])][:4],
             "trazabilidad": [fila(t, ("dimension", "hallazgo", "estado")) for t in R.get("trazabilidad", [])], "cronologia": [fila(c, ("cuando", "que"))[:2] for c in R.get("cronologia", [])],
