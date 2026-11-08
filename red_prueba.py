@@ -1,6 +1,9 @@
 """Qué servicios de IA y de coordenadas se alcanzan desde Actions (código, tipo y primeros bytes de la respuesta)."""
 import urllib.request, urllib.error, json
-HOSTS = ["https://models.github.ai/catalog/models", "https://generativelanguage.googleapis.com/v1beta/models", "https://api.groq.com/openai/v1/models",
+HOSTS = [
+         "https://tile.openstreetmap.org/15/10179/17908.png", "https://a.basemaps.cartocdn.com/rastertiles/voyager/15/10179/17908.png",
+         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/15/17908/10179", "https://fonts.googleapis.com/css2?family=Inter", "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png",
+"https://models.github.ai/catalog/models", "https://generativelanguage.googleapis.com/v1beta/models", "https://api.groq.com/openai/v1/models",
          "https://openrouter.ai/api/v1/models", "https://api.anthropic.com/v1/models", "https://api.openai.com/v1/models", "https://huggingface.co/api/models?limit=1",
          "https://nominatim.openstreetmap.org/search?q=El+Alto,+Bolivia&format=json&limit=1", "https://overpass-api.de/api/status", "https://news.google.com/rss/search?q=ciclista+El+Alto&hl=es-419&gl=BO&ceid=BO:es-419",
          "https://example.com/", "https://eldeber.com.bo/", "https://www.reduno.com.bo/"]
