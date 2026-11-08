@@ -20,6 +20,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOTXpUaTlIWWxxQ1RKSksybDdWXzZaYnppTDlVdHZiREFyYzRYMFYzNG9zR29nZE4tbTVsYVA2cWtSQk10NnpKX19zRGRPWFJjNF9PR0ZqYkYxMktieFhCbjB5SVNqRnFNWVdkWm1Zc2w5a0ZyU2tWX1hPRHJvV2JUVHB6TGU2OVRfUlVZVjlMT29xWmhCWndkYzlTcWFrQXlQd3g0LWZnVQ?oc=5 | https://news.google.com/rss/articles/CBMilgFBVV95cUxOVUVzX1NHd1FVYm5femN5cGNQSS0tWXB2UnROT2xfSkZDUGdmWjQ5TkRkWDlKN1ZSSjNONVprTERWV0x0dmpUZmZCX1lVQ1lMQ1U1SktBWERsX2V5RHRBSEJ6RGVaV29EaU8xR2pDNElyMzRhakZGYTdpdEpzZXZEWmlLZXJmUlRXOG13MEF2MWd0TXdnNFE?oc=5 | https://news.google.com/rss/articles/CBMivgFBVV95cUxPV2o0aDNWalpDTDBoQzRJSF8yLTZ4MGNaYlFyMGxma3hiSC1NM3dLNGx2R2dhOGp6MU4xRzZnY0I3UEhITTc1cFNCNzctZVpLbGNDS1FhT2tQNnZXb2JEXzF3N2xVZ3BTQm5YYzhMaUJsbkhQNGY0U293a3BYYUUzX01ER283VThkS3NlV2Vid3ZMLTRxYTJfU1FFMkd5bHB3VXgtdGhuMm1oWnZHd182SUwweVpxNlB3dkFlWWRR?oc=5"
  },
  {
+  "hecho_id": "noticia:h9uvwl",
+  "fecha_hora_local": "2026-11-07 23:59",
+  "ts_ms": 1794110347000,
+  "titulo": "Epsas activa atención solidaria y suministra agua potable a comunidad afectada por la sequía en Viacha - eju.tv",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 3,
+  "fuentes": "ABI - Agencia Boliviana de Información; La Patria Bolivia; eju.tv",
+  "lat": -16.742,
+  "lon": -68.313,
+  "lugar": "Viacha, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Viacha",
+  "enlaces": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNZ0FmbFpfMHdKdG42dXdKSnhtSTROUy1qVUdHMUU1RzVtTjV5V1ZwVjVzZTE0ZXhXOVRPWFhzRVZGUTQxSl9McFJXbDI2X29jNUI3QnBnbWo1ekczWHZZWXNyOG1VdkRsOWxBSExuMW9xR3MzenU3WGM0ZDBEeklFczRVOWhjeXJ5dHlMOERRMWREeEowbDRwSmY0UWxneXVMcFdZNXZtUFZlbVB3WXQ0c3Ric2ozd3owX3dNVTVtaFh2SDF3?oc=5 | https://news.google.com/rss/articles/CBMiugFBVV95cUxNVVh1ZjRkQ0JpSmIydEs5ODRaSEtIQ1dzMmZUUGFFalgxRU5aR2dzelZyZVk0XzZTUTRvanBqMjVCN0o1a3Y5WGVINUE3eU1aNkFoeHEzTEp1ZWh0eTc4N25idjh3R040QnJKaG41OHZ2dDdZZm5tZUtodThjLUdvZlpLUVNLS21CTDh5dHNXNUZNUXZrU3haeGdGaUhMMkV3T2dzdXFIMmNJc3VWOUFYRUZsNXl3SzdmT0E?oc=5 | https://news.google.com/rss/articles/CBMinwFBVV95cUxNeV9PUjdhZFZoR3Z4MVQ1OFIxVzFGOFlINk91SUptc0FOOFk5Rk9SS2VuTnJuTE5XRnZqT2R1SW9pa1JoTkFoQ012LWdFbDFtTG1fcnkwSnFfVi1XXzVXWXM3RWkwZkJJcmlGZ0tVTUN3UF9BcXhaeUdRWGdlY2ZlSVU3eWdiX0szdF9DdWVxVnhBS2hZcjJVMHYwcUljSmc?oc=5"
+ },
+ {
   "hecho_id": "noticia:1t4lkre",
   "fecha_hora_local": "2026-11-07 22:26",
   "ts_ms": 1794104796000,
@@ -78,26 +98,6 @@
   "departamento": "Pando",
   "municipio": "Cobija",
   "enlaces": "https://open-meteo.com/"
- },
- {
-  "hecho_id": "noticia:1vt2o7h",
-  "fecha_hora_local": "2026-11-07 21:17",
-  "ts_ms": 1794100627000,
-  "titulo": "Epsas activa atención solidaria y suministra agua potable a comunidad afectada por la sequía en Viacha - ABI - Agencia Boliviana de Información",
-  "tipo_amenaza": "climatológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 2,
-  "fuentes": "ABI - Agencia Boliviana de Información; La Patria Bolivia",
-  "lat": -16.742,
-  "lon": -68.313,
-  "lugar": "Viacha, La Paz",
-  "departamento": "La Paz",
-  "municipio": "Viacha",
-  "enlaces": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNVVh1ZjRkQ0JpSmIydEs5ODRaSEtIQ1dzMmZUUGFFalgxRU5aR2dzelZyZVk0XzZTUTRvanBqMjVCN0o1a3Y5WGVINUE3eU1aNkFoeHEzTEp1ZWh0eTc4N25idjh3R040QnJKaG41OHZ2dDdZZm5tZUtodThjLUdvZlpLUVNLS21CTDh5dHNXNUZNUXZrU3haeGdGaUhMMkV3T2dzdXFIMmNJc3VWOUFYRUZsNXl3SzdmT0E?oc=5 | https://news.google.com/rss/articles/CBMinwFBVV95cUxNeV9PUjdhZFZoR3Z4MVQ1OFIxVzFGOFlINk91SUptc0FOOFk5Rk9SS2VuTnJuTE5XRnZqT2R1SW9pa1JoTkFoQ012LWdFbDFtTG1fcnkwSnFfVi1XXzVXWXM3RWkwZkJJcmlGZ0tVTUN3UF9BcXhaeUdRWGdlY2ZlSVU3eWdiX0szdF9DdWVxVnhBS2hZcjJVMHYwcUljSmc?oc=5"
  },
  {
   "hecho_id": "gdacs:WF1033609:0",
