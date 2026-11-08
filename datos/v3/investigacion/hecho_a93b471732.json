@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:a93b471732",
- "generado": "2026-11-08T10:51:40.348687+00:00",
- "segundos": 595,
+ "generado": "2026-11-08T11:00:33.618248+00:00",
+ "segundos": 357,
  "consultas": [
   [
    1,
@@ -70,37 +70,37 @@
   ],
   [
    2,
-   "Omereque sequia desastre emergencia agua ganado [es-419]",
+   "sequia Omereque Cochabamba ganado emergencia [es-419]",
+   2
+  ],
+  [
+   2,
+   "Cono Sur Cochabamba desastre sequia cisternas [es-419]",
+   2
+  ],
+  [
+   2,
+   "Gobernacion Cochabamba emergencia sequia Pasorapa Omereque [es-419]",
    1
   ],
   [
    2,
-   "Cochabamba cono sur sequia ley emergencia [es-419]",
-   1
+   "Defensa Civil sequia Cochabamba forraje agua [es-419]",
+   2
   ],
   [
    2,
-   "Omereque Cochabamba sequia perdida cultivos ganado [es-419]",
-   1
+   "site:abi.bo sequia Cochabamba Omereque [es-419]",
+   3
   ],
   [
    2,
-   "Viceministerio de Defensa Civil Cochabamba Omereque sequia [es-419]",
-   1
-  ],
-  [
-   2,
-   "ABI sequia Cochabamba Omereque Cono Sur [es-419]",
-   1
-  ],
-  [
-   2,
-   "El Deber sequia Cochabamba Pasorapa Omereque [es-419]",
+   "site:eldeber.com.bo sequia Cochabamba Cono Sur [es-419]",
    0
   ],
   [
    2,
-   "Omereque Aiquile sequia cisternas forraje ayuda [es-419]",
+   "site:erbol.com.bo sequia Omereque Pasorapa [es-419]",
    0
   ],
   [
@@ -121,7 +121,7 @@
   [
    2,
    "Gobernación de Cochabamba [es]",
-   19
+   18
   ],
   [
    2,
@@ -131,7 +131,7 @@
   [
    2,
    "Manfred Reyes Villa [es]",
-   17
+   16
   ],
   [
    2,
@@ -139,27 +139,18 @@
    0
   ]
  ],
- "descartadas_por_ruido": 70,
- "n_fuentes": 31,
- "n_leidas": 30,
+ "descartadas_por_ruido": 89,
+ "n_fuentes": 15,
+ "n_leidas": 15,
  "nombres_propios": [
   "Asamblea Legislativa Departamental de Cochabamba",
   "Gobernación de Cochabamba",
   "Manfred Reyes Villa",
-  "Alcaldía de Omereque",
-  "Asamblea Legislativa Departamental",
-  "Edwin Jiménez"
+  "Viceministerio de Defensa Civil Bolivia",
+  "Edwin Jiménez",
+  "Asamblea Legislativa Departamental"
  ],
- "lugares": [
-  {
-   "consulta": "sector de Ivirizu",
-   "sin_resultado": true
-  },
-  {
-   "consulta": "calle Venezuela",
-   "sin_resultado": true
-  }
- ],
+ "lugares": [],
  "oficiales": {
   "lluvia": {
    "fechas": [
@@ -245,19 +236,23 @@
  "ia": "gemini/gemini-3.8-flash",
  "analisis": {
   "hecho": {
-   "fecha": "2026-11-03",
+   "fecha": null,
    "hora": null,
    "lugar_versiones": [
     {
-     "texto": "Río Pajcha, sector Ivirizu, camino a Yungas de Vandiola, municipio de Totora",
+     "texto": "Municipio de Omereque, provincia Campero, Cono Sur del departamento de Cochabamba",
      "fuentes": [
-      "EL DÍA - Noticias de Bolivia para el mundo"
+      "Los Tiempos",
+      "Opinión Bolivia",
+      "La Patria Bolivia",
+      "Red Uno",
+      "eju.tv"
      ]
     }
    ],
    "victima": {
-    "nombre": "Bacilia Antezana Rojas",
-    "edad": 21,
+    "nombre": null,
+    "edad": null,
     "nacionalidad": null
    },
    "vehiculo": null,
@@ -268,98 +263,117 @@
   },
   "instituciones": [
    {
-    "nombre": "Gobierno Autónomo Municipal de Totora",
-    "que_hizo": "Tomó conocimiento el martes de la desaparición de la joven; su alcalde acudió a la Gobernación a pedir ayuda y funcionarios municipales participaron en el operativo de búsqueda y rescate.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
+    "nombre": "Gobierno Autónomo Departamental de Cochabamba",
+    "que_hizo": "Emitió el Decreto Departamental N° 6526 el 30 de octubre de 2026 declarando Emergencia Departamental ante la Sequía y gestionó modificaciones presupuestarias para atender a municipios afectados, incluyendo Omereque",
+    "fuente": "Opinión Bolivia"
    },
    {
-    "nombre": "Gobernación de Cochabamba (Unidad de Gestión de Riesgos Departamental)",
-    "que_hizo": "Recibió la solicitud de ayuda del alcalde de Totora para buscar a la persona desaparecida.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
+    "nombre": "Asamblea Legislativa Departamental de Cochabamba (ALDC)",
+    "que_hizo": "Aprobó la ley departamental que declara emergencia departamental por sequía y autoriza el uso de una cartera de Bs 1,3 millones para atender municipios como Omereque",
+    "fuente": "Opinión Bolivia"
    },
    {
-    "nombre": "SAR-Bolivia",
-    "que_hizo": "Fue convocado/solicitado por el alcalde de Totora para apoyar en la búsqueda.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
-   },
-   {
-    "nombre": "Defensa Civil",
-    "que_hizo": "Fue convocada/solicitada por el alcalde de Totora para apoyar en la búsqueda.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
-   },
-   {
-    "nombre": "Bomberos",
-    "que_hizo": "Participaron en el operativo de búsqueda y rescate que halló el cuerpo de la joven.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
-   },
-   {
-    "nombre": "Policía",
-    "que_hizo": "Participó en el operativo de búsqueda y rescate que recuperó el cuerpo.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
-   },
-   {
-    "nombre": "Hospital de Totora",
-    "que_hizo": "Recibió el cuerpo de la joven antes de ser entregado a la familia.",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo"
+    "nombre": "Gobierno Autónomo Municipal de Omereque",
+    "que_hizo": "Se declaró previamente en desastre / emergencia municipal por condiciones climáticas adversas y falta de agua",
+    "fuente": "La Patria Bolivia"
    }
   ],
   "cronologia": [
    {
-    "cuando": "Martes 03/11/2026",
-    "que": "Bacilia Antezana Rojas resbala de un sector rocoso, cae al río Pajcha y es arrastrada por aguas caudalosas durante un paseo familiar; la Alcaldía de Totora toma conocimiento del hecho.",
+    "cuando": "30/10/2026",
+    "que": "Se reporta que una cisterna se encuentra en Omereque, mientras la Gobernación gestiona recursos ante la ALDC para atender la emergencia en el municipio",
     "fuentes": [
-     "EL DÍA - Noticias de Bolivia para el mundo"
+     "Los Tiempos"
     ]
    },
    {
-    "cuando": "Miércoles 04/11/2026",
-    "que": "El alcalde de Totora, Wilder Castellón, acude a la Gobernación de Cochabamba para solicitar apoyo a Gestión de Riesgos, SAR-Bolivia y Defensa Civil.",
+    "cuando": "30/10/2026",
+    "que": "El Órgano Ejecutivo de la Gobernación emite el Decreto Departamental N° 6526 que declara Emergencia Departamental ante la Sequía",
     "fuentes": [
-     "EL DÍA - Noticias de Bolivia para el mundo"
+     "Opinión Bolivia"
     ]
    },
    {
-    "cuando": "Jueves 05/11/2026 (o previo a la publicación)",
-    "que": "Bomberos, policías, funcionarios municipales y comunarios hallan el cuerpo sin vida de la joven tras varias horas de búsqueda y lo trasladan al hospital de Totora.",
+    "cuando": "02/11/2026",
+    "que": "La ALDC prepara el tratamiento del proyecto de ley de declaratoria de emergencia que incluye a Omereque con asignación inicial de Bs 1,3 millones",
     "fuentes": [
-     "EL DÍA - Noticias de Bolivia para el mundo"
+     "La Patria Bolivia",
+     "eju.tv"
+    ]
+   },
+   {
+    "cuando": "03/11/2026 06:00",
+    "que": "La Comisión de Medio Ambiente de la ALD revisa y aprueba el proyecto de ley de emergencia por sequía",
+    "fuentes": [
+     "La Patria Bolivia"
+    ]
+   },
+   {
+    "cuando": "03/11/2026",
+    "que": "La ALDC aprueba la Ley Departamental que declara Emergencia Departamental ante la Sequía y autoriza uso de Bs 1,3 millones para atención inmediata de Omereque y otros municipios",
+    "fuentes": [
+     "Opinión Bolivia",
+     "La Patria Bolivia"
     ]
    }
   ],
   "afirmaciones": [
    {
-    "dato": "Causa del deceso",
-    "valor": "Caída accidental al río Pajcha tras resbalar de una zona rocosa y ser arrastrada por la corriente",
+    "dato": "Presencia de cisterna de auxilio en Omereque",
+    "valor": "Una cisterna se encuentra en Omereque",
     "fuentes": [
-     "EL DÍA - Noticias de Bolivia para el mundo"
+     "Los Tiempos"
     ],
     "estado": "fuente_unica",
-    "detalle": "Atribuido por el medio al alcalde de Totora, Wilder Castellón."
+    "detalle": "Atribuido al asambleísta Edwin Jiménez el 30 de octubre."
    },
    {
-    "dato": "Lugar específico del accidente",
-    "valor": "Sector de Ivirizu, río Pajcha, camino a Yungas de Vandiola, municipio de Totora",
+    "dato": "Paralización de represa en Omereque",
+    "valor": "Represa con inversión de Bs 140 millones cuya entrega estaba prevista hace un año se encuentra paralizada",
     "fuentes": [
-     "EL DÍA - Noticias de Bolivia para el mundo"
+     "Los Tiempos"
     ],
     "estado": "fuente_unica",
-    "detalle": "Afirmado por EL DÍA según antecedentes y reporte municipal."
+    "detalle": "Cuestionado y afirmado por el asambleísta Edwin Jiménez."
    },
    {
-    "dato": "Identidad y edad de la víctima",
-    "valor": "Bacilia Antezana Rojas, 21 años",
+    "dato": "Declaratoria de desastre municipal en Omereque",
+    "valor": "Omereque ya emitió su declaratoria de desastre / emergencia previa por condiciones climáticas adversas",
     "fuentes": [
-     "EL DÍA - Noticias de Bolivia para el mundo"
+     "La Patria Bolivia",
+     "eju.tv"
     ],
-    "estado": "fuente_unica",
-    "detalle": "Identificada plenamente por el reporte de rescate."
+    "estado": "coincide",
+    "detalle": "Señalan que Omereque cuenta con ley de declaratoria de emergencia/desastre y agotó recursos."
+   },
+   {
+    "dato": "Inclusión de Omereque en la Ley de Emergencia Departamental",
+    "valor": "Omereque está incluido entre los municipios que recibirán atención inmediata con la asignación de Bs 1,3 millones",
+    "fuentes": [
+     "Opinión Bolivia",
+     "La Patria Bolivia",
+     "eju.tv"
+    ],
+    "estado": "coincide",
+    "detalle": "Opinión Bolivia y La Patria reportan Bs 1,3 millones; eju.tv menciona 1.300 millones en su texto citando a Jiménez."
+   },
+   {
+    "dato": "Ganado en riesgo en la provincia Campero (Aiquile, Omereque y Pasorapa)",
+    "valor": "Alrededor de 40.000 cabezas de ganado en riesgo",
+    "fuentes": [
+     "Los Tiempos",
+     "Red Uno"
+    ],
+    "estado": "coincide",
+    "detalle": "Juan Carlos Loza informó que en la provincia Campero 40.000 animales están en riesgo."
    }
   ],
   "vacios": [
-   "Hora exacta en que ocurrió el accidente el día martes.",
-   "Nacionalidad de la víctima Bacilia Antezana Rojas.",
-   "Causa médica legal formal de la muerte (informe de autopsia o certificación forense del hospital de Totora).",
-   "Hora y día exactos en que fue encontrado y recuperado el cuerpo."
+   "Cantidad exacta y desagregada de familias, comunidades o productores afectados específicamente en el municipio de Omereque",
+   "Cifra oficial y verificada de cabezas de ganado muertas o hectáreas de cultivos perdidas exclusivamente en Omereque",
+   "Fecha exacta de inicio de la sequía y de la emisión de la declaratoria municipal de desastre de Omereque",
+   "Cronograma y fecha efectiva de llegada de cisternas adicionales, tanques o forraje asignados a Omereque con los fondos de la ALDC",
+   "Motivo específico del retraso o paralización de la represa de Bs 140 millones en Omereque"
   ],
   "novedades_ultimas_24h": []
  },
@@ -420,11 +434,44 @@
    "relevante": true
   },
   {
-   "medio": "unitel.bo",
+   "medio": "eju.tv",
    "titulo": "Asamblea de Cochabamba trata este martes Ley de Emergencia por sequía para destinar Bs 1.300 millones al Cono Sur",
-   "url": "https://unitel.bo/noticias/sociedad/asamblea-de-cochabamba-trata-este-martes-ley-de-emergencia-por-sequia-para-destinar-bs-1300-millones-al-cono-sur-KA24533339",
-   "fecha": "02/11 09:18",
-   "pub": 1793625503000,
+   "url": "https://eju.tv/2026/11/asamblea-de-cochabamba-trata-este-martes-ley-de-emergencia-por-sequia-para-destinar-bs-1-300-millones-al-cono-sur/",
+   "fecha": "02/11 12:50",
+   "pub": 1793638236000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "La Patria Bolivia",
+   "titulo": "Cochabamba: Envían 2 cisternas para comunidades afectadas por la sequía",
+   "url": "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/",
+   "fecha": "06/11 18:05",
+   "pub": 1794002743000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Los Tiempos",
+   "titulo": "Semapa lleva agua a comunidades afectadas por la sequía en Aiquile",
+   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261106/semapa-lleva-agua-comunidades-afectadas-sequia-aiquile",
+   "fecha": "06/11 11:39",
+   "pub": 1793979562000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Los Tiempos",
+   "titulo": "Misión cumplida: Manfred llega con agua y forraje a Pasorapa, golpeada por la sequía",
+   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261030/mision-cumplida-manfred-llega-agua-forraje-pasorapa-golpeada-sequia",
+   "fecha": "30/10 03:00",
+   "pub": 1793343600000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -442,44 +489,11 @@
    "relevante": true
   },
   {
-   "medio": "Los Tiempos",
-   "titulo": "Vocero denuncia que existe intentos de desestabilizar la gestión de Loza",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261105/vocero-denuncia-que-existe-intentos-desestabilizar-gestion-loza",
-   "fecha": "05/11 17:35",
-   "pub": 1793914515000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Red Uno",
-   "titulo": "Gobernación de Cochabamba rechaza el 1% de coparticipación tributaria y plantea un 3%",
-   "url": "https://www.reduno.com.bo/noticias/gobernacion-de-cochabamba-rechaza-el-1-de-coparticipacion-tributaria-y-plantea-un-3-202611311539",
-   "fecha": "03/11 13:19",
-   "pub": 1793726365000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
    "medio": "eju.tv",
    "titulo": "Cochabamba: Gobernación anuncia Bs 1,3 millones para municipios afectados por la sequía",
    "url": "https://eju.tv/2026/10/cochabamba-gobernacion-anuncia-bs-13-millones-para-municipios-afectados-por-la-sequia/",
    "fecha": "30/10 18:21",
    "pub": 1793398875000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "unitel.bo",
-   "titulo": "Paro por bono vacunación: Gobernación de Cochabamba pide al Gobierno aclarar obligaciones del pago",
-   "url": "https://unitel.bo/noticias/salud/paro-por-bono-vacunacion-gobernacion-de-cochabamba-pide-al-gobierno-aclarar-obligaciones-del-pago-GA24605434",
-   "fecha": "05/11 10:09",
-   "pub": 1793887783000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -508,28 +522,6 @@
    "relevante": true
   },
   {
-   "medio": "Radio Panamericana",
-   "titulo": "\"En vez de estar haciendo más desorden, de estar haciendo de esto un show, él debiera ponerse a trabajar y responder a todos los cochabambinos”, concejal de Cochabamba defiende ayuda enviada por el alcalde a Pasorapa y cuestiona la inacción del go",
-   "url": "https://www.panamericana.bo/nacional/vez-estar-haciendo-mas-desorden-estar-haciendo-show-debiera-ponerse-trabajar-responder-todos-cochabambinos-concejal-cochabamba-defiende-ayuda-enviada-alcalde-pasorapa-cuestiona-inaccion-gobernador-loza/20261106115050017550.html",
-   "fecha": "06/11 11:50",
-   "pub": 1793980250000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "EL DÍA - Noticias de Bolivia para el mundo",
-   "titulo": "Encuentran sin vida a joven arrastrada por el río Pajcha; equipos de rescate recuperaron su cuerpo - EL DÍA",
-   "url": "https://eldia.com.bo/2026-11-05/pais/encuentran-sin-vida-a-joven-arrastrada-por-el-rio-pajcha-equipos-de-rescate-recuperaron-su-cuerpo.html",
-   "fecha": "05/11 10:37",
-   "pub": 1793889426000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
    "medio": "eju.tv",
    "titulo": "Manfred Reyes Villa envía ayuda humanitaria a Pasorapa ante severa sequía",
    "url": "https://eju.tv/2026/10/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia/",
@@ -548,160 +540,6 @@
    "pub": 1793914151000,
    "ronda": 2,
    "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Erbol |",
-   "titulo": "Dockweiler pide incluir a los municipios en el pacto fiscal y Reyes Villa reclama más recursos para las alcaldías",
-   "url": "https://erbol.com.bo/econom%C3%ADa/dockweiler-pide-incluir-los-municipios-en-el-pacto-fiscal-y-reyes-villa-reclama-m%C3%A1s",
-   "fecha": "02/11 15:23",
-   "pub": 1793647382000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Visión 360",
-   "titulo": "El audio entre Cerimedo y Reyes Villa fue manipulado con inteligencia artificial",
-   "url": "https://www.vision360.bo/noticias/2026/10/30/74877-el-audio-entre-cerimedo-y-reyes-villa-fue-manipulado-con-inteligencia-artificial",
-   "fecha": "30/10 12:12",
-   "pub": 1793376736000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "El Deber",
-   "titulo": "Manfred sobre la Justicia: “Se va investigando y van saliendo cosas que nos alarman”",
-   "url": "https://eldeber.com.bo/pais/manfred-justicia-van-investigando-van-saliendo-cosas-nos-alarman_1793976683",
-   "fecha": "06/11 11:17",
-   "pub": 1793978251000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Los Tiempos",
-   "titulo": "Misión cumplida: Manfred llega con agua y forraje a Pasorapa, golpeada por la sequía",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261030/mision-cumplida-manfred-llega-agua-forraje-pasorapa-golpeada-sequia",
-   "fecha": "30/10 03:00",
-   "pub": 1793343600000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "ABI - Agencia Boliviana de Información",
-   "titulo": "En Cochabamba, lanzan campaña masiva de vacunación antirrábica - ABI",
-   "url": "https://abi.bo/en-cochabamba-lanzan-campana-masiva-de-vacunacion-antirrabica/",
-   "fecha": "03/11 06:44",
-   "pub": 1793702662000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "La Octava",
-   "titulo": "Alcaldía de Cochabamba inicia la renovación de mercados con la demolición del Papa Paulo",
-   "url": "https://laoctavabo.com/2026/11/07/alcaldia-de-cochabamba-inicia-la-renovacion-de-mercados-con-la-demolicion-del-papa-paulo/",
-   "fecha": "07/11 21:30",
-   "pub": 1794101411000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Manfred pide que se elija por meritocracia a autoridades del Órgano Judicial, ante nuevas declaraciones en el caso maletas",
-   "url": "https://eju.tv/2026/11/manfred-pide-que-se-elija-por-meritocracia-a-autoridades-del-organo-judicial-ante-nuevas-declaraciones-en-el-caso-maletas/",
-   "fecha": "06/11 10:33",
-   "pub": 1793975614000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Los Tiempos",
-   "titulo": "Alcaldía derruye el mercado Papa Paulo",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261106/alcaldia-derruye-mercado-papa-paulo",
-   "fecha": "06/11 18:07",
-   "pub": 1794002835000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Manfred rechaza el cierre de Manaco y plantea comprar calzados para escolares como apoyo",
-   "url": "https://eju.tv/2026/11/manfred-rechaza-el-cierre-de-manaco-y-plantea-comprar-calzados-para-escolares-como-apoyo/",
-   "fecha": "03/11 15:12",
-   "pub": 1793733165000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Los Tiempos",
-   "titulo": "Marcha de Manaco logra apoyo de la COB, alcalde y concejales",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261104/marcha-manaco-logra-apoyo-cob-alcalde-concejales",
-   "fecha": "04/11 09:09",
-   "pub": 1793797773000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "eju.tv",
-   "titulo": "Manfred: «Deberíamos comenzar el año con un presupuesto en el que nos digan qué va a pasar con el 50/50",
-   "url": "https://eju.tv/2026/11/manfred-deberiamos-comenzar-el-ano-con-un-presupuesto-en-el-que-nos-digan-que-va-a-pasar-con-el-50-50/",
-   "fecha": "02/11 15:15",
-   "pub": 1793646910000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Los Tiempos",
-   "titulo": "Alcaldía de Cochabamba controla el incendio en el botadero de Cotapachi",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261104/alcaldia-cochabamba-controla-incendio-botadero-cotapachi",
-   "fecha": "04/11 20:03",
-   "pub": 1793837020000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Prensa Mercosur",
-   "titulo": "Manfred pide verificar denuncia que vincula a Saucedo con las maletas",
-   "url": "https://prensamercosur.org/2026/11/07/manfred-pide-verificar-denuncia-que-vincula-a-saucedo-con-las-maletas/",
-   "fecha": "07/11 17:54",
-   "pub": 1794088452000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "FmBolivia",
-   "titulo": "Manfred Reyes Villa plantea eliminar la elección de magistrados por voto y designarlos mediante meritocracia",
-   "url": "https://fmbolivia.com.bo/politica/manfred-reyes-villa-plantea-eliminar-la-eleccion-de-magistrados-por-voto-y-designarlos-mediante-meritocracia-21704",
-   "fecha": "06/11 11:25",
-   "pub": 1793978700000,
-   "ronda": 2,
-   "leida": false,
    "resolvio": true,
    "relevante": true
   }

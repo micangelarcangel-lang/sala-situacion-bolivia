@@ -1,6 +1,6 @@
 {
  "codigo": "BOL-471732",
- "titulo": "Ahogamiento accidental · Totora, Cochabamba",
+ "titulo": "Sequía en Omereque, Cochabamba",
  "meta": [
   [
    "BOLETÍN",
@@ -12,41 +12,48 @@
   ],
   [
    "CORTE",
-   "08 NOV 2026 · 06:53 BOT"
+   "08 NOV 2026 · 07:04 BOT"
   ],
   [
    "ESTADO",
    "Seguimiento"
   ]
  ],
- "sintesis": "El 3 de noviembre de 2026, Bacilia Antezana Rojas cayó al río Pajcha tras resbalar de una zona rocosa en el sector Ivirizu, municipio de Totora. La corriente caudalosa arrastró a la joven durante un paseo familiar. Tras labores de búsqueda conjuntas entre Bomberos, Policía, funcionarios ediles y comunarios, el cuerpo sin vida fue rescatado y trasladado al Hospital de Totora. El caso se encuentra cerrado en fase de rescate con el cuerpo entregado a los familiares. Falta la certificación médica legal de la causa de defunción y la hora exacta del suceso.",
+ "sintesis": "El municipio de Omereque, provincia Campero de Cochabamba, enfrenta un evento adverso por déficit hídrico tras haberse declarado previamente en desastre municipal. El 30 de octubre de 2026 la Gobernación emitió el Decreto Departamental N° 6526 y el 3 de noviembre la Asamblea Legislativa Departamental aprobó la ley que declara Emergencia Departamental ante la Sequía, autorizando Bs 1,3 millones para auxilio inmediato. En la provincia Campero se reportan cerca de 40.000 cabezas de ganado en riesgo y el despliegue de una cisterna en la zona. Resta precisar el número desagregado de familias afectadas, pérdidas agrícolas directas en Omereque y el cronograma de entrega de suministros adicionales.",
  "kpis": [
   [
    "1",
-   "Municipio afectado"
-  ],
-  [
-   "1",
-   "Persona fallecida"
+   "Municipio foco (Omereque)"
   ],
   [
    "S/D",
-   "Pérdidas materiales"
+   "Familias afectadas"
   ],
   [
-   "Sin declaratoria",
-   "Situación de declaratoria"
+   "~40.000",
+   "Cabezas de ganado en riesgo (prov. Campero)"
+  ],
+  [
+   "Emergencia",
+   "Declaratoria departamental"
   ]
  ],
- "puntos": [],
- "nota_mapa": "No se pudo ubicar en OpenStreetMap: Río Pajcha, Totora.",
+ "puntos": [
+  {
+   "nombre": "Omereque",
+   "lat": -18.107245,
+   "lon": -64.908006,
+   "version": "A"
+  }
+ ],
+ "nota_mapa": "",
  "victima": {
-  "nombre": "Bacilia Antezana Rojas",
-  "detalle": "21 años · Nacionalidad no precisada · Joven paseante"
+  "nombre": null,
+  "detalle": null
  },
- "foto_url": null,
- "foto_medio": null,
- "vehiculo": "NO APLICA",
+ "foto_url": "https://www.lostiempos.com/actualidad/cochabamba/20261030/alcaldia-lleva-cisternas-forraje-pasorapa-mitigar-dura-sequia",
+ "foto_medio": "Los Tiempos",
+ "vehiculo": null,
  "lluvia": {
   "fechas": [
    "2026-10-09",
@@ -119,105 +126,105 @@
  },
  "mapa_tipo": "afectados",
  "esquema": false,
- "operativa": "El operativo de búsqueda y recuperación concluyó con el hallazgo del cuerpo por brigadas conjuntas y su remisión al Hospital de Totora. Queda pendiente el cierre del registro administrativo mediante la emisión del certificado médico legal oficial. El cuerpo ya fue derivado para entrega a la familia.",
+ "operativa": "La declaratoria de emergencia departamental fue aprobada y cuenta con autorización de recursos por Bs 1,3 millones para municipios afectados, incluido Omereque. Se mantiene una cisterna operando en el sector mientras se canalizan las modificaciones presupuestarias. Queda pendiente consolidar el registro cuantitativo oficial de comunidades damnificadas y la entrega efectiva del soporte complementario.",
  "acciones": [
   [
-   "Confirmar estado del caso y cierre de actuaciones con Policía Boliviana y Fiscalía Departamental.",
+   "Confirmar estado del caso con Policía/Fiscalía respecto a denuncias o peritajes vinculados a la emergencia",
    "Centro Coordinador de Emergencias en Salud",
    "24 h"
   ],
   [
-   "Pedir parte policial formal e informe forense al Hospital de Totora.",
-   "Dirección de Epidemiología / Red de Salud Totora",
+   "Pedir parte policial y forense sobre posibles daños personales o decesos atribuidos al evento",
+   "Unidad de Gestión de Riesgos / Enlace Policial",
    "48 h"
   ],
   [
-   "Coordinar con Cancillería verificación de nacionalidad en caso de registrarse procedencia extranjera.",
-   "Área de Relaciones Internacionales del Ministerio de Salud",
+   "Coordinar con Cancillería el seguimiento ante eventual necesidad de cooperación o reportes bilaterales",
+   "Dirección de Relaciones Internacionales",
    "72 h"
   ],
   [
-   "Fijar un mensaje oficial único de cierre de evento para vocería institucional.",
-   "Unidad de Comunicación del Ministerio de Salud y Deportes",
+   "Fijar un mensaje oficial único interinstitucional sobre asignación de recursos y cifras de afectación",
+   "Comunicación Estratégica del Ministerio de Salud y Deportes",
    "Continuo"
   ]
  ],
  "trazabilidad": [
   [
    "Territorio afectado",
-   "El hecho se registró en el sector de Ivirizu, río Pajcha, camino a Yungas de Vandiola, municipio de Totora.",
+   "Municipio de Omereque, provincia Campero, en la región del Cono Sur del departamento de Cochabamba.",
    "Confirmado"
   ],
   [
    "Población y producción afectadas",
-   "Una persona de sexo femenino de 21 años resultó víctima del arrastre del río durante un paseo familiar.",
-   "Confirmado"
+   "Alrededor de 40.000 cabezas de ganado en riesgo en la provincia Campero que incluye a Omereque.",
+   "Pendiente: Censo desagregado de familias y productores afectados en Omereque en poder del Gobierno Autónomo Municipal de Omereque"
   ],
   [
    "Declaratoria y marco legal",
-   "No cursa registro de declaratoria de emergencia municipal o departamental en los antecedentes remitidos.",
-   "Sin dato público"
+   "Omereque cuenta con declaratoria municipal de desastre y la Gobernación emitió el Decreto Departamental N° 6526 ratificado por Ley Departamental.",
+   "Confirmado"
   ],
   [
    "Ayuda desplegada",
-   "Se movilizaron bomberos, policías, funcionarios municipales y comunarios en operativo de búsqueda y rescate.",
-   "Confirmado"
+   "Presencia de un carro cisterna en el municipio y aprobación de recursos departamentales para atención inmediata.",
+   "Discrepa: Asignación de Bs 1,3 millones / Asignación de Bs 1.300 millones"
   ],
   [
    "Pérdidas reportadas",
-   "Se confirmó el fallecimiento de Bacilia Antezana Rojas tras ser recuperado su cuerpo.",
-   "Confirmado"
+   "Falta de agua para consumo y riesgo pecuario, con obras de almacenamiento como una represa paralizada.",
+   "Pendiente: Cuantificación oficial de hectáreas y cabezas de ganado perdidas en poder del Gobierno Autónomo Municipal de Omereque"
   ],
   [
    "Necesidades pendientes",
-   "Falta la certificación médica de causa de muerte y la formalización de entrega a los familiares.",
-   "Pendiente: Certificado médico forense que debe emitir el Hospital de Totora o médico de turno"
+   "Distribución efectiva de agua mediante cisternas adicionales y reactivación de obras de almacenamiento de agua.",
+   "Pendiente: Cronograma de entrega de insumos y agua en poder de la Gobernación de Cochabamba"
   ],
   [
    "Pronóstico y evolución",
-   "El operativo de rescate concluyó con el hallazgo del cuerpo y su posterior traslado a dependencias de salud.",
-   "Confirmado"
+   "Condiciones climáticas adversas y persistencia del déficit hídrico en la zona del Cono Sur.",
+   "Sin dato público"
   ]
  ],
  "cronologia": [
   [
-   "2026-11-03 - Hora no determinada",
-   "Bacilia Antezana Rojas resbala en una zona rocosa y cae al caudaloso río Pajcha durante un paseo familiar en Totora."
+   "Sin dato de fecha y hora",
+   "El Gobierno Autónomo Municipal de Omereque emite su declaratoria de emergencia y desastre municipal ante la escasez de agua."
   ],
   [
-   "2026-11-03 - Horas de la tarde",
-   "El Gobierno Autónomo Municipal de Totora toma conocimiento oficial sobre la desaparición de la joven."
+   "30/10/2026 sin hora",
+   "Se constata el despliegue de un carro cisterna en el municipio de Omereque para mitigar la falta de agua."
   ],
   [
-   "2026-11-04 - Horas de la mañana",
-   "El alcalde de Totora se traslada a la Gobernación de Cochabamba para solicitar apoyo a la Unidad de Gestión de Riesgos."
+   "30/10/2026 sin hora",
+   "El Órgano Ejecutivo Departamental de Cochabamba promulga el Decreto Departamental N° 6526 que declara Emergencia Departamental ante la Sequía."
   ],
   [
-   "2026-11-04 - Horas de la tarde",
-   "Se cursan solicitudes de apoyo operativo a las entidades SAR-Bolivia y Defensa Civil para tareas de búsqueda."
+   "02/11/2026 sin hora",
+   "La Asamblea Legislativa Departamental de Cochabamba programa el tratamiento del proyecto de ley de emergencia presupuestaria que incluye a Omereque."
   ],
   [
-   "2026-11-05 - Horas no determinadas",
-   "Bomberos, Policía, personal municipal y comunarios ejecutan rastrillaje coordinado en el sector del río Pajcha."
+   "03/11/2026 06:00",
+   "La Comisión de Medio Ambiente de la Asamblea Legislativa Departamental de Cochabamba aprueba el informe del proyecto de ley de emergencia por sequía."
   ],
   [
-   "2026-11-05 - Horas no determinadas",
-   "Las brigadas de rescate localizan y recuperan el cuerpo sin vida de la joven en la cuenca del río."
+   "03/11/2026 sin hora",
+   "El pleno de la Asamblea Legislativa Departamental de Cochabamba aprueba la Ley Departamental que autoriza fondos de emergencia para Omereque y otros municipios."
   ],
   [
-   "2026-11-05 - Horas de la tarde",
-   "El cuerpo de la víctima es trasladado al Hospital de Totora para los actuados pertinentes y entrega a la familia."
+   "08/11/2026 sin hora",
+   "Persiste la alerta por 40.000 cabezas de ganado en riesgo en la provincia Campero y obras de provisión hídrica paralizadas."
   ]
  ],
- "reconstruccion": "El 3 de noviembre de 2026, una joven de 21 años resbaló accidentalmente en un área rocosa del sector Ivirizu y fue arrastrada por la corriente del río Pajcha. Ante la contingencia, autoridades municipales gestionaron el respaldo de la Gobernación, SAR-Bolivia y Defensa Civil para las tareas de rastrillaje. Tras varias horas de operativo conjunto entre bomberos, policías y comunarios, se halló el cuerpo y fue llevado al hospital local.",
+ "reconstruccion": "El municipio de Omereque se declaró en desastre debido a la severa sequía y falta de recursos para atender la contingencia. Ante el agotamiento de capacidades locales y el riesgo sobre 40.000 cabezas de ganado en la provincia, la Gobernación y la Asamblea Departamental emitieron la normativa de emergencia para habilitar fondos de auxilio. Actualmente se mantiene el auxilio con una cisterna en el lugar a la espera de la ejecución de los recursos asignados y la resolución de obras de provisión de agua.",
  "vacios": [
-  "Informe de autopsia legal y certificado de defunción médica que debe emitir el Hospital de Totora.",
-  "Acta policial del levantamiento legal del cadáver e informe técnico del operativo que tiene la Policía Boliviana.",
-  "Hora exacta del suceso y registro del ingreso del reporte de emergencia que custodia la Alcaldía de Totora.",
-  "Certificado de nacimiento o documento de identidad que acredite la nacionalidad de la víctima en poder del SERECÍ.",
-  "Informe de cierre de misión y coordenadas de recuperación del cuerpo que debe remitir el cuerpo de Bomberos."
+  "Informe técnico de evaluación de daños y análisis de necesidades (EDAN) con número de familias damnificadas en Omereque, en poder de la Unidad de Gestión de Riesgos Municipal de Omereque.",
+  "Copia formal de la Ley Municipal de Declaratoria de Desastre, en poder del Concejo Municipal de Omereque.",
+  "Plan departamental de distribución de cisternas y forraje con cronograma de entregas, en poder de la Unidad de Gestión de Riesgos de la Gobernación de Cochabamba.",
+  "Registro oficial y desagregado de mortandad animal y pérdida de cultivos agrícolas, en poder de la Dirección de Desarrollo Productivo de Omereque.",
+  "Informe de estado situacional y auditoría de la represa de Bs 140 millones, en poder del Ministerio de Medio Ambiente y Agua y la Gobernación de Cochabamba."
  ],
- "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (31 notas halladas, 30 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (gemini/gemini-3.8-flash); requiere revisión humana antes de circular.",
+ "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (15 notas halladas, 15 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (gemini/gemini-3.8-flash); requiere revisión humana antes de circular.",
  "fuentes": [
   [
    "eju.tv",
@@ -236,15 +243,11 @@
    "30/10"
   ],
   [
-   "Visión 360",
-   "30/10"
-  ],
-  [
    "eju.tv",
    "30/10"
   ],
   [
-   "unitel.bo",
+   "eju.tv",
    "02/11"
   ],
   [
@@ -252,27 +255,7 @@
    "02/11"
   ],
   [
-   "eju.tv",
-   "02/11"
-  ],
-  [
-   "Erbol |",
-   "02/11"
-  ],
-  [
-   "ABI - Agencia Boliviana de Informa",
-   "03/11"
-  ],
-  [
    "La Patria Bolivia",
-   "03/11"
-  ],
-  [
-   "Red Uno",
-   "03/11"
-  ],
-  [
-   "eju.tv",
    "03/11"
   ],
   [
@@ -285,22 +268,6 @@
   ],
   [
    "Los Tiempos",
-   "04/11"
-  ],
-  [
-   "Los Tiempos",
-   "04/11"
-  ],
-  [
-   "Los Tiempos",
-   "05/11"
-  ],
-  [
-   "unitel.bo",
-   "05/11"
-  ],
-  [
-   "EL DÍA - Noticias de Bolivia para ",
    "05/11"
   ],
   [
@@ -309,22 +276,6 @@
   ],
   [
    "Los Tiempos",
-   "05/11"
-  ],
-  [
-   "Los Tiempos",
-   "06/11"
-  ],
-  [
-   "eju.tv",
-   "06/11"
-  ],
-  [
-   "El Deber",
-   "06/11"
-  ],
-  [
-   "Radio Panamericana",
    "06/11"
   ],
   [
@@ -332,12 +283,8 @@
    "06/11"
   ],
   [
-   "Prensa Mercosur",
-   "07/11"
-  ],
-  [
-   "La Octava",
-   "07/11"
+   "La Patria Bolivia",
+   "06/11"
   ]
  ]
 }
