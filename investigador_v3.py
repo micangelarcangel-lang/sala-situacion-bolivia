@@ -292,7 +292,7 @@ def armar_informe(hecho, res, fuentes, red):
 # ---------------------------------------------------------------- boletín (producto final)
 SIS_BOL = ("Eres analista senior del Centro Coordinador de Emergencias en Salud del Ministerio de Salud y Deportes de Bolivia. Escribes un BOLETÍN DE SITUACIÓN para la máxima autoridad: "
            "solo lo que se sabe, dónde, qué falta y qué se pide. Usa EXCLUSIVAMENTE el análisis dado; no inventes datos. Frases cortas y directas. No nombres ni califiques al conductor (presunción de inocencia). "
-           "Cuando los medios discrepan en un dato, dilo en la misma celda ('Discrepa: A según X; B según Y'). Nada de apoyo psicológico ni infraestructura vial. Responde SOLO JSON.")
+           "Cuando los medios discrepan en un dato, dilo en la misma celda ('Discrepa: A según X; B según Y'). Nada de apoyo psicológico ni infraestructura vial. ADAPTA kpis, dimensiones de trazabilidad y acciones al TIPO de evento (tránsito: fallecidos, aprehendidos, repatriación; sequía/inundación/incendio: afectados, municipios, declaratoria de emergencia, ayuda; brote: casos, defunciones, control). Responde SOLO JSON.")
 
 
 def og_imagen(fuentes, nombre, log=print):
@@ -364,7 +364,7 @@ def armar_boletin(hecho, res, fuentes, R, log=print):
             "meta": [["BOLETÍN", "001"], ["FECHA DEL HECHO", dt.datetime.fromtimestamp(hecho["primera"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y").upper()],
                      ["CORTE", ahora.strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Seguimiento"]],
             "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts, "nota_mapa": ("No se pudo ubicar en OpenStreetMap: " + ", ".join(sin_ubicar) + ".") if sin_ubicar else "",
-            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"),
+            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"), "esquema": bool(re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "")),
             "operativa": R.get("operativa", ""), "acciones": [fila(a, ("accion", "responsable_sugerido", "plazo")) for a in R.get("acciones", [])][:4],
             "trazabilidad": [fila(t, ("dimension", "hallazgo", "estado")) for t in R.get("trazabilidad", [])], "cronologia": [fila(c, ("cuando", "que"))[:2] for c in R.get("cronologia", [])],
             "reconstruccion": R.get("reconstruccion", ""), "vacios": [str(v) for v in R.get("vacios", [])],

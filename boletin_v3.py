@@ -121,15 +121,15 @@ def build(B, salida):
         der += [_qr(B["foto_url"]), Paragraph("Retrato difundido por %s. Escanee el código para abrir la fuente original. No es una imagen del accidente." % e(B.get("foto_medio", "un medio")), TS)]
     der += [Paragraph("Escena del siniestro: no se localizó fotografía verificable del impacto; no se incorpora material no autenticado.", TS)]
     t = Table([[izq, der]], colWidths=[W * .63, W * .37]); t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)])); S += [t]
-    S += [Paragraph("ESQUEMA ILUSTRATIVO DE INTERACCIÓN VIAL", H2), eg.imagen(esquema(B.get("vehiculo", "CAMIÓN DE CARGA")), W),
-          Paragraph("Representación conceptual; no reproduce la escena ni determina la mecánica del impacto. Debe sustituirse por el croquis, fotografías y peritaje oficiales.", TS)]
+    if B.get("esquema", True):
+        S += [Paragraph("ESQUEMA ILUSTRATIVO DE INTERACCIÓN VIAL", H2), eg.imagen(esquema(B.get("vehiculo", "CAMIÓN DE CARGA")), W),
+              Paragraph("Representación conceptual; no reproduce la escena ni determina la mecánica del impacto. Debe sustituirse por el croquis, fotografías y peritaje oficiales.", TS)]
     S += [Paragraph("SITUACIÓN OPERATIVA Y ACCIONES", H2), Paragraph(e(B["operativa"]), T), Spacer(1, 2 * mm)]
     S += [_tab([[Paragraph(str(i + 1), TB), Paragraph(e(a[0]), TB), Paragraph(e(a[1]), TB), Paragraph("<b>%s</b>" % e(a[2]), TB)] for i, a in enumerate(B["acciones"])], [6 * mm, W - 6 * mm - 44 * mm - 16 * mm, 44 * mm, 16 * mm], ["#", "Acción", "Responsable sugerido", "Plazo"])]
     # página 2
     S += [PageBreak(), Paragraph("CADENA DE ATENCIÓN Y SITUACIÓN POSTERIOR", H2)]
     S += [_tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB), Paragraph('<font color="%s">%s</font>' % (estado_color(c), e(c)), TB)] for a, b, c in B["trazabilidad"]], [33 * mm, W - 33 * mm - 58 * mm, 58 * mm], ["DIMENSIÓN", "QUÉ SE SABE", "ESTADO"])]
-    S += [Paragraph("RECONSTRUCCIÓN CRONOLÓGICA", H2), _tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB)] for a, b in B["cronologia"]], [30 * mm, W - 30 * mm], ["CUÁNDO", "QUÉ"])]
-    S += [Paragraph("RECONSTRUCCIÓN PRELIMINAR", H2), Paragraph(e(B["reconstruccion"]), T), Paragraph("<b>Vacíos prioritarios:</b> " + e("; ".join(B["vacios"])) + ".", T)]
+    S += [Paragraph("<b>Vacíos prioritarios:</b> " + e("; ".join(B["vacios"])) + ".", T)]
     # fuentes y método reducidos
     vis = {}
     for n, f in B.get("fuentes", []):
