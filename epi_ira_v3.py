@@ -2,7 +2,7 @@
 """Panorama de IRAs / influenza a partir del Boletín Epidemiológico semanal del Ministerio de Salud (PDF público).
 Todo lo numérico se LEE del boletín (no lo inventa ninguna IA); el texto de síntesis se arma con plantilla a partir de esas cifras."""
 import io, re, json, urllib.request, datetime as dt
-UA = {"User-Agent": "Mozilla/5.0 sala-situacion-bolivia/3"}
+UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36", "Accept": "application/pdf,text/html,*/*", "Accept-Encoding": "identity", "Connection": "close"}
 BASE = "https://minsalud.gob.bo"
 DEPTOS = ["Chuquisaca", "La Paz", "Cochabamba", "Oruro", "Potosí", "Tarija", "Santa Cruz", "Beni", "Pando"]
 NUM = r"\d{1,3}(?:\.\d{3})*(?:,\d+)?|\d+(?:,\d+)?"
@@ -19,13 +19,13 @@ def num(x):
 
 def _get(u, t=120):
     import time
-    for k in range(4):
+    for k in range(7):
         try:
             return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
         except Exception:
-            if k == 3:
+            if k == 6:
                 raise
-            time.sleep(5 * (k + 1))
+            time.sleep(8 * (k + 1))
 
 
 def enlaces():
