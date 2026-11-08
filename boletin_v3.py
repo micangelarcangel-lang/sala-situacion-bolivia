@@ -90,7 +90,7 @@ def _tab(filas, anchos, cab, estcol=None):
 
 def estado_color(s):
     s = s.lower()
-    return ROJO if ("discrep" in s or "no se" in s or "sin " in s or "pendiente" in s) else (VERDE if "coincid" in s or "confirm" in s else AMBAR)
+    return ROJO if "discrep" in s else (AMBAR if ("pendiente" in s or "sin dato" in s) else VERDE)
 
 
 def build(B, salida):
@@ -126,8 +126,8 @@ def build(B, salida):
     S += [Paragraph("SITUACIÓN OPERATIVA Y ACCIONES", H2), Paragraph(e(B["operativa"]), T), Spacer(1, 2 * mm)]
     S += [_tab([[Paragraph(str(i + 1), TB), Paragraph(e(a[0]), TB), Paragraph(e(a[1]), TB), Paragraph("<b>%s</b>" % e(a[2]), TB)] for i, a in enumerate(B["acciones"])], [6 * mm, W - 6 * mm - 44 * mm - 16 * mm, 44 * mm, 16 * mm], ["#", "Acción", "Responsable sugerido", "Plazo"])]
     # página 2
-    S += [PageBreak(), Paragraph("TRAZABILIDAD DEL HECHO", H2)]
-    S += [_tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB), Paragraph('<font color="%s">%s</font>' % (estado_color(c), e(c)), TB)] for a, b, c in B["trazabilidad"]], [33 * mm, W - 33 * mm - 58 * mm, 58 * mm], ["DIMENSIÓN", "HALLAZGO CONSOLIDADO", "ESTADO / VACÍO"])]
+    S += [PageBreak(), Paragraph("CADENA DE ATENCIÓN Y SITUACIÓN POSTERIOR", H2)]
+    S += [_tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB), Paragraph('<font color="%s">%s</font>' % (estado_color(c), e(c)), TB)] for a, b, c in B["trazabilidad"]], [33 * mm, W - 33 * mm - 58 * mm, 58 * mm], ["DIMENSIÓN", "QUÉ SE SABE", "ESTADO"])]
     S += [Paragraph("RECONSTRUCCIÓN CRONOLÓGICA", H2), _tab([[Paragraph("<b>%s</b>" % e(a), TB), Paragraph(e(b), TB)] for a, b in B["cronologia"]], [30 * mm, W - 30 * mm], ["CUÁNDO", "QUÉ"])]
     S += [Paragraph("RECONSTRUCCIÓN PRELIMINAR", H2), Paragraph(e(B["reconstruccion"]), T), Paragraph("<b>Vacíos prioritarios:</b> " + e("; ".join(B["vacios"])) + ".", T)]
     # fuentes y método reducidos

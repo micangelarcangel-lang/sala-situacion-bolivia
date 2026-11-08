@@ -322,7 +322,7 @@ victima{nombre, detalle (edad · nacionalidad · cómo se le conoce)}, vehiculo 
 versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior)}] (máx 4),
 operativa (2-3 frases: dónde está el caso y qué decisión se pide a la MAE),
 acciones [objetos {accion (una línea concreta), responsable_sugerido, plazo ('24 h','48 h','72 h','Continuo')}] x4: confirmar estado del caso con Policía/Fiscalía, pedir parte policial y forense, coordinar con Cancillería, fijar un mensaje oficial único.""",
-        """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 (Identificación, Auxilio en el lugar, Fallecimiento/traslado, Lugar del hecho, Conductor/proceso, Repatriación o gestión consular, Respaldo oficial), con 'estado' = 'Coincide en N medios' | 'Fuente única: X' | 'Discrepa: …' | 'Sin dato en fuentes abiertas',
+        """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 con ESTAS dimensiones: Identificación, Auxilio y atención en el lugar, Traslado y fallecimiento, Levantamiento y destino del cuerpo, Repatriación, Proceso judicial, Lugar del hecho. 'hallazgo' = qué se sabe, en una frase, sin nombrar medios. 'estado' = SOLO una de: 'Confirmado' | 'Pendiente: <qué falta y quién lo tiene>' | 'Discrepa: <A> / <B>' | 'Sin dato público'. No cuentes medios ni cites fuentes aquí,
 cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconstruccion (2-3 frases, informativa no pericial), vacios [strings: 5 documentos o datos que faltan y quién los tiene]."""]
     out = {}
     for ped in pedidos:
@@ -337,7 +337,7 @@ cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconst
 def armar_boletin(hecho, res, fuentes, R, log=print):
     ahora = dt.datetime.now(dt.timezone(dt.timedelta(hours=-4)))
     pts = []
-    for v in R.get("versiones_lugar", [])[:4]:
+    for v in [v for v in R.get("versiones_lugar", []) if not re.search(r"(?i)precis|principal|general|desconoc|no se", str(v.get("nombre_corto", "")) + str(v.get("consulta", "")))][:4]:
         ciudad = (hecho.get("lugar") or "El Alto").split(",")[0]
         cand = [str(v.get("consulta", "")), str(v.get("nombre_corto", "")), re.sub(r"(?i)^(av\.?|avenida|calle|sector|zona)\s+", "", str(v.get("nombre_corto", "")))]
         for q in dict.fromkeys(c for c in cand if len(c) > 3):
