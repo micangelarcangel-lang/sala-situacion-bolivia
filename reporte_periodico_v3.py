@@ -167,7 +167,7 @@ def _metodo(el, est, hs, desde, ini, tipo):
     el += [Paragraph("Calidad de la información y método", est["h"]),
            Paragraph(f"Con lugar identificado hasta municipio, tramo o varios municipios: {q['lugar_preciso']}% de los hechos. Con alguna cifra: {q['con_cifras']}%. Cubiertos por más de un medio: {q['varios_medios']}%. "
                      "Un hecho cuenta una sola vez aunque lo cubran varios medios o lo sigan varios días. Cifra vigente: la mayor de fuente oficial; si no hay, la mayor de prensa. Si una nota posterior da una cifra menor, el hecho se marca para revisión. "
-                     "Todo lo de prensa es información sin verificar; el nivel «confirmado» exige fuente institucional o validación.", est["c"])]
+                     "Una noticia o alerta no equivale a un incidente confirmado. Todo lo de prensa es información sin verificar; el nivel «confirmado» exige fuente institucional o validación.", est["c"])]
     if desde > ini + D:
         el.append(Paragraph(f"Atención: el sistema acumula hechos desde el {dt.datetime.fromtimestamp(desde / 1000, BO).strftime('%d/%m/%Y')}; este {tipo} está incompleto.", est["alerta"]))
 
