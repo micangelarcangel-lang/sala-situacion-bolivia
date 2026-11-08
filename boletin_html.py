@@ -127,7 +127,54 @@ def estado(s):
     return "di" if "discrep" in l else ("pe" if ("pendiente" in l or "sin dato" in l) else "ok")
 
 
+def svg_curva(curva, W_=1000, H_=300):
+    xs = [c[0] for c in curva]; ys = [c[1] for c in curva]; mx = max(ys) * 1.15; mn = min(ys) * .8
+    X = lambda i: 70 + i * (W_ - 110) / max(1, len(curva) - 1); Y = lambda v: 30 + (H_ - 80) * (1 - (v - mn) / (mx - mn))
+    s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><rect width="{W_}" height="{H_}" fill="#f6f8fb" rx="8"/>']
+    for k in (0, .5, 1):
+        v = mn + (mx - mn) * k; y = Y(v); s.append(f'<line x1="60" x2="{W_ - 20}" y1="{y:.0f}" y2="{y:.0f}" stroke="#dde3ea"/><text x="54" y="{y + 5:.0f}" text-anchor="end" font-size="15" fill="#6b7785">{v / 1000:.0f} mil</text>')
+    pts = " ".join(f"{X(i):.0f},{Y(v):.0f}" for i, v in enumerate(ys))
+    s.append(f'<polyline points="{pts}" fill="none" stroke="#2a78d6" stroke-width="4" stroke-linejoin="round"/>')
+    for i, (se, v) in enumerate(curva):
+        last = i == len(curva) - 1
+        s.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="{8 if last else 5}" fill="{"#c0392b" if last else "#2a78d6"}" stroke="#fff" stroke-width="2.5"/><text x="{X(i):.0f}" y="{H_ - 26}" text-anchor="middle" font-size="15" fill="#44505e">SE {se}</text>')
+        s.append(f'<text x="{X(i):.0f}" y="{Y(v) - 14:.0f}" text-anchor="middle" font-size="{16 if last else 14}" font-weight="{700 if last else 400}" fill="#1b2430">{v:,.0f}</text>'.replace(",", "."))
+    return "".join(s) + "</svg>"
+
+
+def svg_deptos(dep):
+    mx = max(max(d["tasa41"], d["tasa40"]) for d in dep) * 1.1; H_ = 38 * len(dep) + 20
+    s = [f'<svg viewBox="0 0 560 {H_}" xmlns="http://www.w3.org/2000/svg">']
+    for i, d in enumerate(dep):
+        y = 12 + i * 38; w = 330 * d["tasa41"] / mx; w0 = 330 * d["tasa40"] / mx; c = "#c0392b" if d["tasa41"] > d["tasa40"] * 1.05 else ("#1e8c5a" if d["tasa41"] < d["tasa40"] * .95 else "#2a78d6")
+        flecha = "▲" if d["tasa41"] > d["tasa40"] * 1.05 else ("▼" if d["tasa41"] < d["tasa40"] * .95 else "■")
+        s.append(f'<text x="0" y="{y + 19}" font-size="15" font-weight="600" fill="#1b2430">{E(d["depto"])}</text><rect x="110" y="{y + 3}" width="{w:.0f}" height="22" fill="{c}" rx="3"/>'
+                 f'<line x1="{110 + w0:.0f}" x2="{110 + w0:.0f}" y1="{y - 1}" y2="{y + 29}" stroke="#222" stroke-width="3"/>'
+                 f'<text x="{110 + max(w, w0) + 8:.0f}" y="{y + 19}" font-size="15" fill="#1b2430">{str(round(d["tasa41"], 1)).replace(".", ",")} {flecha}</text>')
+    return "".join(s) + "</svg>"
+
+
+def html_epi(B):
+    cab = '<div class="top"><b>CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA</b><span>Vigilancia epidemiológica · fuente oficial</span></div>'
+    pie = lambda n: f'<div class="pie"><span>Cifras leídas del boletín oficial del Ministerio de Salud y Deportes. Verificar contra el documento original.</span><span>{E(B["codigo"])} · pág. {n}</span></div>'
+    tb = "".join(f'<tr><td class="k">{E(d["depto"])}</td><td>{d["casos39"]:,.0f}</td><td>{d["casos40"]:,.0f}</td><td><b>{d["casos41"]:,.0f}</b></td><td>{str(d["tasa41"]).replace(".", ",")}</td><td class="{"di" if d["casos41"] > d["casos40"] * 1.05 else ("ok" if d["casos41"] < d["casos40"] * .95 else "")}">{(d["casos41"] - d["casos40"]) / d["casos40"] * 100:+.0f}%</td></tr>'.replace(",", "·").replace("·", ".", 0) for d in B["deptos"])
+    tb = tb.replace("·", ".")
+    vac = ""
+    if B.get("vacuna"):
+        V = B["vacuna"]; vac = f'<div class="card"><div class="n">{V["a"]:,.0f}</div><div class="d">dosis de vacuna antiinfluenza aplicadas en 2026 (+{V["adicionales"]:,.0f} en la semana)</div></div>'.replace(",", ".")
+    p1 = f'''<div class="pg">{cab}<h1>SITUACIÓN EPIDEMIOLÓGICA</h1><div>{E(B["titulo"])}</div>
+<div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
+<div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
+<h2>Casos semanales de IRA en el país</h2><div class="map" style="border:0">{svg_curva(B["curva"])}</div><div class="nota">Punto rojo: última semana. Fuente: Boletín Epidemiológico semanal (SUIS).</div>
+<div class="g" style="margin-top:5mm;grid-template-columns:1.5fr 1fr"><div><h2>Tasa semanal por departamento · por 1.000 hab.</h2>{svg_deptos(B["deptos"])}<div class="nota">Barra: SE actual. Línea negra: semana anterior. ▲ sube más de 5% · ▼ baja más de 5%.</div></div><div><h2>Vacunación y virus</h2>{vac}<div class="card" style="margin-top:3mm"><div class="d" style="margin:0">{E(B.get("virus") or "Sin dato de circulación viral en este boletín.")}</div></div></div></div>{pie(1)}</div>'''
+    p2 = f'''<div class="pg">{cab}<h2>Casos de IRA por departamento · últimas tres semanas</h2><table><tr><th>Departamento</th><th>SE {B["curva"][-1][0] - 2}</th><th>SE {B["curva"][-1][0] - 1}</th><th>SE {B["curva"][-1][0]}</th><th>Tasa SE {B["curva"][-1][0]}</th><th>Cambio</th></tr>{tb}</table>
+<div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{"<br>".join(E(n) for n, _ in B["fuentes"])}<br><a>{E(B["url"])}</a></div></div>{pie(2)}</div>'''
+    return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
+
+
 def html(B):
+    if B.get("tipo") == "epi_ira":
+        return html_epi(B)
     pts = B.get("puntos", []); mapa = ""; nota = B.get("nota_mapa", "")
     if len(pts) >= 1:
         svg, red = svg_mapa(pts, tipo=B.get('mapa_tipo', 'versiones'))
