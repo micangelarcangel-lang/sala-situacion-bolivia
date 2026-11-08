@@ -151,6 +151,8 @@ def analizar(fuentes, nombres=()):
         t = _n(f["titulo"] + " " + f["texto"][:3000])
         if any(_n(n) in t for n in nombres):
             return True
+        if f.get("medio", "").startswith("SENAMHI"):
+            return True
         return ("el alto" in t or "bolivia" in t) and any(k in t for k in ("coreano", "jinstravel", "ciclista", "youtuber"))
     fuentes = [f for f in fuentes if f.get("texto") and del_hecho(f)][:18]
     arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:2200]}" for i, f in enumerate(fuentes))[:30000]
@@ -385,7 +387,7 @@ def armar_boletin(hecho, res, fuentes, R, log=print):
             "meta": [["BOLETÍN", "001"], ["FECHA DEL HECHO", dt.datetime.fromtimestamp(hecho["primera"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y").upper()],
                      ["CORTE", ahora.strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Seguimiento"]],
             "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts, "nota_mapa": ("No se pudo ubicar en OpenStreetMap: " + ", ".join(sin_ubicar) + ".") if sin_ubicar else "",
-            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"), "mapa_tipo": "versiones" if re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "") else "afectados", "esquema": bool(re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "")),
+            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"), "lluvia": (res.get("oficiales") or {}).get("lluvia"), "mapa_tipo": "versiones" if re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "") else "afectados", "esquema": bool(re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "")),
             "operativa": R.get("operativa", ""), "acciones": [fila(a, ("accion", "responsable_sugerido", "plazo")) for a in R.get("acciones", [])][:4],
             "trazabilidad": [fila(t, ("dimension", "hallazgo", "estado")) for t in R.get("trazabilidad", [])], "cronologia": [fila(c, ("cuando", "que"))[:2] for c in R.get("cronologia", [])],
             "reconstruccion": R.get("reconstruccion", ""), "vacios": [str(v) for v in R.get("vacios", [])],
@@ -447,9 +449,15 @@ def investigar(hecho, max_leer=24, log=print):
         if ref[0] is not None:
             g["km_al_centro_municipio"] = distancia_km((g["lat"], g["lon"]), ref)
     total = len(vistos)
-    analisis, prov = analizar([f for f in fuentes if f["leida"]], nombres)
+    try:
+        import oficiales_v3
+        ref_ll = (hecho.get("lat"), hecho.get("lon")) if hecho.get("lat") is not None else ((pts[0]["lat"], pts[0]["lon"]) if pts else (None, None))
+        ofi = oficiales_v3.para(hecho.get("subtipo"), ref_ll[0], ref_ll[1], log)
+    except Exception as e:
+        ofi = {"lluvia": None, "textos": []}; log("oficiales:", str(e)[:80])
+    analisis, prov = analizar([f for f in fuentes if f["leida"]] + ofi["textos"], nombres)
     res = {"hecho_id": hecho["id"], "generado": dt.datetime.now(dt.timezone.utc).isoformat(), "segundos": round(time.time() - t0),
-           "consultas": qlog, "descartadas_por_ruido": total - len(fuentes), "n_fuentes": len(fuentes), "n_leidas": sum(f["leida"] for f in fuentes), "nombres_propios": nombres, "lugares": geo, "ia": prov, "analisis": analisis,
+           "consultas": qlog, "descartadas_por_ruido": total - len(fuentes), "n_fuentes": len(fuentes), "n_leidas": sum(f["leida"] for f in fuentes), "nombres_propios": nombres, "lugares": geo, "oficiales": {"lluvia": ofi["lluvia"], "textos": [{"medio": t["medio"], "url": t["url"]} for t in ofi["textos"]]}, "ia": prov, "analisis": analisis,
            "fuentes": [{k: v for k, v in f.items() if k != "texto"} for f in fuentes]}
     return res, fuentes
 

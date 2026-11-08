@@ -79,6 +79,19 @@ def qr_svg(url):
     return t[t.index("<svg"):].replace('width="', 'data-w="', 1).replace('height="', 'data-h="', 1)
 
 
+def svg_lluvia(L):
+    mm = L["mm"]; n = len(mm); W_, H_ = 1000, 230; mx = max(max(mm), 10); bw = (W_ - 60) / n
+    s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><rect width="{W_}" height="{H_}" fill="#f6f8fb" rx="8"/>']
+    for k in (0, .5, 1):
+        y = 25 + (H_ - 70) * (1 - k); s.append(f'<line x1="50" x2="{W_ - 10}" y1="{y:.0f}" y2="{y:.0f}" stroke="#dde3ea"/><text x="44" y="{y + 5:.0f}" text-anchor="end" font-size="14" fill="#6b7785">{mx * k:.0f}</text>')
+    for i, v in enumerate(mm):
+        h = (H_ - 70) * v / mx; s.append(f'<rect x="{55 + i * bw:.1f}" y="{25 + (H_ - 70) - h:.1f}" width="{bw - 3:.1f}" height="{max(h, 1):.1f}" fill="#2a78d6" rx="2"/>')
+    for i in (0, n // 2, n - 1):
+        s.append(f'<text x="{55 + i * bw:.0f}" y="{H_ - 28}" font-size="14" fill="#6b7785">{L["fechas"][i][8:]}/{L["fechas"][i][5:7]}</text>')
+    s.append(f'<text x="50" y="14" font-size="14" fill="#6b7785">mm por día</text></svg>')
+    return "".join(s)
+
+
 def svg_esquema(vehiculo):
     f = 11 if len(vehiculo) < 17 else 8.5
     return f'''<svg viewBox="0 0 1000 150" xmlns="http://www.w3.org/2000/svg"><rect width="1000" height="150" fill="#e4e8ee" rx="8"/><rect y="6" width="1000" height="9" fill="#b9c2cf"/><rect y="135" width="1000" height="9" fill="#b9c2cf"/>
@@ -125,6 +138,9 @@ def html(B):
         ident += f'<div class="qr">{qr_svg(B["foto_url"])}</div><div class="nota">Retrato difundido por {E(B.get("foto_medio") or "un medio")}. Escanee el código para abrir la fuente original. No es una imagen del accidente.</div>'
     ident += ('<div class="nota">Escena del siniestro: no se localizó fotografía verificable del impacto; no se incorpora material no autenticado.</div></div>' if B.get("mapa_tipo", "versiones") == "versiones" else '</div>')
     esq = f'<div class="esq"><h2>Esquema ilustrativo de interacción vial</h2>{svg_esquema(B.get("vehiculo", "VEHÍCULO"))}<div class="nota">Representación conceptual; no reproduce la escena ni determina la mecánica del impacto. Debe sustituirse por el croquis, fotografías y peritaje oficiales.</div></div>' if B.get("esquema", True) else ""
+    if not B.get("esquema", True) and B.get("lluvia"):
+        L = B["lluvia"]; nor = L.get("normal_mm"); dif = (f"{(L['total_mm'] - nor) / nor * 100:+.0f}% frente a lo normal" if nor else "sin referencia histórica")
+        esq = f'<div class="esq"><h2>Lluvia observada · últimos {L["dias"]} días</h2><div class="kpis" style="margin:0 0 2mm"><div><b>{L["total_mm"]:.0f} mm</b><small>acumulado observado</small></div><div><b>{(str(round(nor)) + " mm") if nor else "—"}</b><small>normal 2016–2025, mismas fechas</small></div><div><b>{dif.split(" ")[0] if nor else "—"}</b><small>{dif if nor else ""}</small></div></div>{svg_lluvia(L)}<div class="nota">Fuente: {E(L["fuente"])}. Punto de referencia: municipio del evento.</div></div>'
     cab = lambda p: f'<div class="top"><b>CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA</b><span>Para: MAE · circulación restringida</span></div>'
     pie = lambda n: f'<div class="pie"><span>Boletín elaborado con fuentes abiertas. No sustituye los informes oficiales, médico-forenses, fiscales ni consulares.</span><span>{E(B["codigo"])} · pág. {n}</span></div>'
     acc = "".join(f'<tr><td>{i + 1}</td><td>{E(a[0])}</td><td>{E(a[1])}</td><td class="k">{E(a[2])}</td></tr>' for i, a in enumerate(B["acciones"]))
@@ -135,8 +151,8 @@ def html(B):
     p1 = f'''<div class="pg">{cab(1)}<h1>BOLETÍN DE SITUACIÓN</h1><div>{E(B["titulo"])}</div>
 <div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
 <div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
-<div class="g"><div>{mapa}</div><div>{ident}</div></div>{esq}{pie(1)}</div>'''
-    p2 = f'''<div class="pg">{cab(2)}<h2>Situación actual</h2><div class="sint" style="margin-top:0;font-size:9.6pt">{E(B["operativa"])}</div>
+<div class="g"><div>{mapa}</div><div>{ident}</div></div>{esq if B.get("esquema", True) else ""}{pie(1)}</div>'''
+    p2 = f'''<div class="pg">{cab(2)}{esq if not B.get("esquema", True) else ""}<h2 style="margin-top:5mm">Situación actual</h2><div class="sint" style="margin-top:0;font-size:9.6pt">{E(B["operativa"])}</div>
 <div class="sec"><h2>Cadena de atención y situación posterior</h2><table><tr><th>Dimensión</th><th>Qué se sabe</th><th>Estado</th></tr>{tra}</table></div>
 <div class="sec"><h2>Vacíos prioritarios</h2><div style="font-size:8.6pt">{E("; ".join(B["vacios"]))}.</div></div>
 <div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{fu}</div></div>{pie(2)}</div>'''
