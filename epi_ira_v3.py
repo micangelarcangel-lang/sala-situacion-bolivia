@@ -17,8 +17,15 @@ def num(x):
     return float(x.replace(".", "").replace(",", ".")) if "," in x else float(x.replace(".", ""))
 
 
-def _get(u, t=90):
-    return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
+def _get(u, t=120):
+    import time
+    for k in range(4):
+        try:
+            return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
+        except Exception:
+            if k == 3:
+                raise
+            time.sleep(5 * (k + 1))
 
 
 def enlaces():
@@ -88,7 +95,7 @@ def boletin(log=print):
             curva.append([se, v]); curva.sort()
     dep = sorted(U["deptos"], key=lambda x: -x["tasa41"])
     top = ", ".join(f"{x['depto']} ({x['tasa41']:.1f}‰)".replace(".", ",") for x in dep[:3])
-    sint = (f"En la SE {N['se']} ({U['fechas']}) el país notificó {N['casos']:,.0f} casos de infecciones respiratorias agudas, {N['var_pct']:+.1f}% respecto de la semana anterior ({N['casos_prev']:,.0f}). ".replace(",", ".")
+    sint = (f"En la SE {N['se']} ({U['fechas']}) el país notificó {N['casos']:,.0f} casos de infecciones respiratorias agudas, {('+' if N['var_pct'] > 0 else '')}{str(round(N['var_pct'], 1)).replace('.', ',')}% respecto de la semana anterior ({N['casos_prev']:,.0f}). ".replace(",", ".")
             + (f"Las tasas semanales más altas están en {top} por 1.000 habitantes. " if dep else "") + (U["virus"] + " " if U["virus"] else "")
             + "Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.")
     kp = [[f"{N['casos']:,.0f}".replace(",", "."), f"casos de IRA, SE {N['se']}"], [f"{N['var_pct']:+.1f}%".replace(".", ","), "frente a la semana anterior"],
