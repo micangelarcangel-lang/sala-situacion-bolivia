@@ -75,8 +75,25 @@ def anclas(hecho):
     return comunes, lugar
 
 
-def relevante(f, comunes, lugar, nombres=()):
+TEMAS = [(r"tr[aá]nsito|accidente", r"ciclist|atropell|accident|cami[oó]n|choque|tr[aá]nsito|colisi|volcad|embest|veh[ií]cul"),
+         (r"sequ", r"sequ|d[eé]ficit h[ií]drico|cisterna|forraje|falta de agua|escasez de agua|mortandad|cultivo"),
+         (r"inund|riada|desliz", r"inund|riada|desborde|desliz|lluvia|r[ií]o|damnific|evacua"),
+         (r"incendio", r"incendio|fuego|quema|llamas|bombero|hect[aá]rea|focos"),
+         (r"sismo|terremoto", r"sismo|temblor|terremoto|magnitud|r[eé]plica"),
+         (r"brote|intox|sanidad|rabia|dengue|chikun", r"brote|casos|dengue|chikun|rabia|intoxic|epidemi|v[ií]ctimas|sanitari")]
+
+
+def tema_de(subtipo):
+    for rx, tema in TEMAS:
+        if re.search(rx, subtipo or "", re.I):
+            return tema
+    return None
+
+
+def relevante(f, comunes, lugar, nombres=(), tema=None):
     base = _n(f["titulo"] + " " + f.get("texto", "")[:2500])
+    if tema and not re.search(_n(tema), base):
+        return False
     if nombres and any(_n(n) in base for n in nombres):
         return True
     hit = sum(1 for w in comunes if w[:6] in base) + (1 if lugar and lugar in base else 0)
@@ -142,11 +159,11 @@ def llamar_ia(sistema, usuario, max_tokens=4000):
     return None, ("; ".join(errores) if errores else "sin clave de IA en los secretos (GEMINI_API_KEY o GROQ_API_KEY)")
 
 
-SISTEMA = ("Eres analista de un centro coordinador de emergencias. Recibes artículos de prensa sobre UN hecho. Usa SOLO lo que dicen los artículos; cada afirmación debe citar el medio. "
+SISTEMA = ("Eres analista de un centro coordinador de emergencias. Recibes artículos de prensa sobre UN hecho. Ignora los artículos que no traten del hecho indicado. Usa SOLO lo que dicen los artículos; cada afirmación debe citar el medio. "
            "Si un dato no aparece, escribe null. No inventes nombres, cifras ni cargos. Distingue lo que afirma el medio de lo que atribuye a una autoridad. Responde en JSON.")
 
 
-def analizar(fuentes, nombres=()):
+def analizar(fuentes, nombres=(), descr=""):
     def del_hecho(f):
         t = _n(f["titulo"] + " " + f["texto"][:3000])
         if any(_n(n) in t for n in nombres):
@@ -156,7 +173,7 @@ def analizar(fuentes, nombres=()):
         return ("el alto" in t or "bolivia" in t) and any(k in t for k in ("coreano", "jinstravel", "ciclista", "youtuber"))
     fuentes = [f for f in fuentes if f.get("texto") and del_hecho(f)][:18]
     arts = "\n\n".join(f"[{i + 1}] {f['medio']} · {f['fecha']} · {f['url']}\n{f['texto'][:2200]}" for i, f in enumerate(fuentes))[:30000]
-    pedido = ("Con estos artículos devuelve JSON con: hecho{fecha,hora,lugar_versiones[{texto,fuentes}],victima{nombre,edad,nacionalidad},vehiculo,conductor{estado,declaraciones[{texto,atribuido_a,fuente}]}}, "
+    pedido = (f"HECHO: {descr}. Usa solo los artículos que traten de ESTE hecho.\n" if descr else "") + ("Con estos artículos devuelve JSON con: hecho{fecha,hora,lugar_versiones[{texto,fuentes}],victima{nombre,edad,nacionalidad},vehiculo,conductor{estado,declaraciones[{texto,atribuido_a,fuente}]}}, "
               "instituciones[{nombre,que_hizo,fuente}], cronologia[{cuando,que,fuentes}], afirmaciones[{dato,valor,fuentes,estado('coincide'|'fuente_unica'|'discrepa'),detalle}], "
               "vacios[strings: lo que NO se sabe y debería saberse], novedades_ultimas_24h[strings].\n\nARTÍCULOS:\n" + arts)
     txt, prov = llamar_ia(SISTEMA, pedido)
@@ -423,7 +440,7 @@ def investigar(hecho, max_leer=24, log=print):
         fuentes.append(leer(it))
     comunes, lugar = anclas(hecho)
     for f in fuentes:
-        f["relevante"] = relevante(f, comunes, lugar)
+        f["relevante"] = relevante(f, comunes, lugar, (), tema_de(hecho.get("subtipo")))
     rel1 = [f for f in fuentes if f["relevante"]]
     tabu = set(re.findall(r"[a-z]{4,}", lugar)) | set(comunes) | {"alto"}
     nombres = [n for n in nombres_propios([f["texto"] for f in rel1] + [f["titulo"] for f in rel1], minimo=2) if not (set(re.findall(r"[a-z]{4,}", _n(n))) & tabu)][:3]
@@ -437,7 +454,7 @@ def investigar(hecho, max_leer=24, log=print):
             n = agregar([dict(x, ronda=2) for x in rss(nm, hl, gl, ceid)], 2); qlog.append((2, f"{nm} [{etq}]", n))
     nuevos = [v for v in vistos.values() if v["ronda"] == 2][:max_leer + 20]
     for it in nuevos:
-        f = leer(it); f["relevante"] = relevante(f, comunes, lugar, nombres); fuentes.append(f)
+        f = leer(it); f["relevante"] = relevante(f, comunes, lugar, nombres, tema_de(hecho.get("subtipo"))); fuentes.append(f)
     # lugares y coordenadas
     fuentes = [f for f in fuentes if f.get("relevante")]
     textos = [f["texto"] for f in fuentes if f["leida"]]
@@ -455,7 +472,7 @@ def investigar(hecho, max_leer=24, log=print):
         ofi = oficiales_v3.para(hecho.get("subtipo"), ref_ll[0], ref_ll[1], log)
     except Exception as e:
         ofi = {"lluvia": None, "textos": []}; log("oficiales:", str(e)[:80])
-    analisis, prov = analizar([f for f in fuentes if f["leida"]] + ofi["textos"], nombres)
+    analisis, prov = analizar([f for f in fuentes if f["leida"]] + ofi["textos"], nombres, f"{hecho['subtipo']} en {hecho.get('lugar')}")
     res = {"hecho_id": hecho["id"], "generado": dt.datetime.now(dt.timezone.utc).isoformat(), "segundos": round(time.time() - t0),
            "consultas": qlog, "descartadas_por_ruido": total - len(fuentes), "n_fuentes": len(fuentes), "n_leidas": sum(f["leida"] for f in fuentes), "nombres_propios": nombres, "lugares": geo, "oficiales": {"lluvia": ofi["lluvia"], "textos": [{"medio": t["medio"], "url": t["url"]} for t in ofi["textos"]]}, "ia": prov, "analisis": analisis,
            "fuentes": [{k: v for k, v in f.items() if k != "texto"} for f in fuentes]}
