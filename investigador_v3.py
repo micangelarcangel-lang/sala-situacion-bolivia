@@ -224,7 +224,7 @@ def redactar(hecho, analisis, fuentes, lugares):
     pedidos = [
         ("""JSON con EXACTAMENTE: titulo (máx 70 car., describe el hecho concreto: quién, qué, dónde), clasificacion, nivel_atencion ('Bajo'|'Medio'|'Alto'),
 esencial{paso: QUÉ OCURRIÓ en 2 frases con datos del análisis (no una acción), resuelto: qué ya está establecido, abierto: qué sigue sin saberse, requiere: la decisión o gestión que se pide a la MAE},
-kpis [[valor, etiqueta] x5] (fallecidos, heridos, aprehendidos, medios que lo reportan, alcance 'Local'|'Nacional'|'Internacional'),
+kpis [[valor, etiqueta] x5] (fallecidos, heridos, aprehendidos, medios que lo reportan, alcance: 'Internacional' si medios de otro país lo reportan, 'Nacional' si varios departamentos o medios nacionales, si no 'Local'),
 hitos [{dia:int día de noviembre, hora:número 0-24, texto:máx 28 car., hecho:true|false}] (6 a 7; los pendientes hecho:false con dia >= hoy),
 ficha [[campo, valor]] (Fecha y hora, Lugar, Víctima, Vehículo, Conductor, Causa, Estado del caso, Respaldo oficial, Confianza),
 lugares_citados: nombres de la lista %s que son versiones del lugar del hecho.""" % lug),
@@ -314,7 +314,7 @@ def og_imagen(fuentes, nombre, log=print):
 
 DIM_TIPO = [
     (r"tr[aá]nsito|accidente", "Identificación, Auxilio y atención en el lugar, Traslado y fallecimiento, Levantamiento y destino del cuerpo, Repatriación, Proceso judicial, Lugar del hecho",
-     "personas fallecidas, aprehendidos, fecha del evento, alcance 'Local'|'Nacional'|'Internacional'"),
+     "personas fallecidas, aprehendidos, fecha del evento, alcance: 'Internacional' si medios de otro país lo reportan, 'Nacional' si varios departamentos o medios nacionales, si no 'Local'"),
     (r"sequ|inund|granizada|helada|riada|desliz", "Territorio afectado, Población y producción afectadas, Declaratoria y marco legal, Ayuda desplegada, Pérdidas reportadas, Necesidades pendientes, Pronóstico y evolución",
      "municipios afectados, familias o personas afectadas (si no hay dato 'S/D'), pérdidas principales (p. ej. cabezas de ganado, hectáreas), situación de la declaratoria ('Emergencia'|'Desastre'|'Sin declaratoria')"),
     (r"incendio", "Zona y superficie, Focos y control, Personas afectadas o evacuadas, Recursos desplegados, Causa, Riesgo para la salud (humo, calidad del aire), Declaratoria",
@@ -340,7 +340,7 @@ def redactar_boletin(hecho, analisis, log=print):
 kpis [[valor, etiqueta] x4] (%s),
 victima{nombre, detalle (edad · nacionalidad · cómo se le conoce)}, vehiculo (en mayúsculas, p. ej. 'CAMIÓN DE CARGA'),
 versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior; solo si los medios discrepan en el lugar de un hecho puntual)}] (máx 6; en eventos extensos como sequía o inundación, los municipios afectados, todos 'A'),
-operativa (2-3 frases: dónde está el caso y qué decisión se pide a la MAE),
+operativa (2-3 frases de SITUACIÓN ACTUAL: en qué etapa está el caso y qué queda por cerrarse; es un boletín público: NO pidas acciones ni decisiones a nadie),
 acciones [objetos {accion (una línea concreta), responsable_sugerido, plazo ('24 h','48 h','72 h','Continuo')}] x4: confirmar estado del caso con Policía/Fiscalía, pedir parte policial y forense, coordinar con Cancillería, fijar un mensaje oficial único.""",
         """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 con ESTAS dimensiones (en este orden): %s. 'hallazgo' = qué se sabe, en una frase, sin nombrar medios. 'estado' = SOLO una de: 'Confirmado' | 'Pendiente: <qué falta y quién lo tiene>' | 'Discrepa: <A> / <B>' | 'Sin dato público'. No cuentes medios ni cites fuentes aquí,
 cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconstruccion (2-3 frases, informativa no pericial), vacios [strings: 5 documentos o datos que faltan y quién los tiene]."""]

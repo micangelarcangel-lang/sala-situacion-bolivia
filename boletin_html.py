@@ -136,8 +136,7 @@ def html(B):
 <div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
 <div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
 <div class="g"><div>{mapa}</div><div>{ident}</div></div>{esq}{pie(1)}</div>'''
-    p2 = f'''<div class="pg">{cab(2)}<h2>Situación operativa y acciones</h2><div class="sint" style="margin-top:0;font-size:9.4pt">{E(B["operativa"])}</div>
-<table><tr><th>#</th><th>Acción</th><th>Responsable sugerido</th><th>Plazo</th></tr>{acc}</table>
+    p2 = f'''<div class="pg">{cab(2)}<h2>Situación actual</h2><div class="sint" style="margin-top:0;font-size:9.6pt">{E(B["operativa"])}</div>
 <div class="sec"><h2>Cadena de atención y situación posterior</h2><table><tr><th>Dimensión</th><th>Qué se sabe</th><th>Estado</th></tr>{tra}</table></div>
 <div class="sec"><h2>Vacíos prioritarios</h2><div style="font-size:8.6pt">{E("; ".join(B["vacios"]))}.</div></div>
 <div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{fu}</div></div>{pie(2)}</div>'''
