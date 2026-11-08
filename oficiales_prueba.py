@@ -1,20 +1,19 @@
-import re, urllib.request
+import re, io, urllib.request
 UA = {"User-Agent": "Mozilla/5.0 sala-situacion/3"}
-def get(u, t=40):
-    return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read().decode("utf-8", "ignore")
-h = get("https://minsalud.gob.bo/9104-boletines-epidemiologicos-2026")
-print("== MINSALUD enlaces con boletin/epidem/semana")
-for m in re.finditer(r'<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>', h, re.S):
-    t = re.sub(r"<[^>]+>|\s+", " ", m.group(2)).strip()
-    if re.search(r"(?i)boletin|boletín|epidem|semana|SE ?\d|2026", t + m.group(1)) and "Descarga/RRHH" not in m.group(1):
-        print("  ", t[:70], "->", m.group(1)[:140])
-for u in ("https://senamhi.gob.bo/servicios/alerta-meteorologica", "https://senamhi.gob.bo/hidrologia/alertas", "https://senamhi.gob.bo/servicios/monitor-sequias"):
-    try:
-        h = get(u); print("== SENAMHI", u, len(h))
-        urls = set(re.findall(r"""["'](https?://[^"']+|/[a-zA-Z0-9_\-/\.]+(?:api|json|geojson|data|wms|wfs|alerta|aviso)[^"']*)["']""", h))
-        for x in sorted(urls)[:25]: print("   REF", x[:150])
-        for m in list(re.finditer(r'(?i)(fetch|axios\.get|\$\.get|ajax)\(\s*["\']([^"\']+)', h))[:8]: print("   JS", m.group(2)[:140])
-        iframes = re.findall(r'<iframe[^>]+src="([^"]+)"', h); print("   IFRAME", iframes[:5])
-        imgs = re.findall(r'<img[^>]+src="([^"]+)"', h); print("   IMG", [i for i in imgs if re.search(r"(?i)alert|aviso|mapa|pronost", i)][:6])
-    except Exception as e:
-        print("ERR", u, type(e).__name__, str(e)[:80])
+def get(u, t=60):
+    return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
+try:
+    h = get("https://sena.senamhi.gob.bo/public/forecast-public-reports").decode("utf-8", "ignore"); print("== SENA iframe", len(h))
+    t = re.sub(r"<script.*?</script>|<style.*?</style>|<[^>]+>", " ", h, flags=re.S); print("   TEXTO:", re.sub(r"\s+", " ", t)[:900])
+    for m in list(re.finditer(r'(?i)(fetch|axios\.get|\$\.get|ajax|url:)\(?\s*[:"\']([^"\']+)', h))[:10]: print("   JS", m.group(2)[:140])
+    for m in list(re.finditer(r'(?:href|src)="([^"]+\.(?:pdf|png|jpg|json|geojson)[^"]*)"', h))[:15]: print("   ARCH", m.group(1)[:150])
+except Exception as e:
+    print("ERR sena", type(e).__name__, str(e)[:100])
+try:
+    b = get("https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1060-boletin-epidemiologico-semana-epidemiologica-no-41?Itemid=465")
+    print("== MINSALUD SE41 bytes", len(b), b[:8])
+    from pypdf import PdfReader
+    r = PdfReader(io.BytesIO(b)); print("   paginas", len(r.pages))
+    print("   TEXTO:", re.sub(r"\s+", " ", (r.pages[0].extract_text() or ""))[:1200])
+except Exception as e:
+    print("ERR minsalud", type(e).__name__, str(e)[:100])

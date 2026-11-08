@@ -17,6 +17,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - run: python red_prueba.py && python oficiales_prueba.py
+      - run: python red_prueba.py && pip install -q pypdf && python oficiales_prueba.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
