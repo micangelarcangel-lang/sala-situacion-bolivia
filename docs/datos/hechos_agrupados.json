@@ -100,6 +100,26 @@
   "enlaces": "https://open-meteo.com/"
  },
  {
+  "hecho_id": "noticia:8yowl3",
+  "fecha_hora_local": "2026-11-07 21:47",
+  "ts_ms": 1794102421000,
+  "titulo": "Paz visita zona donde se produjo explosión en cuartel que dejó 7 muertos; declara duelo en Bolivia - América TeVé",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 7,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "América TeVé",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOMUZhYjJJVXEyNU1HY1AyeXhGdm5nREFLSEZQZWxhZUNpdGxndHZpQjVPSUJRZFN1ZFdNdm4zdEVDWlBIUFBiZXc1U2U4Nk4teDJ5aG1SLVhEdkh1bWhRYWJjV01KaWQ1TUhSUzNsMVgzajZFRlNFSDB5NDJqNGRnOC1ZZW5WN2pWa0g0cURjS3l0UFpBTC1ERmlCeko5QUlKMEMxRUVUYzVnV3luS1JQOWRiMkNwd2tpUkpoeUpsQkhULUtlOVVhSzdKQ1PSAcwBQVVfeXFMTjFGYWIySVVxMjVNR2NQMnl4RnZuZ0RBS0hGUGVsYWVDaXRsZ3R2aUI1T0lCUWRTdWRXTXZuM3RFQ1pQSFBQYmV3NVNlODZOLXgyeWhtUi1YRHZIdW1oUWFiY1dNSmlkNU1IUlMzbDFYM2o2RUZTRUgweTQyajRkZzgtWWVuVjdqVmtINHFEY0t5dFBaQUwtREZpQnpKOUFJSjBDMUVFVGM1Z1d5bktSUDlkYjJDcHdraVJKaHlKbEJIVC1LZTlVYUs3SkNT?oc=5"
+ },
+ {
   "hecho_id": "gdacs:WF1033609:0",
   "fecha_hora_local": "2026-11-07 20:51",
   "ts_ms": 1794099110000,
