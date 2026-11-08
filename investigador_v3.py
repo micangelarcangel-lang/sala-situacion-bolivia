@@ -447,8 +447,14 @@ if __name__ == "__main__":
                 B = armar_boletin(H, res, fuentes, R)
                 ruta = f"{SALIDA}/{hid.replace(':', '_')}_boletin.json"
                 json.dump(B, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-                import boletin_v3
-                boletin_v3.build(B, f"{SALIDA}/{hid.replace(':', '_')}_BOLETIN.pdf")
+                pdf = f"{SALIDA}/{hid.replace(':', '_')}_BOLETIN.pdf"
+                try:
+                    import boletin_html
+                    boletin_html.build(B, pdf)
+                except Exception as ex:
+                    print("HTML→PDF falló, se usa el formato simple:", str(ex)[:200])
+                    import boletin_v3
+                    boletin_v3.build(B, pdf)
                 print("PDF generado")
         except Exception:
             import traceback; traceback.print_exc()
