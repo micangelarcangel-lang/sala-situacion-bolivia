@@ -47,13 +47,18 @@ def parse_boletin(pags):
     m = re.search(r"Semana Epidemiol[oó]gica N[º°o]? ?(\d+) (\d+ de \w+ al \d+ de \w+ ?20 ?26)", todo)
     out["se"] = int(m.group(1)) if m else None; out["fechas"] = re.sub(r"\s+", " ", m.group(2)).replace("20 26", "2026") if m else ""
     deptos = []
+    def valido(v):
+        if not all(0 < v[i] <= 60 for i in (3, 5, 7)) or not all(v[i] >= 50 for i in (2, 4, 6)):
+            return False
+        r = [v[2] / v[3], v[4] / v[5], v[6] / v[7]]
+        return max(r) / min(r) < 1.25
     for d in DEPTOS:
-        r = re.search(re.escape(d) + r" ((?:" + NUM + r") ){7}(" + NUM + r")", todo)
-        if r:
+        for r in re.finditer(re.escape(d) + r" ((?:" + NUM + r") ){7}(" + NUM + r")", todo):
             toks = re.findall(NUM, r.group(0)[len(d):])
             if len(toks) >= 8:
                 v = [num(t) for t in toks[:8]]
-                deptos.append({"depto": d, "acum": v[0], "tasa_acum": v[1], "casos39": v[2], "tasa39": v[3], "casos40": v[4], "tasa40": v[5], "casos41": v[6], "tasa41": v[7]})
+                if valido(v):
+                    deptos.append({"depto": d, "acum": v[0], "tasa_acum": v[1], "casos39": v[2], "tasa39": v[3], "casos40": v[4], "tasa40": v[5], "casos41": v[6], "tasa41": v[7]}); break
     out["deptos"] = deptos
     m = re.search(r"semanas? epidemiol[oó]gicas? (\d+), el pa[ií]s registr[oó] (" + NUM + r") casos.*?(" + NUM + r")% en relaci[oó]n a la semana ant ?erior \((" + NUM + r")\)", todo)
     if m:
@@ -70,32 +75,36 @@ def parse_boletin(pags):
     return out
 
 
-def serie(max_se=8, log=print):
-    enl = enlaces(); ses = sorted(enl)[-max_se:]; datos = {}
-    for se in ses:
+def serie(log=print):
+    """Curva nacional de hasta 12 semanas: cada boletín trae 3 semanas por departamento (n-2, n-1, n); se leen los boletines n, n-3, n-6, n-9.
+    Una semana se acepta solo si los 9 departamentos pasan la validación; la semana n y n-1 del último boletín se toman del total nacional que el propio boletín declara."""
+    enl = enlaces(); ult = max(enl); datos = {}; curva = {}
+    for se in (ult, ult - 3, ult - 6, ult - 9):
+        if se not in enl:
+            continue
         try:
-            p = parse_boletin(paginas(enl[se]))
-            if p.get("nacional"):
-                datos[se] = p
+            p = parse_boletin(paginas(enl[se])); datos[se] = p
+            if len(p["deptos"]) == 9:
+                for col, k in ((se - 2, "casos39"), (se - 1, "casos40"), (se, "casos41")):
+                    curva[col] = sum(d[k] for d in p["deptos"])
         except Exception as e:
             log("SE", se, "falló:", str(e)[:80])
-    return datos, enl
+    if ult in datos and datos[ult].get("nacional"):
+        N = datos[ult]["nacional"]; curva[N["se"]] = N["casos"]; curva[N["se"] - 1] = N["casos_prev"]
+    return datos, enl, ult, curva
 
 
 def boletin(log=print):
-    datos, enl = serie(8, log)
-    if not datos:
+    datos, enl, ult, cur = serie(log)
+    if ult not in datos or not datos[ult].get("nacional"):
         return None
-    ult = max(datos); U = datos[ult]; N = U["nacional"]
-    curva = [[se, d["nacional"]["casos"]] for se, d in sorted(datos.items())]
-    # el boletín de la SE n también trae la SE n-1: se completa la serie con 'casos_prev'
-    prev = {U["nacional"]["se"] - 1: U["nacional"]["casos_prev"]}
-    for se, v in prev.items():
-        if se not in [c[0] for c in curva]:
-            curva.append([se, v]); curva.sort()
+    U = datos[ult]; N = U["nacional"]
+    curva = [[se, v] for se, v in sorted(cur.items())]
     dep = sorted(U["deptos"], key=lambda x: -x["tasa41"])
     top = ", ".join(f"{x['depto']} ({x['tasa41']:.1f}‰)".replace(".", ",") for x in dep[:3])
-    sint = (f"En la SE {N['se']} ({U['fechas']}) el país notificó {N['casos']:,.0f} casos de infecciones respiratorias agudas, {('+' if N['var_pct'] > 0 else '')}{str(round(N['var_pct'], 1)).replace('.', ',')}% respecto de la semana anterior ({N['casos_prev']:,.0f}). ".replace(",", ".")
+    mil = lambda x: f"{x:,.0f}".replace(",", ".")
+    vp = ("+" if N["var_pct"] > 0 else "") + str(round(N["var_pct"], 1)).replace(".", ",") + "%"
+    sint = (f"En la SE {N['se']} ({U['fechas']}) el país notificó {mil(N['casos'])} casos de infecciones respiratorias agudas, {vp} respecto de la semana anterior ({mil(N['casos_prev'])}). "
             + (f"Las tasas semanales más altas están en {top} por 1.000 habitantes. " if dep else "") + (U["virus"] + " " if U["virus"] else "")
             + "Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.")
     kp = [[f"{N['casos']:,.0f}".replace(",", "."), f"casos de IRA, SE {N['se']}"], [f"{N['var_pct']:+.1f}%".replace(".", ","), "frente a la semana anterior"],
@@ -104,8 +113,8 @@ def boletin(log=print):
     return {"tipo": "epi_ira", "codigo": f"EPI-IRA-SE{N['se']}", "titulo": f"Infecciones respiratorias agudas e influenza · Bolivia · SE {N['se']}",
             "meta": [["BOLETÍN", f"SE {N['se']}"], ["PERIODO", U["fechas"]], ["CORTE", dt.datetime.now(dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Vigilancia activa"]],
             "sintesis": sint, "kpis": kp, "curva": curva, "deptos": dep, "vacuna": U["vacuna"], "edad": U["edad"], "virus": U["virus"], "url": enl[ult],
-            "metodo": f"Cifras leídas automáticamente del Boletín Epidemiológico N° {N['se']} (PDF público del Ministerio de Salud y Deportes) y de las 7 ediciones anteriores para la curva semanal. No hay estimaciones propias; verificar contra el PDF original.",
-            "fuentes": [[f"Boletín epidemiológico SE {se}", ""] for se in sorted(datos)]}
+            "metodo": f"Cifras leídas automáticamente de los Boletines Epidemiológicos N° {', '.join(str(x) for x in sorted(datos))} (PDF públicos del Ministerio de Salud y Deportes); las semanas de la curva se aceptan solo si pasan una validación de coherencia (tasa × población). No hay estimaciones propias; verificar contra el PDF original.",
+            "fuentes": [[f"Boletín epidemiológico SE {se}", ""] for se in sorted(datos)], "deptos_omitidos": [d for d in DEPTOS if d not in [x["depto"] for x in U["deptos"]]]}
 
 
 if __name__ == "__main__":
