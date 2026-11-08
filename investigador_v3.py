@@ -312,18 +312,39 @@ def og_imagen(fuentes, nombre, log=print):
     return None, None
 
 
+DIM_TIPO = [
+    (r"tr[aá]nsito|accidente", "Identificación, Auxilio y atención en el lugar, Traslado y fallecimiento, Levantamiento y destino del cuerpo, Repatriación, Proceso judicial, Lugar del hecho",
+     "personas fallecidas, aprehendidos, fecha del evento, alcance 'Local'|'Nacional'|'Internacional'"),
+    (r"sequ|inund|granizada|helada|riada|desliz", "Territorio afectado, Población y producción afectadas, Declaratoria y marco legal, Ayuda desplegada, Pérdidas reportadas, Necesidades pendientes, Pronóstico y evolución",
+     "municipios afectados, familias o personas afectadas (si no hay dato 'S/D'), pérdidas principales (p. ej. cabezas de ganado, hectáreas), situación de la declaratoria ('Emergencia'|'Desastre'|'Sin declaratoria')"),
+    (r"incendio", "Zona y superficie, Focos y control, Personas afectadas o evacuadas, Recursos desplegados, Causa, Riesgo para la salud (humo, calidad del aire), Declaratoria",
+     "hectáreas o viviendas afectadas, personas afectadas, focos activos, estado ('Activo'|'Controlado'|'Extinguido')"),
+    (r"sismo|terremoto", "Magnitud y epicentro, Daños, Personas afectadas, Respuesta, Servicios de salud, Réplicas, Declaratoria", "magnitud, personas heridas o fallecidas, viviendas afectadas, alcance"),
+    (r"brote|intox|sanidad|rabia|dengue|chikun", "Casos confirmados y sospechosos, Defunciones, Territorio, Agente o causa, Medidas de control, Capacidad de servicios, Comunicación de riesgo", "casos, defunciones, municipios afectados, estado del control"),
+]
+
+
+def dim_tipo(subtipo):
+    for rx, dims, kp in DIM_TIPO:
+        if re.search(rx, subtipo or "", re.I):
+            return dims, kp
+    return "Qué ocurrió, Personas afectadas, Territorio, Respuesta de las instituciones, Daños y pérdidas, Qué falta por confirmar, Seguimiento", "personas afectadas, fallecidos, fecha del evento, alcance"
+
+
 def redactar_boletin(hecho, analisis, log=print):
+    dims, kpis = dim_tipo(hecho.get('subtipo'))
     comp = json.dumps(analisis, ensure_ascii=False)[:15000]
     base = f"Hecho: {hecho['subtipo']} en {hecho.get('lugar')}. Hoy es {dt.date.today().isoformat()}.\nANÁLISIS CON CITAS:\n{comp}\n\n"
     pedidos = [
         """JSON con EXACTAMENTE: titulo (máx 80 car., tipo de evento · lugar), sintesis (4-5 frases: quién, qué, cuándo, dónde, estado del caso, qué se discute o falta; sin acciones),
-kpis [[valor, etiqueta] x4] (personas fallecidas, aprehendidos, fecha del evento, alcance 'Local'|'Nacional'|'Internacional'),
+kpis [[valor, etiqueta] x4] (%s),
 victima{nombre, detalle (edad · nacionalidad · cómo se le conoce)}, vehiculo (en mayúsculas, p. ej. 'CAMIÓN DE CARGA'),
-versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior)}] (máx 4),
+versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior; solo si los medios discrepan en el lugar de un hecho puntual)}] (máx 6; en eventos extensos como sequía o inundación, los municipios afectados, todos 'A'),
 operativa (2-3 frases: dónde está el caso y qué decisión se pide a la MAE),
 acciones [objetos {accion (una línea concreta), responsable_sugerido, plazo ('24 h','48 h','72 h','Continuo')}] x4: confirmar estado del caso con Policía/Fiscalía, pedir parte policial y forense, coordinar con Cancillería, fijar un mensaje oficial único.""",
-        """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 con ESTAS dimensiones: Identificación, Auxilio y atención en el lugar, Traslado y fallecimiento, Levantamiento y destino del cuerpo, Repatriación, Proceso judicial, Lugar del hecho. 'hallazgo' = qué se sabe, en una frase, sin nombrar medios. 'estado' = SOLO una de: 'Confirmado' | 'Pendiente: <qué falta y quién lo tiene>' | 'Discrepa: <A> / <B>' | 'Sin dato público'. No cuentes medios ni cites fuentes aquí,
+        """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 con ESTAS dimensiones (en este orden): %s. 'hallazgo' = qué se sabe, en una frase, sin nombrar medios. 'estado' = SOLO una de: 'Confirmado' | 'Pendiente: <qué falta y quién lo tiene>' | 'Discrepa: <A> / <B>' | 'Sin dato público'. No cuentes medios ni cites fuentes aquí,
 cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconstruccion (2-3 frases, informativa no pericial), vacios [strings: 5 documentos o datos que faltan y quién los tiene]."""]
+    pedidos = [pedidos[0] % kpis, pedidos[1] % dims]
     out = {}
     for ped in pedidos:
         txt, prov = llamar_ia(SIS_BOL, base + ped, max_tokens=3500)
@@ -337,7 +358,7 @@ cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconst
 def armar_boletin(hecho, res, fuentes, R, log=print):
     ahora = dt.datetime.now(dt.timezone(dt.timedelta(hours=-4)))
     pts = []
-    for v in [v for v in R.get("versiones_lugar", []) if not re.search(r"(?i)precis|principal|general|desconoc|no se", str(v.get("nombre_corto", "")) + str(v.get("consulta", "")))][:4]:
+    for v in [v for v in R.get("versiones_lugar", []) if not re.search(r"(?i)precis|principal|general|desconoc|no se", str(v.get("nombre_corto", "")) + str(v.get("consulta", "")))][:6]:
         ciudad = (hecho.get("lugar") or "El Alto").split(",")[0]
         cand = [str(v.get("consulta", "")), str(v.get("nombre_corto", "")), re.sub(r"(?i)^(av\.?|avenida|calle|sector|zona)\s+", "", str(v.get("nombre_corto", "")))]
         for q in dict.fromkeys(c for c in cand if len(c) > 3):
@@ -364,7 +385,7 @@ def armar_boletin(hecho, res, fuentes, R, log=print):
             "meta": [["BOLETÍN", "001"], ["FECHA DEL HECHO", dt.datetime.fromtimestamp(hecho["primera"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y").upper()],
                      ["CORTE", ahora.strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Seguimiento"]],
             "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts, "nota_mapa": ("No se pudo ubicar en OpenStreetMap: " + ", ".join(sin_ubicar) + ".") if sin_ubicar else "",
-            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"), "esquema": bool(re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "")),
+            "victima": {"nombre": vic.get("nombre", "—"), "detalle": vic.get("detalle", "")}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"), "mapa_tipo": "versiones" if re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "") else "afectados", "esquema": bool(re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "")),
             "operativa": R.get("operativa", ""), "acciones": [fila(a, ("accion", "responsable_sugerido", "plazo")) for a in R.get("acciones", [])][:4],
             "trazabilidad": [fila(t, ("dimension", "hallazgo", "estado")) for t in R.get("trazabilidad", [])], "cronologia": [fila(c, ("cuando", "que"))[:2] for c in R.get("cronologia", [])],
             "reconstruccion": R.get("reconstruccion", ""), "vacios": [str(v) for v in R.get("vacios", [])],

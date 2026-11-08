@@ -23,21 +23,25 @@ def mapa_base(pts, ancho=900, alto=720):
         if (x1 - x0) * 512 < ancho * .62 and (y1 - y0) * 512 < alto * .62: break
         z -= 1
     cx = (_xy(min(la), min(lo), z)[0] + _xy(max(la), max(lo), z)[0]) / 2; cy = (_xy(min(la), min(lo), z)[1] + _xy(max(la), max(lo), z)[1]) / 2
+    zt = z + 1  # teselas de 256 px a zoom z+1 = misma escala que 512 px a zoom z
     ox, oy = cx * 512 - ancho / 2, cy * 512 - alto / 2
     img = Image.new("RGB", (ancho, alto), "#e9edf2"); red = False
-    for tx in range(int(ox // 512), int((ox + ancho) // 512) + 1):
-        for ty in range(int(oy // 512), int((oy + alto) // 512) + 1):
-            try:
-                if os.environ.get("MAPA_OFFLINE"): raise OSError
-                u = f"https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{tx}/{ty}@2x.png"
-                t = Image.open(io.BytesIO(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": UA}), timeout=20).read())).convert("RGB").resize((512, 512)); red = True
-            except Exception:
-                t = Image.new("RGB", (512, 512), "#e9edf2"); d = ImageDraw.Draw(t)
-                for k in range(0, 512, 64): d.line([(k, 0), (k, 512)], fill="#d5dbe3"); d.line([(0, k), (512, k)], fill="#d5dbe3")
-            img.paste(t, (int(tx * 512 - ox), int(ty * 512 - oy)))
+    plantillas = ["https://tile.openstreetmap.org/{z}/{x}/{y}.png", "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"]
+    for tx in range(int(ox // 256), int((ox + ancho) // 256) + 1):
+        for ty in range(int(oy // 256), int((oy + alto) // 256) + 1):
+            t = None
+            for pl in plantillas:
+                try:
+                    if os.environ.get("MAPA_OFFLINE"): raise OSError
+                    t = Image.open(io.BytesIO(urllib.request.urlopen(urllib.request.Request(pl.format(z=zt, x=tx, y=ty), headers={"User-Agent": UA, "Referer": "https://github.com/micangelarcangel-lang/sala-situacion-bolivia"}), timeout=20).read())).convert("RGB").resize((256, 256)); red = True; break
+                except Exception:
+                    t = None
+            if t is None:
+                t = Image.new("RGB", (256, 256), "#e9edf2"); d = ImageDraw.Draw(t)
+                for k in range(0, 256, 32): d.line([(k, 0), (k, 256)], fill="#d5dbe3"); d.line([(0, k), (256, k)], fill="#d5dbe3")
+            img.paste(t, (int(tx * 256 - ox), int(ty * 256 - oy)))
     b = io.BytesIO(); img.save(b, "PNG", optimize=True)
     px = [(_xy(p["lat"], p["lon"], z)[0] * 512 - ox, _xy(p["lat"], p["lon"], z)[1] * 512 - oy) for p in pts]
-    km_px = 512 * 2 ** 0  # px por tesela
     m_por_px = 156543.03392 * math.cos(math.radians(sum(la) / len(la))) / (2 ** z) / 2
     return "data:image/png;base64," + base64.b64encode(b.getvalue()).decode(), px, red, m_por_px
 
@@ -47,11 +51,11 @@ def _hav(a, b):
     return 2 * R * math.asin(math.sqrt(math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2))
 
 
-def svg_mapa(pts, ancho=900, alto=720):
+def svg_mapa(pts, ancho=900, alto=720, tipo='versiones'):
     uri, px, red, mpp = mapa_base(pts, ancho, alto)
     s = [f'<svg viewBox="0 0 {ancho} {alto}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{ancho}" height="{alto}"/>']
     A = [i for i, p in enumerate(pts) if p.get("version", "A") == "A"]; B = [i for i, p in enumerate(pts) if p.get("version") == "B"]
-    if A and B:
+    if A and B and tipo == 'versiones':
         a = (sum(px[i][0] for i in A) / len(A), sum(px[i][1] for i in A) / len(A)); b = (sum(px[i][0] for i in B) / len(B), sum(px[i][1] for i in B) / len(B))
         d = _hav((sum(pts[i]["lat"] for i in A) / len(A), sum(pts[i]["lon"] for i in A) / len(A)), (sum(pts[i]["lat"] for i in B) / len(B), sum(pts[i]["lon"] for i in B) / len(B)))
         mx, my = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
@@ -64,7 +68,7 @@ def svg_mapa(pts, ancho=900, alto=720):
         s.append(f'<g transform="translate({lx:.0f},{ly:.0f})"><rect width="{w}" height="28" rx="6" fill="#fff" stroke="{c}" stroke-width="1.6"/><text x="10" y="19.5" font-size="15.5" font-weight="600" fill="#1b2430">{E(p["nombre"])}</text></g>')
     bar = 1000 / mpp
     s.append(f'<g transform="translate(24,{alto - 34})"><rect x="-8" y="-10" width="{bar + 56:.0f}" height="34" rx="6" fill="#fff" opacity=".85"/><rect width="{bar:.0f}" height="6" fill="#222"/><text x="{bar + 8:.0f}" y="8" font-size="14" fill="#222" font-weight="600">1 km</text></g>')
-    s.append(f'<text x="{ancho - 10}" y="{alto - 8}" text-anchor="end" font-size="11" fill="#444" opacity=".85">© OpenStreetMap contributors © CARTO</text></svg>')
+    s.append(f'<text x="{ancho - 10}" y="{alto - 8}" text-anchor="end" font-size="11" fill="#444" opacity=".85">© OpenStreetMap contributors</text></svg>')
     return "".join(s), red
 
 
@@ -113,12 +117,13 @@ def estado(s):
 def html(B):
     pts = B.get("puntos", []); mapa = ""; nota = B.get("nota_mapa", "")
     if len(pts) >= 2:
-        svg, red = svg_mapa(pts)
-        mapa = f'<h2>Localización · versiones de los reportes</h2><div class="map">{svg}</div><div class="nota">{"<b style=color:%s>Azul</b>: versión inicial · <b style=color:%s>rojo</b>: versión posterior. " % (AZ, RJ) if any(p.get("version") == "B" for p in pts) else ""}Ubicación de referencia en OpenStreetMap, no coordenada confirmada del impacto. {E(nota)}{"" if red else " (Mapa base no disponible en este entorno)."}</div>'
-    ident = f'<h2>Identificación</h2><div class="card"><div class="n">{E(B["victima"]["nombre"])}</div><div class="d">{E(B["victima"]["detalle"])}</div>'
-    if B.get("foto_url"):
+        svg, red = svg_mapa(pts, tipo=B.get('mapa_tipo', 'versiones'))
+        tit = "Localización · versiones de los reportes" if B.get("mapa_tipo", "versiones") == "versiones" else "Territorios mencionados como afectados"
+        mapa = f'<h2>{tit}</h2><div class="map">{svg}</div><div class="nota">{"<b style=color:%s>Azul</b>: versión inicial · <b style=color:%s>rojo</b>: versión posterior. " % (AZ, RJ) if any(p.get("version") == "B" for p in pts) else ""}Ubicación de referencia en OpenStreetMap{", no coordenada confirmada del impacto" if B.get("mapa_tipo", "versiones") == "versiones" else " (centro del municipio); no delimita el área afectada"}. {E(nota)}{"" if red else " (Mapa base no disponible en este entorno)."}</div>'
+    ident = f'<h2>{"Identificación" if B.get("mapa_tipo", "versiones") == "versiones" else "Panorama"}</h2><div class="card"><div class="n">{E(B["victima"]["nombre"])}</div><div class="d">{E(B["victima"]["detalle"])}</div>'
+    if B.get("foto_url") and B.get("mapa_tipo", "versiones") == "versiones":
         ident += f'<div class="qr">{qr_svg(B["foto_url"])}</div><div class="nota">Retrato difundido por {E(B.get("foto_medio") or "un medio")}. Escanee el código para abrir la fuente original. No es una imagen del accidente.</div>'
-    ident += '<div class="nota">Escena del siniestro: no se localizó fotografía verificable del impacto; no se incorpora material no autenticado.</div></div>'
+    ident += ('<div class="nota">Escena del siniestro: no se localizó fotografía verificable del impacto; no se incorpora material no autenticado.</div></div>' if B.get("mapa_tipo", "versiones") == "versiones" else '</div>')
     esq = f'<div class="esq"><h2>Esquema ilustrativo de interacción vial</h2>{svg_esquema(B.get("vehiculo", "VEHÍCULO"))}<div class="nota">Representación conceptual; no reproduce la escena ni determina la mecánica del impacto. Debe sustituirse por el croquis, fotografías y peritaje oficiales.</div></div>' if B.get("esquema", True) else ""
     cab = lambda p: f'<div class="top"><b>CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA</b><span>Para: MAE · circulación restringida</span></div>'
     pie = lambda n: f'<div class="pie"><span>Boletín elaborado con fuentes abiertas. No sustituye los informes oficiales, médico-forenses, fiscales ni consulares.</span><span>{E(B["codigo"])} · pág. {n}</span></div>'
