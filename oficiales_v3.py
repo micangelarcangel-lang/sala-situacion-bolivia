@@ -44,13 +44,30 @@ def textos_senamhi(log=print):
     return out
 
 
+def epi_texto(palabras, log=print):
+    """Último boletín epidemiológico semanal del Ministerio de Salud (PDF público): devuelve las páginas que mencionan `palabras`."""
+    import io
+    from pypdf import PdfReader
+    base = "https://minsalud.gob.bo"
+    h = urllib.request.urlopen(urllib.request.Request(base + "/9104-boletines-epidemiologicos-2026", headers=UA), timeout=60).read().decode("utf-8", "ignore")
+    enl = re.findall(r'href="(/component/jdownloads/send/[^"]*semana-epidemiologica-no-(\d+)[^"]*)"', h)
+    if not enl:
+        return None
+    ruta, se = max(enl, key=lambda x: int(x[1]))
+    b = urllib.request.urlopen(urllib.request.Request(base + ruta.replace("&amp;", "&"), headers=UA), timeout=90).read()
+    pags = [re.sub(r"\s+", " ", (pg.extract_text() or "")) for pg in PdfReader(io.BytesIO(b)).pages]
+    pal = [w.lower() for w in palabras if len(w) > 3]
+    hit = [t for t in pags if any(w in t.lower() for w in pal)][:4] or pags[:2]
+    return {"medio": f"Minsalud · Boletín epidemiológico SE {se}", "url": base + ruta.replace("&amp;", "&"), "titulo": f"Boletín epidemiológico semana {se}", "texto": " ".join(hit)[:7000], "leida": True, "relevante": True, "pub": None, "fecha": "", "ronda": 0}
+
+
 def sismos(dias=15, mag=3.0):
     ini = (dt.date.today() - dt.timedelta(days=dias)).isoformat()
     j = _j(f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=-23&maxlatitude=-9&minlongitude=-70&maxlongitude=-57&starttime={ini}&minmagnitude={mag}&orderby=time&limit=20")
     return [{"lugar": f["properties"]["place"], "mag": f["properties"]["mag"], "t": f["properties"]["time"]} for f in j["features"]]
 
 
-def para(subtipo, lat, lon, log=print):
+def para(subtipo, lat, lon, log=print, lugar=""):
     """Devuelve {'lluvia':…, 'textos':[…]} según el tipo de evento. Nunca lanza excepción."""
     out = {"lluvia": None, "textos": []}
     s = (subtipo or "").lower()
@@ -59,6 +76,11 @@ def para(subtipo, lat, lon, log=print):
             if lat is not None:
                 out["lluvia"] = lluvia(lat, lon, 90)
             out["textos"] = textos_senamhi(log)
+        if re.search(r"brote|intox|sanidad|rabia|dengue|chikun|sarampi|c[oó]lera|gripe|influenza|covid|fiebre", s):
+            palabras = re.findall(r"[a-záéíóúñ]{4,}", s) + [x for x in (lugar or "").lower().replace(",", " ").split()]
+            t = epi_texto(palabras, log)
+            if t:
+                out["textos"].append(t)
     except Exception as e:
         log("oficiales falló:", type(e).__name__, str(e)[:80])
     return out

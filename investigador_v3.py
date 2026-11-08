@@ -469,7 +469,7 @@ def investigar(hecho, max_leer=24, log=print):
     try:
         import oficiales_v3
         ref_ll = (hecho.get("lat"), hecho.get("lon")) if hecho.get("lat") is not None else ((pts[0]["lat"], pts[0]["lon"]) if pts else (None, None))
-        ofi = oficiales_v3.para(hecho.get("subtipo"), ref_ll[0], ref_ll[1], log)
+        ofi = oficiales_v3.para(hecho.get("subtipo"), ref_ll[0], ref_ll[1], log, hecho.get("lugar") or "")
     except Exception as e:
         ofi = {"lluvia": None, "textos": []}; log("oficiales:", str(e)[:80])
     analisis, prov = analizar([f for f in fuentes if f["leida"]] + ofi["textos"], nombres, f"{hecho['subtipo']} en {hecho.get('lugar')}")
