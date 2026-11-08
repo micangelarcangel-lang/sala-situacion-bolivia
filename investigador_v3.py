@@ -358,7 +358,7 @@ def redactar_boletin(hecho, analisis, log=print):
         """JSON con EXACTAMENTE: titulo (máx 80 car., tipo de evento · lugar), sintesis (4-5 frases: quién, qué, cuándo, dónde, estado del caso, qué se discute o falta; sin acciones),
 kpis [[valor, etiqueta] x4] (%s),
 victima{nombre, detalle (edad · nacionalidad · cómo se le conoce)}, vehiculo (en mayúsculas, p. ej. 'CAMIÓN DE CARGA'),
-versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior; solo si los medios discrepan en el lugar de un hecho puntual)}] (máx 6; en eventos extensos como sequía o inundación, los municipios afectados, todos 'A'),
+versiones_lugar [{nombre_corto, consulta (lugar geocodificable corto, p. ej. 'Molino Andino, El Alto'), version 'A' (primera) o 'B' (posterior; solo si los medios discrepan en el lugar de un hecho puntual)}] (máx 10; en eventos extensos como sequía o inundación, los municipios afectados, todos 'A'),
 operativa (2-3 frases de SITUACIÓN ACTUAL: en qué etapa está el caso y qué queda por cerrarse; es un boletín público: NO pidas acciones ni decisiones a nadie),
 acciones [objetos {accion (una línea concreta), responsable_sugerido, plazo ('24 h','48 h','72 h','Continuo')}] x4: confirmar estado del caso con Policía/Fiscalía, pedir parte policial y forense, coordinar con Cancillería, fijar un mensaje oficial único.""",
         """JSON con EXACTAMENTE: trazabilidad [objetos {dimension, hallazgo, estado}] x7 con ESTAS dimensiones (en este orden): %s. 'hallazgo' = qué se sabe, en una frase, sin nombrar medios. 'estado' = SOLO una de: 'Confirmado' | 'Pendiente: <qué falta y quién lo tiene>' | 'Discrepa: <A> / <B>' | 'Sin dato público'. No cuentes medios ni cites fuentes aquí,
@@ -377,7 +377,7 @@ cronologia [objetos {cuando, que}] x7 (fecha y hora, un hecho por fila), reconst
 def armar_boletin(hecho, res, fuentes, R, log=print):
     ahora = dt.datetime.now(dt.timezone(dt.timedelta(hours=-4)))
     pts = []
-    for v in [v for v in R.get("versiones_lugar", []) if not re.search(r"(?i)precis|principal|general|desconoc|no se", str(v.get("nombre_corto", "")) + str(v.get("consulta", "")))][:6]:
+    for v in [v for v in R.get("versiones_lugar", []) if not re.search(r"(?i)precis|principal|general|desconoc|no se", str(v.get("nombre_corto", "")) + str(v.get("consulta", "")))][:10]:
         ciudad = (hecho.get("lugar") or "El Alto").split(",")[0]
         cand = [str(v.get("consulta", "")), str(v.get("nombre_corto", "")), re.sub(r"(?i)^(av\.?|avenida|calle|sector|zona)\s+", "", str(v.get("nombre_corto", "")))]
         for q in dict.fromkeys(c for c in cand if len(c) > 3):
