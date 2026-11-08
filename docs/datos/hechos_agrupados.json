@@ -1,8 +1,8 @@
 [
  {
   "hecho_id": "noticia:1t4lkre",
-  "fecha_hora_local": "2026-11-07 22:24",
-  "ts_ms": 1794104679000,
+  "fecha_hora_local": "2026-11-07 22:26",
+  "ts_ms": 1794104796000,
   "titulo": "Accidente de tránsito en La Paz deja tres muertos y varios heridos - La Patria Bolivia",
   "tipo_amenaza": "antropogénica",
   "nivel_num": 2,
@@ -10,14 +10,14 @@
   "fallecidos_max": 3,
   "heridos_max": 9,
   "cifras_discrepantes": "sí",
-  "n_notas": 8,
+  "n_notas": 9,
   "fuentes": "El Deber; La Patria Bolivia; Red Uno; Urgentebo; eju.tv; unitel.bo",
   "lat": -16.169,
   "lon": -68.09,
   "lugar": "La Paz, La Paz",
   "departamento": "La Paz",
   "municipio": "Nuestra Señora de La Paz",
-  "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPMjBpYmFXSURvdENYcGhGZlZaMzNNQjRxSjlJc2FRVlhKa254a0ZmNWlpUG84cXBRT0Z1Q2NvZFl3VEs3c3hYYkMzaUdoUDhGc2ZFd0J5b2E0SktDb3BYcWhfZGRzZWhqUURHYjBfdXljbW9KZ3FrMm5IS0RiTUd6VnJYRlhvUHlPU0JWY05fLVBkWndseXpncUdTQ0JVQUFIM3VDNjdmNUdNUQ?oc=5 | https://news.google.com/rss/articles/CBMiugFBVV95cUxOQk00ck5ZY1VIVnJKb01CZFpGcVlva1R1bEMtLUJVNGw3SlNyRmV1VVd6WHJhSFZuRndaSHN1cHRCSlNOQ1RLMUROaExpRHNLekphRFZwRUl6cW9RY2t2UjBwR1ZqdXYyWWlnRE44WVNhZ3NvX2JKbnA0ZmllRzFoc1RqNUFFLWZfUG1jSmJ6MEowejZXTUxSWEJGQ2RjOGlaNXA0NVd1MktabEZKYVd6ejN1R1FnWWw2S1E?oc=5 | https://news.google.com/rss/articles/CBMikAFBVV95cUxPTS1udGx0MVFjV2JVNVJVR3FkLWYwcWcyTHVYVnRGSHVqNEVxUDJGZVA3UkJfTnhBZlBMM3ZfNDlFa2xrYXQ1cTI0akdjT2I2VFJRR2tGbVF0OXlOSTdoUTh2RXJMWERENmlEMWc5T3VJdFZaWS1vLWx2MnhsZUpTdVRrU3pGc1RURkpKSmhMMTM?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNOTVqajNrakEzay00S1Vsb1dlRG5vamZsQXRBR0o3cHRnTm1WRTBfcmtkME5ieXhWMEdYRHB1MFN5RTd6cmNITk4zOGtBcjN3VzMzSEpkdkhHVzVhZjNSWHlpX0NZT2ZfNEx2czk2MlVjWGdTdWtYZVdFVEhYUjZaNVNPYnlMRXJjbmtMRElweHJreDI2Z3V3UERGcUJRRklWX21PMUk1dUlGMGtjQ3pUNA?oc=5 | https://news.google.com/rss/articles/CBMiqgFBVV95cUxPMjBpYmFXSURvdENYcGhGZlZaMzNNQjRxSjlJc2FRVlhKa254a0ZmNWlpUG84cXBRT0Z1Q2NvZFl3VEs3c3hYYkMzaUdoUDhGc2ZFd0J5b2E0SktDb3BYcWhfZGRzZWhqUURHYjBfdXljbW9KZ3FrMm5IS0RiTUd6VnJYRlhvUHlPU0JWY05fLVBkWndseXpncUdTQ0JVQUFIM3VDNjdmNUdNUQ?oc=5 | https://news.google.com/rss/articles/CBMiugFBVV95cUxOQk00ck5ZY1VIVnJKb01CZFpGcVlva1R1bEMtLUJVNGw3SlNyRmV1VVd6WHJhSFZuRndaSHN1cHRCSlNOQ1RLMUROaExpRHNLekphRFZwRUl6cW9RY2t2UjBwR1ZqdXYyWWlnRE44WVNhZ3NvX2JKbnA0ZmllRzFoc1RqNUFFLWZfUG1jSmJ6MEowejZXTUxSWEJGQ2RjOGlaNXA0NVd1MktabEZKYVd6ejN1R1FnWWw2S1E?oc=5"
  },
  {
   "hecho_id": "clima:Cobija:2026-11-08:lluvia:1",
