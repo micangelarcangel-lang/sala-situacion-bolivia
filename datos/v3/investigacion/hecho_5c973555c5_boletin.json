@@ -1,0 +1,166 @@
+{
+ "codigo": "BOL-3555C5",
+ "titulo": "Brote de enfermedad transmisible · Santa Cruz",
+ "meta": [
+  [
+   "BOLETÍN",
+   "001"
+  ],
+  [
+   "FECHA DEL HECHO",
+   "05 NOV 2026"
+  ],
+  [
+   "CORTE",
+   "08 NOV 2026 · 08:03 BOT"
+  ],
+  [
+   "ESTADO",
+   "Seguimiento"
+  ]
+ ],
+ "sintesis": "Se detecta un brote de enfermedad transmisible en el departamento de Santa Cruz. No se dispone de fecha ni hora de inicio. No se ha confirmado número de casos ni defunciones. Falta información sobre la enfermedad específica y fuentes oficiales. Se requiere confirmar datos y definir medidas.",
+ "kpis": [
+  [
+   "None",
+   "Casos confirmados"
+  ],
+  [
+   "None",
+   "Defunciones"
+  ],
+  [
+   "None",
+   "Municipios afectados"
+  ],
+  [
+   "None",
+   "Estado del control"
+  ]
+ ],
+ "puntos": [],
+ "nota_mapa": "No se pudo ubicar en OpenStreetMap: Santa Cruz.",
+ "victima": {
+  "nombre": "",
+  "detalle": ""
+ },
+ "foto_url": "https://correodelsur.com/local/20261105/uasb-encabezara-novedoso-proyecto-contra-el-dengue.html",
+ "foto_medio": "Correo del Sur",
+ "vehiculo": null,
+ "lluvia": null,
+ "mapa_tipo": "afectados",
+ "esquema": false,
+ "operativa": "El brote está en fase de detección preliminar; se carece de datos esenciales para activar la respuesta sanitaria. Pendiente de confirmación de casos y definición de medidas de control.",
+ "acciones": [
+  [
+   "Confirmar estado del caso con Policía/Fiscalía",
+   "CCES",
+   "24 h"
+  ],
+  [
+   "Solicitar apoyo policial y forense para investigación",
+   "Ministerio del Interior",
+   "48 h"
+  ],
+  [
+   "Coordinar con Cancillería para posibles repatriaciones",
+   "Ministerio de Relaciones Exteriores",
+   "72 h"
+  ],
+  [
+   "Fijar mensaje oficial único de salud pública",
+   "Ministerio de Salud",
+   "24 h"
+  ]
+ ],
+ "trazabilidad": [
+  [
+   "Casos confirmados y sospechosos",
+   "No se dispone de número de casos confirmados ni sospechosos",
+   "Pendiente: reporte de casos por parte del Departamento de Salud de Santa Cruz"
+  ],
+  [
+   "Defunciones",
+   "No se ha informado de defunciones asociadas al brote",
+   "Sin dato público"
+  ],
+  [
+   "Territorio",
+   "El brote se ubica en el departamento de Santa Cruz, sin precisión de municipio o zona",
+   "Pendiente: ubicación exacta por parte de la Gobernación de Santa Cruz"
+  ],
+  [
+   "Agente o causa",
+   "Tipo de enfermedad transmisible no identificado",
+   "Pendiente: diagnóstico de laboratorio del Instituto Nacional de Salud"
+  ],
+  [
+   "Medidas de control",
+   "No se han comunicado medidas de control implementadas",
+   "Pendiente: plan de respuesta del Ministerio de Salud"
+  ],
+  [
+   "Capacidad de servicios",
+   "Capacidad de atención (hospitales, laboratorios) no informada",
+   "Sin dato público"
+  ],
+  [
+   "Comunicación de riesgo",
+   "No hay evidencia de comunicación de riesgo al público",
+   "Pendiente: difusión por la Oficina de Comunicación del Ministerio"
+  ]
+ ],
+ "cronologia": [
+  [
+   "2026-11-08 (fecha del brote desconocida)",
+   "Detección inicial de posible brote de enfermedad transmisible en Santa Cruz"
+  ],
+  [
+   "2026-11-08 (hora desconocida)",
+   "Notificación preliminar a autoridades sanitarias"
+  ],
+  [
+   "2026-11-08",
+   "Solicitud de información a laboratorios para identificación del agente"
+  ],
+  [
+   "2026-11-08",
+   "Reunión de coordinación interinstitucional (Ministerio de Salud, Gobernación)"
+  ],
+  [
+   "2026-11-08",
+   "Emisión de alerta interna sin difusión pública"
+  ],
+  [
+   "2026-11-08",
+   "Registro de casos pendientes de confirmación"
+  ],
+  [
+   "2026-11-08",
+   "Planificación de medidas de control en espera de datos"
+  ]
+ ],
+ "reconstruccion": "Se ha detectado un posible brote de enfermedad transmisible en el departamento de Santa Cruz, pero aún no se dispone de datos sobre número de casos, agente causal ni ubicación exacta. Las autoridades sanitarias están solicitando información a laboratorios y a la gobernación para definir medidas de control. La falta de datos impide la comunicación de riesgo al público.",
+ "vacios": [
+  "Número de casos confirmados - Ministerio de Salud",
+  "Identidad de víctimas - Departamento de Salud de Santa Cruz",
+  "Tipo de enfermedad transmisible - Instituto Nacional de Salud",
+  "Ubicación exacta del brote - Gobernación de Santa Cruz",
+  "Medidas de control implementadas - Equipo de respuesta del Ministerio"
+ ],
+ "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (3 notas halladas, 3 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (groq/openai/gpt-oss-120b); requiere revisión humana antes de circular.",
+ "fuentes": [
+  [
+   "ceb.bo",
+   "03/11"
+  ],
+  [
+   "Correo del Sur",
+   "05/11"
+  ],
+  [
+   "Pan American Health Organization (",
+   "06/11"
+  ]
+ ]
+}

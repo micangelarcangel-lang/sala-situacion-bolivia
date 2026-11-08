@@ -1,0 +1,180 @@
+{
+ "hecho_id": "hecho:5c973555c5",
+ "generado": "2026-11-08T12:02:43.700197+00:00",
+ "segundos": 175,
+ "consultas": [
+  [
+   1,
+   "UASB encabezará novedoso proyecto contra el dengue - Correo del Sur",
+   1
+  ],
+  [
+   1,
+   "UASB encabezará novedoso proyecto contra el dengue",
+   0
+  ],
+  [
+   1,
+   "brote / enfermedad transmisible Santa Cruz (solo departamento)",
+   0
+  ],
+  [
+   2,
+   "brote dengue Santa Cruz Bolivia 2024 [es-419]",
+   0
+  ],
+  [
+   2,
+   "dengue Santa Cruz departamento comunicado oficial [es-419]",
+   0
+  ],
+  [
+   2,
+   "UASB proyecto control biológico dengue [es-419]",
+   0
+  ],
+  [
+   2,
+   "Ministerio de Salud Bolivia dengue 2024 [es-419]",
+   2
+  ],
+  [
+   2,
+   "World Health Organization dengue Bolivia report [en-US]",
+   0
+  ],
+  [
+   2,
+   "CDC dengue outbreak Santa Cruz Bolivia [en-US]",
+   0
+  ],
+  [
+   2,
+   "ANDE dengue Santa Cruz noticia [es-419]",
+   0
+  ],
+  [
+   2,
+   "health alert dengue Santa Cruz department [en-US]",
+   1
+  ],
+  [
+   2,
+   "Universidad Andina Simón Bolívar (UASB) [es]",
+   0
+  ],
+  [
+   2,
+   "Universidad Andina Simón Bolívar (UASB) [en]",
+   0
+  ],
+  [
+   2,
+   "Ministerio de Salud y Deportes de Bolivia [es]",
+   30
+  ],
+  [
+   2,
+   "Ministerio de Salud y Deportes de Bolivia [en]",
+   0
+  ],
+  [
+   2,
+   "Dirección Departamental de Salud Santa Cruz [es]",
+   27
+  ],
+  [
+   2,
+   "Dirección Departamental de Salud Santa Cruz [en]",
+   0
+  ]
+ ],
+ "descartadas_por_ruido": 58,
+ "n_fuentes": 3,
+ "n_leidas": 3,
+ "nombres_propios": [
+  "Universidad Andina Simón Bolívar (UASB)",
+  "Ministerio de Salud y Deportes de Bolivia",
+  "Dirección Departamental de Salud Santa Cruz",
+  "Agencia de Noticias del Estado (ANDE)"
+ ],
+ "lugares": [],
+ "oficiales": {
+  "lluvia": null,
+  "textos": [
+   {
+    "medio": "Minsalud · Boletín epidemiológico SE 41",
+    "url": "https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1060-boletin-epidemiologico-semana-epidemiologica-no-41?Itemid=465"
+   }
+  ]
+ },
+ "ia": "groq/openai/gpt-oss-120b",
+ "analisis": {
+  "hecho": {
+   "fecha": null,
+   "hora": null,
+   "lugar_versiones": [],
+   "victima": {
+    "nombre": null,
+    "edad": null,
+    "nacionalidad": null
+   },
+   "vehiculo": null,
+   "conductor": {
+    "estado": null,
+    "declaraciones": []
+   }
+  },
+  "instituciones": [],
+  "cronologia": [],
+  "afirmaciones": [],
+  "vacios": [
+   "fecha del brote",
+   "hora del inicio del brote",
+   "lugar exacto dentro del departamento de Santa Cruz",
+   "número de casos confirmados",
+   "identidad de víctimas (nombre, edad, nacionalidad)",
+   "tipo de enfermedad transmisible involucrada",
+   "fuentes oficiales que confirmen el brote",
+   "medidas de respuesta sanitaria implementadas",
+   "información sobre posibles vehículos o transmisores",
+   "declaraciones de autoridades locales o nacionales"
+  ],
+  "novedades_ultimas_24h": []
+ },
+ "fuentes": [
+  {
+   "medio": "Correo del Sur",
+   "titulo": "UASB encabezará novedoso proyecto contra el dengue",
+   "url": "https://correodelsur.com/local/20261105/uasb-encabezara-novedoso-proyecto-contra-el-dengue.html",
+   "fecha": "05/11 03:03",
+   "pub": 1793862180000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "Pan American Health Organization (PAHO)",
+   "titulo": "Bolivia y la OPS fortalecen la cooperación para la detección temprana y notificación de eventos de salud pública",
+   "url": "https://www.paho.org/es/noticias/6-11-2026-bolivia-ops-fortalecen-cooperacion-para-deteccion-temprana-notificacion-eventos",
+   "fecha": "06/11 17:36",
+   "pub": 1794001012000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "ceb.bo",
+   "titulo": "Ministerio de Salud de Bolivia dispone vacunación gratuita contra el sarampión para delegaciones y peregrinos que viajarán a Perú por la visita del papa León XIV",
+   "url": "https://ceb.bo/2026/11/ministerio-de-salud-de-bolivia-dispone-vacunacion-gratuita-contra-el-sarampion-para-delegaciones-y-peregrinos-que-viajaran-a-peru-por-la-visita-del-papa-leon-xiv/",
+   "fecha": "03/11 16:55",
+   "pub": 1793739329000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  }
+ ]
+}
