@@ -1,6 +1,6 @@
 {
  "codigo": "BOL-6EB45E",
- "titulo": "Accidente de tránsito con víctima fatal · El Alto",
+ "titulo": "Atropello con muerte de ciclista · El Alto",
  "meta": [
   [
    "BOLETÍN",
@@ -12,25 +12,25 @@
   ],
   [
    "CORTE",
-   "07 NOV 2026 · 23:06 BOT"
+   "07 NOV 2026 · 23:16 BOT"
   ],
   [
    "ESTADO",
    "Seguimiento"
   ]
  ],
- "sintesis": "El 04/11/2026 falleció el ciudadano surcoreano Cho Jin-woo tras ser embestido por un camión de transporte pesado en El Alto. Discrepa la hora: 09:30 según eju.tv e Infobae; 09:15 según Red Uno. Discrepa el lugar: Av. Cívica e ingreso a Av. Litoral según Red Uno y El Día; Av. 6 de Marzo según Correo del Sur y Unitel. El conductor dio negativo en alcotest y la autoridad judicial determinó su detención domiciliaria por presunto homicidio en accidente de tránsito. Resta precisar la ubicación oficial exacta del hecho y los datos técnicos de identificación del vehículo.",
+ "sintesis": "El 4 de noviembre de 2026 a las 09:30, un ciclista coreano de 33 años falleció tras ser colisionado por un camión de transporte pesado en El Alto. El lugar exacto del siniestro presenta versiones encontradas entre la avenida Cívica y la avenida 6 de Marzo. La prueba de alcoholemia practicada a la persona que conducía resultó negativa y la autoridad judicial determinó su detención domiciliaria preventiva. Se desconoce la causa técnica concluyente del impacto, así como los datos de identificación y placa del automotor involucrado. Cancillería y el consulado surcoreano coordinan la repatriación de los restos mientras el Ministerio Público continúa la investigación formal.",
  "kpis": [
   [
    "1",
    "Personas fallecidas"
   ],
   [
-   "0",
+   "1",
    "Aprehendidos"
   ],
   [
-   "04/11/2026",
+   "2026-11-04",
    "Fecha del evento"
   ],
   [
@@ -40,136 +40,131 @@
  ],
  "puntos": [
   {
-   "nombre": "avenida Cívica",
-   "lat": -16.5225769,
-   "lon": -68.1578555,
+   "nombre": "Av. Cívica / Litoral",
+   "lat": -16.5216605,
+   "lon": -68.1578322,
    "version": "A"
   },
   {
-   "nombre": "avenida Litoral",
-   "lat": -16.5329888,
-   "lon": -68.2093996,
-   "version": "A"
+   "nombre": "Av. 6 de Marzo",
+   "lat": -16.5540655,
+   "lon": -68.1769447,
+   "version": "B"
   },
   {
-   "nombre": "zona Franca",
-   "lat": -16.545961,
-   "lon": -68.2282541,
-   "version": "A"
-  },
-  {
-   "nombre": "Puente Alto",
-   "lat": -16.5449385,
-   "lon": -68.1765699,
-   "version": "A"
+   "nombre": "Vía principal no precisada",
+   "lat": -16.5048228,
+   "lon": -68.1624337,
+   "version": "B"
   }
  ],
+ "nota_mapa": "",
  "victima": {
   "nombre": "Cho Jin-woo",
-  "detalle": "33 años · Surcoreana / Coreana · Cicloturista / Creador de contenido en YouTube"
+  "detalle": "33 años · Coreana · Ciclista"
  },
  "foto_url": "https://eju.tv/2026/11/el-alto-ciclista-extranjero-muere-atropellado-por-un-camion-el-conductor-huyo-pero-fue-capturado/",
  "foto_medio": "eju.tv",
- "vehiculo": "CAMIÓN DE TRANSPORTE PESADO",
- "operativa": "El caso se encuentra bajo investigación penal en la Fiscalía y con detención domiciliaria dispuesta por el juzgado cautelar. Se solicita a la MAE instruir la articulación interinstitucional para verificar antecedentes forenses y canalizar los requerimientos formales del proceso.",
+ "vehiculo": "CAMIÓN DE CARGA",
+ "operativa": "La investigación formal y la aplicación de medidas cautelares se encuentran radicadas en el Ministerio Público y la Fiscalía de El Alto. Se solicita a la MAE instruir el requerimiento formal de los antecedentes periciales y autorizar la vocería oficial del sector salud ante las instancias diplomáticas correspondientes.",
  "acciones": [
   [
-   "Confirmar el estado procesal y medidas del caso ante la División de Accidentes de Tránsito y el Ministerio Público",
-   "Unidad de Asuntos Jurídicos / CCES",
+   "Confirmar estado procesal del caso e investigación con Policía de Tránsito y Fiscalía",
+   "Unidad de Gestión de Riesgos y Emergencias en Salud",
    "24 h"
   ],
   [
-   "Solicitar copia oficial del informe técnico policial de tránsito y del certificado médico forense de defunción",
+   "Requerir copia oficial del informe técnico del accidente y certificado de medicina forense",
    "Centro Coordinador de Emergencias en Salud",
    "48 h"
   ],
   [
-   "Coordinar con la Dirección General de Relaciones Bilaterales y Cancillería el seguimiento al proceso de repatriación del cuerpo",
-   "Área de Cooperación y Relaciones Internacionales",
-   "72 h"
+   "Establecer enlace de coordinación institucional con Cancillería del Estado para seguimiento consular",
+   "Dirección General de Relaciones Internacionales del Ministerio",
+   "48 h"
   ],
   [
-   "Fijar un mensaje institucional único y validado para vocería ministerial frente a requerimientos diplomáticos o mediáticos",
-   "Dirección de Comunicación Institucional",
+   "Fijar línea discursiva y mensaje oficial único del sector sobre el incidente",
+   "Unidad de Comunicación Institucional",
    "24 h"
   ]
  ],
  "trazabilidad": [
   [
    "Identificación",
-   "Víctima: Cho Jin-woo, 33 años, surcoreano. Conductor: nombre no divulgado",
-   "Coincide en 8 medios (víctima); Sin dato en fuentes abiertas (conductor)"
-  ],
-  [
-   "Auxilio en el lugar",
-   "Policía de Tránsito de El Alto atendió, realizó alcotest (0), retuvo camión y contactó al consulado",
+   "Víctima: Cho Jin-woo, 33 años, nacionalidad coreana; conductor bajo detención domiciliaria",
    "Coincide en 8 medios"
   ],
   [
+   "Auxilio en el lugar",
+   "Testigos intentaron auxiliar; víctima falleció en el sitio",
+   "Coincide en 2 medios"
+  ],
+  [
    "Fallecimiento/traslado",
-   "Cho Jin-woo falleció en el lugar; se gestionó repatriación del cuerpo a Corea del Sur",
-   "Coincide en 6 medios"
+   "Víctima falleció en el lugar; restos gestionados para repatriación consular",
+   "Coincide en 3 medios"
   ],
   [
    "Lugar del hecho",
-   "Avenida Cívica/Litoral (rotonda Zona Franca) vs Avenida 6 de Marzo (sector Molino Andino)",
-   "Discrepa: Av. Cívica/Litoral (Red Uno, EL DÍA) vs Av. 6 de Marzo (Correo del Sur, Asuntos Centrales, Unitel)"
+   "Discrepa: Avenida Cívica ingreso a Litoral según [2]; Avenida 6 de Marzo sector Molino Andino según [8],[10]",
+   "Discrepa"
   ],
   [
    "Conductor/proceso",
-   "Alcotest negativo; conductor aprehendido; medida cautelar: detención domiciliaria; discrepancia en hora (09:30 vs 09:15) y forma de captura",
-   "Discrepa: hora 09:30 (eju.tv) vs 09:15 (Red Uno); captura horas después (eju.tv, Red Uno) vs interceptado por choferes (Unitel, EL DÍA)"
+   "Conductor no vio al ciclista, alcoholemia negativa, huyó, fue aprehendido y puesto en detención domiciliaria",
+   "Coincide en 5 medios"
   ],
   [
    "Repatriación o gestión consular",
-   "Consulado de Corea contactado; se coordina repatriación; fecha de vuelo no definida",
-   "Coincide en 5 medios (contacto consular); Sin dato en fuentes abiertas (fecha de vuelo)"
+   "Consulado de Corea del Sur contactado; coordinación para repatriación de restos",
+   "Coincide en 3 medios"
   ],
   [
    "Respaldo oficial",
-   "Fiscalía investiga por homicidio; juez dictó detención domiciliaria; Cancillería emitió comunicado de pésame",
-   "Coincide en 6 medios"
+   "Cancillería emitió comunicado de pesar y anunció seguimiento institucional",
+   "Fuente única: [4]"
   ]
  ],
  "cronologia": [
   [
-   "30/10/2026",
-   "Cho Jin-woo publica su último video en YouTube mostrando travesía en los Andes (Perú)"
+   "2026-11-04 09:15‑09:30",
+   "Atropello del ciclista por camión de carga en El Alto"
   ],
   [
-   "04/11/2026 09:15-09:30",
-   "Cho Jin-woo es embestido por camión de gran tonelaje en El Alto y muere en el lugar"
+   "2026-11-04 09:30‑10:00",
+   "Conductor huye del lugar; víctima fallece en el sitio"
   ],
   [
-   "04/11/2026 (horas después)",
-   "Conductor del camión es interceptado/aprehendido, se le realiza alcotest (0) y es puesto a disposición del Ministerio Público"
+   "2026-11-04 (varias horas después)",
+   "Conductor localizado y aprehendido por la Policía"
   ],
   [
-   "04/11/2026 (posterior)",
-   "Policía de Tránsito contacta al Consulado de Corea del Sur para iniciar gestiones consulares"
+   "2026-11-05",
+   "Policía informa al Ministerio Público; se inicia investigación formal"
   ],
   [
-   "05/11/2026",
-   "Familiar/amigo confirma públicamente la muerte de Cho Jin-woo en su canal de YouTube"
+   "2026-11-05",
+   "Familia del ciclista contactada; se coordinan gestiones consulares para repatriación"
   ],
   [
-   "06/11/2026",
-   "Hermano de Cho solicita privacidad en Instagram; Cancillería emite comunicado de pésame; autoridad judicial dicta detención domiciliaria al conductor"
+   "2026-11-06",
+   "Audiencia de medidas cautelares; se dicta detención domiciliaria para el conductor"
   ],
   [
-   "06/11/2026",
-   "Medida cautelar de detención domiciliaria confirmada por fuentes judiciales (Correo del Sur, Asuntos Centrales)"
+   "2026-11-06",
+   "Cancillería emite comunicado de pesar y anuncia seguimiento institucional"
   ]
  ],
- "reconstruccion": "El 4 de noviembre a primera hora de la mañana, Cho Jin-woo fue impactado por un camión de gran tonelaje en El Alto y falleció en el acto. La Policía de Tránsito detuvo al conductor, realizó un alcotest negativo y lo entregó a la Fiscalía, que abrió investigación por homicidio y solicitó detención domiciliaria. El Consulado de Corea y la Cancillería boliviana gestionan la repatriación del cuerpo, cuya fecha aún no se ha definido.",
+ "reconstruccion": "A las 09:30 h del 4 de noviembre, un camión de carga impactó a un ciclista coreano en una avenida de El Alto. El conductor, que no vio al ciclista y presentó alcoholemia negativa, abandonó el lugar y fue detenido horas después; la víctima falleció en el sitio. La Fiscalía mantiene la investigación y el conductor está bajo detención domiciliaria mientras se gestionan la repatriación de los restos y el acompañamiento consular.",
  "vacios": [
-  "Nombre completo del conductor del camión (Policía/ Fiscalía)",
-  "Condiciones y medidas cautelares adicionales de la detención domiciliaria (Juzgado)",
-  "Aclaración oficial sobre la ubicación exacta del accidente (Policía/ Fiscalía)",
-  "Placa, marca y empresa propietaria del camión (Policía/ empresa de transporte)",
-  "Fecha y hora del vuelo de repatriación del cuerpo a Corea del Sur (Cancillería/ Consulado)"
+  "Identificación completa del conductor (edad, nacionalidad, placa) – posee la Policía de Tránsito",
+  "Causa exacta del accidente (falla mecánica, velocidad, visibilidad) – bajo investigación de la Fiscalía",
+  "Resultado final de la investigación de la Fiscalía – pendiente de publicación",
+  "Detalles de la sentencia o medidas definitivas contra el conductor – dependerá del fallo judicial",
+  "Declaraciones completas de testigos adicionales – en poder de la Policía y del Ministerio Público"
  ],
- "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (39 notas halladas, 35 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (gemini/gemini-3.8-flash); requiere revisión humana antes de circular.",
+ "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (38 notas halladas, 36 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (groq/openai/gpt-oss-120b); requiere revisión humana antes de circular.",
  "fuentes": [
   [
    "eldoce",
@@ -212,11 +207,11 @@
    "05/11"
   ],
   [
-   "La República",
-   "05/11"
+   "The Korea Herald",
+   "06/11"
   ],
   [
-   "The Korea Herald",
+   "FmBolivia",
    "06/11"
   ],
   [
@@ -228,19 +223,7 @@
    "06/11"
   ],
   [
-   "Red PAT",
-   "06/11"
-  ],
-  [
    "Red Uno",
-   "06/11"
-  ],
-  [
-   "2001 Online",
-   "06/11"
-  ],
-  [
-   "La Razón Digital Bolivia",
    "06/11"
   ],
   [
@@ -268,7 +251,7 @@
    "06/11"
   ],
   [
-   "Must Share News",
+   "Diario de México",
    "06/11"
   ],
   [
@@ -280,7 +263,11 @@
    "07/11"
   ],
   [
-   "+8 notas de medios en coreano",
+   "TV Azteca Puebla",
+   "07/11"
+  ],
+  [
+   "+11 notas de medios en coreano",
    ""
   ]
  ]
