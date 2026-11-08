@@ -57,7 +57,7 @@ def para(subtipo, lat, lon, log=print):
     try:
         if re.search(r"sequ|inund|granizada|helada|riada|desliz", s):
             if lat is not None:
-                out["lluvia"] = lluvia(lat, lon, 30)
+                out["lluvia"] = lluvia(lat, lon, 90)
             out["textos"] = textos_senamhi(log)
     except Exception as e:
         log("oficiales falló:", type(e).__name__, str(e)[:80])

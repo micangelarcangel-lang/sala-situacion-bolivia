@@ -17,8 +17,8 @@ def mapa_base(pts, ancho=900, alto=720):
     """Une teselas CARTO 'Voyager' (OpenStreetMap) que cubren los puntos. Devuelve (data_uri, [(px,py)...], hubo_red)."""
     from PIL import Image, ImageDraw
     la = [p["lat"] for p in pts]; lo = [p["lon"] for p in pts]
-    z = 17
-    while z > 11:
+    z = 17 if len(pts) > 1 else 12
+    while z > 11 and len(pts) > 1:
         x0, y1 = _xy(min(la), min(lo), z); x1, y0 = _xy(max(la), max(lo), z)
         if (x1 - x0) * 512 < ancho * .62 and (y1 - y0) * 512 < alto * .62: break
         z -= 1
@@ -129,11 +129,11 @@ def estado(s):
 
 def html(B):
     pts = B.get("puntos", []); mapa = ""; nota = B.get("nota_mapa", "")
-    if len(pts) >= 2:
+    if len(pts) >= 1:
         svg, red = svg_mapa(pts, tipo=B.get('mapa_tipo', 'versiones'))
         tit = "Localización · versiones de los reportes" if B.get("mapa_tipo", "versiones") == "versiones" else "Territorios mencionados como afectados"
         mapa = f'<h2>{tit}</h2><div class="map">{svg}</div><div class="nota">{"<b style=color:%s>Azul</b>: versión inicial · <b style=color:%s>rojo</b>: versión posterior. " % (AZ, RJ) if any(p.get("version") == "B" for p in pts) else ""}Ubicación de referencia en OpenStreetMap{", no coordenada confirmada del impacto" if B.get("mapa_tipo", "versiones") == "versiones" else " (centro del municipio); no delimita el área afectada"}. {E(nota)}{"" if red else " (Mapa base no disponible en este entorno)."}</div>'
-    ident = f'<h2>{"Identificación" if B.get("mapa_tipo", "versiones") == "versiones" else "Panorama"}</h2><div class="card"><div class="n">{E(B["victima"]["nombre"])}</div><div class="d">{E(B["victima"]["detalle"])}</div>'
+    ident = f'<h2>{"Identificación" if B.get("mapa_tipo", "versiones") == "versiones" else "Panorama"}</h2><div class="card"><div class="n">{E(B["victima"].get("nombre") or "Sin víctimas reportadas")}</div><div class="d">{E(B["victima"].get("detalle") or "")}</div>'
     if B.get("foto_url") and B.get("mapa_tipo", "versiones") == "versiones":
         ident += f'<div class="qr">{qr_svg(B["foto_url"])}</div><div class="nota">Retrato difundido por {E(B.get("foto_medio") or "un medio")}. Escanee el código para abrir la fuente original. No es una imagen del accidente.</div>'
     ident += ('<div class="nota">Escena del siniestro: no se localizó fotografía verificable del impacto; no se incorpora material no autenticado.</div></div>' if B.get("mapa_tipo", "versiones") == "versiones" else '</div>')
@@ -151,7 +151,7 @@ def html(B):
     p1 = f'''<div class="pg">{cab(1)}<h1>BOLETÍN DE SITUACIÓN</h1><div>{E(B["titulo"])}</div>
 <div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
 <div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
-<div class="g"><div>{mapa}</div><div>{ident}</div></div>{esq if B.get("esquema", True) else ""}{pie(1)}</div>'''
+<div class="g" style="{"" if B.get("mapa_tipo", "versiones") == "versiones" else "grid-template-columns:1fr"}"><div>{mapa}</div>{"<div>" + ident + "</div>" if B.get("mapa_tipo", "versiones") == "versiones" else ""}</div>{esq if B.get("esquema", True) else ""}{pie(1)}</div>'''
     p2 = f'''<div class="pg">{cab(2)}{esq if not B.get("esquema", True) else ""}<h2 style="margin-top:5mm">Situación actual</h2><div class="sint" style="margin-top:0;font-size:9.6pt">{E(B["operativa"])}</div>
 <div class="sec"><h2>Cadena de atención y situación posterior</h2><table><tr><th>Dimensión</th><th>Qué se sabe</th><th>Estado</th></tr>{tra}</table></div>
 <div class="sec"><h2>Vacíos prioritarios</h2><div style="font-size:8.6pt">{E("; ".join(B["vacios"]))}.</div></div>
