@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:a93b471732",
- "generado": "2026-11-08T11:15:55.495844+00:00",
- "segundos": 603,
+ "generado": "2026-11-08T11:31:50.118447+00:00",
+ "segundos": 846,
  "consultas": [
   [
    1,
@@ -16,7 +16,7 @@
   [
    1,
    "Ante la afectación por sequía, el alcalde Manfred llegó con ayuda hasta Pasorapa",
-   3
+   2
   ],
   [
    1,
@@ -75,43 +75,43 @@
   ],
   [
    2,
-   "Cono Sur Cochabamba desastre sequia cisternas [es-419]",
+   "Cono Sur Cochabamba sequia desastre cisternas [es-419]",
    2
   ],
   [
    2,
-   "declaratoria emergencia sequia Cochabamba ALD [es-419]",
+   "VIDECI Cochabamba sequia ayuda humanitaria [es-419]",
    0
   ],
   [
    2,
-   "Defensa Civil ayuda sequia Omereque Pasorapa [es-419]",
-   2
-  ],
-  [
-   2,
-   "Omereque Cochabamba sequia perdidas agricolas [es-419]",
+   "declaratoria emergencia sequia Cochabamba ABI [es-419]",
    0
   ],
   [
    2,
-   "Bolivia drought Cochabamba Omereque cattle emergency [en-US]",
+   "Omereque Pasorapa sequia Ministerio de Desarrollo Rural y Tierras [es-419]",
    0
   ],
   [
    2,
-   "Manfred Reyes Villa [es]",
-   20
+   "Bolivia drought Cochabamba cattle Campero Omereque [en-US]",
+   0
   ],
   [
    2,
-   "Manfred Reyes Villa [en]",
+   "Asamblea Legislativa Departamental de Cochabamba [es]",
+   1
+  ],
+  [
+   2,
+   "Asamblea Legislativa Departamental de Cochabamba [en]",
    0
   ],
   [
    2,
    "Gobernación de Cochabamba [es]",
-   17
+   20
   ],
   [
    2,
@@ -120,25 +120,25 @@
   ],
   [
    2,
-   "Asamblea Legislativa Departamental de Cochabamba [es]",
-   0
+   "Viceministerio de Defensa Civil [es]",
+   11
   ],
   [
    2,
-   "Asamblea Legislativa Departamental de Cochabamba [en]",
-   0
+   "Viceministerio de Defensa Civil [en]",
+   1
   ]
  ],
- "descartadas_por_ruido": 87,
- "n_fuentes": 15,
- "n_leidas": 15,
+ "descartadas_por_ruido": 77,
+ "n_fuentes": 18,
+ "n_leidas": 18,
  "nombres_propios": [
-  "Manfred Reyes Villa",
-  "Gobernación de Cochabamba",
   "Asamblea Legislativa Departamental de Cochabamba",
-  "Viceministerio de Defensa Civil Bolivia",
+  "Gobernación de Cochabamba",
+  "Viceministerio de Defensa Civil",
+  "Edwin Jiménez",
   "Asamblea Legislativa Departamental",
-  "Edwin Jiménez"
+  "Cono Sur"
  ],
  "lugares": [],
  "oficiales": {
@@ -346,201 +346,165 @@
  "ia": "groq/openai/gpt-oss-120b",
  "analisis": {
   "hecho": {
-   "fecha": "2026-10-30",
-   "hora": "03:00",
+   "fecha": null,
+   "hora": null,
    "lugar_versiones": [
     {
-     "texto": "Omereque es uno de los municipios afectados por la sequía en Cochabamba, con riesgo de 40.000 cabezas de ganado.",
+     "texto": "Pasorapa, Omereque, Aiquile y Totora",
      "fuentes": [
-      "[1]",
-      "[4]"
+      "Los Tiempos 30/10/2026 03:00"
      ]
     },
     {
-     "texto": "Se reporta la paralización de una represa en Omereque, con una inversión de Bs 140 millones cuya entrega estaba prevista para hace un año.",
+     "texto": "municipios de Pasorapa, Omereque, Aiquile, Totora, Pojo, Mizque y Sacabamba",
      "fuentes": [
-      "[1]"
+      "Opinión Bolivia 03/11/2026 15:55"
      ]
     },
     {
-     "texto": "Una cisterna fue destinada a Omereque según el asambleísta Edwin Jiménez.",
+     "texto": "Aiquile, Omereque y Pasorapa",
      "fuentes": [
-      "[1]"
+      "Red Uno 30/10/2026 03:00"
      ]
     },
     {
-     "texto": "Omereque está incluido en la declaratoria de emergencia por sequía aprobada por la Asamblea Legislativa Departamental.",
+     "texto": "Omereque (entre los siete municipios afectados)",
      "fuentes": [
-      "[2]",
-      "[3]",
-      "[5]",
-      "[6]"
+      "La Patria Bolivia 02/11/2026 12:53"
      ]
     }
    ],
-   "victima": null,
+   "victima": {
+    "nombre": null,
+    "edad": null,
+    "nacionalidad": null
+   },
    "vehiculo": null,
-   "conductor": null
+   "conductor": {
+    "estado": null,
+    "declaraciones": []
+   }
   },
   "instituciones": [
    {
     "nombre": "Alcaldía de Cochabamba",
-    "que_hizo": "Envió cisternas y forraje a Pasorapa; coordinó ayuda solidaria ante la sequía.",
-    "fuente": "[1]"
+    "que_hizo": "envió cisternas y forraje a Pasorapa y coordinó ayuda para familias afectadas por la sequía",
+    "fuente": "Los Tiempos 30/10/2026 03:00"
    },
    {
     "nombre": "Gobernación de Cochabamba",
-    "que_hizo": "Gestionó recursos (Bs 2‑3 millones buscados, hasta Bs 5 millones gestionados) y señaló la paralización de una represa en Omereque.",
-    "fuente": "[1]"
+    "que_hizo": "gestionó recursos (Bs 2‑3 millones) y solicitó modificación presupuestaria para atender la emergencia en Pasorapa, Omereque, Aiquile y Totora",
+    "fuente": "Los Tiempos 30/10/2026 03:00"
    },
    {
-    "nombre": "Asamblea Legislativa Departamental (ALD) de Cochabamba",
-    "que_hizo": "Aprobó la declaratoria de emergencia por sequía y autorizó Bs 1,3 millones para los siete municipios, incluido Omereque.",
-    "fuente": "[2]"
+    "nombre": "Secretaría de Gobernabilidad (Gobernación)",
+    "que_hizo": "indicó que se gestionan hasta Bs 5 millones para la emergencia",
+    "fuente": "Los Tiempos 30/10/2026 03:00"
    },
    {
-    "nombre": "Secretario de Gobernabilidad José Antonio Gonzales",
-    "que_hizo": "Informó la gestión de fondos (Bs 5 millones) para atender la emergencia.",
-    "fuente": "[1]"
+    "nombre": "Asamblea Legislativa Departamental de Cochabamba (ALD)",
+    "que_hizo": "declaró emergencia departamental por sequía y aprobó la asignación de Bs 1,3 millones",
+    "fuente": "Opinión Bolivia 03/11/2026 15:55"
    },
    {
-    "nombre": "Asambleísta Edwin Jiménez",
-    "que_hizo": "Indicó la presencia de una cisterna en Omereque y denunció la paralización de la represa de Bs 140 millones.",
-    "fuente": "[1]"
+    "nombre": "Comisión de Medio Ambiente (ALD)",
+    "que_hizo": "revisó y aprobó por unanimidad el proyecto de ley de emergencia por sequía",
+    "fuente": "eju.tv 03/11/2026 11:19"
    },
    {
-    "nombre": "Secretario de Gobernabilidad José Gonzales (eju.tv 30/10)",
-    "que_hizo": "Anunció el decreto que dispone Bs 1.300.000 para los municipios afectados, entre ellos Omereque.",
-    "fuente": "[14]"
+    "nombre": "Secretaría General de la Provincia Campero",
+    "que_hizo": "informó que más de 2 000 cabezas de ganado están afectadas y que al menos 40 000 están en riesgo",
+    "fuente": "Los Tiempos 30/10/2026 03:00"
    }
   ],
   "cronologia": [
    {
-    "cuando": "2026-10-29",
-    "que": "Alcalde Manfred Reyes Villa envía convoy con 10 cisternas y forraje a Pasorapa (no menciona Omereque).",
+    "cuando": "30/10/2026 03:00",
+    "que": "Gobernación gestiona recursos y solicita Bs 2‑3 millones para atender la sequía en Pasorapa, Omereque, Aiquile y Totora",
     "fuentes": [
-     "[9]",
-     "[12]"
+     "Los Tiempos 30/10/2026 03:00"
     ]
    },
    {
-    "cuando": "2026-10-30 03:00",
-    "que": "Alcaldía envía cisternas a Pasorapa; Gobernación gestiona recursos y menciona una cisterna destinada a Omereque; se señala la paralización de la represa de Bs 140 M.",
+    "cuando": "30/10/2026 03:00",
+    "que": "Se reporta que 40 000 cabezas de ganado están en riesgo en la zona (incluido Omereque)",
     "fuentes": [
-     "[1]"
+     "Los Tiempos 30/10/2026 03:00",
+     "Red Uno 30/10/2026 03:00"
     ]
    },
    {
-    "cuando": "2026-10-30",
-    "que": "Reportan 2.000 cabezas de ganado muertas y 40.000 en riesgo en la zona que incluye Omereque.",
+    "cuando": "03/11/2026 15:55",
+    "que": "Asamblea aprueba Declaratoria de Emergencia por Sequía y autoriza Bs 1,3 millones",
     "fuentes": [
-     "[4]"
+     "Opinión Bolivia 03/11/2026 15:55"
     ]
    },
    {
-    "cuando": "2026-11-02 06:00",
-    "que": "Comisión de Medio Ambiente de la ALD se reúne para aprobar proyecto de emergencia que incluye a Omereque.",
+    "cuando": "02/11/2026 12:53",
+    "que": "ALD declara emergencia en siete municipios, entre ellos Omereque, y asigna Bs 1,3 millones",
     "fuentes": [
-     "[3]"
+     "La Patria Bolivia 02/11/2026 12:53"
     ]
    },
    {
-    "cuando": "2026-11-03 15:55",
-    "que": "Asamblea aprueba declaratoria de emergencia y autoriza Bs 1,3 millones para los municipios, entre ellos Omereque.",
+    "cuando": "03/11/2026 11:19",
+    "que": "Comisión de Medio Ambiente aprueba por unanimidad el proyecto de ley de emergencia por sequía",
     "fuentes": [
-     "[2]"
-    ]
-   },
-   {
-    "cuando": "2026-11-03",
-    "que": "Publicación del proyecto de ley que declara emergencia en siete municipios, incluido Omereque.",
-    "fuentes": [
-     "[5]"
-    ]
-   },
-   {
-    "cuando": "2026-11-06 18:05",
-    "que": "Se discute la Ley de Emergencia que asigna Bs 1.300 millones, menciona a Omereque entre los beneficiarios.",
-    "fuentes": [
-     "[7]"
+     "eju.tv 03/11/2026 11:19"
     ]
    }
   ],
   "afirmaciones": [
    {
-    "dato": "Omereque está entre los municipios afectados por la sequía",
-    "valor": "true",
+    "dato": "cabezas de ganado en riesgo en Omereque",
+    "valor": "40 000",
     "fuentes": [
-     "[1]",
-     "[2]",
-     "[3]",
-     "[4]",
-     "[5]",
-     "[6]"
+     "Los Tiempos 30/10/2026 03:00",
+     "Red Uno 30/10/2026 03:00"
     ],
     "estado": "coincide",
-    "detalle": "Múltiples fuentes confirman la inclusión de Omereque."
+    "detalle": "Ambas fuentes indican que alrededor de 40 000 cabezas de ganado están en riesgo en la zona que incluye Omereque."
    },
    {
-    "dato": "Riesgo de 40.000 cabezas de ganado en la zona que incluye Omereque",
-    "valor": "40.000",
+    "dato": "cisternas enviadas a Omereque",
+    "valor": "1",
     "fuentes": [
-     "[1]",
-     "[4]"
+     "Los Tiempos 30/10/2026 03:00"
     ],
-    "estado": "coincide",
-    "detalle": "Ambas fuentes citan la misma cifra para la zona del Cono Sur, que abarca Omereque."
+    "estado": "fuente_unica",
+    "detalle": "El asambleísta Edwin Jiménez informó que hay una cisterna en Omereque."
    },
    {
-    "dato": "Paralización de una represa en Omereque con inversión de Bs 140 millones",
+    "dato": "inversión prevista para represa en Omereque",
     "valor": "Bs 140 millones",
     "fuentes": [
-     "[1]"
+     "Los Tiempos 30/10/2026 03:00"
     ],
     "estado": "fuente_unica",
-    "detalle": "Solo el artículo de Los Tiempos menciona este hecho."
+    "detalle": "Se menciona la paralización de una represa con inversión de Bs 140 millones cuya entrega estaba prevista para hace un año."
    },
    {
-    "dato": "Una cisterna fue destinada a Omereque",
-    "valor": "1 cisterna",
+    "dato": "presupuesto solicitado para atender la sequía en la zona (incluido Omereque)",
+    "valor": "Bs 2‑3 millones (solicitado) / hasta Bs 5 millones (gestión)",
     "fuentes": [
-     "[1]"
+     "Los Tiempos 30/10/2026 03:00"
     ],
     "estado": "fuente_unica",
-    "detalle": "Mencionado por el asambleísta Edwin Jiménez; no aparece en otras fuentes."
-   },
-   {
-    "dato": "Asignación de Bs 1,3 millones para la emergencia en los siete municipios, incluido Omereque",
-    "valor": "Bs 1,3 millones",
-    "fuentes": [
-     "[2]",
-     "[3]",
-     "[5]"
-    ],
-    "estado": "coincide",
-    "detalle": "Todas las fuentes que tratan la declaratoria citan la misma cifra."
-   },
-   {
-    "dato": "Ley de Emergencia que destina Bs 1.300 millones incluye a Omereque",
-    "valor": "Bs 1.300 millones",
-    "fuentes": [
-     "[6]",
-     "[7]"
-    ],
-    "estado": "coincide",
-    "detalle": "Ambas fuentes hablan de la misma legislación que contempla a Omereque."
+    "detalle": "El gobernador Leonardo Loza busca reunir entre Bs 2 y 3 millones; el secretario de Gobernabilidad indica que se gestionan hasta Bs 5 millones."
    }
   ],
   "vacios": [
-   "Número exacto de ganado afectado específicamente en Omereque.",
-   "Estado actual y fecha de reactivación de la represa paralizada en Omereque.",
-   "Si la cisterna anunciada para Omereque llegó efectivamente y cuánta agua transportó.",
-   "Impacto de la sequía en la población humana de Omereque (familias afectadas, fallecimientos, desplazamientos).",
-   "Detalles de los recursos financieros efectivamente entregados a Omereque (desglose de Bs 1,3 millones)."
+   "Número exacto de familias o personas afectadas en Omereque",
+   "Cantidad de agua (litros) entregada específicamente a Omereque mediante cisternas",
+   "Estado actual de la represa paralizada y causas de la demora",
+   "Detalle de los recursos (forraje, agua) que se entregarán a Omereque",
+   "Identidad de autoridades locales (alcalde, concejo) de Omereque que hayan solicitado ayuda"
   ],
   "novedades_ultimas_24h": [
-   "06/11/2026 18:05 – La Asamblea de Cochabamba discute la Ley de Emergencia que asigna Bs 1.300 millones para atender a los siete municipios, entre ellos Omereque (fuente [7]).",
-   "06/11/2026 11:39 – Semapa mantiene operativo de envío de cisternas de agua a comunidades del Cono Sur; aunque el foco es Aiquile, la medida forma parte de la respuesta regional que incluye a Omereque (fuente [8])."
+   "Los Tiempos 06/11/2026 08:18 informó que la Alcaldía de Cochabamba envió una cisterna a Pasorapa y preparó el traslado de dos más a Aiquile, resaltando la lentitud de la Gobernación en la respuesta.",
+   "Los Tiempos 06/11/2026 11:39 reportó que Semapa mantiene operativo de envío de carros cisterna para abastecer de agua potable a comunidades del cono sur, principalmente Aiquile.",
+   "La Patria Bolivia 06/11/2026 18:05 anunció el envío de dos cisternas de 15 000 litros cada una al Cono Sur, con énfasis en Aiquile, pero sin mencionar Omereque."
   ]
  },
  "fuentes": [
@@ -601,6 +565,17 @@
   },
   {
    "medio": "eju.tv",
+   "titulo": "Asamblea de Cochabamba aprueba proyecto de emergencia por sequía en siete municipios",
+   "url": "https://eju.tv/2026/11/asamblea-de-cochabamba-aprueba-proyecto-de-emergencia-por-sequia-en-siete-municipios/",
+   "fecha": "03/11 11:19",
+   "pub": 1793719141000,
+   "ronda": 1,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "eju.tv",
    "titulo": "Asamblea de Cochabamba trata este martes Ley de Emergencia por sequía para destinar Bs 1.300 millones al Cono Sur",
    "url": "https://eju.tv/2026/11/asamblea-de-cochabamba-trata-este-martes-ley-de-emergencia-por-sequia-para-destinar-bs-1-300-millones-al-cono-sur/",
    "fecha": "02/11 12:50",
@@ -634,21 +609,10 @@
   },
   {
    "medio": "eju.tv",
-   "titulo": "Manfred Reyes Villa envía ayuda humanitaria a Pasorapa ante severa sequía",
-   "url": "https://eju.tv/2026/10/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia/",
-   "fecha": "29/10 17:44",
-   "pub": 1793310260000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "Opinión Bolivia",
-   "titulo": "El alcalde Reyes Villa anuncia ayuda para Aiquile ante la falta de agua",
-   "url": "https://www.opinion.com.bo/cochabamba/alcalde-reyes-villa-anuncia-ayuda-aiquile-falta-agua/20261105172911998765.html",
-   "fecha": "05/11 17:29",
-   "pub": 1793914151000,
+   "titulo": "Cochabamba: Gobernación anuncia Bs 1,3 millones para municipios afectados por la sequía",
+   "url": "https://eju.tv/2026/10/cochabamba-gobernacion-anuncia-bs-13-millones-para-municipios-afectados-por-la-sequia/",
+   "fecha": "30/10 18:21",
+   "pub": 1793398875000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -656,21 +620,10 @@
   },
   {
    "medio": "Los Tiempos",
-   "titulo": "Misión cumplida: Manfred llega con agua y forraje a Pasorapa, golpeada por la sequía",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261030/mision-cumplida-manfred-llega-agua-forraje-pasorapa-golpeada-sequia",
-   "fecha": "30/10 03:00",
-   "pub": 1793343600000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
-   "medio": "ABI - Agencia Boliviana de Información",
-   "titulo": "Alcaldía de Cochabamba envía ayuda a familias afectadas por la sequía en Pasorapa - ABI",
-   "url": "https://abi.bo/alcaldia-de-cochabamba-envia-ayuda-a-familias-afectadas-por-la-sequia-en-pasorapa/",
-   "fecha": "04/11 04:19",
-   "pub": 1793780352000,
+   "titulo": "Lobo, lobo, ¿qué estás haciendo?",
+   "url": "https://www.lostiempos.com/actualidad/opinion/20261105/columna/lobo-lobo-que-estas-haciendo",
+   "fecha": "05/11 07:06",
+   "pub": 1793876776000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -689,10 +642,10 @@
   },
   {
    "medio": "eju.tv",
-   "titulo": "Cochabamba: Gobernación anuncia Bs 1,3 millones para municipios afectados por la sequía",
-   "url": "https://eju.tv/2026/10/cochabamba-gobernacion-anuncia-bs-13-millones-para-municipios-afectados-por-la-sequia/",
-   "fecha": "30/10 18:21",
-   "pub": 1793398875000,
+   "titulo": "Agropecuarios de Cochabamba consideran “insuficiente” el presupuesto de Bs 1,3 millones para atender la sequía",
+   "url": "https://eju.tv/2026/11/agropecuarios-de-cochabamba-consideran-insuficiente-el-presupuesto-de-bs-13-millones-para-atender-la-sequia/",
+   "fecha": "04/11 10:56",
+   "pub": 1793804215000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
@@ -700,10 +653,54 @@
   },
   {
    "medio": "Los Tiempos",
-   "titulo": "Lobo, lobo, ¿qué estás haciendo?",
-   "url": "https://www.lostiempos.com/actualidad/opinion/20261105/columna/lobo-lobo-que-estas-haciendo",
-   "fecha": "05/11 07:06",
-   "pub": 1793876776000,
+   "titulo": "Ministro de Defensa y autoridades de Pando acuerdan cuatro acciones para fortalecer la prevención de desastres",
+   "url": "https://www.lostiempos.com/actualidad/pais/20261107/ministro-defensa-autoridades-pando-acuerdan-cuatro-acciones-fortalecer",
+   "fecha": "07/11 11:55",
+   "pub": 1794066909000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "unitel.bo",
+   "titulo": "Defensa Civil gestiona la entrega de 100 tanques de agua para atender a damnificados por desastres naturales",
+   "url": "https://unitel.bo/noticias/sociedad/defensa-civil-gestiona-la-entrega-de-100-tanques-de-agua-para-atender-a-damnificados-por-desastres-naturales-CE24571131",
+   "fecha": "03/11 22:19",
+   "pub": 1793758752000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "elfulgor.com",
+   "titulo": "Defensa Civil entrega 36 tanques de agua, respuesta adelantada frente al fenómeno de El Niño",
+   "url": "https://elfulgor.com/noticias/nacional/defensa-civil-entrega-36-tanques-de-agua-respuesta-adelantada-frente-al-fenomeno-de-el-nino",
+   "fecha": "04/11 17:56",
+   "pub": 1793829364000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "eju.tv",
+   "titulo": "Gobierno identifica a 115 mil familias damnificadas en seis departamentos y activa recursos por emergencia nacional",
+   "url": "https://eju.tv/2026/11/gobierno-identifica-a-115-mil-familias-damnificadas-en-seis-departamentos-y-activa-recursos-por-emergencia-nacional/",
+   "fecha": "01/11 20:19",
+   "pub": 1793578797000,
+   "ronda": 2,
+   "leida": true,
+   "resolvio": true,
+   "relevante": true
+  },
+  {
+   "medio": "El Nacional - El diario de los lectores influyentes",
+   "titulo": "Bolivia declara emergencia nacional ante el avance del «superniño» - El Nacional",
+   "url": "https://elnacional.com.py/mundo/bolivia-declara-emergencia-nacional-avance-supernino-n114534",
+   "fecha": "01/11 13:00",
+   "pub": 1793552400000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,

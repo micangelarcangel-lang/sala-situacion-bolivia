@@ -1,6 +1,6 @@
 {
  "codigo": "BOL-471732",
- "titulo": "Sequía en Omereque, Cochabamba – Declaratoria de Emergencia",
+ "titulo": "Sequía en Omereque, Cochabamba",
  "meta": [
   [
    "BOLETÍN",
@@ -12,14 +12,14 @@
   ],
   [
    "CORTE",
-   "08 NOV 2026 · 07:16 BOT"
+   "08 NOV 2026 · 07:32 BOT"
   ],
   [
    "ESTADO",
    "Seguimiento"
   ]
  ],
- "sintesis": "Gobierno y ALD de Cochabamba han declarado emergencia por sequía en Omereque. Se reporta paralización de una represa de Bs 140 millones y una cisterna destinada al municipio. La declaratoria aprobó Bs 1,3 millones para los siete municipios. Falta confirmar estado de la represa y llegada de la cisterna, y datos de impacto en población y ganado.",
+ "sintesis": "Gobernación de Cochabamba gestiona recursos para la sequía en Omereque. Se reporta riesgo de 40 000 cabezas de ganado. Se enviaron cisternas a Pasorapa y se planea traslado a Aiquile. Falta cifra exacta de familias afectadas y estado de la represa paralizada. Se discute la falta de respuesta rápida de la Gobernación.",
  "kpis": [
   [
    "7",
@@ -30,8 +30,8 @@
    "Familias o personas afectadas"
   ],
   [
-   "40,000 cabezas de ganado",
-   "Pérdidas principales"
+   "40000",
+   "Cabezas de ganado"
   ],
   [
    "Emergencia",
@@ -40,13 +40,31 @@
  ],
  "puntos": [
   {
+   "nombre": "Pasorapa, Omereque, Aiquile, Totora",
+   "lat": -18.107245,
+   "lon": -64.908006,
+   "version": "A"
+  },
+  {
+   "nombre": "Pasorapa, Omereque, Aiquile, Totora, Poj",
+   "lat": -18.107245,
+   "lon": -64.908006,
+   "version": "B"
+  },
+  {
+   "nombre": "Aiquile, Omereque, Pasorapa",
+   "lat": -18.107245,
+   "lon": -64.908006,
+   "version": "A"
+  },
+  {
    "nombre": "Omereque",
    "lat": -18.107245,
    "lon": -64.908006,
    "version": "A"
   }
  ],
- "nota_mapa": "",
+ "nota_mapa": "No se pudo ubicar en OpenStreetMap: Pasorapa, Omereque, Aiquile, Totora, Pojo, Mizque, Sacabamba.",
  "victima": {
   "nombre": "",
   "detalle": ""
@@ -246,110 +264,106 @@
  },
  "mapa_tipo": "afectados",
  "esquema": false,
- "operativa": "La declaratoria de emergencia ya está aprobada y se han asignado Bs 1,3 millones. La represa paralizada sigue sin reactivarse y la llegada de la cisterna no se ha confirmado. Se continúa monitoreando la situación del ganado y la disponibilidad de agua.",
+ "operativa": "La respuesta se encuentra en fase de movilización de recursos. Se han enviado cisternas a Pasorapa y se planea traslado a Aiquile. Queda por cerrar la entrega de agua a Omereque y la evaluación de la represa paralizada.",
  "acciones": [
   [
-   "Confirmar estado de la represa paralizada en Omereque",
-   "Gobernación de Cochabamba",
+   "Confirmar estado del caso con Policía/Fiscalía",
+   "Ministerio de Seguridad",
+   "24 h"
+  ],
+  [
+   "Pedir parte policial y forense",
+   "Ministerio de Seguridad",
    "48 h"
   ],
   [
-   "Verificar llegada y capacidad de la cisterna destinada a Omereque",
-   "Alcaldía de Cochabamba",
-   "48 h"
-  ],
-  [
-   "Actualizar datos de ganado afectado y riesgo",
-   "Secretaría de Medio Ambiente",
+   "Coordinar con Cancillería",
+   "Ministerio de Relaciones Exteriores",
    "72 h"
   ],
   [
-   "Publicar mensaje oficial único sobre la situación de la sequía",
-   "Secretaría de Gobernabilidad",
-   "24 h"
+   "Fijar un mensaje oficial único",
+   "Ministerio de Salud",
+   "Continuo"
   ]
  ],
  "trazabilidad": [
   [
    "Territorio afectado",
-   "Omereque, Cochabamba, está incluido entre los municipios afectados por la sequía",
-   "Confirmado"
+   "La sequía afecta a Omereque y a varios municipios del sur de Cochabamba.",
+   "Discrepa: Pasorapa, Omereque, Aiquile y Totora / Pasorapa, Omereque, Aiquile, Totora, Pojo, Mizque y Sacabamba / Aiquile, Omereque y Pasorapa / Omereque (entre siete municipios)"
   ],
   [
    "Población y producción afectadas",
-   "Se reportan 2.000 cabezas de ganado muertas y 40.000 en riesgo en la zona que incluye Omereque",
-   "Pendiente: desglose por municipio, autoridades locales"
+   "Más de 2 000 cabezas de ganado están afectadas y unas 40 000 se encuentran en riesgo en la zona que incluye Omereque.",
+   "Confirmado"
   ],
   [
    "Declaratoria y marco legal",
-   "Omereque forma parte de la declaratoria de emergencia por sequía y se autorizaron Bs 1,3 millones para los siete municipios",
+   "La ALD declaró emergencia en siete municipios, entre ellos Omereque, y aprobó la asignación de Bs 1,3 millones; la Asamblea legislativa también aprobó la declaratoria y el mismo monto.",
    "Confirmado"
   ],
   [
    "Ayuda desplegada",
-   "Se anunció una cisterna destinada a Omereque y se asignaron recursos de hasta Bs 5 millones para la emergencia",
-   "Pendiente: confirmación de llegada de la cisterna y detalle de fondos entregados, Gobernación y ALD"
+   "Se envió al menos una cisterna a Omereque y se gestionan recursos financieros de hasta Bs 5 millones; se enviaron cisternas a Pasorapa y Aiquile.",
+   "Pendiente: Detalle de cantidad de agua y recursos entregados a Omereque (autoridad local)"
   ],
   [
    "Pérdidas reportadas",
-   "Paralización de una represa en Omereque con inversión de Bs 140 millones; 2.000 cabezas de ganado muertas y 40.000 en riesgo",
+   "Alrededor de 40 000 cabezas de ganado están en riesgo y un proyecto de represa de Bs 140 millones está paralizado.",
    "Confirmado"
   ],
   [
    "Necesidades pendientes",
-   "Reactivar la represa, confirmar entrega de la cisterna, obtener datos específicos de ganado y población humana, detallar fondos entregados",
-   "Pendiente: autoridades municipales y departamentales"
+   "Se requieren más cisternas, forraje y recursos financieros para atender a ganado y familias vulnerables.",
+   "Pendiente: Coordinación y asignación de recursos adicionales (Gobernación, alcaldía)"
   ],
   [
    "Pronóstico y evolución",
-   "Riesgo de sequía persiste; no hay datos públicos de pronóstico específico",
+   "Se anticipa que la sequía mantendrá el riesgo para el ganado y la escasez de agua en los próximos meses.",
    "Sin dato público"
   ]
  ],
  "cronologia": [
   [
-   "2026-10-29",
-   "Alcalde envía convoy con 10 cisternas y forraje a Pasorapa (no menciona Omereque)"
+   "30/10/2026 03:00",
+   "Gobernación gestiona recursos y solicita Bs 2‑3 millones para atender la sequía en Pasorapa, Omereque, Aiquile y Totora"
   ],
   [
-   "2026-10-30 03:00",
-   "Alcaldía envía cisternas a Pasorapa; Gobernación menciona una cisterna destinada a Omereque y paralización de represa de Bs 140 M"
+   "30/10/2026 03:00",
+   "Se reporta que 40 000 cabezas de ganado están en riesgo en la zona, incluido Omereque"
   ],
   [
-   "2026-10-30",
-   "Reportan 2.000 cabezas de ganado muertas y 40.000 en riesgo en zona que incluye Omereque"
+   "02/11/2026 12:53",
+   "ALD declara emergencia en siete municipios, entre ellos Omereque, y asigna Bs 1,3 millones"
   ],
   [
-   "2026-11-02 06:00",
-   "Comisión de Medio Ambiente de la ALD se reúne para aprobar proyecto de emergencia que incluye a Omereque"
+   "03/11/2026 11:19",
+   "Comisión de Medio Ambiente aprueba por unanimidad el proyecto de ley de emergencia por sequía"
   ],
   [
-   "2026-11-03 15:55",
-   "Asamblea aprueba declaratoria de emergencia y autoriza Bs 1,3 millones para los municipios, incluido Omereque"
+   "03/11/2026 15:55",
+   "Asamblea aprueba Declaratoria de Emergencia por Sequía y autoriza Bs 1,3 millones"
   ],
   [
-   "2026-11-03",
-   "Publicación del proyecto de ley que declara emergencia en siete municipios, incluido Omereque"
+   "06/11/2026 08:18",
+   "Alcaldía de Cochabamba envía una cisterna a Pasorapa y prepara traslado de dos más a Aiquile"
   ],
   [
-   "2026-11-06 18:05",
-   "Se discute la Ley de Emergencia que asigna Bs 1.300 millones y menciona a Omereque entre los beneficiarios"
+   "06/11/2026 18:05",
+   "Se anuncia envío de dos cisternas de 15 000 litros al Cono Sur, con énfasis en Aiquile, sin mencionar Omereque"
   ]
  ],
- "reconstruccion": "Omereque, Cochabamba, está dentro de la zona afectada por la sequía. Se registran 2.000 cabezas de ganado muertas y 40.000 en riesgo, y la represa local permanece paralizada tras una inversión de Bs 140 millones. La Asamblea aprobó la declaratoria de emergencia y asignó Bs 1,3 millones, pero la llegada de la cisterna anunciada y la reactivación de la represa siguen pendientes.",
+ "reconstruccion": "La sequía que afecta a Omereque y municipios colindantes ha generado riesgo para 40 000 cabezas de ganado y ha motivado la declaración de emergencia departamental con asignación de Bs 1,3 millones. Las autoridades han gestionado recursos financieros y enviado al menos una cisterna a la zona, pero la cobertura de agua y forraje sigue insuficiente. Se mantiene la paralización de una represa de Bs 140 millones, lo que agrava la vulnerabilidad hídrica.",
  "vacios": [
-  "Número exacto de ganado afectado específicamente en Omereque – autoridades municipales",
-  "Estado y fecha de reactivación de la represa paralizada – Gobernación",
-  "Confirmación de llegada y volumen de agua de la cisterna anunciada – Secretaría de Gobernabilidad",
-  "Impacto de la sequía en la población humana (familias afectadas, desplazamientos) – Oficina de Estadísticas del Ministerio de Salud",
-  "Desglose detallado de los Bs 1,3 millones entregados a Omereque – Asamblea Legislativa Departamental"
+  "Número exacto de familias o personas afectadas en Omereque (Autoridades locales)",
+  "Cantidad de agua (litros) entregada específicamente a Omereque mediante cisternas (Alcaldía de Cochabamba)",
+  "Estado actual y causas de la demora de la represa paralizada (Gobernación)",
+  "Detalle de los recursos (forraje, agua) que se entregarán a Omereque (Secretaría de Gobernabilidad)",
+  "Identidad de autoridades locales (alcalde, concejo) de Omereque que solicitaron ayuda (Municipalidad de Omereque)"
  ],
- "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (15 notas halladas, 15 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (groq/openai/gpt-oss-120b); requiere revisión humana antes de circular.",
+ "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (18 notas halladas, 18 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (groq/openai/gpt-oss-120b); requiere revisión humana antes de circular.",
  "fuentes": [
-  [
-   "eju.tv",
-   "29/10"
-  ],
   [
    "Los Tiempos",
    "30/10"
@@ -359,12 +373,16 @@
    "30/10"
   ],
   [
-   "Los Tiempos",
+   "eju.tv",
    "30/10"
   ],
   [
+   "El Nacional - El diario de los lec",
+   "01/11"
+  ],
+  [
    "eju.tv",
-   "30/10"
+   "01/11"
   ],
   [
    "eju.tv",
@@ -373,6 +391,10 @@
   [
    "La Patria Bolivia",
    "02/11"
+  ],
+  [
+   "eju.tv",
+   "03/11"
   ],
   [
    "La Patria Bolivia",
@@ -383,7 +405,15 @@
    "03/11"
   ],
   [
-   "ABI - Agencia Boliviana de Informa",
+   "unitel.bo",
+   "03/11"
+  ],
+  [
+   "eju.tv",
+   "04/11"
+  ],
+  [
+   "elfulgor.com",
    "04/11"
   ],
   [
@@ -391,10 +421,6 @@
    "05/11"
   ],
   [
-   "Opinión Bolivia",
-   "05/11"
-  ],
-  [
    "Los Tiempos",
    "06/11"
   ],
@@ -405,6 +431,10 @@
   [
    "La Patria Bolivia",
    "06/11"
+  ],
+  [
+   "Los Tiempos",
+   "07/11"
   ]
  ]
 }
