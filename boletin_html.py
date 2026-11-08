@@ -116,9 +116,9 @@ h2{font-size:7.6pt;letter-spacing:.09em;text-transform:uppercase;color:#0b3d6e;m
 .g{display:grid;grid-template-columns:1.75fr 1fr;gap:5mm}.map{border:1px solid #cfd6df;border-radius:6px;overflow:hidden}.map svg{display:block;width:100%;height:auto}
 .nota{font-size:6.8pt;color:#6b7785;line-height:1.35;margin-top:1.6mm}.card{border:1px solid #dfe4ea;border-radius:6px;padding:4mm;background:#fafbfd}.card .n{font-size:13pt;font-weight:700;color:#0b3d6e;line-height:1.15}.card .d{margin:1.5mm 0 3mm;font-size:8.6pt}
 .qr svg{width:26mm;height:26mm;display:block}.esq{margin-top:4.5mm}.esq svg{width:100%;height:auto;display:block}
-table{border-collapse:collapse;width:100%;font-size:8.3pt}th{background:#0b3d6e;color:#fff;text-align:left;font-size:6.9pt;letter-spacing:.06em;padding:2mm 2.6mm;font-weight:700;text-transform:uppercase}td{padding:1.8mm 2.6mm;border-bottom:1px solid #e1e6ec;vertical-align:top}td.k{font-weight:600;white-space:nowrap}
+table{border-collapse:collapse;width:100%;font-size:8pt}th{background:#0b3d6e;color:#fff;text-align:left;font-size:6.9pt;letter-spacing:.06em;padding:2mm 2.6mm;font-weight:700;text-transform:uppercase}td{padding:1.3mm 2.6mm;border-bottom:1px solid #e1e6ec;vertical-align:top}td.k{font-weight:600;white-space:nowrap}
 .ok{color:#1e8c5a;font-weight:600}.pe{color:#b7791f;font-weight:600}.di{color:#c0392b;font-weight:600}.sec{margin-top:5mm}
-.fu{columns:4;column-gap:5mm;font-size:6.2pt;color:#44505e;line-height:1.4}.met{font-size:7pt;color:#6b7785;margin-bottom:1.5mm}
+.fu{max-height:22mm;overflow:hidden;columns:4;column-gap:5mm;font-size:6.2pt;color:#44505e;line-height:1.4}.met{font-size:7pt;color:#6b7785;margin-bottom:1.5mm}
 """
 
 
@@ -154,8 +154,8 @@ def html(B):
 <div class="g" style="{"" if B.get("mapa_tipo", "versiones") == "versiones" else "grid-template-columns:1fr"}"><div>{mapa}</div>{"<div>" + ident + "</div>" if B.get("mapa_tipo", "versiones") == "versiones" else ""}</div>{esq if B.get("esquema", True) else ""}{pie(1)}</div>'''
     p2 = f'''<div class="pg">{cab(2)}{esq if not B.get("esquema", True) else ""}<h2 style="margin-top:5mm">Situación actual</h2><div class="sint" style="margin-top:0;font-size:9.6pt">{E(B["operativa"])}</div>
 <div class="sec"><h2>Cadena de atención y situación posterior</h2><table><tr><th>Dimensión</th><th>Qué se sabe</th><th>Estado</th></tr>{tra}</table></div>
-<div class="sec"><h2>Vacíos prioritarios</h2><div style="font-size:8.6pt">{E("; ".join(B["vacios"]))}.</div></div>
-<div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{fu}</div></div>{pie(2)}</div>'''
+<div class="sec" style="margin-top:3.5mm"><h2>Vacíos prioritarios</h2><div style="font-size:8pt;line-height:1.4">{E("; ".join(B["vacios"]))}.</div></div>
+<div class="sec" style="margin-top:3.5mm"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{fu}</div></div>{pie(2)}</div>'''
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
 
 
