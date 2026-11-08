@@ -1,41 +1,41 @@
 {
  "tipo": "epi_ira",
- "codigo": "EPI-IRA-SE40",
- "titulo": "Infecciones respiratorias agudas e influenza · Bolivia · SE 40",
+ "codigo": "EPI-IRA-SE41",
+ "titulo": "Infecciones respiratorias agudas e influenza · Bolivia · SE 41",
  "meta": [
   [
    "BOLETÍN",
-   "SE 40"
+   "SE 41"
   ],
   [
    "PERIODO",
-   "4 de octubre al 10 de octubre 2026"
+   "11 de octubre al 17 de octubre 2026"
   ],
   [
    "CORTE",
-   "08 NOV 2026 · 08:20 BOT"
+   "08 NOV 2026 · 08:22 BOT"
   ],
   [
    "ESTADO",
    "Vigilancia activa"
   ]
  ],
- "sintesis": "En la SE 40 (4 de octubre al 10 de octubre 2026) el país notificó 87.877 casos de infecciones respiratorias agudas. +20.6% respecto de la semana anterior (72.881). Las tasas semanales más altas están en Chuquisaca (13,3‰), Potosí (13,1‰), Oruro (10,7‰) por 1.000 habitantes. La circulación viral predominante es por influenza tipo AH3N2. Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.",
+ "sintesis": "En la SE 41 (11 de octubre al 17 de octubre 2026) el país notificó 93.732 casos de infecciones respiratorias agudas. +6.7% respecto de la semana anterior (87.877). Las tasas semanales más altas están en Pando (831,0‰), Chuquisaca (12,8‰), Potosí (12,8‰) por 1.000 habitantes. La circulación viral predominante es por influenza tipo B. Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.",
  "kpis": [
   [
-   "87.877",
-   "casos de IRA, SE 40"
+   "93.732",
+   "casos de IRA, SE 41"
   ],
   [
-   "+20,6%",
+   "+6,7%",
    "frente a la semana anterior"
   ],
   [
-   "7,3‰",
+   "7,8‰",
    "tasa semanal por 1.000 hab."
   ],
   [
-   "S/D",
+   "+13.260",
    "dosis de vacuna antiinfluenza esta semana"
   ]
  ],
@@ -59,114 +59,127 @@
   [
    40,
    87877.0
+  ],
+  [
+   41,
+   93732.0
   ]
  ],
  "deptos": [
   {
+   "depto": "Pando",
+   "acum": 41330.0,
+   "tasa_acum": 277.0,
+   "casos39": 976.0,
+   "tasa39": 6.5,
+   "casos40": 100.0,
+   "tasa40": 2.0,
+   "casos41": 6.7,
+   "tasa41": 831.0
+  },
+  {
    "depto": "Chuquisaca",
-   "acum": 253042.0,
-   "tasa_acum": 405.0,
-   "casos39": 7357.0,
-   "tasa39": 11.8,
-   "casos40": 5586.0,
-   "tasa40": 8.9,
-   "casos41": 8314.0,
-   "tasa41": 13.3
+   "acum": 261022.0,
+   "tasa_acum": 418.0,
+   "casos39": 5586.0,
+   "tasa39": 8.9,
+   "casos40": 8314.0,
+   "tasa40": 13.3,
+   "casos41": 7980.0,
+   "tasa41": 12.8
   },
   {
    "depto": "Potosí",
-   "acum": 373750.0,
-   "tasa_acum": 419.0,
-   "casos39": 9615.0,
-   "tasa39": 10.8,
-   "casos40": 7928.0,
-   "tasa40": 8.9,
-   "casos41": 11695.0,
-   "tasa41": 13.1
+   "acum": 385183.0,
+   "tasa_acum": 432.0,
+   "casos39": 7928.0,
+   "tasa39": 8.9,
+   "casos40": 11695.0,
+   "tasa40": 13.1,
+   "casos41": 11433.0,
+   "tasa41": 12.8
   },
   {
    "depto": "Oruro",
-   "acum": 202343.0,
-   "tasa_acum": 340.0,
-   "casos39": 6023.0,
-   "tasa39": 10.1,
-   "casos40": 5953.0,
-   "tasa40": 10.0,
-   "casos41": 6380.0,
-   "tasa41": 10.7
+   "acum": 209238.0,
+   "tasa_acum": 352.0,
+   "casos39": 5953.0,
+   "tasa39": 10.0,
+   "casos40": 6380.0,
+   "tasa40": 10.7,
+   "casos41": 6895.0,
+   "tasa41": 11.6
   },
   {
    "depto": "Tarija",
-   "acum": 250072.0,
-   "tasa_acum": 450.0,
-   "casos39": 6632.0,
-   "tasa39": 11.9,
-   "casos40": 5978.0,
-   "tasa40": 10.7,
-   "casos41": 5609.0,
-   "tasa41": 10.1
+   "acum": 256072.0,
+   "tasa_acum": 460.0,
+   "casos39": 5978.0,
+   "tasa39": 10.7,
+   "casos40": 5609.0,
+   "tasa40": 10.1,
+   "casos41": 6000.0,
+   "tasa41": 10.8
   },
   {
    "depto": "La Paz",
-   "acum": 657508.0,
-   "tasa_acum": 210.0,
-   "casos39": 17919.0,
-   "tasa39": 5.7,
-   "casos40": 18859.0,
-   "tasa40": 6.0,
-   "casos41": 24233.0,
-   "tasa41": 7.8
+   "acum": 683494.0,
+   "tasa_acum": 219.0,
+   "casos39": 18859.0,
+   "tasa39": 6.0,
+   "casos40": 24233.0,
+   "tasa40": 7.8,
+   "casos41": 25986.0,
+   "tasa41": 8.3
   },
   {
    "depto": "Cochabamba",
-   "acum": 578494.0,
-   "tasa_acum": 270.0,
-   "casos39": 12284.0,
-   "tasa39": 5.7,
-   "casos40": 11828.0,
-   "tasa40": 5.5,
-   "casos41": 14787.0,
-   "tasa41": 6.9
-  },
-  {
-   "depto": "Pando",
-   "acum": 40499.0,
-   "tasa_acum": 271.0,
-   "casos39": 825.0,
+   "acum": 594454.0,
+   "tasa_acum": 277.0,
+   "casos39": 11828.0,
    "tasa39": 5.5,
-   "casos40": 976.0,
-   "tasa40": 6.5,
-   "casos41": 1002.0,
-   "tasa41": 6.7
+   "casos40": 14787.0,
+   "tasa40": 6.9,
+   "casos41": 15960.0,
+   "tasa41": 7.4
   },
   {
    "depto": "Santa Cruz",
-   "acum": 723881.0,
-   "tasa_acum": 216.0,
-   "casos39": 11120.0,
-   "tasa39": 3.3,
-   "casos40": 13295.0,
-   "tasa40": 4.0,
-   "casos41": 13687.0,
-   "tasa41": 4.1
+   "acum": 739917.0,
+   "tasa_acum": 221.0,
+   "casos39": 13295.0,
+   "tasa39": 4.0,
+   "casos40": 13687.0,
+   "tasa40": 4.1,
+   "casos41": 16036.0,
+   "tasa41": 4.8
   },
   {
    "depto": "Beni",
-   "acum": 132414.0,
-   "tasa_acum": 243.0,
-   "casos39": 2708.0,
-   "tasa39": 5.0,
-   "casos40": 2478.0,
-   "tasa40": 4.6,
-   "casos41": 2170.0,
-   "tasa41": 4.0
+   "acum": 135025.0,
+   "tasa_acum": 248.0,
+   "casos39": 2478.0,
+   "tasa39": 4.6,
+   "casos40": 2170.0,
+   "tasa40": 4.0,
+   "casos41": 2611.0,
+   "tasa41": 4.8
   }
  ],
- "vacuna": null,
- "edad": null,
- "virus": "La circulación viral predominante es por influenza tipo AH3N2.",
- "url": "https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1059-boletin-epidemiologico-semana-epidemiologica-no-40?Itemid=465",
- "metodo": "Cifras leídas automáticamente del Boletín Epidemiológico N° 40 (PDF público del Ministerio de Salud y Deportes) y de las 7 ediciones anteriores para la curva semanal. No hay estimaciones propias; verificar contra el PDF original.",
+ "vacuna": {
+  "de": 1547510.0,
+  "a": 1560770.0,
+  "adicionales": 13260.0
+ },
+ "edad": {
+  "mayor": "20 a 59 años",
+  "mayor_pct": 33,
+  "segundo": "1 a 4 años",
+  "segundo_pct": 17
+ },
+ "virus": "La circulación viral predominante es por influenza tipo B.",
+ "url": "https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1060-boletin-epidemiologico-semana-epidemiologica-no-41?Itemid=465",
+ "metodo": "Cifras leídas automáticamente del Boletín Epidemiológico N° 41 (PDF público del Ministerio de Salud y Deportes) y de las 7 ediciones anteriores para la curva semanal. No hay estimaciones propias; verificar contra el PDF original.",
  "fuentes": [
   [
    "Boletín epidemiológico SE 34",
@@ -186,6 +199,10 @@
   ],
   [
    "Boletín epidemiológico SE 40",
+   ""
+  ],
+  [
+   "Boletín epidemiológico SE 41",
    ""
   ]
  ]
