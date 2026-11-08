@@ -1,7 +1,7 @@
 {
  "hecho_id": "hecho:a93b471732",
- "generado": "2026-11-08T03:28:20.841786+00:00",
- "segundos": 200,
+ "generado": "2026-11-08T04:09:27.518752+00:00",
+ "segundos": 172,
  "consultas": [
   [
    1,
@@ -70,53 +70,53 @@
   ],
   [
    2,
-   "sequía Omereque Cochabamba emergencia [es-419]",
-   2
-  ],
-  [
-   2,
-   "Bs 1,3 millones ayuda sequía Cochabamba [es-419]",
+   "sequía Omereque Cochabamba comunicado oficial [es-419]",
    1
   ],
   [
    2,
-   "municipios Pasorapa Omereque Aiquile sequía [es-419]",
+   "drought Omereque Bolivia official statement [en-US]",
    0
   ],
   [
    2,
-   "Cochabamba drought official press release [en-US]",
-   0
-  ],
-  [
-   2,
-   "Bolivia government emergency decree drought [en-US]",
-   7
-  ],
-  [
-   2,
-   "Red Uno sequía Cono Sur Cochabamba [es-419]",
-   4
-  ],
-  [
-   2,
-   "La Patria Bolivia sequía municipios [es-419]",
+   "Ayuda cisternas sequía Cochabamba municipios [es-419]",
    2
   ],
   [
    2,
-   "Ministerio de Desarrollo Rural y Tierras comunicado sequía 2024 [es-419]",
+   "Cochabamba drought emergency law 2024 [en-US]",
    0
   ],
   [
    2,
-   "Asamblea Legislativa Departamental de Cochabamba [es]",
+   "impacto sequía ganado Cochabamba noticias [es-419]",
+   8
+  ],
+  [
+   2,
+   "Bolivia emergency declaration drought Omereque [en-US]",
+   0
+  ],
+  [
+   2,
+   "Alerta sequía Pasorapa Aiquile Omereque [es-419]",
+   0
+  ],
+  [
+   2,
+   "Cochabamba Department environmental commission drought report [en-US]",
+   0
+  ],
+  [
+   2,
+   "Opinión Bolivia [es]",
+   50
+  ],
+  [
+   2,
+   "Opinión Bolivia [en]",
    1
-  ],
-  [
-   2,
-   "Asamblea Legislativa Departamental de Cochabamba [en]",
-   0
   ],
   [
    2,
@@ -139,34 +139,34 @@
    9
   ]
  ],
- "descartadas_por_ruido": 271,
- "n_fuentes": 8,
- "n_leidas": 8,
+ "descartadas_por_ruido": 317,
+ "n_fuentes": 7,
+ "n_leidas": 7,
  "nombres_propios": [
-  "Asamblea Legislativa Departamental de Cochabamba",
+  "Opinión Bolivia",
   "La Patria Bolivia",
   "Red Uno",
-  "Ministerio de Desarrollo Rural y Tierras",
-  "Cono Sur",
-  "Edwin Jiménez"
+  "Asamblea Legislativa Departamental de Cochabamba",
+  "Edwin Jiménez",
+  "Cono Sur"
  ],
  "lugares": [],
  "ia": "groq/openai/gpt-oss-120b",
  "analisis": {
   "hecho": {
    "fecha": "2026-11-02",
-   "hora": "06:00",
+   "hora": null,
    "lugar_versiones": [
     {
-     "texto": "Declaratoria de Emergencia por Sequía en el Departamento de Cochabamba, abarcando los municipios de Aiquile, Omereque, Pasorapa, Pojo, Totora, Mizque y Sacabamba.",
+     "texto": "Cono Sur del departamento de Cochabamba, municipios Pasorapa, Omereque, Aiquile, Totora, Pojo, Mizque y Sacabamba",
      "fuentes": [
-      "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html"
+      "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/"
      ]
     },
     {
-     "texto": "La Asamblea Legislativa Departamental de Cochabamba declara emergencia por sequía en siete municipios: Aiquile, Omereque, Pasorapa, Pojo, Totora, Mizque y Sacabamba.",
+     "texto": "Provincia Campero, municipios Aiquile, Omereque y Pasorapa",
      "fuentes": [
-      "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/"
+      "https://www.reduno.com.bo/noticias/sequia-golpea-al-cono-sur-de-cochabamba-40-000-cabezas-de-ganado-estan-en-riesgo-20261030123357"
      ]
     }
    ],
@@ -177,164 +177,75 @@
   "instituciones": [
    {
     "nombre": "Asamblea Legislativa Departamental de Cochabamba",
-    "que_hizo": "Aprobó la declaratoria de emergencia por sequía y autorizó la asignación de Bs 1,3 millones.",
+    "que_hizo": "Declaró emergencia por sequía y aprobó asignación de Bs 1,3 millones",
+    "fuente": "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html"
+   },
+   {
+    "nombre": "Gobernación de Cochabamba",
+    "que_hizo": "Solicitó aprobación de fondos y coordinó envío de ayuda",
+    "fuente": "https://www.reduno.com.bo/noticias/sequia-golpea-al-cono-sur-de-cochabamba-40-000-cabezas-de-ganado-estan-en-riesgo-20261030123357"
+   },
+   {
+    "nombre": "Municipio de Cochabamba (Semapa)",
+    "que_hizo": "Envió dos cisternas de 15.000 litros a Aiquile",
+    "fuente": "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/"
+   },
+   {
+    "nombre": "Alcalde de Cochabamba, Manfred Reyes Villa",
+    "que_hizo": "Anunció envío personal de 10 cisternas y forraje a Pasorapa; envió dos cisternas a Aiquile",
     "fuente": [
-     "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html",
-     "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/"
+     "https://www.reduno.com.bo/noticias/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia-20261029162638",
+     "https://www.opinion.com.bo/cochabamba/alcalde-reyes-villa-anuncia-ayuda-aiquile-falta-agua/20261105172911998765.html"
     ]
    },
    {
-    "nombre": "Gobernación de Cochabamba (Gobernador Leonardo Loza)",
-    "que_hizo": "Solicitó reajustes presupuestarios y la aprobación de fondos para atender a las familias afectadas.",
-    "fuente": [
-     "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html"
-    ]
-   },
-   {
-    "nombre": "Semapa (Servicio Municipal de Agua Potable y Alcantarillado)",
-    "que_hizo": "Envió dos cisternas de 15.000 litros cada una al Cono Sur, principalmente a Aiquile.",
-    "fuente": [
-     "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/"
-    ]
-   },
-   {
-    "nombre": "Alcaldía de Cochabamba / Alcalde Manfred Reyes Villa",
-    "que_hizo": "Envío personal de 10 camiones cisterna con agua y 2 camiones con forraje, sin usar fondos municipales.",
-    "fuente": [
-     "https://www.reduno.com.bo/noticias/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia-20261029162638"
-    ]
-   },
-   {
-    "nombre": "Secretario de Relaciones de la provincia Campero, Juan Carlos Loza",
-    "que_hizo": "Denunció la falta de ayuda y la situación crítica en Pasorapa.",
-    "fuente": [
-     "https://www.reduno.com.bo/noticias/sequia-golpea-al-cono-sur-de-cochabamba-40-000-cabezas-de-ganado-estan-en-riesgo-20261030123357"
-    ]
+    "nombre": "Defensa Civil",
+    "que_hizo": "Solicitada para apoyo en municipios",
+    "fuente": "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
    }
   ],
   "cronologia": [
    {
-    "cuando": "2026-10-30",
-    "que": "Emisión del Decreto Departamental N° 6526 que declara Emergencia Departamental ante la Sequía.",
-    "fuentes": [
-     "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html"
-    ]
-   },
-   {
     "cuando": "2026-10-29",
-    "que": "Alcalde Manfred Reyes Villa anuncia envío de ayuda humanitaria (10 cisternas y 2 camiones de forraje) a Pasorapa.",
+    "que": "Alcalde de Cochabamba anuncia envío personal de 10 cisternas y forraje a Pasorapa",
     "fuentes": [
      "https://www.reduno.com.bo/noticias/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia-20261029162638"
     ]
    },
    {
     "cuando": "2026-10-30",
-    "que": "Reportes de productores indican muerte de 2.000 cabezas de ganado y 40.000 en riesgo.",
+    "que": "Reportes de sequía indican 2.000 cabezas de ganado muertas y 40.000 en riesgo",
     "fuentes": [
      "https://www.reduno.com.bo/noticias/sequia-golpea-al-cono-sur-de-cochabamba-40-000-cabezas-de-ganado-estan-en-riesgo-20261030123357"
     ]
    },
    {
-    "cuando": "2026-11-02 06:00",
-    "que": "Reunión de la Comisión de Medio Ambiente para revisar la documentación del proyecto de emergencia.",
+    "cuando": "2026-11-02",
+    "que": "Asamblea Legislativa Departamental declara emergencia por sequía en siete municipios y asigna Bs 1,3 millones",
     "fuentes": [
-     "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/",
-     "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
+     "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/"
     ]
    },
    {
     "cuando": "2026-11-03",
-    "que": "Aprobación por unanimidad del proyecto de ley que declara emergencia por sequía y autoriza Bs 1,3 millones.",
+    "que": "Comisión de Medio Ambiente aprueba proyecto de ley de emergencia y autoriza fondos",
     "fuentes": [
-     "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html",
      "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
+    ]
+   },
+   {
+    "cuando": "2026-11-05",
+    "que": "Alcalde Reyes Villa anuncia envío de dos cisternas a Aiquile",
+    "fuentes": [
+     "https://www.opinion.com.bo/cochabamba/alcalde-reyes-villa-anuncia-ayuda-aiquile-falta-agua/20261105172911998765.html"
     ]
    },
    {
     "cuando": "2026-11-06",
-    "que": "Semapa envía dos cisternas de 15.000 litros cada una al Cono Sur, principalmente a Aiquile.",
+    "que": "Semapa envía dos cisternas de 15.000 litros a 71 comunidades de Aiquile",
     "fuentes": [
      "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/"
     ]
-   }
-  ],
-  "afirmaciones": [
-   {
-    "dato": "Asignación inicial de recursos",
-    "valor": "Bs 1,3 millones",
-    "fuentes": [
-     "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html",
-     "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/",
-     "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
-    ],
-    "estado": "coincide",
-    "detalle": null
-   },
-   {
-    "dato": "Municipios afectados",
-    "valor": "Aiquile, Omereque, Pasorapa, Pojo, Totora, Mizque, Sacabamba",
-    "fuentes": [
-     "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html",
-     "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/",
-     "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
-    ],
-    "estado": "coincide",
-    "detalle": null
-   },
-   {
-    "dato": "Hora de reunión de la Comisión de Medio Ambiente",
-    "valor": "06:00",
-    "fuentes": [
-     "https://lapatria.bo/enfoque-nacional/gestion/emergencia-sequia-cochabamba/",
-     "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
-    ],
-    "estado": "coincide",
-    "detalle": null
-   },
-   {
-    "dato": "Animales muertos en Pasorapa (según Red Uno)",
-    "valor": "2.000",
-    "fuentes": [
-     "https://www.reduno.com.bo/noticias/sequia-golpea-al-cono-sur-de-cochabamba-40-000-cabezas-de-ganado-estan-en-riesgo-20261030123357"
-    ],
-    "estado": "fuente_unica",
-    "detalle": null
-   },
-   {
-    "dato": "Animales muertos en Pasorapa (según La Patria)",
-    "valor": "457",
-    "fuentes": [
-     "https://lapatria.bo/enfoque-nacional/gestion/siete-municipios-cochabamba-recibiran-ayuda-sequia/"
-    ],
-    "estado": "fuente_unica",
-    "detalle": "Discrepancia con la cifra de 2.000 reportada por Red Uno"
-   },
-   {
-    "dato": "Cisternas enviadas por el alcalde Manfred Reyes Villa",
-    "valor": "10",
-    "fuentes": [
-     "https://www.reduno.com.bo/noticias/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia-20261029162638"
-    ],
-    "estado": "fuente_unica",
-    "detalle": null
-   },
-   {
-    "dato": "Cisternas enviadas por Semapa",
-    "valor": "2",
-    "fuentes": [
-     "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/"
-    ],
-    "estado": "fuente_unica",
-    "detalle": null
-   },
-   {
-    "dato": "Capacidad de cada cisterna enviada por Semapa",
-    "valor": "15.000 litros",
-    "fuentes": [
-     "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/"
-    ],
-    "estado": "fuente_unica",
-    "detalle": null
    }
   ]
  },
@@ -384,17 +295,6 @@
    "relevante": true
   },
   {
-   "medio": "Red Uno",
-   "titulo": "Manfred Reyes Villa envía ayuda humanitaria a Pasorapa ante severa sequía",
-   "url": "https://www.reduno.com.bo/noticias/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia-20261029162638",
-   "fecha": "29/10 03:00",
-   "pub": 1793257200000,
-   "ronda": 2,
-   "leida": true,
-   "resolvio": true,
-   "relevante": true
-  },
-  {
    "medio": "La Patria Bolivia",
    "titulo": "Cochabamba: Envían 2 cisternas para comunidades afectadas por la sequía",
    "url": "https://lapatria.bo/enfoque-nacional/gestion/cochabamba-envia-dos-cisternas-comunidades-afectadas/",
@@ -406,22 +306,22 @@
    "relevante": true
   },
   {
-   "medio": "Los Tiempos",
-   "titulo": "Vocero denuncia que existe intentos de desestabilizar la gestión de Loza",
-   "url": "https://www.lostiempos.com/actualidad/cochabamba/20261105/vocero-denuncia-que-existe-intentos-desestabilizar-gestion-loza",
-   "fecha": "05/11 17:35",
-   "pub": 1793914515000,
+   "medio": "Red Uno",
+   "titulo": "Manfred Reyes Villa envía ayuda humanitaria a Pasorapa ante severa sequía",
+   "url": "https://www.reduno.com.bo/noticias/manfred-reyes-villa-envia-ayuda-humanitaria-a-pasorapa-ante-severa-sequia-20261029162638",
+   "fecha": "29/10 03:00",
+   "pub": 1793257200000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,
    "relevante": true
   },
   {
-   "medio": "La Patria Bolivia",
-   "titulo": "Paz y el nuevo presidente de Paraguay revalidan agenda bilateral",
-   "url": "https://lapatria.bo/global/politica-internacional/paz-nuevo-mandatario-paraguayo-revalidan-agenda-bilateral/",
-   "fecha": "07/11 20:09",
-   "pub": 1794096584000,
+   "medio": "Opinión Bolivia",
+   "titulo": "El alcalde Reyes Villa anuncia ayuda para Aiquile ante la falta de agua",
+   "url": "https://www.opinion.com.bo/cochabamba/alcalde-reyes-villa-anuncia-ayuda-aiquile-falta-agua/20261105172911998765.html",
+   "fecha": "05/11 17:29",
+   "pub": 1793914151000,
    "ronda": 2,
    "leida": true,
    "resolvio": true,

@@ -1,6 +1,6 @@
 {
  "codigo": "BOL-471732",
- "titulo": "SEQUÍA · CONO SUR DE COCHABAMBA",
+ "titulo": "Sequía · Omereque, Cochabamba",
  "meta": [
   [
    "BOLETÍN",
@@ -12,166 +12,142 @@
   ],
   [
    "CORTE",
-   "07 NOV 2026 · 23:30 BOT"
+   "08 NOV 2026 · 00:10 BOT"
   ],
   [
    "ESTADO",
    "Seguimiento"
   ]
  ],
- "sintesis": "La Asamblea Legislativa Departamental de Cochabamba aprobó la declaratoria de emergencia por sequía que afecta a siete municipios del departamento: Aiquile, Omereque, Pasorapa, Pojo, Totora, Mizque y Sacabamba. El Decreto Departamental N° 6526 fue emitido el 30 de octubre de 2026 y la ley departamental autorizó la asignación de Bs 1,3 millones el 3 de noviembre de 2026. La Alcaldía de Cochabamba envió 10 camiones cisterna con agua y 2 de forraje, mientras Semapa despachó 2 cisternas de 15.000 litros al Cono Sur. Discrepa la mortandad de ganado en Pasorapa: 2.000 cabezas según Red Uno; 457 según La Patria, con 40.000 cabezas en riesgo reportadas.",
+ "sintesis": "La Asamblea Legislativa Departamental de Cochabamba declaró emergencia por sequía el 2 de noviembre de 2026. Afectan siete municipios del Cono Sur: Pasorapa, Omereque, Aiquile, Totora, Pojo, Mizque y Sacabamba. Se reportan 2,000 cabezas de ganado muertas y 40,000 en riesgo. Se han enviado cisternas y forraje, pero falta coordinación de ayuda a nivel municipal. Se requiere seguimiento de la declaración y de la distribución de recursos.",
  "kpis": [
   [
-   "0",
-   "Personas fallecidas"
+   "7",
+   "Municipios afectados"
   ],
   [
-   "0",
-   "Aprehendidos"
+   "S/D",
+   "Familias o personas afectadas"
   ],
   [
-   "2026-10-30",
-   "Fecha del evento"
+   "2,000 cabezas de ganado muertas, 40,000 en riesgo",
+   "Pérdidas principales"
   ],
   [
-   "Local",
-   "Alcance"
+   "Emergencia",
+   "Situación de la declaratoria"
   ]
  ],
- "puntos": [
-  {
-   "nombre": "Omereque",
-   "lat": -18.107245,
-   "lon": -64.908006,
-   "version": "A"
-  },
-  {
-   "nombre": "Pasorapa",
-   "lat": -18.1791696,
-   "lon": -64.8692772,
-   "version": "B"
-  },
-  {
-   "nombre": "Aiquile",
-   "lat": -18.1876861,
-   "lon": -64.9249603,
-   "version": "B"
-  },
-  {
-   "nombre": "Totora",
-   "lat": -17.9851227,
-   "lon": -64.9769158,
-   "version": "B"
-  }
- ],
- "nota_mapa": "",
+ "puntos": [],
+ "nota_mapa": "No se pudo ubicar en OpenStreetMap: Cono Sur, Cochabamba, Provincia Campero.",
  "victima": {
-  "nombre": "Sin víctimas humanas reportadas",
-  "detalle": "Poblaciones y productores agropecuarios de 7 municipios de Cochabamba"
+  "nombre": "—",
+  "detalle": ""
  },
  "foto_url": "https://www.opinion.com.bo/cochabamba/asamblea-aprueba-declaratoria-emergencia-sequia-autoriza-uso-bs-13-millones/20261103155515998636.html",
  "foto_medio": "Opinión Bolivia",
- "vehiculo": "CAMIONES CISTERNA Y CAMIONES DE FORRAJE",
+ "vehiculo": null,
+ "mapa_tipo": "afectados",
  "esquema": false,
- "operativa": "La declaratoria departamental y los fondos de Bs 1,3 millones están aprobados, encontrándose en curso la distribución de agua mediante cisternas municipales y de Semapa. Se solicita a la MAE instruir la consolidación técnica del impacto de la sequía y coordinar la intervención interinstitucional para el abastecimiento continuo de agua y forraje.",
+ "operativa": "El caso se encuentra en fase de respuesta inicial. Se han movilizado recursos y se ha declarado emergencia. Queda por cerrar la coordinación de ayuda y la distribución de recursos.",
  "acciones": [
   [
-   "Confirmar el estado de afectación y reportes de pérdidas ante instancias de Defensa Civil y la Gobernación de Cochabamba",
-   "Unidad de Gestión de Riesgos y Desastres",
+   "Confirmar estado de la declaratoria de emergencia con la Fiscalía",
+   "Gobernación de Cochabamba",
    "24 h"
   ],
   [
-   "Pedir el informe técnico consolidado y evaluación oficial de daños pecuarios a los municipios afectados",
-   "Dirección General de Epidemiología y Emergencias",
+   "Solicitar apoyo de la Defensa Civil para la distribución de cisternas",
+   "Gobernación de Cochabamba",
    "48 h"
   ],
   [
-   "Coordinar con Cancillería y organismos de cooperación el seguimiento a posible asistencia técnica humanitaria",
-   "Dirección de Relaciones Internacionales",
+   "Coordinar con la Secretaría de Medio Ambiente la evaluación de pérdidas de ganado",
+   "Gobernación de Cochabamba",
    "72 h"
   ],
   [
-   "Fijar un mensaje oficial único sobre la situación de sequía, asignación de recursos y ayuda entregada",
-   "Unidad de Comunicación Social",
+   "Establecer mensaje oficial único sobre la situación de la sequía",
+   "Gobernación de Cochabamba",
    "Continuo"
   ]
  ],
  "trazabilidad": [
   [
-   "Identificación",
-   "Declaratoria de emergencia por sequía en 7 municipios del Departamento de Cochabamba",
+   "Territorio afectado",
+   "Sequía reportada en el cono sur de Cochabamba; versiones indican entre 3 y 8 municipios afectados",
+   "Discrepa: 8 municipios según fuente1 / 3 municipios según fuente2"
+  ],
+  [
+   "Población y producción afectadas",
+   "Se reportan 2,000 cabezas de ganado muertas y 40,000 en riesgo",
    "Confirmado"
   ],
   [
-   "Auxilio y atención en el lugar",
-   "Alcaldía envía 10 cisternas y 2 camiones de forraje; Semapa envía 2 cisternas de 15.000 L cada una al Cono Sur",
+   "Declaratoria y marco legal",
+   "Se declaró emergencia por sequía en siete municipios y se asignaron Bs 1,3 millones",
    "Confirmado"
   ],
   [
-   "Traslado y fallecimiento",
-   "No se reportan fallecimientos humanos; se reportan muertes de ganado",
-   "Sin dato público"
-  ],
-  [
-   "Levantamiento y destino del cuerpo",
-   "Sin información disponible",
-   "Sin dato público"
-  ],
-  [
-   "Repatriación",
-   "No aplica al evento de sequía",
-   "Sin dato público"
-  ],
-  [
-   "Proceso judicial",
-   "No se ha iniciado proceso judicial relacionado con la sequía",
-   "Sin dato público"
-  ],
-  [
-   "Lugar del hecho",
-   "Omereque y demás municipios del Cono Sur de Cochabamba afectados por sequía",
+   "Ayuda desplegada",
+   "Se enviaron 10 cisternas y forraje a Pasorapa; 2 cisternas a Aiquile; 2 cisternas de 15,000 L a 71 comunidades de Aiquile",
    "Confirmado"
+  ],
+  [
+   "Pérdidas reportadas",
+   "2,000 cabezas de ganado muertas",
+   "Confirmado"
+  ],
+  [
+   "Necesidades pendientes",
+   "Se requieren fondos adicionales y apoyo de Defensa Civil para cubrir más municipios",
+   "Pendiente: fondos adicionales (Gobernación) y apoyo de Defensa Civil (Defensa Civil)"
+  ],
+  [
+   "Pronóstico y evolución",
+   "",
+   "Sin dato público"
   ]
  ],
  "cronologia": [
   [
    "2026-10-29",
-   "Alcalde Manfred Reyes Villa anuncia envío de 10 cisternas y 2 camiones de forraje a Pasorapa"
+   "Alcalde de Cochabamba anuncia envío personal de 10 cisternas y forraje a Pasorapa"
   ],
   [
    "2026-10-30",
-   "Emisión del Decreto Departamental N° 6526 que declara Emergencia Departamental ante la Sequía"
+   "Reportes de sequía indican 2,000 cabezas de ganado muertas y 40,000 en riesgo"
   ],
   [
-   "2026-10-30",
-   "Productores reportan muerte de 2.000 cabezas de ganado y 40.000 en riesgo"
-  ],
-  [
-   "2026-11-02 06:00",
-   "Reunión de la Comisión de Medio Ambiente para revisar la documentación del proyecto de emergencia"
+   "2026-11-02",
+   "Asamblea Legislativa Departamental declara emergencia por sequía en siete municipios y asigna Bs 1,3 millones"
   ],
   [
    "2026-11-03",
-   "Aprobación por unanimidad del proyecto de ley que declara emergencia por sequía y autoriza Bs 1,3 millones"
+   "Comisión de Medio Ambiente aprueba proyecto de ley de emergencia y autoriza fondos"
+  ],
+  [
+   "2026-11-05",
+   "Alcalde Reyes Villa anuncia envío de dos cisternas a Aiquile"
   ],
   [
    "2026-11-06",
-   "Semapa envía dos cisternas de 15.000 L cada una al Cono Sur, principalmente a Aiquile"
+   "Semapa envía dos cisternas de 15,000 litros a 71 comunidades de Aiquile"
   ],
   [
    "2026-11-08",
-   "Situación de sequía se mantiene en los municipios declarados; no se registran nuevas acciones"
+   "Situación actual sin nuevos reportes"
   ]
  ],
- "reconstruccion": "El Departamento de Cochabamba declaró emergencia por sequía en siete municipios, autorizando Bs 1,3 millones y movilizando cisternas de agua tanto por la Alcaldía como por Semapa. Se reportan pérdidas significativas de ganado y la población sigue sin cobertura hídrica adecuada. Las autoridades continúan evaluando la respuesta y la asignación de recursos.",
+ "reconstruccion": "Una sequía severa afecta al cono sur de Cochabamba, provocando la muerte de 2,000 cabezas de ganado y poniendo en riesgo a 40,000 más. La Asamblea declaró emergencia y asignó recursos; se han despachado cisternas y forraje a los municipios más críticos. Aún se necesitan fondos adicionales y apoyo de Defensa Civil para ampliar la asistencia.",
  "vacios": [
-  "Inventario actualizado de familias y población afectada – Ministerio de Salud",
-  "Reporte de consumo y cobertura de agua en los municipios – Gobernación de Cochabamba",
-  "Detalle de la ejecución de los Bs 1,3 millones asignados – Asamblea Legislativa Departamental",
-  "Evaluación de riesgos sanitarios vinculados a la sequía (enfermedades, desnutrición) – Dirección de Salud Pública",
-  "Plan de contingencia a mediano plazo para la zona del Cono Sur – Oficina de Gestión de Riesgos"
+  "Detalle de población humana afectada – Municipalidad",
+  "Inventario actualizado de recursos hídricos – Gobernación",
+  "Informe de evaluación de pérdidas agrícolas – Ministerio de Agricultura",
+  "Plan de distribución y logística de cisternas – Defensa Civil",
+  "Pronóstico meteorológico actualizado – Servicio Nacional de Meteorología"
  ],
- "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (8 notas halladas, 8 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (groq/openai/gpt-oss-120b); requiere revisión humana antes de circular.",
+ "metodo": "Búsqueda automática en prensa de Bolivia, Corea del Sur y otros países (7 notas halladas, 7 leídas completas); cruce de cada dato entre medios; lugares ubicados en OpenStreetMap. Redacción asistida por IA (groq/openai/gpt-oss-120b); requiere revisión humana antes de circular.",
  "fuentes": [
   [
    "Red Uno",
@@ -194,16 +170,12 @@
    "03/11"
   ],
   [
-   "Los Tiempos",
+   "Opinión Bolivia",
    "05/11"
   ],
   [
    "La Patria Bolivia",
    "06/11"
-  ],
-  [
-   "La Patria Bolivia",
-   "07/11"
   ]
  ]
 }
