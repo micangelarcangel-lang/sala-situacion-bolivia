@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:5gutl1",
+  "fecha_hora_local": "2026-11-08 11:53",
+  "ts_ms": 1794153196000,
+  "titulo": "Colisión entre dos trenes en la provincia egipcia de Giza deja cuatro fallecidos - El Potosí",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 4,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOOFZGa1otWnVncGoySlFobGpPbkM5WUV3dkxyVGFNU0VlVEwzVWRHbFR2WFFoZ2l5QzNiUEcxODNZd1RldWQ1WnNod2drbUhwc0hQbHYxSGpFN1VuRTVPNk9zOElnNnczRWhiLWUxYkhvaUE0QVhUcEt3Z2M1MHRzcG1mUG56NmFpcF9KdGRqVVZnak9TVTVPNzV0X0FKY01vOGYwUkctSFBValViTFNwLWpIWl82NkthdWd0UmF3?oc=5"
+ },
+ {
   "hecho_id": "noticia:bzr7eh",
   "fecha_hora_local": "2026-11-08 06:44",
   "ts_ms": 1794134680000,
@@ -18,6 +38,26 @@
   "departamento": "Potosí",
   "municipio": "Potosí",
   "enlaces": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOTXpUaTlIWWxxQ1RKSksybDdWXzZaYnppTDlVdHZiREFyYzRYMFYzNG9zR29nZE4tbTVsYVA2cWtSQk10NnpKX19zRGRPWFJjNF9PR0ZqYkYxMktieFhCbjB5SVNqRnFNWVdkWm1Zc2w5a0ZyU2tWX1hPRHJvV2JUVHB6TGU2OVRfUlVZVjlMT29xWmhCWndkYzlTcWFrQXlQd3g0LWZnVQ?oc=5 | https://news.google.com/rss/articles/CBMilgFBVV95cUxOVUVzX1NHd1FVYm5femN5cGNQSS0tWXB2UnROT2xfSkZDUGdmWjQ5TkRkWDlKN1ZSSjNONVprTERWV0x0dmpUZmZCX1lVQ1lMQ1U1SktBWERsX2V5RHRBSEJ6RGVaV29EaU8xR2pDNElyMzRhakZGYTdpdEpzZXZEWmlLZXJmUlRXOG13MEF2MWd0TXdnNFE?oc=5 | https://news.google.com/rss/articles/CBMivgFBVV95cUxPV2o0aDNWalpDTDBoQzRJSF8yLTZ4MGNaYlFyMGxma3hiSC1NM3dLNGx2R2dhOGp6MU4xRzZnY0I3UEhITTc1cFNCNzctZVpLbGNDS1FhT2tQNnZXb2JEXzF3N2xVZ3BTQm5YYzhMaUJsbkhQNGY0U293a3BYYUUzX01ER283VThkS3NlV2Vid3ZMLTRxYTJfU1FFMkd5bHB3VXgtdGhuMm1oWnZHd182SUwweVpxNlB3dkFlWWRR?oc=5"
+ },
+ {
+  "hecho_id": "noticia:1og9so8",
+  "fecha_hora_local": "2026-11-08 06:44",
+  "ts_ms": 1794134658000,
+  "titulo": "Frente frío provocará lluvias y descenso brusco de temperaturas en siete departamentos - El Potosí",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPNnhWQ29ZSGRtcHNONVd2ckVtX1pmN2lJc1ZBeHY1aXE0OGh1dUFmVDNPVnhUUzIzZFpaNWtFSzlFQWY3dVctdjFvUmRDWWVmQ21SRlZmTFVib0xUU2F2bWhMTGV5NE5JR1QxZmFGaGlQb0dYREtuWDNSYWRYTEhJUk1KREhqVndfSExzRms5WmUyTmo3b1JYZ1FqdEo2RFJRbE5GNHYzR3VNWndMTlE0WmZqbll0SnRKR2lTUHdpcXpIc1VDdGlveWdn?oc=5"
  },
  {
   "hecho_id": "noticia:h9uvwl",
