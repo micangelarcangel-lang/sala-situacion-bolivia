@@ -403,7 +403,7 @@ def armar_boletin(hecho, res, fuentes, R, log=print):
     return {"codigo": "BOL-" + hecho["id"][-6:].upper(), "titulo": R.get("titulo", ""),
             "meta": [["BOLETÍN", "001"], ["FECHA DEL HECHO", dt.datetime.fromtimestamp(hecho["primera"] / 1000, dt.timezone(dt.timedelta(hours=-4))).strftime("%d %b %Y").upper()],
                      ["CORTE", ahora.strftime("%d %b %Y · %H:%M BOT").upper()], ["ESTADO", "Seguimiento"]],
-            "sintesis": R.get("sintesis", ""), "kpis": [[str(a), str(b)] for a, b in [(k + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts, "nota_mapa": ("No se pudo ubicar en OpenStreetMap: " + ", ".join(sin_ubicar) + ".") if sin_ubicar else "",
+            "sintesis": R.get("sintesis", ""), "kpis": [[("S/D" if a in (None, "None", "null", "") else str(a)), str(b)] for a, b in [(list(k) + ["", ""])[:2] for k in R.get("kpis", [])]][:4], "puntos": pts, "nota_mapa": ("No se pudo ubicar en OpenStreetMap: " + ", ".join(sin_ubicar) + ".") if sin_ubicar else "",
             "victima": {"nombre": vic.get("nombre") or "", "detalle": vic.get("detalle") or ""}, "foto_url": furl, "foto_medio": fmedio, "vehiculo": R.get("vehiculo", "VEHÍCULO"), "lluvia": (res.get("oficiales") or {}).get("lluvia"), "mapa_tipo": "versiones" if re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "") else "afectados", "esquema": bool(re.search(r"(?i)tr[aá]nsito|accidente", hecho.get("subtipo") or "")),
             "operativa": R.get("operativa", ""), "acciones": [fila(a, ("accion", "responsable_sugerido", "plazo")) for a in R.get("acciones", [])][:4],
             "trazabilidad": [fila(t, ("dimension", "hallazgo", "estado")) for t in R.get("trazabilidad", [])], "cronologia": [fila(c, ("cuando", "que"))[:2] for c in R.get("cronologia", [])],
@@ -487,6 +487,12 @@ if __name__ == "__main__":
     json.dump(res, open(f"{SALIDA}/{hid.replace(':', '_')}.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     if isinstance(res["analisis"], dict) and "error_json" not in res["analisis"]:
         try:
+            an = res["analisis"]
+            hay = bool(an.get("instituciones") or an.get("cronologia") or an.get("afirmaciones") or (an.get("hecho") or {}).get("fecha"))
+            medios = len({f["medio"] for f in fuentes if f["leida"]})
+            if not hay or medios < 2:
+                print("SIN EVENTO VERIFICABLE: el análisis no encontró hechos concretos o hay menos de 2 medios; no se genera boletín.")
+                raise SystemExit(0)
             R, prov = redactar_boletin(H, res["analisis"])
             print("REDACCION:", "ok" if R else prov)
             if R:
