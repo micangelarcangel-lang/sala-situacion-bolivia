@@ -13,14 +13,14 @@
   ],
   [
    "CORTE",
-   "08 NOV 2026 · 08:22 BOT"
+   "08 NOV 2026 · 08:25 BOT"
   ],
   [
    "ESTADO",
    "Vigilancia activa"
   ]
  ],
- "sintesis": "En la SE 41 (11 de octubre al 17 de octubre 2026) el país notificó 93.732 casos de infecciones respiratorias agudas. +6.7% respecto de la semana anterior (87.877). Las tasas semanales más altas están en Pando (831,0‰), Chuquisaca (12,8‰), Potosí (12,8‰) por 1.000 habitantes. La circulación viral predominante es por influenza tipo B. Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.",
+ "sintesis": "En la SE 41 (11 de octubre al 17 de octubre 2026) el país notificó 93.732 casos de infecciones respiratorias agudas, +6,7% respecto de la semana anterior (87.877). Las tasas semanales más altas están en Chuquisaca (12,8‰), Potosí (12,8‰), Oruro (11,6‰) por 1.000 habitantes. La circulación viral predominante es por influenza tipo B. Fuente: Boletín Epidemiológico semanal, Dirección General de Epidemiología, Ministerio de Salud y Deportes.",
  "kpis": [
   [
    "93.732",
@@ -41,12 +41,36 @@
  ],
  "curva": [
   [
+   30,
+   58188.0
+  ],
+  [
+   31,
+   48358.0
+  ],
+  [
+   32,
+   69650.0
+  ],
+  [
+   33,
+   66495.0
+  ],
+  [
    34,
    79823.0
   ],
   [
+   35,
+   72106.0
+  ],
+  [
    36,
    78153.0
+  ],
+  [
+   37,
+   79946.0
   ],
   [
    38,
@@ -54,7 +78,7 @@
   ],
   [
    39,
-   72881.0
+   72102.0
   ],
   [
    40,
@@ -66,17 +90,6 @@
   ]
  ],
  "deptos": [
-  {
-   "depto": "Pando",
-   "acum": 41330.0,
-   "tasa_acum": 277.0,
-   "casos39": 976.0,
-   "tasa39": 6.5,
-   "casos40": 100.0,
-   "tasa40": 2.0,
-   "casos41": 6.7,
-   "tasa41": 831.0
-  },
   {
    "depto": "Chuquisaca",
    "acum": 261022.0,
@@ -164,6 +177,17 @@
    "tasa40": 4.0,
    "casos41": 2611.0,
    "tasa41": 4.8
+  },
+  {
+   "depto": "Pando",
+   "acum": 7518.0,
+   "tasa_acum": 50.0,
+   "casos39": 197.0,
+   "tasa39": 1.32,
+   "casos40": 197.0,
+   "tasa40": 1.32,
+   "casos41": 170.0,
+   "tasa41": 1.14
   }
  ],
  "vacuna": {
@@ -179,14 +203,14 @@
  },
  "virus": "La circulación viral predominante es por influenza tipo B.",
  "url": "https://minsalud.gob.bo/component/jdownloads/send/71-boletines-epidemiologicos-semanal/1060-boletin-epidemiologico-semana-epidemiologica-no-41?Itemid=465",
- "metodo": "Cifras leídas automáticamente del Boletín Epidemiológico N° 41 (PDF público del Ministerio de Salud y Deportes) y de las 7 ediciones anteriores para la curva semanal. No hay estimaciones propias; verificar contra el PDF original.",
+ "metodo": "Cifras leídas automáticamente de los Boletines Epidemiológicos N° 32, 35, 38, 41 (PDF públicos del Ministerio de Salud y Deportes); las semanas de la curva se aceptan solo si pasan una validación de coherencia (tasa × población). No hay estimaciones propias; verificar contra el PDF original.",
  "fuentes": [
   [
-   "Boletín epidemiológico SE 34",
+   "Boletín epidemiológico SE 32",
    ""
   ],
   [
-   "Boletín epidemiológico SE 36",
+   "Boletín epidemiológico SE 35",
    ""
   ],
   [
@@ -194,16 +218,9 @@
    ""
   ],
   [
-   "Boletín epidemiológico SE 39",
-   ""
-  ],
-  [
-   "Boletín epidemiológico SE 40",
-   ""
-  ],
-  [
    "Boletín epidemiológico SE 41",
    ""
   ]
- ]
+ ],
+ "deptos_omitidos": []
 }
