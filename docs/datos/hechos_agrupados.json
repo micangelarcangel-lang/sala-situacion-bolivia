@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1wf2vra",
+  "fecha_hora_local": "2026-11-09 09:38",
+  "ts_ms": 1794231513000,
+  "titulo": "Deslizamiento de tierra y piedras afecta a la avenida Petrolera en Cochabamba - Red Uno",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPWm5Fd3VMeGZpYmx0MjF1R3BuamF0V2lwN3ZoMjJjZmkzTnRWQzJfbHo4NkF3T1BYeExLZlhWNS1STlFxWUZ5S0lJNE9xWUJrRVlfRUllSWp4Q3B2aWdkTDRCYnM0WlJEbFMzVnc3eDNGWFJNS2tTM2xGOG9iLTY2VW1JaUFIODVPck1zZG5yampfMEpZTlBtS2tiMTlBN1NZeGRta3JBUmxyR2dMOXNIeDdhUjYzRGh6UEZjS0lMSzE0TkE?oc=5"
+ },
+ {
   "hecho_id": "noticia:x62len",
   "fecha_hora_local": "2026-11-09 07:58",
   "ts_ms": 1794225480000,
