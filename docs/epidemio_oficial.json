@@ -55,6 +55,33 @@
   {
    "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Ebola disease caused by Bundibugyo virus, Democratic Republic of the Congo, Kenya and Nigeria",
+   "fecha": "2026-11-06",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON625",
+   "resumen": "Since the publication of the previous Disease Outbreak News on 23 October 2026, the Bundibugyo virus disease (BVD) outbreak has expanded geographically in the Democratic Republic of the Congo. While some areas have seen a slight decline in cases, sustained, high-level transmission continues overall in the Democratic Republic of the Congo. As of 3 November 2026, a total of 10 668 confirmed cases, including 5198 deaths (crude case fatality ratio: 48.7%), have been reported across 67 health zones i",
+   "slug": "2026-DON625",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Yellow fever - WHO African Region",
+   "fecha": "2026-11-06",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON624",
+   "resumen": "Yellow fever transmission continues in the WHO African Region, with recent outbreak activity concentrated in parts of West Africa. Between 1 January and 12 October 2026, 67 confirmed cases, including 18 deaths, were recorded in nine countries in the Region: Burkina Faso, Cameroon, the Central African Republic, Côte d’Ivoire, Ghana, Guinea, Liberia, Nigeria and Togo. The most recent outbreak activity has been concentrated in Burkina Faso, Côte d’Ivoire, Ghana and Liberia, including in areas close",
+   "slug": "2026-DON624",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Shamonda virus in human - France",
+   "fecha": "2026-11-02",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623",
+   "resumen": "On 20 October 2026, the National IHR Focal Point (NFP) of France notified WHO regarding the first documented human infection with Shamonda virus (SHAV). The case was an immunocompromised older man from eastern France with no travel history during the preceding year. He developed severe neurological illness on 23 September 2026 and was diagnosed with severe encephalitis (brain inflammation). The patient died on 8 October 2026. SHAV is recognized primarily as an animal-associated virus, like the c",
+   "slug": "2026-DON623",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Ebola disease caused by Bundibugyo virus, Democratic Republic of the Congo, Kenya and Nigeria",
    "fecha": "2026-10-23",
    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON622",
    "resumen": "Since the publication of the previous Disease Outbreak News on 8 October 2026, the Bundibugyo virus disease (BVD) outbreak has expanded geographically in the Democratic Republic of the Congo, as well as in the African Region, with Kenya and Nigeria reporting imported cases. Sustained, high-level transmission continues in the Democratic Republic of the Congo. As of 20 October 2026, a total of 9704 confirmed cases, including 4687 deaths (crude case fatality ratio: 48.3%), have been reported across",
@@ -277,7 +304,10 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON621",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON617",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON616",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON615"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON615",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON625",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON624",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623"
  ],
- "actualizado": "2026-11-09T10:24:32.638719Z"
+ "actualizado": "2026-11-09T11:24:31.157899Z"
 }
