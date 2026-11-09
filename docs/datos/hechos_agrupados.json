@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:qaasrs",
+  "fecha_hora_local": "2026-11-09 11:53",
+  "ts_ms": 1794239612000,
+  "titulo": "Cochabamba reclama ítems de salud y advierte riesgo de colapso hospitalario - Red Uno",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQMTVzYWF4NHYyeTlaS0tnNlN0MWdNaU5BUTZoQVd3SXhjekNnR0NteWQzSkJ1dHJWbEhVZGdBNjdDZ3p6RXRHSl9XcXJfYl9TVGM1NEJaZWJGSG96NWRMZExRZmR4U3laWVlFNVdmMUJxWWllNUVCOFNtNTlocmdvZXRSOU1TQTkwMXpYUEhqYUxJWjB0RDVjbzF1LVRSMG1DRC1mR1UxcTZobWw2d1R4dnpIVFo1SXhQdjBsWmRPR3c?oc=5"
+ },
+ {
   "hecho_id": "noticia:1aiqxo6",
   "fecha_hora_local": "2026-11-09 10:13",
   "ts_ms": 1794233612000,
