@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1i7attu",
+  "fecha_hora_local": "2026-11-09 05:46",
+  "ts_ms": 1794217575000,
+  "titulo": "Crece el riesgo de sequía por ausencia de precipitaciones pluviales - El Potosí",
+  "tipo_amenaza": "climatológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNY1ItMVBubXRSdE1sRmhPZVI2R292N2hrT2gxcE44RGZnUFBONThiSlNiTDFrczRQWDIwRFBaWnhldTVIV1pFc0hGUTZOSnBmUWhacUV3OWlVd0hUSkpzZWxwT1JiRVN2aTBtWHJZZTFHRThWNVVtM0RRS0FXOFpjUTdtWTZSaE5QSFVRWjFOSV9QLVg1aWxoQkZadXI0Nl9HNGFVbzh4V2hUcEw5?oc=5"
+ },
+ {
   "hecho_id": "noticia:iq8s07",
   "fecha_hora_local": "2026-11-08 23:18",
   "ts_ms": 1794194337000,
