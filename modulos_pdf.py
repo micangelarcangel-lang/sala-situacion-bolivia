@@ -6,15 +6,29 @@ from playwright.sync_api import sync_playwright
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAW = "https://raw.githubusercontent.com/micangelarcangel-lang/sala-situacion-bolivia/main/docs/"
 DIAS = {"24h": 1, "7d": 7, "30d": 30}; NOM = {"24h": "Últimas 24 horas", "7d": "Últimos 7 días", "30d": "Último mes"}
-HIDE = ".hdr,#hdr,.foot,#mbar,.mbar,#pnl,.noimp,.live,[id^=s-sub] .cap{display:none!important}.mctrl,.maplibregl-ctrl-top-right,select{display:none!important}body{padding:0!important;background:#fff!important}.wrap{max-width:none!important;padding:0 6mm!important}"
+HIDE = ".alert{flex-wrap:wrap!important}.alert>div{min-width:0;flex:1 1 100%!important}.alert .badge{order:-1}.hdr,#hdr,.foot,#mbar,.mbar,#pnl,.noimp,.live,[id^=s-sub] .cap{display:none!important}.mctrl,.maplibregl-ctrl-top-right,select{display:none!important}body{padding:0!important;background:#fff!important}.wrap{max-width:none!important;padding:0 6mm!important}"
+
+import re
+HECHO = re.compile(r"muri|muert|fallec|herid|accident|choque|colisi|vuelc|embarranc|atropell|bloque|marcha|paro |protesta|enfrentamient|conflict|asesin|feminicid|homicid|incendi|explosi|robo|atraco|secuestr|detenid|aprehend|rescat|derrumb|intoxic|ahog", re.I)
+RUIDO = re.compile(r"econom|\bINE\b|unesco|whatsapp|seguro|artistas|música|pacto global|https?://|campaña|premio|libro|festival|aniversario|impunidad|informe", re.I)
+
+def filtrar(dst):
+    """Deja en el boletín solo hechos concretos (verbo de hecho en el titular y no ruido). Trabaja sobre la copia; no toca el sitio."""
+    p = os.path.join(dst, "eventos_unificados.json")
+    try:
+        d = json.load(open(p, encoding="utf-8")); n0 = len(d["eventos"])
+        d["eventos"] = [e for e in d["eventos"] if e.get("categoria") not in ("antropogénica", "tecnológica") or (HECHO.search(e.get("titulo") or "") and not RUIDO.search(e.get("titulo") or ""))]
+        d["n"] = len(d["eventos"]); json.dump(d, open(p, "w", encoding="utf-8"), ensure_ascii=False); print("hechos:", n0, "->", d["n"])
+    except Exception as ex: print("filtro", ex)
 
 def preparar(dst):
     shutil.copytree(os.path.join(AQUI, "docs"), dst, dirs_exist_ok=True)
-    if os.environ.get("MAPA_OFFLINE"): return
+    if os.environ.get("MAPA_OFFLINE"): filtrar(dst); return
     for f in os.listdir(dst):
         if f.endswith((".json", ".geojson")) and not os.path.isdir(os.path.join(dst, f)):
             try: open(os.path.join(dst, f), "wb").write(urllib.request.urlopen(urllib.request.Request(RAW + f, headers={"User-Agent": "Mozilla/5.0"}), timeout=40).read())
             except Exception: pass
+    filtrar(dst)
 
 def generar(tipo, ventana, salida):
     d = tempfile.mkdtemp(); preparar(d)
