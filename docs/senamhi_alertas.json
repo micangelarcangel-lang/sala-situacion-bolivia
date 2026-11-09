@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-08T23:06:43.435223Z",
+ "actualizado": "2026-11-09T00:05:07.848682Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -54,7 +54,7 @@
    "n_municipios": 31,
    "texto": "SE PRONOSTICAN, LLUVIAS MODERADAS, TEMPORALMENTE FUERTES Y TORMENTAS ELÉCTRICAS AISLADAS, CON MONTOS ACUMULADOS ENTRE 60 Y 90 mm, A OCURRIR DESDE LA MADRUGADA HASTA LA NOCHE DEL 08 DE NOVIEMBRE DEL 2026 EN:",
    "numero": "94/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
@@ -170,7 +170,7 @@
    "n_municipios": 65,
    "texto": "SE PRONOSTICA EL INGRESO DE FRENTE FRÍO AL TERRITORIO BOLIVIANO, QUE OCASIONARÁ DESCENSOS BRUSCOS DE TEMPERATURA ENTRE 6 °C Y 12 °C POR DEBAJO DE LOS VALORES NORMALES DE CADA REGIÓN AFECTADA. A OCURRIR ENTRE EL DÍA SÁBADO 07 HASTA EL DÍA DOMINGO 08 DE NOVIEMBRE, AFECTANDO A:",
    "numero": "92/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
@@ -313,7 +313,7 @@
    "n_municipios": 34,
    "texto": "SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DESDE LA MAÑANA DEL DÍA VIERNES 06 HASTA LA MAÑANA DEL DÍA DOMINGO 08 DE NOVIEMBRE A OCURRIR EN:",
    "numero": "91/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
