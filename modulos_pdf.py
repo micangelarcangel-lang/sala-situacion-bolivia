@@ -25,12 +25,20 @@ def generar(tipo, ventana, salida):
         try: b = pw.chromium.launch(channel="chrome", args=["--use-gl=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist", "--no-sandbox"])
         except Exception: b = pw.chromium.launch(args=["--use-gl=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist", "--no-sandbox"])
         pg = b.new_page(viewport={"width": 1100, "height": 900}); pg.add_init_script("try{localStorage.setItem('sala_theme','light')}catch(e){}")
-        pg.goto(url, wait_until="networkidle"); pg.wait_for_timeout(6000)
+        pg.goto(url, wait_until="networkidle"); pg.wait_for_timeout(9000)
         corte = dt.datetime.now(dt.timezone(dt.timedelta(hours=-4))).strftime("%d/%m/%Y %H:%M")
         tit = pg.evaluate("(document.querySelector('.hero h1')||document.querySelector('h1')||{}).textContent||''")
         pg.add_style_tag(content=HIDE)
         pg.evaluate("""([t,v,c])=>{var w=document.querySelector('.wrap');var d=document.createElement('div');d.style.cssText='background:linear-gradient(90deg,#0b3b6e,#1f6fb5);color:#fff;padding:14px 18px;border-radius:12px;margin:6px 0 10px;font-family:Inter,system-ui';d.innerHTML='<div style="font-size:11px;letter-spacing:.08em;opacity:.85">CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA</div><div style="font-size:22px;font-weight:800;margin-top:2px">BOLETÍN DE SITUACIÓN · '+t.toUpperCase()+'</div><div style="font-size:13px;margin-top:2px">'+v+' · corte '+c+' (hora Bolivia) · fuentes abiertas, información preliminar</div>';w.insertBefore(d,w.firstChild)}""", [tit.strip(), NOM[ventana], corte])
         pg.wait_for_timeout(1500)
+        # los mapas WebGL no salen en el PDF: se fotografían y se reemplazan por imagen
+        import base64
+        for i, m in enumerate(pg.query_selector_all(".maplibregl-map")):
+            try:
+                m.scroll_into_view_if_needed(); pg.wait_for_timeout(2500)
+                u = "data:image/png;base64," + base64.b64encode(m.screenshot()).decode()
+                m.evaluate("(e,u)=>{var i=document.createElement('img');i.src=u;i.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:5;object-fit:cover';e.style.position='relative';e.appendChild(i)}", u)
+            except Exception as ex: print("mapa", i, ex)
         pg.emulate_media(media="screen"); pg.wait_for_timeout(1500)
         pg.pdf(path=salida, width="1100px", height=str(pg.evaluate("document.body.scrollHeight") + 40) + "px", print_background=True, margin={"top": "0", "bottom": "0", "left": "0", "right": "0"})
         b.close()
