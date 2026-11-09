@@ -47,9 +47,13 @@ def generar(tipo, ventana, salida):
 if __name__ == "__main__":
     import unicodedata
     T = sys.argv[1]; V = sys.argv[2]; os.makedirs("datos/v3/investigacion", exist_ok=True)
-    tipos = ["geológica", "meteorológica", "hidrológica", "climatológica"] if T == "todos" else [T]
+    tipos = ["geológica", "meteorológica", "hidrológica", "climatológica", "biológica", "tecnológica", "antropogénica", "salud"] if T == "todos" else [T]
     for t in tipos:
         for v in (list(DIAS) if V == "todas" else [V]):
             sl = unicodedata.normalize("NFD", t).encode("ascii", "ignore").decode()
-            try: print(generar(t, v, f"datos/v3/investigacion/BOL_{sl}_{v}.pdf"))
+            try:
+                out = f"datos/v3/investigacion/BOL_{sl}_{v}.pdf"; print(generar(t, v, out))
+                epi = "datos/v3/investigacion/epi_ira_BOLETIN.pdf"
+                if t == "biológica" and os.path.exists(epi):  # anexo: boletín oficial del Ministerio (IRAs/influenza)
+                    from pypdf import PdfWriter; w = PdfWriter(); w.append(out); w.append(epi); w.write(out)
             except Exception as e: print("ERROR", t, v, e)
