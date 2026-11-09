@@ -13,7 +13,7 @@ def _xy(lat, lon, z):
     n = 2 ** z; x = (lon + 180) / 360 * n; y = (1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * n; return x, y
 
 
-def mapa_base(pts, ancho=900, alto=720):
+def mapa_base(pts, ancho=900, alto=720, llenar=.62):
     if len(pts) < 1: raise ValueError
     """Une teselas CARTO 'Voyager' (OpenStreetMap) que cubren los puntos. Devuelve (data_uri, [(px,py)...], hubo_red)."""
     from PIL import Image, ImageDraw
@@ -21,9 +21,10 @@ def mapa_base(pts, ancho=900, alto=720):
     z = 17 if len(pts) > 1 else 12
     while z > 3 and len(pts) > 1:
         x0, y1 = _xy(min(la), min(lo), z); x1, y0 = _xy(max(la), max(lo), z)
-        if (x1 - x0) * 512 < ancho * .62 and (y1 - y0) * 512 < alto * .62: break
+        if (x1 - x0) * 512 < ancho * llenar and (y1 - y0) * 512 < alto * llenar: break
         z -= 1
     cx = (_xy(min(la), min(lo), z)[0] + _xy(max(la), max(lo), z)[0]) / 2; cy = (_xy(min(la), min(lo), z)[1] + _xy(max(la), max(lo), z)[1]) / 2
+    global _ULT
     zt = z + 1  # teselas de 256 px a zoom z+1 = misma escala que 512 px a zoom z
     ox, oy = cx * 512 - ancho / 2, cy * 512 - alto / 2
     img = Image.new("RGB", (ancho, alto), "#e9edf2"); red = False
@@ -41,6 +42,7 @@ def mapa_base(pts, ancho=900, alto=720):
                 t = Image.new("RGB", (256, 256), "#e9edf2"); d = ImageDraw.Draw(t)
                 for k in range(0, 256, 32): d.line([(k, 0), (k, 256)], fill="#d5dbe3"); d.line([(0, k), (256, k)], fill="#d5dbe3")
             img.paste(t, (int(tx * 256 - ox), int(ty * 256 - oy)))
+    _ULT = (z, ox, oy)
     b = io.BytesIO(); img.save(b, "PNG", optimize=True)
     px = [(_xy(p["lat"], p["lon"], z)[0] * 512 - ox, _xy(p["lat"], p["lon"], z)[1] * 512 - oy) for p in pts]
     m_por_px = 156543.03392 * math.cos(math.radians(sum(la) / len(la))) / (2 ** z) / 2
@@ -116,7 +118,7 @@ h2{font-size:7.6pt;letter-spacing:.09em;text-transform:uppercase;color:#0b3d6e;m
 .sint{font-size:10.4pt;line-height:1.5;margin:4mm 0}.kpis{display:flex;border-top:1px solid #dfe4ea;border-bottom:1px solid #dfe4ea;margin-bottom:4.5mm}.kpis div{flex:1;text-align:center;padding:3mm 0}.kpis b{display:block;font-size:17pt;color:#0b3d6e;line-height:1.1}.kpis small{font-size:7pt;color:#5b6b7a}
 .g{display:grid;grid-template-columns:1.75fr 1fr;gap:5mm}.map{border:1px solid #cfd6df;border-radius:6px;overflow:hidden}.map svg{display:block;width:100%;height:auto}
 .nota{font-size:6.8pt;color:#6b7785;line-height:1.35;margin-top:1.6mm}.card{border:1px solid #dfe4ea;border-radius:6px;padding:4mm;background:#fafbfd}.card .n{font-size:13pt;font-weight:700;color:#0b3d6e;line-height:1.15}.card .d{margin:1.5mm 0 3mm;font-size:8.6pt}
-.mapw svg{max-height:82mm;width:auto;max-width:100%;display:block;margin:0 auto}.qr svg{width:26mm;height:26mm;display:block}.esq{margin-top:4.5mm}.esq svg{width:100%;height:auto;display:block}
+.mapw svg{max-height:82mm;width:auto;max-width:100%;display:block;margin:0 auto}.mapa-ancho svg{display:block;width:100%;height:auto}.qr svg{width:26mm;height:26mm;display:block}.esq{margin-top:4.5mm}.esq svg{width:100%;height:auto;display:block}
 table{border-collapse:collapse;width:100%;font-size:8pt}th{background:#0b3d6e;color:#fff;text-align:left;font-size:6.9pt;letter-spacing:.06em;padding:2mm 2.6mm;font-weight:700;text-transform:uppercase}td{padding:1.3mm 2.6mm;border-bottom:1px solid #e1e6ec;vertical-align:top}td.k{font-weight:600;white-space:nowrap}
 .ok{color:#1e8c5a;font-weight:600}.pe{color:#b7791f;font-weight:600}.di{color:#c0392b;font-weight:600}.sec{margin-top:5mm}
 .fu{max-height:22mm;overflow:hidden;columns:4;column-gap:5mm;font-size:6.2pt;color:#44505e;line-height:1.4}.met{font-size:7pt;color:#6b7785;margin-bottom:1.5mm}
@@ -201,12 +203,16 @@ def html_epi(B):
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
 
 
-def svg_sismos(ev, W_=900, H_=720):
+def svg_sismos(ev, W_=900, H_=760):
     """Mapa de epicentros: tamaño = magnitud, color = profundidad (somero rojo, intermedio naranja, profundo azul)."""
     gm = json.load(open(os.path.join(AQUI, "docs/geo_dep.geojson"), encoding="utf-8"))
-    esq = [{"lat": -23.5, "lon": -70.5}, {"lat": -8.5, "lon": -56.5}]
-    uri, px, red, mpp = mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in ev], W_, H_)
+    esq = [{"lat": -22.9, "lon": -69.7}, {"lat": -9.6, "lon": -57.4}]
+    uri, px, red, mpp = mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in ev], W_, H_, .97)
     s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{W_}" height="{H_}"/>']
+    z_, ox_, oy_ = _ULT
+    for f in gm["features"]:
+        for q in ([f["geometry"]["coordinates"]] if f["geometry"]["type"] == "Polygon" else f["geometry"]["coordinates"]):
+            s.append(f'<polygon points="{" ".join(f"{_xy(b_, a_, z_)[0] * 512 - ox_:.0f},{_xy(b_, a_, z_)[1] * 512 - oy_:.0f}" for a_, b_ in q[0][::2])}" fill="none" stroke="#3b4656" stroke-width="1.6" stroke-opacity=".75"/>')
     col = lambda p: "#d7301f" if p < 70 else ("#f59e0b" if p < 300 else "#2a5db0")
     for i, e in sorted(enumerate(ev), key=lambda x: x[1]["mag"]):
         x, y = px[i + 2]; r = 3 + (e["mag"] - 2) ** 1.6 * 2.2
@@ -243,7 +249,7 @@ def html_sismo(B):
     p1 = f'''<div class="pg">{cab}<h1>ACTIVIDAD SÍSMICA</h1><div>{E(B["titulo"])}</div>
 <div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
 <div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
-<h2>Epicentros · tamaño = magnitud, color = profundidad</h2><div class="map"><div class="mapw" style="max-width:100%">{mapa}</div></div><div class="nota">Contorno negro: probablemente sentido por la población (M ≥ 4,0 y profundidad ≤ 100 km).{"" if red else " (Mapa base no disponible en este entorno.)"}</div>{pie(1)}</div>'''
+<h2>Epicentros · tamaño = magnitud, color = profundidad</h2><div class="map"><div class="mapa-ancho">{mapa}</div></div><div class="nota">Contorno negro: probablemente sentido por la población (M ≥ 4,0 y profundidad ≤ 100 km).{"" if red else " (Mapa base no disponible en este entorno.)"}</div>{pie(1)}</div>'''
     p2 = f'''<div class="pg">{cab}<h2>Sismos por día</h2>{svg_serie(B["serie"])}<div class="sec"><h2>Últimos sismos en Bolivia</h2><table><tr><th>Fecha y hora (Bolivia)</th><th>Magnitud</th><th>Profundidad</th><th>Lugar</th></tr>{tb}</table></div>
 <div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div></div>{pie(2)}</div>'''
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
