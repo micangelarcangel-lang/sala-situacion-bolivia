@@ -14,6 +14,7 @@ def _xy(lat, lon, z):
 
 
 def mapa_base(pts, ancho=900, alto=720):
+    if len(pts) < 1: raise ValueError
     """Une teselas CARTO 'Voyager' (OpenStreetMap) que cubren los puntos. Devuelve (data_uri, [(px,py)...], hubo_red)."""
     from PIL import Image, ImageDraw
     la = [p["lat"] for p in pts]; lo = [p["lon"] for p in pts]
@@ -200,9 +201,59 @@ def html_epi(B):
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
 
 
+def svg_sismos(ev, W_=900, H_=720):
+    """Mapa de epicentros: tamaño = magnitud, color = profundidad (somero rojo, intermedio naranja, profundo azul)."""
+    gm = json.load(open(os.path.join(AQUI, "docs/geo_dep.geojson"), encoding="utf-8"))
+    esq = [{"lat": -23.5, "lon": -70.5}, {"lat": -8.5, "lon": -56.5}]
+    uri, px, red, mpp = mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in ev], W_, H_)
+    s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{W_}" height="{H_}"/>']
+    col = lambda p: "#d7301f" if p < 70 else ("#f59e0b" if p < 300 else "#2a5db0")
+    for i, e in sorted(enumerate(ev), key=lambda x: x[1]["mag"]):
+        x, y = px[i + 2]; r = 3 + (e["mag"] - 2) ** 1.6 * 2.2
+        s.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r:.1f}" fill="{col(e["prof"])}" fill-opacity="{.75 if e["bo"] else .35}" stroke="{"#111" if e.get("sentido") else "#fff"}" stroke-width="{3 if e.get("sentido") else 1}"/>')
+    my = max(ev, key=lambda e: e["mag"]) if ev else None
+    if my:
+        x, y = px[ev.index(my) + 2]; s.append(f'<text x="{x + 12:.0f}" y="{y - 10:.0f}" font-size="18" font-weight="700" fill="#1b2430" stroke="#fff" stroke-width="4" paint-order="stroke">M {str(my["mag"]).replace(".", ",")}</text>')
+    for k, (t, c) in enumerate((("< 70 km", "#d7301f"), ("70–300 km", "#f59e0b"), ("> 300 km", "#2a5db0"))):
+        s.append(f'<circle cx="{26 + k * 120}" cy="{H_ - 26}" r="8" fill="{c}"/><text x="{40 + k * 120}" y="{H_ - 21}" font-size="15" fill="#1b2430" stroke="#fff" stroke-width="3" paint-order="stroke">{t}</text>')
+    s.append(f'<text x="{W_ - 8}" y="{H_ - 6}" text-anchor="end" font-size="11" fill="#444">© OpenStreetMap contributors</text></svg>')
+    return "".join(s), red
+
+
+def svg_serie(serie, W_=1000, H_=210):
+    mx = max([a + b for _, a, b in serie] + [3]); n = len(serie); bw = (W_ - 70) / n
+    s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><rect width="{W_}" height="{H_}" fill="#f6f8fb" rx="8"/>']
+    for k in (0, .5, 1):
+        y = 20 + (H_ - 60) * (1 - k); s.append(f'<line x1="50" x2="{W_ - 10}" y1="{y:.0f}" y2="{y:.0f}" stroke="#dde3ea"/><text x="44" y="{y + 5:.0f}" text-anchor="end" font-size="14" fill="#6b7785">{mx * k:.0f}</text>')
+    for i, (d, a, b) in enumerate(serie):
+        x = 55 + i * bw; ha = (H_ - 60) * a / mx; hb = (H_ - 60) * b / mx
+        s.append(f'<rect x="{x:.1f}" y="{20 + (H_ - 60) - ha:.1f}" width="{bw - 3:.1f}" height="{ha:.1f}" fill="#a9b4c2"/><rect x="{x:.1f}" y="{20 + (H_ - 60) - ha - hb:.1f}" width="{bw - 3:.1f}" height="{hb:.1f}" fill="#d7301f"/>')
+        if i in (0, n // 2, n - 1): s.append(f'<text x="{x:.0f}" y="{H_ - 14}" font-size="14" fill="#6b7785">{d[8:]}/{d[5:7]}</text>')
+    s.append(f'<rect x="{W_ - 360}" y="6" width="12" height="12" fill="#a9b4c2"/><text x="{W_ - 343}" y="17" font-size="14" fill="#1b2430">sismos</text><rect x="{W_ - 270}" y="6" width="12" height="12" fill="#d7301f"/><text x="{W_ - 253}" y="17" font-size="14" fill="#1b2430">probablemente sentidos</text></svg>')
+    return "".join(s)
+
+
+def html_sismo(B):
+    from datetime import datetime, timezone, timedelta
+    cab = '<div class="top"><b>CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA</b><span>Monitoreo sísmico · fuente oficial</span></div>'
+    pie = lambda n: f'<div class="pie"><span>Datos del Observatorio San Calixto (boletín sísmico oficial).</span><span>{E(B["codigo"])} · pág. {n}</span></div>'
+    mapa, red = svg_sismos(B["eventos"])
+    fila = lambda e: f'<tr><td class="k">{datetime.fromtimestamp(e["t"] / 1000, timezone(timedelta(hours=-4))).strftime("%d/%m %H:%M")}</td><td><b>{str(e["mag"]).replace(".", ",")}</b></td><td>{e["prof"]:.0f} km</td><td>{E(e["lugar"])}</td></tr>'
+    tb = "".join(fila(e) for e in B["ultimos"]) or '<tr><td colspan="4">Sin eventos en Bolivia en la ventana.</td></tr>'
+    p1 = f'''<div class="pg">{cab}<h1>ACTIVIDAD SÍSMICA</h1><div>{E(B["titulo"])}</div>
+<div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
+<div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
+<h2>Epicentros · tamaño = magnitud, color = profundidad</h2><div class="map"><div class="mapw" style="max-width:100%">{mapa}</div></div><div class="nota">Contorno negro: probablemente sentido por la población (M ≥ 4,0 y profundidad ≤ 100 km).{"" if red else " (Mapa base no disponible en este entorno.)"}</div>{pie(1)}</div>'''
+    p2 = f'''<div class="pg">{cab}<h2>Sismos por día</h2>{svg_serie(B["serie"])}<div class="sec"><h2>Últimos sismos en Bolivia</h2><table><tr><th>Fecha y hora (Bolivia)</th><th>Magnitud</th><th>Profundidad</th><th>Lugar</th></tr>{tb}</table></div>
+<div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div></div>{pie(2)}</div>'''
+    return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
+
+
 def html(B):
     if B.get("tipo") == "epi_ira":
         return html_epi(B)
+    if B.get("tipo") == "sismo":
+        return html_sismo(B)
     pts = B.get("puntos", []); mapa = ""; nota = B.get("nota_mapa", "")
     if len(pts) >= 1:
         svg, red = svg_mapa(pts, tipo=B.get('mapa_tipo', 'versiones'))
