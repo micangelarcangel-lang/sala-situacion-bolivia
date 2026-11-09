@@ -115,7 +115,7 @@ h2{font-size:7.6pt;letter-spacing:.09em;text-transform:uppercase;color:#0b3d6e;m
 .sint{font-size:10.4pt;line-height:1.5;margin:4mm 0}.kpis{display:flex;border-top:1px solid #dfe4ea;border-bottom:1px solid #dfe4ea;margin-bottom:4.5mm}.kpis div{flex:1;text-align:center;padding:3mm 0}.kpis b{display:block;font-size:17pt;color:#0b3d6e;line-height:1.1}.kpis small{font-size:7pt;color:#5b6b7a}
 .g{display:grid;grid-template-columns:1.75fr 1fr;gap:5mm}.map{border:1px solid #cfd6df;border-radius:6px;overflow:hidden}.map svg{display:block;width:100%;height:auto}
 .nota{font-size:6.8pt;color:#6b7785;line-height:1.35;margin-top:1.6mm}.card{border:1px solid #dfe4ea;border-radius:6px;padding:4mm;background:#fafbfd}.card .n{font-size:13pt;font-weight:700;color:#0b3d6e;line-height:1.15}.card .d{margin:1.5mm 0 3mm;font-size:8.6pt}
-.qr svg{width:26mm;height:26mm;display:block}.esq{margin-top:4.5mm}.esq svg{width:100%;height:auto;display:block}
+.mapw svg{max-height:82mm;width:auto;max-width:100%;display:block;margin:0 auto}.qr svg{width:26mm;height:26mm;display:block}.esq{margin-top:4.5mm}.esq svg{width:100%;height:auto;display:block}
 table{border-collapse:collapse;width:100%;font-size:8pt}th{background:#0b3d6e;color:#fff;text-align:left;font-size:6.9pt;letter-spacing:.06em;padding:2mm 2.6mm;font-weight:700;text-transform:uppercase}td{padding:1.3mm 2.6mm;border-bottom:1px solid #e1e6ec;vertical-align:top}td.k{font-weight:600;white-space:nowrap}
 .ok{color:#1e8c5a;font-weight:600}.pe{color:#b7791f;font-weight:600}.di{color:#c0392b;font-weight:600}.sec{margin-top:5mm}
 .fu{max-height:22mm;overflow:hidden;columns:4;column-gap:5mm;font-size:6.2pt;color:#44505e;line-height:1.4}.met{font-size:7pt;color:#6b7785;margin-bottom:1.5mm}
@@ -127,7 +127,7 @@ def estado(s):
     return "di" if "discrep" in l else ("pe" if ("pendiente" in l or "sin dato" in l) else "ok")
 
 
-def svg_curva(curva, W_=1000, H_=300):
+def svg_curva(curva, W_=1000, H_=230):
     xs = [c[0] for c in curva]; ys = [c[1] for c in curva]; mx = max(ys) * 1.15; mn = min(ys) * .8
     X = lambda i: 70 + i * (W_ - 110) / max(1, len(curva) - 1); Y = lambda v: 30 + (H_ - 80) * (1 - (v - mn) / (mx - mn))
     s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><rect width="{W_}" height="{H_}" fill="#f6f8fb" rx="8"/>']
@@ -139,6 +139,34 @@ def svg_curva(curva, W_=1000, H_=300):
         last = i == len(curva) - 1
         s.append(f'<circle cx="{X(i):.0f}" cy="{Y(v):.0f}" r="{8 if last else 5}" fill="{"#c0392b" if last else "#2a78d6"}" stroke="#fff" stroke-width="2.5"/><text x="{X(i):.0f}" y="{H_ - 26}" text-anchor="middle" font-size="15" fill="#44505e">SE {se}</text>')
         s.append(f'<text x="{X(i):.0f}" y="{Y(v) - 14:.0f}" text-anchor="middle" font-size="{16 if last else 14}" font-weight="{700 if last else 400}" fill="#1b2430">{v:,.0f}</text>'.replace(",", "."))
+    return "".join(s) + "</svg>"
+
+
+def svg_mapa_deptos(dep, W_=520):
+    """Mapa coroplético: color = tasa semanal de la última semana; etiqueta = nombre y tasa; borde grueso si subió más de 5%."""
+    import unicodedata
+    n_ = lambda t: "".join(c for c in unicodedata.normalize("NFD", t.lower()) if unicodedata.category(c) != "Mn")
+    g = json.load(open(os.path.join(AQUI, "docs/geo_dep.geojson"), encoding="utf-8")); pol = lambda f: [f["geometry"]["coordinates"]] if f["geometry"]["type"] == "Polygon" else f["geometry"]["coordinates"]
+    allp = [pt for f in g["features"] for q in pol(f) for pt in q[0]]; lo0, lo1 = min(p[0] for p in allp), max(p[0] for p in allp); la0, la1 = min(p[1] for p in allp), max(p[1] for p in allp)
+    k = math.cos(math.radians((la0 + la1) / 2)); H_ = W_ * (la1 - la0) / ((lo1 - lo0) * k)
+    X = lambda lo: (lo - lo0) / (lo1 - lo0) * W_; Y = lambda la: (la1 - la) / (la1 - la0) * H_
+    por = {n_(d["depto"]): d for d in dep}; mx = max(d["tasa41"] for d in dep); mn = min(d["tasa41"] for d in dep)
+    def color(v):
+        t = (v - mn) / max(mx - mn, 1e-9); a = (254, 240, 217); b = (179, 0, 0); m = (252, 141, 89)
+        c = [a[i] + (m[i] - a[i]) * t / .5 for i in range(3)] if t < .5 else [m[i] + (b[i] - m[i]) * (t - .5) / .5 for i in range(3)]
+        return "#%02x%02x%02x" % tuple(int(x) for x in c)
+    s = [f'<svg viewBox="0 0 {W_} {H_:.0f}" xmlns="http://www.w3.org/2000/svg">']; rot = []
+    for f in g["features"]:
+        d = por.get(n_(f["properties"]["n"])); sube = d and d["tasa41"] > d["tasa40"] * 1.05
+        for q in pol(f):
+            s.append(f'<polygon points="{" ".join(f"{X(a):.1f},{Y(b):.1f}" for a, b in q[0])}" fill="{color(d["tasa41"]) if d else "#e5e9ee"}" stroke="{"#222" if sube else "#fff"}" stroke-width="{2.4 if sube else 1.2}" stroke-linejoin="round"/>')
+        big = max(pol(f), key=lambda q: len(q[0]))[0]; cx = sum(p[0] for p in big) / len(big); cy = sum(p[1] for p in big) / len(big)
+        if d:
+            lum = sum(int(color(d["tasa41"])[i:i + 2], 16) for i in (1, 3, 5)) / 3; tc = "#fff" if lum < 150 else "#1b2430"
+            rot.append(f'<text x="{X(cx):.0f}" y="{Y(cy) - 2:.0f}" text-anchor="middle" font-size="14" font-weight="700" fill="{tc}">{E(d["depto"].replace("Santa Cruz", "S. Cruz").replace("Cochabamba", "Cbba."))}</text><text x="{X(cx):.0f}" y="{Y(cy) + 14:.0f}" text-anchor="middle" font-size="14" fill="{tc}">{str(d["tasa41"]).replace(".", ",")}</text>')
+    s += rot
+    for i, v in enumerate([mn, (mn + mx) / 2, mx]):
+        s.append(f'<rect x="{10 + i * 56}" y="{H_ - 34:.0f}" width="56" height="12" fill="{color(v)}"/><text x="{10 + i * 56 + 28}" y="{H_ - 8:.0f}" text-anchor="middle" font-size="12" fill="#44505e">{str(round(v, 1)).replace(".", ",")}</text>')
     return "".join(s) + "</svg>"
 
 
@@ -166,9 +194,9 @@ def html_epi(B):
 <div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
 <div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
 <h2>Casos semanales de IRA en el país</h2><div class="map" style="border:0">{svg_curva(B["curva"])}</div><div class="nota">Punto rojo: última semana. Fuente: Boletín Epidemiológico semanal (SUIS).</div>
-<div class="g" style="margin-top:5mm;grid-template-columns:1.5fr 1fr"><div><h2>Tasa semanal por departamento · por 1.000 hab.</h2>{svg_deptos(B["deptos"])}<div class="nota">Barra: SE actual. Línea negra: semana anterior. ▲ sube más de 5% · ▼ baja más de 5%.</div></div><div><h2>Vacunación y virus</h2>{vac}<div class="card" style="margin-top:3mm"><div class="d" style="margin:0">{E(B.get("virus") or "Sin dato de circulación viral en este boletín.")}</div></div></div></div>{pie(1)}</div>'''
-    p2 = f'''<div class="pg">{cab}<h2>Casos de IRA por departamento · últimas tres semanas</h2><table><tr><th>Departamento</th><th>SE {B["curva"][-1][0] - 2}</th><th>SE {B["curva"][-1][0] - 1}</th><th>SE {B["curva"][-1][0]}</th><th>Tasa SE {B["curva"][-1][0]}</th><th>Cambio</th></tr>{tb}</table>
-<div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{"<br>".join(E(n) for n, _ in B["fuentes"])}<br><a>{E(B["url"])}</a></div></div>{pie(2)}</div>'''
+<div class="g" style="margin-top:5mm;grid-template-columns:1fr 1.05fr;gap:6mm"><div><h2>Mapa · tasa semanal por 1.000 hab.</h2><div class="mapw">{svg_mapa_deptos(B["deptos"])}</div><div class="nota">Más oscuro = mayor tasa. Borde negro: subió más de 5% frente a la semana anterior. Datos oficiales por departamento.</div></div><div><h2>Ranking y cambio</h2>{svg_deptos(B["deptos"])}<div class="nota">Barra: semana actual. Línea negra: semana anterior. ▲ sube más de 5% · ▼ baja más de 5%.</div></div></div>{pie(1)}</div>'''
+    p2 = f'''<div class="pg">{cab}<h2>Vacunación y virus</h2><div class="g" style="grid-template-columns:1fr 1fr;margin-bottom:5mm">{vac}<div class="card"><div class="d" style="margin:0;font-size:9.6pt">{E(B.get("virus") or "Sin dato de circulación viral en este boletín.")}</div></div></div><h2>Casos de IRA por departamento · últimas tres semanas</h2><table><tr><th>Departamento</th><th>SE {B["curva"][-1][0] - 2}</th><th>SE {B["curva"][-1][0] - 1}</th><th>SE {B["curva"][-1][0]}</th><th>Tasa SE {B["curva"][-1][0]}</th><th>Cambio</th></tr>{tb}</table>
+<div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div><div class="fu">{"<br>".join(E(n) for n, _ in B["fuentes"])}</div><div class="met" style="margin-top:2mm;word-break:break-all">Documento original: {E(B["url"])}</div></div>{pie(2)}</div>'''
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
 
 
