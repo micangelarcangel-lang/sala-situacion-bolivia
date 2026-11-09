@@ -1,7 +1,8 @@
 {
  "tipo": "sismo",
- "codigo": "SIS-20261108",
- "titulo": "Actividad sísmica en Bolivia · últimos 32 días",
+ "codigo": "SIS-30D-20261108",
+ "ventana": "30d",
+ "titulo": "Actividad sísmica en Bolivia · último mes",
  "meta": [
   [
    "FUENTE",
@@ -9,22 +10,22 @@
   ],
   [
    "VENTANA",
-   "32 días"
+   "ÚLTIMO MES"
   ],
   [
    "CORTE",
-   "08 NOV 2026 · 22:25 BOT"
+   "08 NOV 2026 · 22:41 BOT"
   ],
   [
    "ESTADO",
    "Monitoreo"
   ]
  ],
- "sintesis": "El Observatorio San Calixto reporta 44 sismos en los últimos 32 días; 7 en los últimos 7 días y 0 en las últimas 24 horas. El mayor fue de magnitud 4,9 (17/10 12:52, Nor Lipez, Potosí, a 192 km de profundidad). Departamentos con más eventos: Potosí (32), Oruro (5), Cochabamba (3). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
+ "sintesis": "El Observatorio San Calixto reporta 42 sismos en las último mes. El mayor fue de magnitud 4,9 (17/10 12:52, Nor Lipez, Potosí, a 192 km de profundidad). Departamentos con más eventos: Potosí (31), Oruro (4), Cochabamba (3). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
  "kpis": [
   [
-   "44",
-   "sismos, 32 días"
+   "42",
+   "sismos, último mes"
   ],
   [
    "0",
@@ -501,41 +502,9 @@
    "prof": 202.8,
    "bo": true,
    "sentido": false
-  },
-  {
-   "t": 1791553253000.0,
-   "mag": 4.3,
-   "lugar": "Sud Lipez, Potosí",
-   "depto": "Potosí",
-   "lat": -21.906,
-   "lon": -67.203,
-   "prof": 182.6,
-   "bo": true,
-   "sentido": false
-  },
-  {
-   "t": 1791449537000.0,
-   "mag": 3.0,
-   "lugar": "Ladislao Cabrera, Oruro",
-   "depto": "Oruro",
-   "lat": -19.301,
-   "lon": -67.296,
-   "prof": 209.8,
-   "bo": true,
-   "sentido": false
   }
  ],
  "serie": [
-  [
-   "2026-10-08",
-   1,
-   0
-  ],
-  [
-   "2026-10-09",
-   1,
-   0
-  ],
   [
    "2026-10-10",
    3,
@@ -690,11 +659,11 @@
  "por_depto": [
   [
    "Potosí",
-   32
+   31
   ],
   [
    "Oruro",
-   5
+   4
   ],
   [
    "Cochabamba",
@@ -708,6 +677,302 @@
    "Santa Cruz",
    2
   ]
+ ],
+ "graf": [
+  {
+   "t": 1793913294000.0,
+   "mag": 3.4,
+   "prof": 165.7,
+   "f": "2026-11-05 17:14",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793905857000.0,
+   "mag": 4.0,
+   "prof": 310.2,
+   "f": "2026-11-05 15:10",
+   "l": "Inquisivi, La Paz"
+  },
+  {
+   "t": 1793788700000.0,
+   "mag": 3.5,
+   "prof": 241.0,
+   "f": "2026-11-04 06:38",
+   "l": "Ladislao Cabrera, Oruro"
+  },
+  {
+   "t": 1793737916000.0,
+   "mag": 3.3,
+   "prof": 287.0,
+   "f": "2026-11-03 16:31",
+   "l": "Sud Chichas, Potosí"
+  },
+  {
+   "t": 1793683730000.0,
+   "mag": 3.0,
+   "prof": 167.6,
+   "f": "2026-11-03 01:28",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1793645662000.0,
+   "mag": 4.3,
+   "prof": 27.3,
+   "f": "2026-11-02 14:54",
+   "l": "José Carrasco, Cochabamba"
+  },
+  {
+   "t": 1793634494000.0,
+   "mag": 3.5,
+   "prof": 188.5,
+   "f": "2026-11-02 11:48",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793550849000.0,
+   "mag": 3.1,
+   "prof": 119.7,
+   "f": "2026-11-01 12:34",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793523875000.0,
+   "mag": 3.1,
+   "prof": 27.4,
+   "f": "2026-11-01 05:04",
+   "l": "Ichilo, Santa Cruz"
+  },
+  {
+   "t": 1793304382000.0,
+   "mag": 3.0,
+   "prof": 171.1,
+   "f": "2026-10-29 16:06",
+   "l": "Ladislao Cabrera, Oruro"
+  },
+  {
+   "t": 1793244427000.0,
+   "mag": 3.0,
+   "prof": 210.0,
+   "f": "2026-10-28 23:27",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793237694000.0,
+   "mag": 3.0,
+   "prof": 197.2,
+   "f": "2026-10-28 21:34",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1793212727000.0,
+   "mag": 3.4,
+   "prof": 241.6,
+   "f": "2026-10-28 14:38",
+   "l": "Ladislao Cabrera, Oruro"
+  },
+  {
+   "t": 1793168472000.0,
+   "mag": 3.0,
+   "prof": 214.1,
+   "f": "2026-10-28 02:21",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793154483000.0,
+   "mag": 3.1,
+   "prof": 181.9,
+   "f": "2026-10-27 22:28",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793110761000.0,
+   "mag": 3.7,
+   "prof": 26.6,
+   "f": "2026-10-27 10:19",
+   "l": "José Carrasco, Cochabamba"
+  },
+  {
+   "t": 1793003563000.0,
+   "mag": 3.1,
+   "prof": 153.3,
+   "f": "2026-10-26 04:32",
+   "l": "Pacajes, La Paz"
+  },
+  {
+   "t": 1792910372000.0,
+   "mag": 3.1,
+   "prof": 182.1,
+   "f": "2026-10-25 02:39",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792880578000.0,
+   "mag": 3.4,
+   "prof": 16.9,
+   "f": "2026-10-24 18:22",
+   "l": "Quillacollo, Cochabamba"
+  },
+  {
+   "t": 1792807713000.0,
+   "mag": 3.1,
+   "prof": 173.9,
+   "f": "2026-10-23 22:08",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792796183000.0,
+   "mag": 3.8,
+   "prof": 171.0,
+   "f": "2026-10-23 18:56",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792755228000.0,
+   "mag": 3.1,
+   "prof": 157.3,
+   "f": "2026-10-23 07:33",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1792723541000.0,
+   "mag": 4.3,
+   "prof": 234.6,
+   "f": "2026-10-22 22:45",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1792662007000.0,
+   "mag": 3.0,
+   "prof": 242.3,
+   "f": "2026-10-22 05:40",
+   "l": "Sud Carangas, Potosí"
+  },
+  {
+   "t": 1792613383000.0,
+   "mag": 3.5,
+   "prof": 28.8,
+   "f": "2026-10-21 16:09",
+   "l": "Velasco, Santa Cruz"
+  },
+  {
+   "t": 1792568681000.0,
+   "mag": 3.5,
+   "prof": 133.2,
+   "f": "2026-10-21 03:44",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1792535753000.0,
+   "mag": 3.4,
+   "prof": 140.7,
+   "f": "2026-10-20 18:35",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792436440000.0,
+   "mag": 3.1,
+   "prof": 200.3,
+   "f": "2026-10-19 15:00",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792420833000.0,
+   "mag": 3.3,
+   "prof": 149.8,
+   "f": "2026-10-19 10:40",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1792255965000.0,
+   "mag": 4.9,
+   "prof": 191.6,
+   "f": "2026-10-17 12:52",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792216544000.0,
+   "mag": 3.5,
+   "prof": 170.9,
+   "f": "2026-10-17 01:55",
+   "l": "Daniel Campos, Potosí"
+  },
+  {
+   "t": 1792205560000.0,
+   "mag": 3.5,
+   "prof": 189.6,
+   "f": "2026-10-16 22:52",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1792145094000.0,
+   "mag": 3.3,
+   "prof": 140.8,
+   "f": "2026-10-16 06:04",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1792097020000.0,
+   "mag": 3.1,
+   "prof": 169.2,
+   "f": "2026-10-15 16:43",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1791976737000.0,
+   "mag": 3.3,
+   "prof": 203.8,
+   "f": "2026-10-14 07:18",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1791955424000.0,
+   "mag": 3.1,
+   "prof": 200.1,
+   "f": "2026-10-14 01:23",
+   "l": "Sajama, Oruro"
+  },
+  {
+   "t": 1791872182000.0,
+   "mag": 3.0,
+   "prof": 110.9,
+   "f": "2026-10-13 02:16",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1791806315000.0,
+   "mag": 3.4,
+   "prof": 143.9,
+   "f": "2026-10-12 07:58",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1791803186000.0,
+   "mag": 3.4,
+   "prof": 252.2,
+   "f": "2026-10-12 07:06",
+   "l": "Antonio Quijarro, Potosí"
+  },
+  {
+   "t": 1791688903000.0,
+   "mag": 3.2,
+   "prof": 187.1,
+   "f": "2026-10-10 23:21",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1791636357000.0,
+   "mag": 3.0,
+   "prof": 159.7,
+   "f": "2026-10-10 08:45",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1791609525000.0,
+   "mag": 3.0,
+   "prof": 202.8,
+   "f": "2026-10-10 01:18",
+   "l": "Nor Lipez, Potosí"
+  }
  ],
  "ultimos": [
   {

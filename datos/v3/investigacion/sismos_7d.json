@@ -1,0 +1,314 @@
+{
+ "tipo": "sismo",
+ "codigo": "SIS-7D-20261108",
+ "ventana": "7d",
+ "titulo": "Actividad sísmica en Bolivia · últimos 7 días",
+ "meta": [
+  [
+   "FUENTE",
+   "Observatorio San Calixto"
+  ],
+  [
+   "VENTANA",
+   "ÚLTIMOS 7 DÍAS"
+  ],
+  [
+   "CORTE",
+   "08 NOV 2026 · 22:40 BOT"
+  ],
+  [
+   "ESTADO",
+   "Monitoreo"
+  ]
+ ],
+ "sintesis": "El Observatorio San Calixto reporta 7 sismos en las últimos 7 días. El mayor fue de magnitud 4,3 (02/11 14:54, José Carrasco, Cochabamba, a 27 km de profundidad). Departamentos con más eventos: Potosí (4), La Paz (1), Oruro (1). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
+ "kpis": [
+  [
+   "7",
+   "sismos, últimos 7 días"
+  ],
+  [
+   "0",
+   "últimas 24 horas"
+  ],
+  [
+   "4,3",
+   "mayor magnitud"
+  ],
+  [
+   "1",
+   "probablemente sentidos"
+  ]
+ ],
+ "eventos": [
+  {
+   "t": 1793913294000.0,
+   "mag": 3.4,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.266,
+   "lon": -67.61,
+   "prof": 165.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793905857000.0,
+   "mag": 4.0,
+   "lugar": "Inquisivi, La Paz",
+   "depto": "La Paz",
+   "lat": -17.392,
+   "lon": -67.123,
+   "prof": 310.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793788700000.0,
+   "mag": 3.5,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.537,
+   "lon": -67.453,
+   "prof": 241.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793737916000.0,
+   "mag": 3.3,
+   "lugar": "Sud Chichas, Potosí",
+   "depto": "Potosí",
+   "lat": -21.243,
+   "lon": -65.778,
+   "prof": 287.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793683730000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.233,
+   "lon": -67.49,
+   "prof": 167.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793645662000.0,
+   "mag": 4.3,
+   "lugar": "José Carrasco, Cochabamba",
+   "depto": "Cochabamba",
+   "lat": -17.413,
+   "lon": -64.507,
+   "prof": 27.3,
+   "bo": true,
+   "sentido": true
+  },
+  {
+   "t": 1793634494000.0,
+   "mag": 3.5,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.507,
+   "lon": -66.862,
+   "prof": 188.5,
+   "bo": true,
+   "sentido": false
+  }
+ ],
+ "serie": [
+  [
+   "2026-11-02",
+   1,
+   1
+  ],
+  [
+   "2026-11-03",
+   2,
+   0
+  ],
+  [
+   "2026-11-04",
+   1,
+   0
+  ],
+  [
+   "2026-11-05",
+   2,
+   0
+  ],
+  [
+   "2026-11-06",
+   0,
+   0
+  ],
+  [
+   "2026-11-07",
+   0,
+   0
+  ],
+  [
+   "2026-11-08",
+   0,
+   0
+  ]
+ ],
+ "por_depto": [
+  [
+   "Potosí",
+   4
+  ],
+  [
+   "La Paz",
+   1
+  ],
+  [
+   "Oruro",
+   1
+  ],
+  [
+   "Cochabamba",
+   1
+  ]
+ ],
+ "graf": [
+  {
+   "t": 1793913294000.0,
+   "mag": 3.4,
+   "prof": 165.7,
+   "f": "2026-11-05 17:14",
+   "l": "Sud Lipez, Potosí"
+  },
+  {
+   "t": 1793905857000.0,
+   "mag": 4.0,
+   "prof": 310.2,
+   "f": "2026-11-05 15:10",
+   "l": "Inquisivi, La Paz"
+  },
+  {
+   "t": 1793788700000.0,
+   "mag": 3.5,
+   "prof": 241.0,
+   "f": "2026-11-04 06:38",
+   "l": "Ladislao Cabrera, Oruro"
+  },
+  {
+   "t": 1793737916000.0,
+   "mag": 3.3,
+   "prof": 287.0,
+   "f": "2026-11-03 16:31",
+   "l": "Sud Chichas, Potosí"
+  },
+  {
+   "t": 1793683730000.0,
+   "mag": 3.0,
+   "prof": 167.6,
+   "f": "2026-11-03 01:28",
+   "l": "Nor Lipez, Potosí"
+  },
+  {
+   "t": 1793645662000.0,
+   "mag": 4.3,
+   "prof": 27.3,
+   "f": "2026-11-02 14:54",
+   "l": "José Carrasco, Cochabamba"
+  },
+  {
+   "t": 1793634494000.0,
+   "mag": 3.5,
+   "prof": 188.5,
+   "f": "2026-11-02 11:48",
+   "l": "Sud Lipez, Potosí"
+  }
+ ],
+ "ultimos": [
+  {
+   "t": 1793913294000.0,
+   "mag": 3.4,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.266,
+   "lon": -67.61,
+   "prof": 165.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793905857000.0,
+   "mag": 4.0,
+   "lugar": "Inquisivi, La Paz",
+   "depto": "La Paz",
+   "lat": -17.392,
+   "lon": -67.123,
+   "prof": 310.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793788700000.0,
+   "mag": 3.5,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.537,
+   "lon": -67.453,
+   "prof": 241.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793737916000.0,
+   "mag": 3.3,
+   "lugar": "Sud Chichas, Potosí",
+   "depto": "Potosí",
+   "lat": -21.243,
+   "lon": -65.778,
+   "prof": 287.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793683730000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.233,
+   "lon": -67.49,
+   "prof": 167.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793645662000.0,
+   "mag": 4.3,
+   "lugar": "José Carrasco, Cochabamba",
+   "depto": "Cochabamba",
+   "lat": -17.413,
+   "lon": -64.507,
+   "prof": 27.3,
+   "bo": true,
+   "sentido": true
+  },
+  {
+   "t": 1793634494000.0,
+   "mag": 3.5,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.507,
+   "lon": -66.862,
+   "prof": 188.5,
+   "bo": true,
+   "sentido": false
+  }
+ ],
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-09T01:46 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "fuentes": [
+  [
+   "Observatorio San Calixto · Boletín sísmico",
+   "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico"
+  ]
+ ]
+}

@@ -239,6 +239,32 @@ def svg_serie(serie, W_=1000, H_=210):
     return "".join(s)
 
 
+def graficas_sismo(B):
+    """Mismas gráficas ECharts de la interfaz (modulo.js), renderizadas en SVG dentro del PDF."""
+    d = json.dumps(B.get("graf", []), ensure_ascii=False); v = B.get("ventana", "30d")
+    js = open(os.path.join(AQUI, "docs", "vendor", "echarts.min.js"), encoding="utf-8").read() if os.path.exists(os.path.join(AQUI, "docs", "vendor", "echarts.min.js")) else ""
+    html_ = "".join(f'<div class="gc"><h3>{t}</h3><div class="gs">{c}</div><div id="g{i}" class="gx"></div></div>' for i, (t, c) in enumerate([
+        ("Magnitud en el tiempo", "Tamaño = magnitud, color = profundidad"), ("Distribución por magnitud", "Pocos grandes, muchos pequeños"),
+        ("Profundidad según magnitud", "Los profundos (>100 km) casi no se sienten"), ("Sismos por departamento", "Observatorio San Calixto"),
+        ("Sismos por hora" if v == "24h" else "Sismos por día", "Frecuencia en la ventana"), ("Hora del día (La Paz)", "Distribución horaria")]))
+    return f"""<div class="gg">{html_}</div><script>{js}</script><script>
+var D={d},V="{v}",COL="#8d6e63",MUT="#5b6472";
+function ini(i,o){{var c=echarts.init(document.getElementById('g'+i),null,{{renderer:'svg'}});o.animation=false;c.setOption(o);}}
+ini(0,{{grid:{{left:40,right:14,top:10,bottom:46}},xAxis:{{type:'time'}},yAxis:{{type:'value',name:'M',min:1.5}},visualMap:{{dimension:2,min:0,max:300,orient:'horizontal',left:'center',bottom:0,itemWidth:10,itemHeight:90,text:['profundo','superficial'],inRange:{{color:['#d7263d','#f5b700','#2a7fd1']}},textStyle:{{color:MUT}}}},series:[{{type:'scatter',symbolSize:function(v){{return 5+Math.pow(v[1],2)*1.1}},data:D.map(function(s){{return [s.t,s.mag,s.prof]}}),itemStyle:{{opacity:.85,borderColor:'#fff',borderWidth:1}}}}]}});
+var b={{}};D.forEach(function(s){{var k=(Math.floor(s.mag*2)/2).toFixed(1);b[k]=(b[k]||0)+1}});var ks=Object.keys(b).sort(function(a,c){{return a-c}});
+ini(1,{{grid:{{left:34,right:10,top:14,bottom:28}},xAxis:{{type:'category',data:ks.map(function(k){{return 'M '+k}})}},yAxis:{{type:'value',minInterval:1}},series:[{{type:'bar',data:ks.map(function(k){{return b[k]}}),itemStyle:{{color:COL,borderRadius:[4,4,0,0]}},label:{{show:true,position:'top'}}}}]}});
+ini(2,{{grid:{{left:44,right:14,top:10,bottom:30}},xAxis:{{type:'value',name:'Magnitud',min:1.5}},yAxis:{{type:'value',name:'km',inverse:true}},series:[{{type:'scatter',symbolSize:9,data:D.map(function(s){{return [s.mag,s.prof]}}),itemStyle:{{color:COL,opacity:.75}},markLine:{{silent:true,symbol:'none',lineStyle:{{color:'#d7263d',type:'dashed'}},data:[{{yAxis:100}}],label:{{formatter:'100 km'}}}}}}]}});
+var dp={{}};D.forEach(function(s){{var k=s.l.split(',').pop().trim();dp[k]=(dp[k]||0)+1}});var dk=Object.keys(dp).sort(function(a,c){{return dp[c]-dp[a]}}).slice(0,9).reverse();
+ini(3,{{grid:{{left:84,right:30,top:8,bottom:20}},xAxis:{{type:'value',minInterval:1}},yAxis:{{type:'category',data:dk}},series:[{{type:'bar',data:dk.map(function(k){{return dp[k]}}),itemStyle:{{color:COL,borderRadius:[0,4,4,0]}},label:{{show:true,position:'right'}}}}]}});
+var pd={{}},ord=[];D.forEach(function(s){{var k=V=='24h'?s.f.slice(5,13)+'h':s.f.slice(5,10);pd[k]=(pd[k]||0)+1}});
+var now=new Date(Date.now()-4*36e5),n=V=='24h'?24:(V=='7d'?7:30);
+for(var i=n-1;i>=0;i--){{var x=new Date(now.getTime()-i*(V=='24h'?36e5:864e5)),iso=x.toISOString();ord.push(V=='24h'?iso.slice(5,10)+' '+iso.slice(11,13)+'h':iso.slice(5,10))}}
+ini(4,{{grid:{{left:30,right:10,top:14,bottom:34}},xAxis:{{type:'category',data:ord,axisLabel:{{interval:V=='30d'?4:(V=='24h'?3:0),fontSize:8}}}},yAxis:{{type:'value',minInterval:1}},series:[{{type:'bar',data:ord.map(function(k){{return pd[k]||0}}),itemStyle:{{color:COL,borderRadius:[3,3,0,0]}}}}]}});
+var h=[];for(var i=0;i<24;i++)h.push(0);D.forEach(function(s){{h[+s.f.slice(11,13)]++}});
+ini(5,{{angleAxis:{{type:'category',data:h.map(function(_,i){{return i+'h'}}),axisLabel:{{color:MUT,fontSize:8}}}},radiusAxis:{{axisLabel:{{show:false}}}},polar:{{radius:'74%'}},series:[{{type:'bar',coordinateSystem:'polar',data:h,itemStyle:{{color:COL}}}}]}});
+</script>"""
+
+
 def html_sismo(B):
     from datetime import datetime, timezone, timedelta
     cab = '<div class="top"><b>CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA</b><span>Monitoreo sísmico · fuente oficial</span></div>'
@@ -250,7 +276,7 @@ def html_sismo(B):
 <div class="meta">{"".join(f"<div><small>{E(k)}</small><b>{E(v)}</b></div>" for k, v in B["meta"])}</div>
 <div class="sint">{E(B["sintesis"])}</div><div class="kpis">{"".join(f"<div><b>{E(a)}</b><small>{E(b)}</small></div>" for a, b in B["kpis"])}</div>
 <h2>Epicentros · tamaño = magnitud, color = profundidad</h2><div class="map"><div class="mapa-ancho">{mapa}</div></div><div class="nota">Contorno negro: probablemente sentido por la población (M ≥ 4,0 y profundidad ≤ 100 km).{"" if red else " (Mapa base no disponible en este entorno.)"}</div>{pie(1)}</div>'''
-    p2 = f'''<div class="pg">{cab}<h2>Sismos por día</h2>{svg_serie(B["serie"])}<div class="sec"><h2>Últimos sismos en Bolivia</h2><table><tr><th>Fecha y hora (Bolivia)</th><th>Magnitud</th><th>Profundidad</th><th>Lugar</th></tr>{tb}</table></div>
+    p2 = f'''<div class="pg">{cab}<h2>Indicadores y gráficos de análisis</h2>{graficas_sismo(B)}<div class="sec"><h2>Últimos sismos en Bolivia</h2><table><tr><th>Fecha y hora (Bolivia)</th><th>Magnitud</th><th>Profundidad</th><th>Lugar</th></tr>{tb}</table></div>
 <div class="sec"><h2>Fuentes y método</h2><div class="met">{E(B["metodo"])}</div></div>{pie(2)}</div>'''
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
 
@@ -291,10 +317,13 @@ def html(B):
     return f'<!doctype html><html lang="es"><meta charset="utf-8"><style>{CSS.replace("FUENTES", AQUI + "/fuentes")}</style><body>{p1}{p2}</body></html>'
 
 
+CSS += """.gg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3mm}.gc{border:.3mm solid #d9dde3;border-radius:2mm;padding:2mm}.gc h3{font-size:8.5pt;margin:0}.gs{font-size:6.5pt;color:#5b6472;margin-bottom:1mm}.gx{width:100%;height:46mm}"""
+
+
 def build(B, salida):
     d = tempfile.mkdtemp(); h = os.path.join(d, "b.html"); open(h, "w", encoding="utf-8").write(html(B))
     exe = next((shutil.which(x) for x in ("google-chrome", "chromium", "chromium-browser") if shutil.which(x)), None)
-    subprocess.run([exe, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--allow-file-access-from-files", f"--print-to-pdf={os.path.abspath(salida)}", "file://" + h], check=True, timeout=120, capture_output=True)
+    subprocess.run([exe, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--allow-file-access-from-files", "--virtual-time-budget=6000", f"--print-to-pdf={os.path.abspath(salida)}", "file://" + h], check=True, timeout=120, capture_output=True)
     return salida
 
 

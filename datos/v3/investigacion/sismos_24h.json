@@ -1,0 +1,61 @@
+{
+ "tipo": "sismo",
+ "codigo": "SIS-24H-20261108",
+ "ventana": "24h",
+ "titulo": "Actividad sísmica en Bolivia · últimas 24 horas",
+ "meta": [
+  [
+   "FUENTE",
+   "Observatorio San Calixto"
+  ],
+  [
+   "VENTANA",
+   "ÚLTIMAS 24 HORAS"
+  ],
+  [
+   "CORTE",
+   "08 NOV 2026 · 22:40 BOT"
+  ],
+  [
+   "ESTADO",
+   "Monitoreo"
+  ]
+ ],
+ "sintesis": "El Observatorio San Calixto no reporta sismos en las últimas 24 horas. Fuente oficial: Observatorio San Calixto.",
+ "kpis": [
+  [
+   "0",
+   "sismos, últimas 24 horas"
+  ],
+  [
+   "0",
+   "últimas 24 horas"
+  ],
+  [
+   "—",
+   "mayor magnitud"
+  ],
+  [
+   "0",
+   "probablemente sentidos"
+  ]
+ ],
+ "eventos": [],
+ "serie": [
+  [
+   "2026-11-08",
+   0,
+   0
+  ]
+ ],
+ "por_depto": [],
+ "graf": [],
+ "ultimos": [],
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-09T01:46 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "fuentes": [
+  [
+   "Observatorio San Calixto · Boletín sísmico",
+   "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico"
+  ]
+ ]
+}
