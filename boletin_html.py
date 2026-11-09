@@ -19,7 +19,7 @@ def mapa_base(pts, ancho=900, alto=720):
     from PIL import Image, ImageDraw
     la = [p["lat"] for p in pts]; lo = [p["lon"] for p in pts]
     z = 17 if len(pts) > 1 else 12
-    while z > 11 and len(pts) > 1:
+    while z > 3 and len(pts) > 1:
         x0, y1 = _xy(min(la), min(lo), z); x1, y0 = _xy(max(la), max(lo), z)
         if (x1 - x0) * 512 < ancho * .62 and (y1 - y0) * 512 < alto * .62: break
         z -= 1
