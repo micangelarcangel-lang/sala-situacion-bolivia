@@ -140,6 +140,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNMHdBVXBiWnMwaUpvRklleTRULTk4dVdEWlZXT29PeDJBN1Y1WnBpSzhwRzV2cWR1LTJHcFpiX1prNDdvQk9xNzV4R0s2QnFFRXlKQXptWU1TSlJ5ZXR6eG9veTY2UVhYSHJ6d2VUNWRfdXVrZWQ1UG9pdmlGeDB0bHQzT2lTckFXUWdLRnBKUUR0R0phZmR0aXRR?oc=5 | https://news.google.com/rss/articles/CBMixgFBVV95cUxQdWhnNzl3SUJBRFRnT0Z6SzNPSlh0RGZBQzRIZUhCZmtscklaLWdfVFZEWW8tXzlNclAtMzhsRW02VDdtYk85ZmNIeU01OWxXMVJybTRZZDE1UklBWXA2MllyM0RsTlkzdkVUakIySkpxM1Z0TkFvaDZPNEdGcGczY2E2MTYyWm9GaVZrd2pKbTdqRXM0S3RrVXMwSkpQXzd0Qnd0eDFISWVNbklJeTdicS1GcnNJODFEbmJFbnBXRlVUSnp0aWc?oc=5"
  },
  {
+  "hecho_id": "noticia:1x6b70a",
+  "fecha_hora_local": "2026-11-08 22:39",
+  "ts_ms": 1794191958000,
+  "titulo": "El Cairo: Dos trenes colisionan en la provincia egipcia de Giza y deja siete fallecidos - El Potosí",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 7,
+  "heridos_max": 0,
+  "cifras_discrepantes": "sí",
+  "n_notas": 2,
+  "fuentes": "El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNQXRWMmZ3WDFvZTFpSEN4dWQtU29EcWhveGpXMDNWU2ZiMGxmczJIU3ZXMTF6SkdxbnBQdV9UQ0ZxVENfQS1waXRrZjBHd2hxblZ3SHM5OUxMS2M1SFRiWUNqQ01XSkNmeUZmekIwNS1XZmhHbWc2WGl3b0p1TnR3ek10NGVReDBqVGU3MnhNUWFXRk02TUdJbURCeXBXQ3F5YjlzdGYxODRDMGdnVnhnYjc0VUVmMmwydnBfbW96cUprdVVYYkE?oc=5 | https://news.google.com/rss/articles/CBMivgFBVV95cUxOOFZGa1otWnVncGoySlFobGpPbkM5WUV3dkxyVGFNU0VlVEwzVWRHbFR2WFFoZ2l5QzNiUEcxODNZd1RldWQ1WnNod2drbUhwc0hQbHYxSGpFN1VuRTVPNk9zOElnNnczRWhiLWUxYkhvaUE0QVhUcEt3Z2M1MHRzcG1mUG56NmFpcF9KdGRqVVZnak9TVTVPNzV0X0FKY01vOGYwUkctSFBValViTFNwLWpIWl82NkthdWd0UmF3?oc=5"
+ },
+ {
   "hecho_id": "clima:Oruro:2026-11-08:viento:1",
   "fecha_hora_local": "2026-11-08 21:05",
   "ts_ms": 1794186329531,
@@ -238,26 +258,6 @@
   "departamento": "",
   "municipio": "",
   "enlaces": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQUko0aWZzSXhHNkxESXNKaVp4VkZ5OVVJZml5ZzM4cUY3a25xNGxHZmVpR21ScE94U1Y5RWoyR1hyaTBLOHZwN3ZjWGFWUURycGE5TkNpOXBsTFVYZWhHa2NPakc4N0pTcl8zaTBod2E0NXhtZktoLWxkam1zbFVzaWptaHN6VkpsRWUxRlgwcDlvZEZmQmFIRTJ6TF92OXc?oc=5"
- },
- {
-  "hecho_id": "noticia:5gutl1",
-  "fecha_hora_local": "2026-11-08 11:53",
-  "ts_ms": 1794153196000,
-  "titulo": "Colisión entre dos trenes en la provincia egipcia de Giza deja cuatro fallecidos - El Potosí",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 2,
-  "nivel_preliminar": "naranja",
-  "fallecidos_max": 4,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "El Potosí",
-  "lat": -19.58,
-  "lon": -65.75,
-  "lugar": "Potosí, Potosí",
-  "departamento": "Potosí",
-  "municipio": "Potosí",
-  "enlaces": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOOFZGa1otWnVncGoySlFobGpPbkM5WUV3dkxyVGFNU0VlVEwzVWRHbFR2WFFoZ2l5QzNiUEcxODNZd1RldWQ1WnNod2drbUhwc0hQbHYxSGpFN1VuRTVPNk9zOElnNnczRWhiLWUxYkhvaUE0QVhUcEt3Z2M1MHRzcG1mUG56NmFpcF9KdGRqVVZnak9TVTVPNzV0X0FKY01vOGYwUkctSFBValViTFNwLWpIWl82NkthdWd0UmF3?oc=5"
  },
  {
   "hecho_id": "noticia:bzr7eh",
