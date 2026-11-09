@@ -89,7 +89,7 @@ def build(eventos, salida, horas=24, ahora=None, geo_dep_ruta="docs/geo_dep.geoj
            "h": S("h", f="Helvetica-Bold", s=10.5, l=14, textColor=colors.HexColor(AZUL), spaceBefore=6), "k": S("k", f="Helvetica-Bold", s=15, l=18, alignment=1), "kl": S("kl", s=7.5, l=9, alignment=1, textColor=colors.HexColor(GRIS))}
     f_ = dt.datetime.fromtimestamp(ahora / 1000, BO).strftime("%d/%m/%Y %H:%M")
     doc = SimpleDocTemplate(salida, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=13 * mm, bottomMargin=13 * mm, title="Boletín Sala de Situación Bolivia", author="Sala de Situación Bolivia")
-    el = [Paragraph("Sala de Situación Bolivia · Boletín breve", est["t"]), Paragraph(f"Últimas {horas} horas hasta {f_} (hora de Bolivia). Información de prensa y fuentes oficiales; la de prensa no está verificada.", est["c"]), Spacer(1, 5)]
+    el = [Paragraph("Sala de Situación Bolivia · Boletín breve", est["t"]), Paragraph(f"Últimas {horas} horas hasta {f_} (hora de Bolivia). Una noticia o alerta no equivale a un incidente confirmado. La información de prensa es preliminar y requiere verificación.", est["c"]), Spacer(1, 5)]
     tiles = [[Paragraph(str(len(evs)), est["k"]), Paragraph(str(oficiales), est["k"]), Paragraph(str(len(deps)), est["k"]), Paragraph(f"{fall} / {her}", est["k"]), Paragraph(str(focos), est["k"])],
              [Paragraph(x, est["kl"]) for x in ("eventos", "de fuente oficial", "departamentos", "fallecidos / heridos*", "focos de calor")]]
     t = Table(tiles, colWidths=[36 * mm] * 5); t.setStyle(TableStyle([("LINEABOVE", (0, 0), (-1, 0), 1.6, colors.HexColor("#2a78d6")), ("LINEBELOW", (0, 1), (-1, 1), .4, colors.HexColor("#e1e0dc")), ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
