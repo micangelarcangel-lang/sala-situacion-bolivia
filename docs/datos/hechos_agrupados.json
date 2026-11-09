@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1cdx87v",
+  "fecha_hora_local": "2026-11-09 17:25",
+  "ts_ms": 1794259515000,
+  "titulo": "CAMIÓN CISTERNA CAE POR UNA PENDIENTE Y EXPLOSIONA EN LA RUTA COCHABAMBA-SANTA CRUZ; HAY UN FALLECIDO - El Alteño",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 1,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 3,
+  "fuentes": "El Alteño; Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNRGNoTHhjM2ZraW1NdHdqYlVlSWNqVXkySnJsZTVkWGttUVZRUU5tVkJYeHRmakllU0xnREhwQmtwbDhCZFI1RURVTnFFZUMzYXFZWTJkV05SYjVHWDFYeEM0RUVyU2c0T1dQLXQ1ODRxQkVjdXZhMzV3S016TmtVTjM2aXVGd195cDFsUjMwSTdjZ0hhMkdXZXF2bTJTbXYtanY0bjhNYjlMWHN3aXhSTEwwNGdwLVUxTmpmdFg4NzU5Y00?oc=5 | https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbkpfVGQwRF9ZMjhjSUdsTVpzUmpYdHdjc3BGdm5jWG5kWTlRN3hpZmpXeVdrRmVicEU0ZTU2SkxqcWJLOWpXS2RlQW96MFFmRUlyX2lvVnJIWEQ1LTZYWTd3Rm5wZW5TVnRZc0tuZExXNmd1MnhreWpldjhrbjhiLWRmdTJtVXFDVFhvYXBXYnJVR1hkMUdmc1czN0p5d2h3bWdTT3E0Vm02dm1XNklhZmNhc1hTMU5m?oc=5 | https://news.google.com/rss/articles/CBMitgFBVV95cUxOcFg5M2dMUEtlU1B3MV9wV1VuQXA0ZnBpQWY2WlhsMGcwMVhMbkJlUThSb2xyZ0k5WFpSUkRrdGRMdXdzeTFpZGJNUzE3cll3WU82R3pjQVR1SFdkTGJyajdHWUlmeUEyM3JtcnJ3SzBRYUtpOUxTUGlfTUozY1JxY3Y4bVZnWXVGWVJUallkTlV2M0VXMnNvYzRRbE9OU1pyYnM2R2t0OEU4Q2VVakt1VXN4c3c2Zw?oc=5"
+ },
+ {
   "hecho_id": "noticia:i0eojb",
   "fecha_hora_local": "2026-11-09 17:15",
   "ts_ms": 1794258958000,
@@ -78,26 +98,6 @@
   "departamento": "Cochabamba",
   "municipio": "Cochabamba",
   "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQSEZ6VktlVWdMSEZQQzJzWDJfanBTcjhibFE4V2dHdXZZQ1FLdktBb2NrRzVCN0N4cVJfN1l3MjNhRzg2dUpMSjNKZGNGWEtCb25McTF2LU14SGpNUERudElPaXhKbGZncnB3OURLaUR3TU5fNXVwY1ctT19QTTN2VHlDZjE5eUx3N25mRWJ6NlBxR3RjYWZQTEtsNDR1UjRnekFMbXFhWGFLdjRiaGxjSGpFMHNMVGcyT3NhSW1XR295eEx2Umw3djFheE4?oc=5 | https://news.google.com/rss/articles/CBMinwFBVV95cUxNeV9PUjdhZFZoR3Z4MVQ1OFIxVzFGOFlINk91SUptc0FOOFk5Rk9SS2VuTnJuTE5XRnZqT2R1SW9pa1JoTkFoQ012LWdFbDFtTG1fcnkwSnFfVi1XXzVXWXM3RWkwZkJJcmlGZ0tVTUN3UF9BcXhaeUdRWGdlY2ZlSVU3eWdiX0szdF9DdWVxVnhBS2hZcjJVMHYwcUljSmc?oc=5 | https://news.google.com/rss/articles/CBMiyAFBVV95cUxPZE92WnZOUlQyRDZONkdRc1FrMXV2V1YyYmdOa0J6ZlZyTDdLWDZXY0tyekxuUGJMeTJXSHdHTlRHb2xWcTg0NkZTVkI3UzViTVVtZ3gtaXJyQUdlZTJXbHIyUUo1cFQ1T3dhWEtod0RZaWpzVjFIelF3NXFibHE4N0wzOE5nVTN2S3FvSV9EWXJOMGJhTklFcUdydlhpT0hWQ3JnSHpEOGJqNFVrTWlpallCMnQ5eS1RaHZaOGl5dV9fbEhKQ0xVRA?oc=5"
- },
- {
-  "hecho_id": "noticia:1o9nzjr",
-  "fecha_hora_local": "2026-11-09 13:53",
-  "ts_ms": 1794246819000,
-  "titulo": "Cisterna se embarranca y explota en la carretera Cochabamba–Santa Cruz - Red Uno",
-  "tipo_amenaza": "tecnológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 2,
-  "fuentes": "Red Uno",
-  "lat": -17.39,
-  "lon": -66.16,
-  "lugar": "Cochabamba, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Cochabamba",
-  "enlaces": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbkpfVGQwRF9ZMjhjSUdsTVpzUmpYdHdjc3BGdm5jWG5kWTlRN3hpZmpXeVdrRmVicEU0ZTU2SkxqcWJLOWpXS2RlQW96MFFmRUlyX2lvVnJIWEQ1LTZYWTd3Rm5wZW5TVnRZc0tuZExXNmd1MnhreWpldjhrbjhiLWRmdTJtVXFDVFhvYXBXYnJVR1hkMUdmc1czN0p5d2h3bWdTT3E0Vm02dm1XNklhZmNhc1hTMU5m?oc=5 | https://news.google.com/rss/articles/CBMitgFBVV95cUxOcFg5M2dMUEtlU1B3MV9wV1VuQXA0ZnBpQWY2WlhsMGcwMVhMbkJlUThSb2xyZ0k5WFpSUkRrdGRMdXdzeTFpZGJNUzE3cll3WU82R3pjQVR1SFdkTGJyajdHWUlmeUEyM3JtcnJ3SzBRYUtpOUxTUGlfTUozY1JxY3Y4bVZnWXVGWVJUallkTlV2M0VXMnNvYzRRbE9OU1pyYnM2R2t0OEU4Q2VVakt1VXN4c3c2Zw?oc=5"
  },
  {
   "hecho_id": "noticia:hozlhs",
