@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAW = "https://raw.githubusercontent.com/micangelarcangel-lang/sala-situacion-bolivia/main/docs/"
 DIAS = {"24h": 1, "7d": 7, "30d": 30}; NOM = {"24h": "Últimas 24 horas", "7d": "Últimos 7 días", "30d": "Último mes"}
-HIDE = ".hdr,#hdr,.foot,#mbar,.mbar,#pnl,.noimp,.live,[id^=s-sub] .cap{display:none!important}body{padding:0!important;background:#fff!important}.wrap{max-width:none!important;padding:0 6mm!important}"
+HIDE = ".hdr,#hdr,.foot,#mbar,.mbar,#pnl,.noimp,.live,[id^=s-sub] .cap{display:none!important}.mctrl,.maplibregl-ctrl-top-right,select{display:none!important}body{padding:0!important;background:#fff!important}.wrap{max-width:none!important;padding:0 6mm!important}"
 
 def preparar(dst):
     shutil.copytree(os.path.join(AQUI, "docs"), dst, dirs_exist_ok=True)
