@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:x62len",
+  "fecha_hora_local": "2026-11-09 07:58",
+  "ts_ms": 1794225480000,
+  "titulo": "Choque de dos motos en el Oriente de Caldas tiene como saldo un muerto y un herido - La Patria",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 1,
+  "heridos_max": 1,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Patria",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQMzczWjFxazB5eGpoclZXLTFBQm5HOWxrZ1dLTzRlbk1yY0VySU10MlcwZXdwR1VtQkVjdWhRa1BlSXJQSTdNYmVNMWZ3RW9rMWpiYnpVaWpicTZrS2xjUHY3bTU4NnliaU0xNGoySk5NVkd0OFhQV2tEQ0NDMzVvSVdreDZFNHBucmxhRW9wUkp1VVdJRWNlU05zeFRPcGs1S2xTbjl6TV93LWhnWEhacUc2bzYyUQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:1i7attu",
   "fecha_hora_local": "2026-11-09 05:46",
   "ts_ms": 1794217575000,
