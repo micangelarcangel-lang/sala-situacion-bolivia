@@ -1,0 +1,831 @@
+{
+ "tipo": "sismo",
+ "codigo": "SIS-20261108",
+ "titulo": "Actividad sísmica en Bolivia · últimos 32 días",
+ "meta": [
+  [
+   "FUENTE",
+   "Observatorio San Calixto"
+  ],
+  [
+   "VENTANA",
+   "32 días"
+  ],
+  [
+   "CORTE",
+   "08 NOV 2026 · 22:20 BOT"
+  ],
+  [
+   "ESTADO",
+   "Monitoreo"
+  ]
+ ],
+ "sintesis": "El Observatorio San Calixto reporta 44 sismos en los últimos 32 días; 7 en los últimos 7 días y 0 en las últimas 24 horas. El mayor fue de magnitud 4,9 (17/10 12:52, Nor Lipez, Potosí, a 192 km de profundidad). Departamentos con más eventos: Potosí (32), Oruro (5), Cochabamba (3). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
+ "kpis": [
+  [
+   "44",
+   "sismos, 32 días"
+  ],
+  [
+   "0",
+   "últimas 24 horas"
+  ],
+  [
+   "4,9",
+   "mayor magnitud"
+  ],
+  [
+   "1",
+   "probablemente sentidos"
+  ]
+ ],
+ "eventos": [
+  {
+   "t": 1793913294000.0,
+   "mag": 3.4,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.266,
+   "lon": -67.61,
+   "prof": 165.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793905857000.0,
+   "mag": 4.0,
+   "lugar": "Inquisivi, La Paz",
+   "depto": "La Paz",
+   "lat": -17.392,
+   "lon": -67.123,
+   "prof": 310.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793788700000.0,
+   "mag": 3.5,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.537,
+   "lon": -67.453,
+   "prof": 241.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793737916000.0,
+   "mag": 3.3,
+   "lugar": "Sud Chichas, Potosí",
+   "depto": "Potosí",
+   "lat": -21.243,
+   "lon": -65.778,
+   "prof": 287.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793683730000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.233,
+   "lon": -67.49,
+   "prof": 167.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793645662000.0,
+   "mag": 4.3,
+   "lugar": "José Carrasco, Cochabamba",
+   "depto": "Cochabamba",
+   "lat": -17.413,
+   "lon": -64.507,
+   "prof": 27.3,
+   "bo": true,
+   "sentido": true
+  },
+  {
+   "t": 1793634494000.0,
+   "mag": 3.5,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.507,
+   "lon": -66.862,
+   "prof": 188.5,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793550849000.0,
+   "mag": 3.1,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.35,
+   "lon": -67.527,
+   "prof": 119.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793523875000.0,
+   "mag": 3.1,
+   "lugar": "Ichilo, Santa Cruz",
+   "depto": "Santa Cruz",
+   "lat": -17.403,
+   "lon": -64.229,
+   "prof": 27.4,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793304382000.0,
+   "mag": 3.0,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.368,
+   "lon": -67.8,
+   "prof": 171.1,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793244427000.0,
+   "mag": 3.0,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.463,
+   "lon": -66.773,
+   "prof": 210.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793237694000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.423,
+   "lon": -66.807,
+   "prof": 197.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793212727000.0,
+   "mag": 3.4,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.146,
+   "lon": -67.059,
+   "prof": 241.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793168472000.0,
+   "mag": 3.0,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.409,
+   "lon": -66.641,
+   "prof": 214.1,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793154483000.0,
+   "mag": 3.1,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.137,
+   "lon": -67.329,
+   "prof": 181.9,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793110761000.0,
+   "mag": 3.7,
+   "lugar": "José Carrasco, Cochabamba",
+   "depto": "Cochabamba",
+   "lat": -17.222,
+   "lon": -65.145,
+   "prof": 26.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793003563000.0,
+   "mag": 3.1,
+   "lugar": "Pacajes, La Paz",
+   "depto": "La Paz",
+   "lat": -17.64,
+   "lon": -69.421,
+   "prof": 153.3,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792910372000.0,
+   "mag": 3.1,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.858,
+   "lon": -67.295,
+   "prof": 182.1,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792880578000.0,
+   "mag": 3.4,
+   "lugar": "Quillacollo, Cochabamba",
+   "depto": "Cochabamba",
+   "lat": -17.149,
+   "lon": -66.385,
+   "prof": 16.9,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792807713000.0,
+   "mag": 3.1,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.374,
+   "lon": -67.314,
+   "prof": 173.9,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792796183000.0,
+   "mag": 3.8,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.086,
+   "lon": -67.59,
+   "prof": 171.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792755228000.0,
+   "mag": 3.1,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.056,
+   "lon": -67.536,
+   "prof": 157.3,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792723541000.0,
+   "mag": 4.3,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.411,
+   "lon": -66.565,
+   "prof": 234.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792662007000.0,
+   "mag": 3.0,
+   "lugar": "Sud Carangas, Potosí",
+   "depto": "Potosí",
+   "lat": -18.887,
+   "lon": -67.353,
+   "prof": 242.3,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792613383000.0,
+   "mag": 3.5,
+   "lugar": "Velasco, Santa Cruz",
+   "depto": "Santa Cruz",
+   "lat": -16.709,
+   "lon": -61.259,
+   "prof": 28.8,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792568681000.0,
+   "mag": 3.5,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.409,
+   "lon": -67.741,
+   "prof": 133.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792535753000.0,
+   "mag": 3.4,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.093,
+   "lon": -68.06,
+   "prof": 140.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792436440000.0,
+   "mag": 3.1,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.435,
+   "lon": -67.175,
+   "prof": 200.3,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792420833000.0,
+   "mag": 3.3,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.482,
+   "lon": -67.576,
+   "prof": 149.8,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792255965000.0,
+   "mag": 4.9,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.219,
+   "lon": -67.296,
+   "prof": 191.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792216544000.0,
+   "mag": 3.5,
+   "lugar": "Daniel Campos, Potosí",
+   "depto": "Potosí",
+   "lat": -20.628,
+   "lon": -67.932,
+   "prof": 170.9,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792205560000.0,
+   "mag": 3.5,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -20.802,
+   "lon": -67.281,
+   "prof": 189.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792145094000.0,
+   "mag": 3.3,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.112,
+   "lon": -67.384,
+   "prof": 140.8,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1792097020000.0,
+   "mag": 3.1,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.134,
+   "lon": -67.284,
+   "prof": 169.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791976737000.0,
+   "mag": 3.3,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.4,
+   "lon": -66.749,
+   "prof": 203.8,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791955424000.0,
+   "mag": 3.1,
+   "lugar": "Sajama, Oruro",
+   "depto": "Oruro",
+   "lat": -18.364,
+   "lon": -68.069,
+   "prof": 200.1,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791872182000.0,
+   "mag": 3.0,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.23,
+   "lon": -67.408,
+   "prof": 110.9,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791806315000.0,
+   "mag": 3.4,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.316,
+   "lon": -67.886,
+   "prof": 143.9,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791803186000.0,
+   "mag": 3.4,
+   "lugar": "Antonio Quijarro, Potosí",
+   "depto": "Potosí",
+   "lat": -19.48,
+   "lon": -66.851,
+   "prof": 252.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791688903000.0,
+   "mag": 3.2,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -20.843,
+   "lon": -67.346,
+   "prof": 187.1,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791636357000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.426,
+   "lon": -67.308,
+   "prof": 159.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791609525000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.338,
+   "lon": -66.685,
+   "prof": 202.8,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791553253000.0,
+   "mag": 4.3,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.906,
+   "lon": -67.203,
+   "prof": 182.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1791449537000.0,
+   "mag": 3.0,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.301,
+   "lon": -67.296,
+   "prof": 209.8,
+   "bo": true,
+   "sentido": false
+  }
+ ],
+ "serie": [
+  [
+   "2026-10-08",
+   1,
+   0
+  ],
+  [
+   "2026-10-09",
+   1,
+   0
+  ],
+  [
+   "2026-10-10",
+   3,
+   0
+  ],
+  [
+   "2026-10-11",
+   0,
+   0
+  ],
+  [
+   "2026-10-12",
+   2,
+   0
+  ],
+  [
+   "2026-10-13",
+   1,
+   0
+  ],
+  [
+   "2026-10-14",
+   2,
+   0
+  ],
+  [
+   "2026-10-15",
+   1,
+   0
+  ],
+  [
+   "2026-10-16",
+   2,
+   0
+  ],
+  [
+   "2026-10-17",
+   2,
+   0
+  ],
+  [
+   "2026-10-18",
+   0,
+   0
+  ],
+  [
+   "2026-10-19",
+   2,
+   0
+  ],
+  [
+   "2026-10-20",
+   1,
+   0
+  ],
+  [
+   "2026-10-21",
+   2,
+   0
+  ],
+  [
+   "2026-10-22",
+   2,
+   0
+  ],
+  [
+   "2026-10-23",
+   3,
+   0
+  ],
+  [
+   "2026-10-24",
+   1,
+   0
+  ],
+  [
+   "2026-10-25",
+   1,
+   0
+  ],
+  [
+   "2026-10-26",
+   1,
+   0
+  ],
+  [
+   "2026-10-27",
+   2,
+   0
+  ],
+  [
+   "2026-10-28",
+   4,
+   0
+  ],
+  [
+   "2026-10-29",
+   1,
+   0
+  ],
+  [
+   "2026-10-30",
+   0,
+   0
+  ],
+  [
+   "2026-10-31",
+   0,
+   0
+  ],
+  [
+   "2026-11-01",
+   2,
+   0
+  ],
+  [
+   "2026-11-02",
+   1,
+   1
+  ],
+  [
+   "2026-11-03",
+   2,
+   0
+  ],
+  [
+   "2026-11-04",
+   1,
+   0
+  ],
+  [
+   "2026-11-05",
+   2,
+   0
+  ],
+  [
+   "2026-11-06",
+   0,
+   0
+  ],
+  [
+   "2026-11-07",
+   0,
+   0
+  ],
+  [
+   "2026-11-08",
+   0,
+   0
+  ]
+ ],
+ "por_depto": [
+  [
+   "Potosí",
+   32
+  ],
+  [
+   "Oruro",
+   5
+  ],
+  [
+   "Cochabamba",
+   3
+  ],
+  [
+   "La Paz",
+   2
+  ],
+  [
+   "Santa Cruz",
+   2
+  ]
+ ],
+ "ultimos": [
+  {
+   "t": 1793913294000.0,
+   "mag": 3.4,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.266,
+   "lon": -67.61,
+   "prof": 165.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793905857000.0,
+   "mag": 4.0,
+   "lugar": "Inquisivi, La Paz",
+   "depto": "La Paz",
+   "lat": -17.392,
+   "lon": -67.123,
+   "prof": 310.2,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793788700000.0,
+   "mag": 3.5,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.537,
+   "lon": -67.453,
+   "prof": 241.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793737916000.0,
+   "mag": 3.3,
+   "lugar": "Sud Chichas, Potosí",
+   "depto": "Potosí",
+   "lat": -21.243,
+   "lon": -65.778,
+   "prof": 287.0,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793683730000.0,
+   "mag": 3.0,
+   "lugar": "Nor Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.233,
+   "lon": -67.49,
+   "prof": 167.6,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793645662000.0,
+   "mag": 4.3,
+   "lugar": "José Carrasco, Cochabamba",
+   "depto": "Cochabamba",
+   "lat": -17.413,
+   "lon": -64.507,
+   "prof": 27.3,
+   "bo": true,
+   "sentido": true
+  },
+  {
+   "t": 1793634494000.0,
+   "mag": 3.5,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -21.507,
+   "lon": -66.862,
+   "prof": 188.5,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793550849000.0,
+   "mag": 3.1,
+   "lugar": "Sud Lipez, Potosí",
+   "depto": "Potosí",
+   "lat": -22.35,
+   "lon": -67.527,
+   "prof": 119.7,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793523875000.0,
+   "mag": 3.1,
+   "lugar": "Ichilo, Santa Cruz",
+   "depto": "Santa Cruz",
+   "lat": -17.403,
+   "lon": -64.229,
+   "prof": 27.4,
+   "bo": true,
+   "sentido": false
+  },
+  {
+   "t": 1793304382000.0,
+   "mag": 3.0,
+   "lugar": "Ladislao Cabrera, Oruro",
+   "depto": "Oruro",
+   "lat": -19.368,
+   "lon": -67.8,
+   "prof": 171.1,
+   "bo": true,
+   "sentido": false
+  }
+ ],
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-09T01:46 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "fuentes": [
+  [
+   "Observatorio San Calixto · Boletín sísmico",
+   "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico"
+  ]
+ ]
+}
