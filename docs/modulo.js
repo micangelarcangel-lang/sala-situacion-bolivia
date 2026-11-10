@@ -49,7 +49,7 @@
       try { herramientas(m, id); } catch (x) { console.error("herramientas", x); }
     });
     function pop(capa, f) { m.on("click", capa, function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop">' + f(e.features[0].properties) + '</div>').addTo(m); }); m.on("mouseenter", capa, function () { m.getCanvas().style.cursor = "pointer"; }); m.on("mouseleave", capa, function () { m.getCanvas().style.cursor = ""; }); }
-    m.pop = pop; return m;
+    m.pop = pop; (window.__mapas = window.__mapas || {})[id] = m; return m;
   }
 
   /* ---------- herramientas de mapa: mapa base, desglose municipal y vista 3D ---------- */
@@ -100,6 +100,35 @@
     d.innerHTML = '<label>Mapa base <select data-r="b">' + Object.keys(BASES).map(function (k) { return '<option value="' + k + '"' + (k === cur ? " selected" : "") + '>' + BASES[k].n + '</option>'; }).join("") + '</select></label>' +
       '<label>Desglose <select data-r="d"><option value="dep">Departamento</option><option value="mun">Municipio (intensidad)</option></select></label><label class="ck"><input type="checkbox" data-r="3"> Vista 3D</label>';
     cont.appendChild(d); d.addEventListener("change", function (e) { var r = e.target.dataset.r; if (r === "b") base(e.target.value); if (r === "d") { desglose(e.target.value === "mun"); if (e.target.value !== "mun") { var t3 = d.querySelector('[data-r="3"]'); if (t3.checked) { t3.checked = false; vista3d(false); } } } if (r === "3") { if (e.target.checked && d.querySelector('[data-r="d"]').value !== "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); } vista3d(e.target.checked); } });
+
+    if (T === "geológica") {
+      var G = document.createElement("div"); G.className = "mtools mctx";
+      G.innerHTML = '<b>Contexto</b><label class="ck"><input type="checkbox" data-c="lab"> Nombres de lugares</label><label class="ck"><input type="checkbox" data-c="pla"> Placas tectónicas</label><label class="ck"><input type="checkbox" data-c="pob"> Densidad de población</label><label class="ck"><input type="checkbox" data-c="usgs"> Alertas USGS (PAGER / sentido)</label>';
+      cont.appendChild(G);
+      var ant = function () { return m.getLayer("mt-f") ? "mt-f" : "dep-line"; };
+      var on = {
+        lab: function (v) { if (v) { m.addSource("c-lab", {type: "raster", tiles: [ESRI("Reference/World_Boundaries_and_Places")], tileSize: 256, maxzoom: 17}); m.addLayer({id: "c-lab", type: "raster", source: "c-lab"}); } else { if (m.getLayer("c-lab")) m.removeLayer("c-lab"); if (m.getSource("c-lab")) m.removeSource("c-lab"); } },
+        pob: function (v) { if (v) { m.addSource("c-pob", {type: "raster", tiles: ["https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/GPW_Population_Density_2020/default/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png"], tileSize: 256, maxzoom: 7, attribution: "SEDAC/CIESIN GPW v4 vía NASA GIBS"}); m.addLayer({id: "c-pob", type: "raster", source: "c-pob", paint: {"raster-opacity": .62}}, "dep-line"); } else { if (m.getLayer("c-pob")) m.removeLayer("c-pob"); if (m.getSource("c-pob")) m.removeSource("c-pob"); } },
+        pla: function (v) {
+          if (!v) { if (m.getLayer("c-pla")) m.removeLayer("c-pla"); if (m.getSource("c-pla")) m.removeSource("c-pla"); return; }
+          fetch("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json").then(function (r) { return r.json(); }).then(function (g) {
+            if (m.getSource("c-pla")) return; m.addSource("c-pla", {type: "geojson", data: g});
+            m.addLayer({id: "c-pla", type: "line", source: "c-pla", paint: {"line-color": "#e11d48", "line-width": 2.4, "line-dasharray": [2, 1.2]}}, "dep-line");
+            m.on("click", "c-pla", function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>Límite de placas</b>' + S.esc(String(e.features[0].properties.Name || "").replace(/-/g, " – ")) + '<br><span class="nota">Bird (2003), PB2002</span></div>').addTo(m); });
+          }).catch(function () { G.querySelector('[data-c="pla"]').checked = false; });
+        },
+        usgs: function (v) {
+          if (!v) { ["c-us"].forEach(function (i) { if (m.getLayer(i)) m.removeLayer(i); }); if (m.getSource("c-us")) m.removeSource("c-us"); return; }
+          var ini = new Date(Date.now() - Math.max(PER, 7) * DIA).toISOString().slice(0, 10);
+          fetch("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=-27&maxlatitude=-5&minlongitude=-74&maxlongitude=-52&minmagnitude=3.5&orderby=time&limit=400&starttime=" + ini).then(function (r) { return r.json(); }).then(function (g) {
+            if (m.getSource("c-us")) return; m.addSource("c-us", {type: "geojson", data: g});
+            m.addLayer({id: "c-us", type: "circle", source: "c-us", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 3, 5, 7, 22], "circle-color": ["match", ["get", "alert"], "green", "#2e9e5b", "yellow", "#f5b700", "orange", "#f26a1b", "red", "#d7263d", "#8b95a5"], "circle-opacity": .78, "circle-stroke-color": ["case", [">", ["coalesce", ["get", "felt"], 0], 0], "#111", "#fff"], "circle-stroke-width": ["case", [">", ["coalesce", ["get", "felt"], 0], 0], 2.4, 1]}}, "dep-line");
+            m.on("click", "c-us", function (e) { var p = e.features[0].properties; new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>USGS M ' + p.mag + '</b>' + S.esc(p.place || "") + '<br>' + new Date(p.time).toLocaleString("es-BO", {timeZone: "America/La_Paz"}) + '<br>Alerta PAGER: ' + (p.alert || "sin alerta") + ' · reportes «lo sentí»: ' + (p.felt || 0) + '<br><a href="' + p.url + '" target="_blank" rel="noopener">Ver en USGS</a></div>').addTo(m); });
+          }).catch(function () { G.querySelector('[data-c="usgs"]').checked = false; });
+        }
+      };
+      G.addEventListener("change", function (e) { var c = e.target.dataset.c; if (c && on[c]) on[c](e.target.checked); });
+    }
     base(cur); if (q.get("d") === "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); }
   }
   function nuevo(pref) { var o = D.nuevas || {}, k = Object.keys(o).filter(function (x) { return x.indexOf(pref) === 0; }); return k.length ? o[k[0]] : []; }
@@ -171,8 +200,12 @@
       map: {t: "Mapa de sismos", c: "Círculos de color = Observatorio San Calixto (oficial). Círculos blancos huecos = EMSC (fuente complementaria, incluye sismos de países vecinos). Toque un círculo.", f: function (m) { m.addSource("s", {type: "geojson", data: {type: "FeatureCollection", features: s30.map(function (s) { return {type: "Feature", properties: {mag: s.mag, p: s.prof_km, t: s.fecha_local, l: s.provincia + ", " + s.departamento}, geometry: {type: "Point", coordinates: [s.lon, s.lat]}}; })}}); m.addLayer({id: "s", type: "circle", source: "s", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 4, 6, 18], "circle-color": ["interpolate", ["linear"], ["get", "p"], 0, "#d7263d", 100, "#f5b700", 300, "#2a7fd1"], "circle-stroke-color": "#fff", "circle-stroke-width": 1, "circle-opacity": .8}}); var em = nuevo("EMSC").filter(function (x) { return x.lat != null && x.lon != null; }); m.addSource("em", {type: "geojson", data: {type: "FeatureCollection", features: em.map(function (x) { return {type: "Feature", properties: {m: x.mag, r: x.region, t: x.fecha_utc, p: x.prof_km}, geometry: {type: "Point", coordinates: [x.lon, x.lat]}}; })}}); m.addLayer({id: "em", type: "circle", source: "em", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "m"], 2, 3, 6, 14], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#ffffff", "circle-stroke-width": 1.6, "circle-opacity": .9}}); m.pop("em", function (p) { return "<b>EMSC M " + p.m + "</b>" + S.esc(p.r) + "<br>" + p.t + " · " + p.p + " km (fuente complementaria)"; });
       capaMun(m, "ms", s30.map(function (s) { return [s.lon, s.lat, 1]; }), "#8d6e63", "s"); ctrl(m, [{id: "mm", label: "Sismos por municipio (30 d)", layers: ["msf", "msl"]}, {id: "sc", label: "Sismos San Calixto", layers: ["s"]}, {id: "se", label: "Sismos EMSC", layers: ["em"]}]);
       m.pop("s", function (p) { return "<b>Sismo M " + p.mag + "</b>" + S.esc(p.l) + "<br>" + p.t + " · " + p.p + " km"; }); }},
-      vig: {t: "Sismos probablemente sentidos (30 días)", h: sen.length ? sen.map(function (s) { return '<a class="alert" href="evento.html?id=' + encodeURIComponent("sismo:" + s.id) + '" style="--c:#f26a1b;color:inherit;text-decoration:none"><div style="flex:1"><div class="t">M ' + s.mag.toFixed(1) + ' · ' + S.esc(s.provincia) + ', ' + S.esc(s.departamento) + '</div><div class="m">' + s.fecha_local + ' · prof. ' + s.prof_km + ' km</div></div></a>'; }).join("") : '<p class="nota">No hubo sismos probablemente sentidos (M ≥ 4,0 y ≤ 100 km) en los últimos 30 días.</p>'},
-      reg: evs(function (e) { return e.origen !== "sismo"; })
+      vig: {t: "Sismos del período · " + PL, h: '<div class="sx-ctl"><label>Ordenar <select id="sSort"><option value="t">Más recientes</option><option value="m">Mayor magnitud</option><option value="p">Más superficiales</option></select></label><label>Magnitud mínima <select id="sMin"><option value="0">Todas</option><option value="3">≥ 3</option><option value="4">≥ 4</option></select></label></div><div id="sLista" class="sx-lista"></div>', hook: function () {
+        var S30 = s30.slice(); function pinta() { var o = $("sSort").value, mn = +$("sMin").value, L = S30.filter(function (x) { return x.mag >= mn; }).sort(function (a, b) { return o === "m" ? b.mag - a.mag : o === "p" ? a.prof_km - b.prof_km : b.ts - a.ts; });
+          $("sLista").innerHTML = L.length ? L.slice(0, 40).map(function (x, k) { var sen = x.probable_sentido; return '<a class="alert sx" data-i="' + S30.indexOf(x) + '" style="--c:' + (sen ? "#f26a1b" : "#8d6e63") + ';color:inherit;text-decoration:none;cursor:pointer"><div style="flex:1"><div class="t"><b>M ' + x.mag.toFixed(1) + '</b> · ' + S.esc(x.provincia || "") + ', ' + S.esc(x.departamento) + (sen ? ' <span class="badge" style="background:#f26a1b">probablemente sentido</span>' : '') + '</div><div class="m">' + x.fecha_local + ' · prof. ' + x.prof_km + ' km</div></div></a>'; }).join("") : '<p class="nota">Sin sismos con ese filtro en el período.</p>'; }
+        $("sSort").onchange = $("sMin").onchange = pinta; pinta();
+        $("sLista").onclick = function (e) { var a = e.target.closest(".sx"); if (!a) return; var x = S30[+a.dataset.i], m = (window.__mapas || {})[Object.keys(window.__mapas || {})[0]]; if (m) { m.flyTo({center: [x.lon, x.lat], zoom: 8, duration: 900}); new maplibregl.Popup().setLngLat([x.lon, x.lat]).setHTML('<div class="pop"><b>M ' + x.mag + '</b>' + S.esc(x.provincia + ", " + x.departamento) + '<br>' + x.fecha_local + ' · ' + x.prof_km + ' km</div>').addTo(m); } };
+      }},      reg: evs(function (e) { return e.origen !== "sismo"; })
     };
   }
   function bMeteo() {
@@ -361,7 +394,7 @@
     h = h.replace(/Últimos 30 días/g, PLU).replace(/\(30 días\)/g, "(" + PL + ")").replace(/30 días/g, PL);
     $("app").innerHTML = h;
     (function () { var s = document.getElementById("selPer"); if (!s) return; s.value = String(PER >= 36500 ? 0 : PER); s.onchange = function () { var u = new URL(location.href); u.searchParams.set("p", s.value); location.href = u.toString(); }; })();
-    mapa("mmap", B.map.f);
+    mapa("mmap", B.map.f); if (B.vig && B.vig.hook) B.vig.hook();
     var arrSub = T === "salud" ? B.reg : D.ev.filter(function (e) { return e.categoria === T && e.origen !== "modelo" && act(e) > Date.now() - PER * DIA; });
     subNivel("chSub", arrSub);
     if (T === "biológica") bioCharts(B); else B.charts.forEach(function (c) { c.f(); });
