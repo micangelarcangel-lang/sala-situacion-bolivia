@@ -41,8 +41,8 @@ def svg_mapa(ev, W_=900, H_=700):
     gm = json.load(open(os.path.join(AQUI, "docs/geo_dep.geojson"), encoding="utf-8"))
     pts = [e for e in ev if e["lat"] is not None and e["lon"] is not None]
     esq = [{"lat": -22.9, "lon": -69.7}, {"lat": -9.6, "lon": -57.4}]
-    uri, px, red, mpp = BH.mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in pts], W_, H_, .97)
-    z_, ox_, oy_ = BH._ULT; s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{W_}" height="{H_}"/>']
+    uri, px, red, mpp = BH.mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in pts], W_, H_, .97, base="calles")
+    z_, ox_, oy_ = BH._ULT; s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{W_}" height="{H_}"/>', BH.capa_municipios(W_, H_)]
     for f in gm["features"]:
         for q in ([f["geometry"]["coordinates"]] if f["geometry"]["type"] == "Polygon" else f["geometry"]["coordinates"]):
             s.append(f'<polygon points="{" ".join(f"{BH._xy(b_, a_, z_)[0] * 512 - ox_:.0f},{BH._xy(b_, a_, z_)[1] * 512 - oy_:.0f}" for a_, b_ in q[0][::2])}" fill="none" stroke="#3b4656" stroke-width="1.5" stroke-opacity=".7"/>')

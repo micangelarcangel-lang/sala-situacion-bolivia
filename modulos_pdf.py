@@ -82,3 +82,6 @@ if __name__ == "__main__":
         for v in (list(DIAS) if V == "todas" else [V]):
             try: B = TB.boletin(v); TB.build(B, f"datos/v3/investigacion/BOL_transito_{v}.pdf"); print("transito", v)
             except Exception as e: print("ERROR transito", v, e)
+        import subprocess
+        for v in (list(DIAS) if V == "todas" else [V]):
+            subprocess.run([sys.executable, "sismos_v3.py", v], check=False)

@@ -13,7 +13,20 @@ def _xy(lat, lon, z):
     n = 2 ** z; x = (lon + 180) / 360 * n; y = (1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * n; return x, y
 
 
-def mapa_base(pts, ancho=900, alto=720, llenar=.62):
+ESRI_ = "https://server.arcgisonline.com/ArcGIS/rest/services/%s/MapServer/tile/{z}/{y}/{x}"
+BASES_PL = {"calles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png", ESRI_ % "World_Street_Map"], "sat": [ESRI_ % "World_Imagery"], "topo": [ESRI_ % "World_Topo_Map", "https://tile.openstreetmap.org/{z}/{x}/{y}.png"], "relieve": [ESRI_ % "Elevation/World_Hillshade", ESRI_ % "World_Topo_Map"]}
+
+
+def capa_municipios(W_, H_, color="#4b5a70", ancho=.5, op=.45):
+    """Límites municipales (339) sobre el último mapa base armado con mapa_base."""
+    z_, ox_, oy_ = _ULT; gm = json.load(open(os.path.join(AQUI, "docs/geo_mun.geojson"), encoding="utf-8")); s = []
+    for f in gm["features"]:
+        for q in ([f["geometry"]["coordinates"]] if f["geometry"]["type"] == "Polygon" else f["geometry"]["coordinates"]):
+            s.append(f'<polygon points="{" ".join(f"{_xy(b_, a_, z_)[0] * 512 - ox_:.0f},{_xy(b_, a_, z_)[1] * 512 - oy_:.0f}" for a_, b_ in q[0][::3])}" fill="none" stroke="{color}" stroke-width="{ancho}" stroke-opacity="{op}"/>')
+    return "".join(s)
+
+
+def mapa_base(pts, ancho=900, alto=720, llenar=.62, base="calles"):
     if len(pts) < 1: raise ValueError
     """Une teselas CARTO 'Voyager' (OpenStreetMap) que cubren los puntos. Devuelve (data_uri, [(px,py)...], hubo_red)."""
     from PIL import Image, ImageDraw
@@ -28,7 +41,7 @@ def mapa_base(pts, ancho=900, alto=720, llenar=.62):
     zt = z + 1  # teselas de 256 px a zoom z+1 = misma escala que 512 px a zoom z
     ox, oy = cx * 512 - ancho / 2, cy * 512 - alto / 2
     img = Image.new("RGB", (ancho, alto), "#e9edf2"); red = False
-    plantillas = ["https://tile.openstreetmap.org/{z}/{x}/{y}.png", "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"]
+    plantillas = BASES_PL.get(os.environ.get("BASE_MAPA") or base, BASES_PL["calles"])
     for tx in range(int(ox // 256), int((ox + ancho) // 256) + 1):
         for ty in range(int(oy // 256), int((oy + alto) // 256) + 1):
             t = None
@@ -207,8 +220,8 @@ def svg_sismos(ev, W_=900, H_=760):
     """Mapa de epicentros: tamaño = magnitud, color = profundidad (somero rojo, intermedio naranja, profundo azul)."""
     gm = json.load(open(os.path.join(AQUI, "docs/geo_dep.geojson"), encoding="utf-8"))
     esq = [{"lat": -22.9, "lon": -69.7}, {"lat": -9.6, "lon": -57.4}]
-    uri, px, red, mpp = mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in ev], W_, H_, .97)
-    s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{W_}" height="{H_}"/>']
+    uri, px, red, mpp = mapa_base(esq + [{"lat": e["lat"], "lon": e["lon"]} for e in ev], W_, H_, .97, base="topo")
+    s = [f'<svg viewBox="0 0 {W_} {H_}" xmlns="http://www.w3.org/2000/svg"><image href="{uri}" width="{W_}" height="{H_}"/>', capa_municipios(W_, H_)]
     z_, ox_, oy_ = _ULT
     for f in gm["features"]:
         for q in ([f["geometry"]["coordinates"]] if f["geometry"]["type"] == "Polygon" else f["geometry"]["coordinates"]):
