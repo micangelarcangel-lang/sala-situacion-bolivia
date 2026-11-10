@@ -77,3 +77,8 @@ if __name__ == "__main__":
                 if t == "biológica" and os.path.exists(epi):  # anexo: boletín oficial del Ministerio (IRAs/influenza)
                     from pypdf import PdfWriter; w = PdfWriter(); w.append(out); w.append(epi); w.write(out)
             except Exception as e: print("ERROR", t, v, e)
+    if T == "todos":
+        import transito_boletin as TB
+        for v in (list(DIAS) if V == "todas" else [V]):
+            try: B = TB.boletin(v); TB.build(B, f"datos/v3/investigacion/BOL_transito_{v}.pdf"); print("transito", v)
+            except Exception as e: print("ERROR transito", v, e)
