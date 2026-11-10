@@ -129,6 +129,82 @@
       };
       G.addEventListener("change", function (e) { var c = e.target.dataset.c; if (c && on[c]) on[c](e.target.checked); });
     }
+
+    if (T === "meteorológica") {
+      var W = document.createElement("div"); W.className = "mtools mctx";
+      W.innerHTML = '<b>Capas del tiempo</b><label class="ck"><input type="checkbox" data-w="viento"> Viento animado</label><label class="ck"><input type="checkbox" data-w="nubes"> Nubes (GOES-East)</label><label class="ck"><input type="checkbox" data-w="lluvia"> Lluvia (IMERG, NASA)</label><label class="ck"><input type="checkbox" data-w="pron"> Pronóstico al tocar el mapa</label><a class="nota" target="_blank" rel="noopener" href="https://www.windy.com/-16.5/-64.6?-16.5,-64.6,5">Abrir en Windy ↗</a>';
+      cont.appendChild(W);
+      /* viento animado: partículas sobre una grilla Open-Meteo (modelo; no es observación) */
+      var VT = {raf: 0, cv: null, grid: null};
+      function gridViento() {
+        if (VT.grid) return Promise.resolve(VT.grid);
+        var la = [], lo = [], NL = 8, NO = 8; for (var i = 0; i < NL; i++) la.push(-23 + i * (13.6 / (NL - 1))); for (var j = 0; j < NO; j++) lo.push(-70 + j * (13.4 / (NO - 1)));
+        var LA = [], LO = []; la.forEach(function (a) { lo.forEach(function (o) { LA.push(a.toFixed(2)); LO.push(o.toFixed(2)); }); });
+        return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + LA.join(",") + "&longitude=" + LO.join(",") + "&current=wind_speed_10m,wind_direction_10m&wind_speed_unit=kmh").then(function (r) { return r.json(); }).then(function (a) {
+          var u = [], v = []; a = [].concat(a); a.forEach(function (p) { var sp = p.current.wind_speed_10m, d = p.current.wind_direction_10m * Math.PI / 180; u.push(-sp * Math.sin(d)); v.push(-sp * Math.cos(d)); });
+          return VT.grid = {la: la, lo: lo, u: u, v: v, t: a[0].current.time};
+        });
+      }
+      function muestra(g, lon, lat) {
+        var fy = (lat - g.la[0]) / (g.la[g.la.length - 1] - g.la[0]) * (g.la.length - 1), fx = (lon - g.lo[0]) / (g.lo[g.lo.length - 1] - g.lo[0]) * (g.lo.length - 1);
+        if (fy < 0 || fx < 0 || fy > g.la.length - 1 || fx > g.lo.length - 1) return null;
+        var y0 = Math.floor(fy), x0 = Math.floor(fx), y1 = Math.min(y0 + 1, g.la.length - 1), x1 = Math.min(x0 + 1, g.lo.length - 1), ty = fy - y0, tx = fx - x0, N = g.lo.length;
+        function bi(A) { return (A[y0 * N + x0] * (1 - tx) + A[y0 * N + x1] * tx) * (1 - ty) + (A[y1 * N + x0] * (1 - tx) + A[y1 * N + x1] * tx) * ty; }
+        return [bi(g.u), bi(g.v)];
+      }
+      function viento(on) {
+        if (!on) { cancelAnimationFrame(VT.raf); if (VT.cv) { VT.cv.remove(); VT.cv = null; } return; }
+        gridViento().then(function (g) {
+          var cv = document.createElement("canvas"); cv.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:3"; cont.appendChild(cv); VT.cv = cv;
+          var ctx, w, h, P = [];
+          function dim() { var r = cont.getBoundingClientRect(); w = cv.width = r.width; h = cv.height = r.height; ctx = cv.getContext("2d"); ctx.clearRect(0, 0, w, h); }
+          function nace(p) { p.x = Math.random() * w; p.y = Math.random() * h; p.a = 0; p.vida = 40 + Math.random() * 60; return p; }
+          dim(); for (var i = 0; i < 1100; i++) P.push(nace({}));
+          m.on("move", function () { if (VT.cv) ctx.clearRect(0, 0, w, h); }); window.addEventListener("resize", dim);
+          function paso() {
+            if (!VT.cv) return;
+            ctx.globalCompositeOperation = "destination-out"; ctx.fillStyle = "rgba(0,0,0,.07)"; ctx.fillRect(0, 0, w, h); ctx.globalCompositeOperation = "source-over"; ctx.lineWidth = 1.3;
+            P.forEach(function (p) {
+              var ll = m.unproject([p.x, p.y]), uv = muestra(g, ll.lng, ll.lat); if (!uv || --p.vida < 0) { nace(p); return; }
+              var sp = Math.hypot(uv[0], uv[1]), nx = p.x + uv[0] * .055, ny = p.y - uv[1] * .055;
+              ctx.strokeStyle = sp < 8 ? "rgba(70,130,200,.85)" : sp < 18 ? "rgba(40,160,120,.9)" : sp < 30 ? "rgba(235,170,20,.95)" : "rgba(215,38,61,.95)";
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke(); p.x = nx; p.y = ny;
+            });
+            VT.raf = requestAnimationFrame(paso);
+          }
+          paso();
+        }).catch(function () { W.querySelector('[data-w="viento"]').checked = false; });
+      }
+      /* capas raster de la NASA (GIBS) */
+      function gibsCapa(id, capa, ext, nivel, op, sub) {
+        return function (v) {
+          if (!v) { if (m.getLayer(id)) m.removeLayer(id); if (m.getSource(id)) m.removeSource(id); return; }
+          var t = sub ? new Date(Math.floor((Date.now() - 50 * 60e3) / 6e5) * 6e5).toISOString().slice(0, 19) + "Z" : new Date(Date.now() - 36e5 * 30).toISOString().slice(0, 10);
+          m.addSource(id, {type: "raster", tiles: ["https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/" + capa + "/default/" + t + "/GoogleMapsCompatible_Level" + nivel + "/{z}/{y}/{x}." + ext], tileSize: 256, maxzoom: nivel, attribution: "NASA GIBS / EOSDIS"});
+          m.addLayer({id: id, type: "raster", source: id, paint: {"raster-opacity": op}}, "dep-line");
+        };
+      }
+      /* pronóstico del punto (modelo Open-Meteo) */
+      var PF = {on: false, mk: null, box: null, ll: null};
+      function pronostico(ll) {
+        PF.ll = ll; if (PF.mk) PF.mk.remove(); PF.mk = new maplibregl.Marker({color: "#1d6fb8"}).setLngLat(ll).addTo(m);
+        if (!PF.box) { PF.box = document.createElement("div"); PF.box.className = "mfor"; cont.appendChild(PF.box); }
+        var mod = (PF.box.querySelector("select") || {}).value || "";
+        PF.box.innerHTML = '<div class="mfh"><b>Pronóstico del punto</b><button type="button" class="mfx">×</button></div><div class="nota">Cargando…</div>';
+        PF.box.querySelector(".mfx").onclick = function () { PF.box.remove(); PF.box = null; if (PF.mk) PF.mk.remove(); };
+        fetch("https://api.open-meteo.com/v1/forecast?latitude=" + ll.lat.toFixed(3) + "&longitude=" + ll.lng.toFixed(3) + "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m&hourly=temperature_2m,precipitation,wind_gusts_10m&forecast_days=3&timezone=America%2FLa_Paz&wind_speed_unit=kmh" + (mod ? "&models=" + mod : "")).then(function (r) { return r.json(); }).then(function (d) {
+          var c = d.current, hrs = d.hourly.time.slice(0, 48), sfx = mod ? "_" + mod : "";
+          var T2 = d.hourly["temperature_2m" + sfx] || d.hourly.temperature_2m, PR = d.hourly["precipitation" + sfx] || d.hourly.precipitation, G = d.hourly["wind_gusts_10m" + sfx] || d.hourly.wind_gusts_10m;
+          PF.box.innerHTML = '<div class="mfh"><b>Pronóstico del punto</b><button type="button" class="mfx">×</button></div><div class="mfs"><span><b>' + (c ? Math.round(c.temperature_2m) : "–") + ' °C</b> ahora</span><span>Humedad ' + (c ? c.relative_humidity_2m : "–") + ' %</span><span>Viento ' + (c ? Math.round(c.wind_speed_10m) : "–") + ' km/h (ráf. ' + (c ? Math.round(c.wind_gusts_10m) : "–") + ')</span></div><label class="nota">Modelo <select><option value="">Automático</option><option value="ecmwf_ifs025">ECMWF</option><option value="gfs_seamless">GFS</option><option value="icon_seamless">ICON</option></select></label><div id="pfChart" style="height:150px"></div><div class="nota">' + ll.lat.toFixed(2) + ', ' + ll.lng.toFixed(2) + ' · próximas 48 h · modelo Open-Meteo, no es un pronóstico oficial</div>';
+          PF.box.querySelector("select").value = mod; PF.box.querySelector("select").onchange = function () { pronostico(PF.ll); };
+          PF.box.querySelector(".mfx").onclick = function () { PF.box.remove(); PF.box = null; if (PF.mk) PF.mk.remove(); };
+          X.chart("pfChart", {tooltip: {trigger: "axis"}, legend: {top: 0, textStyle: {fontSize: 10}}, grid: {left: 30, right: 30, top: 24, bottom: 20}, xAxis: {type: "category", data: hrs.map(function (t) { return t.slice(8, 10) + "/" + t.slice(11, 13) + "h"; }), axisLabel: {interval: 7, fontSize: 9}}, yAxis: [{type: "value", name: "°C"}, {type: "value", name: "mm", splitLine: {show: false}}], series: [{name: "Temp.", type: "line", smooth: true, data: T2.slice(0, 48), itemStyle: {color: "#d7263d"}, showSymbol: false}, {name: "Lluvia", type: "bar", yAxisIndex: 1, data: PR.slice(0, 48), itemStyle: {color: "#1e88e5"}}, {name: "Ráfaga km/h", type: "line", data: G.slice(0, 48), itemStyle: {color: "#8e24aa"}, lineStyle: {type: "dashed", width: 1}, showSymbol: false, yAxisIndex: 0}]});
+        }).catch(function () { PF.box.querySelector(".nota").textContent = "No se pudo cargar el pronóstico (sin conexión al servicio)."; });
+      }
+      m.on("click", function (e) { if (PF.on) pronostico(e.lngLat); });
+      var ow = {viento: viento, nubes: gibsCapa("w-nub", "GOES-East_ABI_GeoColor", "png", 7, .8, true), lluvia: gibsCapa("w-llu", "IMERG_Precipitation_Rate", "png", 6, .7, false), pron: function (v) { PF.on = v; m.getCanvas().style.cursor = v ? "crosshair" : ""; if (!v && PF.box) { PF.box.remove(); PF.box = null; if (PF.mk) PF.mk.remove(); } }};
+      W.addEventListener("change", function (e) { var c = e.target.dataset.w; if (c && ow[c]) ow[c](e.target.checked); });
+    }
     base(cur); if (q.get("d") === "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); }
   }
 
