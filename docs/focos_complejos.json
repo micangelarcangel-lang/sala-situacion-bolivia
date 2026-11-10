@@ -1,12 +1,12 @@
 {
- "actualizado": "2026-11-10T13:39:46.300114Z",
- "dia": "2026-11-09",
+ "actualizado": "2026-11-10T14:52:36.849533Z",
+ "dia": "2026-11-10",
  "complejos": [
   {
-   "n": 43,
-   "frp_mw": 739.7,
-   "lat": -16.681,
-   "lon": -63.88,
+   "n": 59,
+   "frp_mw": 790.3,
+   "lat": -16.682,
+   "lon": -63.877,
    "departamento": "Santa Cruz",
    "municipio": "Santa Rosa",
    "municipios": [
@@ -17,10 +17,10 @@
    "bbox": [
     -64.24,
     -16.859,
-    -63.704,
+    -63.702,
     -16.584
    ],
-   "id": "2026-11-09:1"
+   "id": "2026-11-10:1"
   },
   {
    "n": 29,
@@ -38,29 +38,48 @@
     -63.774,
     -16.037
    ],
-   "id": "2026-11-09:2"
+   "id": "2026-11-10:2"
   },
   {
-   "n": 16,
-   "frp_mw": 324.1,
-   "lat": -12.071,
-   "lon": -64.86,
-   "departamento": "Beni",
-   "municipio": "San Joaquín",
+   "n": 31,
+   "frp_mw": 325.3,
+   "lat": -17.63,
+   "lon": -60.29,
+   "departamento": "Santa Cruz",
+   "municipio": "San José",
    "municipios": [
-    "San Joaquín"
+    "San José"
    ],
    "bbox": [
-    -64.875,
-    -12.103,
-    -64.805,
-    -12.058
+    -60.323,
+    -17.65,
+    -60.279,
+    -17.607
    ],
-   "id": "2026-11-09:3"
+   "id": "2026-11-10:3"
   },
   {
-   "n": 23,
-   "frp_mw": 264.8,
+   "n": 33,
+   "frp_mw": 269.2,
+   "lat": -17.329,
+   "lon": -60.421,
+   "departamento": "Santa Cruz",
+   "municipio": "San José",
+   "municipios": [
+    "San José",
+    "San Rafael"
+   ],
+   "bbox": [
+    -60.507,
+    -17.465,
+    -60.325,
+    -17.221
+   ],
+   "id": "2026-11-10:4"
+  },
+  {
+   "n": 27,
+   "frp_mw": 268.3,
    "lat": -12.597,
    "lon": -64.517,
    "departamento": "Beni",
@@ -69,12 +88,102 @@
     "San Joaquín"
    ],
    "bbox": [
-    -64.551,
+    -64.561,
     -12.645,
     -64.429,
     -12.445
    ],
-   "id": "2026-11-09:4"
+   "id": "2026-11-10:5"
+  },
+  {
+   "n": 9,
+   "frp_mw": 222.8,
+   "lat": -16.024,
+   "lon": -64.633,
+   "departamento": "Santa Cruz",
+   "municipio": "Yapacaní",
+   "municipios": [
+    "Yapacaní"
+   ],
+   "bbox": [
+    -64.643,
+    -16.04,
+    -64.631,
+    -16.015
+   ],
+   "id": "2026-11-10:6"
+  },
+  {
+   "n": 9,
+   "frp_mw": 212.9,
+   "lat": -15.637,
+   "lon": -64.438,
+   "departamento": "Beni",
+   "municipio": "San Andrés",
+   "municipios": [
+    "San Andrés"
+   ],
+   "bbox": [
+    -64.442,
+    -15.648,
+    -64.428,
+    -15.627
+   ],
+   "id": "2026-11-10:7"
+  },
+  {
+   "n": 16,
+   "frp_mw": 176.3,
+   "lat": -18.373,
+   "lon": -62.091,
+   "departamento": "Santa Cruz",
+   "municipio": "Charagua",
+   "municipios": [
+    "Charagua"
+   ],
+   "bbox": [
+    -62.144,
+    -18.385,
+    -62.075,
+    -18.319
+   ],
+   "id": "2026-11-10:8"
+  },
+  {
+   "n": 18,
+   "frp_mw": 144.5,
+   "lat": -16.677,
+   "lon": -62.248,
+   "departamento": "Santa Cruz",
+   "municipio": "Concepción",
+   "municipios": [
+    "Concepción"
+   ],
+   "bbox": [
+    -62.27,
+    -16.753,
+    -62.236,
+    -16.642
+   ],
+   "id": "2026-11-10:9"
+  },
+  {
+   "n": 16,
+   "frp_mw": 139.8,
+   "lat": -17.281,
+   "lon": -60.145,
+   "departamento": "Santa Cruz",
+   "municipio": "San José",
+   "municipios": [
+    "San José"
+   ],
+   "bbox": [
+    -60.189,
+    -17.291,
+    -60.024,
+    -17.257
+   ],
+   "id": "2026-11-10:10"
   },
   {
    "n": 10,
@@ -92,7 +201,25 @@
     -64.126,
     -16.223
    ],
-   "id": "2026-11-09:5"
+   "id": "2026-11-10:11"
+  },
+  {
+   "n": 12,
+   "frp_mw": 105.7,
+   "lat": -15.395,
+   "lon": -63.973,
+   "departamento": "Beni",
+   "municipio": "San Andrés",
+   "municipios": [
+    "San Andrés"
+   ],
+   "bbox": [
+    -63.98,
+    -15.402,
+    -63.952,
+    -15.37
+   ],
+   "id": "2026-11-10:12"
   },
   {
    "n": 8,
@@ -110,7 +237,97 @@
     -64.857,
     -16.035
    ],
-   "id": "2026-11-09:6"
+   "id": "2026-11-10:13"
+  },
+  {
+   "n": 16,
+   "frp_mw": 65.6,
+   "lat": -17.531,
+   "lon": -62.734,
+   "departamento": "Santa Cruz",
+   "municipio": "Pailón",
+   "municipios": [
+    "Pailón"
+   ],
+   "bbox": [
+    -62.752,
+    -17.537,
+    -62.666,
+    -17.511
+   ],
+   "id": "2026-11-10:14"
+  },
+  {
+   "n": 10,
+   "frp_mw": 60.9,
+   "lat": -17.688,
+   "lon": -61.238,
+   "departamento": "Santa Cruz",
+   "municipio": "Pailón",
+   "municipios": [
+    "Pailón"
+   ],
+   "bbox": [
+    -61.299,
+    -17.718,
+    -61.139,
+    -17.645
+   ],
+   "id": "2026-11-10:15"
+  },
+  {
+   "n": 9,
+   "frp_mw": 53.8,
+   "lat": -17.963,
+   "lon": -61.92,
+   "departamento": "Santa Cruz",
+   "municipio": "Pailón",
+   "municipios": [
+    "Pailón"
+   ],
+   "bbox": [
+    -61.923,
+    -17.966,
+    -61.917,
+    -17.958
+   ],
+   "id": "2026-11-10:16"
+  },
+  {
+   "n": 8,
+   "frp_mw": 47.3,
+   "lat": -12.094,
+   "lon": -64.839,
+   "departamento": "Beni",
+   "municipio": "San Joaquín",
+   "municipios": [
+    "San Joaquín"
+   ],
+   "bbox": [
+    -64.886,
+    -12.103,
+    -64.805,
+    -12.075
+   ],
+   "id": "2026-11-10:17"
+  },
+  {
+   "n": 13,
+   "frp_mw": 36.5,
+   "lat": -18.316,
+   "lon": -62.511,
+   "departamento": "Santa Cruz",
+   "municipio": "Charagua",
+   "municipios": [
+    "Charagua"
+   ],
+   "bbox": [
+    -62.519,
+    -18.319,
+    -62.501,
+    -18.314
+   ],
+   "id": "2026-11-10:18"
   }
  ]
 }
