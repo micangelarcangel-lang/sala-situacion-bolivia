@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:nhfxf5",
+  "fecha_hora_local": "2026-11-10 15:03",
+  "ts_ms": 1794337384000,
+  "titulo": "Segunda jornada de paro del magisterio deriva en bloqueo y gasificación en La Paz - Erbol |",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo; Erbol |",
+  "lat": -16.169,
+  "lon": -68.09,
+  "lugar": "La Paz, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Nuestra Señora de La Paz",
+  "enlaces": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNVlVVdFlFWnFCa3VrYkptLWlZMloyNVRVY2tCdjg5MHVxZDAzQl9Tb0ZDUlBoMmhKTnFTRllRSkNpcThla3B6d3NYLU1OdEVPbnd6TFRjVk9QMHlBd2ZyckYxaGdiRTUtemtSWkx0R1B6YkNRMnVaMEVEWlJmSVkzQUd0NVAtZ1hzb1BwSWw3WnNQamRzMEl4VVY1MjllcWYzaXl4V0dkRklIZEtqOTBUVy01R3FKSG8?oc=5 | https://news.google.com/rss/articles/CBMizwFBVV95cUxOQ193M0s5a2NMQlNNZFRHTGlZUDBiUWtQeXBES29jOXJQVzVVbUd2anhfLWRWazRqNzhXb2h1ak54R1pCUUw0WFIwaHgzbGs0ZHJnM0xhejcyVUlRSGhldDFMZlNFbm1PQkh5bGxXSGVLZzZGSTQ2UndrNV9Sb3R3cEpmRU1fR3E3QzZHc05hUThMVVNHWmpUX1ZseWdaT2sweVlmc1BIX2ZQNVE4V1ZQZmZRUGZSYXVTTEM4VFdPdjlaR3ZQeG5PZXVtaHU2S3c?oc=5"
+ },
+ {
   "hecho_id": "noticia:4fd4wo",
   "fecha_hora_local": "2026-11-10 11:38",
   "ts_ms": 1794325136000,
