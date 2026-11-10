@@ -25,3 +25,8 @@ Vigilancia por eventos de nivel nacional: buscar en cientos de medios y en repor
 - Boletín **público**: no pide acciones a la MAE ni a nadie. Sin cronología/reconstrucción repetida, sin triangulación como sección (se usa para escribir; fuentes y método al final, cortos).
 - Contenido: síntesis, cifras, mapa/geolocalización, identificación + foto (enlace), esquema, estado de la cadena de atención, vacíos. Referencia de calidad: `REPORTE_ACCIDENTE_DE_TRANSITO_CIUDADANO_DE_COREA_DEL_SUR.pdf` (ChatGPT) y superarlo.
 - Cada tipo de evento con su propio diseño; presentación de vanguardia; respuestas breves y concretas; en español.
+
+## Boletines por tipo y ventana (09/11/2026)
+- `modulos_pdf.py <tipo|todos> <24h|7d|30d|todas>`: abre el módulo de la interfaz (`docs/modulo.html`) con Playwright, filtra hechos (solo Bolivia, hechos concretos), pone encabezado institucional y guarda PDF `datos/v3/investigacion/BOL_<tipo>_<ventana>.pdf`. Mapas WebGL se fotografían. Biológica añade como anexo el boletín epidemiológico oficial (epi_ira).
+- Disparo: `investigar_solicitud.txt` = `modulo todos todas rNN` (o `modulo climatológica 7d`). `sismo 24h|7d|30d` y `epi` siguen aparte.
+- Pendiente: ajustes por tipo (el usuario los indicará), módulo propio de tránsito, tipos con datos de prensa mejorar clasificación.

@@ -12,14 +12,14 @@ import re
 HECHO = re.compile(r"muri|muert|fallec|herid|accident|choque|colisi|vuelc|embarranc|atropell|bloque|marcha|paro |protesta|enfrentamient|conflict|asesin|feminicid|homicid|incendi|explosi|robo|atraco|secuestr|detenid|aprehend|rescat|derrumb|intoxic|ahog", re.I)
 RUIDO = re.compile(r"econom|\bINE\b|unesco|whatsapp|seguro|artistas|música|pacto global|https?://|campaña|premio|libro|festival|aniversario|impunidad|informe", re.I)
 
-EXTRA = re.compile(r"egip|españ|ucrania|gaza|israel|rusia|china|estados unidos|eeuu|méxico|argentin|brasil|peru\\b|perú|chile\\b|colombia|venezuela|mundo", re.I)
+EXTRA = re.compile(r"egip|españ|ucrania|gaza|israel|rusia|china|estados unidos|eeuu|méxico|argentin|brasil|peru\\b|perú|chile\\b|colombia|venezuela|mundo|tanzania|egipto|cairo|asu[aá]n|sud[aá]frica|india\\b|pakist|nigeria|congo|filipin|indonesia|turqu|ir[aá]n\\b|siria|francia|alemania|italia|reino unido|londres|madrid|tailandia|corea|jap[oó]n|paraguay|uruguay|ecuador|bogot|lima\\b|buenos aires", re.I)
 
 def filtrar(dst):
     """Deja en el boletín solo hechos concretos (verbo de hecho en el titular y no ruido). Trabaja sobre la copia; no toca el sitio."""
     p = os.path.join(dst, "eventos_unificados.json")
     try:
         d = json.load(open(p, encoding="utf-8")); n0 = len(d["eventos"])
-        ok = lambda e: e.get("categoria") not in ("antropogénica", "tecnológica") or (HECHO.search(e.get("titulo") or "") and not RUIDO.search(e.get("titulo") or "") and (e.get("departamentos") or e.get("lugar")) and "/mundo/" not in (e.get("url") or "") and not EXTRA.search(e.get("titulo") or ""))
+        ok = lambda e: e.get("categoria") not in ("antropogénica", "tecnológica", "otra") or (HECHO.search(e.get("titulo") or "") and not RUIDO.search(e.get("titulo") or "") and (e.get("departamentos") or e.get("lugar")) and "/mundo/" not in (e.get("url") or "") and not EXTRA.search(e.get("titulo") or ""))
         d["eventos"] = [e for e in d["eventos"] if ok(e)]
         for e in d["eventos"]:  # cifras implausibles para un solo hecho (p. ej. "180 vehículos" leído como heridos): se anulan
             c = e.get("cifras") or {}
