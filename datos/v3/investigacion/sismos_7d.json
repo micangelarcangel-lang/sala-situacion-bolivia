@@ -1,6 +1,6 @@
 {
  "tipo": "sismo",
- "codigo": "SIS-7D-20261109",
+ "codigo": "SIS-7D-20261110",
  "ventana": "7d",
  "titulo": "Actividad sísmica en Bolivia · últimos 7 días",
  "meta": [
@@ -14,17 +14,17 @@
   ],
   [
    "CORTE",
-   "09 NOV 2026 · 23:34 BOT"
+   "10 NOV 2026 · 06:16 BOT"
   ],
   [
    "ESTADO",
    "Monitoreo"
   ]
  ],
- "sintesis": "El Observatorio San Calixto reporta 5 sismos en los últimos 7 días. El mayor fue de magnitud 4,0 (05/11 15:10, Inquisivi, La Paz, a 310 km de profundidad). Departamentos con más eventos: Potosí (3), La Paz (1), Oruro (1). 0 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
+ "sintesis": "El Observatorio San Calixto reporta 4 sismos en los últimos 7 días. El mayor fue de magnitud 4,0 (05/11 15:10, Inquisivi, La Paz, a 310 km de profundidad). Departamentos con más eventos: Potosí (2), La Paz (1), Oruro (1). 0 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
  "kpis": [
   [
-   "5",
+   "4",
    "sismos, últimos 7 días"
   ],
   [
@@ -84,25 +84,9 @@
    "prof": 287.0,
    "bo": true,
    "sentido": false
-  },
-  {
-   "t": 1793683730000.0,
-   "mag": 3.0,
-   "lugar": "Nor Lipez, Potosí",
-   "depto": "Potosí",
-   "lat": -21.233,
-   "lon": -67.49,
-   "prof": 167.6,
-   "bo": true,
-   "sentido": false
   }
  ],
  "serie": [
-  [
-   "2026-11-03",
-   2,
-   0
-  ],
   [
    "2026-11-04",
    1,
@@ -132,12 +116,17 @@
    "2026-11-09",
    0,
    0
+  ],
+  [
+   "2026-11-10",
+   0,
+   0
   ]
  ],
  "por_depto": [
   [
    "Potosí",
-   3
+   2
   ],
   [
    "La Paz",
@@ -176,13 +165,6 @@
    "prof": 287.0,
    "f": "2026-11-03 16:31",
    "l": "Sud Chichas, Potosí"
-  },
-  {
-   "t": 1793683730000.0,
-   "mag": 3.0,
-   "prof": 167.6,
-   "f": "2026-11-03 01:28",
-   "l": "Nor Lipez, Potosí"
   }
  ],
  "ultimos": [
@@ -229,20 +211,9 @@
    "prof": 287.0,
    "bo": true,
    "sentido": false
-  },
-  {
-   "t": 1793683730000.0,
-   "mag": 3.0,
-   "lugar": "Nor Lipez, Potosí",
-   "depto": "Potosí",
-   "lat": -21.233,
-   "lon": -67.49,
-   "prof": 167.6,
-   "bo": true,
-   "sentido": false
   }
  ],
- "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T02:48 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T09:21 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
  "fuentes": [
   [
    "Observatorio San Calixto · Boletín sísmico",

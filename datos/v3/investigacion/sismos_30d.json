@@ -1,6 +1,6 @@
 {
  "tipo": "sismo",
- "codigo": "SIS-30D-20261109",
+ "codigo": "SIS-30D-20261110",
  "ventana": "30d",
  "titulo": "Actividad sísmica en Bolivia · último mes",
  "meta": [
@@ -14,7 +14,7 @@
   ],
   [
    "CORTE",
-   "09 NOV 2026 · 23:34 BOT"
+   "10 NOV 2026 · 06:16 BOT"
   ],
   [
    "ESTADO",
@@ -473,11 +473,6 @@
  ],
  "serie": [
   [
-   "2026-10-11",
-   0,
-   0
-  ],
-  [
    "2026-10-12",
    2,
    0
@@ -619,6 +614,11 @@
   ],
   [
    "2026-11-09",
+   0,
+   0
+  ],
+  [
+   "2026-11-10",
    0,
    0
   ]
@@ -1032,7 +1032,7 @@
    "sentido": false
   }
  ],
- "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T02:48 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T09:21 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
  "fuentes": [
   [
    "Observatorio San Calixto · Boletín sísmico",
