@@ -234,14 +234,14 @@
   /* ---------- filtros propios de cada módulo (actualizan KPIs, gráficas, mapa y lista) ---------- */
   function filtrosHtml(B) {
     if (!B.filtros) return "";
-    return '<div class="card fmod"><h2>' + X.ic("list") + 'Filtros de análisis</h2><div class="sx-ctl">' + B.filtros.ctl.map(function (c) { return '<label>' + c.l + ' <select data-f="' + c.id + '">' + c.o.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("") + '</select></label>'; }).join("") + '<button class="btn s" id="fReset" type="button">Quitar filtros</button></div><div class="nota" id="fRes"></div></div>';
+    return '<div class="card fmod"><h2>' + X.ic("list") + 'Filtros de análisis</h2><div class="sx-ctl">' + B.filtros.ctl.map(function (c) { return '<label>' + c.l + ' <select data-f="' + c.id + '">' + c.o.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("") + '</select></label>'; }).join("") + '<button class="btn s" id="fReset" type="button">Quitar filtros</button></div><div class="nota" id="fRes"></div></div>' + (B.wb ? '<div class="card"><h2>' + X.ic("info") + 'Contexto de Bolivia · tendencias (Banco Mundial)</h2><div class="grid g4" id="wbCtx"></div></div>' : "");
   }
   function filtrosInit(B) {
     if (!B.filtros) return;
     var box = document.querySelector(".fmod");
     function vals() { var v = {}; [].forEach.call(box.querySelectorAll("select[data-f]"), function (e) { v[e.dataset.f] = e.value; }); return v; }
     function aplica() {
-      var r = B.filtros.aplica(vals()); $("fRes").textContent = r || "";
+      var r = B.filtros.aplica(vals()); $("fRes").innerHTML = r || "";
       var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = B.kpiF();
       B.charts.forEach(function (c) { try { c.f(); } catch (x) { console.error(x); } });
       var m = (window.__mapas || {}).mmap; if (m && B.filtros.mapa) { try { B.filtros.mapa(m); } catch (x) { console.error(x); } }
@@ -249,7 +249,7 @@
     }
     box.addEventListener("change", aplica);
     $("fReset").onclick = function () { [].forEach.call(box.querySelectorAll("select[data-f]"), function (e) { e.selectedIndex = 0; }); aplica(); };
-    aplica();
+    aplica(); if (B.wb) contextoWB();
   }
   var ITEM_AV = function (a) { return '<a class="alert" href="' + S.esc(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + COLN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(a.titulo) + '</div><div class="m">Vigente ' + S.esc(a.inicio || "") + ' → ' + S.esc(a.fin || "") + ' · ' + S.esc((a.departamentos || []).join(", ")) + (a.n_municipios ? ' · ' + a.n_municipios + ' municipios' : '') + '</div></div><span class="badge b' + Math.max(0, a._n) + '">' + NIVT[Math.max(0, a._n)] + '</span></a>'; };
   function filtrosAvisos(ALL, AV, vig, extra) {
@@ -263,6 +263,51 @@
       AV.length = 0; L.forEach(function (a) { AV.push(a); }); vig.length = 0; AV.filter(function (a) { return a._v; }).forEach(function (a) { vig.push(a); });
       return "Mostrando " + AV.length + " de " + ALL.length + " avisos de los últimos 60 días · " + vig.length + " vigentes";
     }, mapa: function (m) { var niv = {}; vig.forEach(function (a) { (a.municipios || []).forEach(function (t) { if (niv[t] == null || a._n > niv[t]) niv[t] = a._n; }); }); var g = geoCopia(D.geoMun); g.features.forEach(function (f) { var q = niv[f.properties.n + " (" + f.properties.d + ")"]; f.properties.niv = q == null ? -1 : q; }); if (m.getSource("mun")) m.getSource("mun").setData(g); }};
+  }
+
+  var HECHO_RX = /muri|muert|fallec|herid|accident|choque|colisi|vuelc|embarranc|atropell|bloque|marcha|paro |protesta|enfrentamient|conflict|asesin|feminicid|homicid|incendi|explosi|robo|atraco|secuestr|detenid|aprehend|rescat|derrumb|intoxic|ahog|derrame|fuga|colaps/i, RUIDO_RX = /econom|\bINE\b|unesco|whatsapp|seguro|artistas|m[uú]sica|pacto global|https?:\/\/|campa[nñ]a|premio|libro|festival|aniversario|impunidad|informe/i;
+  function esHecho(e) { var t = e.titulo || ""; return HECHO_RX.test(t) && !RUIDO_RX.test(t); }
+  function embudo(rev, sen, conf, desc) { return '<span class="emb"><b>' + rev + '</b> notas revisadas</span><span class="emb">→ <b>' + sen + '</b> señales (1 medio)</span><span class="emb">→ <b>' + conf + '</b> hechos triangulados (2+ medios)</span><span class="emb dsc"><b>' + desc + '</b> descartadas (no son un hecho)</span>'; }
+  function filtrosPrensa(ORIG, L, L30, SUB) {
+    var deps = {}; ORIG.forEach(function (e) { (e.departamentos || []).forEach(function (d) { deps[d] = 1; }); });
+    return {ctl: [{id: "per", l: "Pertinencia", o: [["h", "Solo hechos concretos"], ["", "Todas las notas"]]}, {id: "sub", l: "Tipo de hecho", o: [["", "Todos"]].concat(SUB.map(function (x) { return [x[0], x[0]]; }))}, {id: "dep", l: "Departamento", o: [["", "Todos"]].concat(Object.keys(deps).sort().map(function (d) { return [d, d]; }))}, {id: "cf", l: "Confianza", o: [["", "Todas"], ["m", "Media o alta (2+ medios)"], ["b", "Una sola fuente"]]}, {id: "vi", l: "Víctimas", o: [["", "Todos"], ["v", "Con víctimas"], ["f", "Con fallecidos"]]}],
+      lista: function () { return lista(L, 10); },
+      aplica: function (v) {
+        var base = ORIG.filter(function (e) { return v.per ? esHecho(e) : true; }), now = Date.now();
+        var f = base.filter(function (e) { var c = e.cifras || {}, n = e.confianza ? e.confianza.nivel : "Baja"; return (!v.sub || subtipo(e) === v.sub) && (!v.dep || (e.departamentos || []).indexOf(v.dep) >= 0) && (!v.cf || (v.cf === "m" ? n !== "Baja" : n === "Baja")) && (!v.vi || (v.vi === "f" ? (c.fallecidos || 0) > 0 : ((c.fallecidos || 0) + (c.heridos || 0)) > 0)); });
+        L.length = 0; f.forEach(function (e) { L.push(e); }); L30.length = 0; f.filter(function (e) { return act(e) > now - PER * DIA; }).forEach(function (e) { L30.push(e); });
+        var p = ORIG.filter(function (e) { return act(e) > now - PER * DIA; }), hs = p.filter(esHecho), tri = hs.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length;
+        return embudo(p.length, hs.length - tri, tri, p.length - hs.length) + '<span class="emb ok">Mostrando <b>' + L30.length + '</b> en ' + PL + '</span>';
+      },
+      mapa: function (m) {
+        var pts = L30.filter(function (e) { return e.lat != null; });
+        if (m.getSource("e")) m.getSource("e").setData({type: "FeatureCollection", features: pts.map(function (e) { return {type: "Feature", properties: {t: e.titulo, c: e.confianza ? e.confianza.nivel : "Baja", id: e.id}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; })});
+        if (m.getSource("me")) { var c = {}; pts.forEach(function (e) { var k = munDe(e.lon, e.lat); if (k) c[k] = (c[k] || 0) + 1; }); var g = geoCopia(D.geoMun); g.features.forEach(function (q) { q.properties.v = c[q.properties.n + " (" + q.properties.d + ")"] || 0; }); m.getSource("me").setData(g); }
+      }};
+  }
+  function filtrosBio(ALL, intl, vig, alta) {
+    var enf = {}, fu = {}; ALL.forEach(function (x) { enf[x._c.enf] = 1; fu[x.fuente] = 1; });
+    function item(x) { return '<a class="alert" href="' + S.esc(S.urlOk(x.url)) + '" target="_blank" rel="noopener" style="--c:' + PRIOC[x._c.prio] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(x.titulo) + '</div><div class="m">' + S.esc(x.fuente) + ' · ' + S.esc(x.fecha) + ' · ' + x._c.enf + '</div></div></a>'; }
+    return {ctl: [{id: "enf", l: "Enfermedad", o: [["", "Todas"]].concat(Object.keys(enf).sort().map(function (d) { return [d, d]; }))}, {id: "pr", l: "Prioridad", o: [["", "Todas"], ["Alta", "Alta"], ["Media", "Media"], ["Baja", "Baja"]]}, {id: "fu", l: "Fuente", o: [["", "Todas"]].concat(Object.keys(fu).sort().map(function (d) { return [d, d]; }))}, {id: "vg", l: "Estado", o: [["", "Todas (60 días)"], ["1", "Solo vigentes"]]}],
+      lista: function () { var L = (alta.length ? alta : vig).slice(0, 8); return L.map(item).join("") || '<p class="nota">Sin alertas con esos filtros.</p>'; },
+      aplica: function (v) {
+        var f = ALL.filter(function (x) { return (!v.enf || x._c.enf === v.enf) && (!v.pr || x._c.prio === v.pr) && (!v.fu || x.fuente === v.fu) && (!v.vg || x._c.vig); });
+        intl.length = 0; f.forEach(function (x) { intl.push(x); }); vig.length = 0; intl.filter(function (x) { return x._c.vig; }).forEach(function (x) { vig.push(x); }); alta.length = 0; vig.filter(function (x) { return x._c.prio === "Alta"; }).forEach(function (x) { alta.push(x); });
+        return '<span class="emb ok">Mostrando <b>' + intl.length + '</b> de ' + ALL.length + ' publicaciones oficiales · ' + vig.length + ' vigentes · ' + alta.length + ' de prioridad alta</span>';
+      }};
+  }
+  /* contexto de Bolivia (Banco Mundial, API abierta): tendencia de indicadores de salud y población */
+  function contextoWB() {
+    var box = $("wbCtx"); if (!box) return;
+    var IND = [["SH.DYN.MORT", "Mortalidad en menores de 5 años", "por 1.000 nacidos vivos", "#c62828"], ["SP.DYN.LE00.IN", "Esperanza de vida al nacer", "años", "#1d6fb8"], ["SH.IMM.MEAS", "Vacunación contra sarampión (12–23 m)", "% de niños", "#2e9e5b"], ["SP.POP.TOTL", "Población total", "personas", "#6a1b9a"]];
+    box.innerHTML = IND.map(function (i, k) { return '<div class="card kpi" style="--k:' + i[3] + '"><div class="l">' + i[1] + '</div><div class="v" id="wb' + k + 'v">…</div><div class="d" id="wb' + k + 'd">' + i[2] + '</div><div id="wb' + k + 'c" style="height:70px;margin-top:6px"></div></div>'; }).join("");
+    IND.forEach(function (i, k) {
+      fetch("https://api.worldbank.org/v2/country/BOL/indicator/" + i[0] + "?format=json&per_page=40&mrv=30").then(function (r) { return r.json(); }).then(function (a) {
+        var d = (a[1] || []).filter(function (x) { return x.value != null; }).reverse(); if (!d.length) throw 0; var u = d[d.length - 1];
+        $("wb" + k + "v").textContent = u.value >= 1e6 ? (u.value / 1e6).toFixed(2).replace(".", ",") + " M" : u.value.toFixed(1).replace(".", ","); $("wb" + k + "d").textContent = i[2] + " · " + u.date + " · Banco Mundial";
+        X.chart("wb" + k + "c", {grid: {left: 4, right: 4, top: 6, bottom: 4}, tooltip: {trigger: "axis"}, xAxis: {type: "category", data: d.map(function (x) { return x.date; }), show: false}, yAxis: {type: "value", show: false, scale: true}, series: [{type: "line", smooth: true, showSymbol: false, data: d.map(function (x) { return x.value; }), lineStyle: {color: i[3], width: 2}, areaStyle: {color: i[3], opacity: .12}}]});
+      }).catch(function () { $("wb" + k + "v").textContent = "—"; $("wb" + k + "d").textContent = "sin conexión al Banco Mundial"; });
+    });
   }
   function nuevo(pref) { var o = D.nuevas || {}, k = Object.keys(o).filter(function (x) { return x.indexOf(pref) === 0; }); return k.length ? o[k[0]] : []; }
   function geoCopia(g) { return JSON.parse(JSON.stringify(g || {type: "FeatureCollection", features: []})); }
@@ -432,8 +477,10 @@
     var O = D.epidemio_oficial || {}, ecdc = nuevo("ECDC").concat([]).concat(((D.nuevas || {})[Object.keys(D.nuevas || {}).filter(function (x) { return x.indexOf("ECDC") === 0; })[1]]) || []).filter(function (x) { return x.titulo && !isNaN(Date.parse(x.fecha)); }).map(function (x) { return {fuente: "ECDC", titulo: x.titulo, fecha: new Date(Date.parse(x.fecha)).toISOString().slice(0, 10), url: x.url, resumen: x.resumen || ""}; }), vistos = {}, intl = (O.internacional || []).concat(ecdc).filter(function (x) { if (vistos[x.url]) return false; vistos[x.url] = 1; return true; }).map(function (x) { x._c = claseOps(x); return x; }), bol = (O.boletines || []).slice().sort(function (a, b) { return b.semana - a.semana; }), now = Date.now();
     var vig = intl.filter(function (x) { return x._c.vig; }), alta = vig.filter(function (x) { return x._c.prio === "Alta"; }), dec = ((D.declaratorias || {}).declaratorias) || [];
     var pr = evs(function (e) { return e.origen === "prensa" && !e.internacional; }).sort(function (a, b) { return b.ts - a.ts; }), pr30 = pr.filter(function (e) { return act(e) > now - PER * DIA; });
+    var ALLI = intl.slice(), alta2 = alta;
     return {
-      kpis: kpi("Publicaciones oficiales vigentes", vig.length, "OPS, OMS y ECDC · últimos 60 días", COL, "virus") + kpi("Prioridad alta para Bolivia", alta.length, "menciona a Bolivia o alerta regional vigente", alta.length ? "#d7263d" : "#2e9e5b", "shield") + kpi("Último boletín MSyD", bol[0] ? "SE " + bol[0].semana : "—", bol[0] ? S.esc(bol[0].periodo) : "sin boletín", "#0aa3a3", "doc") + kpi("Declaratorias registradas", dec.length, "internacional · nacional · local", "#1d6fb8", "info"),
+      wb: true, filtros: filtrosBio(ALLI, intl, vig, alta),
+      kpiF: function () {  return kpi("Publicaciones oficiales vigentes", vig.length, "OPS, OMS y ECDC · últimos 60 días", COL, "virus") + kpi("Prioridad alta para Bolivia", alta.length, "menciona a Bolivia o alerta regional vigente", alta.length ? "#d7263d" : "#2e9e5b", "shield") + kpi("Último boletín MSyD", bol[0] ? "SE " + bol[0].semana : "—", bol[0] ? S.esc(bol[0].periodo) : "sin boletín", "#0aa3a3", "doc") + kpi("Declaratorias registradas", dec.length, "internacional · nacional · local", "#1d6fb8", "info"); },
       bio: {intl: intl, vig: vig, bol: bol, dec: dec, pr: pr, pr30: pr30},
       charts: [
         {t: "Prioridad de vigilancia", c: "Criterio del sistema (no oficial): Alta = menciona Bolivia o alerta epidemiológica regional vigente; Media = vigente y regional; Baja = resto.", id: "b1", f: function () { var o = contar(intl.filter(function (x) { return x._c.vig; }), function (x) { return x._c.prio; }); pie("b1", o, PRIOC); }},
@@ -441,7 +488,7 @@
         {t: "Línea de tiempo de publicaciones", c: "Cada punto es una publicación de OPS/OMS (tamaño = prioridad).", id: "b3", f: function () { var ks = topK(contar(intl, function (x) { return x._c.enf; }), 10, true); X.chart("b3", {tooltip: {formatter: function (p) { var x = p.data[3]; return "<b>" + S.esc(x.titulo) + "</b><br>" + S.esc(x.fuente) + " · " + x.fecha + "<br>Prioridad " + x._c.prio; }}, grid: {left: 120, right: 14, top: 10, bottom: 28}, xAxis: {type: "time"}, yAxis: {type: "category", data: ks}, series: [{type: "scatter", symbolSize: function (v) { return v[2] * 7 + 6; }, data: intl.filter(function (x) { return ks.indexOf(x._c.enf) >= 0; }).map(function (x) { return {value: [Date.parse(x.fecha), x._c.enf, {Alta: 3, Media: 2, Baja: 1}[x._c.prio], x], itemStyle: {color: PRIOC[x._c.prio]}}; })}]}); }},
         {t: "Tipo de publicación", c: "Alertas, actualizaciones, notas informativas y brotes.", id: "b4", f: function () { pie("b4", contar(intl, function (x) { return x._c.tipo; })); }}],
       map: {t: "Notas de prensa sobre salud por departamento (30 días)", c: "Solo prensa, preliminar: no es confirmación del Ministerio de Salud.", f: function (m) { var c = contar(pr30, function (e) { return e.departamentos || []; }), mx = 1; Object.keys(c).forEach(function (k) { mx = Math.max(mx, c[k]); }); var g = geoCopia(D.geoDep); g.features.forEach(function (f) { f.properties.v = c[f.properties.n] || 0; }); m.getSource("dep").setData(g); m.addLayer({id: "df", type: "fill", source: "dep", paint: {"fill-color": ["interpolate", ["linear"], ["get", "v"], 0, "#e9d7f2", mx, "#6a1b9a"], "fill-opacity": .75}}); m.pop("df", function (p) { return "<b>" + S.esc(p.n) + "</b>" + p.v + " nota(s) de prensa"; }); var pts = pr30.filter(function (e) { return e.lat != null; }); m.addSource("bp", {type: "geojson", data: {type: "FeatureCollection", features: pts.map(function (e) { return {type: "Feature", properties: {t: e.titulo, id: e.id}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; })}}); m.addLayer({id: "bp", type: "circle", source: "bp", paint: {"circle-radius": 7, "circle-color": "#8e24aa", "circle-stroke-color": "#fff", "circle-stroke-width": 2}}); m.pop("bp", function (p) { return "<b>" + S.esc(p.t) + "</b><a href='evento.html?id=" + encodeURIComponent(p.id) + "'>Abrir ficha →</a>"; }); }},
-      vig: {t: "Alertas oficiales de mayor prioridad", h: (alta.length ? alta : vig).slice(0, 8).map(function (x) { return '<a class="alert" href="' + S.esc(S.urlOk(x.url)) + '" target="_blank" rel="noopener" style="--c:' + PRIOC[x._c.prio] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(x.titulo) + '</div><div class="m">' + S.esc(x.fuente) + ' · ' + S.esc(x.fecha) + ' · ' + x._c.enf + '</div></div></a>'; }).join("") || '<p class="nota">Sin alertas oficiales vigentes.</p>'},
+      vig: {t: "Alertas oficiales de mayor prioridad", h: '<div id="aLista">' + ((alta.length ? alta : vig).slice(0, 8).map(function (x) { return '<a class="alert" href="' + S.esc(S.urlOk(x.url)) + '" target="_blank" rel="noopener" style="--c:' + PRIOC[x._c.prio] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(x.titulo) + '</div><div class="m">' + S.esc(x.fuente) + ' · ' + S.esc(x.fecha) + ' · ' + x._c.enf + '</div></div></a>'; }).join("") || '<p class="nota">Sin alertas oficiales vigentes.</p>') + '</div>'},
       reg: []
     };
   }
@@ -450,8 +497,10 @@
     var SUB = {"tecnológica": [["Explosión / incendio", /explosi|incendio|fuego|llamas/], ["Derrame / contaminación", /derrame|contamin|fuga|gas/], ["Colapso / estructura", /colaps|derrumb|puente|edificio/], ["Intoxicación", /intoxic/], ["Otro", /./]], "antropogénica": [["Accidente de tránsito", /accident|choque|colisi|vuelc|atropell/], ["Conflicto / bloqueo", /bloqueo|conflicto|marcha|protesta|paro/], ["Violencia / delito", /asesin|homicid|robo|asalto|detenid|aprehend|secuestr|feminicid/], ["Incendio", /incendio|quema/], ["Otro", /./]]}[T] || [["Otro", /./]];
     function sub(e) { return subtipo(e); }
     var vic = L30.filter(function (e) { return ((e.cifras || {}).fallecidos || 0) + ((e.cifras || {}).heridos || 0) > 0; });
+    var ORIGL = L.slice();
     return {
-      kpis: kpi("Notas en 30 días", L30.length, "hechos únicos (ya unidos)", COL, "list") + kpi("En 24 horas", L.filter(function (e) { return e.ts > now - DIA; }).length, "prensa boliviana", "#f26a1b", "pulse") + kpi("Con víctimas", vic.length, "fallecidos o heridos reportados", "#d7263d", "heart") + kpi("Con confianza media o alta", L30.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length, "2 o más fuentes independientes", "#2e9e5b", "shield"),
+      filtros: filtrosPrensa(ORIGL, L, L30, SUB),
+      kpiF: function () { var vic = L30.filter(function (e) { return ((e.cifras || {}).fallecidos || 0) + ((e.cifras || {}).heridos || 0) > 0; }); return kpi("Notas en 30 días", L30.length, "hechos únicos (ya unidos)", COL, "list") + kpi("En 24 horas", L.filter(function (e) { return e.ts > now - DIA; }).length, "prensa boliviana", "#f26a1b", "pulse") + kpi("Con víctimas", vic.length, "fallecidos o heridos reportados", "#d7263d", "heart") + kpi("Con confianza media o alta", L30.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length, "2 o más fuentes independientes", "#2e9e5b", "shield"); },
       charts: [
         {t: "Hechos por día", c: "Últimos 30 días.", id: "p1", f: function () { barDia("p1", L30, function (e) { return e.ts; }, ND, COL); }},
         {t: "Tipo de hecho", c: "Clasificación por palabras clave del titular.", id: "p2", f: function () { pie("p2", contar(L30, sub)); }},
@@ -461,7 +510,7 @@
         {t: "Víctimas reportadas por día", c: "Máximo reportado por hecho.", id: "p6", f: function () { var ks = dias(ND), f = {}, h = {}; L30.forEach(function (e) { var k = S.diaKey(e.ts); f[k] = (f[k] || 0) + ((e.cifras || {}).fallecidos || 0); h[k] = (h[k] || 0) + ((e.cifras || {}).heridos || 0); }); X.chart("p6", {tooltip: {trigger: "axis"}, legend: {top: 0}, grid: {left: 34, right: 10, top: 34, bottom: 28}, xAxis: {type: "category", data: ks.map(function (k) { return k.slice(5); })}, yAxis: {type: "value", minInterval: 1}, series: [{name: "Fallecidos", type: "bar", stack: "v", data: ks.map(function (k) { return f[k] || 0; }), itemStyle: {color: "#7a1f2b"}}, {name: "Heridos", type: "bar", stack: "v", data: ks.map(function (k) { return h[k] || 0; }), itemStyle: {color: "#f26a1b"}}]}); }}],
       map: {t: "Mapa de hechos", c: "Punto = hecho con ubicación (color = confianza).", f: function (m) { m.addSource("e", {type: "geojson", data: {type: "FeatureCollection", features: L30.filter(function (e) { return e.lat != null; }).map(function (e) { return {type: "Feature", properties: {t: e.titulo, c: e.confianza ? e.confianza.nivel : "Baja", id: e.id}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; })}}); capaMun(m, "me", L30.filter(function (e) { return e.lat != null; }).map(function (e) { return [e.lon, e.lat, 1]; }), "#ef6c00", null); ctrl(m, [{id: "mm", label: "Hechos por municipio (30 d)", layers: ["mef", "mel"]}, {id: "pp", label: "Hechos (puntos)", layers: ["e"]}]);
       m.addLayer({id: "e", type: "circle", source: "e", paint: {"circle-radius": 8, "circle-color": ["match", ["get", "c"], "Alta", "#2e9e5b", "Media", "#f5b700", "#8896ab"], "circle-stroke-color": "#fff", "circle-stroke-width": 1.5}}); m.pop("e", function (p) { return "<b>" + S.esc(p.t) + "</b>Confianza " + p.c.toLowerCase() + "<br><a href='evento.html?id=" + encodeURIComponent(p.id) + "'>Abrir ficha →</a>"; }); }},
-      vig: {t: "Hechos recientes", h: lista(L, 10) + (T === "antropogénica" ? '<a class="btn p" style="margin-top:10px" href="index.html#tra">' + X.ic("heart") + 'Ir a Salud humana: accidentes con víctimas</a>' : '')},
+      vig: {t: "Hechos recientes", h: '<div id="aLista">' + lista(L, 10) + '</div>' + (T === "antropogénica" ? '<a class="btn p" style="margin-top:10px" href="index.html#tra">' + X.ic("heart") + 'Ir a Salud humana: accidentes con víctimas</a>' : '')},
       reg: L
     };
   }
