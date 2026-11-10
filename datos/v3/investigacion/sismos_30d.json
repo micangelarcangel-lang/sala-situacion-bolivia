@@ -14,17 +14,17 @@
   ],
   [
    "CORTE",
-   "09 NOV 2026 · 22:21 BOT"
+   "09 NOV 2026 · 23:34 BOT"
   ],
   [
    "ESTADO",
    "Monitoreo"
   ]
  ],
- "sintesis": "El Observatorio San Calixto reporta 40 sismos en el último mes. El mayor fue de magnitud 4,9 (17/10 12:52, Nor Lipez, Potosí, a 192 km de profundidad). Departamentos con más eventos: Potosí (29), Oruro (4), Cochabamba (3). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
+ "sintesis": "El Observatorio San Calixto reporta 39 sismos en el último mes. El mayor fue de magnitud 4,9 (17/10 12:52, Nor Lipez, Potosí, a 192 km de profundidad). Departamentos con más eventos: Potosí (28), Oruro (4), Cochabamba (3). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
  "kpis": [
   [
-   "40",
+   "39",
    "sismos, último mes"
   ],
   [
@@ -469,17 +469,6 @@
    "prof": 252.2,
    "bo": true,
    "sentido": false
-  },
-  {
-   "t": 1791688903000.0,
-   "mag": 3.2,
-   "lugar": "Nor Lipez, Potosí",
-   "depto": "Potosí",
-   "lat": -20.843,
-   "lon": -67.346,
-   "prof": 187.1,
-   "bo": true,
-   "sentido": false
   }
  ],
  "serie": [
@@ -637,7 +626,7 @@
  "por_depto": [
   [
    "Potosí",
-   29
+   28
   ],
   [
    "Oruro",
@@ -929,13 +918,6 @@
    "prof": 252.2,
    "f": "2026-10-12 07:06",
    "l": "Antonio Quijarro, Potosí"
-  },
-  {
-   "t": 1791688903000.0,
-   "mag": 3.2,
-   "prof": 187.1,
-   "f": "2026-10-10 23:21",
-   "l": "Nor Lipez, Potosí"
   }
  ],
  "ultimos": [
@@ -1050,7 +1032,7 @@
    "sentido": false
   }
  ],
- "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T01:58 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T02:48 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
  "fuentes": [
   [
    "Observatorio San Calixto · Boletín sísmico",
