@@ -46,9 +46,61 @@
       m.addSource("mun", {type: "geojson", data: D.geoMun || {type: "FeatureCollection", features: []}});
       fn(m);
       m.addLayer({id: "dep-line", type: "line", source: "dep", paint: {"line-color": sat ? "#ffffff" : osc ? "#9fb3cc" : "#4b5a70", "line-width": sat ? 1.4 : 1.2, "line-opacity": sat ? .8 : 1}});
+      try { herramientas(m, id); } catch (x) { console.error("herramientas", x); }
     });
     function pop(capa, f) { m.on("click", capa, function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop">' + f(e.features[0].properties) + '</div>').addTo(m); }); m.on("mouseenter", capa, function () { m.getCanvas().style.cursor = "pointer"; }); m.on("mouseleave", capa, function () { m.getCanvas().style.cursor = ""; }); }
     m.pop = pop; return m;
+  }
+
+  /* ---------- herramientas de mapa: mapa base, desglose municipal y vista 3D ---------- */
+  var ESRI = function (n) { return "https://server.arcgisonline.com/ArcGIS/rest/services/" + n + "/MapServer/tile/{z}/{y}/{x}"; };
+  var BASES = {calles: {n: "Calles (OSM)", t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], o: 1, b: 1, s: 0}, claro: {n: "Claro (contexto)", t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], o: .6, b: 1, s: -.2},
+    sat: {n: "Satélite (Esri)", t: [ESRI("World_Imagery")], o: 1, b: 1, s: 0}, topo: {n: "Topográfico (Esri)", t: [ESRI("World_Topo_Map")], o: 1, b: 1, s: 0}, relieve: {n: "Relieve sombreado", t: [ESRI("Elevation/World_Hillshade")], o: 1, b: 1, s: 0}, oscuro: {n: "Oscuro", t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], o: .5, b: .42, s: -.4}};
+  var BASE_DEF = {"geológica": "topo", "meteorológica": "claro", "hidrológica": "topo", "climatológica": "sat", "biológica": "claro", "tecnológica": "calles", "antropogénica": "calles", "salud": "calles"};
+  function puntosTipo() {
+    var P = [];
+    try {
+      if (T === "geológica") ((D.sismos_oficiales || {}).sismos || []).forEach(function (s) { if (s.ts > Date.now() - PER * DIA) P.push([s.lon, s.lat, 1]); });
+      if (T === "climatológica") { var fp = D.focos_puntos || {}; (fp.puntos || []).forEach(function (p) { P.push([p[1], p[0], 1]); }); }
+      D.ev.forEach(function (e) { if (e.lat != null && e.lon != null && (e.categoria === T || (T === "salud" && e.cifras && (e.cifras.fallecidos || e.cifras.heridos))) && act(e) > Date.now() - PER * DIA && e.origen !== "modelo" && T !== "geológica" && T !== "climatológica") P.push([e.lon, e.lat, 1]); });
+    } catch (x) {}
+    return P;
+  }
+  function herramientas(m, id) {
+    var cont = m.getContainer(), q = new URLSearchParams(location.search), osc = document.documentElement.getAttribute("data-theme") === "dark";
+    var cur = q.get("b") && BASES[q.get("b")] ? q.get("b") : (BASE_DEF[T] || "calles");
+    function base(k) {
+      var b = BASES[k]; cur = k; m.getSource("base").setTiles(b.t);
+      m.setPaintProperty("base", "raster-opacity", b.o); m.setPaintProperty("base", "raster-brightness-max", b.b); m.setPaintProperty("base", "raster-saturation", b.s);
+      var sat = (k === "sat" || k === "oscuro"); if (m.getLayer("dep-line")) m.setPaintProperty("dep-line", "line-color", sat ? "#ffffff" : "#4b5a70");
+    }
+    var cnt = null;
+    function conteo() {
+      if (cnt) return cnt; var c = {}; puntosTipo().forEach(function (p) { var k = munDe(p[0], p[1]); if (k) c[k] = (c[k] || 0) + 1; });
+      var g = geoCopia(D.geoMun), mx = 1; g.features.forEach(function (f) { var v = c[f.properties.n + " (" + f.properties.d + ")"] || 0; f.properties.v = v; mx = Math.max(mx, v); });
+      return cnt = {g: g, mx: mx, n: Object.keys(c).length};
+    }
+    function desglose(on) {
+      ["mt-f", "mt-l"].forEach(function (i) { if (m.getLayer(i)) m.removeLayer(i); }); if (m.getSource("mt")) m.removeSource("mt");
+      if (!on) return;
+      var c = conteo(); m.addSource("mt", {type: "geojson", data: c.g});
+      m.addLayer({id: "mt-f", type: "fill", source: "mt", paint: {"fill-color": ["interpolate", ["linear"], ["get", "v"], 0, "rgba(0,0,0,0)", 1, "#ffe9b0", 1 + c.mx * .5, COL, 1 + c.mx, "#3a0a1e"], "fill-opacity": ["case", [">", ["get", "v"], 0], .7, 0]}}, "dep-line");
+      m.addLayer({id: "mt-l", type: "line", source: "mt", paint: {"line-color": "#5b6b82", "line-width": .5, "line-opacity": .75}}, "dep-line");
+      m.on("click", "mt-f", function (e) { var p = e.features[0].properties; new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>' + S.esc(p.n) + '</b>' + S.esc(p.d) + '<br>' + p.v + ' registro(s) en ' + PL + '</div>').addTo(m); });
+    }
+    function vista3d(on) {
+      if (m.getLayer("mt-3d")) m.removeLayer("mt-3d");
+      if (on) {
+        var c = conteo(); if (!m.getSource("mt3")) m.addSource("mt3", {type: "geojson", data: c.g});
+        m.addLayer({id: "mt-3d", type: "fill-extrusion", source: "mt3", filter: [">", ["get", "v"], 0], paint: {"fill-extrusion-color": ["interpolate", ["linear"], ["get", "v"], 1, "#ffd166", 1 + c.mx * .5, COL, 1 + c.mx, "#3a0a1e"], "fill-extrusion-height": ["*", ["get", "v"], 150000 / c.mx], "fill-extrusion-opacity": .86}}, "dep-line");
+        m.easeTo({pitch: 58, bearing: -18, duration: 900});
+      } else m.easeTo({pitch: 0, bearing: 0, duration: 700});
+    }
+    var d = document.createElement("div"); d.className = "mtools";
+    d.innerHTML = '<label>Mapa base <select data-r="b">' + Object.keys(BASES).map(function (k) { return '<option value="' + k + '"' + (k === cur ? " selected" : "") + '>' + BASES[k].n + '</option>'; }).join("") + '</select></label>' +
+      '<label>Desglose <select data-r="d"><option value="dep">Departamento</option><option value="mun">Municipio (intensidad)</option></select></label><label class="ck"><input type="checkbox" data-r="3"> Vista 3D</label>';
+    cont.appendChild(d); d.addEventListener("change", function (e) { var r = e.target.dataset.r; if (r === "b") base(e.target.value); if (r === "d") { desglose(e.target.value === "mun"); if (e.target.value !== "mun") { var t3 = d.querySelector('[data-r="3"]'); if (t3.checked) { t3.checked = false; vista3d(false); } } } if (r === "3") { if (e.target.checked && d.querySelector('[data-r="d"]').value !== "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); } vista3d(e.target.checked); } });
+    base(cur); if (q.get("d") === "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); }
   }
   function nuevo(pref) { var o = D.nuevas || {}, k = Object.keys(o).filter(function (x) { return x.indexOf(pref) === 0; }); return k.length ? o[k[0]] : []; }
   function geoCopia(g) { return JSON.parse(JSON.stringify(g || {type: "FeatureCollection", features: []})); }

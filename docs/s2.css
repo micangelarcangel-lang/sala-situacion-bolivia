@@ -153,3 +153,6 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 
 .mctrl{position:absolute;top:10px;left:10px;z-index:5;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 11px;font-size:12.5px;max-width:230px;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.96}
 .mctrl label{display:flex;gap:6px;align-items:center;margin-top:4px;cursor:pointer}.mctrl hr{border:0;border-top:1px solid var(--line);margin:7px 0 3px}
+
+.mtools{position:absolute;left:10px;bottom:28px;z-index:5;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:7px 10px;font-size:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;max-width:calc(100% - 20px);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.mtools label{display:flex;gap:5px;align-items:center;margin:0;font-weight:600}.mtools select{font:inherit;padding:3px 6px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mtools .ck{cursor:pointer}
