@@ -232,6 +232,7 @@
   }
 
   /* ---------- filtros propios de cada módulo (actualizan KPIs, gráficas, mapa y lista) ---------- */
+  function ventana(h) { return h.replace(/Últimos 30 días/g, PLU).replace(/\(30 días\)/g, "(" + PL + ")").replace(/30 días/g, PL); }
   function filtrosHtml(B) {
     if (!B.filtros) return "";
     return '<div class="card fmod"><h2>' + X.ic("list") + 'Filtros de análisis</h2><div class="sx-ctl">' + B.filtros.ctl.map(function (c) { return '<label>' + c.l + ' <select data-f="' + c.id + '">' + c.o.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("") + '</select></label>'; }).join("") + '<button class="btn s" id="fReset" type="button">Quitar filtros</button></div><div class="nota" id="fRes"></div></div>' + (B.wb ? '<div class="card"><h2>' + X.ic("info") + 'Contexto de Bolivia · tendencias (Banco Mundial)</h2><div class="grid g4" id="wbCtx"></div></div>' : "");
@@ -242,7 +243,7 @@
     function vals() { var v = {}; [].forEach.call(box.querySelectorAll("select[data-f]"), function (e) { v[e.dataset.f] = e.value; }); return v; }
     function aplica() {
       var r = B.filtros.aplica(vals()); $("fRes").innerHTML = r || "";
-      var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = B.kpiF();
+      var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = ventana(B.kpiF());
       B.charts.forEach(function (c) { try { c.f(); } catch (x) { console.error(x); } });
       var m = (window.__mapas || {}).mmap; if (m && B.filtros.mapa) { try { B.filtros.mapa(m); } catch (x) { console.error(x); } }
       var l = $("aLista"); if (l && B.filtros.lista) l.innerHTML = B.filtros.lista();
@@ -257,7 +258,7 @@
     var fen = {}; ALL.forEach(function (a) { if (a.fenomeno) fen[a.fenomeno.trim()] = 1; });
     var ctl = [{id: "niv", l: "Nivel", o: [["", "Todos"], ["1", "Amarilla"], ["2", "Naranja"], ["3", "Roja"]]}, {id: "dep", l: "Departamento", o: [["", "Todos"]].concat(Object.keys(deps).sort().map(function (d) { return [d, d]; }))}, {id: "vig", l: "Estado", o: [["", "Últimos 60 días"], ["1", "Solo vigentes"]]}];
     if (extra && Object.keys(fen).length) ctl.push({id: "fen", l: "Fenómeno", o: [["", "Todos"]].concat(Object.keys(fen).sort().map(function (d) { return [d, d]; }))});
-    function lista() { return vig.length ? vig.map(ITEM_AV).join("") : '<p class="nota">Sin avisos con esos filtros.</p>'; }
+    function lista() { return vig.length ? vig.map(ITEM_AV).join("") : '<p class="nota">Sin avisos vigentes con esos filtros.</p>'; }
     return {ctl: ctl, lista: lista, aplica: function (v) {
       var L = ALL.filter(function (a) { return (!v.niv || a._n === +v.niv) && (!v.dep || (a.departamentos || []).indexOf(v.dep) >= 0) && (!v.fen || (a.fenomeno || "").trim() === v.fen) && (!v.vig || a._v); });
       AV.length = 0; L.forEach(function (a) { AV.push(a); }); vig.length = 0; AV.filter(function (a) { return a._v; }).forEach(function (a) { vig.push(a); });
@@ -385,7 +386,7 @@
           F = filtra(); var o = $("sSort").value, L = F.slice().sort(function (a, b) { return o === "m" ? b.mag - a.mag : o === "p" ? a.prof_km - b.prof_km : b.ts - a.ts; });
           $("sRes").textContent = "Mostrando " + F.length + " de " + ALL.length + " sismos del período" + (F.length ? " · M máx. " + Math.max.apply(null, F.map(function (x) { return x.mag; })).toFixed(1) : "");
           $("sLista").innerHTML = L.length ? L.slice(0, 40).map(function (x) { var sen = x.probable_sentido; return '<a class="alert sx" data-i="' + ALL.indexOf(x) + '" style="--c:' + (sen ? "#f26a1b" : "#8d6e63") + ';color:inherit;text-decoration:none;cursor:pointer"><div style="flex:1"><div class="t"><b>M ' + x.mag.toFixed(1) + '</b> · ' + S.esc(x.provincia || "") + ', ' + S.esc(x.departamento) + (sen ? ' <span class="badge" style="background:#f26a1b">probablemente sentido</span>' : '') + '</div><div class="m">' + x.fecha_local + ' · prof. ' + x.prof_km + ' km</div></div></a>'; }).join("") : '<p class="nota">Sin sismos con ese filtro en el período.</p>';
-          if (redibuja) { s30.length = 0; F.forEach(function (x) { s30.push(x); }); B.charts.forEach(function (c) { c.f(); }); var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = B.kpiF(); var m = (window.__mapas || {}).mmap; if (m && m.getSource("s")) m.getSource("s").setData({type: "FeatureCollection", features: F.map(function (s) { return {type: "Feature", properties: {mag: s.mag, p: s.prof_km, t: s.fecha_local, l: s.provincia + ", " + s.departamento}, geometry: {type: "Point", coordinates: [s.lon, s.lat]}}; })}); }
+          if (redibuja) { s30.length = 0; F.forEach(function (x) { s30.push(x); }); B.charts.forEach(function (c) { c.f(); }); var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = ventana(B.kpiF()); var m = (window.__mapas || {}).mmap; if (m && m.getSource("s")) m.getSource("s").setData({type: "FeatureCollection", features: F.map(function (s) { return {type: "Feature", properties: {mag: s.mag, p: s.prof_km, t: s.fecha_local, l: s.provincia + ", " + s.departamento}, geometry: {type: "Point", coordinates: [s.lon, s.lat]}}; })}); }
         }
         ["sMin", "sProf", "sDep", "sSen"].forEach(function (i) { $(i).onchange = function () { pinta(true); }; }); $("sSort").onchange = function () { pinta(false); }; pinta(false);
         $("sLista").onclick = function (e) { var a = e.target.closest(".sx"); if (!a) return; var x = ALL[+a.dataset.i], m = (window.__mapas || {}).mmap; if (m) { m.flyTo({center: [x.lon, x.lat], zoom: 8, duration: 900}); new maplibregl.Popup().setLngLat([x.lon, x.lat]).setHTML('<div class="pop"><b>M ' + x.mag + '</b>' + S.esc(x.provincia + ", " + x.departamento) + '<br>' + x.fecha_local + ' · ' + x.prof_km + ' km</div>').addTo(m); } };
@@ -516,7 +517,7 @@
   }
 
   function bSalud() {
-    var now = Date.now(), HO = (((D.transito || {}).hechos) || []).filter(function (h) { return act(h) > now - PER * DIA; }), H = HO.slice();
+    var now = Date.now(), HO = (((D.transito || {}).hechos) || []).filter(function (h) { return act(h) > now - PER * DIA && (h.departamento || h.lat != null) && !/tanzania|egipto|cairo|asu[aá]n|argentina|espa[nñ]a|m[eé]xico|per[uú]\b|chile|brasil\b|colombia|ecuador|paraguay|nigeria|india|china|pakist[aá]n|estados unidos|ee\.? ?uu/i.test(h.titulo || ""); }), H = HO.slice();
     var O = D.ev.filter(function (e) { return e.categoria !== "biológica" && e.origen === "prensa" && act(e) > now - PER * DIA && ((e.cifras || {}).fallecidos || 0) + ((e.cifras || {}).heridos || 0) > 0 && !/transito/.test(e.id) && e.lat != null && !/españa|mexican|vocalista|muertos|toledo|estados unidos|texas|pensilvania|china|india|rusia|ucrania|gaza|israel/.test(norm(e.titulo)); });
     function tot() { var fa = H.reduce(function (a, h) { return a + (h.fallecidos || 0); }, 0), he = H.reduce(function (a, h) { return a + (h.heridos || 0); }, 0); return {fa: fa, he: he, l: fa + he ? Math.round(100 * fa / (fa + he)) : 0}; }
     function listas() { var conF = H.filter(function (h) { return h.fallecidos > 0; }), conH = H.filter(function (h) { return h.heridos > 0; }); return (conF.length ? conF.sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8).map(f).join("") : '<p class="nota">Sin fallecidos con esos filtros.</p>') + '<h3 style="margin:14px 0 6px;font-size:14px">Morbilidad: hechos con heridos</h3>' + (conH.length ? conH.sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8).map(f).join("") : '<p class="nota">Sin heridos con esos filtros.</p>'); }
