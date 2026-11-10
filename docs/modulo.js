@@ -136,14 +136,24 @@
       cont.appendChild(W);
       /* viento animado: partículas sobre una grilla Open-Meteo (modelo; no es observación) */
       var VT = {raf: 0, cv: null, grid: null};
+      var NIVV = {"": ["Superficie (10 m)", "10m", "wind_speed_10m", "wind_direction_10m"], "850": ["850 hPa (~1,5 km)", "850", "wind_speed_850hPa", "wind_direction_850hPa"], "700": ["700 hPa (~3 km)", "700", "wind_speed_700hPa", "wind_direction_700hPa"], "500": ["500 hPa (~5,5 km)", "500", "wind_speed_500hPa", "wind_direction_500hPa"]};
       function gridViento() {
-        if (VT.grid) return Promise.resolve(VT.grid);
+        if (VT.data) return Promise.resolve(VT.data);
         var la = [], lo = [], NL = 8, NO = 8; for (var i = 0; i < NL; i++) la.push(-23 + i * (13.6 / (NL - 1))); for (var j = 0; j < NO; j++) lo.push(-70 + j * (13.4 / (NO - 1)));
         var LA = [], LO = []; la.forEach(function (a) { lo.forEach(function (o) { LA.push(a.toFixed(2)); LO.push(o.toFixed(2)); }); });
-        return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + LA.join(",") + "&longitude=" + LO.join(",") + "&current=wind_speed_10m,wind_direction_10m&wind_speed_unit=kmh").then(function (r) { return r.json(); }).then(function (a) {
-          var u = [], v = []; a = [].concat(a); a.forEach(function (p) { var sp = p.current.wind_speed_10m, d = p.current.wind_direction_10m * Math.PI / 180; u.push(-sp * Math.sin(d)); v.push(-sp * Math.cos(d)); });
-          return VT.grid = {la: la, lo: lo, u: u, v: v, t: a[0].current.time};
+        var ck = "viento_v2_" + new Date().toISOString().slice(0, 13);
+        try { var c = sessionStorage.getItem(ck); if (c) { VT.data = JSON.parse(c); return Promise.resolve(VT.data); } } catch (x) {}
+        var vars = []; Object.keys(NIVV).forEach(function (k) { vars.push(NIVV[k][2], NIVV[k][3]); });
+        return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + LA.join(",") + "&longitude=" + LO.join(",") + "&hourly=" + vars.join(",") + "&forecast_days=3&timezone=America%2FLa_Paz&wind_speed_unit=kmh").then(function (r) { return r.json(); }).then(function (a) {
+          a = [].concat(a); var D_ = {la: la, lo: lo, t: a[0].hourly.time, sp: {}, dr: {}};
+          Object.keys(NIVV).forEach(function (k) { D_.sp[k] = a.map(function (p) { return p.hourly[NIVV[k][2]]; }); D_.dr[k] = a.map(function (p) { return p.hourly[NIVV[k][3]]; }); });
+          try { sessionStorage.setItem(ck, JSON.stringify(D_)); } catch (x) {}
+          return VT.data = D_;
         });
+      }
+      function campoViento(D_, h, k) {
+        var u = [], v = []; D_.sp[k].forEach(function (arr, i) { var sp = arr[h] == null ? 0 : arr[h], d = (D_.dr[k][i][h] || 0) * Math.PI / 180; u.push(-sp * Math.sin(d)); v.push(-sp * Math.cos(d)); });
+        return {la: D_.la, lo: D_.lo, u: u, v: v};
       }
       function muestra(g, lon, lat) {
         var fy = (lat - g.la[0]) / (g.la[g.la.length - 1] - g.la[0]) * (g.la.length - 1), fx = (lon - g.lo[0]) / (g.lo[g.lo.length - 1] - g.lo[0]) * (g.lo.length - 1);
@@ -153,19 +163,32 @@
         return [bi(g.u), bi(g.v)];
       }
       function viento(on) {
-        if (!on) { cancelAnimationFrame(VT.raf); if (VT.cv) { VT.cv.remove(); VT.cv = null; } return; }
-        gridViento().then(function (g) {
+        if (!on) { cancelAnimationFrame(VT.raf); clearInterval(VT.pl); if (VT.cv) { VT.cv.remove(); VT.cv = null; } if (VT.bar) { VT.bar.remove(); VT.bar = null; } return; }
+        gridViento().then(function (D_) {
+          var ahora = new Date(Date.now() - 4 * 36e5).toISOString().slice(0, 13), h0 = Math.max(0, D_.t.findIndex(function (t) { return t.slice(0, 13) >= ahora; }));
+          var hh = h0, kk = "";
+          VT.g = campoViento(D_, hh, kk);
           var cv = document.createElement("canvas"); cv.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:3"; cont.appendChild(cv); VT.cv = cv;
+          var DIAS_ = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+          var bar = document.createElement("div"); bar.className = "mtools mtime"; VT.bar = bar;
+          bar.innerHTML = '<button type="button" class="btn s" data-t="play">▶</button><input type="range" min="0" max="' + (D_.t.length - 1) + '" value="' + hh + '" data-t="r"><b data-t="lb"></b><select data-t="niv">' + Object.keys(NIVV).map(function (k) { return '<option value="' + k + '">' + NIVV[k][0] + '</option>'; }).join("") + '</select><span class="mleg"><i></i> 0 · 8 · 18 · 30+ km/h</span>';
+          cont.appendChild(bar);
+          function etiqueta() { var t = D_.t[hh], d = new Date(t + ":00"); bar.querySelector('[data-t="lb"]').textContent = DIAS_[d.getDay()] + " " + t.slice(8, 10) + "/" + t.slice(5, 7) + " " + t.slice(11, 16) + " (hora Bolivia)" + (hh === h0 ? " · ahora" : ""); }
+          function pon(h) { hh = h; VT.g = campoViento(D_, hh, kk); bar.querySelector('[data-t="r"]').value = hh; etiqueta(); }
+          bar.addEventListener("input", function (e) { if (e.target.dataset.t === "r") pon(+e.target.value); });
+          bar.addEventListener("change", function (e) { if (e.target.dataset.t === "niv") { kk = e.target.value; pon(hh); } });
+          bar.querySelector('[data-t="play"]').onclick = function () { var b = this; if (VT.pl) { clearInterval(VT.pl); VT.pl = 0; b.textContent = "▶"; return; } b.textContent = "⏸"; VT.pl = setInterval(function () { pon(hh + 1 >= D_.t.length ? 0 : hh + 1); }, 700); };
+          etiqueta();
           var ctx, w, h, P = [];
           function dim() { var r = cont.getBoundingClientRect(); w = cv.width = r.width; h = cv.height = r.height; ctx = cv.getContext("2d"); ctx.clearRect(0, 0, w, h); }
-          function nace(p) { p.x = Math.random() * w; p.y = Math.random() * h; p.a = 0; p.vida = 40 + Math.random() * 60; return p; }
+          function nace(p) { p.x = Math.random() * w; p.y = Math.random() * h; p.vida = 40 + Math.random() * 60; return p; }
           dim(); for (var i = 0; i < 1100; i++) P.push(nace({}));
           m.on("move", function () { if (VT.cv) ctx.clearRect(0, 0, w, h); }); window.addEventListener("resize", dim);
           function paso() {
             if (!VT.cv) return;
             ctx.globalCompositeOperation = "destination-out"; ctx.fillStyle = "rgba(0,0,0,.07)"; ctx.fillRect(0, 0, w, h); ctx.globalCompositeOperation = "source-over"; ctx.lineWidth = 1.3;
             P.forEach(function (p) {
-              var ll = m.unproject([p.x, p.y]), uv = muestra(g, ll.lng, ll.lat); if (!uv || --p.vida < 0) { nace(p); return; }
+              var ll = m.unproject([p.x, p.y]), uv = muestra(VT.g, ll.lng, ll.lat); if (!uv || --p.vida < 0) { nace(p); return; }
               var sp = Math.hypot(uv[0], uv[1]), nx = p.x + uv[0] * .055, ny = p.y - uv[1] * .055;
               ctx.strokeStyle = sp < 8 ? "rgba(70,130,200,.85)" : sp < 18 ? "rgba(40,160,120,.9)" : sp < 30 ? "rgba(235,170,20,.95)" : "rgba(215,38,61,.95)";
               ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke(); p.x = nx; p.y = ny;
