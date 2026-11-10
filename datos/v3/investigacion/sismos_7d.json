@@ -1,6 +1,6 @@
 {
  "tipo": "sismo",
- "codigo": "SIS-7D-20261108",
+ "codigo": "SIS-7D-20261109",
  "ventana": "7d",
  "titulo": "Actividad sísmica en Bolivia · últimos 7 días",
  "meta": [
@@ -14,17 +14,17 @@
   ],
   [
    "CORTE",
-   "08 NOV 2026 · 22:42 BOT"
+   "09 NOV 2026 · 22:21 BOT"
   ],
   [
    "ESTADO",
    "Monitoreo"
   ]
  ],
- "sintesis": "El Observatorio San Calixto reporta 7 sismos en los últimos 7 días. El mayor fue de magnitud 4,3 (02/11 14:54, José Carrasco, Cochabamba, a 27 km de profundidad). Departamentos con más eventos: Potosí (4), La Paz (1), Oruro (1). 1 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
+ "sintesis": "El Observatorio San Calixto reporta 5 sismos en los últimos 7 días. El mayor fue de magnitud 4,0 (05/11 15:10, Inquisivi, La Paz, a 310 km de profundidad). Departamentos con más eventos: Potosí (3), La Paz (1), Oruro (1). 0 evento(s) con probabilidad de haber sido sentidos por la población (magnitud 4,0 o más y profundidad menor a 100 km). Fuente oficial: Observatorio San Calixto.",
  "kpis": [
   [
-   "7",
+   "5",
    "sismos, últimos 7 días"
   ],
   [
@@ -32,11 +32,11 @@
    "últimas 24 horas"
   ],
   [
-   "4,3",
+   "4,0",
    "mayor magnitud"
   ],
   [
-   "1",
+   "0",
    "probablemente sentidos"
   ]
  ],
@@ -95,36 +95,9 @@
    "prof": 167.6,
    "bo": true,
    "sentido": false
-  },
-  {
-   "t": 1793645662000.0,
-   "mag": 4.3,
-   "lugar": "José Carrasco, Cochabamba",
-   "depto": "Cochabamba",
-   "lat": -17.413,
-   "lon": -64.507,
-   "prof": 27.3,
-   "bo": true,
-   "sentido": true
-  },
-  {
-   "t": 1793634494000.0,
-   "mag": 3.5,
-   "lugar": "Sud Lipez, Potosí",
-   "depto": "Potosí",
-   "lat": -21.507,
-   "lon": -66.862,
-   "prof": 188.5,
-   "bo": true,
-   "sentido": false
   }
  ],
  "serie": [
-  [
-   "2026-11-02",
-   1,
-   1
-  ],
   [
    "2026-11-03",
    2,
@@ -154,12 +127,17 @@
    "2026-11-08",
    0,
    0
+  ],
+  [
+   "2026-11-09",
+   0,
+   0
   ]
  ],
  "por_depto": [
   [
    "Potosí",
-   4
+   3
   ],
   [
    "La Paz",
@@ -167,10 +145,6 @@
   ],
   [
    "Oruro",
-   1
-  ],
-  [
-   "Cochabamba",
    1
   ]
  ],
@@ -209,20 +183,6 @@
    "prof": 167.6,
    "f": "2026-11-03 01:28",
    "l": "Nor Lipez, Potosí"
-  },
-  {
-   "t": 1793645662000.0,
-   "mag": 4.3,
-   "prof": 27.3,
-   "f": "2026-11-02 14:54",
-   "l": "José Carrasco, Cochabamba"
-  },
-  {
-   "t": 1793634494000.0,
-   "mag": 3.5,
-   "prof": 188.5,
-   "f": "2026-11-02 11:48",
-   "l": "Sud Lipez, Potosí"
   }
  ],
  "ultimos": [
@@ -280,31 +240,9 @@
    "prof": 167.6,
    "bo": true,
    "sentido": false
-  },
-  {
-   "t": 1793645662000.0,
-   "mag": 4.3,
-   "lugar": "José Carrasco, Cochabamba",
-   "depto": "Cochabamba",
-   "lat": -17.413,
-   "lon": -64.507,
-   "prof": 27.3,
-   "bo": true,
-   "sentido": true
-  },
-  {
-   "t": 1793634494000.0,
-   "mag": 3.5,
-   "lugar": "Sud Lipez, Potosí",
-   "depto": "Potosí",
-   "lat": -21.507,
-   "lon": -66.862,
-   "prof": 188.5,
-   "bo": true,
-   "sentido": false
   }
  ],
- "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-09T01:46 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
+ "metodo": "Eventos del boletín sísmico oficial del Observatorio San Calixto, leídos automáticamente (actualizado: 2026-11-10T01:58 UTC). Un sismo se marca como 'probablemente sentido' con magnitud ≥ 4,0 y profundidad ≤ 100 km (criterio del sistema; no es una intensidad medida).",
  "fuentes": [
   [
    "Observatorio San Calixto · Boletín sísmico",
