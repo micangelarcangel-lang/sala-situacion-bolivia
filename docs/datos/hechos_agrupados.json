@@ -1,23 +1,23 @@
 [
  {
-  "hecho_id": "noticia:onatt7",
-  "fecha_hora_local": "2026-11-10 10:13",
-  "ts_ms": 1794320038000,
-  "titulo": "Video: Al menos 10 muertos y once heridos deja un aparatoso choque múltiple en Bulgaria - unitel.bo",
+  "hecho_id": "noticia:4fd4wo",
+  "fecha_hora_local": "2026-11-10 11:38",
+  "ts_ms": 1794325136000,
+  "titulo": "Una densa niebla provoca un choque múltiple con 11 muertos en Bulgaria - Red Uno",
   "tipo_amenaza": "antropogénica",
   "nivel_num": 3,
   "nivel_preliminar": "roja",
-  "fallecidos_max": 10,
+  "fallecidos_max": 11,
   "heridos_max": 1,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "unitel.bo",
+  "cifras_discrepantes": "sí",
+  "n_notas": 2,
+  "fuentes": "Red Uno; unitel.bo",
   "lat": "",
   "lon": "",
   "lugar": "",
   "departamento": "",
   "municipio": "",
-  "enlaces": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQVHc5dlBKbzJsTjlmWDFXcVA1OHNIR2hMdXBzRHFEWkxiU1I2TkNtUXVITVlqUjZIenZOYTBPVFU2SlkzSHlMVlZuX0dqaXhWUVRyOXNEYUNrclBYR201Z2FBSHgxR1FmMlp6UEdGQW5RNmJWRVR6UE1MNExjNC1lZWNsVUJfaE5vaDJKdjdBSVJYM2MtRXBta3EyUkJ2OEFRRnZuR0NMT1RKdGEzbThWSmZjOUJFc1RWQldCRWlQQnJxelhOUFUwb2h3?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNeHU5aEk0eFdwcm9rSEk3Qm9UTW9CY1FtNjQwVXpuS094N1Y2NEtPblVBbTdHQ1IxN1NGUDQwMDVYekRGT1RoZFktSVN2eTdCU3lrY1hiMkZkdTBRWW5mM254V0ZvelBxVHJ1ZGw0eVpGeWZHM3NqTENBQmFFeUt0UGt1N28ydHJmLW1wYUVFLVMxRkFkWmpxNS1yYnQ5OUlyZW0yTWRkY1dKZmtpczNFV1kzR0JlWUd3ZE96QlhUbHVIdw?oc=5 | https://news.google.com/rss/articles/CBMiygFBVV95cUxQVHc5dlBKbzJsTjlmWDFXcVA1OHNIR2hMdXBzRHFEWkxiU1I2TkNtUXVITVlqUjZIenZOYTBPVFU2SlkzSHlMVlZuX0dqaXhWUVRyOXNEYUNrclBYR201Z2FBSHgxR1FmMlp6UEdGQW5RNmJWRVR6UE1MNExjNC1lZWNsVUJfaE5vaDJKdjdBSVJYM2MtRXBta3EyUkJ2OEFRRnZuR0NMT1RKdGEzbThWSmZjOUJFc1RWQldCRWlQQnJxelhOUFUwb2h3?oc=5"
  },
  {
   "hecho_id": "noticia:1oje8bi",
