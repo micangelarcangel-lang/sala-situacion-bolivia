@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-10T11:21:45.938401Z",
+ "actualizado": "2026-11-10T12:19:54.409890Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261109T195112_-17.658_-69.371",
+   "fecha_local": "2026-11-09 19:51:12",
+   "lat": -17.658,
+   "lon": -69.371,
+   "prof_km": 160.0,
+   "mag": 3.3,
+   "provincia": "Pacajes",
+   "departamento": "La Paz",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261105T171454_-22.266_-67.61",
    "fecha_local": "2026-11-05 17:14:54",
