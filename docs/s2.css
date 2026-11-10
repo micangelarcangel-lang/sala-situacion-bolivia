@@ -158,3 +158,4 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 .mtools label{display:flex;gap:5px;align-items:center;margin:0;font-weight:600}.mtools select{font:inherit;padding:3px 6px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.mtools .ck{cursor:pointer}
 .mtools.mctx{bottom:auto;top:10px;left:auto;right:56px;flex-direction:column;align-items:flex-start;gap:4px;max-width:210px}.mtools.mctx b{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
 .sx-ctl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;font-size:12px}.sx-ctl label{display:flex;gap:5px;align-items:center;font-weight:600}.sx-ctl select{font:inherit;padding:3px 6px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.sx-lista{display:flex;flex-direction:column;gap:6px}.sx:hover{filter:brightness(.97)}
+.fmod{margin:6px 0 10px}.fmod h2{margin-bottom:8px}.fmod .btn{padding:4px 10px;font-size:12px}

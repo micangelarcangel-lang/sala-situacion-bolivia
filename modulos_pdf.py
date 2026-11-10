@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAW = "https://raw.githubusercontent.com/micangelarcangel-lang/sala-situacion-bolivia/main/docs/"
 DIAS = {"24h": 1, "7d": 7, "30d": 30}; NOM = {"24h": "Últimas 24 horas", "7d": "Últimos 7 días", "30d": "Último mes"}
-HIDE = ".alert{flex-wrap:wrap!important}.alert>div{min-width:0;flex:1 1 100%!important}.alert .badge{order:-1}.hdr,#hdr,.foot,#mbar,.mbar,#pnl,.noimp,.live,[id^=s-sub] .cap{display:none!important}.mctrl,.mtools,.maplibregl-ctrl-top-right,select{display:none!important}body{padding:0!important;background:#fff!important}.wrap{max-width:none!important;padding:0 6mm!important}"
+HIDE = ".alert{flex-wrap:wrap!important}.alert>div{min-width:0;flex:1 1 100%!important}.alert .badge{order:-1}.hdr,#hdr,.foot,#mbar,.mbar,#pnl,.noimp,.live,[id^=s-sub] .cap{display:none!important}.mctrl,.mtools,.fmod,.maplibregl-ctrl-top-right,select{display:none!important}body{padding:0!important;background:#fff!important}.wrap{max-width:none!important;padding:0 6mm!important}"
 
 import re
 HECHO = re.compile(r"muri|muert|fallec|herid|accident|choque|colisi|vuelc|embarranc|atropell|bloque|marcha|paro |protesta|enfrentamient|conflict|asesin|feminicid|homicid|incendi|explosi|robo|atraco|secuestr|detenid|aprehend|rescat|derrumb|intoxic|ahog", re.I)
