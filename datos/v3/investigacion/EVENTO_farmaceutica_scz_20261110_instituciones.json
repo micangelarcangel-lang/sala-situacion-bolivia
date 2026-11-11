@@ -4,62 +4,40 @@
   -63.19
  ],
  "fuente_punto": "estimación del sistema a partir de «Av. Banzer, cerca del décimo anillo» (prensa); no es una coordenada confirmada",
- "fuente_instituciones": "OpenStreetMap (Overpass)",
+ "fuente_instituciones": "OpenStreetMap (Nominatim)",
  "instituciones": [
   {
    "cat": "salud",
-   "nombre": "Centro de Salud El Remanzo",
-   "lat": -17.7146794,
-   "lon": -63.1787558,
+   "nombre": "C.S. Universitario Norte",
+   "lat": -17.7218875,
+   "lon": -63.1595925,
    "dir": "",
-   "km": 4.570106781685609,
+   "km": 6.128444898711265,
    "n": 1,
    "color": "#1d6fb8",
    "nomcat": "Salud"
   },
   {
    "cat": "salud",
-   "nombre": "C.S. Universitario Norte",
-   "lat": -17.7219169,
-   "lon": -63.1596009,
-   "dir": "Avenida Viru Viru",
-   "km": 6.130758710858894,
+   "nombre": "Centro de Salud",
+   "lat": -17.7276886,
+   "lon": -63.1598266,
+   "dir": "",
+   "km": 6.673875783144039,
    "n": 2,
    "color": "#1d6fb8",
    "nomcat": "Salud"
   },
   {
    "cat": "salud",
-   "nombre": "C.S. Anita Suárez de Leigue",
-   "lat": -17.737024,
-   "lon": -63.1717392,
+   "nombre": "Avenida Gral. Manuel Belgrano",
+   "lat": -17.7345795,
+   "lon": -63.1629393,
    "dir": "",
-   "km": 7.162877892782429,
+   "km": 7.218489548345584,
    "n": 3,
    "color": "#1d6fb8",
    "nomcat": "Salud"
-  },
-  {
-   "cat": "bomberos",
-   "nombre": "Bombero Voluntarios",
-   "lat": -17.7640929,
-   "lon": -63.1484685,
-   "dir": "Calle Diagonal 3",
-   "km": 10.839440362368721,
-   "n": 4,
-   "color": "#d2491f",
-   "nomcat": "Bomberos"
-  },
-  {
-   "cat": "bomberos",
-   "nombre": "Bomberos UDEM",
-   "lat": -17.7644506,
-   "lon": -63.1454207,
-   "dir": "",
-   "km": 11.010334584978347,
-   "n": 5,
-   "color": "#d2491f",
-   "nomcat": "Bomberos"
   },
   {
    "cat": "bomberos",
@@ -68,20 +46,9 @@
    "lon": -63.2062872,
    "dir": "",
    "km": 12.163564580752823,
-   "n": 6,
+   "n": 4,
    "color": "#d2491f",
    "nomcat": "Bomberos"
-  },
-  {
-   "cat": "policia",
-   "nombre": "Patrulla Caminera",
-   "lat": -17.7178075,
-   "lon": -63.1623538,
-   "dir": "Avenida Cristo Redentor",
-   "km": 5.588772629568761,
-   "n": 7,
-   "color": "#2e3a8c",
-   "nomcat": "Policía"
   },
   {
    "cat": "policia",
@@ -90,51 +57,51 @@
    "lon": -63.158895,
    "dir": "",
    "km": 7.022306577974724,
-   "n": 8,
+   "n": 5,
    "color": "#2e3a8c",
    "nomcat": "Policía"
   },
   {
    "cat": "policia",
-   "nombre": "Distrito Policial 8",
-   "lat": -17.7343851,
-   "lon": -63.1479205,
-   "dir": "Calle Racine",
-   "km": 7.966955522960135,
-   "n": 9,
+   "nombre": "Policía Montada",
+   "lat": -17.7486146,
+   "lon": -63.1967333,
+   "dir": "",
+   "km": 8.216583134140311,
+   "n": 6,
+   "color": "#2e3a8c",
+   "nomcat": "Policía"
+  },
+  {
+   "cat": "policia",
+   "nombre": "Policía Nacional de Bolivia",
+   "lat": -17.7518067,
+   "lon": -63.1576789,
+   "dir": "",
+   "km": 9.201148161682669,
+   "n": 7,
    "color": "#2e3a8c",
    "nomcat": "Policía"
   },
   {
    "cat": "rescate",
-   "nombre": "Emer Cruz",
-   "lat": -17.7873443,
-   "lon": -63.208674,
+   "nombre": "Calle Villa Roja",
+   "lat": -17.8347398,
+   "lon": -63.1764458,
    "dir": "",
-   "km": 12.647715755144091,
-   "n": 10,
+   "km": 17.820157304144686,
+   "n": 8,
    "color": "#2e9e5b",
    "nomcat": "Rescate / emergencias"
   },
   {
    "cat": "rescate",
-   "nombre": "Mia",
-   "lat": -17.786385,
-   "lon": -63.2194377,
+   "nombre": "Parada trufi Arroyito bandera blanca y roja Barrio Tatu 3",
+   "lat": -17.8198473,
+   "lon": -63.0724902,
    "dir": "",
-   "km": 12.77185133609663,
-   "n": 11,
-   "color": "#2e9e5b",
-   "nomcat": "Rescate / emergencias"
-  },
-  {
-   "cat": "rescate",
-   "nombre": "EMEDSA",
-   "lat": -17.7997826,
-   "lon": -63.1849128,
-   "dir": "Calle Choferes del Chaco",
-   "km": 13.885648661726774,
-   "n": 12,
+   "km": 20.35391072244207,
+   "n": 9,
    "color": "#2e9e5b",
    "nomcat": "Rescate / emergencias"
   }
@@ -142,27 +109,19 @@
  "todas": [
   {
    "cat": "salud",
-   "nombre": "Centro de Salud El Remanzo",
-   "lat": -17.7146794,
-   "lon": -63.1787558,
+   "nombre": "C.S. Universitario Norte",
+   "lat": -17.7218875,
+   "lon": -63.1595925,
    "dir": "",
-   "km": 4.570106781685609
-  },
-  {
-   "cat": "policia",
-   "nombre": "Patrulla Caminera",
-   "lat": -17.7178075,
-   "lon": -63.1623538,
-   "dir": "Avenida Cristo Redentor",
-   "km": 5.588772629568761
+   "km": 6.128444898711265
   },
   {
    "cat": "salud",
-   "nombre": "C.S. Universitario Norte",
-   "lat": -17.7219169,
-   "lon": -63.1596009,
-   "dir": "Avenida Viru Viru",
-   "km": 6.130758710858894
+   "nombre": "Centro de Salud",
+   "lat": -17.7276886,
+   "lon": -63.1598266,
+   "dir": "",
+   "km": 6.673875783144039
   },
   {
    "cat": "policia",
@@ -174,59 +133,27 @@
   },
   {
    "cat": "salud",
-   "nombre": "C.S. Anita Suárez de Leigue",
-   "lat": -17.737024,
-   "lon": -63.1717392,
+   "nombre": "Avenida Gral. Manuel Belgrano",
+   "lat": -17.7345795,
+   "lon": -63.1629393,
    "dir": "",
-   "km": 7.162877892782429
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S. Pochola Trapero",
-   "lat": -17.7330794,
-   "lon": -63.1559681,
-   "dir": "Calle Mal Raux",
-   "km": 7.396161914336264
+   "km": 7.218489548345584
   },
   {
    "cat": "salud",
    "nombre": "Hospital Católico",
-   "lat": -17.7361159,
-   "lon": -63.1614328,
+   "lat": -17.7361893,
+   "lon": -63.1614275,
    "dir": "",
-   "km": 7.439062326262103
-  },
-  {
-   "cat": "policia",
-   "nombre": "Distrito Policial 8",
-   "lat": -17.7343851,
-   "lon": -63.1479205,
-   "dir": "Calle Racine",
-   "km": 7.966955522960135
+   "km": 7.446746910437289
   },
   {
    "cat": "salud",
    "nombre": "Clínica MedicalCenter Neurocenter",
-   "lat": -17.7457219,
-   "lon": -63.1741289,
-   "dir": "Avenida Cristo Redentor",
-   "km": 8.041606505960123
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S. Virgen de Cotoca",
-   "lat": -17.7469702,
-   "lon": -63.1820966,
+   "lat": -17.7457218,
+   "lon": -63.1741288,
    "dir": "",
-   "km": 8.0463898698866
-  },
-  {
-   "cat": "policia",
-   "nombre": "PAC Patrulla Auxiliar de Cooperación Ciudadana",
-   "lat": -17.7422077,
-   "lon": -63.1598942,
-   "dir": "Avenida Alemania",
-   "km": 8.125127373826198
+   "km": 8.041597846701304
   },
   {
    "cat": "policia",
@@ -238,371 +165,83 @@
   },
   {
    "cat": "salud",
-   "nombre": "C.S. Los Tusequis",
-   "lat": -17.7419955,
-   "lon": -63.1550628,
-   "dir": "",
-   "km": 8.3181472950577
-  },
-  {
-   "cat": "salud",
-   "nombre": "Cns Los Tusequis",
-   "lat": -17.7424271,
-   "lon": -63.1545318,
-   "dir": "",
-   "km": 8.38620018447518
-  },
-  {
-   "cat": "salud",
-   "nombre": "Clinica Corazon De Jesús",
-   "lat": -17.738744,
-   "lon": -63.1469212,
-   "dir": "Avenida 2 de Agosto",
-   "km": 8.429873595347551
-  },
-  {
-   "cat": "salud",
-   "nombre": "VitalMed Bolivia",
-   "lat": -17.7548763,
-   "lon": -63.1930938,
-   "dir": "Calle Doctor Agustín Landívar",
-   "km": 8.8878826809689
-  },
-  {
-   "cat": "salud",
    "nombre": "C.S. Brígida",
-   "lat": -17.7564576,
-   "lon": -63.1949678,
+   "lat": -17.7565022,
+   "lon": -63.1949446,
    "dir": "",
-   "km": 9.07294352869166
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S. San Carlos",
-   "lat": -17.756329,
-   "lon": -63.1803013,
-   "dir": "",
-   "km": 9.101534753465742
-  },
-  {
-   "cat": "policia",
-   "nombre": "G.A.C.I.P. Santa Cruz",
-   "lat": -17.7563139,
-   "lon": -63.2010756,
-   "dir": "",
-   "km": 9.117482754591036
-  },
-  {
-   "cat": "salud",
-   "nombre": "Centro de Salud Municipal \"Ciudad Satelite Norte\"",
-   "lat": -17.6071483,
-   "lon": -63.1411208,
-   "dir": "",
-   "km": 9.151554735524249
+   "km": 9.077752365234504
   },
   {
    "cat": "policia",
    "nombre": "Policía Nacional de Bolivia",
    "lat": -17.7518067,
    "lon": -63.1576789,
-   "dir": "Calle 1 Este",
+   "dir": "",
    "km": 9.201148161682669
   },
   {
    "cat": "salud",
-   "nombre": "Neo Medic",
-   "lat": -17.7585885,
-   "lon": -63.1836825,
-   "dir": "Tercer Anillo Externo",
-   "km": 9.318673662410038
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S. Hamacas",
-   "lat": -17.7563893,
-   "lon": -63.1689855,
-   "dir": "Calle Río Blanco",
-   "km": 9.319791046483278
-  },
-  {
-   "cat": "salud",
-   "nombre": "Instituto de Salud Reproductiva",
-   "lat": -17.7586995,
-   "lon": -63.1961742,
-   "dir": "",
-   "km": 9.32990824407991
-  },
-  {
-   "cat": "salud",
-   "nombre": "Centro de Medicina y Estética Embellece",
-   "lat": -17.7587909,
-   "lon": -63.185093,
-   "dir": "Tercer Anillo Externo",
-   "km": 9.331608965679774
-  },
-  {
-   "cat": "salud",
-   "nombre": "Centro Ginecologico Pro-Mujer",
-   "lat": -17.7564011,
-   "lon": -63.1655209,
-   "dir": "Avenida Alemania",
-   "km": 9.415446414324252
-  },
-  {
-   "cat": "policia",
-   "nombre": "Policia Satelite Norte",
-   "lat": -17.6037136,
-   "lon": -63.1416302,
-   "dir": "",
-   "km": 9.439495347458129
-  },
-  {
-   "cat": "salud",
-   "nombre": "Brain Balance",
-   "lat": -17.7586108,
-   "lon": -63.1693375,
-   "dir": "Avenida República del Japón",
-   "km": 9.551228376215489
-  },
-  {
-   "cat": "salud",
-   "nombre": "Clínica Hamacas",
-   "lat": -17.759528,
-   "lon": -63.1715032,
-   "dir": "Tercer Anillo Interno",
-   "km": 9.601106778790312
-  },
-  {
-   "cat": "policia",
-   "nombre": "UNIPOL",
-   "lat": -17.7572308,
-   "lon": -63.1607191,
-   "dir": "Calle Simon Moreno",
-   "km": 9.655333819539903
-  },
-  {
-   "cat": "salud",
    "nombre": "Instituto Oncológico del Oriente Boliviano",
-   "lat": -17.7628645,
-   "lon": -63.1941985,
-   "dir": "Tercer Anillo Interno",
-   "km": 9.780202206233323
+   "lat": -17.7629133,
+   "lon": -63.1941064,
+   "dir": "",
+   "km": 9.785184435928672
   },
   {
    "cat": "salud",
    "nombre": "Clínica CIES Regional Santa Cruz",
-   "lat": -17.7605648,
-   "lon": -63.1667203,
-   "dir": "Tercer Anillo Interno",
-   "km": 9.828704807512494
-  },
-  {
-   "cat": "salud",
-   "nombre": "Instituto Nacional Oftalmológico",
-   "lat": -17.7634063,
-   "lon": -63.1909064,
-   "dir": "Avenida La Salle",
-   "km": 9.83080084097329
-  },
-  {
-   "cat": "salud",
-   "nombre": "Clinica Figueroa",
-   "lat": -17.7576951,
-   "lon": -63.1562371,
-   "dir": "Avenida Mutualista",
-   "km": 9.86622581031272
-  },
-  {
-   "cat": "salud",
-   "nombre": "Enfermeria",
-   "lat": -17.7608726,
-   "lon": -63.1631726,
-   "dir": "Calle Capitan Manuel Tovar",
-   "km": 9.962441772196915
-  },
-  {
-   "cat": "salud",
-   "nombre": "Centro Medico",
-   "lat": -17.7600106,
-   "lon": -63.1571893,
+   "lat": -17.7604958,
+   "lon": -63.1666874,
    "dir": "",
-   "km": 10.071364664471542
-  },
-  {
-   "cat": "policia",
-   "nombre": "Dirección General de Sustancias Controladas",
-   "lat": -17.7659212,
-   "lon": -63.1865565,
-   "dir": "Santiago Vaca Guzmán",
-   "km": 10.116553148553674
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S. Roque Aguilera",
-   "lat": -17.7661211,
-   "lon": -63.1863518,
-   "dir": "Santiago Vaca Guzmán",
-   "km": 10.139569713368166
-  },
-  {
-   "cat": "salud",
-   "nombre": "Pharmatech Boliviana S.A.",
-   "lat": -17.7662009,
-   "lon": -63.1965213,
-   "dir": "",
-   "km": 10.16457364596694
-  },
-  {
-   "cat": "salud",
-   "nombre": "Skin Spa",
-   "lat": -17.7648683,
-   "lon": -63.1722475,
-   "dir": "Avenida Los Cusis",
-   "km": 10.168268461821285
-  },
-  {
-   "cat": "salud",
-   "nombre": "Hospital Universitario Martin Dockweiler",
-   "lat": -17.7662073,
-   "lon": -63.1992468,
-   "dir": "",
-   "km": 10.188971061161753
-  },
-  {
-   "cat": "salud",
-   "nombre": "Centro Médico Foianini",
-   "lat": -17.7668968,
-   "lon": -63.1987996,
-   "dir": "Tercer Anillo Interno",
-   "km": 10.260876467950178
+   "km": 9.82215353439766
   },
   {
    "cat": "policia",
    "nombre": "Policia Boliviana",
-   "lat": -17.7674094,
+   "lat": -17.7674093,
    "lon": -63.1942494,
    "dir": "",
-   "km": 10.285309269094205
-  },
-  {
-   "cat": "salud",
-   "nombre": "Orthosystem",
-   "lat": -17.7677239,
-   "lon": -63.1883876,
-   "dir": "Guillermo B. Rodrígez",
-   "km": 10.311841595199647
+   "km": 10.285298160259236
   },
   {
    "cat": "salud",
    "nombre": "Prosalud Especialidades Médicas",
-   "lat": -17.7661406,
-   "lon": -63.1711382,
+   "lat": -17.7661481,
+   "lon": -63.1711381,
    "dir": "",
-   "km": 10.329414146380822
-  },
-  {
-   "cat": "salud",
-   "nombre": "Ginofiv - Instituto de Fertilización In Vitro",
-   "lat": -17.7664055,
-   "lon": -63.1715972,
-   "dir": "Calle Sao",
-   "km": 10.349047950120406
-  },
-  {
-   "cat": "salud",
-   "nombre": "Cederma",
-   "lat": -17.7664873,
-   "lon": -63.1712378,
-   "dir": "Calle Sao",
-   "km": 10.365212026805393
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S.A. 26 de Septiembre",
-   "lat": -17.7209687,
-   "lon": -63.1048332,
-   "dir": "Calle 10",
-   "km": 10.369293822616793
-  },
-  {
-   "cat": "salud",
-   "nombre": "Prosalud - Clínica 1",
-   "lat": -17.7666117,
-   "lon": -63.1706199,
-   "dir": "Calle Sao",
-   "km": 10.391518270610694
-  },
-  {
-   "cat": "salud",
-   "nombre": "Clínica Prosalud",
-   "lat": -17.7667784,
-   "lon": -63.1704338,
-   "dir": "Avenida Alemania",
-   "km": 10.413594563969214
-  },
-  {
-   "cat": "salud",
-   "nombre": "Policonsultorio Centro Social Japonés",
-   "lat": -17.7693708,
-   "lon": -63.1782451,
-   "dir": "Avenida Beni",
-   "km": 10.567158694481675
-  },
-  {
-   "cat": "policia",
-   "nombre": "Comando Departamental de Policía",
-   "lat": -17.770289,
-   "lon": -63.1843875,
-   "dir": "",
-   "km": 10.612316281234499
-  },
-  {
-   "cat": "salud",
-   "nombre": "C.S. Wille Lemaitre",
-   "lat": -17.7702134,
-   "lon": -63.1978562,
-   "dir": "",
-   "km": 10.619896823549551
-  },
-  {
-   "cat": "policia",
-   "nombre": "Modulo Policial",
-   "lat": -17.7672021,
-   "lon": -63.1636535,
-   "dir": "",
-   "km": 10.625403160206499
+   "km": 10.330234402916581
   },
   {
    "cat": "salud",
    "nombre": "C.S.10 de Octubre",
-   "lat": -17.7435094,
-   "lon": -63.1199371,
+   "lat": -17.7434966,
+   "lon": -63.1199376,
    "dir": "",
-   "km": 10.635337811996745
+   "km": 10.634281601542371
   },
   {
    "cat": "salud",
-   "nombre": "Embriovid",
-   "lat": -17.7706905,
-   "lon": -63.193648,
-   "dir": "Enrique Finot",
-   "km": 10.647311375911142
+   "nombre": "Hospital Obrero 3",
+   "lat": -17.7671751,
+   "lon": -63.1576898,
+   "dir": "",
+   "km": 10.80565072919049
   },
   {
    "cat": "policia",
    "nombre": "Policía Boliviana - Interpol",
    "lat": -17.76922,
    "lon": -63.1650202,
-   "dir": "Avenida Mutualista",
+   "dir": "",
    "km": 10.80570982280477
   },
   {
-   "cat": "salud",
-   "nombre": "Hospital Obrero 3",
-   "lat": -17.7671623,
-   "lon": -63.1576268,
-   "dir": "Tercer Anillo Externo",
-   "km": 10.806416231145786
+   "cat": "policia",
+   "nombre": "Calle Los Tucanes",
+   "lat": -17.7692444,
+   "lon": -63.1649728,
+   "dir": "",
+   "km": 10.809570452972729
   },
   {
    "cat": "policia",
@@ -613,12 +252,340 @@
    "km": 10.817151153788878
   },
   {
+   "cat": "salud",
+   "nombre": "Caja Petrolera de Salud",
+   "lat": -17.7771909,
+   "lon": -63.1861375,
+   "dir": "",
+   "km": 11.37047152706914
+  },
+  {
+   "cat": "salud",
+   "nombre": "Centro de Resonancia & Tomografía Rengel",
+   "lat": -17.7777144,
+   "lon": -63.1826232,
+   "dir": "",
+   "km": 11.448013450335056
+  },
+  {
+   "cat": "salud",
+   "nombre": "Clínica Niño Jesús",
+   "lat": -17.7786776,
+   "lon": -63.1879528,
+   "dir": "",
+   "km": 11.530462042467741
+  },
+  {
+   "cat": "salud",
+   "nombre": "Enfermeria Salud",
+   "lat": -17.7789005,
+   "lon": -63.1830947,
+   "dir": "",
+   "km": 11.576335222612798
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital de Niños",
+   "lat": -17.7806891,
+   "lon": -63.1865329,
+   "dir": "",
+   "km": 11.757827518562188
+  },
+  {
+   "cat": "salud",
+   "nombre": "Gen-Vida",
+   "lat": -17.7811729,
+   "lon": -63.1860074,
+   "dir": "",
+   "km": 11.813458852816497
+  },
+  {
+   "cat": "salud",
+   "nombre": "Caja Nacional de Salud (Pauserna)",
+   "lat": -17.7785625,
+   "lon": -63.1590871,
+   "dir": "",
+   "km": 11.972036587661908
+  },
+  {
    "cat": "bomberos",
-   "nombre": "Bombero Voluntarios",
-   "lat": -17.7640929,
-   "lon": -63.1484685,
-   "dir": "Calle Diagonal 3",
-   "km": 10.839440362368721
+   "nombre": "Bomberos",
+   "lat": -17.7832839,
+   "lon": -63.2062872,
+   "dir": "",
+   "km": 12.163564580752823
+  },
+  {
+   "cat": "salud",
+   "nombre": "Centro de Diagnostico Especializado",
+   "lat": -17.7844737,
+   "lon": -63.1930032,
+   "dir": "",
+   "km": 12.177075056222725
+  },
+  {
+   "cat": "salud",
+   "nombre": "Multimedica",
+   "lat": -17.7834404,
+   "lon": -63.1732682,
+   "dir": "",
+   "km": 12.187548755904052
+  },
+  {
+   "cat": "salud",
+   "nombre": "Cemed",
+   "lat": -17.7847104,
+   "lon": -63.1725993,
+   "dir": "",
+   "km": 12.337665368554207
+  },
+  {
+   "cat": "salud",
+   "nombre": "Udime",
+   "lat": -17.7849456,
+   "lon": -63.1725019,
+   "dir": "",
+   "km": 12.365067377101989
+  },
+  {
+   "cat": "salud",
+   "nombre": "Riviut",
+   "lat": -17.7880748,
+   "lon": -63.1773139,
+   "dir": "",
+   "km": 12.644931250061461
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital Municipal Pampa de la Isla",
+   "lat": -17.7592133,
+   "lon": -63.1071737,
+   "dir": "",
+   "km": 12.83170063068917
+  },
+  {
+   "cat": "salud",
+   "nombre": "Prevenir",
+   "lat": -17.7899212,
+   "lon": -63.1766968,
+   "dir": "",
+   "km": 12.85609575426218
+  },
+  {
+   "cat": "salud",
+   "nombre": "Medica Sirani",
+   "lat": -17.7906255,
+   "lon": -63.180855,
+   "dir": "",
+   "km": 12.893400068397936
+  },
+  {
+   "cat": "salud",
+   "nombre": "Clinica Santa Maria",
+   "lat": -17.7905273,
+   "lon": -63.1726677,
+   "dir": "",
+   "km": 12.976546725497046
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital del Ojo",
+   "lat": -17.7915959,
+   "lon": -63.1772349,
+   "dir": "",
+   "km": 13.03517330911236
+  },
+  {
+   "cat": "salud",
+   "nombre": "Implant House",
+   "lat": -17.7920583,
+   "lon": -63.180698,
+   "dir": "",
+   "km": 13.053519627561764
+  },
+  {
+   "cat": "salud",
+   "nombre": "Centro Prosalud La Madre",
+   "lat": -17.7907255,
+   "lon": -63.2110678,
+   "dir": "",
+   "km": 13.060111733194253
+  },
+  {
+   "cat": "salud",
+   "nombre": "Caja Petrolera de Salud Guaracachi",
+   "lat": -17.785812,
+   "lon": -63.1466683,
+   "dir": "",
+   "km": 13.148674703594132
+  },
+  {
+   "cat": "salud",
+   "nombre": "Clínica Madrid",
+   "lat": -17.7966197,
+   "lon": -63.1905054,
+   "dir": "",
+   "km": 13.523599551109283
+  },
+  {
+   "cat": "salud",
+   "nombre": "Clínica Urbarí",
+   "lat": -17.7969274,
+   "lon": -63.197588,
+   "dir": "",
+   "km": 13.58150573328878
+  },
+  {
+   "cat": "policia",
+   "nombre": "Calle Guacaya",
+   "lat": -17.79692,
+   "lon": -63.1989079,
+   "dir": "",
+   "km": 13.589672983692857
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hair Recovery",
+   "lat": -17.7970202,
+   "lon": -63.1804349,
+   "dir": "",
+   "km": 13.605793177192345
+  },
+  {
+   "cat": "policia",
+   "nombre": "Batallón de Seguridad Física",
+   "lat": -17.796159,
+   "lon": -63.166184,
+   "dir": "",
+   "km": 13.706357169033211
+  },
+  {
+   "cat": "salud",
+   "nombre": "Avenida Monte Cristo",
+   "lat": -17.7356114,
+   "lon": -63.0769526,
+   "dir": "",
+   "km": 13.741219641194858
+  },
+  {
+   "cat": "policia",
+   "nombre": "Calle 1",
+   "lat": -17.7866092,
+   "lon": -63.1290901,
+   "dir": "",
+   "km": 13.986948239257233
+  },
+  {
+   "cat": "policia",
+   "nombre": "Dirección Nacional de Prevención de Robo de Vehículos",
+   "lat": -17.8003518,
+   "lon": -63.1636657,
+   "dir": "",
+   "km": 14.214783131754928
+  },
+  {
+   "cat": "salud",
+   "nombre": "Centro Pro-Salud el Carmen",
+   "lat": -17.8035992,
+   "lon": -63.1906582,
+   "dir": "",
+   "km": 14.299748519594036
+  },
+  {
+   "cat": "policia",
+   "nombre": "Servicio Aéreo Policial",
+   "lat": -17.8038277,
+   "lon": -63.1751298,
+   "dir": "",
+   "km": 14.41129623710576
+  },
+  {
+   "cat": "salud",
+   "nombre": "Manantial de Vida",
+   "lat": -17.8045077,
+   "lon": -63.1993818,
+   "dir": "",
+   "km": 14.434836553914447
+  },
+  {
+   "cat": "policia",
+   "nombre": "Centro de Monitoreo de Video Vigilancia",
+   "lat": -17.8029981,
+   "lon": -63.1556098,
+   "dir": "",
+   "km": 14.691374512962238
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital Psiquiátrico Benito Menni",
+   "lat": -17.8072273,
+   "lon": -63.2280919,
+   "dir": "",
+   "km": 15.246411208186215
+  },
+  {
+   "cat": "salud",
+   "nombre": "Centro de Salud Mental",
+   "lat": -17.8134753,
+   "lon": -63.1853391,
+   "dir": "",
+   "km": 15.405660767986436
+  },
+  {
+   "cat": "policia",
+   "nombre": "Fuerza Especial de Lucha Contra el Crimen",
+   "lat": -17.8133299,
+   "lon": -63.181372,
+   "dir": "",
+   "km": 15.408699950472958
+  },
+  {
+   "cat": "salud",
+   "nombre": "Prosalud La Morita",
+   "lat": -17.8158126,
+   "lon": -63.1798651,
+   "dir": "",
+   "km": 15.69439187905386
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital Municipal Villa Primero de Mayo",
+   "lat": -17.7993509,
+   "lon": -63.1177523,
+   "dir": "",
+   "km": 15.803149889335046
+  },
+  {
+   "cat": "policia",
+   "nombre": "Calle Pan de Arroz",
+   "lat": -17.82347,
+   "lon": -63.1723651,
+   "dir": "",
+   "km": 16.61440819970757
+  },
+  {
+   "cat": "policia",
+   "nombre": "Puesto Policial La Colorada",
+   "lat": -17.8235249,
+   "lon": -63.1723681,
+   "dir": "",
+   "km": 16.620438397618493
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital Virgen Milagrosa Proyecto Hombres Nuevos",
+   "lat": -17.8249772,
+   "lon": -63.1323864,
+   "dir": "",
+   "km": 17.757791440107347
+  },
+  {
+   "cat": "rescate",
+   "nombre": "Calle Villa Roja",
+   "lat": -17.8347398,
+   "lon": -63.1764458,
+   "dir": "",
+   "km": 17.820157304144686
   }
  ]
 }
