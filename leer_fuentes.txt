@@ -1,1 +1,3 @@
-https://sedescochabamba.gob.bo/boletin.php
+https://micangelarcangel-lang.github.io/sala-situacion-bolivia/s2.css
+https://micangelarcangel-lang.github.io/sala-situacion-bolivia/linea_base_snis.json
+https://micangelarcangel-lang.github.io/sala-situacion-bolivia/modulo.html?t=salud

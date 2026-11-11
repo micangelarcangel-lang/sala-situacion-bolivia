@@ -1,0 +1,4 @@
+1) Descomprima TODO este archivo en una carpeta (no lo abra desde dentro del .zip).
+2) Haga doble clic en ABRIR_SALA.bat. Se abre el navegador en http://localhost:8765/index.html
+3) Para cerrarlo, cierre la ventana negra.
+Es la version de prueba (rama v3-prueba-de-valor); los datos son una copia de produccion al 11/11/2026.
