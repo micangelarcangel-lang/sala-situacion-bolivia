@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "clima:Oruro:2026-11-11:viento:1",
+  "fecha_hora_local": "2026-11-11 19:05",
+  "ts_ms": 1794438328810,
+  "titulo": "Oruro 2026-11-11: 65.9 km/h de ráfagas pronosticadas",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Open-Meteo (pronóstico)",
+  "lat": -17.97,
+  "lon": -67.11,
+  "lugar": "Oruro",
+  "departamento": "Oruro",
+  "municipio": "Oruro",
+  "enlaces": "https://open-meteo.com/"
+ },
+ {
   "hecho_id": "noticia:1mowind",
   "fecha_hora_local": "2026-11-11 16:12",
   "ts_ms": 1794427961000,
