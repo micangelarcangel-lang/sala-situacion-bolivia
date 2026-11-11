@@ -12,6 +12,19 @@ def geocodifica(q):
         if r: return float(r[0]["lat"]), float(r[0]["lon"]), "Nominatim/OpenStreetMap"
     except Exception: pass
     return None
+def overpass(q):
+    for host in ("https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"):
+        try: return json.load(urllib.request.urlopen(urllib.request.Request(host, data=urllib.parse.urlencode({"data": q}).encode(), headers={"User-Agent": UA, "Accept": "*/*"}), timeout=60))["elements"]
+        except Exception as ex: print("overpass", host, ex)
+    return []
+def interseccion(calle, anillo, caja="-17.85,-63.35,-17.30,-62.95"):
+    """punto medio entre el tramo de la calle más cercano al anillo; devuelve (lat, lon, descripcion, n_calle, n_anillo)"""
+    A = overpass('[out:json][timeout:50];way["name"~"%s"](%s);out tags center 200;' % (calle, caja)); B = overpass('[out:json][timeout:50];way["name"~"%s"](%s);out tags center 200;' % (anillo, caja))
+    c = lambda e: (e["center"]["lat"], e["center"]["lon"])
+    print("calle", len(A), "anillo", len(B), [e["tags"].get("name") for e in B][:5])
+    if not A or not B: return None
+    best = min(((math.hypot(c(a)[0] - c(b)[0], c(a)[1] - c(b)[1]), a, b) for a in A for b in B), key=lambda t: t[0]); d, a, b = best
+    return (c(a)[0] + c(b)[0]) / 2, (c(a)[1] + c(b)[1]) / 2, "OpenStreetMap (Overpass): cruce de tramos de %s y %s (separación %.0f m)" % (a["tags"].get("name"), b["tags"].get("name"), d * 111000), len(A), len(B)
 def mapa(lat, lon, z, W, H, radio_m, base="calles"):
     """teselas alrededor del punto + círculo de incertidumbre; devuelve data URI y si hubo red"""
     zt = z + 1; cx, cy = [v * 512 for v in BH._xy(lat, lon, z)]; ox, oy = cx - W / 2, cy - H / 2
@@ -36,8 +49,9 @@ ESQUEMA = """<svg viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg" font-
 <rect x="318" y="150" width="62" height="22" rx="4" fill="#2e9e5b"/><text x="321" y="164" fill="#fff" font-size="9">Ambulancias</text>
 <path d="M300 180 L300 196" stroke="#2e9e5b" stroke-width="3"/><text x="330" y="60" font-size="9" fill="#5a6b80">Fuga de gas (hipótesis)</text><path d="M326 62 L246 82" stroke="#5a6b80" stroke-dasharray="3 3"/></svg>"""
 def main(f):
-    e = json.load(open(f, encoding="utf8")); g = geocodifica(e["geocodificar"]) or (e["lat_ref"], e["lon_ref"], "referencia aproximada (no se pudo geocodificar)")
-    lat, lon, src = g; m1, r1 = mapa(lat, lon, 11, 520, 330, e["radio_m"]); m2, r2 = mapa(lat, lon, 15, 520, 330, e["radio_m"])
+    e = json.load(open(f, encoding="utf8")); g = (interseccion(e["calle"], e["anillo"]) or [None])[:3] if e.get("calle") else None
+    g = g if g and g[0] else (geocodifica(e["geocodificar"]) or (e["lat_ref"], e["lon_ref"], "referencia aproximada (no se pudo geocodificar)"))
+    lat, lon, src = g; m1, r1 = mapa(lat, lon, 11, 520, 250, e["radio_m"]); m2, r2 = mapa(lat, lon, 15, 520, 250, e["radio_m"])
     h = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), e["plantilla"]), encoding="utf8").read()
     for k, v in (("{{MAPA_CIUDAD}}", m1), ("{{MAPA_DETALLE}}", m2), ("{{ESQUEMA}}", ESQUEMA), ("{{FUENTE_GEO}}", E(src)), ("{{RED}}", "" if r1 and r2 else " (mapa base no disponible en este entorno)")): h = h.replace(k, v)
     os.makedirs("datos/v3/investigacion", exist_ok=True); tmp = tempfile.mkdtemp(); hp = os.path.join(tmp, "r.html"); open(hp, "w", encoding="utf8").write(h)
