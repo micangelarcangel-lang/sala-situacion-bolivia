@@ -199,6 +199,9 @@
    "Tarija": 51,
    "Chuquisaca": 24,
    "La Paz": 5
+  },
+  "2026-11-11": {
+   "Santa Cruz": 2
   }
  },
  "municipios": {
@@ -581,11 +584,14 @@
    "San Ramón (Beni)": 30,
    "San Rafael (Santa Cruz)": 29,
    "Concepción (Santa Cruz)": 25
+  },
+  "2026-11-11": {
+   "El Carmen Rivero Tórrez (Santa Cruz)": 2
   }
  },
- "actualizado": "2026-11-11T04:54:51.241831Z",
+ "actualizado": "2026-11-11T05:54:07.683290Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1903,
+ "detecciones_fuera_de_limites": 1913,
  "slack_dia": "2026-11-11"
 }
