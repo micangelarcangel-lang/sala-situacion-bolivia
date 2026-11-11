@@ -1,5 +1,6 @@
 ﻿id,fecha_local,lat,lon,prof_km,mag,provincia,departamento,fuente
 20261111T012627_-22.078_-67.134,2026-11-11 01:26:27,-22.078,-67.134,182.2,3.3,Sud Lipez,Potosí,Observatorio San Calixto
+20261110T230224_-22.267_-67.643,2026-11-10 23:02:24,-22.267,-67.643,143.7,3.1,Sud Lipez,Potosí,Observatorio San Calixto
 20261110T210217_-20.837_-67.85,2026-11-10 21:02:17,-20.837,-67.85,159.7,3.0,Nor Lipez,Potosí,Observatorio San Calixto
 20261109T195112_-17.658_-69.371,2026-11-09 19:51:12,-17.658,-69.371,160.0,3.3,Pacajes,La Paz,Observatorio San Calixto
 20261105T171454_-22.266_-67.61,2026-11-05 17:14:54,-22.266,-67.61,165.7,3.4,Sud Lipez,Potosí,Observatorio San Calixto
