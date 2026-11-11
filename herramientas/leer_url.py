@@ -15,7 +15,10 @@ estado = []
 for u in [l.strip() for l in open(sys.argv[1], encoding="utf8") if l.strip() and not l.startswith("#")]:
     s = slug(u); r = {"url": u, "slug": s}
     try:
-        x = requests.get(u, headers=UA, timeout=60, allow_redirects=True); r["http"] = x.status_code; ct = x.headers.get("content-type", "").lower(); r["tipo"] = ct; r["bytes"] = len(x.content)
+        try: x = requests.get(u, headers=UA, timeout=60, allow_redirects=True)
+        except requests.exceptions.SSLError:  # sitios públicos de gobierno con cadena de certificados incompleta: lectura de solo lectura
+            import urllib3; urllib3.disable_warnings(); x = requests.get(u, headers=UA, timeout=60, allow_redirects=True, verify=False); r["ssl"] = "sin verificar (certificado del sitio incompleto)"
+  r["http"] = x.status_code; ct = x.headers.get("content-type", "").lower(); r["tipo"] = ct; r["bytes"] = len(x.content)
         if x.status_code >= 400: raise RuntimeError("HTTP %d" % x.status_code)
         if "pdf" in ct or u.lower().endswith(".pdf"):
             t = pdf_texto(x.content, f"{OUT}/{s}.pdf") if len(x.content) < 25e6 else "[PDF demasiado grande]"; open(f"{OUT}/{s}.txt", "w", encoding="utf8").write(t); r["chars"] = len(t)
@@ -27,6 +30,14 @@ for u in [l.strip() for l in open(sys.argv[1], encoding="utf8") if l.strip() and
                 import trafilatura; t = trafilatura.extract(h, include_tables=True, include_links=False) or ""
             except Exception: t = ""
             if len(t) < 300: [e.decompose() for e in soup(["script", "style", "noscript"])]; t = re.sub(r"\n{3,}", "\n\n", soup.get_text("\n", strip=True))
+            if len(t) < 1500:  # tableros JavaScript: renderizar con Chrome
+                try:
+                    from playwright.sync_api import sync_playwright
+                    with sync_playwright() as pw:
+                        b = pw.chromium.launch(); pg = b.new_page(ignore_https_errors=True, viewport={"width": 1400, "height": 1000}); pg.goto(u, wait_until="networkidle", timeout=60000); pg.wait_for_timeout(5000)
+                        t2 = pg.inner_text("body"); pg.screenshot(path=f"{OUT}/{s}.png", full_page=True); b.close()
+                    if len(t2) > len(t): t = t2; r["render"] = "chrome"
+                except Exception as e: r["render_error"] = str(e)[:120]
             open(f"{OUT}/{s}.txt", "w", encoding="utf8").write(t); r["chars"] = len(t)
             doc = [l for l in links if re.search(r"\.(pdf|csv|xlsx?|json|zip)(\?|$)", l[1], re.I)]
             open(f"{OUT}/{s}.enlaces.txt", "w", encoding="utf8").write("== Archivos (pdf/csv/xlsx/json/zip) ==\n" + "\n".join(f"{a} | {b}" for a, b in doc) + "\n\n== Todos los enlaces ==\n" + "\n".join(f"{a} | {b}" for a, b in links)); r["archivos"] = len(doc)
