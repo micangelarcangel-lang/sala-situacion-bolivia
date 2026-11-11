@@ -1,0 +1,568 @@
+COMPORTAMIENTO
+EPIDEMIOLÓGICO DEL HANTAVIRUS
+EN LA PAZ, BOLIVIA (2025–2026)
+Boletín Epidemiológico
+
+El Instituto Nacional de Laboratorios de Salud (INLASA) presenta una nueva edición de su
+Boletín Epidemiológico, dedicado en esta oportunidad al análisis del Hantavirus,
+particularmente de la variante Andes en Bolivia durante el periodo 2025–2026. Esta
+publicación constituye un aporte al conocimiento científico y a la difusión de información
+epidemiológica confiable, elementos fundamentales para fortalecer la vigilancia, orientar
+las intervenciones sanitarias y contribuir a la protección de la salud de la población
+boliviana.
+Ante la presencia de enfermedades emergentes y reemergentes, el país requiere
+instituciones capaces de generar evidencia científica, fortalecer sus capacidades
+diagnósticas y proporcionar información oportuna para la toma de decisiones. En este
+contexto, el INLASA, como institución de referencia nacional en el ámbito laboratorial,
+reafirma su compromiso con el fortalecimiento del Sistema Nacional de Laboratorios de
+Salud y con el desarrollo de una vigilancia laboratorial articulada con la vigilancia
+epidemiológica nacional.
+La gestión que me honra dirigir impulsa el fortalecimiento de las capacidades técnicas,
+científicas y tecnológicas del Instituto, con el propósito de responder de manera cada vez
+más eficiente a los desafíos sanitarios del país. Este boletín refleja el trabajo especializado
+de nuestros equipos técnicos y profesionales, cuya labor es esencial para contribuir al
+diagnóstico oportuno, la investigación, la caracterización de agentes infecciosos y la
+generación de evidencia que permita comprender mejor el comportamiento de las
+enfermedades y sus riesgos para la población.
+En el caso del Hantavirus, la detección oportuna y la confirmación laboratorial son
+fundamentales para respaldar la sospecha clínica, orientar la respuesta sanitaria y
+contribuir a la prevención de complicaciones graves, como el síndrome cardiopulmonar por
+Hantavirus. Por ello, la información presentada en esta edición busca constituirse en una
+herramienta de consulta para los profesionales de salud y en un aporte para fortalecer la
+vigilancia, la identificación de zonas de riesgo y la coordinación entre los distintos niveles
+del sistema sanitario.
+Asimismo, consideramos indispensable abordar estos desafíos desde el enfoque de «Una
+Sola Salud», reconociendo la estrecha relación entre la salud humana, la salud animal y el
+ambiente. La articulación interinstitucional, la vigilancia activa y el intercambio oportuno de
+información son componentes esenciales para anticipar riesgos y mejorar la capacidad de
+respuesta del país frente a amenazas sanitarias.
+Invito a los profesionales de salud, investigadores, autoridades y demás actores del sistema
+sanitario a consultar y utilizar este boletín como una herramienta para fortalecer el
+conocimiento, la vigilancia y la toma de decisiones basadas en evidencia científica. Desde el
+INLASA continuaremos trabajando para consolidar las capacidades laboratoriales
+nacionales, promover la investigación y contribuir al desarrollo de políticas públicas
+sustentadas en información confiable y de calidad.
+La ciencia de laboratorio es mucho más que un resultado diagnóstico: es una herramienta
+estratégica para la vigilancia, la prevención y la protección de la vida. Con ese compromiso,
+reafirmamos nuestra responsabilidad institucional de contribuir a una Bolivia mejor
+preparada para enfrentar sus desafíos sanitarios.
+EDITORIAL
+AUTORIDADES
+Dra. Patricia Carla Vacaflor Torrico  
+DIRECTORA INSTITUTO NACIONAL DE LABORATORIOS DE SALUD - INLASA
+EDITORIAL
+Dra. Patricia Carla Vacaflor Torrico  
+DIRECTORA INSTITUTO NACIONAL DE
+LABORATORIOS DE SALUD - INLASA
+MSc. Lic. Boris Flores Nogales
+JEFE DE LA UNIDAD DE ADMINISTRACIÓN Y
+FINANZAS
+Dra. Aleida Nina Cruz
+JEFA DEL LABORATORIO VIROLOGÍA 
+Dra. Pamela Cortez Copa
+JEFA DE LA UNIDAD DE PLANIFICACIÓN
+EQUIPO TÉCNICO DE PRODUCCIÓN
+DEL BOLETÍN 
+AUTORES:
+DISEÑO Y MAQUETACIÓN
+Lic. Diether Orozco Reyes Ortiz
+UNIDAD DE COMUNICACIÓN
+Comportamiento Epidemiológico del Hantavirus (Variante Andes) en Bolivia (2025–2026) BOLETÍN N°  / JULIO 2026
+Dra. Pamela Berrios 
+COORDINADORA DE LA DIVISIÓN DE
+ENFERMEDADES TRANSMISIBLES
+Dra. Pamela Cortez Copa
+JEFA DE LA UNIDAD DE PLANIFICACIÓN
+REVISIÓN
+Lic. Consuelo Valdez Quenallata 
+UNIDAD DE COMUNICACIÓN
+Lic. Jamelin Choque
+ANALISTA DE ARBOVIRUS 
+LAB. DE VIROLOGÍA
+Lic. Jacqueline  Cahuaya Luque
+RESPONSABLE DE ARBOVIRUS
+Dra. Grace Rojas
+RESPONSABLE DE VIGILANCIA
+EPIDEMOLÓGICA
+Dra. Aleida Natali Nina Cruz
+JEFA DE LABORATORIO DE VIROLOGÍA
+
+El Síndrome Cardiopulmonar por Hantavirus
+(SCPH) es una zoonosis emergente de curso
+agudo y elevada letalidad en el continente
+americano. Es provocado por virus del
+género Orthohantavirus, los cuales
+mantienen ciclos enzoóticos con roedores
+silvestres de la subfamilia Sigmodontinae
+(Pavez-Paredes & Fernández-Andrade,
+2023). La transmisión al ser humano ocurre
+por la inhalación de aerosoles
+contaminados con excretas o saliva de estos
+reservorios, afectando principalmente a
+personas en entornos rurales y agrícolas. A
+nivel regional, el virus Andes (ANDV) destaca
+por su virulencia y su capacidad demostrada
+de transmisión interpersonal (persona a
+persona), lo que representa un desafío
+crítico para los sistemas de seguridad
+sanitaria al romper el patrón de contagio
+meramente ambiental (Velavan & Schmidt-
+Chanasit, 2026).
+En Bolivia, la vigilancia epidemiológica de
+este patógeno se concentra en zonas
+tropicales, subtropicales y valles subandinos
+de Santa Cruz, Tarija, Cochabamba y La Paz
+(Morales Diaz & Salazar Ávila, 2022). Son de
+especial relevancia los hallazgos en el norte
+paceño, particularmente en la provincia
+Caranavi, donde estudios serológicos
+previos confirmaron la coexistencia de
+marcadores de infección aguda (IgM) y de
+memoria inmunológica (IgG) en pacientes
+sospechosos (Delgado Casazola et al., 2022).
+Esta dinámica local demuestra que el riesgo
+biológico está estrechamente vinculado a
+determinantes sociales y actividades
+ocupacionales que exponen con mayor
+frecuencia a la población masculina en edad
+productiva.
+La urgencia de consolidar una vigilancia 
+1.ANTECEDENTES Y CONTEXTO EPIDEMIOLÓGICO
+robusta bajo el enfoque de "Una Sola Salud"
+se revalidó globalmente durante la gestión
+2026. En mayo de ese año, la Organización
+Mundial de la Salud (OMS) notificó un brote
+inusual de hantavirus a bordo de un crucero
+que navegaba por el Atlántico Sur (Centro de
+Coordinación de Alertas y Emergencias
+Sanitarias, 2026). El evento, que provocó el
+rápido deterioro clínico y fallecimiento de
+pacientes por distrés respiratorio severo,
+activó los protocolos internacionales del
+Reglamento Sanitario Internacional tras la
+confirmación del diagnóstico mediante
+pruebas de PCR (Velavan & Schmidt-
+Chanasit, 2026). Este brote evidenció la
+vulnerabilidad del transporte masivo ante
+patógenos raros y reavivó el debate sobre la
+superpropagación en espacios cerrados.
+Frente a este escenario, el análisis del
+Hantavirus en Bolivia es un imperativo
+estratégico. El INLASA, mediante el
+Laboratorio de Virología, realiza la vigilancia
+serológica nacional empleando técnicas
+estandarizadas de ELISA IgM e IgG para
+diagnosticar de forma oportuna a pacientes
+sospechosos de zonas endémicas como
+Caranavi y Palos Blancos (Delgado Casazola
+et al., 2022). Esta caracterización laboratorial
+basada en evidencia científica es clave para
+consolidar un modelo efectivo de alerta
+temprana, cuyos hallazgos estadísticos y
+tendencias institucionales para el periodo
+actual se desglosarán en la sección de
+resultados.
+Boletín Epidemiológico
+
+2.MATERIALES Y MÉTODOS 
+El Laboratorio de Virología del Instituto
+Nacional de Laboratorios de Salud (INLASA)
+procesa muestras remitidas de suero o
+sangre entera de pacientes con síndromes
+febriles remitidas principalmente del norte
+de La Paz, bajo cadena de frío (4 °C a 8 °C).
+La confirmación diagnóstica institucional se
+rige bajo un algoritmo analítico
+bicompartimental, dependiente del tiempo
+transcurrido entre el inicio de los síntomas y
+la toma de muestra. Muestras negativas
+para arbovirus son sometidas a vigilancia
+laboratorial para diagnóstico diferencial de
+hantavirus tomado en cuenta datos
+epidemiológicos (ubicación geográfica,
+clínica y antecedentes de contacto con casos
+positivos de hantavirus) mediante:
+Boletín Epidemiológico
+Inmunodiagnóstico Serológico
+(ELISA): Determinación de
+anticuerpos mediante el Ensayo
+Inmunoenzimático (ELISA) kit
+comercial. Se identifican
+inmunoglobulinas IgM para fase
+aguda mediante el empleo del
+antígeno recombinante de la
+nucleoproteína de hantavirus, e IgG
+indirecto para evaluar memoria
+inmunológica, midiendo la densidad
+óptica a 450 nm en un lector
+espectrofotométrico. 
+Diagnóstico molecular: Se realizó
+mediante un algoritmo de diagnóstico
+molecular secuencial que consiste en la
+Detección directa de ARN viral género
+Orthohantavirus mediante Reacción en
+Cadena de la Polimerasa anidada con
+Transcripción Inversa de punto final
+(Nested RT-PCR) optimizada para el
+tamizaje genérico de hantavirus
+altamente divergentes. La detección
+específica se realizó mediante Reacción
+en Cadena de la Polimerasa con
+transcripción inversa en Tiempo Real
+(qRT-PCR) dirigida a una región
+altamente conservada del segmento S
+que codifica la nucleoproteína (NP) de
+Orthohantavirus andesense (Trombley et
+al., 2010).
+Las muestras sometidas a diagnóstico
+diferencial para hantavirus fueron
+procesadas por ambos métodos de
+laboratorio: Serología (ELISA IgM e IgG) y
+molecular (PCR punto final y qRT-PCR
+tiempo real). 
+Con un diseño descriptivo y diacrónico, se
+consolidaron los datos de 2025 junto a la
+vigilancia activa de 2026 (hasta mayo).
+Mediante herramientas informáticas, se
+analizaron variables críticas como índices de
+positividad analítica, procedencia geográfica
+municipal, edad y sexo de los casos
+confirmados.
+
+Boletín Epidemiológico
+ RESULTADOS
+A continuación, se exponen los hallazgos
+analíticos y estadísticos derivados de la
+vigilancia activa del hantavirus en Bolivia
+durante el periodo 2025–2026,
+estructurados a partir de los registros
+oficiales del Laboratorio de Virología del
+INLASA.
+1. Casos positivos
+Durante el periodo evaluado entre el año
+2025 y el corte epidemiológico de 2026*, se
+procesó un total acumulado de 172
+muestras sospechosas, de las cuales 25
+resultaron confirmadas por laboratorio
+mediante criterios serológicos, moleculares
+o combinados Tabla 1 y Gráfico 1.
+ 
+• Análisis del Periodo 2025: De 102 muestras
+biológicas procesadas, se confirmaron 13
+casos positivos. El perfil diagnóstico reveló
+que 6 casos se identificaron exclusivamente
+mediante marcadores serológicos (IgM/IgG).
+Los 7 casos restantes presentaron una
+confirmación conjunta mediante pruebas
+serológicas y la detección directa de ARN viral
+a través de qRT-PCR para orthohantavirus
+compatible con Andes virus.
+· Análisis del Periodo 2026*: De las 70
+muestras analizadas hasta la fecha de corte,
+se consolidaron 12 casos positivos. Se observa
+una marcada prevalencia en la ventana de
+detección aguda: solo 1 caso se confirmó
+únicamente por serología (IgM/IgG). En
+contraste, la qRT-PCR desempeñó un rol
+crítico al confirmar 8 casos en conjunto con
+serología completa, 1 caso asociado solo a IgM
+activa, y detectar 2 casos positivos
+exclusivamente por la vía molecular (qRT-PCR
+positivo con serología negativa o no reactiva),
+lo que evidencia fases tempranas de la
+infección.
+
+Año
+Total de
+muestras
+procesada
+s
+Casos
+positivos
+(IgM, IgG)
+Casos
+positivos
+(IgM, IgG y
+qRT-PCR)
+Casos
+positivos
+(IgM y qRT-
+PCR)
+Casos
+positivos
+qRT-PCR
+Total Índice de positividad
+2025 102 6 7 13 12,70%
+2026* 70 1 8 1 2 12 17,10%
+Total
+acumulado 172 7 15 1 2 25 14,50%
+Boletín Epidemiológico
+Fuente: Laboratorio de Virología - INLASA. Base de datos integrada de Fiebres Hemorrágicas (2025, 2026).
+*Nota: Los datos de la gestión 2026 corresponden al corte epidemiológico parcial al mes de mayo.
+Tabla 1. Casos confirmados de hantavirus según tipo de marcador diagnóstico
+(serológico y molecular) y muestras procesadas. La Paz, Bolivia, 2025 - 2026*.
+Al evaluar el rendimiento de la vigilancia, se
+evidenció un incremento en el índice de
+positividad general, el cual pasó de 12.7% en
+el año 2025 a 17.1% durante el periodo
+2026*. Este aumento en la tasa de
+positividad del año 2026* coincide con una
+mayor tasa de detección molecular en fases
+tempranas, consolidando un índice de
+positividad acumulado del 14.5% para todo
+el ciclo analizado (25 casos positivos de 172
+muestras procesadas), reforzado por la
+directa remisión de muestras con sospecha
+clínica y epidemiológica de hantavirus
+Los resultados evidencian que la detección
+serológica integral (IgM e IgG) constituye
+una herramienta clave para el diagnóstico
+de hantavirus, complementando a las
+técnicas moleculares y permitiendo una
+mejor identificación de los casos en
+diferentes etapas de la infección.
+La elevada proporción de casos con
+positividad simultánea para qRT-PCR, IgM e
+IgG (15/25; 60%) sugiere una superposición
+entre la fase de replicación viral y el
+desarrollo de la respuesta humoral. Este
+comportamiento difiere del observado en
+otras arbovirosis, como el dengue, donde la
+aparición de IgG suele coincidir con una
+reducción de la carga viral circulante. En
+hantavirus, este fenómeno podría explicarse
+por la combinación de un período de
+incubación relativamente prolongado y la
+aparición temprana de anticuerpos durante
+la fase clínica de la enfermedad. En
+consecuencia, los pacientes pueden
+presentar anticuerpos IgG detectables
+desde los primeros días posteriores al inicio
+de síntomas, mientras persiste la detección
+de ARN viral en sangre, lo que favorece la
+coexistencia de marcadores moleculares y
+serológicos en una misma muestra.
+
+Boletín Epidemiológico
+Fuente: Laboratorio de Virología - INLASA. Base de datos integrada (2025, 2026).
+*Nota: Los datos de la gestión 2026 corresponden al corte epidemiológico parcial al mes de mayo.
+El análisis del intervalo de días entre el inicio
+de síntomas y la toma de muestra de los
+casos positivos fue de un promedio de 5 días,
+con un rango entre 2 y 11 días. 
+Este resultado muestra que las muestras
+fueron recolectadas principalmente durante
+la fase aguda de la enfermedad, periodo en el
+que es posible detectar tanto la presencia del
+material genético viral mediante qRT-PCR
+como la respuesta inmunológica temprana a
+través de marcadores serológicos.
+Gráfico 1. Proporción de casos confirmados de hantavirus según metodología de
+diagnóstico laboratorial y periodo anual. Bolivia, 2025 - 2026 
+
+Gráfico 2. Distribución porcentual de casos confirmados de Hantavirus por
+sexo, Bolivia (Periodo 2025 – 2026)
+Distribución por Sexo: 
+El análisis demográfico de la casuística para hantavirus revela una marcada asimetría de
+género, caracterizada por un franco predominio del sexo masculino, el cual concentra el 73%
+de los casos confirmados (18 casos) frente a un 27% registrado en el sexo femenino (7 casos).
+Esta disparidad en la distribución porcentual evidencia un sesgo epidemiológico vinculado a
+determinantes de exposición laboral y ecológica, donde las actividades agroforestales y de
+desmonte incrementan significativamente el riesgo de infectividad en la población masculina.
+Boletín Epidemiológico
+Como se puede observar en la ilustración de
+los datos estadísticos, el comportamiento de
+los marcadores analíticos revela un cambio
+cualitativo crucial entre ambos periodos.
+Mientras que la gestión 2025 se caracterizó
+por una captación predominantemente 
+tardía en fase de convalecencia (sesgo
+serológico positivo), la gestión 2026
+demuestra un fortalecimiento en la
+oportunidad de la sospecha clínica, logrando
+un mayor número de confirmaciones en la
+ventana de viremia temprana mediante la
+técnica molecular de RT-PCR.
+1. Estratificación Demográfica:
+Fuente: Laboratorio de Virología INLASA . Base de datos integrada de Fiebres Hemorrágicas (2025, 2026).
+Distribución por Grupos Etarios: 
+Se detalla la cantidad de pruebas realizadas según rango de edad, se evidencia mayor
+incidencia en el grupo de 19 a 24 años registra la mayor cantidad de pruebas con 6 casos.
+Seguido por el grupo de 14 a 18 años con 4 casos. Existe una presencia notable de casos en
+adultos jóvenes y adultos de mediana edad (34 a 63 años), con una frecuencia que oscila
+entre 1 y 3 pruebas por rango. Se observa un caso en el rango de 64 a 68 años.
+
+La distribución de los casos de hantavirus durante el periodo 2025-2026 muestra una fuerte
+desigualdad geográfica, posicionando al municipio de La Asunta como el principal foco
+crítico de la región al concentrar 15 casos positivos, cifra que supera el 57% del total. Por su
+parte, Palos Blancos se mantiene como una zona afectada habitual con 6 casos, mientras
+que Guanay registró 3 casos, reflejando una posible expansión del patógeno. Finalmente,
+San Buenaventura y Caranavi reportaron un solo caso cada uno.
+Gráfico 4. Distribución de casos confirmados de Hantavirus según
+municipio de procedencia, Bolivia (Periodo 2025 – 2026)
+Gráfico 3. Distribución de pruebas procesadas para hantavirus
+por grupos etarios, La Paz-Bolivia  (Periodo 2025 – 2026)
+Boletín Epidemiológico
+Procedencia Geográfica (Vigilancia Espacial):
+Fuente: Laboratorio de Virología - INLASA. Base de datos integrada (2025, 2026).
+Fuente: Laboratorio de Virología - INLASA. Base de datos integrada (2025, 2026).
+
+Boletín Epidemiológico
+Análisis epidemiológico
+Durante el periodo 2025–2026 se identificó
+una positividad acumulada de 14,5%
+(25/172), con un incremento del índice de
+positividad de 12,7% en 2025 a 17,1% en
+2026, lo que sugiere una mayor eficiencia en
+la captación de casos sospechosos y una
+mejor oportunidad diagnóstica, más que un
+incremento concluyente de la transmisión.
+La incorporación de la qRT-PCR permitió
+detectar infecciones en fases tempranas,
+incluso antes de la seroconversión,
+fortaleciendo la sensibilidad del sistema de
+vigilancia y mejorando la confirmación de
+casos agudos.
+La elevada proporción de casos con
+positividad simultánea para qRT-PCR, IgM e
+IgG evidencia que los pacientes fueron
+captados principalmente durante la fase
+aguda de la enfermedad, cuando coexisten
+la replicación viral y la respuesta
+inmunológica. Este hallazgo, respaldado por
+un promedio de cinco días entre el inicio de
+síntomas y la toma de muestra, confirma
+una adecuada oportunidad en la notificación
+y remisión de casos sospechosos, aspecto
+fundamental para el diagnóstico oportuno y
+la implementación de medidas de control.
+Desde el punto de vista epidemiológico, el
+predominio de casos en hombres jóvenes y
+adultos refleja un patrón ocupacional
+compatible con la exposición a ambientes
+rurales y actividades agroforestales, donde el
+contacto con reservorios silvestres del
+hantavirus es más frecuente. Asimismo, la
+concentración de más de la mitad de los
+casos en el municipio de La Asunta, seguida
+por Palos Blancos y Guanay, evidencia una
+distribución espacial focalizada, consistente
+con áreas de mayor riesgo ecológico y
+ocupacional, que requieren fortalecer la
+vigilancia integrada, las intervenciones de
+prevención y la educación sanitaria dirigida a
+las poblaciones expuestas.
+En conjunto, los hallazgos muestran que la
+vigilancia epidemiológica y laboratorial han
+mejorado su capacidad para detectar casos
+en fases tempranas de la infección,
+permitiendo una caracterización más precisa
+del comportamiento del hantavirus. No
+obstante, la persistencia de focos geográficos
+definidos y la asociación con factores
+ocupacionales resaltan la necesidad de
+mantener una vigilancia activa, fortalecer las
+acciones de prevención en zonas endémicas
+y consolidar el diagnóstico combinado
+mediante técnicas moleculares y serológicas
+para reducir la morbimortalidad asociada a
+esta enfermedad.
+
+Boletín Epidemiológico
+CONCLUSIONES
+La vigilancia epidemiológica activa del
+hantavirus (2025-2026) confirma un patrón
+de transmisión focalizado en el norte de La
+Paz, con el municipio de La Asunta como el
+principal foco crítico al concentrar más del
+57% de los casos. El perfil demográfico
+ratifica un claro sesgo de riesgo ocupacional
+y socioambiental, afectando
+predominantemente a la población
+masculina (73%) y a los estratos de
+población joven en edad productiva. 
+Por otra parte, el fortalecimiento de la
+capacidad resolutiva del INLASA ha
+permitido una transición cualitativa crucial
+en el algoritmo diagnóstico, optimizando la
+captación oportuna de pacientes en fase de
+viremia temprana mediante la técnica
+molecular de qRT-PCR y serología. Este
+avance consolida al laboratorio como un
+pilar estratégico para la alerta temprana y la
+toma de decisiones eficaces bajo el enfoque
+de "Una Sola Salud".
+Los próximos pasos para fortalecer el
+diagnóstico y vigilancia de hantavirus son:  
+trabajar en forma coordinada con el SEDES
+La Paz, conocer el genotipo de hantavirus
+circulantes mediante secuenciamiento
+genético y la identificación de las especies
+de roedores en las zonas con casos
+confirmados para una correlación con el
+reservorio del virus.
+·Berjaoui, S., Puglia, I., Caporale, M., Pinoni,
+C., Salvaggiulo, A., Gatta, G., Sepashvili, M., &
+Di Donato, G. (2026). Hantaviruses in the
+One Health era: strengthening surveillance
+before the next spillover. Veterinaria
+Italiana, 62(2).
+https://doi.org/10.12834/VetIt.4024.40521.1
+·Centro de Coordinación de Alertas y
+Emergencias Sanitarias. (2026, 5 de mayo).
+Informe de situación: Brote de hantavirus
+en un crucero con vinculación de varios
+países. Ministerio de Sanidad de España.
+·Delgado Casazola, J., Cadena Mamani, R., &
+Santalla Vargas, J. (2022). Diagnostico
+Serológico de Hantavirus en el
+Departamento de La Paz, Bolivia, en la
+gestión 2022. Revista de Investigación e
+Información en Salud, 17(2), 11-23.
+https://doi.org/10.53287/ejdf2072iu86f
+·Ferres, M., Vial, P., Marco, C., Yáñez, L.,
+Godoy, P., Castillo, C., Hjelle, B., Delgado, I.,
+Lee, S. J., Mertz, G. J., & Vial, P. A. (2007).
+Prospective evaluation of household
+contacts of persons with hantavirus
+cardiopulmonary syndrome in Chile. The
+Journal of Infectious Diseases, 195(11),
+1563–1571. https://doi.org/10.1086/516776
+·Martinez-Valdebenito, C., Calvo, M., Vial, C.,
+Mansilla, R., Marco, C., Palma, R. E., Vial, P.
+A., Valdivieso, F., Mertz, G. J., & Ferres, M.
+(2020). Person-to-person transmission of
+Andes virus in an outbreak in southern
+Argentina. The New England Journal of
+Medicine, 383(23), 2230–2241.
+https://doi.org/10.1056/NEJMoa2009040
+·Morales Diaz, D., & Salazar Ávila, F. A.
+(2022). Hantavirus en Bolivia: Una Revisión
+Bibliográfica. Revista Científica de UNITEPC,
+9(1), 35-48.
+REFERENCIAS
+
+Boletín Epidemiológico
+·Pavez-Paredes, N., & Fernández-Andrade, P.
+(2023). Síndrome cardiopulmonar por
+Hantavirus: pasado, presente y futuro. ARS
+MEDICA Revista de Ciencias Médicas, 50(3), 84-
+93. https://doi.org/10.11565/arsmed.v50i3.2174
+·Trombley, A. R., Wachter, L., Garrison, J.,
+Buckley-Beason, V. A., Jahrling, J., Hensley, L. E.,
+Schoepp, R. J., Norwood, D. A., Goba, A., Fair, J.
+N., & Kulesh, D. A. (2010). Short report:
+Comprehensive panel of real-time TaqMan™
+polymerase chain reaction assays for detection
+and absolute quantification of filoviruses,
+arenaviruses, and New World hantaviruses. The
+American Journal of Tropical Medicine and
+Hygiene, 82(5), 954–960.
+https://doi.org/10.4269/ajtmh.2010.09-0636
+·Velavan, T. P., & Schmidt-Chanasit, J. (2026).
+When Rare Zoonoses Travel: Andes virus,
+Hantavirus Cardiopulmonary Syndrome, and
+the Preparedness Gap. International Journal of
+Infectious Diseases, 164, 108778.
+https://doi.org/10.1016/j.ijid.2026.108778
+

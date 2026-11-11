@@ -2,12 +2,21 @@
  {
   "url": "https://inlasa.gob.bo/wp-content/uploads/2026/10/Boletin-epidemiologia-HANTAVIRUS.pdf",
   "slug": "inlasa_gob_bo_wp_content_uploads_2026_10_Boletin_epidemiologia_HANTAVI_2c6789",
-  "error": "HTTPSConnectionPool(host='inlasa.gob.bo', port=443): Max retries exceeded with url: /wp-content/uploads/2026/10/Boletin-epidemiologia-HANTAVIRUS.pdf (Caused by SSLError(SSLCertVerificationError(1, '[S"
+  "ssl": "sin verificar (certificado del sitio incompleto)",
+  "http": 200,
+  "tipo": "application/pdf",
+  "bytes": 8513230,
+  "chars": 23607
  },
  {
   "url": "https://inlasa.gob.bo/boletines/",
   "slug": "inlasa_gob_bo_boletines_206ac4",
-  "error": "HTTPSConnectionPool(host='inlasa.gob.bo', port=443): Max retries exceeded with url: /boletines/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai"
+  "ssl": "sin verificar (certificado del sitio incompleto)",
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 88629,
+  "chars": 3221,
+  "archivos": 6
  },
  {
   "url": "https://vigilancia.inlasa.gob.bo/dashboard-vigilancia/",
@@ -15,6 +24,7 @@
   "http": 200,
   "tipo": "text/html; charset=utf-8",
   "bytes": 51470,
+  "render_error": "Page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://vigilancia.inlasa.gob.bo/dashboard-vigilancia/",
   "chars": 517,
   "archivos": 0
  },
@@ -24,7 +34,8 @@
   "http": 200,
   "tipo": "text/html; charset=utf-8",
   "bytes": 46034,
-  "chars": 1205,
+  "render": "chrome",
+  "chars": 2699,
   "archivos": 0
  },
  {

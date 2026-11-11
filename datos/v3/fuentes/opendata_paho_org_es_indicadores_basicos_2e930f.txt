@@ -1,12 +1,59 @@
+Pasar al contenido principal
+English
+Español
+Core Indicators
+INDICADORES BÁSICOS
+TODOS LOS INDICADORES
+VISUALIZACIONES
+DESCARGAR
+SOBRE LOS DATOS
+Buscar
+Buscar
+
 Este portal interactivo alberga más de 140 indicadores de salud y relacionados con la salud, con datos desde 1995 hasta el presente, desagregados por edad, sexo y distribución urbano-rural, entre otros. Presentamos información crucial sobre la situación y las tendencias de salud a nivel nacional, subregional y regional.
+
 NUEVO Octubre 2, 2026:
-- Los Indicadores Básicos se han actualizado!
+
+Los Indicadores Básicos se han actualizado!
+
 Últimas actualizaciones:
-- Octubre 2, 2026:
-  - Actualización de la base de indicadores básicos.
-- Abril 13, 2026:
-  - NHWA: Densidad (10 000 habs) de dentistas, médicos/as, profesionales de partería, enfermería, farmacéuticos/as
-  - UNICEF IGME: Tasa de mortalidad infantil, en menores de cinco años estimada y neonatal estimada (1 000 nv)
-  - Casos de malaria con desagregación por sexo
+
+Octubre 2, 2026:
+Actualización de la base de indicadores básicos.
+Abril 13, 2026:
+NHWA: Densidad (10 000 habs) de dentistas, médicos/as, profesionales de partería, enfermería, farmacéuticos/as
+UNICEF IGME: Tasa de mortalidad infantil, en menores de cinco años estimada y neonatal estimada (1 000 nv)
+Casos de malaria con desagregación por sexo
+
 Actualizaciones recientes | Descargar datos
+
+ 
+
+Ver TODOS LOS INDICADORES
+
 Esta plataforma sobre la situación y tendencias de salud de las Américas es un esfuerzo de colaboración entre los Ministerios de Salud, los institutos nacionales de estadística de los países y territorios de las Américas y las oficinas de país, departamentos técnicos y unidades de la OPS. Es mantenido por el Departamento de Evidencia e Inteligencia para la Acción en Salud (EIH).
+
+Más datos de OPS / OMS
+Salud en las Americas
+Rede Interagencial de Informações para a Saúde (Ripsa)
+Estadísticas de salud mundial 2025 - OMS
+Datos de enfermedades no transmisibles
+Base de datos de mortalidad global OMS
+European health information gateway
+30 años de los indicadores básicos
+ 
+Durante tres décadas, la OPS ha venido creando conciencia sobre la necesidad de contar con información oportuna y coherente para la toma de decisiones en los países de las Américas.
+Lecturas recomendadas
+ Libros, informes y sitios web sobre la historia, los conceptos y las consideraciones de los indicadores básicos. Los datos e indicadores de los países también se pueden encontrar aquí.
+
+PLISA es el portal de datos abiertos de la Organización Panamericana de la Salud (OPS / OMS). Aquí encontrará datos de los países y territorios de la Región de las Américas.
+
+Buscar
+ Buscar
+
+EIH Departmento de Evidencia e Información para la Acción en Salud
+Organización Panamericana de la Salud © 2026
+
+Este sitio web está bajo licencia de Creative Commons 3.0 (CC BY-NC 3.0 IGO) para Organizaciones intergubernamentales, excepto cuando se indique de otra manera. Ciertos datos y fuentes de información podrían estar cobijados por otro tipo de licencia CC.
+
+Términos y condiciones | Política de protección de datos personales (inglés)
