@@ -1,0 +1,164 @@
+{
+ "punto": [
+  -17.675,
+  -63.19
+ ],
+ "fuente_punto": "estimación del sistema a partir de «Av. Banzer, cerca del décimo anillo» (prensa); no es una coordenada confirmada",
+ "fuente_instituciones": "OpenStreetMap (Overpass)",
+ "instituciones": [
+  {
+   "cat": "salud",
+   "nombre": "Centro de Salud El Remanzo",
+   "lat": -17.7146794,
+   "lon": -63.1787558,
+   "dir": "",
+   "km": 4.570106781685609,
+   "n": 1,
+   "color": "#1d6fb8",
+   "nomcat": "Salud"
+  },
+  {
+   "cat": "salud",
+   "nombre": "C.S. Universitario Norte",
+   "lat": -17.7219169,
+   "lon": -63.1596009,
+   "dir": "Avenida Viru Viru",
+   "km": 6.130758710858894,
+   "n": 2,
+   "color": "#1d6fb8",
+   "nomcat": "Salud"
+  },
+  {
+   "cat": "salud",
+   "nombre": "C.S. Anita Suárez de Leigue",
+   "lat": -17.737024,
+   "lon": -63.1717392,
+   "dir": "",
+   "km": 7.162877892782429,
+   "n": 3,
+   "color": "#1d6fb8",
+   "nomcat": "Salud"
+  },
+  {
+   "cat": "salud",
+   "nombre": "C.S. Pochola Trapero",
+   "lat": -17.7330794,
+   "lon": -63.1559681,
+   "dir": "Calle Mal Raux",
+   "km": 7.396161914336264,
+   "n": 4,
+   "color": "#1d6fb8",
+   "nomcat": "Salud"
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital Católico",
+   "lat": -17.7361159,
+   "lon": -63.1614328,
+   "dir": "",
+   "km": 7.439062326262103,
+   "n": 5,
+   "color": "#1d6fb8",
+   "nomcat": "Salud"
+  },
+  {
+   "cat": "policia",
+   "nombre": "Patrulla Caminera",
+   "lat": -17.7178075,
+   "lon": -63.1623538,
+   "dir": "Avenida Cristo Redentor",
+   "km": 5.588772629568761,
+   "n": 6,
+   "color": "#2e3a8c",
+   "nomcat": "Policía"
+  },
+  {
+   "cat": "policia",
+   "nombre": "Policía Caminera",
+   "lat": -17.6192352,
+   "lon": -63.158895,
+   "dir": "",
+   "km": 7.022306577974724,
+   "n": 7,
+   "color": "#2e3a8c",
+   "nomcat": "Policía"
+  },
+  {
+   "cat": "policia",
+   "nombre": "Distrito Policial 8",
+   "lat": -17.7343851,
+   "lon": -63.1479205,
+   "dir": "Calle Racine",
+   "km": 7.966955522960135,
+   "n": 8,
+   "color": "#2e3a8c",
+   "nomcat": "Policía"
+  }
+ ],
+ "todas": [
+  {
+   "cat": "salud",
+   "nombre": "Centro de Salud El Remanzo",
+   "lat": -17.7146794,
+   "lon": -63.1787558,
+   "dir": "",
+   "km": 4.570106781685609
+  },
+  {
+   "cat": "policia",
+   "nombre": "Patrulla Caminera",
+   "lat": -17.7178075,
+   "lon": -63.1623538,
+   "dir": "Avenida Cristo Redentor",
+   "km": 5.588772629568761
+  },
+  {
+   "cat": "salud",
+   "nombre": "C.S. Universitario Norte",
+   "lat": -17.7219169,
+   "lon": -63.1596009,
+   "dir": "Avenida Viru Viru",
+   "km": 6.130758710858894
+  },
+  {
+   "cat": "policia",
+   "nombre": "Policía Caminera",
+   "lat": -17.6192352,
+   "lon": -63.158895,
+   "dir": "",
+   "km": 7.022306577974724
+  },
+  {
+   "cat": "salud",
+   "nombre": "C.S. Anita Suárez de Leigue",
+   "lat": -17.737024,
+   "lon": -63.1717392,
+   "dir": "",
+   "km": 7.162877892782429
+  },
+  {
+   "cat": "salud",
+   "nombre": "C.S. Pochola Trapero",
+   "lat": -17.7330794,
+   "lon": -63.1559681,
+   "dir": "Calle Mal Raux",
+   "km": 7.396161914336264
+  },
+  {
+   "cat": "salud",
+   "nombre": "Hospital Católico",
+   "lat": -17.7361159,
+   "lon": -63.1614328,
+   "dir": "",
+   "km": 7.439062326262103
+  },
+  {
+   "cat": "policia",
+   "nombre": "Distrito Policial 8",
+   "lat": -17.7343851,
+   "lon": -63.1479205,
+   "dir": "Calle Racine",
+   "km": 7.966955522960135
+  }
+ ]
+}
