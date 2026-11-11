@@ -163,3 +163,27 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 .mtools.mtime{left:50%;transform:translateX(-50%);bottom:74px;gap:8px;flex-wrap:nowrap;max-width:calc(100% - 24px)}.mtime input[type=range]{width:190px}.mtime b{font-size:12px;white-space:nowrap}.mleg{font-size:11px;color:var(--mut);display:flex;align-items:center;gap:4px;white-space:nowrap}.mleg i{display:inline-block;width:46px;height:8px;border-radius:4px;background:linear-gradient(90deg,#4682c8,#28a078,#ebaa14,#d7263d)}
 @media(max-width:700px){.mtools.mtime{flex-wrap:wrap}.mtime input[type=range]{width:120px}}
 .emb{display:inline-block;margin:2px 10px 2px 0;font-size:12.5px}.emb b{font-size:15px;color:var(--ink)}.emb.dsc{color:var(--mut)}.emb.ok{color:#1e8c5a;font-weight:600}
+
+/* ===== Tema negro (v3): fondo negro puro, tarjetas y botones bien definidos; colores de gráficas sin cambios ===== */
+:root[data-theme=dark]{--bg:#000;--card:#0b0d12;--ink:#f1f5fb;--mut:#a3b0c2;--line:#2b3340;--soft:#12161d;--brand:#05080d;--brand2:#5aa9f0;--shadow:0 0 0 1px rgba(255,255,255,.03),0 12px 30px rgba(0,0,0,.7)}
+:root[data-theme=dark] body{background:radial-gradient(900px 420px at 88% -12%,rgba(29,111,184,.16),transparent 62%),radial-gradient(700px 360px at -6% 8%,rgba(142,36,170,.10),transparent 58%),#000}
+:root[data-theme=dark] .hdr,:root[data-theme=dark] #hdr{background:linear-gradient(180deg,#07101c,#000);border-bottom:1px solid #1f2a3a}
+:root[data-theme=dark] .card,:root[data-theme=dark] .alert,:root[data-theme=dark] .ayuda,:root[data-theme=dark] .fcard{background:var(--card);border:1px solid var(--line)}
+:root[data-theme=dark] .kpi{background:linear-gradient(135deg,#0b0d12 55%,color-mix(in srgb,var(--k) 26%,#0b0d12));border:1px solid color-mix(in srgb,var(--k) 38%,#2b3340)}
+:root[data-theme=dark] .btn{background:#141922;border:1px solid #475266;color:#f1f5fb;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+:root[data-theme=dark] .btn:hover{background:#1b2230;border-color:var(--brand2);box-shadow:0 0 0 3px rgba(90,169,240,.18)}
+:root[data-theme=dark] .btn:active{transform:translateY(0);background:#0f141c}
+:root[data-theme=dark] .btn:focus-visible,:root[data-theme=dark] select:focus-visible,:root[data-theme=dark] input:focus-visible{outline:2px solid var(--brand2);outline-offset:2px}
+:root[data-theme=dark] .btn.p{background:linear-gradient(135deg,#2a86d6,#1260a8);border-color:#5aa9f0;color:#fff;box-shadow:0 0 0 1px rgba(90,169,240,.35),0 6px 16px rgba(29,111,184,.4)}
+:root[data-theme=dark] .btn.w{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4)}
+:root[data-theme=dark] select,:root[data-theme=dark] input[type=text],:root[data-theme=dark] input[type=date]{background:#0b0d12;color:var(--ink);border:1px solid #475266;border-radius:8px}
+:root[data-theme=dark] select:hover,:root[data-theme=dark] input:hover{border-color:var(--brand2)}
+:root[data-theme=dark] .tab.on{background:#000}
+:root[data-theme=dark] .mtools,:root[data-theme=dark] .mctrl,:root[data-theme=dark] .mleg{background:rgba(8,10,14,.92);border:1px solid #475266;color:var(--ink)}
+:root[data-theme=dark] .mtools button,:root[data-theme=dark] .mctrl button{background:#141922;border:1px solid #475266;color:var(--ink)}
+:root[data-theme=dark] .mtools button.on,:root[data-theme=dark] .mtools button:hover{background:#1d6fb8;border-color:#5aa9f0;color:#fff}
+:root[data-theme=dark] .maplibregl-popup-content{background:#0b0d12!important;color:#f1f5fb!important;border:1px solid #475266}
+:root[data-theme=dark] .maplibregl-popup-tip{border-top-color:#0b0d12!important;border-bottom-color:#0b0d12!important}
+:root[data-theme=dark] table th{background:#12161d}
+:root[data-theme=dark] .fmod{background:#07090d}
+:root[data-theme=dark] hr,:root[data-theme=dark] td,:root[data-theme=dark] th{border-color:#222a36}
