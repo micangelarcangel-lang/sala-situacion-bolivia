@@ -10,14 +10,14 @@
   "fallecidos_max": 0,
   "heridos_max": 5,
   "cifras_discrepantes": "sí",
-  "n_notas": 4,
-  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo; El Mundo Bolivia; Red Uno; Visión 360",
+  "n_notas": 6,
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo; El Mundo Bolivia; Opinión Bolivia; Red Uno; Visión 360",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQcGFPSkEyMGlYVzg3bjVfQnAxUWd1ajREdDRFV0xSQzlPamZWX3ZnMllNNzhzYWkxZkJLcVZrcDNtU3Vqd2VwSWt5UjRZRnBOTlBYdVNCVGgwVlpQM2Rsblg0QWJzam1XWldMeXhTbERYMjdhcmdRM3E0cU5rZEVDYkhiOWNXbFk4NndFenEyRl91YlgwX1l3bHBNQjBUb1F1Zlg2aHk4S0ljdGkxVzlDcjJoR3l5SXFUbmVYbWZ5U2d6T0tuRnMtRzF3N2gtcGJOVmpnUw?oc=5 | https://news.google.com/rss/articles/CBMioAFBVV95cUxNMW1hczlJVnZ3czk2Zk5VcTdwcHVGdXU5YkNfa3J3NkZNd2ExVHdxeFdBaWdLQXNYSXRrWV9MRjV6eU9obGZ0TU56UTJyZk9sUnR1NWtwb2pGc01FZWhidkd6MTJWVm9YQnpuMEhEMXNlRThydnNrU240dU9ZaVVRcHY0UVNyLUxaQjRFY3pDbUVxcU8zMThKOGV2MDFubmw5?oc=5 | https://news.google.com/rss/articles/CBMi4AFBVV95cUxPMnVyT21LUnlMZWNsOG5jTEhqM0IwN2I4S2hrQ0ktS2RPazUyaWJwV3d1WDJ5bUxNWG1fazRSVnhVczAyelZzUnE0VmJ2dTZpenRDdXl6WXA4WFNvUWpnMVNyS0g5VXpyU01pLUw3ak5SU1NkWG03RzZKVkNPbHRiZmJRZG9Kd0VHWEN0d1hRQkNKOW5ZMTQyUEZ4VGFlN2dDNzA3ZkgxZG8wdzVISWJONDc0eVZoS0s4Zm55WFR4LUctM1l6MEgxLVJJbG5hVkVicXlGQnpKbkx5LWVsaV9wOdIB4AFBVV95cUxPMnVyT21LUnlMZWNsOG5jTEhqM0IwN2I4S2hrQ0ktS2RPazUyaWJwV3d1WDJ5bUxNWG1fazRSVnhVczAyelZzUnE0VmJ2dTZpenRDdXl6WXA4WFNvUWpnMVNyS0g5VXpyU01pLUw3ak5SU1NkWG03RzZKVkNPbHRiZmJRZG9Kd0VHWEN0d1hRQkNKOW5ZMTQyUEZ4VGFlN2dDNzA3ZkgxZG8wdzVISWJONDc0eVZoS0s4Zm55WFR4LUctM1l6MEgxLVJJbG5hVkVicXlGQnpKbkx5LWVsaV9wOQ?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQcGFPSkEyMGlYVzg3bjVfQnAxUWd1ajREdDRFV0xSQzlPamZWX3ZnMllNNzhzYWkxZkJLcVZrcDNtU3Vqd2VwSWt5UjRZRnBOTlBYdVNCVGgwVlpQM2Rsblg0QWJzam1XWldMeXhTbERYMjdhcmdRM3E0cU5rZEVDYkhiOWNXbFk4NndFenEyRl91YlgwX1l3bHBNQjBUb1F1Zlg2aHk4S0ljdGkxVzlDcjJoR3l5SXFUbmVYbWZ5U2d6T0tuRnMtRzF3N2gtcGJOVmpnUw?oc=5 | https://news.google.com/rss/articles/CBMioAFBVV95cUxNMW1hczlJVnZ3czk2Zk5VcTdwcHVGdXU5YkNfa3J3NkZNd2ExVHdxeFdBaWdLQXNYSXRrWV9MRjV6eU9obGZ0TU56UTJyZk9sUnR1NWtwb2pGc01FZWhidkd6MTJWVm9YQnpuMEhEMXNlRThydnNrU240dU9ZaVVRcHY0UVNyLUxaQjRFY3pDbUVxcU8zMThKOGV2MDFubmw5?oc=5 | https://news.google.com/rss/articles/CBMi6AFBVV95cUxPWVBYelI4TmVtODdSMWdCWmlLdEpEYndiYWhveHdMR2xmSVVLd3RTX0dFMUtNN3h4UzBiUXhFemVBMjFLZ2FWaEUxY2VkdU1VTHJVeUgzcXV0TTB4ME4xbDB3RGhjYTktTEFqOExhdWRCd1BBakY1X0lYOFp6QV9GdktXcTRRcjZpdE1US0c3WUZrb3JOZWsyV2pxaDRVcGRma2ptQUlHU0VxTzBvNmx5THhQeGlmczFISG5WMzBmQ0hXZVJQaWphVEZXYk1ZdnFmRUFPcWR2bHRyOEljU2tiRk9yc0l3X0Fm0gHoAUFVX3lxTE9ZUFh6UjhOZW04N1IxZ0JaaUt0SkRid2JhaG94d0xHbGZJVUt3dFNfR0UxS003eHhTMGJReEV6ZUEyMUtnYVZoRTFjZWR1TVVMclV5SDNxdXRNMHgwTjFsMHdEaGNhOS1MQWo4TGF1ZEJ3UEFqRjVfSVg4WnpBX0Z2S1dxNFFyNml0TVRLRzdZRmtvck5lazJXanFoNFVwZGZram1BSUdTRXFPMG82bHlMeFB4aWZzMUhIblYzMGZDSFdlUlBpamFURldiTVl2cWZFQU9xZHZsdHI4SWNTa2JGT3JzSXdfQWY?oc=5"
  },
  {
   "hecho_id": "noticia:2sb53f",
@@ -38,6 +38,26 @@
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
   "enlaces": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQWkF2TV9tMDZVS0hYc2J6dUlCUlN6UHVMMThJSXgtYnZNU253TUxTLXc2QzNWOXJQdmJkMGJWVmZHT2M3Q1p2SHhEdmIwVkVIVHAtUG05Q0VGVDNqWUljNkJGS1BRdjhUUWJOQ0FtU3hSc2U5SVppRWFaWmMtNURpc1RVM3hrcEl1ZW0xdlJudW53NUpuOE1CRkFlNWFibS1kdEozcGxCTnRJeVVwX1M4T2NqRVVwV0wtNnhnWHRLM09jTEF5Z2wwYlA5QnFIdw?oc=5 | https://news.google.com/rss/articles/CBMi1gFBVV95cUxQVmRVcVlHNTVzc1BxUHBtbXJ1VnZqSjBkT01XaEQzaHVZcHBsUXV0MTdhNGtDNGJ0VDhrZS1xOXUyWWRhVEhrVHJUd0JwWmw3LURaTUJ2cXhndHc1dHpOdnh5N3V0d1Nod3VCTXczZGwtSGYxNXFXcVRoM2R6RGlWbENSdE94ZFk1Y1R4ODREelJkeXhsbWZsUXc1S1BDOF9oU1g1d0JnTnA5d2p0TlhTSXExcU1FMERVeHc4VG15c3BPelNBZENtN3d4V0pTNDJmYmZlVkJB?oc=5"
+ },
+ {
+  "hecho_id": "noticia:10a9qht",
+  "fecha_hora_local": "2026-11-10 21:14",
+  "ts_ms": 1794359649000,
+  "titulo": "Aumenta la cifra de heridos tras explosión en farmacéutica; esto es lo que se sabe - Red Uno",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 1,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNSHpCUkFqYXBtSG9jLVUxX3NLLVlZTHRIMWdkQmt0WlB2R1VZdmxHMVJyVkh1RXpEdzcxZ1lucTVIX3pyMTJVMm0waXdfeGdHNkZ3UFNzOGVqMTVsb1FzVllGdEVXbThYXzNlTThGVkVfR0pCMm5iR282ci1sS3NWQXBXUkhrNjRrUGtPMHdkeF9QTHBYbGdpdUJyRWpkbk1FUU9rZlc4YVZrb1lvajdoVnY3ZThLazFkeVl2cUpLbTJiWW93anljWA?oc=5"
  },
  {
   "hecho_id": "noticia:760ueg",
