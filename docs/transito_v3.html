@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tránsito · Sala de Situación Bolivia</title>
+<style>
+:root{--bg:#f5f7fa;--card:#fff;--ink:#16202c;--mut:#5d6b7c;--line:#dfe5ec;--acc:#2a78d6;--hd:#0f3d6e;--c1:#2a78d6;--c2:#eb6834;--c3:#eda100;--c4:#1baf7a;--c5:#6250d6;--map:#e9eef4;--mapl:#c9d3de}
+@media(prefers-color-scheme:dark){:root:not([data-t=l]){--bg:#0e1621;--card:#142030;--ink:#e8eef5;--mut:#93a3b5;--line:#233347;--map:#1a2a3d;--mapl:#2d4259;--c1:#5aa0f2;--c2:#f08a5c;--c3:#f0b429;--c4:#3fcf9c;--c5:#8b7df0}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(120deg,#0f3d6e,#1b6bb3);color:#fff;padding:18px 20px}header a{color:#cfe4ff;font-size:13px;text-decoration:none}
+header h1{margin:4px 0 2px;font-size:24px;font-weight:650}header p{margin:0;opacity:.85;font-size:13px}
+main{max-width:1180px;margin:0 auto;padding:16px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.bar label{color:var(--mut);font-size:13px}
+select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}.kpi small{color:var(--mut);font-size:12px}.kpi b{display:block;font-size:30px;line-height:1.15;font-weight:650;font-variant-numeric:tabular-nums}.kpi i{font-style:normal;font-size:12px;color:var(--mut)}
+.g{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.c12{grid-column:span 12}.c7{grid-column:span 7}.c5{grid-column:span 5}.c6{grid-column:span 6}.c4{grid-column:span 4}
+@media(max-width:860px){.c7,.c5,.c6,.c4{grid-column:span 12}}
+h2{margin:0 0 2px;font-size:15px;font-weight:650}.sub{color:var(--mut);font-size:12px;margin:0 0 8px}
+svg{width:100%;height:auto;display:block}svg text{fill:var(--mut);font-size:11px;font-family:inherit}svg .v{fill:var(--ink)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:4px 0 0}.leg span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--k);vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--mut);font-weight:500;font-size:12px;border-bottom:1px solid var(--line);padding:6px 8px}td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:top}
+.tag{display:inline-block;font-size:11px;border:1px solid var(--line);border-radius:10px;padding:0 8px;color:var(--mut)}
+.nota{font-size:12px;color:var(--mut);margin-top:14px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:7px;display:none;max-width:260px;z-index:9}
+</style></head><body>
+<header><a href="index.html">← Sala de Situación Bolivia</a><h1>Tránsito · accidentes</h1><p id="act">Cargando…</p></header>
+<main>
+<div class="bar"><label>Período <select id="per"><option value="7">7 días</option><option value="30" selected>30 días</option><option value="90">90 días</option><option value="0">Todo lo capturado</option></select></label><span class="tag" id="rango"></span></div>
+<div class="kpis" id="kpis"></div>
+<div class="g">
+<div class="card c12"><h2>Comportamiento en el tiempo</h2><p class="sub" id="subt"></p><div id="tend"></div><div class="leg" id="legt"></div></div>
+<div class="card c7"><h2>Dónde ocurren</h2><p class="sub" id="submapa"></p><div id="mapa"></div><div class="leg" id="legm"></div></div>
+<div class="card c5"><h2>Tipo de accidente</h2><p class="sub">Hechos únicos, según el titular.</p><div id="tipo"></div><h2 style="margin-top:14px">Departamento</h2><p class="sub">Hechos y víctimas reportadas.</p><div id="dep"></div></div>
+<div class="card c12"><h2>Hechos del período</h2><p class="sub">Un registro por hecho: las notas repetidas de varios medios se unieron.</p><div id="tabla"></div></div>
+</div>
+<p class="nota" id="nota"></p>
+</main><div id="tip"></div>
+<script>
+(function(){
+var DIA=864e5,TZ=-4*36e5,NS="http://www.w3.org/2000/svg",$=function(i){return document.getElementById(i)};
+var H=[],GEO=null,INI=0,tip=$("tip");
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function dk(ts){return Math.floor((ts+TZ)/DIA)}
+function fd(k){var d=new Date(k*DIA);return d.getUTCDate()+"/"+(d.getUTCMonth()+1)}
+function cs(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function showTip(ev,html){tip.innerHTML=html;tip.style.display="block";tip.style.left=Math.min(ev.clientX+12,innerWidth-270)+"px";tip.style.top=(ev.clientY+12)+"px"}
+function hideTip(){tip.style.display="none"}
+function bind(el,html){el.addEventListener("mousemove",function(e){showTip(e,html)});el.addEventListener("mouseleave",hideTip)}
+function sv(w,h){var s=document.createElementNS(NS,"svg");s.setAttribute("viewBox","0 0 "+w+" "+h);return s}
+function el(p,t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function tx(p,x,y,t,a){var e=el(p,"text",Object.assign({x:x,y:y},a||{}));e.textContent=t;return e}
+function sel(){var p=+$("per").value,hoy=dk(Date.now()),ult=Math.max.apply(null,H.map(function(h){return dk(h.ts)})),fin=Math.max(hoy,ult);
+ var ini=p?fin-p+1:Math.min.apply(null,H.map(function(h){return dk(h.ts)}));
+ return{ini:ini,fin:fin,n:fin-ini+1,p:p}}
+function en(a,b){return H.filter(function(h){var k=dk(h.ts);return k>=a&&k<=b})}
+function sum(L,c){return L.reduce(function(s,h){return s+(h[c]||0)},0)}
+function kpis(S,L){
+ var primero=INI,A=S.ini-S.n,P=S.p&&A>=primero?en(A,S.ini-1):null;
+ function d(v,u){if(!P)return"sin período previo comparable";var a=u(P);return a===0&&v===0?"igual que el período previo":(v>=a?"+":"")+(v-a)+" vs. período previo ("+a+")"}
+ var K=[["Hechos",L.length,function(P){return P.length}],["Fallecidos",sum(L,"fallecidos"),function(P){return sum(P,"fallecidos")}],["Heridos",sum(L,"heridos"),function(P){return sum(P,"heridos")}],
+  ["Hechos con víctimas",L.filter(function(h){return h.fallecidos+h.heridos>0}).length,function(P){return P.filter(function(h){return h.fallecidos+h.heridos>0}).length}]];
+ $("kpis").innerHTML=K.map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b><i>'+d(k[1],k[2])+'</i></div>'}).join("")}
+function tendencia(S,L){
+ var W=1080,Hh=270,m={l:34,r:12,t:12,b:26},n=S.n,por={},mx=1,i,k;
+ for(i=0;i<n;i++)por[S.ini+i]={f:0,h:0,s:0};
+ L.forEach(function(h){var o=por[dk(h.ts)];if(!o)return;if(h.fallecidos>0)o.f++;else if(h.heridos>0)o.h++;else o.s++});
+ var tot=[];for(i=0;i<n;i++){var o=por[S.ini+i];tot.push(o.f+o.h+o.s);mx=Math.max(mx,tot[i])}
+ var ma=tot.map(function(_,j){var a=tot.slice(Math.max(0,j-6),j+1);return a.reduce(function(x,y){return x+y},0)/a.length}),mm=Math.max(mx,Math.ceil(Math.max.apply(null,ma)));
+ var s=sv(W,Hh),iw=W-m.l-m.r,ih=Hh-m.t-m.b,bw=iw/n,y=function(v){return m.t+ih-v/mm*ih};
+ var paso=mm>8?Math.ceil(mm/4):1;for(i=0;i<=mm;i+=paso){el(s,"line",{x1:m.l,x2:W-m.r,y1:y(i),y2:y(i),stroke:cs("--line"),"stroke-width":1});tx(s,m.l-6,y(i)+4,i,{"text-anchor":"end"})}
+ if(INI>S.ini){var nx=Math.min(INI-S.ini,n)*bw;el(s,"rect",{x:m.l,y:m.t,width:nx,height:ih,fill:cs("--line"),"fill-opacity":.45});tx(s,m.l+6,m.t+12,"captura parcial: solo notas antiguas recuperadas",{})}
+ var cf=cs("--c2"),ch=cs("--c3"),cn=cs("--c1"),ba=Math.min(bw*.62,22);
+ for(i=0;i<n;i++){var o=por[S.ini+i],x=m.l+i*bw+(bw-ba)/2,acc=0,seg=[[o.f,cf,"con fallecidos"],[o.h,ch,"con heridos"],[o.s,cn,"sin víctimas reportadas"]];
+  seg.forEach(function(g,q){if(!g[0])return;var y1=y(acc+g[0]),hh=y(acc)-y1-1.5;var r=el(s,"rect",{x:x,y:y1,width:ba,height:Math.max(hh,1),rx:3,fill:g[1]});acc+=g[0]});
+  var z=el(s,"rect",{x:m.l+i*bw,y:m.t,width:bw,height:ih,fill:"transparent"});bind(z,"<b>"+fd(S.ini+i)+"</b><br>"+tot[i]+" hechos<br>"+o.f+" con fallecidos · "+o.h+" con heridos · "+o.s+" sin víctimas reportadas");
+  var cada=Math.ceil(n/12);if(i%cada===0||i===n-1)tx(s,m.l+i*bw+bw/2,Hh-8,fd(S.ini+i),{"text-anchor":"middle"})}
+ var pts=ma.map(function(v,j){return(m.l+j*bw+bw/2)+","+y(v)}).join(" ");el(s,"polyline",{points:pts,fill:"none",stroke:cs("--ink"),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"});
+ $("tend").innerHTML="";$("tend").appendChild(s);
+ $("subt").textContent="Hechos por día; la línea es el promedio de los 7 días previos. "+(S.p&&S.ini-S.n>=INI?"":"Aún no hay captura anterior a este período para compararlo: la línea base se construye con el tiempo.");
+ $("legt").innerHTML='<span style="--k:'+cf+'">con fallecidos</span><span style="--k:'+ch+'">con heridos</span><span style="--k:'+cn+'">sin víctimas reportadas</span><span style="--k:'+cs("--ink")+'">promedio 7 días</span>'}
+function mapa(S,L){
+ var W=620,Hh=560,b=[-69.7,-57.4,-23,-9.6],sx=W/(b[1]-b[0]),sy=Hh/(b[3]-b[2]),k=Math.min(sx/Math.cos(16*Math.PI/180)*0+sx,sy);
+ var px=function(lo){return(lo-b[0])*k+10},py=function(la){return(b[3]-la)*k+8},s=sv(W,Hh);
+ GEO.features.forEach(function(f){var g=f.geometry,R=g.type==="Polygon"?[g.coordinates]:g.coordinates,d="";R.forEach(function(P){P.forEach(function(r){d+="M"+r.map(function(c){return px(c[0]).toFixed(1)+" "+py(c[1]).toFixed(1)}).join("L")+"Z"})});
+  var p=el(s,"path",{d:d,fill:cs("--map"),stroke:cs("--mapl"),"stroke-width":1});bind(p,esc(f.properties.n))});
+ var con=L.filter(function(h){return h.lat!=null&&(h.precision==="municipio"||h.precision==="punto"||h.precision==="tramo")}),sin=L.length-con.length;
+ con.slice().sort(function(a,b){return(b.fallecidos+b.heridos)-(a.fallecidos+a.heridos)}).forEach(function(h){var v=h.fallecidos*2+h.heridos,r=5+Math.sqrt(v)*3.2,c=h.fallecidos>0?cs("--c2"):h.heridos>0?cs("--c3"):cs("--c1");
+  var o=el(s,"circle",{cx:px(h.lon),cy:py(h.lat),r:r,fill:c,"fill-opacity":.72,stroke:cs("--card"),"stroke-width":1.5});bind(o,"<b>"+esc(h.lugar)+"</b><br>"+esc(h.titulo)+"<br>"+h.fallecidos+" fallecidos · "+h.heridos+" heridos")});
+ $("mapa").innerHTML="";$("mapa").appendChild(s);
+ $("submapa").textContent=con.length+" hechos con ubicación a nivel de municipio o tramo"+(sin?"; "+sin+" solo tienen departamento y no se dibujan.":".");
+ $("legm").innerHTML='<span style="--k:'+cs("--c2")+'">con fallecidos</span><span style="--k:'+cs("--c3")+'">con heridos</span><span style="--k:'+cs("--c1")+'">sin víctimas reportadas</span><span>Tamaño = víctimas</span>'}
+function barras(id,datos,col){
+ var W=520,fil=26,Hh=datos.length*fil+6,s=sv(W,Hh),mx=Math.max.apply(null,datos.map(function(d){return d[1]}).concat([1])),lw=150;
+ datos.forEach(function(d,i){var y=i*fil+3,w=(W-lw-130)*d[1]/mx;tx(s,lw-8,y+14,d[0],{"text-anchor":"end"}).setAttribute("class","v");
+  var r=el(s,"rect",{x:lw,y:y+4,width:Math.max(w,2),height:14,rx:4,fill:col});tx(s,lw+Math.max(w,2)+6,y+15,d[1]+(d[2]?" · "+d[2]:""),{}).setAttribute("class","v");bind(r,esc(d[0])+": "+d[1])});
+ $(id).innerHTML="";$(id).appendChild(s)}
+function conteo(L,f){var m={};L.forEach(function(h){var k=f(h);m[k]=m[k]||{n:0,v:0};m[k].n++;m[k].v+=h.fallecidos+h.heridos});return Object.keys(m).map(function(k){return[k,m[k].n,m[k].v?m[k].v+" víctimas":""]}).sort(function(a,b){return b[1]-a[1]})}
+function tabla(L){
+ $("tabla").innerHTML=L.length?'<table><tr><th>Fecha</th><th>Hecho</th><th>Lugar</th><th>Tipo</th><th>Víctimas</th><th>Notas</th></tr>'+L.slice(0,60).map(function(h){var v=h.victimas==="cifra"?(h.fallecidos?h.fallecidos+" fallecidos":"")+(h.fallecidos&&h.heridos?" · ":"")+(h.heridos?h.heridos+" heridos":"")+(h.sin_confirmar?' <span class="tag">sin confirmar</span>':""):"sin víctimas reportadas";
+  var d=new Date(h.ts+TZ);return'<tr><td style="white-space:nowrap">'+d.getUTCDate()+"/"+(d.getUTCMonth()+1)+'</td><td><a href="'+esc(h.url)+'" target="_blank" rel="noopener" style="color:var(--acc)">'+esc(h.titulo)+'</a></td><td>'+esc(h.lugar||h.departamento||"")+'</td><td>'+esc(h.tipo)+'</td><td>'+v+'</td><td>'+h.n_notas+'</td></tr>'}).join("")+'</table>':"<p class='sub'>Sin hechos en este período.</p>"}
+function pintar(){var S=sel(),L=en(S.ini,S.fin);$("rango").textContent=fd(S.ini)+" – "+fd(S.fin)+" · "+L.length+" hechos";kpis(S,L);tendencia(S,L);mapa(S,L);barras("tipo",conteo(L,function(h){return h.tipo}),cs("--c1"));barras("dep",conteo(L,function(h){return h.departamento||"Sin departamento"}).slice(0,8),cs("--c5"));tabla(L)}
+Promise.all([fetch("transito_v3.json").then(function(r){return r.json()}),fetch("geo_dep.geojson").then(function(r){return r.json()})]).then(function(r){
+ H=r[0].hechos;INI=dk(r[0].inicio_captura||0);GEO=r[1];var t=r[0].generado;$("act").textContent="Hechos de tránsito únicos detectados en prensa · actualizado "+new Date(t+TZ).toISOString().slice(0,16).replace("T"," ")+" (hora de La Paz)";
+ var p=INI;
+ $("nota").innerHTML="Límites: la cifra de víctimas viene de la prensa y se marca «sin confirmar» mientras no haya fuente oficial. La captura continua empieza el "+fd(p)+": para tendencias de largo plazo hay que incorporar las estadísticas de Policía y del Servicio Nacional de Caminos (se gestionan por oficio). Los accidentes sin tipo en el titular aparecen como «Otro / sin detalle».";
+ $("per").onchange=pintar;pintar()}).catch(function(e){$("act").textContent="No se pudieron cargar los datos: "+e});
+})();
+</script></body></html>

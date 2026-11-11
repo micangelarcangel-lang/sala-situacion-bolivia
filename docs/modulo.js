@@ -46,9 +46,293 @@
       m.addSource("mun", {type: "geojson", data: D.geoMun || {type: "FeatureCollection", features: []}});
       fn(m);
       m.addLayer({id: "dep-line", type: "line", source: "dep", paint: {"line-color": sat ? "#ffffff" : osc ? "#9fb3cc" : "#4b5a70", "line-width": sat ? 1.4 : 1.2, "line-opacity": sat ? .8 : 1}});
+      try { herramientas(m, id); } catch (x) { console.error("herramientas", x); }
     });
     function pop(capa, f) { m.on("click", capa, function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop">' + f(e.features[0].properties) + '</div>').addTo(m); }); m.on("mouseenter", capa, function () { m.getCanvas().style.cursor = "pointer"; }); m.on("mouseleave", capa, function () { m.getCanvas().style.cursor = ""; }); }
-    m.pop = pop; return m;
+    m.pop = pop; (window.__mapas = window.__mapas || {})[id] = m; return m;
+  }
+
+  /* ---------- herramientas de mapa: mapa base, desglose municipal y vista 3D ---------- */
+  var ESRI = function (n) { return "https://server.arcgisonline.com/ArcGIS/rest/services/" + n + "/MapServer/tile/{z}/{y}/{x}"; };
+  var BASES = {calles: {n: "Calles (OSM)", t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], o: 1, b: 1, s: 0}, claro: {n: "Claro (contexto)", t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], o: .6, b: 1, s: -.2},
+    sat: {n: "Satélite (Esri)", t: [ESRI("World_Imagery")], o: 1, b: 1, s: 0}, topo: {n: "Topográfico (Esri)", t: [ESRI("World_Topo_Map")], o: 1, b: 1, s: 0}, relieve: {n: "Relieve sombreado", t: [ESRI("Elevation/World_Hillshade")], o: 1, b: 1, s: 0}, oscuro: {n: "Oscuro", t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], o: .5, b: .42, s: -.4}};
+  var BASE_DEF = {"geológica": "topo", "meteorológica": "claro", "hidrológica": "topo", "climatológica": "sat", "biológica": "claro", "tecnológica": "calles", "antropogénica": "calles", "salud": "calles"};
+  function puntosTipo() {
+    var P = [];
+    try {
+      if (T === "geológica") ((D.sismos_oficiales || {}).sismos || []).forEach(function (s) { if (s.ts > Date.now() - PER * DIA) P.push([s.lon, s.lat, 1]); });
+      if (T === "climatológica") { var fp = D.focos_puntos || {}; (fp.puntos || []).forEach(function (p) { P.push([p[1], p[0], 1]); }); }
+      D.ev.forEach(function (e) { if (e.lat != null && e.lon != null && (e.categoria === T || (T === "salud" && e.cifras && (e.cifras.fallecidos || e.cifras.heridos))) && act(e) > Date.now() - PER * DIA && e.origen !== "modelo" && T !== "geológica" && T !== "climatológica") P.push([e.lon, e.lat, 1]); });
+    } catch (x) {}
+    return P;
+  }
+  function herramientas(m, id) {
+    var cont = m.getContainer(), q = new URLSearchParams(location.search), osc = document.documentElement.getAttribute("data-theme") === "dark";
+    var cur = q.get("b") && BASES[q.get("b")] ? q.get("b") : (BASE_DEF[T] || "calles");
+    function base(k) {
+      var b = BASES[k]; cur = k; m.getSource("base").setTiles(b.t);
+      m.setPaintProperty("base", "raster-opacity", b.o); m.setPaintProperty("base", "raster-brightness-max", b.b); m.setPaintProperty("base", "raster-saturation", b.s);
+      var sat = (k === "sat" || k === "oscuro"); if (m.getLayer("dep-line")) m.setPaintProperty("dep-line", "line-color", sat ? "#ffffff" : "#4b5a70");
+    }
+    var cnt = null;
+    function conteo() {
+      if (cnt) return cnt; var c = {}; puntosTipo().forEach(function (p) { var k = munDe(p[0], p[1]); if (k) c[k] = (c[k] || 0) + 1; });
+      var g = geoCopia(D.geoMun), mx = 1; g.features.forEach(function (f) { var v = c[f.properties.n + " (" + f.properties.d + ")"] || 0; f.properties.v = v; mx = Math.max(mx, v); });
+      return cnt = {g: g, mx: mx, n: Object.keys(c).length};
+    }
+    function desglose(on) {
+      ["mt-f", "mt-l"].forEach(function (i) { if (m.getLayer(i)) m.removeLayer(i); }); if (m.getSource("mt")) m.removeSource("mt");
+      if (!on) return;
+      var c = conteo(); m.addSource("mt", {type: "geojson", data: c.g});
+      m.addLayer({id: "mt-f", type: "fill", source: "mt", paint: {"fill-color": ["interpolate", ["linear"], ["get", "v"], 0, "rgba(0,0,0,0)", 1, "#ffe9b0", 1 + c.mx * .5, COL, 1 + c.mx, "#3a0a1e"], "fill-opacity": ["case", [">", ["get", "v"], 0], .7, 0]}}, "dep-line");
+      m.addLayer({id: "mt-l", type: "line", source: "mt", paint: {"line-color": "#5b6b82", "line-width": .5, "line-opacity": .75}}, "dep-line");
+      m.on("click", "mt-f", function (e) { var p = e.features[0].properties; new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>' + S.esc(p.n) + '</b>' + S.esc(p.d) + '<br>' + p.v + ' registro(s) en ' + PL + '</div>').addTo(m); });
+    }
+    function vista3d(on) {
+      if (m.getLayer("mt-3d")) m.removeLayer("mt-3d");
+      if (on) {
+        var c = conteo(); if (!m.getSource("mt3")) m.addSource("mt3", {type: "geojson", data: c.g});
+        m.addLayer({id: "mt-3d", type: "fill-extrusion", source: "mt3", filter: [">", ["get", "v"], 0], paint: {"fill-extrusion-color": ["interpolate", ["linear"], ["get", "v"], 1, "#ffd166", 1 + c.mx * .5, COL, 1 + c.mx, "#3a0a1e"], "fill-extrusion-height": ["*", ["get", "v"], 150000 / c.mx], "fill-extrusion-opacity": .86}}, "dep-line");
+        m.easeTo({pitch: 58, bearing: -18, duration: 900});
+      } else m.easeTo({pitch: 0, bearing: 0, duration: 700});
+    }
+    var d = document.createElement("div"); d.className = "mtools";
+    d.innerHTML = '<label>Mapa base <select data-r="b">' + Object.keys(BASES).map(function (k) { return '<option value="' + k + '"' + (k === cur ? " selected" : "") + '>' + BASES[k].n + '</option>'; }).join("") + '</select></label>' +
+      '<label>Desglose <select data-r="d"><option value="dep">Departamento</option><option value="mun">Municipio (intensidad)</option></select></label><label class="ck"><input type="checkbox" data-r="3"> Vista 3D</label>';
+    cont.appendChild(d); d.addEventListener("change", function (e) { var r = e.target.dataset.r; if (r === "b") base(e.target.value); if (r === "d") { desglose(e.target.value === "mun"); if (e.target.value !== "mun") { var t3 = d.querySelector('[data-r="3"]'); if (t3.checked) { t3.checked = false; vista3d(false); } } } if (r === "3") { if (e.target.checked && d.querySelector('[data-r="d"]').value !== "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); } vista3d(e.target.checked); } });
+
+    if (T === "geológica") {
+      var G = document.createElement("div"); G.className = "mtools mctx";
+      G.innerHTML = '<b>Contexto</b><label class="ck"><input type="checkbox" data-c="lab"> Nombres de lugares</label><label class="ck"><input type="checkbox" data-c="pla"> Placas tectónicas</label><label class="ck"><input type="checkbox" data-c="pob"> Densidad de población</label><label class="ck"><input type="checkbox" data-c="usgs"> Alertas USGS (PAGER / sentido)</label>';
+      cont.appendChild(G);
+      var ant = function () { return m.getLayer("mt-f") ? "mt-f" : "dep-line"; };
+      var on = {
+        lab: function (v) { if (v) { m.addSource("c-lab", {type: "raster", tiles: [ESRI("Reference/World_Boundaries_and_Places")], tileSize: 256, maxzoom: 17}); m.addLayer({id: "c-lab", type: "raster", source: "c-lab"}); } else { if (m.getLayer("c-lab")) m.removeLayer("c-lab"); if (m.getSource("c-lab")) m.removeSource("c-lab"); } },
+        pob: function (v) { if (v) { m.addSource("c-pob", {type: "raster", tiles: ["https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/GPW_Population_Density_2020/default/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png"], tileSize: 256, maxzoom: 7, attribution: "SEDAC/CIESIN GPW v4 vía NASA GIBS"}); m.addLayer({id: "c-pob", type: "raster", source: "c-pob", paint: {"raster-opacity": .62}}, "dep-line"); } else { if (m.getLayer("c-pob")) m.removeLayer("c-pob"); if (m.getSource("c-pob")) m.removeSource("c-pob"); } },
+        pla: function (v) {
+          if (!v) { if (m.getLayer("c-pla")) m.removeLayer("c-pla"); if (m.getSource("c-pla")) m.removeSource("c-pla"); return; }
+          fetch("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json").then(function (r) { return r.json(); }).then(function (g) {
+            if (m.getSource("c-pla")) return; m.addSource("c-pla", {type: "geojson", data: g});
+            m.addLayer({id: "c-pla", type: "line", source: "c-pla", paint: {"line-color": "#e11d48", "line-width": 2.4, "line-dasharray": [2, 1.2]}}, "dep-line");
+            m.on("click", "c-pla", function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>Límite de placas</b>' + S.esc(String(e.features[0].properties.Name || "").replace(/-/g, " – ")) + '<br><span class="nota">Bird (2003), PB2002</span></div>').addTo(m); });
+          }).catch(function () { G.querySelector('[data-c="pla"]').checked = false; });
+        },
+        usgs: function (v) {
+          if (!v) { ["c-us"].forEach(function (i) { if (m.getLayer(i)) m.removeLayer(i); }); if (m.getSource("c-us")) m.removeSource("c-us"); return; }
+          var ini = new Date(Date.now() - Math.max(PER, 7) * DIA).toISOString().slice(0, 10);
+          fetch("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=-27&maxlatitude=-5&minlongitude=-74&maxlongitude=-52&minmagnitude=3.5&orderby=time&limit=400&starttime=" + ini).then(function (r) { return r.json(); }).then(function (g) {
+            if (m.getSource("c-us")) return; m.addSource("c-us", {type: "geojson", data: g});
+            m.addLayer({id: "c-us", type: "circle", source: "c-us", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 3, 5, 7, 22], "circle-color": ["match", ["get", "alert"], "green", "#2e9e5b", "yellow", "#f5b700", "orange", "#f26a1b", "red", "#d7263d", "#8b95a5"], "circle-opacity": .78, "circle-stroke-color": ["case", [">", ["coalesce", ["get", "felt"], 0], 0], "#111", "#fff"], "circle-stroke-width": ["case", [">", ["coalesce", ["get", "felt"], 0], 0], 2.4, 1]}}, "dep-line");
+            m.on("click", "c-us", function (e) { var p = e.features[0].properties; new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop"><b>USGS M ' + p.mag + '</b>' + S.esc(p.place || "") + '<br>' + new Date(p.time).toLocaleString("es-BO", {timeZone: "America/La_Paz"}) + '<br>Alerta PAGER: ' + (p.alert || "sin alerta") + ' · reportes «lo sentí»: ' + (p.felt || 0) + '<br><a href="' + p.url + '" target="_blank" rel="noopener">Ver en USGS</a></div>').addTo(m); });
+          }).catch(function () { G.querySelector('[data-c="usgs"]').checked = false; });
+        }
+      };
+      G.addEventListener("change", function (e) { var c = e.target.dataset.c; if (c && on[c]) on[c](e.target.checked); });
+    }
+
+    if (T === "meteorológica") {
+      var W = document.createElement("div"); W.className = "mtools mctx";
+      W.innerHTML = '<b>Capas del tiempo</b><label class="ck"><input type="checkbox" data-w="viento"> Viento animado</label><label class="ck"><input type="checkbox" data-w="nubes"> Nubes (GOES-East)</label><label class="ck"><input type="checkbox" data-w="lluvia"> Lluvia (IMERG, NASA)</label><label class="ck"><input type="checkbox" data-w="pron"> Pronóstico al tocar el mapa</label><a class="nota" target="_blank" rel="noopener" href="https://www.windy.com/-16.5/-64.6?-16.5,-64.6,5">Abrir en Windy ↗</a>';
+      cont.appendChild(W);
+      /* viento animado: partículas sobre una grilla Open-Meteo (modelo; no es observación) */
+      var VT = {raf: 0, cv: null, grid: null};
+      var NIVV = {"": ["Superficie (10 m)", "10m", "wind_speed_10m", "wind_direction_10m"], "850": ["850 hPa (~1,5 km)", "850", "wind_speed_850hPa", "wind_direction_850hPa"], "700": ["700 hPa (~3 km)", "700", "wind_speed_700hPa", "wind_direction_700hPa"], "500": ["500 hPa (~5,5 km)", "500", "wind_speed_500hPa", "wind_direction_500hPa"]};
+      function gridViento() {
+        if (VT.data) return Promise.resolve(VT.data);
+        var la = [], lo = [], NL = 8, NO = 8; for (var i = 0; i < NL; i++) la.push(-23 + i * (13.6 / (NL - 1))); for (var j = 0; j < NO; j++) lo.push(-70 + j * (13.4 / (NO - 1)));
+        var LA = [], LO = []; la.forEach(function (a) { lo.forEach(function (o) { LA.push(a.toFixed(2)); LO.push(o.toFixed(2)); }); });
+        var ck = "viento_v2_" + new Date().toISOString().slice(0, 13);
+        try { var c = sessionStorage.getItem(ck); if (c) { VT.data = JSON.parse(c); return Promise.resolve(VT.data); } } catch (x) {}
+        var vars = []; Object.keys(NIVV).forEach(function (k) { vars.push(NIVV[k][2], NIVV[k][3]); });
+        return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + LA.join(",") + "&longitude=" + LO.join(",") + "&hourly=" + vars.join(",") + "&forecast_days=3&timezone=America%2FLa_Paz&wind_speed_unit=kmh").then(function (r) { return r.json(); }).then(function (a) {
+          a = [].concat(a); var D_ = {la: la, lo: lo, t: a[0].hourly.time, sp: {}, dr: {}};
+          Object.keys(NIVV).forEach(function (k) { D_.sp[k] = a.map(function (p) { return p.hourly[NIVV[k][2]]; }); D_.dr[k] = a.map(function (p) { return p.hourly[NIVV[k][3]]; }); });
+          try { sessionStorage.setItem(ck, JSON.stringify(D_)); } catch (x) {}
+          return VT.data = D_;
+        });
+      }
+      function campoViento(D_, h, k) {
+        var u = [], v = []; D_.sp[k].forEach(function (arr, i) { var sp = arr[h] == null ? 0 : arr[h], d = (D_.dr[k][i][h] || 0) * Math.PI / 180; u.push(-sp * Math.sin(d)); v.push(-sp * Math.cos(d)); });
+        return {la: D_.la, lo: D_.lo, u: u, v: v};
+      }
+      function muestra(g, lon, lat) {
+        var fy = (lat - g.la[0]) / (g.la[g.la.length - 1] - g.la[0]) * (g.la.length - 1), fx = (lon - g.lo[0]) / (g.lo[g.lo.length - 1] - g.lo[0]) * (g.lo.length - 1);
+        if (fy < 0 || fx < 0 || fy > g.la.length - 1 || fx > g.lo.length - 1) return null;
+        var y0 = Math.floor(fy), x0 = Math.floor(fx), y1 = Math.min(y0 + 1, g.la.length - 1), x1 = Math.min(x0 + 1, g.lo.length - 1), ty = fy - y0, tx = fx - x0, N = g.lo.length;
+        function bi(A) { return (A[y0 * N + x0] * (1 - tx) + A[y0 * N + x1] * tx) * (1 - ty) + (A[y1 * N + x0] * (1 - tx) + A[y1 * N + x1] * tx) * ty; }
+        return [bi(g.u), bi(g.v)];
+      }
+      function viento(on) {
+        if (!on) { cancelAnimationFrame(VT.raf); clearInterval(VT.pl); if (VT.cv) { VT.cv.remove(); VT.cv = null; } if (VT.bar) { VT.bar.remove(); VT.bar = null; } return; }
+        gridViento().then(function (D_) {
+          var ahora = new Date(Date.now() - 4 * 36e5).toISOString().slice(0, 13), h0 = Math.max(0, D_.t.findIndex(function (t) { return t.slice(0, 13) >= ahora; }));
+          var hh = h0, kk = "";
+          VT.g = campoViento(D_, hh, kk);
+          var cv = document.createElement("canvas"); cv.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:3"; cont.appendChild(cv); VT.cv = cv;
+          var DIAS_ = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+          var bar = document.createElement("div"); bar.className = "mtools mtime"; VT.bar = bar;
+          bar.innerHTML = '<button type="button" class="btn s" data-t="play">▶</button><input type="range" min="0" max="' + (D_.t.length - 1) + '" value="' + hh + '" data-t="r"><b data-t="lb"></b><select data-t="niv">' + Object.keys(NIVV).map(function (k) { return '<option value="' + k + '">' + NIVV[k][0] + '</option>'; }).join("") + '</select><span class="mleg"><i></i> 0 · 8 · 18 · 30+ km/h</span>';
+          cont.appendChild(bar);
+          function etiqueta() { var t = D_.t[hh], d = new Date(t + ":00"); bar.querySelector('[data-t="lb"]').textContent = DIAS_[d.getDay()] + " " + t.slice(8, 10) + "/" + t.slice(5, 7) + " " + t.slice(11, 16) + " (hora Bolivia)" + (hh === h0 ? " · ahora" : ""); }
+          function pon(h) { hh = h; VT.g = campoViento(D_, hh, kk); bar.querySelector('[data-t="r"]').value = hh; etiqueta(); }
+          bar.addEventListener("input", function (e) { if (e.target.dataset.t === "r") pon(+e.target.value); });
+          bar.addEventListener("change", function (e) { if (e.target.dataset.t === "niv") { kk = e.target.value; pon(hh); } });
+          bar.querySelector('[data-t="play"]').onclick = function () { var b = this; if (VT.pl) { clearInterval(VT.pl); VT.pl = 0; b.textContent = "▶"; return; } b.textContent = "⏸"; VT.pl = setInterval(function () { pon(hh + 1 >= D_.t.length ? 0 : hh + 1); }, 700); };
+          etiqueta();
+          var ctx, w, h, P = [];
+          function dim() { var r = cont.getBoundingClientRect(); w = cv.width = r.width; h = cv.height = r.height; ctx = cv.getContext("2d"); ctx.clearRect(0, 0, w, h); }
+          function nace(p) { p.x = Math.random() * w; p.y = Math.random() * h; p.vida = 40 + Math.random() * 60; return p; }
+          dim(); for (var i = 0; i < 1100; i++) P.push(nace({}));
+          m.on("move", function () { if (VT.cv) ctx.clearRect(0, 0, w, h); }); window.addEventListener("resize", dim);
+          function paso() {
+            if (!VT.cv) return;
+            ctx.globalCompositeOperation = "destination-out"; ctx.fillStyle = "rgba(0,0,0,.07)"; ctx.fillRect(0, 0, w, h); ctx.globalCompositeOperation = "source-over"; ctx.lineWidth = 1.3;
+            P.forEach(function (p) {
+              var ll = m.unproject([p.x, p.y]), uv = muestra(VT.g, ll.lng, ll.lat); if (!uv || --p.vida < 0) { nace(p); return; }
+              var sp = Math.hypot(uv[0], uv[1]), nx = p.x + uv[0] * .055, ny = p.y - uv[1] * .055;
+              ctx.strokeStyle = sp < 8 ? "rgba(70,130,200,.85)" : sp < 18 ? "rgba(40,160,120,.9)" : sp < 30 ? "rgba(235,170,20,.95)" : "rgba(215,38,61,.95)";
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(nx, ny); ctx.stroke(); p.x = nx; p.y = ny;
+            });
+            VT.raf = requestAnimationFrame(paso);
+          }
+          paso();
+        }).catch(function () { W.querySelector('[data-w="viento"]').checked = false; });
+      }
+      /* capas raster de la NASA (GIBS) */
+      function gibsCapa(id, capa, ext, nivel, op, sub) {
+        return function (v) {
+          if (!v) { if (m.getLayer(id)) m.removeLayer(id); if (m.getSource(id)) m.removeSource(id); return; }
+          var t = sub ? new Date(Math.floor((Date.now() - 50 * 60e3) / 6e5) * 6e5).toISOString().slice(0, 19) + "Z" : new Date(Date.now() - 36e5 * 30).toISOString().slice(0, 10);
+          m.addSource(id, {type: "raster", tiles: ["https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/" + capa + "/default/" + t + "/GoogleMapsCompatible_Level" + nivel + "/{z}/{y}/{x}." + ext], tileSize: 256, maxzoom: nivel, attribution: "NASA GIBS / EOSDIS"});
+          m.addLayer({id: id, type: "raster", source: id, paint: {"raster-opacity": op}}, "dep-line");
+        };
+      }
+      /* pronóstico del punto (modelo Open-Meteo) */
+      var PF = {on: false, mk: null, box: null, ll: null};
+      function pronostico(ll) {
+        PF.ll = ll; if (PF.mk) PF.mk.remove(); PF.mk = new maplibregl.Marker({color: "#1d6fb8"}).setLngLat(ll).addTo(m);
+        if (!PF.box) { PF.box = document.createElement("div"); PF.box.className = "mfor"; cont.appendChild(PF.box); }
+        var mod = (PF.box.querySelector("select") || {}).value || "";
+        PF.box.innerHTML = '<div class="mfh"><b>Pronóstico del punto</b><button type="button" class="mfx">×</button></div><div class="nota">Cargando…</div>';
+        PF.box.querySelector(".mfx").onclick = function () { PF.box.remove(); PF.box = null; if (PF.mk) PF.mk.remove(); };
+        fetch("https://api.open-meteo.com/v1/forecast?latitude=" + ll.lat.toFixed(3) + "&longitude=" + ll.lng.toFixed(3) + "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m&hourly=temperature_2m,precipitation,wind_gusts_10m&forecast_days=3&timezone=America%2FLa_Paz&wind_speed_unit=kmh" + (mod ? "&models=" + mod : "")).then(function (r) { return r.json(); }).then(function (d) {
+          var c = d.current, hrs = d.hourly.time.slice(0, 48), sfx = mod ? "_" + mod : "";
+          var T2 = d.hourly["temperature_2m" + sfx] || d.hourly.temperature_2m, PR = d.hourly["precipitation" + sfx] || d.hourly.precipitation, G = d.hourly["wind_gusts_10m" + sfx] || d.hourly.wind_gusts_10m;
+          PF.box.innerHTML = '<div class="mfh"><b>Pronóstico del punto</b><button type="button" class="mfx">×</button></div><div class="mfs"><span><b>' + (c ? Math.round(c.temperature_2m) : "–") + ' °C</b> ahora</span><span>Humedad ' + (c ? c.relative_humidity_2m : "–") + ' %</span><span>Viento ' + (c ? Math.round(c.wind_speed_10m) : "–") + ' km/h (ráf. ' + (c ? Math.round(c.wind_gusts_10m) : "–") + ')</span></div><label class="nota">Modelo <select><option value="">Automático</option><option value="ecmwf_ifs025">ECMWF</option><option value="gfs_seamless">GFS</option><option value="icon_seamless">ICON</option></select></label><div id="pfChart" style="height:150px"></div><div class="nota">' + ll.lat.toFixed(2) + ', ' + ll.lng.toFixed(2) + ' · próximas 48 h · modelo Open-Meteo, no es un pronóstico oficial</div>';
+          PF.box.querySelector("select").value = mod; PF.box.querySelector("select").onchange = function () { pronostico(PF.ll); };
+          PF.box.querySelector(".mfx").onclick = function () { PF.box.remove(); PF.box = null; if (PF.mk) PF.mk.remove(); };
+          X.chart("pfChart", {tooltip: {trigger: "axis"}, legend: {top: 0, textStyle: {fontSize: 10}}, grid: {left: 30, right: 30, top: 24, bottom: 20}, xAxis: {type: "category", data: hrs.map(function (t) { return t.slice(8, 10) + "/" + t.slice(11, 13) + "h"; }), axisLabel: {interval: 7, fontSize: 9}}, yAxis: [{type: "value", name: "°C"}, {type: "value", name: "mm", splitLine: {show: false}}], series: [{name: "Temp.", type: "line", smooth: true, data: T2.slice(0, 48), itemStyle: {color: "#d7263d"}, showSymbol: false}, {name: "Lluvia", type: "bar", yAxisIndex: 1, data: PR.slice(0, 48), itemStyle: {color: "#1e88e5"}}, {name: "Ráfaga km/h", type: "line", data: G.slice(0, 48), itemStyle: {color: "#8e24aa"}, lineStyle: {type: "dashed", width: 1}, showSymbol: false, yAxisIndex: 0}]});
+        }).catch(function () { PF.box.querySelector(".nota").textContent = "No se pudo cargar el pronóstico (sin conexión al servicio)."; });
+      }
+      m.on("click", function (e) { if (PF.on) pronostico(e.lngLat); });
+      var ow = {viento: viento, nubes: gibsCapa("w-nub", "GOES-East_ABI_GeoColor", "png", 7, .8, true), lluvia: gibsCapa("w-llu", "IMERG_Precipitation_Rate", "png", 6, .7, false), pron: function (v) { PF.on = v; m.getCanvas().style.cursor = v ? "crosshair" : ""; if (!v && PF.box) { PF.box.remove(); PF.box = null; if (PF.mk) PF.mk.remove(); } }};
+      W.addEventListener("change", function (e) { var c = e.target.dataset.w; if (c && ow[c]) ow[c](e.target.checked); });
+    }
+    base(cur); if (q.get("d") === "mun") { d.querySelector('[data-r="d"]').value = "mun"; desglose(true); }
+  }
+
+  /* ---------- filtros propios de cada módulo (actualizan KPIs, gráficas, mapa y lista) ---------- */
+  function ventana(h) { return h.replace(/Últimos 30 días/g, PLU).replace(/\(30 días\)/g, "(" + PL + ")").replace(/30 días/g, PL); }
+  function filtrosHtml(B) {
+    if (!B.filtros) return "";
+    return '<div class="card fmod"><h2>' + X.ic("list") + 'Filtros de análisis</h2><div class="sx-ctl">' + B.filtros.ctl.map(function (c) { return '<label>' + c.l + ' <select data-f="' + c.id + '">' + c.o.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("") + '</select></label>'; }).join("") + '<button class="btn s" id="fReset" type="button">Quitar filtros</button></div><div class="nota" id="fRes"></div></div>' + (B.wb ? '<div class="card"><h2>' + X.ic("info") + 'Contexto de Bolivia · Banco Mundial y línea base SNIS-VE</h2><div class="grid g4" id="wbCtx"></div></div>' : "");
+  }
+  function filtrosInit(B) {
+    if (!B.filtros) return;
+    var box = document.querySelector(".fmod");
+    function vals() { var v = {}; [].forEach.call(box.querySelectorAll("select[data-f]"), function (e) { v[e.dataset.f] = e.value; }); return v; }
+    function aplica() {
+      var r = B.filtros.aplica(vals()); $("fRes").innerHTML = r || "";
+      var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = ventana(B.kpiF());
+      B.charts.forEach(function (c) { try { c.f(); } catch (x) { console.error(x); } });
+      var m = (window.__mapas || {}).mmap; if (m && B.filtros.mapa) { try { B.filtros.mapa(m); } catch (x) { console.error(x); } }
+      var l = $("aLista"); if (l && B.filtros.lista) l.innerHTML = B.filtros.lista();
+    }
+    box.addEventListener("change", aplica);
+    $("fReset").onclick = function () { [].forEach.call(box.querySelectorAll("select[data-f]"), function (e) { e.selectedIndex = 0; }); aplica(); };
+    aplica(); if (B.wb) contextoWB();
+  }
+  var ITEM_AV = function (a) { return '<a class="alert" href="' + S.esc(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + COLN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(a.titulo) + '</div><div class="m">Vigente ' + S.esc(a.inicio || "") + ' → ' + S.esc(a.fin || "") + ' · ' + S.esc((a.departamentos || []).join(", ")) + (a.n_municipios ? ' · ' + a.n_municipios + ' municipios' : '') + '</div></div><span class="badge b' + Math.max(0, a._n) + '">' + NIVT[Math.max(0, a._n)] + '</span></a>'; };
+  function filtrosAvisos(ALL, AV, vig, extra) {
+    var deps = {}; ALL.forEach(function (a) { (a.departamentos || []).forEach(function (d) { deps[d] = 1; }); });
+    var fen = {}; ALL.forEach(function (a) { if (a.fenomeno) fen[a.fenomeno.trim()] = 1; });
+    var ctl = [{id: "niv", l: "Nivel", o: [["", "Todos"], ["1", "Amarilla"], ["2", "Naranja"], ["3", "Roja"]]}, {id: "dep", l: "Departamento", o: [["", "Todos"]].concat(Object.keys(deps).sort().map(function (d) { return [d, d]; }))}, {id: "vig", l: "Estado", o: [["", "Últimos 60 días"], ["1", "Solo vigentes"]]}];
+    if (extra && Object.keys(fen).length) ctl.push({id: "fen", l: "Fenómeno", o: [["", "Todos"]].concat(Object.keys(fen).sort().map(function (d) { return [d, d]; }))});
+    function lista() { return vig.length ? vig.map(ITEM_AV).join("") : '<p class="nota">Sin avisos vigentes con esos filtros.</p>'; }
+    return {ctl: ctl, lista: lista, aplica: function (v) {
+      var L = ALL.filter(function (a) { return (!v.niv || a._n === +v.niv) && (!v.dep || (a.departamentos || []).indexOf(v.dep) >= 0) && (!v.fen || (a.fenomeno || "").trim() === v.fen) && (!v.vig || a._v); });
+      AV.length = 0; L.forEach(function (a) { AV.push(a); }); vig.length = 0; AV.filter(function (a) { return a._v; }).forEach(function (a) { vig.push(a); });
+      return "Mostrando " + AV.length + " de " + ALL.length + " avisos de los últimos 60 días · " + vig.length + " vigentes";
+    }, mapa: function (m) { var niv = {}; vig.forEach(function (a) { (a.municipios || []).forEach(function (t) { if (niv[t] == null || a._n > niv[t]) niv[t] = a._n; }); }); var g = geoCopia(D.geoMun); g.features.forEach(function (f) { var q = niv[f.properties.n + " (" + f.properties.d + ")"]; f.properties.niv = q == null ? -1 : q; }); if (m.getSource("mun")) m.getSource("mun").setData(g); }};
+  }
+
+  var HECHO_RX = /muri|muert|fallec|herid|accident|choque|colisi|vuelc|embarranc|atropell|bloque|marcha|paro |protesta|enfrentamient|conflict|asesin|feminicid|homicid|incendi|explosi|robo|atraco|secuestr|detenid|aprehend|rescat|derrumb|intoxic|ahog|derrame|fuga|colaps/i, RUIDO_RX = /econom|\bINE\b|unesco|whatsapp|seguro|artistas|m[uú]sica|pacto global|https?:\/\/|campa[nñ]a|premio|libro|festival|aniversario|impunidad|informe/i;
+  function esHecho(e) { var t = e.titulo || ""; return HECHO_RX.test(t) && !RUIDO_RX.test(t); }
+  function embudo(rev, sen, conf, desc) { return '<span class="emb"><b>' + rev + '</b> notas revisadas</span><span class="emb">→ <b>' + sen + '</b> señales (1 medio)</span><span class="emb">→ <b>' + conf + '</b> hechos triangulados (2+ medios)</span><span class="emb dsc"><b>' + desc + '</b> descartadas (no son un hecho)</span>'; }
+  function filtrosPrensa(ORIG, L, L30, SUB) {
+    var deps = {}; ORIG.forEach(function (e) { (e.departamentos || []).forEach(function (d) { deps[d] = 1; }); });
+    return {ctl: [{id: "per", l: "Pertinencia", o: [["h", "Solo hechos concretos"], ["", "Todas las notas"]]}, {id: "sub", l: "Tipo de hecho", o: [["", "Todos"]].concat(SUB.map(function (x) { return [x[0], x[0]]; }))}, {id: "dep", l: "Departamento", o: [["", "Todos"]].concat(Object.keys(deps).sort().map(function (d) { return [d, d]; }))}, {id: "cf", l: "Confianza", o: [["", "Todas"], ["m", "Media o alta (2+ medios)"], ["b", "Una sola fuente"]]}, {id: "vi", l: "Víctimas", o: [["", "Todos"], ["v", "Con víctimas"], ["f", "Con fallecidos"]]}],
+      lista: function () { return lista(L, 10); },
+      aplica: function (v) {
+        var base = ORIG.filter(function (e) { return v.per ? esHecho(e) : true; }), now = Date.now();
+        var f = base.filter(function (e) { var c = e.cifras || {}, n = e.confianza ? e.confianza.nivel : "Baja"; return (!v.sub || subtipo(e) === v.sub) && (!v.dep || (e.departamentos || []).indexOf(v.dep) >= 0) && (!v.cf || (v.cf === "m" ? n !== "Baja" : n === "Baja")) && (!v.vi || (v.vi === "f" ? (c.fallecidos || 0) > 0 : ((c.fallecidos || 0) + (c.heridos || 0)) > 0)); });
+        L.length = 0; f.forEach(function (e) { L.push(e); }); L30.length = 0; f.filter(function (e) { return act(e) > now - PER * DIA; }).forEach(function (e) { L30.push(e); });
+        var p = ORIG.filter(function (e) { return act(e) > now - PER * DIA; }), hs = p.filter(esHecho), tri = hs.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length;
+        return embudo(p.length, hs.length - tri, tri, p.length - hs.length) + '<span class="emb ok">Mostrando <b>' + L30.length + '</b> en ' + PL + '</span>';
+      },
+      mapa: function (m) {
+        var pts = L30.filter(function (e) { return e.lat != null; });
+        if (m.getSource("e")) m.getSource("e").setData({type: "FeatureCollection", features: pts.map(function (e) { return {type: "Feature", properties: {t: e.titulo, c: e.confianza ? e.confianza.nivel : "Baja", id: e.id}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; })});
+        if (m.getSource("me")) { var c = {}; pts.forEach(function (e) { var k = munDe(e.lon, e.lat); if (k) c[k] = (c[k] || 0) + 1; }); var g = geoCopia(D.geoMun); g.features.forEach(function (q) { q.properties.v = c[q.properties.n + " (" + q.properties.d + ")"] || 0; }); m.getSource("me").setData(g); }
+      }};
+  }
+  function filtrosBio(ALL, intl, vig, alta) {
+    var enf = {}, fu = {}; ALL.forEach(function (x) { enf[x._c.enf] = 1; fu[x.fuente] = 1; });
+    function item(x) { return '<a class="alert" href="' + S.esc(S.urlOk(x.url)) + '" target="_blank" rel="noopener" style="--c:' + PRIOC[x._c.prio] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(x.titulo) + '</div><div class="m">' + S.esc(x.fuente) + ' · ' + S.esc(x.fecha) + ' · ' + x._c.enf + '</div></div></a>'; }
+    return {ctl: [{id: "enf", l: "Enfermedad", o: [["", "Todas"]].concat(Object.keys(enf).sort().map(function (d) { return [d, d]; }))}, {id: "pr", l: "Prioridad", o: [["", "Todas"], ["Alta", "Alta"], ["Media", "Media"], ["Baja", "Baja"]]}, {id: "fu", l: "Fuente", o: [["", "Todas"]].concat(Object.keys(fu).sort().map(function (d) { return [d, d]; }))}, {id: "vg", l: "Estado", o: [["", "Todas (60 días)"], ["1", "Solo vigentes"]]}],
+      lista: function () { var L = (alta.length ? alta : vig).slice(0, 8); return L.map(item).join("") || '<p class="nota">Sin alertas con esos filtros.</p>'; },
+      aplica: function (v) {
+        var f = ALL.filter(function (x) { return (!v.enf || x._c.enf === v.enf) && (!v.pr || x._c.prio === v.pr) && (!v.fu || x.fuente === v.fu) && (!v.vg || x._c.vig); });
+        intl.length = 0; f.forEach(function (x) { intl.push(x); }); vig.length = 0; intl.filter(function (x) { return x._c.vig; }).forEach(function (x) { vig.push(x); }); alta.length = 0; vig.filter(function (x) { return x._c.prio === "Alta"; }).forEach(function (x) { alta.push(x); });
+        return '<span class="emb ok">Mostrando <b>' + intl.length + '</b> de ' + ALL.length + ' publicaciones oficiales · ' + vig.length + ' vigentes · ' + alta.length + ' de prioridad alta</span>';
+      }};
+  }
+  /* contexto de Bolivia (Banco Mundial, API abierta): tendencia de indicadores de salud y población */
+  /* línea base histórica SNIS-VE (2015–2021, datos abiertos de mauforonda/vigilancia-epidemiologica): canal endémico por enfermedad y departamento */
+  function canalEndemico(box) {
+    var NOM = {dengue: "Dengue", malaria: "Malaria", ira: "Infecciones respiratorias agudas (sin neumonía)", leishmaniasis: "Leishmaniasis", varicela: "Varicela"}, MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    var c = document.createElement("div"); c.className = "card"; c.style.gridColumn = "1/-1";
+    c.innerHTML = '<h2>' + X.ic("pulse") + 'Canal endémico histórico (SNIS-VE)</h2><div class="cap">Casos notificados por mes: franja = rango intercuartil de 2015–2019 (años previos a la pandemia); línea blanca = mediana; línea de color = último año con notificación comparable (se omiten años con subregistro, p. ej. 2020 en dengue). Fuente: SNIS-VE vía datos abiertos (mauforonda/vigilancia-epidemiologica), hasta 2021; es línea base histórica, no vigilancia actual.</div><div class="sx-ctl"><label>Enfermedad <select id="ceD"></select></label><label>Departamento <select id="ceP"></select></label></div><div id="ceC" style="height:300px"></div>';
+    box.appendChild(c);
+    fetch("linea_base_snis.json").then(function (r) { return r.json(); }).then(function (J) {
+      var D2 = J.d, sd = $("ceD"), sp = $("ceP");
+      sd.innerHTML = Object.keys(D2).map(function (k) { return '<option value="' + k + '">' + (NOM[k] || k) + '</option>'; }).join("");
+      sp.innerHTML = '<option value="nac">Bolivia</option>' + Object.keys(J.deps).map(function (k) { return '<option value="' + k + '">' + J.deps[k] + '</option>'; }).join("");
+      function q(a, p) { a = a.slice().sort(function (x, y) { return x - y; }); var i = (a.length - 1) * p, lo = Math.floor(i); return a[lo] + (a[Math.ceil(i)] - a[lo]) * (i - lo); }
+      function dibuja() {
+        var d = D2[sd.value], z = sp.value, ys = Object.keys(d).sort(), base = ys.filter(function (y) { return +y >= 2015 && +y <= 2019 && d[y][z]; }), sm = function (y) { return d[y][z].reduce(function (u, v) { return u + v; }, 0); }, med = base.length ? base.map(sm).reduce(function (u, v) { return u + v; }, 0) / base.length : 0, ult = ys.filter(function (y) { return d[y][z] && sm(y) >= .2 * med; }).pop() || ys[ys.length - 1];
+        var q1 = [], md = [], q3 = [];
+        for (var m = 0; m < 12; m++) { var v = base.map(function (y) { return d[y][z][m]; }); q1.push(v.length ? q(v, .25) : 0); md.push(v.length ? q(v, .5) : 0); q3.push(v.length ? q(v, .75) : 0); }
+        X.chart("ceC", {tooltip: {trigger: "axis"}, legend: {top: 0, data: ["Rango intercuartil 2015–2019", "Mediana 2015–2019", "Año " + ult], textStyle: {color: "#9aa6b6"}}, grid: {left: 46, right: 12, top: 34, bottom: 26}, xAxis: {type: "category", data: MES, boundaryGap: false}, yAxis: {type: "value"}, series: [
+          {name: "Base", type: "line", data: q1, stack: "b", showSymbol: false, lineStyle: {opacity: 0}, silent: true, tooltip: {show: false}}, {name: "Rango intercuartil 2015–2019", type: "line", data: q3.map(function (v, i) { return v - q1[i]; }), stack: "b", showSymbol: false, lineStyle: {opacity: 0}, areaStyle: {color: "#5aa9f0", opacity: .28}},
+          {name: "Mediana 2015–2019", type: "line", data: md, showSymbol: false, smooth: true, lineStyle: {color: "#e8eef7", width: 2, type: "dashed"}},
+          {name: "Año " + ult, type: "line", data: d[ult][z], smooth: true, symbol: "circle", symbolSize: 6, lineStyle: {color: "#f26a1b", width: 3}, itemStyle: {color: "#f26a1b"}}]});
+      }
+      sd.onchange = sp.onchange = dibuja; dibuja();
+    }).catch(function () { $("ceC").innerHTML = '<p class="nota">No se pudo cargar la línea base histórica.</p>'; });
+  }
+  function contextoWB() {
+    var box = $("wbCtx"); if (!box) return;
+    var IND = [["SH.DYN.MORT", "Mortalidad en menores de 5 años", "por 1.000 nacidos vivos", "#c62828"], ["SP.DYN.LE00.IN", "Esperanza de vida al nacer", "años", "#1d6fb8"], ["SH.IMM.MEAS", "Vacunación contra sarampión (12–23 m)", "% de niños", "#2e9e5b"], ["SP.POP.TOTL", "Población total", "personas", "#6a1b9a"]];
+    box.innerHTML = IND.map(function (i, k) { return '<div class="card kpi" style="--k:' + i[3] + '"><div class="l">' + i[1] + '</div><div class="v" id="wb' + k + 'v">…</div><div class="d" id="wb' + k + 'd">' + i[2] + '</div><div id="wb' + k + 'c" style="height:70px;margin-top:6px"></div></div>'; }).join("");
+    canalEndemico(box);
+    IND.forEach(function (i, k) {
+      fetch("https://api.worldbank.org/v2/country/BOL/indicator/" + i[0] + "?format=json&per_page=40&mrv=30").then(function (r) { return r.json(); }).then(function (a) {
+        var d = (a[1] || []).filter(function (x) { return x.value != null; }).reverse(); if (!d.length) throw 0; var u = d[d.length - 1];
+        $("wb" + k + "v").textContent = u.value >= 1e6 ? (u.value / 1e6).toFixed(2).replace(".", ",") + " M" : u.value.toFixed(1).replace(".", ","); $("wb" + k + "d").textContent = i[2] + " · " + u.date + " · Banco Mundial";
+        X.chart("wb" + k + "c", {grid: {left: 4, right: 4, top: 6, bottom: 4}, tooltip: {trigger: "axis"}, xAxis: {type: "category", data: d.map(function (x) { return x.date; }), show: false}, yAxis: {type: "value", show: false, scale: true}, series: [{type: "line", smooth: true, showSymbol: false, data: d.map(function (x) { return x.value; }), lineStyle: {color: i[3], width: 2}, areaStyle: {color: i[3], opacity: .12}}]});
+      }).catch(function () { $("wb" + k + "v").textContent = "—"; $("wb" + k + "d").textContent = "sin conexión al Banco Mundial"; });
+    });
   }
   function nuevo(pref) { var o = D.nuevas || {}, k = Object.keys(o).filter(function (x) { return x.indexOf(pref) === 0; }); return k.length ? o[k[0]] : []; }
   function geoCopia(g) { return JSON.parse(JSON.stringify(g || {type: "FeatureCollection", features: []})); }
@@ -108,7 +392,7 @@
     var now = Date.now(), sis = (((D.sismos_oficiales || {}).sismos) || []).map(function (s) { s.ts = new Date(s.fecha_local.replace(" ", "T") + "-04:00").getTime(); return s; }), s7 = sis.filter(function (s) { return s.ts > now - 7 * DIA; }), s30 = sis.filter(function (s) { return s.ts > now - PER * DIA; });
     var mx = s30.reduce(function (a, s) { return Math.max(a, s.mag); }, 0), sen = s30.filter(function (s) { return s.probable_sentido; }), pm = s30.length ? s30.reduce(function (a, s) { return a + s.prof_km; }, 0) / s30.length : 0;
     return {
-      kpis: kpi("Sismos en 7 días", s7.length, "Observatorio San Calixto", COL, "pulse") + kpi("Sismos en 30 días", s30.length, "registro oficial", "#a1887f", "list") + kpi("Magnitud máxima (30 d)", mx ? "M " + mx.toFixed(1) : "—", "mayor del período", "#d7263d", "mount") + kpi("Probablemente sentidos", sen.length, "M ≥ 4,0 y prof. ≤ 100 km", "#f26a1b", "shield"),
+      kpiF: function () { var now = Date.now(), s7 = s30.filter(function (s) { return s.ts > now - 7 * DIA; }), mx = s30.reduce(function (a, s) { return Math.max(a, s.mag); }, 0), sen = s30.filter(function (s) { return s.probable_sentido; }); return kpi("Sismos en 7 días", s7.length, "Observatorio San Calixto", COL, "pulse") + kpi("Sismos en 30 días", s30.length, "registro oficial", "#a1887f", "list") + kpi("Magnitud máxima (30 d)", mx ? "M " + mx.toFixed(1) : "—", "mayor del período", "#d7263d", "mount") + kpi("Probablemente sentidos", sen.length, "M ≥ 4,0 y prof. ≤ 100 km", "#f26a1b", "shield"); },
       charts: [
         {t: "Magnitud en el tiempo", c: "Cada círculo es un sismo: tamaño = magnitud, color = profundidad.", id: "g1", f: function () { X.chart("g1", {tooltip: {formatter: function (p) { var s = p.data[3]; return "<b>M " + s.mag + "</b><br>" + s.fecha_local + "<br>" + s.provincia + ", " + s.departamento + "<br>prof. " + s.prof_km + " km"; }}, grid: {left: 40, right: 14, top: 10, bottom: 40}, xAxis: {type: "time"}, yAxis: {type: "value", name: "M", min: 1.5}, visualMap: {dimension: 2, min: 0, max: 300, orient: "horizontal", left: "center", bottom: 0, itemWidth: 10, itemHeight: 110, text: ["profundo", "superficial"], inRange: {color: ["#d7263d", "#f5b700", "#2a7fd1"]}, textStyle: {color: X.css("--mut")}}, series: [{type: "scatter", symbolSize: function (v) { return 5 + Math.pow(v[1], 2) * 1.1; }, data: s30.map(function (s) { return [s.ts, s.mag, s.prof_km, s]; }), itemStyle: {opacity: .85, borderColor: "#fff", borderWidth: 1}}]}); }},
         {t: "Distribución por magnitud", c: "Pocos sismos grandes y muchos pequeños (relación de Gutenberg-Richter).", id: "g2", f: function () { var b = {}; s30.forEach(function (s) { var k = Math.floor(s.mag * 2) / 2; b[k.toFixed(1)] = (b[k.toFixed(1)] || 0) + 1; }); var ks = Object.keys(b).sort(function (a, c) { return a - c; }); X.chart("g2", {tooltip: {trigger: "axis"}, grid: {left: 34, right: 10, top: 14, bottom: 28}, xAxis: {type: "category", data: ks.map(function (k) { return "M " + k; })}, yAxis: {type: "value", minInterval: 1}, series: [{type: "bar", data: ks.map(function (k) { return b[k]; }), itemStyle: {color: COL, borderRadius: [4, 4, 0, 0]}, label: {show: true, position: "top"}}]}); }},
@@ -119,16 +403,28 @@
       map: {t: "Mapa de sismos", c: "Círculos de color = Observatorio San Calixto (oficial). Círculos blancos huecos = EMSC (fuente complementaria, incluye sismos de países vecinos). Toque un círculo.", f: function (m) { m.addSource("s", {type: "geojson", data: {type: "FeatureCollection", features: s30.map(function (s) { return {type: "Feature", properties: {mag: s.mag, p: s.prof_km, t: s.fecha_local, l: s.provincia + ", " + s.departamento}, geometry: {type: "Point", coordinates: [s.lon, s.lat]}}; })}}); m.addLayer({id: "s", type: "circle", source: "s", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 4, 6, 18], "circle-color": ["interpolate", ["linear"], ["get", "p"], 0, "#d7263d", 100, "#f5b700", 300, "#2a7fd1"], "circle-stroke-color": "#fff", "circle-stroke-width": 1, "circle-opacity": .8}}); var em = nuevo("EMSC").filter(function (x) { return x.lat != null && x.lon != null; }); m.addSource("em", {type: "geojson", data: {type: "FeatureCollection", features: em.map(function (x) { return {type: "Feature", properties: {m: x.mag, r: x.region, t: x.fecha_utc, p: x.prof_km}, geometry: {type: "Point", coordinates: [x.lon, x.lat]}}; })}}); m.addLayer({id: "em", type: "circle", source: "em", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "m"], 2, 3, 6, 14], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#ffffff", "circle-stroke-width": 1.6, "circle-opacity": .9}}); m.pop("em", function (p) { return "<b>EMSC M " + p.m + "</b>" + S.esc(p.r) + "<br>" + p.t + " · " + p.p + " km (fuente complementaria)"; });
       capaMun(m, "ms", s30.map(function (s) { return [s.lon, s.lat, 1]; }), "#8d6e63", "s"); ctrl(m, [{id: "mm", label: "Sismos por municipio (30 d)", layers: ["msf", "msl"]}, {id: "sc", label: "Sismos San Calixto", layers: ["s"]}, {id: "se", label: "Sismos EMSC", layers: ["em"]}]);
       m.pop("s", function (p) { return "<b>Sismo M " + p.mag + "</b>" + S.esc(p.l) + "<br>" + p.t + " · " + p.p + " km"; }); }},
-      vig: {t: "Sismos probablemente sentidos (30 días)", h: sen.length ? sen.map(function (s) { return '<a class="alert" href="evento.html?id=' + encodeURIComponent("sismo:" + s.id) + '" style="--c:#f26a1b;color:inherit;text-decoration:none"><div style="flex:1"><div class="t">M ' + s.mag.toFixed(1) + ' · ' + S.esc(s.provincia) + ', ' + S.esc(s.departamento) + '</div><div class="m">' + s.fecha_local + ' · prof. ' + s.prof_km + ' km</div></div></a>'; }).join("") : '<p class="nota">No hubo sismos probablemente sentidos (M ≥ 4,0 y ≤ 100 km) en los últimos 30 días.</p>'},
-      reg: evs(function (e) { return e.origen !== "sismo"; })
+      vig: {t: "Sismos del período · " + PL, h: '<div class="sx-ctl"><label>Ordenar <select id="sSort"><option value="t">Más recientes</option><option value="m">Mayor magnitud</option><option value="p">Más superficiales</option></select></label><label>Magnitud <select id="sMin"><option value="0">Todas</option><option value="3">≥ 3</option><option value="4">≥ 4</option></select></label><label>Profundidad <select id="sProf"><option value="">Todas</option><option value="s">Superficial (&lt; 70 km)</option><option value="i">Intermedia (70–300)</option><option value="p">Profunda (&gt; 300)</option></select></label><label>Departamento <select id="sDep"><option value="">Todos</option>' + S.DEPS.map(function (d) { return '<option>' + d + '</option>'; }).join("") + '</select></label><label class="ck"><input type="checkbox" id="sSen"> Solo probablemente sentidos</label></div><div class="nota" id="sRes"></div><div id="sLista" class="sx-lista"></div>', hook: function (B) {
+        var ALL = s30.slice(), F = [];
+        function filtra() { var mn = +$("sMin").value, pf = $("sProf").value, dp = $("sDep").value, sn = $("sSen").checked; return ALL.filter(function (x) { return x.mag >= mn && (!dp || x.departamento === dp) && (!sn || x.probable_sentido) && (!pf || (pf === "s" ? x.prof_km < 70 : pf === "i" ? (x.prof_km >= 70 && x.prof_km <= 300) : x.prof_km > 300)); }); }
+        function pinta(redibuja) {
+          F = filtra(); var o = $("sSort").value, L = F.slice().sort(function (a, b) { return o === "m" ? b.mag - a.mag : o === "p" ? a.prof_km - b.prof_km : b.ts - a.ts; });
+          $("sRes").textContent = "Mostrando " + F.length + " de " + ALL.length + " sismos del período" + (F.length ? " · M máx. " + Math.max.apply(null, F.map(function (x) { return x.mag; })).toFixed(1) : "");
+          $("sLista").innerHTML = L.length ? L.slice(0, 40).map(function (x) { var sen = x.probable_sentido; return '<a class="alert sx" data-i="' + ALL.indexOf(x) + '" style="--c:' + (sen ? "#f26a1b" : "#8d6e63") + ';color:inherit;text-decoration:none;cursor:pointer"><div style="flex:1"><div class="t"><b>M ' + x.mag.toFixed(1) + '</b> · ' + S.esc(x.provincia || "") + ', ' + S.esc(x.departamento) + (sen ? ' <span class="badge" style="background:#f26a1b">probablemente sentido</span>' : '') + '</div><div class="m">' + x.fecha_local + ' · prof. ' + x.prof_km + ' km</div></div></a>'; }).join("") : '<p class="nota">Sin sismos con ese filtro en el período.</p>';
+          if (redibuja) { s30.length = 0; F.forEach(function (x) { s30.push(x); }); B.charts.forEach(function (c) { c.f(); }); var gk = document.querySelector(".grid.g4"); if (gk && B.kpiF) gk.innerHTML = ventana(B.kpiF()); var m = (window.__mapas || {}).mmap; if (m && m.getSource("s")) m.getSource("s").setData({type: "FeatureCollection", features: F.map(function (s) { return {type: "Feature", properties: {mag: s.mag, p: s.prof_km, t: s.fecha_local, l: s.provincia + ", " + s.departamento}, geometry: {type: "Point", coordinates: [s.lon, s.lat]}}; })}); }
+        }
+        ["sMin", "sProf", "sDep", "sSen"].forEach(function (i) { $(i).onchange = function () { pinta(true); }; }); $("sSort").onchange = function () { pinta(false); }; pinta(false);
+        $("sLista").onclick = function (e) { var a = e.target.closest(".sx"); if (!a) return; var x = ALL[+a.dataset.i], m = (window.__mapas || {}).mmap; if (m) { m.flyTo({center: [x.lon, x.lat], zoom: 8, duration: 900}); new maplibregl.Popup().setLngLat([x.lon, x.lat]).setHTML('<div class="pop"><b>M ' + x.mag + '</b>' + S.esc(x.provincia + ", " + x.departamento) + '<br>' + x.fecha_local + ' · ' + x.prof_km + ' km</div>').addTo(m); } };
+      }},      reg: evs(function (e) { return e.origen !== "sismo"; })
     };
   }
   function bMeteo() {
     var AV = avisosSen().filter(function (a) { return a._t === "meteorológica"; }), vig = AV.filter(function (a) { return a._v; }), now = Date.now();
     var raf = {}; evs(function (e) { return e.origen === "modelo"; }).forEach(function (e) { var m = /(\d+(?:\.\d+)?) km\/h/.exec(e.titulo); if (m && e.lugar) raf[e.lugar] = Math.max(raf[e.lugar] || 0, +m[1]); });
     var nivMax = vig.reduce(function (a, x) { return Math.max(a, x._n); }, -1), nmun = {}; vig.forEach(function (a) { (a.municipios || []).forEach(function (m) { nmun[m] = 1; }); });
+    var ALLAV = AV.slice();
     return {
-      kpis: kpi("Avisos vigentes", vig.length, "SENAMHI meteorológicos", COL, "shield") + kpi("Nivel más alto vigente", nivMax >= 0 ? NIVT[nivMax] : "Sin aviso", "escala del aviso SENAMHI", nivMax >= 0 ? COLN[nivMax] : "#2e9e5b", "sun") + kpi("Municipios con aviso", Object.keys(nmun).length, "en avisos vigentes", "#1d6fb8", "map") + kpi("Avisos en 30 días", AV.filter(function (a) { return Date.parse((a.publicada || "").replace(" ", "T")) > now - PER * DIA; }).length, "emitidos", "#5c6bc0", "list"),
+      filtros: filtrosAvisos(ALLAV, AV, vig, true),
+      kpiF: function () { var nivMax = vig.reduce(function (a, x) { return Math.max(a, x._n); }, -1), nmun = {}; vig.forEach(function (a) { (a.municipios || []).forEach(function (m) { nmun[m] = 1; }); }); return kpi("Avisos vigentes", vig.length, "SENAMHI meteorológicos", COL, "shield") + kpi("Nivel más alto vigente", nivMax >= 0 ? NIVT[nivMax] : "Sin aviso", "escala del aviso SENAMHI", nivMax >= 0 ? COLN[nivMax] : "#2e9e5b", "sun") + kpi("Municipios con aviso", Object.keys(nmun).length, "en avisos vigentes", "#1d6fb8", "map") + kpi("Avisos en 30 días", AV.filter(function (a) { return Date.parse((a.publicada || "").replace(" ", "T")) > now - PER * DIA; }).length, "emitidos", "#5c6bc0", "list"); },
       charts: [
         {t: "Fenómenos × nivel de aviso", c: "Avisos de los últimos 60 días.", id: "m1", f: function () { var fen = {}; AV.forEach(function (a) { var f = (a.fenomeno || "Otro").trim(); fen[f] = fen[f] || [0, 0, 0, 0]; if (a._n >= 0) fen[f][a._n]++; }); var ks = Object.keys(fen); X.chart("m1", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, legend: {top: 0}, grid: {left: 150, right: 14, top: 36, bottom: 14}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: ks, axisLabel: {width: 140, overflow: "truncate"}}, series: [1, 2, 3].map(function (n) { return {name: NIVT[n], type: "bar", stack: "n", data: ks.map(function (k) { return fen[k][n]; }), itemStyle: {color: COLN[n]}}; })}); }},
         {t: "Línea de tiempo de avisos", c: "Cada barra es un aviso, de su inicio a su fin (color = nivel).", id: "m2", f: function () { var L = AV.filter(function (a) { return a.inicio && a.fin; }).sort(function (a, b) { return a.inicio < b.inicio ? 1 : -1; }).slice(0, 14).reverse(); X.chart("m2", {tooltip: {formatter: function (p) { var a = L[p.dataIndex]; return "<b>" + S.esc(a.titulo || "") + "</b><br>" + a.inicio + " → " + a.fin + "<br>Nivel " + (a.nivel || ""); }}, grid: {left: 70, right: 14, top: 10, bottom: 30}, xAxis: {type: "time"}, yAxis: {type: "category", data: L.map(function (a) { return "N° " + (a.numero || ""); })}, series: [{type: "custom", renderItem: function (p, api) { var y = api.value(0), s = api.coord([api.value(1), y]), e = api.coord([api.value(2), y]), h = api.size([0, 1])[1] * .62; return {type: "rect", shape: {x: s[0], y: s[1] - h / 2, width: Math.max(4, e[0] - s[0]), height: h, r: 4}, style: api.style()}; }, encode: {x: [1, 2], y: 0}, data: L.map(function (a, i) { return {value: [i, new Date(a.inicio + "T00:00:00-04:00").getTime(), new Date(a.fin + "T23:59:00-04:00").getTime()], itemStyle: {color: COLN[Math.max(0, a._n)]}}; })}]}); }},
@@ -137,7 +433,7 @@
         {t: "Ráfagas pronosticadas por departamento", c: "Modelo Open-Meteo (km/h, próximos días). No es un aviso oficial.", id: "m5", f: function () { barH("m5", raf, "#5c6bc0"); }},
         {t: "Avisos por semana", c: "Emitidos por el SENAMHI (12 semanas).", id: "m6", f: function () { var w = {}; AV.forEach(function (a) { var t = Date.parse((a.publicada || "").replace(" ", "T")); if (isNaN(t)) return; var k = S.diaKey(t - ((new Date(t).getDay() + 6) % 7) * DIA).slice(5); w[k] = (w[k] || 0) + 1; }); var ks = Object.keys(w).sort(); X.chart("m6", {tooltip: {trigger: "axis"}, grid: {left: 30, right: 10, top: 14, bottom: 28}, xAxis: {type: "category", data: ks}, yAxis: {type: "value", minInterval: 1}, series: [{type: "line", smooth: true, areaStyle: {opacity: .35}, data: ks.map(function (k) { return w[k]; }), itemStyle: {color: COL}}]}); }}],
       map: {t: "Municipios con aviso SENAMHI vigente", c: "Color = nivel del aviso. Gris = sin aviso.", f: function (m) { var niv = {}; vig.forEach(function (a) { (a.municipios || []).forEach(function (t) { if (niv[t] == null || a._n > niv[t]) niv[t] = a._n; }); }); var g = geoCopia(D.geoMun); g.features.forEach(function (f) { var v = niv[f.properties.n + " (" + f.properties.d + ")"]; f.properties.niv = v == null ? -1 : v; }); m.getSource("mun").setData(g); m.addLayer({id: "mf", type: "fill", source: "mun", paint: {"fill-color": ["match", ["get", "niv"], 0, "#bfe5c9", 1, "#f9dc6b", 2, "#f7a15e", 3, "#e5576a", "rgba(0,0,0,0)"], "fill-opacity": .72}}); m.addLayer({id: "ml", type: "line", source: "mun", paint: {"line-color": "#7b8aa3", "line-width": .4, "line-opacity": .5}}); m.pop("mf", function (p) { return "<b>" + S.esc(p.n) + "</b>" + S.esc(p.d) + "<br>" + (p.niv >= 0 ? "Aviso " + NIVT[p.niv].toLowerCase() : "Sin aviso vigente"); }); }},
-      vig: {t: "Avisos meteorológicos vigentes", h: vig.length ? vig.map(function (a) { return '<a class="alert" href="' + S.esc(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + COLN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(a.titulo) + '</div><div class="m">Vigente ' + S.esc(a.inicio || "") + ' → ' + S.esc(a.fin || "") + ' · ' + S.esc((a.departamentos || []).join(", ")) + ' · ' + (a.n_municipios || 0) + ' municipios</div></div><span class="badge b' + Math.max(0, a._n) + '">' + (NIVT[Math.max(0, a._n)]) + '</span></a>'; }).join("") : '<p class="nota">No hay avisos meteorológicos vigentes del SENAMHI.</p>'},
+      vig: {t: "Avisos meteorológicos vigentes", h: '<div id="aLista">' + (vig.length ? vig.map(function (a) { return '<a class="alert" href="' + S.esc(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + COLN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(a.titulo) + '</div><div class="m">Vigente ' + S.esc(a.inicio || "") + ' → ' + S.esc(a.fin || "") + ' · ' + S.esc((a.departamentos || []).join(", ")) + ' · ' + (a.n_municipios || 0) + ' municipios</div></div><span class="badge b' + Math.max(0, a._n) + '">' + (NIVT[Math.max(0, a._n)]) + '</span></a>'; }).join("") : '<p class="nota">No hay avisos meteorológicos vigentes del SENAMHI.</p>') + '</div>'},
       reg: evs(function (e) { return e.origen !== "senamhi"; })
     };
   }
@@ -145,8 +441,10 @@
     var AV = avisosSen().filter(function (a) { return a._t === "hidrológica"; }), vig = AV.filter(function (a) { return a._v; }), R = ((D.caudales || {}).puntos) || [];
     R.forEach(function (r) { var i = r.fechas ? r.fechas.indexOf(r.hoy) : -1; r._i = i >= 0 ? i : (r.fechas ? r.fechas.length - 1 : 0); });
     var sobre = R.filter(function (r) { return (r.nivel || 0) >= 1; }), p90 = R.filter(function (r) { return (r.ratio_p90_max_10d || 0) >= 1; });
+    var ALLAV = AV.slice();
     return {
-      kpis: kpi("Avisos hidrológicos vigentes", vig.length, "SENAMHI", COL, "water") + kpi("Ríos monitoreados", R.length, "modelo GloFAS (9 puntos)", "#1d6fb8", "wave") + kpi("Ríos sobre la mediana", sobre.length, "caudal por encima de lo normal", "#f5b700", "pulse") + kpi("Ríos sobre el umbral P90", p90.length, "posible crecida", p90.length ? "#d7263d" : "#2e9e5b", "shield"),
+      filtros: filtrosAvisos(ALLAV, AV, vig, false),
+      kpiF: function () {  return kpi("Avisos hidrológicos vigentes", vig.length, "SENAMHI", COL, "water") + kpi("Ríos monitoreados", R.length, "modelo GloFAS (9 puntos)", "#1d6fb8", "wave") + kpi("Ríos sobre la mediana", sobre.length, "caudal por encima de lo normal", "#f5b700", "pulse") + kpi("Ríos sobre el umbral P90", p90.length, "posible crecida", p90.length ? "#d7263d" : "#2e9e5b", "shield"); },
       charts: [
         {t: "Caudal máximo (10 días) respecto al umbral alto", c: "1,0 = umbral P90 (1993–2022). Sobre 1,0 = caudal excepcionalmente alto.", id: "h1", f: function () { var L = R.slice().sort(function (a, b) { return (a.ratio_p90_max_10d || 0) - (b.ratio_p90_max_10d || 0); }); X.chart("h1", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, grid: {left: 130, right: 30, top: 8, bottom: 18}, xAxis: {type: "value", min: 0}, yAxis: {type: "category", data: L.map(function (r) { return r.nombre; })}, series: [{type: "bar", data: L.map(function (r) { return {value: r.ratio_p90_max_10d || 0, itemStyle: {color: (r.ratio_p90_max_10d || 0) >= 1 ? "#d7263d" : (r.ratio_p90_max_10d || 0) >= .75 ? "#f5b700" : "#2a9d8f"}}; }), label: {show: true, position: "right", formatter: function (p) { return p.value.toFixed(2); }}, markLine: {silent: true, symbol: "none", lineStyle: {color: "#d7263d", type: "dashed"}, data: [{xAxis: 1}], label: {formatter: "P90"}}}]}); }},
         {t: "Caudal del río seleccionado", c: "", extra: '<select id="selRio" style="margin-bottom:6px"></select>', id: "h2", f: function () { var s = $("selRio"); R.forEach(function (r, i) { var o = document.createElement("option"); o.value = i; o.textContent = r.rio + " — " + r.nombre; s.appendChild(o); }); function draw() { var r = R[+s.value || 0]; if (!r) return; X.chart("h2", {tooltip: {trigger: "axis"}, legend: {top: 0}, grid: {left: 52, right: 14, top: 34, bottom: 28}, xAxis: {type: "category", data: r.fechas.map(function (f) { return f.slice(5); })}, yAxis: {type: "value", name: "m³/s"}, series: [{name: "Caudal", type: "line", smooth: true, data: r.caudal_m3s, itemStyle: {color: "#1d6fb8"}, areaStyle: {opacity: .25}}, {name: "Mediana (P50)", type: "line", data: r.p50, symbol: "none", lineStyle: {type: "dashed", color: "#2a9d8f"}}, {name: "Umbral alto (P90)", type: "line", data: r.p90, symbol: "none", lineStyle: {type: "dashed", color: "#d7263d"}}]}); } s.onchange = draw; draw(); }},
@@ -155,7 +453,7 @@
         {t: "Departamentos con avisos hidrológicos", c: "Número de avisos que los incluyen.", id: "h5", f: function () { barH("h5", contar(AV, function (a) { return a.departamentos || []; }), "#00897b"); }},
         {t: "Notas de prensa sobre crecidas e inundaciones", c: "Por día (30 días). Preliminar: no verificadas.", id: "h6", f: function () { barDia("h6", evs(function (e) { return e.origen === "prensa"; }), function (e) { return e.ts; }, ND, "#26a69a"); }}],
       map: {t: "Ríos monitoreados y municipios con aviso", c: "Círculo = punto de río (color = estado). Fondo = aviso hidrológico vigente.", f: function (m) { var niv = {}; vig.forEach(function (a) { (a.municipios || []).forEach(function (t) { if (niv[t] == null || a._n > niv[t]) niv[t] = a._n; }); }); var g = geoCopia(D.geoMun); g.features.forEach(function (f) { var v = niv[f.properties.n + " (" + f.properties.d + ")"]; f.properties.niv = v == null ? -1 : v; }); m.getSource("mun").setData(g); m.addLayer({id: "mf", type: "fill", source: "mun", paint: {"fill-color": ["match", ["get", "niv"], 0, "#bfe5c9", 1, "#f9dc6b", 2, "#f7a15e", 3, "#e5576a", "rgba(0,0,0,0)"], "fill-opacity": .6}}); m.addSource("r", {type: "geojson", data: {type: "FeatureCollection", features: R.map(function (r) { return {type: "Feature", properties: {n: r.nombre, r: r.rio, e: r.estado, v: r.nivel || 0}, geometry: {type: "Point", coordinates: [r.lon, r.lat]}}; })}}); m.addLayer({id: "r", type: "circle", source: "r", paint: {"circle-radius": 9, "circle-color": ["match", ["get", "v"], 0, "#2a9d8f", 1, "#f5b700", 2, "#f26a1b", "#d7263d"], "circle-stroke-color": "#fff", "circle-stroke-width": 2}}); m.pop("r", function (p) { return "<b>" + S.esc(p.r) + " — " + S.esc(p.n) + "</b>" + S.esc(p.e); }); }},
-      vig: {t: "Avisos hidrológicos vigentes y ríos en observación", h: (vig.length ? vig.map(function (a) { return '<a class="alert" href="' + S.esc(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + COLN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(a.titulo) + '</div><div class="m">Vigente ' + S.esc(a.inicio || "") + ' → ' + S.esc(a.fin || "") + ' · ' + S.esc((a.departamentos || []).join(", ")) + '</div></div><span class="badge b' + Math.max(0, a._n) + '">' + NIVT[Math.max(0, a._n)] + '</span></a>'; }).join("") : '<p class="nota">No hay avisos hidrológicos vigentes del SENAMHI.</p>') + sobre.map(function (r) { return '<div class="alert" style="--c:#f5b700"><div style="flex:1"><div class="t">' + S.esc(r.rio) + ' — ' + S.esc(r.nombre) + '</div><div class="m">' + S.esc(r.estado) + ' (modelo GloFAS)</div></div></div>'; }).join("")},
+      vig: {t: "Avisos hidrológicos vigentes y ríos en observación", h: '<div id="aLista">' + (vig.length ? vig.map(function (a) { return '<a class="alert" href="' + S.esc(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + COLN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(a.titulo) + '</div><div class="m">Vigente ' + S.esc(a.inicio || "") + ' → ' + S.esc(a.fin || "") + ' · ' + S.esc((a.departamentos || []).join(", ")) + '</div></div><span class="badge b' + Math.max(0, a._n) + '">' + NIVT[Math.max(0, a._n)] + '</span></a>'; }).join("") : '<p class="nota">No hay avisos hidrológicos vigentes del SENAMHI.</p>') + '</div>' + sobre.map(function (r) { return '<div class="alert" style="--c:#f5b700"><div style="flex:1"><div class="t">' + S.esc(r.rio) + ' — ' + S.esc(r.nombre) + '</div><div class="m">' + S.esc(r.estado) + ' (modelo GloFAS)</div></div></div>'; }).join("")},
       reg: evs(function (e) { return e.origen !== "senamhi" && e.origen !== "caudal"; })
     };
   }
@@ -164,8 +462,14 @@
     var hoy = P.filter(function (p) { return p[3] === u; }), cp = (D.focos_complejos && D.focos_complejos.complejos) || [], seq = Object.keys(SQ).filter(function (k) { return SQ[k].spi3 != null && SQ[k].spi3 <= -1; });
     var frp = hoy.reduce(function (a, p) { return a + p[2]; }, 0);
     function spiCol(v) { return v == null ? "#9aa7ba" : v <= -2 ? "#c0392b" : v <= -1.5 ? "#ef8a3b" : v <= -1 ? "#f7c873" : v < 1 ? "#9fb3cc" : v < 1.5 ? "#8fc0e8" : "#3b82c4"; }
+    var ALLP = P.slice(), ALLCP = cp.slice(), UL = ult3.slice();
+    var depsC = {}; ALLP.forEach(function (p) { depsC[p[4]] = 1; });
     return {
-      kpis: kpi("Focos de calor (último día)", hoy.length.toLocaleString("es-BO"), "NASA FIRMS · " + (u || ""), COL, "fire") + kpi("Potencia radiativa (último día)", Math.round(frp).toLocaleString("es-BO") + " MW", "suma de focos", "#d7263d", "pulse") + kpi("Complejos de incendio", cp.length, "grupos de focos vecinos", "#f26a1b", "map") + kpi("Departamentos con sequía (SPI-3 ≤ −1)", seq.length, seq.join(", ") || "Sin déficit relevante", seq.length ? "#ef8a3b" : "#2e9e5b", "sun"),
+      filtros: {ctl: [{id: "per", l: "Período de focos", o: [["3", "Últimos 3 días"], ["1", "Último día"], ["7", "Todo el período disponible"]]}, {id: "dep", l: "Departamento", o: [["", "Todos"]].concat(Object.keys(depsC).sort().map(function (d) { return [d, d]; }))}, {id: "frp", l: "Potencia mínima", o: [["0", "Todos los focos"], ["10", "≥ 10 MW"], ["30", "≥ 30 MW"], ["100", "≥ 100 MW"]]}],
+        aplica: function (v) { ult3 = v.per === "7" ? dd.slice() : dd.slice(-(+v.per || 3)); var mn = +v.frp || 0; P.length = 0; ALLP.forEach(function (p) { if ((!v.dep || p[4] === v.dep) && p[2] >= mn) P.push(p); }); cp.length = 0; ALLCP.forEach(function (c) { if (!v.dep || c.departamento === v.dep) cp.push(c); });
+          var n = P.filter(function (p) { return ult3.indexOf(p[3]) >= 0; }); return "Mostrando " + n.length.toLocaleString("es-BO") + " focos en " + ult3.length + " día(s)" + (v.dep ? " · " + v.dep : "") + (mn ? " · potencia ≥ " + mn + " MW" : "") + " · " + cp.length + " complejos"; },
+        mapa: function (m) { if (m.getSource("f")) m.getSource("f").setData({type: "FeatureCollection", features: P.filter(function (p) { return ult3.indexOf(p[3]) >= 0; }).map(function (p) { return {type: "Feature", properties: {frp: p[2]}, geometry: {type: "Point", coordinates: [p[1], p[0]]}}; })}); if (m.getSource("c")) m.getSource("c").setData({type: "FeatureCollection", features: cp.map(function (c) { return {type: "Feature", properties: {n: c.n, l: c.municipio + ", " + c.departamento, frp: c.frp_mw}, geometry: {type: "Point", coordinates: [c.lon, c.lat]}}; })}); }},
+      kpiF: function () { var hoy = P.filter(function (p) { return p[3] === u; }), frp = hoy.reduce(function (a, p) { return a + p[2]; }, 0); return kpi("Focos de calor (último día)", hoy.length.toLocaleString("es-BO"), "NASA FIRMS · " + (u || ""), COL, "fire") + kpi("Potencia radiativa (último día)", Math.round(frp).toLocaleString("es-BO") + " MW", "suma de focos", "#d7263d", "pulse") + kpi("Complejos de incendio", cp.length, "grupos de focos vecinos", "#f26a1b", "map") + kpi("Departamentos con sequía (SPI-3 ≤ −1)", seq.length, seq.join(", ") || "Sin déficit relevante", seq.length ? "#ef8a3b" : "#2e9e5b", "sun"); },
       charts: [
         {t: "Focos de calor por día", c: "Barras = número de focos; línea = potencia radiativa (MW).", id: "k1", f: function () { var n = {}, w = {}; P.forEach(function (p) { n[p[3]] = (n[p[3]] || 0) + 1; w[p[3]] = (w[p[3]] || 0) + p[2]; }); X.chart("k1", {tooltip: {trigger: "axis"}, legend: {top: 0}, grid: {left: 44, right: 44, top: 34, bottom: 28}, xAxis: {type: "category", data: dd.map(function (d) { return d.slice(5); })}, yAxis: [{type: "value"}, {type: "value"}], series: [{name: "Focos", type: "bar", data: dd.map(function (d) { return n[d] || 0; }), itemStyle: {color: "#f03b20", borderRadius: [4, 4, 0, 0]}}, {name: "MW", type: "line", yAxisIndex: 1, smooth: true, data: dd.map(function (d) { return Math.round(w[d] || 0); }), itemStyle: {color: "#6a1b9a"}}]}); }},
         {t: "Focos por departamento (3 días)", c: "Detecciones de los últimos tres días.", id: "k2", f: function () { barH("k2", contar(P.filter(function (p) { return ult3.indexOf(p[3]) >= 0; }), function (p) { return p[4]; }), "#ef6c00"); }},
@@ -198,8 +502,10 @@
     var O = D.epidemio_oficial || {}, ecdc = nuevo("ECDC").concat([]).concat(((D.nuevas || {})[Object.keys(D.nuevas || {}).filter(function (x) { return x.indexOf("ECDC") === 0; })[1]]) || []).filter(function (x) { return x.titulo && !isNaN(Date.parse(x.fecha)); }).map(function (x) { return {fuente: "ECDC", titulo: x.titulo, fecha: new Date(Date.parse(x.fecha)).toISOString().slice(0, 10), url: x.url, resumen: x.resumen || ""}; }), vistos = {}, intl = (O.internacional || []).concat(ecdc).filter(function (x) { if (vistos[x.url]) return false; vistos[x.url] = 1; return true; }).map(function (x) { x._c = claseOps(x); return x; }), bol = (O.boletines || []).slice().sort(function (a, b) { return b.semana - a.semana; }), now = Date.now();
     var vig = intl.filter(function (x) { return x._c.vig; }), alta = vig.filter(function (x) { return x._c.prio === "Alta"; }), dec = ((D.declaratorias || {}).declaratorias) || [];
     var pr = evs(function (e) { return e.origen === "prensa" && !e.internacional; }).sort(function (a, b) { return b.ts - a.ts; }), pr30 = pr.filter(function (e) { return act(e) > now - PER * DIA; });
+    var ALLI = intl.slice(), alta2 = alta;
     return {
-      kpis: kpi("Publicaciones oficiales vigentes", vig.length, "OPS, OMS y ECDC · últimos 60 días", COL, "virus") + kpi("Prioridad alta para Bolivia", alta.length, "menciona a Bolivia o alerta regional vigente", alta.length ? "#d7263d" : "#2e9e5b", "shield") + kpi("Último boletín MSyD", bol[0] ? "SE " + bol[0].semana : "—", bol[0] ? S.esc(bol[0].periodo) : "sin boletín", "#0aa3a3", "doc") + kpi("Declaratorias registradas", dec.length, "internacional · nacional · local", "#1d6fb8", "info"),
+      wb: true, filtros: filtrosBio(ALLI, intl, vig, alta),
+      kpiF: function () {  return kpi("Publicaciones oficiales vigentes", vig.length, "OPS, OMS y ECDC · últimos 60 días", COL, "virus") + kpi("Prioridad alta para Bolivia", alta.length, "menciona a Bolivia o alerta regional vigente", alta.length ? "#d7263d" : "#2e9e5b", "shield") + kpi("Último boletín MSyD", bol[0] ? "SE " + bol[0].semana : "—", bol[0] ? S.esc(bol[0].periodo) : "sin boletín", "#0aa3a3", "doc") + kpi("Declaratorias registradas", dec.length, "internacional · nacional · local", "#1d6fb8", "info"); },
       bio: {intl: intl, vig: vig, bol: bol, dec: dec, pr: pr, pr30: pr30},
       charts: [
         {t: "Prioridad de vigilancia", c: "Criterio del sistema (no oficial): Alta = menciona Bolivia o alerta epidemiológica regional vigente; Media = vigente y regional; Baja = resto.", id: "b1", f: function () { var o = contar(intl.filter(function (x) { return x._c.vig; }), function (x) { return x._c.prio; }); pie("b1", o, PRIOC); }},
@@ -207,7 +513,7 @@
         {t: "Línea de tiempo de publicaciones", c: "Cada punto es una publicación de OPS/OMS (tamaño = prioridad).", id: "b3", f: function () { var ks = topK(contar(intl, function (x) { return x._c.enf; }), 10, true); X.chart("b3", {tooltip: {formatter: function (p) { var x = p.data[3]; return "<b>" + S.esc(x.titulo) + "</b><br>" + S.esc(x.fuente) + " · " + x.fecha + "<br>Prioridad " + x._c.prio; }}, grid: {left: 120, right: 14, top: 10, bottom: 28}, xAxis: {type: "time"}, yAxis: {type: "category", data: ks}, series: [{type: "scatter", symbolSize: function (v) { return v[2] * 7 + 6; }, data: intl.filter(function (x) { return ks.indexOf(x._c.enf) >= 0; }).map(function (x) { return {value: [Date.parse(x.fecha), x._c.enf, {Alta: 3, Media: 2, Baja: 1}[x._c.prio], x], itemStyle: {color: PRIOC[x._c.prio]}}; })}]}); }},
         {t: "Tipo de publicación", c: "Alertas, actualizaciones, notas informativas y brotes.", id: "b4", f: function () { pie("b4", contar(intl, function (x) { return x._c.tipo; })); }}],
       map: {t: "Notas de prensa sobre salud por departamento (30 días)", c: "Solo prensa, preliminar: no es confirmación del Ministerio de Salud.", f: function (m) { var c = contar(pr30, function (e) { return e.departamentos || []; }), mx = 1; Object.keys(c).forEach(function (k) { mx = Math.max(mx, c[k]); }); var g = geoCopia(D.geoDep); g.features.forEach(function (f) { f.properties.v = c[f.properties.n] || 0; }); m.getSource("dep").setData(g); m.addLayer({id: "df", type: "fill", source: "dep", paint: {"fill-color": ["interpolate", ["linear"], ["get", "v"], 0, "#e9d7f2", mx, "#6a1b9a"], "fill-opacity": .75}}); m.pop("df", function (p) { return "<b>" + S.esc(p.n) + "</b>" + p.v + " nota(s) de prensa"; }); var pts = pr30.filter(function (e) { return e.lat != null; }); m.addSource("bp", {type: "geojson", data: {type: "FeatureCollection", features: pts.map(function (e) { return {type: "Feature", properties: {t: e.titulo, id: e.id}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; })}}); m.addLayer({id: "bp", type: "circle", source: "bp", paint: {"circle-radius": 7, "circle-color": "#8e24aa", "circle-stroke-color": "#fff", "circle-stroke-width": 2}}); m.pop("bp", function (p) { return "<b>" + S.esc(p.t) + "</b><a href='evento.html?id=" + encodeURIComponent(p.id) + "'>Abrir ficha →</a>"; }); }},
-      vig: {t: "Alertas oficiales de mayor prioridad", h: (alta.length ? alta : vig).slice(0, 8).map(function (x) { return '<a class="alert" href="' + S.esc(S.urlOk(x.url)) + '" target="_blank" rel="noopener" style="--c:' + PRIOC[x._c.prio] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(x.titulo) + '</div><div class="m">' + S.esc(x.fuente) + ' · ' + S.esc(x.fecha) + ' · ' + x._c.enf + '</div></div></a>'; }).join("") || '<p class="nota">Sin alertas oficiales vigentes.</p>'},
+      vig: {t: "Alertas oficiales de mayor prioridad", h: '<div id="aLista">' + ((alta.length ? alta : vig).slice(0, 8).map(function (x) { return '<a class="alert" href="' + S.esc(S.urlOk(x.url)) + '" target="_blank" rel="noopener" style="--c:' + PRIOC[x._c.prio] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(x.titulo) + '</div><div class="m">' + S.esc(x.fuente) + ' · ' + S.esc(x.fecha) + ' · ' + x._c.enf + '</div></div></a>'; }).join("") || '<p class="nota">Sin alertas oficiales vigentes.</p>') + '</div>'},
       reg: []
     };
   }
@@ -216,8 +522,10 @@
     var SUB = {"tecnológica": [["Explosión / incendio", /explosi|incendio|fuego|llamas/], ["Derrame / contaminación", /derrame|contamin|fuga|gas/], ["Colapso / estructura", /colaps|derrumb|puente|edificio/], ["Intoxicación", /intoxic/], ["Otro", /./]], "antropogénica": [["Accidente de tránsito", /accident|choque|colisi|vuelc|atropell/], ["Conflicto / bloqueo", /bloqueo|conflicto|marcha|protesta|paro/], ["Violencia / delito", /asesin|homicid|robo|asalto|detenid|aprehend|secuestr|feminicid/], ["Incendio", /incendio|quema/], ["Otro", /./]]}[T] || [["Otro", /./]];
     function sub(e) { return subtipo(e); }
     var vic = L30.filter(function (e) { return ((e.cifras || {}).fallecidos || 0) + ((e.cifras || {}).heridos || 0) > 0; });
+    var ORIGL = L.slice();
     return {
-      kpis: kpi("Notas en 30 días", L30.length, "hechos únicos (ya unidos)", COL, "list") + kpi("En 24 horas", L.filter(function (e) { return e.ts > now - DIA; }).length, "prensa boliviana", "#f26a1b", "pulse") + kpi("Con víctimas", vic.length, "fallecidos o heridos reportados", "#d7263d", "heart") + kpi("Con confianza media o alta", L30.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length, "2 o más fuentes independientes", "#2e9e5b", "shield"),
+      filtros: filtrosPrensa(ORIGL, L, L30, SUB),
+      kpiF: function () { var vic = L30.filter(function (e) { return ((e.cifras || {}).fallecidos || 0) + ((e.cifras || {}).heridos || 0) > 0; }); return kpi("Notas en 30 días", L30.length, "hechos únicos (ya unidos)", COL, "list") + kpi("En 24 horas", L.filter(function (e) { return e.ts > now - DIA; }).length, "prensa boliviana", "#f26a1b", "pulse") + kpi("Con víctimas", vic.length, "fallecidos o heridos reportados", "#d7263d", "heart") + kpi("Con confianza media o alta", L30.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length, "2 o más fuentes independientes", "#2e9e5b", "shield"); },
       charts: [
         {t: "Hechos por día", c: "Últimos 30 días.", id: "p1", f: function () { barDia("p1", L30, function (e) { return e.ts; }, ND, COL); }},
         {t: "Tipo de hecho", c: "Clasificación por palabras clave del titular.", id: "p2", f: function () { pie("p2", contar(L30, sub)); }},
@@ -227,21 +535,29 @@
         {t: "Víctimas reportadas por día", c: "Máximo reportado por hecho.", id: "p6", f: function () { var ks = dias(ND), f = {}, h = {}; L30.forEach(function (e) { var k = S.diaKey(e.ts); f[k] = (f[k] || 0) + ((e.cifras || {}).fallecidos || 0); h[k] = (h[k] || 0) + ((e.cifras || {}).heridos || 0); }); X.chart("p6", {tooltip: {trigger: "axis"}, legend: {top: 0}, grid: {left: 34, right: 10, top: 34, bottom: 28}, xAxis: {type: "category", data: ks.map(function (k) { return k.slice(5); })}, yAxis: {type: "value", minInterval: 1}, series: [{name: "Fallecidos", type: "bar", stack: "v", data: ks.map(function (k) { return f[k] || 0; }), itemStyle: {color: "#7a1f2b"}}, {name: "Heridos", type: "bar", stack: "v", data: ks.map(function (k) { return h[k] || 0; }), itemStyle: {color: "#f26a1b"}}]}); }}],
       map: {t: "Mapa de hechos", c: "Punto = hecho con ubicación (color = confianza).", f: function (m) { m.addSource("e", {type: "geojson", data: {type: "FeatureCollection", features: L30.filter(function (e) { return e.lat != null; }).map(function (e) { return {type: "Feature", properties: {t: e.titulo, c: e.confianza ? e.confianza.nivel : "Baja", id: e.id}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; })}}); capaMun(m, "me", L30.filter(function (e) { return e.lat != null; }).map(function (e) { return [e.lon, e.lat, 1]; }), "#ef6c00", null); ctrl(m, [{id: "mm", label: "Hechos por municipio (30 d)", layers: ["mef", "mel"]}, {id: "pp", label: "Hechos (puntos)", layers: ["e"]}]);
       m.addLayer({id: "e", type: "circle", source: "e", paint: {"circle-radius": 8, "circle-color": ["match", ["get", "c"], "Alta", "#2e9e5b", "Media", "#f5b700", "#8896ab"], "circle-stroke-color": "#fff", "circle-stroke-width": 1.5}}); m.pop("e", function (p) { return "<b>" + S.esc(p.t) + "</b>Confianza " + p.c.toLowerCase() + "<br><a href='evento.html?id=" + encodeURIComponent(p.id) + "'>Abrir ficha →</a>"; }); }},
-      vig: {t: "Hechos recientes", h: lista(L, 10) + (T === "antropogénica" ? '<a class="btn p" style="margin-top:10px" href="index.html#tra">' + X.ic("heart") + 'Ir a Salud humana: accidentes con víctimas</a>' : '')},
+      vig: {t: "Hechos recientes", h: '<div id="aLista">' + lista(L, 10) + '</div>' + (T === "antropogénica" ? '<a class="btn p" style="margin-top:10px" href="index.html#tra">' + X.ic("heart") + 'Ir a Salud humana: accidentes con víctimas</a>' : '')},
       reg: L
     };
   }
 
   function bSalud() {
-    var now = Date.now(), H = (((D.transito || {}).hechos) || []).filter(function (h) { return act(h) > now - PER * DIA; });
+    var now = Date.now(), HO = (((D.transito || {}).hechos) || []).filter(function (h) { return act(h) > now - PER * DIA && (h.departamento || h.lat != null) && !/tanzania|egipto|cairo|asu[aá]n|argentina|espa[nñ]a|m[eé]xico|per[uú]\b|chile|brasil\b|colombia|ecuador|paraguay|nigeria|india|china|pakist[aá]n|estados unidos|ee\.? ?uu/i.test(h.titulo || ""); }), H = HO.slice();
+    /* corrige cifras mal leídas del titular ("tres muertos" no es 30) */
+    var NUM = {un: 1, uno: 1, una: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, siete: 7, ocho: 8, nueve: 9, diez: 10};
+    HO = HO.map(function (h) { var m = /\b(un|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\s+(muertos?|fallecidos?|muertes)/i.exec(h.titulo || ""); if (m && NUM[m[1].toLowerCase()] !== h.fallecidos) { var c = {}; for (var k in h) c[k] = h[k]; c.fallecidos = NUM[m[1].toLowerCase()]; return c; } return h; }); H = HO.slice();
     var O = D.ev.filter(function (e) { return e.categoria !== "biológica" && e.origen === "prensa" && act(e) > now - PER * DIA && ((e.cifras || {}).fallecidos || 0) + ((e.cifras || {}).heridos || 0) > 0 && !/transito/.test(e.id) && e.lat != null && !/españa|mexican|vocalista|muertos|toledo|estados unidos|texas|pensilvania|china|india|rusia|ucrania|gaza|israel/.test(norm(e.titulo)); });
-    var fa = H.reduce(function (a, h) { return a + (h.fallecidos || 0); }, 0), he = H.reduce(function (a, h) { return a + (h.heridos || 0); }, 0), let_ = fa + he ? Math.round(100 * fa / (fa + he)) : 0;
-    var conF = H.filter(function (h) { return h.fallecidos > 0; }), conH = H.filter(function (h) { return h.heridos > 0; });
+    function tot() { var fa = H.reduce(function (a, h) { return a + (h.fallecidos || 0); }, 0), he = H.reduce(function (a, h) { return a + (h.heridos || 0); }, 0); return {fa: fa, he: he, l: fa + he ? Math.round(100 * fa / (fa + he)) : 0}; }
+    function listas() { var conF = H.filter(function (h) { return h.fallecidos > 0; }), conH = H.filter(function (h) { return h.heridos > 0; }); return (conF.length ? conF.sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8).map(f).join("") : '<p class="nota">Sin fallecidos con esos filtros.</p>') + '<h3 style="margin:14px 0 6px;font-size:14px">Morbilidad: hechos con heridos</h3>' + (conH.length ? conH.sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8).map(f).join("") : '<p class="nota">Sin heridos con esos filtros.</p>'); }
+    var T0 = tot();
     function f(h) { return '<a class="alert" href="evento.html?id=' + encodeURIComponent(h.id) + '" style="--c:' + (h.fallecidos ? "#7a1f2b" : "#f26a1b") + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + S.esc(h.titulo) + '</div><div class="m">' + S.fecha(h.ts) + ' · ' + S.esc(h.lugar || h.departamento || "") + ' · ' + h.fallecidos + ' fallecido(s) · ' + h.heridos + ' herido(s)</div></div>' + (h.confianza ? '<span class="badge">' + S.esc(h.confianza.nivel) + '</span>' : '') + '</a>'; }
     function fotoCard(h) { return '<a class="fcard" href="evento.html?id=' + encodeURIComponent(h.id) + '" style="color:inherit;text-decoration:none">' + (h.imagen ? '<img loading="lazy" referrerpolicy="no-referrer" src="' + S.esc(h.imagen) + '" alt="" onerror="this.style.display=\'none\'">' : '<div class="nofoto">' + X.ic("heart") + '</div>') + '<div class="fb"><div class="t">' + S.esc(h.titulo) + '</div><div class="m">' + S.fecha(h.ts) + ' · ' + S.esc(h.lugar || "") + '</div>' + (h.imagen ? '<div class="cred">Foto: ' + S.esc(h.imagen_medio || "medio de prensa") + '</div>' : '') + '</div></a>'; }
     var rec = H.slice().sort(function (a, b) { return (b.ultima_nota || b.ts) - (a.ultima_nota || a.ts); }).slice(0, 9);
     return {
-      kpis: kpi("Fallecidos (30 días)", fa, "reportados por prensa", "#7a1f2b", "heart") + kpi("Heridos (30 días)", he, "morbilidad reportada", "#f26a1b", "pulse") + kpi("Hechos (30 días)", H.length, "únicos, ya triangulados", "#1d6fb8", "list") + kpi("Letalidad", let_ + " %", "fallecidos / (fallecidos + heridos)", "#c62828", "shield"),
+      kpiF: function () { var t = tot(); return kpi("Fallecidos (30 días)", t.fa, "reportados por prensa", "#7a1f2b", "heart") + kpi("Heridos (30 días)", t.he, "morbilidad reportada", "#f26a1b", "pulse") + kpi("Hechos (30 días)", H.length, "únicos, ya triangulados", "#1d6fb8", "list") + kpi("Letalidad", t.l + " %", "fallecidos / (fallecidos + heridos)", "#c62828", "shield"); },
+      filtros: {ctl: [{id: "gr", l: "Gravedad", o: [["", "Todos"], ["f", "Con fallecidos"], ["h", "Con heridos"], ["m", "Múltiples víctimas (3+)"]]}, {id: "ti", l: "Tipo de accidente", o: [["", "Todos"]].concat(Object.keys(contar(HO, function (h) { return h.tipo; })).sort().map(function (d) { return [d, d]; }))}, {id: "dp", l: "Departamento", o: [["", "Todos"]].concat(Object.keys(contar(HO, function (h) { return h.departamento || "Sin ubicar"; })).sort().map(function (d) { return [d, d]; }))}, {id: "ve", l: "Vehículo", o: [["", "Todos"]].concat(Object.keys(contar(HO, function (h) { return h.vehiculo || "Sin precisar"; })).sort().map(function (d) { return [d, d]; }))}, {id: "cf", l: "Confianza", o: [["", "Todas"], ["m", "Media o alta (2+ medios)"], ["b", "Una sola fuente"]]}],
+        lista: listas,
+        aplica: function (v) { var f = HO.filter(function (h) { var n = h.confianza ? h.confianza.nivel : "Baja", vc = (h.fallecidos || 0) + (h.heridos || 0); return (!v.gr || (v.gr === "f" ? h.fallecidos > 0 : v.gr === "h" ? h.heridos > 0 : vc >= 3)) && (!v.ti || h.tipo === v.ti) && (!v.dp || (h.departamento || "Sin ubicar") === v.dp) && (!v.ve || (h.vehiculo || "Sin precisar") === v.ve) && (!v.cf || (v.cf === "m" ? n !== "Baja" : n === "Baja")); }); H.length = 0; f.forEach(function (h) { H.push(h); }); return '<span class="emb ok">Mostrando <b>' + H.length + '</b> de ' + HO.length + ' hechos en ' + PL + '</span>'; },
+        mapa: function (m) { var pts = H.filter(function (h) { return h.lat != null; }); if (m.getSource("e")) m.getSource("e").setData({type: "FeatureCollection", features: pts.map(function (h) { return {type: "Feature", properties: {t: h.titulo, f: h.fallecidos || 0, h: h.heridos || 0, id: h.id}, geometry: {type: "Point", coordinates: [h.lon, h.lat]}}; })}); if (m.getSource("ms")) { var c = {}; pts.forEach(function (h) { var k = munDe(h.lon, h.lat); if (k) c[k] = (c[k] || 0) + ((h.fallecidos || 0) + (h.heridos || 0) || 1); }); var g = geoCopia(D.geoMun); g.features.forEach(function (q) { q.properties.v = c[q.properties.n + " (" + q.properties.d + ")"] || 0; }); m.getSource("ms").setData(g); } }},
       charts: [
         {t: "Mortalidad y morbilidad por día", c: "Fallecidos y heridos reportados (30 días).", id: "s1", f: function () { var ks = dias(ND), a = {}, b = {}; H.forEach(function (h) { var k = S.diaKey(h.ts); a[k] = (a[k] || 0) + (h.fallecidos || 0); b[k] = (b[k] || 0) + (h.heridos || 0); }); X.chart("s1", {tooltip: {trigger: "axis"}, legend: {top: 0}, grid: {left: 34, right: 10, top: 34, bottom: 28}, xAxis: {type: "category", data: ks.map(function (k) { return k.slice(5); })}, yAxis: {type: "value", minInterval: 1}, series: [{name: "Fallecidos", type: "bar", stack: "v", data: ks.map(function (k) { return a[k] || 0; }), itemStyle: {color: "#7a1f2b"}}, {name: "Heridos", type: "bar", stack: "v", data: ks.map(function (k) { return b[k] || 0; }), itemStyle: {color: "#f26a1b"}}]}); }},
         {t: "Tipo de accidente", c: "Hechos por tipo (30 días).", id: "s2", f: function () { pie("s2", contar(H, function (h) { return h.tipo; })); }},
@@ -251,7 +567,7 @@
         {t: "Medios que reportan", c: "Hechos por medio.", id: "s6", f: function () { barH("s6", contar(H, function (h) { return h.medios || []; }), "#0aa3a3", 10); }}],
       map: {t: "Mapa de hechos con víctimas (calles y carreteras)", c: "Círculo rojo = con fallecidos; naranja = con heridos; gris = sin víctimas reportadas. Acerque para ver calles.", f: function (m) { m.addSource("e", {type: "geojson", data: {type: "FeatureCollection", features: H.filter(function (h) { return h.lat != null; }).map(function (h) { return {type: "Feature", properties: {t: h.titulo, f: h.fallecidos || 0, h: h.heridos || 0, id: h.id}, geometry: {type: "Point", coordinates: [h.lon, h.lat]}}; })}}); capaMun(m, "ms", H.filter(function (h) { return h.lat != null; }).map(function (h) { return [h.lon, h.lat, (h.fallecidos || 0) + (h.heridos || 0) || 1]; }), "#c62828", null); ctrl(m, [{id: "mm", label: "Víctimas por municipio (30 d)", layers: ["msf", "msl"]}, {id: "pp", label: "Hechos (puntos)", layers: ["e"]}]);
       m.addLayer({id: "e", type: "circle", source: "e", paint: {"circle-radius": ["+", 6, ["*", 2, ["min", 4, ["+", ["get", "f"], ["get", "h"]]]]], "circle-color": ["case", [">", ["get", "f"], 0], "#b71c1c", [">", ["get", "h"], 0], "#f26a1b", "#8896ab"], "circle-stroke-color": "#fff", "circle-stroke-width": 2, "circle-opacity": .9}}); m.pop("e", function (p) { return "<b>" + S.esc(p.t) + "</b>" + p.f + " fallecido(s) · " + p.h + " herido(s)<br><a href='evento.html?id=" + encodeURIComponent(p.id) + "'>Abrir ficha →</a>"; }); }},
-      vig: {t: "Mortalidad: hechos con fallecidos", h: (conF.length ? conF.sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8).map(f).join("") : '<p class="nota">Sin fallecidos reportados en los últimos 30 días.</p>') + '<h3 style="margin:14px 0 6px;font-size:14px">Morbilidad: hechos con heridos</h3>' + (conH.length ? conH.sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8).map(f).join("") : '<p class="nota">Sin heridos reportados.</p>')},
+      vig: {t: "Mortalidad: hechos con fallecidos", h: '<div id="aLista">' + listas() + '</div>'},
       extra: '<div class="secb" id="s-act" style="--c:' + COL + '">Actualizaciones y fotografías de los medios</div><div class="cap" style="margin:-4px 0 10px">Se enlaza la imagen original del medio, con crédito; el sistema no la copia. Si el medio no publica foto, se muestra un recuadro.</div><div class="fgrid">' + rec.map(fotoCard).join("") + '</div>' + (O.length ? '<div class="secb" style="--c:#7a8aa3">Otros hechos con víctimas (no tránsito)</div><div class="grid g3">' + O.slice(0, 6).map(function (e) { return '<div class="card">' + lista([e], 1) + '</div>'; }).join("") + '</div>' : ''),
       reg: H.map(function (h) { return {id: h.id, ts: h.ts, titulo: h.titulo, lugar: h.lugar, departamentos: [h.departamento], nivel: h.fallecidos ? 3 : h.heridos ? 2 : 1, confianza: h.confianza, origen: "prensa", tipo: h.tipo, fallecidos: h.fallecidos || 0, heridos: h.heridos || 0, fuente: (h.medios || []).join(", ")}; })
     };
@@ -300,7 +616,7 @@
     REG = B.reg || [];
     var h = '<div class="mhero" style="--c:' + COL + '"><h1>' + X.ic(T === "salud" ? "heart" : (X.CATICON[T] || "shield")) + CDEF.n + '</h1><p>' + CDEF.def + '</p><div class="src">' + CDEF.fu.map(function (s) { return '<span>' + S.esc(s) + '</span>'; }).join("") + '</div></div>';
     h += '<div class="mbar" id="mbar"><div class="mb-g"><a href="#s-mapa" class="btn s">' + X.ic("map") + 'Mapa</a><a href="#s-sub" class="btn s">' + X.ic("list") + 'Subtipos y niveles</a><a href="#s-graf" class="btn s">' + X.ic("pulse") + 'Indicadores</a>' + (B.extra ? '<a href="#s-act" class="btn s">' + X.ic("heart") + 'Actualizaciones</a>' : '') + '<a href="#s-reg" class="btn s">' + X.ic("db") + 'Registro</a></div><div class="mb-g"><label class="btn s" style="cursor:default">Periodo <select id="selPer" style="margin-left:6px;background:transparent;color:inherit;border:0;font:inherit"><option value="1">24 horas</option><option value="7">7 días</option><option value="30">30 días</option><option value="365">1 año</option><option value="0">Todo</option></select></label><button class="btn p s" data-p="per">' + X.ic("doc") + 'Informe por período</button><button class="btn p s" data-p="hecho">' + X.ic("list") + 'Buscar hecho o tema</button><a class="btn s" href="indicadores.html?t=' + encodeURIComponent(T) + '" target="_blank" data-tip="Definición, fórmula, fuente y límite de cada indicador de este tipo">' + X.ic("info") + 'Indicadores' + '</a><button class="btn s" onclick="window.print()">' + X.ic("print") + 'PDF</button><a class="btn s" href="datos/eventos_unificados.csv" download>' + X.ic("dl") + 'CSV</a></div></div><div class="card" id="pnl" style="display:none;margin-bottom:14px"></div>';
-    h += '<div class="grid g4" style="margin-bottom:6px">' + B.kpis + '</div>';
+    h += '<div class="grid g4" style="margin-bottom:6px">' + (B.kpiF ? B.kpiF() : B.kpis) + '</div>' + filtrosHtml(B);
     h += '<div class="secb" id="s-mapa" style="--c:' + COL + '">Mapa y situación vigente</div><div class="grid g21"><div class="card"><h2>' + X.ic("map") + B.map.t + '</h2><div class="cap">' + B.map.c + '</div><div class="map" id="mmap" style="height:470px"></div></div><div class="card"><h2>' + X.ic("shield") + B.vig.t + '</h2><div style="max-height:500px;overflow:auto">' + B.vig.h + '</div></div></div>';
     h += '<div class="secb" id="s-sub" style="--c:' + COL + '">Subtipos y nivel de importancia</div><div class="card"><div class="cap">Cada fenómeno dentro de este tipo, desglosado por nivel (últimos 30 días). El nivel viene de la fuente oficial cuando existe; en prensa es «sin nivel» hasta que se confirme.</div><div class="ch s" id="chSub"></div></div>';
     if (B.extra) h += B.extra;
@@ -309,7 +625,7 @@
     h = h.replace(/Últimos 30 días/g, PLU).replace(/\(30 días\)/g, "(" + PL + ")").replace(/30 días/g, PL);
     $("app").innerHTML = h;
     (function () { var s = document.getElementById("selPer"); if (!s) return; s.value = String(PER >= 36500 ? 0 : PER); s.onchange = function () { var u = new URL(location.href); u.searchParams.set("p", s.value); location.href = u.toString(); }; })();
-    mapa("mmap", B.map.f);
+    mapa("mmap", B.map.f); if (B.vig && B.vig.hook) B.vig.hook(B); filtrosInit(B);
     var arrSub = T === "salud" ? B.reg : D.ev.filter(function (e) { return e.categoria === T && e.origen !== "modelo" && act(e) > Date.now() - PER * DIA; });
     subNivel("chSub", arrSub);
     if (T === "biológica") bioCharts(B); else B.charts.forEach(function (c) { c.f(); });
