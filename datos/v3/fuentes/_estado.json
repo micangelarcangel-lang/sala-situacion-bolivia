@@ -1,0 +1,57 @@
+[
+ {
+  "url": "https://inlasa.gob.bo/wp-content/uploads/2026/10/Boletin-epidemiologia-HANTAVIRUS.pdf",
+  "slug": "inlasa_gob_bo_wp_content_uploads_2026_10_Boletin_epidemiologia_HANTAVI_2c6789",
+  "error": "HTTPSConnectionPool(host='inlasa.gob.bo', port=443): Max retries exceeded with url: /wp-content/uploads/2026/10/Boletin-epidemiologia-HANTAVIRUS.pdf (Caused by SSLError(SSLCertVerificationError(1, '[S"
+ },
+ {
+  "url": "https://inlasa.gob.bo/boletines/",
+  "slug": "inlasa_gob_bo_boletines_206ac4",
+  "error": "HTTPSConnectionPool(host='inlasa.gob.bo', port=443): Max retries exceeded with url: /boletines/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify fai"
+ },
+ {
+  "url": "https://vigilancia.inlasa.gob.bo/dashboard-vigilancia/",
+  "slug": "vigilancia_inlasa_gob_bo_dashboard_vigilancia_2816d8",
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 51470,
+  "chars": 517,
+  "archivos": 0
+ },
+ {
+  "url": "https://opendata.paho.org/es/indicadores-basicos",
+  "slug": "opendata_paho_org_es_indicadores_basicos_2e930f",
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 46034,
+  "chars": 1205,
+  "archivos": 0
+ },
+ {
+  "url": "https://data.who.int/countries/068",
+  "slug": "data_who_int_countries_068_7a52d0",
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 262544,
+  "chars": 7988,
+  "archivos": 0
+ },
+ {
+  "url": "https://www.ecdc.europa.eu/en/dengue-monthly",
+  "slug": "www_ecdc_europa_eu_en_dengue_monthly_92ff03",
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 105102,
+  "chars": 12211,
+  "archivos": 35
+ },
+ {
+  "url": "https://app7.dge.gob.pe/maps2/shiny_pfa_web/",
+  "slug": "app7_dge_gob_pe_maps2_shiny_pfa_web_b7083d",
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 38835,
+  "chars": 1786,
+  "archivos": 0
+ }
+]

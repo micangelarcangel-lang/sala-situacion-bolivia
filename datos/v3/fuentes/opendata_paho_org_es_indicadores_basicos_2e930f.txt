@@ -1,0 +1,12 @@
+Este portal interactivo alberga más de 140 indicadores de salud y relacionados con la salud, con datos desde 1995 hasta el presente, desagregados por edad, sexo y distribución urbano-rural, entre otros. Presentamos información crucial sobre la situación y las tendencias de salud a nivel nacional, subregional y regional.
+NUEVO Octubre 2, 2026:
+- Los Indicadores Básicos se han actualizado!
+Últimas actualizaciones:
+- Octubre 2, 2026:
+  - Actualización de la base de indicadores básicos.
+- Abril 13, 2026:
+  - NHWA: Densidad (10 000 habs) de dentistas, médicos/as, profesionales de partería, enfermería, farmacéuticos/as
+  - UNICEF IGME: Tasa de mortalidad infantil, en menores de cinco años estimada y neonatal estimada (1 000 nv)
+  - Casos de malaria con desagregación por sexo
+Actualizaciones recientes | Descargar datos
+Esta plataforma sobre la situación y tendencias de salud de las Américas es un esfuerzo de colaboración entre los Ministerios de Salud, los institutos nacionales de estadística de los países y territorios de las Américas y las oficinas de país, departamentos técnicos y unidades de la OPS. Es mantenido por el Departamento de Evidencia e Inteligencia para la Acción en Salud (EIH).

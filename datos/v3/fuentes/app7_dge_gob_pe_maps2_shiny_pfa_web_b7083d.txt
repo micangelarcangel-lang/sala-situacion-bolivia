@@ -1,0 +1,12 @@
+La vigilancia epidemiológica de Parálisis Flácida Aguda (PFA) en menores de 15 años permite al país descartar o confirmar la presencia de casos de poliovirus. La Sala situacional muestra las tendencias de las notificaciones de la vigilancia de PFA reportadas a nivel nacional.
+A continuación se describe la metodología para calcular los indicadores contemplados en la tabla de resumen.
+$$ \textit{Tasa de notificación} = \frac{\textit{N° de casos de PFA en < 15 años}}{\textit{Población menor de 15 años}} \times 100000 $$
+Porcentaje de casos de PFA con investigación dentro de las 48 horas: El cálculo del indicador se realiza a partir del número de casos reportados, dentro de las 48 horas, entre la fecha de investigación y fecha de reporte local. $$ \textit{%} = \frac{\textit{N° de casos de PFA en < 15 años notificados dentro de 48 h}}{\textit{Total de casos notificados}} \times 100 $$
+Porcentaje de casos de PFA con seguimiento a los 60 días: El cálculo del indicador se realiza a partir del número de casos reportados, dentro de los 60 días, entre la fecha se seguimiento y la fecha de inicio de la parálisis. $$ \textit{%} = \frac{\textit{N° de casos de PFA en < 15 años notificados dentro de 60 d}}{\textit{Total de casos notificados}} \times 100 $$
+Porcentaje de casos de PFA que cuentan con muestra adecuada: El cálculo del indicador se realiza a partir del número de casos con muestra de heces, de aproximadamente 10 gramos, tomada dentro de los 14 días calendarios del inicio de la parálisis. $$ \textit{%} = \frac{\textit{N° de casos de PFA en < 15 años con muestra adecuada}}{\textit{Total de casos notificados}} \times 100 $$
+Así mismo, el estado de avance de los indicadores se clasifican en:
+| Avance (%) | Color | 
+|---|---|
+| >= 80% |  | 
+| < 80% |  | 
+| = 0% |  |

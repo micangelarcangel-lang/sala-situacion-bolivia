@@ -1,0 +1,149 @@
+== Archivos (pdf/csv/xlsx/json/zip) ==
+
+
+== Todos los enlaces ==
+Skip to content | https://data.who.int/countries/068#main
+ | https://data.who.int/
+WHO Global | https://www.who.int/
+Language | https://data.who.int/countries/068#void
+Indicators | https://data.who.int/indicators
+Countries | https://data.who.int/countries
+Dashboards | https://data.who.int/dashboards
+About | https://data.who.int/about
+All countries | https://data.who.int/countries/
+Learn more | https://data.who.int/indicators/i/A21CFC2/90E2E48
+Life expectancy | https://data.who.int/countries/068#tabpanel-life-expectancy-section
+Healthy life expectancy | https://data.who.int/countries/068#tabpanel-healthy-life-expectancy-section
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2790E2E48WHOSIS_000001%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, AMOUNT_N&$format=csv
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2790E2E48WHOSIS_000001%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, AMOUNT_N&$format=csv
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27C64284DWHOSIS_000002%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, AMOUNT_N&$format=csv
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27C64284DWHOSIS_000002%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, AMOUNT_N&$format=csv
+Download data | https://xmart-api-public.who.int/DEX_CMS/GHE_FULL_DD?$filter=FLAG_RANKABLE%20in%20(%271%27)%20and%20DIM_AGEGROUP_CODE%20in%20(%27ALLAges%27)%20and%20DIM_SEX_CODE%20in%20(%27FMLE%27)&$orderBy=DIM_COUNTRY_CODE&$select=DIM_COUNTRY_CODE,DIM_YEAR_CODE,DIM_GHECAUSE_TITLE,DIM_SEX_CODE,VAL_DTHS_RATE100K_NUMERIC&$format=csv
+Download data | https://xmart-api-public.who.int/DEX_CMS/GHE_FULL_DD?$filter=FLAG_RANKABLE%20in%20(%271%27)%20and%20DIM_AGEGROUP_CODE%20in%20(%27ALLAges%27)%20and%20DIM_SEX_CODE%20in%20(%27MLE%27)&$orderBy=DIM_COUNTRY_CODE&$select=DIM_COUNTRY_CODE,DIM_YEAR_CODE,DIM_GHECAUSE_TITLE,DIM_SEX_CODE,VAL_DTHS_RATE100K_NUMERIC&$format=csv
+Download data | https://xmart-api-public.who.int/DEX_CMS/GHE_FULL_DD?$filter=FLAG_RANKABLE%20in%20(%271%27)%20and%20DIM_AGEGROUP_CODE%20in%20(%27ALLAges%27)%20and%20DIM_SEX_CODE%20in%20(%27BTSX%27)&$orderBy=DIM_COUNTRY_CODE&$select=DIM_COUNTRY_CODE,DIM_YEAR_CODE,DIM_GHECAUSE_TITLE,DIM_SEX_CODE,VAL_DTHS_RATE100K_NUMERIC&$format=csv
+Explore indicators | https://data.who.int/indicators
+Health status | https://data.who.int/countries/068#tabpanel-health-status-section
+Risk factors | https://data.who.int/countries/068#tabpanel-risk-factors-section
+Service coverage | https://data.who.int/countries/068#tabpanel-service-coverage-section
+Health systems | https://data.who.int/countries/068#tabpanel-health-systems-section
+Visit indicator | https://data.who.int/indicators/i/49AC786/77D059C
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2777D059CSDGHIV%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, RATE_PER_1000_N, RATE_PER_1000_NL, RATE_PER_1000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/13B4226/C288D13
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27C288D13MDG_0000000020%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100000_N, RATE_PER_100000_NL, RATE_PER_100000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/B868307/442CEA8
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27442CEA8MALARIA_EST_INCIDENCE%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_1000_N, RATE_PER_1000_NL, RATE_PER_1000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/62D8ABE/F513188
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27F513188SDGHEPHBSAGPRV%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C540135/1F96863
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%271F96863NCDMORT3070%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/B9D9E6A/D6176E2
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27D6176E2RS_198%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100000_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/55CF708/84FD3DE
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20% 2784FD3DESDGPOISON%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/F08B4FD/16BBF41
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2716BBF41SDGSUICIDE%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_100000_N, RATE_PER_100000_NL, RATE_PER_100000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/60A0E76/361734E
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27361734EVIOLENCE_HOMICIDERATE%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, RATE_PER_100000_N, RATE_PER_100000_NL, RATE_PER_100000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C071DCB/AC597B1
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27AC597B1MDG_0000000026%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100000_N, RATE_PER_100000_NL, RATE_PER_100000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/E3CAF2B/2322814
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%272322814MDG_0000000007%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_1000_N, RATE_PER_1000_NL, RATE_PER_1000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/E3CAF2B/A4C49D3
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27A4C49D3WHOSIS_000003%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_1000_N, RATE_PER_1000_NL, RATE_PER_1000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/80BEA0B/E2FC6D7
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27E2FC6D7SDGAIRBODA%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, DIM_ENV_BURDEN, RATE_PER_100000_N, RATE_PER_100000_NL, RATE_PER_100000_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C123B15/ED50112
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27ED50112SDGWSHBOD%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, RATE_PER_100000_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/7DA4E68/608DE39
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27608DE39NCD_HYP_PREVALENCE_A%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/847662C/75DDA77
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2775DDA77M_Est_tob_curr_std%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, PERCENT_POP_N, PERCENT_POP_NL, PERCENT_POP_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/EF38E6A/EE6F72A
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27EE6F72ASA_0000001688%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, RATE_PER_CAPITA_N, RATE_PER_CAPITA_NL, RATE_PER_CAPITA_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C6262EC/BEFA58B
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27BEFA58BNCD_BMI_30A%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C6262EC/EF93DDB
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27EF93DDBNCD_BMI_PLUS2C%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/BEDE3DB/F8524F2
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27F8524F2SDGIPV12M%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/BEDE3DB/E0D4E17
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27F8524F2SDGIPV12M%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/A5A7413/5F8A486
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27EF93DDBNCD_BMI_PLUS2C%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/6461116/FC5231F
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27FC5231FNUTRITION_WH_2%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_DEG_URB, DIM_HOUSEHOLDWEALTH, DIM_POP_EDU_LEVELMOTHER, DIM_POP_WEALTH_DECILE, DIM_POP_WEALTH_QUINTILE, DIM_SEX, DIM_WEALTHTERCILE, DIM_AGE, RATE_PER_100_N, RATE_PER_100_NL, RATE_PER_100_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/5131A52/1548EA3
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%271548EA3WSH_WATER_SAFELY_MANAGED%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_DEG_URB, PERCENT_POP_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/4CDFDDA/12EE54A
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2712EE54AWSH_SANITATION_SAFELY_MANAGED%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_DEG_URB, PERCENT_POP_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/21B89A9/D1223E8
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27D1223E8WSH_HYGIENE_BASIC%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_DEG_URB, PERCENT_POP_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/6EFF579/A37BDD6
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27A37BDD6WSH_DOMESTIC_WASTE_SAFELY_TREATED%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/D66483C/6A64C9A
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%276A64C9APHE_HHAIR_PROP_POP_CLEAN_FUELS%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_DEG_URB, PERCENT_POP_N, PERCENT_POP_NL, PERCENT_POP_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/87345F3/F810947
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27F810947SDGPM25%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_DEG_URB, RATE_N, RATE_NL, RATE_NU&$format=csv
+Visit indicator | https://data.who.int/indicators/i/95935F3/2D6FBE4
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%272D6FBE4SDGNTDTREATMENT%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, COUNT_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/F2772F7/8074BD9
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%278074BD9SDGFPALL%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, DIM_SEX, DIM_AGE, RATE_PER_100_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/F835E3B/1772666
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%271772666MDG_0000000025%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/48D7D19/F8E084C
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27F8E084CWHS4_100%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/8C8FB8F/B9C6C79
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27B9C6C79GHED_GGHE-DGGE_SHA2011%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_100_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/21A69FA/BBF3A64
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27BBF3A64SDGODA01%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, MONEY_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/CCCEBB2/217795A
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%27217795AHWF_0001%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_10000_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/B54EB15/5C8435F
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%275C8435FHWF_0006%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_10000_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C25EFD6/9F88C44
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%279F88C44HWF_0010%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_10000_N&$format=csv
+Visit indicator | https://data.who.int/indicators/i/C668579/45CA7C8
+Download data | https://xmart-api-public.who.int/DATA_/RELAY_WHS?$filter=IND_ID%20eq%20%2745CA7C8HWF_0014%27&$select=IND_ID, IND_CODE, IND_UUID, IND_PER_CODE, DIM_TIME, DIM_TIME_TYPE, DIM_GEO_CODE_M49, DIM_GEO_CODE_TYPE, DIM_PUBLISH_STATE_CODE, IND_NAME, GEO_NAME_SHORT, RATE_PER_10000_N&$format=csv
+Triple billion data | https://data.who.int/dashboards/global-progress/triple-billion?m49=068
+National Statistics Office | https://www.ine.gob.bo
+WHO country website | https://www.paho.org/en/bolivia
+WHO Americas | https://www.paho.org/hq/index.php?lang=en
+WHO Global country page | https://www.who.int/countries/BOL
+WHO Global | https://www.who.int
+UNDESA population division, World Population Prospects 2022, | https://population.un.org/wpp/
+https://population.un.org/wpp/ | https://population.un.org/wpp/
+World Health Organization, Global Health Expenditure database | https://apps.who.int/nha/database
+https://apps.who.int/nha/database | https://apps.who.int/nha/database
+World Health Organization, Global Health Expenditure database | https://apps.who.int/nha/database
+https://apps.who.int/nha/database | https://apps.who.int/nha/database
+World Health Organization, Global Health Estimates, | https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-life-expectancy-and-healthy-life-expectancy
+https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-life-ex | https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-life-expectancy-and-healthy-life-expectancy
+World Health Organization, Global Health Estimates, | https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
+https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading | https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
+For further information, please visit https://www.who.int/about/policies/publishing/copyri | https://www.who.int/about/policies/publishing/copyright
+Home | https://data.who.int/redirect-pages/footer/datadot/home
+Indicators | https://data.who.int/redirect-pages/footer/datadot/indicators
+Countries | https://data.who.int/redirect-pages/footer/datadot/products
+About | https://data.who.int/redirect-pages/footer/datadot/about
+who.int/data | https://data.who.int/redirect-pages/footer/more-data/who.int-data
+Global Health Estimates | https://data.who.int/redirect-pages/footer/more-data/triple-billion-dashboard
+Health Inequality Monitor | https://data.who.int/redirect-pages/footer/more-data/ddi
+COVID-19 dashboard | https://data.who.int/redirect-pages/footer/more-data/covid-19-dashboard
+WHO data principles | https://data.who.int/redirect-pages/footer/learn-more/data-principles
+WHO data policy | https://data.who.int/redirect-pages/footer/learn-more/who-data-policy
+Terms and conditions | https://data.who.int/redirect-pages/footer/learn-more/terms-and-conditions
+Language translations | https://data.who.int/redirect-pages/footer/learn-more/language-translations
+Home | https://data.who.int/redirect-pages/footer/datadot/home
+Indicators | https://data.who.int/redirect-pages/footer/datadot/indicators
+Countries | https://data.who.int/redirect-pages/footer/datadot/products
+About | https://data.who.int/redirect-pages/footer/datadot/about
+who.int/data | https://data.who.int/redirect-pages/footer/more-data/who.int-data
+Global Health Estimates | https://data.who.int/redirect-pages/footer/more-data/triple-billion-dashboard
+Health Inequality Monitor | https://data.who.int/redirect-pages/footer/more-data/ddi
+COVID-19 dashboard | https://data.who.int/redirect-pages/footer/more-data/covid-19-dashboard
+WHO data principles | https://data.who.int/redirect-pages/footer/learn-more/data-principles
+WHO data policy | https://data.who.int/redirect-pages/footer/learn-more/who-data-policy
+Terms and conditions | https://data.who.int/redirect-pages/footer/learn-more/terms-and-conditions
+Language translations | https://data.who.int/redirect-pages/footer/learn-more/language-translations
+ | https://data.who.int/
+Privacy legal notice | https://data.who.int/

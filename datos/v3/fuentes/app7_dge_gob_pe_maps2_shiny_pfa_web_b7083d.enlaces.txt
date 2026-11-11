@@ -1,0 +1,9 @@
+== Archivos (pdf/csv/xlsx/json/zip) ==
+
+
+== Todos los enlaces ==
+Tendencia nacional | https://app7.dge.gob.pe/maps2/shiny_pfa_web/#tab-8549-1
+Indicadores DIRESA/GERESA/DIRIS | https://app7.dge.gob.pe/maps2/shiny_pfa_web/#tab-8549-2
+Acerca | https://app7.dge.gob.pe/maps2/shiny_pfa_web/#tab-8549-3
+ | https://www.dge.gob.pe/portalnuevo/
+Descargar | https://app7.dge.gob.pe/maps2/shiny_pfa_web/

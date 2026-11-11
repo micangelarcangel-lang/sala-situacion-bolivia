@@ -1,0 +1,46 @@
+== Archivos (pdf/csv/xlsx/json/zip) ==
+
+
+== Todos los enlaces ==
+Pasar al contenido principal | https://opendata.paho.org/es/indicadores-basicos#main-content
+English | https://opendata.paho.org/en/core-indicators
+Español | https://opendata.paho.org/es/indicadores-basicos
+Indicadores Básicos | https://opendata.paho.org/es/indicadores-basicos
+Inicio - Indicadores Básicos | https://opendata.paho.org/es/indicadores-basicos
+30 años | https://opendata.paho.org/es/indicadores-basicos/30-anos
+Todos los indicadores | https://opendata.paho.org/es/indicadores-basicos/tablero-de-los-indicadores-basicos%23latestdata
+Datos más recientes | https://opendata.paho.org/es/indicadores-basicos/tablero-de-los-indicadores-basicos%23latestdata#latestdata
+Perfil de los indicadores | https://opendata.paho.org/es/indicadores-basicos/tablero-de-los-indicadores-basicos%23latestdata#indicator-profile
+Perfil de los países | https://opendata.paho.org/es/indicadores-basicos/tablero-de-los-indicadores-basicos%23latestdata#country-profile
+Comparación de los países | https://opendata.paho.org/es/indicadores-basicos/tablero-de-los-indicadores-basicos%23latestdata#country-comparison
+Metadatos | https://opendata.paho.org/es/indicadores-basicos/metadatos
+Visualizaciones | https://opendata.paho.org/es/indicadores-basicos/visualizaciones
+Mapa de indicadores | https://opendata.paho.org/es/indicadores-basicos/visualizaciones#map
+Gráfico de barras | https://opendata.paho.org/es/indicadores-basicos/visualizaciones#bar
+Tendencias | https://opendata.paho.org/es/indicadores-basicos/visualizaciones#trend
+Transición demográfica | https://opendata.paho.org/es/indicadores-basicos/visualizaciones#demographic
+Indicadores Seleccionados | https://opendata.paho.org/es/indicadores-basicos/visualizaciones#selected
+Calidad de datos de mortalidad | https://opendata.paho.org/es/indicadores-basicos/visualizaciones#quality
+Descargar | https://opendata.paho.org/es/indicadores-basicos/descarga-datos
+Sobre los datos | https://opendata.paho.org/es/indicadores-basicos/sobre-los-datos
+Acerca de los datos | https://opendata.paho.org/es/indicadores-basicos/sobre-los-datos
+Fuentes y comparabilidad | https://opendata.paho.org/es/indicadores-basicos/fuentes-comparabilidad
+Últimas actualizaciones | https://opendata.paho.org/es/indicadores-basicos/ultimas-actualizaciones
+Subregiones | https://opendata.paho.org/es/indicadores-basicos/subregiones-tablero
+Fichas técnicas | https://opendata.paho.org/es/indicadores-basicos/fichas-tecnicas
+ | https://opendata.paho.org/es/indicadores-basicos#main-content
+nacional | javascript:void(0)
+Actualizaciones recientes | https://opendata.paho.org/es/indicadores-basicos/ultimas-actualizaciones
+Descargar datos | https://opendata.paho.org/es/indicadores-basicos/descarga-datos
+Ver TODOS LOS INDICADORES | https://opendata.paho.org/es/indicadores-basicos/tablero-de-los-indicadores-basicos
+Salud en las Americas | https://hia.paho.org/es
+Rede Interagencial de Informações para a Saúde (Ripsa) | https://www.ripsa.org.br/
+Estadísticas de salud mundial 2025 - OMS | https://www.who.int/publications/b/78420
+Datos de enfermedades no transmisibles | https://www.paho.org/es/enfermedades-no-transmisibles-salud-mental/portal-datos-enfermedades-no-transmisibles-salud-mental
+Base de datos de mortalidad global OMS | https://www.who.int/data/data-collection-tools/who-mortality-database
+European health information gateway | https://gateway.euro.who.int/en/
+Durante tres décadas, la OPS ha venido creando conciencia sobre la necesidad de contar con | https://opendata.paho.org/es/indicadores-basicos/25-anos
+Libros, informes y sitios web sobre la historia, los conceptos y las consideraciones de lo | https://opendata.paho.org/es/indicadores-basicos/lecturas-recomendadas
+Términos y condiciones | https://www.paho.org/es/terminos-condiciones-para-uso-sitio
+Política de protección de datos personales (inglés) | https://www.paho.org/en/paho-personal-data-protection-policy
+ | https://opendata.paho.org/es/indicadores-basicos#top
