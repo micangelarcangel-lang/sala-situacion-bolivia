@@ -2,7 +2,22 @@
 var SALA = (function () {
   var DEPS = ["La Paz", "Cochabamba", "Santa Cruz", "Oruro", "Potosí", "Chuquisaca", "Tarija", "Beni", "Pando"];
   var CAT = ["geológica", "meteorológica", "hidrológica", "climatológica", "biológica", "tecnológica", "antropogénica", "otra"];
-  var COLCAT = {"geológica": "#8d6e63", "meteorológica": "#1e88e5", "hidrológica": "#00897b", "climatológica": "#ef6c00", "biológica": "#8e24aa", "tecnológica": "#546e7a", "antropogénica": "#c62828", "otra": "#9e9e9e"};
+  /* en tema negro, los colores de categoría (pensados para fondo claro) se avivan: mismo tono, claridad suficiente (contraste ≥ 5,5:1 sobre #0b0d12) */
+  var OSC = (function () { try { return (localStorage.getItem("sala_theme") || "dark") === "dark"; } catch (e) { return true; } })();
+  function lum(h) { var c = [1, 3, 5].map(function (i) { var v = parseInt(h.substr(i, 2), 16) / 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
+  function hsl2hex(h, s, l) { var a = s * Math.min(l, 1 - l), f = function (n) { var k = (n + h / 30) % 12, c = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); return ("0" + Math.round(255 * c).toString(16)).slice(-2); }; return "#" + f(0) + f(8) + f(4); }
+  function vivo(hex) {
+    if (!OSC || !/^#[0-9a-f]{6}$/i.test(hex || "")) return hex;
+    var r = parseInt(hex.substr(1, 2), 16) / 255, g = parseInt(hex.substr(3, 2), 16) / 255, b = parseInt(hex.substr(5, 2), 16) / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn, h = 0, sa = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+    if (d) { h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; if (h < 0) h += 360; }
+    if (sa < .12) sa = Math.min(sa, .12); else sa = Math.min(1, sa * 1.05 + .05);
+    var ll = Math.max(l, .5), out = hsl2hex(h, sa, ll), lb = lum("#0b0d12");
+    while (ll < .8 && (lum(out) + .05) / (lb + .05) < 5.5) { ll += .02; out = hsl2hex(h, sa, ll); }
+    return out;
+  }
+  var COLCAT0 = {"geológica": "#8d6e63", "meteorológica": "#1e88e5", "hidrológica": "#00897b", "climatológica": "#ef6c00", "biológica": "#8e24aa", "tecnológica": "#546e7a", "antropogénica": "#c62828", "otra": "#9e9e9e"}, COLCAT = {};
+  Object.keys(COLCAT0).forEach(function (k) { COLCAT[k] = vivo(COLCAT0[k]); });
+  
   var ORIGEN = {eonet: "NASA EONET (satélite)", prensa: "Prensa", senamhi: "SENAMHI (oficial)", sismo: "Observatorio San Calixto (oficial)", foco: "NASA FIRMS (satélite)", epidemiologia: "Epidemiología (MSD, OPS/OMS)", modelo: "Modelo meteorológico (pronóstico)", gdacs: "GDACS (ONU/UE)", usgs: "USGS (oficial)"};
   var NIVTXT = ["Verde", "Amarilla", "Naranja", "Roja"];
   function esc(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
@@ -76,6 +91,6 @@ var SALA = (function () {
     return "﻿" + [cab.join(",")].concat(filas.map(function (e) { return [e.id, fecha(e.ts), e.origen, e.categoria, e.titulo, e.nivel_txt, e.oficial ? "sí" : "no", e.lugar, (e.departamentos || []).join("; "), e.lat == null ? "" : e.lat, e.lon == null ? "" : e.lon, e.fuente, e.url, JSON.stringify(e.cifras || {}), (e.detalle || "").slice(0, 600)].map(q).join(","); })).join("\r\n");
   }
   var URL_PEDIR = "https://script.google.com/macros/s/AKfycbzxWSLP0Vz_vJdugCpOngN-uYVsTEwW9b64phK1Q-xdmLJwiUhGhrUHqLp3srPE5sP0/exec?pedir=1";
-  return {DEPS: DEPS, CAT: CAT, COLCAT: COLCAT, ORIGEN: ORIGEN, NIVTXT: NIVTXT, esc: esc, fecha: fecha, diaKey: diaKey, badgeNivel: badgeNivel, badgeOrigen: badgeOrigen, urlOk: urlOk, cargar: cargar,
+  return {DEPS: DEPS, CAT: CAT, COLCAT: COLCAT, COLCAT0: COLCAT0, vivo: vivo, OSC: OSC, ORIGEN: ORIGEN, NIVTXT: NIVTXT, esc: esc, fecha: fecha, diaKey: diaKey, badgeNivel: badgeNivel, badgeOrigen: badgeOrigen, urlOk: urlOk, cargar: cargar,
     mapaSVG: mapaSVG, barrasH: barrasH, serieDiaria: serieDiaria, leyenda: leyenda, descargar: descargar, csv: csv, URL_PEDIR: URL_PEDIR};
 })();

@@ -1,5 +1,34 @@
 /* Sala de Situación Bolivia 2.0 — núcleo compartido (cabecera, datos, gráficos, guía) */
 (function () { var t = "dark"; try { t = localStorage.getItem("sala_theme") || "dark"; } catch (e) {} document.documentElement.setAttribute("data-theme", t); })();
+  /* hechos únicos en el navegador: une notas de prensa del mismo hecho (mismo asunto, ±36 h, departamento compatible) para que el hecho muestre todos sus medios y cifras */
+  function unirHechos(ev) {
+    var STOP = {}; "de la el los las en y a un una por con del al que se su sus para es lo como mas tras deja dejo hay habria segun bolivia santa cruz paz cochabamba https http www html local noticias".split(" ").forEach(function (w) { STOP[w] = 1; });
+    function toks(e) { var s = String(e.titulo || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/https?:\/\/\S+/g, " ").replace(/[^a-z0-9 ]/g, " "), o = {}, n = 0; s.split(/\s+/).forEach(function (w) { if (w.length > 3 && !STOP[w] && !o[w]) { o[w] = 1; n++; } }); return {o: o, n: n}; }
+    function med(e) { return (e.medios && e.medios.length ? e.medios : [e.fuente]).filter(Boolean); }
+    var idx = [], out = []; ev.forEach(function (e, i) { if (e.origen === "prensa" && e.ts && !e.internacional) idx.push(i); });
+    var par = {}; idx.forEach(function (i) { par[i] = i; }); function f(i) { while (par[i] !== i) { par[i] = par[par[i]]; i = par[i]; } return i; }
+    var T = {}; idx.forEach(function (i) { T[i] = toks(ev[i]); });
+    for (var x = 0; x < idx.length; x++) for (var y = x + 1; y < idx.length; y++) {
+      var a = ev[idx[x]], b = ev[idx[y]]; if (Math.abs(a.ts - b.ts) > 36 * 36e5) continue;
+      var da = a.departamentos || [], db = b.departamentos || []; if (da.length && db.length && !da.some(function (d) { return db.indexOf(d) >= 0; })) continue;
+      var ta = T[idx[x]], tb = T[idx[y]], c = 0; for (var w in ta.o) if (tb.o[w]) c++;
+      if (c >= 3 && c / Math.min(ta.n, tb.n) >= .45) par[f(idx[x])] = f(idx[y]);
+    }
+    var g = {}; idx.forEach(function (i) { var r = f(i); (g[r] = g[r] || []).push(i); });
+    var quitar = {};
+    Object.keys(g).forEach(function (r) {
+      var m = g[r]; if (m.length < 2) return;
+      var G = m.map(function (i) { return ev[i]; }), base = G.slice().sort(function (p, q) { return ((q.cifras || {}).notas || 1) - ((p.cifras || {}).notas || 1); })[0], c = Object.assign({}, base.cifras || {}), md = {}, mdl = [];
+      G.forEach(function (e) { var ci = e.cifras || {}; ["fallecidos", "heridos"].forEach(function (k) { if ((ci[k] || 0) > (c[k] || 0)) c[k] = ci[k]; }); med(e).forEach(function (n) { var k = String(n).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/[ .,-]/)[0]; if (!md[k]) { md[k] = 1; mdl.push(n); } }); });
+      c.notas = G.reduce(function (u, e) { return u + (((e.cifras || {}).notas) || 1); }, 0);
+      var nv = mdl.length >= 3 ? "Alta" : mdl.length === 2 ? "Media" : (base.confianza || {}).nivel || "Baja";
+      var u = Object.assign({}, base, {medios: mdl, cifras: c, ts: Math.min.apply(null, G.map(function (e) { return e.ts; })), ts_ult: Math.max.apply(null, G.map(function (e) { return e.ts_ult || e.ts; })), unidos: G.map(function (e) { return e.id; }), confianza: Object.assign({}, base.confianza || {}, {nivel: nv, medios_n: mdl.length})});
+      if (u.lat == null) { var cl = G.filter(function (e) { return e.lat != null; })[0]; if (cl) { u.lat = cl.lat; u.lon = cl.lon; u.lugar = u.lugar || cl.lugar; } }
+      m.forEach(function (i) { quitar[i] = 1; }); quitar["u" + r] = u;
+    });
+    var res = []; ev.forEach(function (e, i) { if (!quitar[i]) res.push(e); }); Object.keys(quitar).forEach(function (k) { if (k.charAt(0) === "u") res.push(quitar[k]); });
+    return res;
+  }
 var S2 = (function () {
   var S = SALA;
   var P = {
@@ -62,7 +91,7 @@ var S2 = (function () {
   function datos() {
     var k = ["eventos_unificados", "transito", "data", "focos_puntos", "focos_complejos", "sequia", "caudales", "sismos_oficiales", "senamhi_alertas", "epidemio_oficial", "focos_propension", "focos_detectados", "estado_fuentes", "textos_hechos"];
     return Promise.all(k.map(function (n) { return opt(n + ".json"); }).concat([opt("geo_dep.geojson"), opt("geo_mun.geojson")])).then(function (r) {
-      var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = (o.eventos_unificados && o.eventos_unificados.eventos) || []; return o;
+      var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = unirHechos((o.eventos_unificados && o.eventos_unificados.eventos) || []); return o;
     });
   }
   function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }

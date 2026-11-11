@@ -461,7 +461,7 @@
   function tipos() {
     var now = Date.now(), tr7 = ((D.transito && D.transito.resumen) || {}).hechos_7d || 0;
     $("tipos").innerHTML = S.CAT.slice(0, 7).map(function (c) {
-      var df = TIPDEF[c], col = S.COLCAT[c], L = D.ev.filter(function (e) { return e.categoria === c && e.origen !== "modelo" && e.ts > now - 30 * DIA; });
+      var df = TIPDEF[c], col = S.COLCAT0[c], L = D.ev.filter(function (e) { return e.categoria === c && e.origen !== "modelo" && e.ts > now - 30 * DIA; });
       var n24 = L.filter(function (e) { return e.ts > now - DIA; }).length, mx = L.reduce(function (a, e) { return Math.max(a, e.nivel == null ? -1 : e.nivel); }, -1);
       var of = L.filter(function (e) { return e.oficial || ["senamhi", "sismo", "epidemiologia"].indexOf(e.origen) >= 0; }).length;
       var extra = c === "antropogénica" ? tr7 + ' hechos de tránsito en 7 días' : of + ' de fuente oficial · ' + (L.length - of) + ' prensa/satélite';
