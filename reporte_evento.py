@@ -40,14 +40,14 @@ def mapa(lat, lon, z, W, H, radio_m, base="calles"):
     d.ellipse((W / 2 - r, H / 2 - r, W / 2 + r, H / 2 + r), fill=(210, 73, 31, 60), outline=(210, 73, 31, 255), width=3)
     d.ellipse((W / 2 - 7, H / 2 - 7, W / 2 + 7, H / 2 + 7), fill=(139, 26, 26, 255), outline=(255, 255, 255, 255), width=2)
     b = io.BytesIO(); img.save(b, "PNG"); return "data:image/png;base64," + base64.b64encode(b.getvalue()).decode(), red
-ESQUEMA = """<svg viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg" font-family="Arial" font-size="10"><rect width="420" height="250" fill="#f3f5f8"/>
+ESQUEMA = """<svg viewBox="0 0 440 250" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" font-family="Arial" font-size="10"><rect width="420" height="250" fill="#f3f5f8"/>
 <rect x="0" y="196" width="420" height="38" fill="#9aa5b4"/><text x="12" y="219" fill="#fff" font-weight="700">Av. Banzer (vía principal)</text>
 <rect x="60" y="30" width="250" height="150" fill="none" stroke="#d2491f" stroke-width="2" stroke-dasharray="6 4"/><text x="64" y="26" fill="#d2491f" font-weight="700">Cordón de seguridad policial (referencial)</text>
 <polygon points="110,70 190,58 240,80 232,140 150,152 104,122" fill="#8b1a1a" opacity=".85"/><text x="134" y="108" fill="#fff" font-weight="700">Planta</text><text x="122" y="121" fill="#fff">estructura colapsada</text>
 <circle cx="210" cy="96" r="12" fill="#f5b700" stroke="#fff" stroke-width="2"/><text x="226" y="94" font-weight="700">Zona de</text><text x="226" y="106" font-weight="700">búsqueda</text>
 <rect x="268" y="150" width="34" height="22" rx="4" fill="#1d6fb8"/><text x="270" y="164" fill="#fff" font-size="9">Triaje</text>
 <rect x="318" y="150" width="62" height="22" rx="4" fill="#2e9e5b"/><text x="321" y="164" fill="#fff" font-size="9">Ambulancias</text>
-<path d="M300 180 L300 196" stroke="#2e9e5b" stroke-width="3"/><text x="330" y="60" font-size="9" fill="#5a6b80">Fuga de gas (hipótesis)</text><path d="M326 62 L246 82" stroke="#5a6b80" stroke-dasharray="3 3"/></svg>"""
+<path d="M300 180 L300 196" stroke="#2e9e5b" stroke-width="3"/><text x="326" y="52" font-size="9" fill="#5a6b80">Fuga de gas</text><text x="326" y="63" font-size="9" fill="#5a6b80">(hipótesis)</text><path d="M326 62 L246 82" stroke="#5a6b80" stroke-dasharray="3 3"/></svg>"""
 def main(f):
     e = json.load(open(f, encoding="utf8")); g = None if e.get("usar_referencia") else ((interseccion(e["calle"], e["anillo"]) or [None])[:3] if e.get("calle") else None)
     g = g if g and g[0] else ((None if e.get("usar_referencia") else geocodifica(e["geocodificar"])) or (e["lat_ref"], e["lon_ref"], e.get("fuente_ref", "referencia aproximada")))
