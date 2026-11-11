@@ -84,7 +84,7 @@ def tokens_tiempo(e):
     for k, off in ((2, 6), (3, 12)):
         if k > n: sig.append("Reporte %d: %s (+%d h del primero)" % (k, fx(r1 + dt.timedelta(hours=off)), off))
     sig.append("luego se integra al boletín diario de las 07:00 y a los consolidados semanal y mensual")
-    return {"N": str(n), "HORAS": fh(m), "CORTE": corte.strftime("%d/%m/%Y %H:%M"), "HECHO": hecho.strftime("%H:%M"), "PROX": "; ".join(sig)}
+    return {"N": str(n), "HORAS": fh(m), "CORTE": corte.strftime("%d/%m/%Y %H:%M"), "HECHO": hecho.strftime("%H:%M"), "PROX": "; ".join(sig), "PROX_CORTO": (r1 + dt.timedelta(hours=6 if n < 2 else 12)).strftime("%d/%m %H:%M") if n < 3 else "07:00 diario"}
 def main(f):
     e = json.load(open(f, encoding="utf8")); lat, lon, src = e["lat_ref"], e["lon_ref"], e["fuente_ref"]
     inst, fuente_inst = instituciones(lat, lon); mp, red, geo, sel = pagina_geo(e, lat, lon, src, inst, fuente_inst)
@@ -95,4 +95,12 @@ def main(f):
     exe = next((shutil.which(x) for x in ("google-chrome", "chromium", "chromium-browser") if shutil.which(x)), None)
     subprocess.run([exe, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--allow-file-access-from-files", "--virtual-time-budget=4000", "--print-to-pdf=" + os.path.abspath(f"datos/v3/investigacion/EVENTO_{e['id']}_R{e.get('numero', 1)}.pdf"), "file://" + hp], check=True, timeout=120, capture_output=True)
     print("ok", len(inst), fuente_inst, red)
+    if e.get("enviar_correo") and os.environ.get("GMAIL_USER"):
+        try:
+            import correo
+            pdf = f"datos/v3/investigacion/EVENTO_{e['id']}_R{e.get('numero', 1)}.pdf"; n = e.get("numero", 1)
+            asunto = f"REPORTE PRELIMINAR N.º {n} · {e['asunto']}"
+            cuerpo = f"REPORTE PRELIMINAR N.º {n} — {e['asunto']}\nCorte: {tokens_tiempo(e)['CORTE']} ({tokens_tiempo(e)['HORAS']} después del hecho).\nInformación preliminar de fuentes abiertas; se adjunta el PDF.\nSiguientes: {tokens_tiempo(e)['PROX']}."
+            ok = correo.enviar(asunto, "<p>" + cuerpo.replace("\n", "<br>") + "</p>", cuerpo, [pdf], log=print); print("correo enviado:", ok)
+        except Exception as ex: print("correo falló:", type(ex).__name__, str(ex)[:120])
 main(sys.argv[1])
