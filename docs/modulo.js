@@ -235,7 +235,7 @@
   function ventana(h) { return h.replace(/Últimos 30 días/g, PLU).replace(/\(30 días\)/g, "(" + PL + ")").replace(/30 días/g, PL); }
   function filtrosHtml(B) {
     if (!B.filtros) return "";
-    return '<div class="card fmod"><h2>' + X.ic("list") + 'Filtros de análisis</h2><div class="sx-ctl">' + B.filtros.ctl.map(function (c) { return '<label>' + c.l + ' <select data-f="' + c.id + '">' + c.o.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("") + '</select></label>'; }).join("") + '<button class="btn s" id="fReset" type="button">Quitar filtros</button></div><div class="nota" id="fRes"></div></div>' + (B.wb ? '<div class="card"><h2>' + X.ic("info") + 'Contexto de Bolivia · tendencias (Banco Mundial)</h2><div class="grid g4" id="wbCtx"></div></div>' : "");
+    return '<div class="card fmod"><h2>' + X.ic("list") + 'Filtros de análisis</h2><div class="sx-ctl">' + B.filtros.ctl.map(function (c) { return '<label>' + c.l + ' <select data-f="' + c.id + '">' + c.o.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join("") + '</select></label>'; }).join("") + '<button class="btn s" id="fReset" type="button">Quitar filtros</button></div><div class="nota" id="fRes"></div></div>' + (B.wb ? '<div class="card"><h2>' + X.ic("info") + 'Contexto de Bolivia · Banco Mundial y línea base SNIS-VE</h2><div class="grid g4" id="wbCtx"></div></div>' : "");
   }
   function filtrosInit(B) {
     if (!B.filtros) return;
@@ -298,10 +298,34 @@
       }};
   }
   /* contexto de Bolivia (Banco Mundial, API abierta): tendencia de indicadores de salud y población */
+  /* línea base histórica SNIS-VE (2015–2021, datos abiertos de mauforonda/vigilancia-epidemiologica): canal endémico por enfermedad y departamento */
+  function canalEndemico(box) {
+    var NOM = {dengue: "Dengue", malaria: "Malaria", ira: "Infecciones respiratorias agudas (sin neumonía)", leishmaniasis: "Leishmaniasis", varicela: "Varicela"}, MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    var c = document.createElement("div"); c.className = "card"; c.style.gridColumn = "1/-1";
+    c.innerHTML = '<h2>' + X.ic("pulse") + 'Canal endémico histórico (SNIS-VE)</h2><div class="cap">Casos notificados por mes: franja = rango intercuartil de 2015–2019 (años previos a la pandemia); línea blanca = mediana; línea de color = último año con notificación comparable (se omiten años con subregistro, p. ej. 2020 en dengue). Fuente: SNIS-VE vía datos abiertos (mauforonda/vigilancia-epidemiologica), hasta 2021; es línea base histórica, no vigilancia actual.</div><div class="sx-ctl"><label>Enfermedad <select id="ceD"></select></label><label>Departamento <select id="ceP"></select></label></div><div id="ceC" style="height:300px"></div>';
+    box.appendChild(c);
+    fetch("linea_base_snis.json").then(function (r) { return r.json(); }).then(function (J) {
+      var D2 = J.d, sd = $("ceD"), sp = $("ceP");
+      sd.innerHTML = Object.keys(D2).map(function (k) { return '<option value="' + k + '">' + (NOM[k] || k) + '</option>'; }).join("");
+      sp.innerHTML = '<option value="nac">Bolivia</option>' + Object.keys(J.deps).map(function (k) { return '<option value="' + k + '">' + J.deps[k] + '</option>'; }).join("");
+      function q(a, p) { a = a.slice().sort(function (x, y) { return x - y; }); var i = (a.length - 1) * p, lo = Math.floor(i); return a[lo] + (a[Math.ceil(i)] - a[lo]) * (i - lo); }
+      function dibuja() {
+        var d = D2[sd.value], z = sp.value, ys = Object.keys(d).sort(), base = ys.filter(function (y) { return +y >= 2015 && +y <= 2019 && d[y][z]; }), sm = function (y) { return d[y][z].reduce(function (u, v) { return u + v; }, 0); }, med = base.length ? base.map(sm).reduce(function (u, v) { return u + v; }, 0) / base.length : 0, ult = ys.filter(function (y) { return d[y][z] && sm(y) >= .2 * med; }).pop() || ys[ys.length - 1];
+        var q1 = [], md = [], q3 = [];
+        for (var m = 0; m < 12; m++) { var v = base.map(function (y) { return d[y][z][m]; }); q1.push(v.length ? q(v, .25) : 0); md.push(v.length ? q(v, .5) : 0); q3.push(v.length ? q(v, .75) : 0); }
+        X.chart("ceC", {tooltip: {trigger: "axis"}, legend: {top: 0, data: ["Rango intercuartil 2015–2019", "Mediana 2015–2019", "Año " + ult], textStyle: {color: "#9aa6b6"}}, grid: {left: 46, right: 12, top: 34, bottom: 26}, xAxis: {type: "category", data: MES, boundaryGap: false}, yAxis: {type: "value"}, series: [
+          {name: "Base", type: "line", data: q1, stack: "b", showSymbol: false, lineStyle: {opacity: 0}, silent: true, tooltip: {show: false}}, {name: "Rango intercuartil 2015–2019", type: "line", data: q3.map(function (v, i) { return v - q1[i]; }), stack: "b", showSymbol: false, lineStyle: {opacity: 0}, areaStyle: {color: "#5aa9f0", opacity: .28}},
+          {name: "Mediana 2015–2019", type: "line", data: md, showSymbol: false, smooth: true, lineStyle: {color: "#e8eef7", width: 2, type: "dashed"}},
+          {name: "Año " + ult, type: "line", data: d[ult][z], smooth: true, symbol: "circle", symbolSize: 6, lineStyle: {color: "#f26a1b", width: 3}, itemStyle: {color: "#f26a1b"}}]});
+      }
+      sd.onchange = sp.onchange = dibuja; dibuja();
+    }).catch(function () { $("ceC").innerHTML = '<p class="nota">No se pudo cargar la línea base histórica.</p>'; });
+  }
   function contextoWB() {
     var box = $("wbCtx"); if (!box) return;
     var IND = [["SH.DYN.MORT", "Mortalidad en menores de 5 años", "por 1.000 nacidos vivos", "#c62828"], ["SP.DYN.LE00.IN", "Esperanza de vida al nacer", "años", "#1d6fb8"], ["SH.IMM.MEAS", "Vacunación contra sarampión (12–23 m)", "% de niños", "#2e9e5b"], ["SP.POP.TOTL", "Población total", "personas", "#6a1b9a"]];
     box.innerHTML = IND.map(function (i, k) { return '<div class="card kpi" style="--k:' + i[3] + '"><div class="l">' + i[1] + '</div><div class="v" id="wb' + k + 'v">…</div><div class="d" id="wb' + k + 'd">' + i[2] + '</div><div id="wb' + k + 'c" style="height:70px;margin-top:6px"></div></div>'; }).join("");
+    canalEndemico(box);
     IND.forEach(function (i, k) {
       fetch("https://api.worldbank.org/v2/country/BOL/indicator/" + i[0] + "?format=json&per_page=40&mrv=30").then(function (r) { return r.json(); }).then(function (a) {
         var d = (a[1] || []).filter(function (x) { return x.value != null; }).reverse(); if (!d.length) throw 0; var u = d[d.length - 1];
