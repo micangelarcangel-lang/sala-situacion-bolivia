@@ -1,0 +1,155 @@
+Sala de Situación · Bolivia
+Vigilancia de eventos con datos abiertos · actualización automática cada 30 min
+Datos hace 13 min
+Tablero
+Informes
+Informe por tema
+Fuentes
+Modo claro
+Guía de uso
+TIPOS DE EVENTO
+Geológica
+Meteorológica
+Hidrológica
+Climatológica
+Biológica
+Tecnológica
+Antropogénica
+Salud humana
+Salud humana: accidentes y hechos con víctimas
+
+Mortalidad, morbilidad y novedades de los hechos que comprometen la salud humana (accidentes de tránsito y otros hechos con víctimas). Son los mismos hechos de Antropogénica/Tecnológica, vistos desde la salud; no se duplican. Fuente: prensa boliviana triangulada; no sustituye el registro de Policía, SUMA 161 o el SNIS.
+
+Prensa boliviana (triangulada)
+Fotografías de los medios, con crédito
+Mapa
+Subtipos y niveles
+Indicadores
+Actualizaciones
+Registro
+Periodo
+24 horas
+7 días
+24 horas
+1 año
+Todo
+Informe por período
+Buscar hecho o tema
+Indicadores
+PDF
+CSV
+Fallecidos (24 horas)
+3
+reportados por prensa
+Heridos (24 horas)
+6
+morbilidad reportada
+Hechos (24 horas)
+3
+únicos, ya triangulados
+Letalidad
+33 %
+fallecidos / (fallecidos + heridos)
+Filtros de análisis
+Gravedad
+Todos
+Con fallecidos
+Con heridos
+Múltiples víctimas (3+)
+Tipo de accidente
+Todos
+Caída a barranco / embarrancamiento
+Choque / colisión
+Departamento
+Todos
+Cochabamba
+La Paz
+Santa Cruz
+Vehículo
+Todos
+cisterna y camión
+minibús
+vagoneta / camioneta
+Confianza
+Todas
+Media o alta (2+ medios)
+Una sola fuente
+Quitar filtros
+Mostrando 3 de 3 hechos en 24 horas
+Mapa y situación vigente
+Mapa de hechos con víctimas (calles y carreteras)
+Círculo rojo = con fallecidos; naranja = con heridos; gris = sin víctimas reportadas. Acerque para ver calles.
+© OpenStreetMap
+Capas
+Víctimas por municipio (30 d)
+Hechos (puntos)
+Mapa base
+Calles (OSM)
+Claro (contexto)
+Satélite (Esri)
+Topográfico (Esri)
+Relieve sombreado
+Oscuro
+Desglose
+Departamento
+Municipio (intensidad)
+Vista 3D
+Mortalidad: hechos con fallecidos
+Camión cisterna se embarranca y incendia en la carretera Cochabamba-Santa Cruz y deja un fallecido
+09/11/2026, 06:12 · Cochabamba, Cochabamba · 1 fallecido(s) · 0 herido(s)
+Alta
+La Paz: dos fallecidas y varios heridos tras colisión de dos minibuses en la ruta a Desaguadero
+06/11/2026, 14:04 · Desaguadero, La Paz · 2 fallecido(s) · 6 herido(s)
+Alta
+Morbilidad: hechos con heridos
+La Paz: dos fallecidas y varios heridos tras colisión de dos minibuses en la ruta a Desaguadero
+06/11/2026, 14:04 · Desaguadero, La Paz · 2 fallecido(s) · 6 herido(s)
+Alta
+Subtipos y nivel de importancia
+Cada fenómeno dentro de este tipo, desglosado por nivel (últimos 24 horas). El nivel viene de la fuente oficial cuando existe; en prensa es «sin nivel» hasta que se confirme.
+Actualizaciones y fotografías de los medios
+Se enlaza la imagen original del medio, con crédito; el sistema no la copia. Si el medio no publica foto, se muestra un recuadro.
+Vehículo cae a un desnivel y casi choca contra casa
+10/11/2026, 20:37 · San José, Santa Cruz
+Foto: La Patria Bolivia
+Camión cisterna se embarranca y incendia en la carretera Cochabamba-Santa Cruz y deja un fallecido
+09/11/2026, 06:12 · Cochabamba, Cochabamba
+Foto: El Día
+La Paz: dos fallecidas y varios heridos tras colisión de dos minibuses en la ruta a Desaguadero
+06/11/2026, 14:04 · Desaguadero, La Paz
+Foto: Eju.tv
+Otros hechos con víctimas (no tránsito)
+Una mujer fallecida y siete heridos deja explosión en la zona norte de Santa Cruz, reporta Bomberos de la Policía
+10/11/2026, 23:54 · Santa Cruz (departamento) · Prensa
+Un solo medio: sin confirmar
+Un hombre sufre quemaduras en presunto ataque de su pareja en Sucre https://correodelsur.com/seguridad/20261110/un-hombre-sufre-quemaduras-en-presunto-ataque-de-su-pareja-en-sucre.html
+10/11/2026, 10:34 · Sucre, Chuquisaca · Prensa
+Confianza media
+Confirman el fallecimiento de una persona tras explosión en farmacéutica
+10/11/2026, 09:40 · Santa Cruz de la Sierra, Santa Cruz · Prensa
+Un solo medio: sin confirmar
+Explosión en un laboratorio de medicamentos deja cinco heridos en el norte de Santa Cruz
+10/11/2026, 08:30 · Santa Cruz (departamento) · Prensa
+Confianza alta
+Fallecen 16 personas y hay heridos tras una explosión
+09/11/2026, 21:57 · Santa Cruz · Prensa
+Confianza alta
+CAMIÓN CISTERNA CAE POR UNA PENDIENTE Y EXPLOSIONA EN LA RUTA COCHABAMBA-SANTA CRUZ; HAY UN FALLECIDO
+09/11/2026, 17:25 · Cochabamba, Cochabamba · Prensa
+Un solo medio: sin confirmar
+Indicadores y gráficos de análisis
+Mortalidad y morbilidad por día
+Fallecidos y heridos reportados (24 horas).
+Tipo de accidente
+Hechos por tipo (24 horas).
+Vehículo involucrado
+Según el titular de la nota.
+Víctimas por departamento
+Fallecidos + heridos reportados.
+Confianza (triangulación)
+Alta: 3+ fuentes independientes · Media: 2 · Baja: 1.
+Medios que reportan
+Hechos por medio.
+Registro de eventos (1)
+Sala de Situación Bolivia · información preliminar de fuentes abiertas
+Volver al inicio · Centro de informes

@@ -1,12 +1,28 @@
 [
  {
-  "url": "https://sedescochabamba.gob.bo/boletin.php",
-  "slug": "sedescochabamba_gob_bo_boletin_php_1e1c5d",
+  "url": "https://micangelarcangel-lang.github.io/sala-situacion-bolivia/s2.css",
+  "slug": "micangelarcangel_lang_github_io_sala_situacion_bolivia_s2_css_e39346",
+  "http": 200,
+  "tipo": "text/css; charset=utf-8",
+  "bytes": 24571,
+  "chars": 0
+ },
+ {
+  "url": "https://micangelarcangel-lang.github.io/sala-situacion-bolivia/linea_base_snis.json",
+  "slug": "micangelarcangel_lang_github_io_sala_situacion_bolivia_linea_base_snis_a830f1",
+  "http": 200,
+  "tipo": "application/json; charset=utf-8",
+  "bytes": 29597,
+  "chars": 0
+ },
+ {
+  "url": "https://micangelarcangel-lang.github.io/sala-situacion-bolivia/modulo.html?t=salud",
+  "slug": "micangelarcangel_lang_github_io_sala_situacion_bolivia_modulo_html_773ad4",
   "http": 200,
   "tipo": "text/html; charset=utf-8",
-  "bytes": 12192,
+  "bytes": 822,
   "render": "chrome",
-  "chars": 1136,
+  "chars": 4893,
   "archivos": 0
  }
 ]

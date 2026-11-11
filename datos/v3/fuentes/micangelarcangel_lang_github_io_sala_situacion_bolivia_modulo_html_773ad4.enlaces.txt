@@ -1,0 +1,6 @@
+== Archivos (pdf/csv/xlsx/json/zip) ==
+
+
+== Todos los enlaces ==
+Volver al inicio | https://micangelarcangel-lang.github.io/sala-situacion-bolivia/index.html
+Centro de informes | https://micangelarcangel-lang.github.io/sala-situacion-bolivia/informes.html
