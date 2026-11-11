@@ -1,39 +1,15 @@
 [
  {
-  "url": "https://nominatim.openstreetmap.org/search?format=json&limit=5&q=D%C3%A9cimo+Anillo+Santa+Cruz+de+la+Sierra+Bolivia",
-  "slug": "nominatim_openstreetmap_org_search_69dd71",
-  "http": 200,
-  "tipo": "application/json; charset=utf-8",
-  "bytes": 2,
-  "chars": 0
- },
- {
-  "url": "https://nominatim.openstreetmap.org/search?format=json&limit=5&q=Avenida+Banzer+10%C2%BA+anillo+Santa+Cruz+Bolivia",
-  "slug": "nominatim_openstreetmap_org_search_d687fe",
-  "http": 200,
-  "tipo": "application/json; charset=utf-8",
-  "bytes": 2,
-  "chars": 0
- },
- {
-  "url": "https://nominatim.openstreetmap.org/search?format=json&limit=5&q=10+Anillo+y+Banzer+Santa+Cruz+Bolivia",
-  "slug": "nominatim_openstreetmap_org_search_f99c45",
-  "http": 200,
-  "tipo": "application/json; charset=utf-8",
-  "bytes": 2,
-  "chars": 0
- },
- {
-  "url": "https://overpass-api.de/api/interpreter?data=[out:json];way[\"name\"~\"Banzer\"](-17.80,-63.30,-17.50,-63.00);out+tags+center+30;",
-  "slug": "overpass_api_de_api_interpreter_a4b715",
+  "url": "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3Bway%5B%22name%22~%22Banzer%22%5D%28-17.85%2C-63.35%2C-17.40%2C-62.95%29%3Bout%20tags%20center%2060%3B",
+  "slug": "overpass_api_de_api_interpreter_4924c1",
   "http": 406,
   "tipo": "text/html",
   "bytes": 558,
   "error": "HTTP 406"
  },
  {
-  "url": "https://overpass-api.de/api/interpreter?data=[out:json];way[\"name\"~\"D[eé]cimo|10\"][\"highway\"](-17.80,-63.30,-17.50,-63.00);out+tags+center+30;",
-  "slug": "overpass_api_de_api_interpreter_b531ad",
+  "url": "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%5B%22name%22~%22%5BDd%5D%5Be%C3%A9%5Dcimo%7C10.%3F%20%3F%5BAa%5Dnillo%7CAnillo%2010%7CD%5Be%C3%A9%5Dcimo%20Anillo%22%5D%28-17.85%2C-63.35%2C-17.40%2C-62.95%29%3Brelation%5B%22name%22~%22%5BDd%5D%5Be%C3%A9%5Dcimo%7CAnillo%2010%7C10.%3F%20%3F%5BAa%5Dnillo%22%5D%28-17.85%2C-63.35%2C-17.40%2C-62.95%29%3B%29%3Bout%20tags%20center%2060%3B",
+  "slug": "overpass_api_de_api_interpreter_1af070",
   "http": 406,
   "tipo": "text/html",
   "bytes": 558,
