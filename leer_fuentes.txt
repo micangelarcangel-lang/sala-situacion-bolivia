@@ -1,0 +1,8 @@
+# una URL por línea
+https://inlasa.gob.bo/wp-content/uploads/2026/10/Boletin-epidemiologia-HANTAVIRUS.pdf
+https://inlasa.gob.bo/boletines/
+https://vigilancia.inlasa.gob.bo/dashboard-vigilancia/
+https://opendata.paho.org/es/indicadores-basicos
+https://data.who.int/countries/068
+https://www.ecdc.europa.eu/en/dengue-monthly
+https://app7.dge.gob.pe/maps2/shiny_pfa_web/
