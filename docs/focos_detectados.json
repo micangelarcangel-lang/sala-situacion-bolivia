@@ -201,11 +201,13 @@
    "La Paz": 5
   },
   "2026-11-11": {
-   "Santa Cruz": 260,
-   "Beni": 93,
-   "Tarija": 2,
-   "Cochabamba": 4,
-   "La Paz": 1
+   "Santa Cruz": 639,
+   "Beni": 349,
+   "Tarija": 10,
+   "Cochabamba": 54,
+   "La Paz": 51,
+   "Chuquisaca": 7,
+   "Pando": 18
   }
  },
  "municipios": {
@@ -590,26 +592,26 @@
    "Concepción (Santa Cruz)": 25
   },
   "2026-11-11": {
-   "San José (Santa Cruz)": 52,
+   "Yapacaní (Santa Cruz)": 111,
+   "El Puente (Santa Cruz)": 94,
+   "San Joaquín (Beni)": 80,
+   "Santa Rosa (Santa Cruz)": 74,
+   "San José (Santa Cruz)": 54,
+   "San Andrés (Beni)": 47,
    "San Ignacio (Santa Cruz)": 43,
+   "San Julián (Santa Cruz)": 39,
+   "Exaltación (Beni)": 33,
+   "Santa Ana (Beni)": 29,
+   "San Miguel (Santa Cruz)": 27,
+   "Ixiamas (La Paz)": 27,
    "San Rafael (Santa Cruz)": 26,
-   "Yapacaní (Santa Cruz)": 21,
-   "San Miguel (Santa Cruz)": 20,
-   "El Puente (Santa Cruz)": 20,
-   "San Joaquín (Beni)": 19,
-   "Concepción (Santa Cruz)": 19,
-   "San Andrés (Beni)": 17,
-   "Exaltación (Beni)": 13,
-   "Roboré (Santa Cruz)": 13,
-   "Magdalena (Beni)": 12,
-   "Riberalta (Beni)": 11,
-   "Santa Rosa (Beni)": 7,
-   "San Juan (Santa Cruz)": 7
+   "Pailón (Santa Cruz)": 23,
+   "Concepción (Santa Cruz)": 23
   }
  },
- "actualizado": "2026-11-11T19:31:23.826015Z",
+ "actualizado": "2026-11-11T21:29:34.614983Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2033,
+ "detecciones_fuera_de_limites": 2189,
  "slack_dia": "2026-11-11"
 }
