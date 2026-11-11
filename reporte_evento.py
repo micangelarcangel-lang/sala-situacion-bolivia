@@ -41,9 +41,8 @@ def main(f):
     h = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), e["plantilla"]), encoding="utf8").read()
     for k, v in (("{{MAPA_CIUDAD}}", m1), ("{{MAPA_DETALLE}}", m2), ("{{ESQUEMA}}", ESQUEMA), ("{{FUENTE_GEO}}", E(src)), ("{{RED}}", "" if r1 and r2 else " (mapa base no disponible en este entorno)")): h = h.replace(k, v)
     os.makedirs("datos/v3/investigacion", exist_ok=True); tmp = tempfile.mkdtemp(); hp = os.path.join(tmp, "r.html"); open(hp, "w", encoding="utf8").write(h)
-    from playwright.sync_api import sync_playwright
-    with sync_playwright() as pw:
-        b = pw.chromium.launch(); pg = b.new_page(); pg.goto("file://" + hp); pg.wait_for_timeout(800)
-        pg.pdf(path=f"datos/v3/investigacion/EVENTO_{e['id']}.pdf", format="A4", print_background=True, margin={"top": "9mm", "bottom": "9mm", "left": "11mm", "right": "11mm"}); b.close()
+    import shutil
+    exe = next((shutil.which(x) for x in ("google-chrome", "chromium", "chromium-browser") if shutil.which(x)), None)
+    subprocess.run([exe, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--allow-file-access-from-files", "--virtual-time-budget=4000", "--print-to-pdf=" + os.path.abspath(f"datos/v3/investigacion/EVENTO_{e['id']}.pdf"), "file://" + hp], check=True, timeout=120, capture_output=True)
     print("ok", lat, lon, src, r1, r2)
 main(sys.argv[1])
