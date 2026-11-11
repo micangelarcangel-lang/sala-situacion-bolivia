@@ -1,0 +1,35 @@
+== Archivos (pdf/csv/xlsx/json/zip) ==
+
+
+== Todos los enlaces ==
+ | https://sedescochabamba.gob.bo/index.php
+Inicio | https://sedescochabamba.gob.bo/index.php
+Servicios | https://sedescochabamba.gob.bo/boletin.php
+Calidad y Servicios | https://sedescochabamba.gob.bo/boletin.php
+Hospitales | https://sedescochabamba.gob.bo/hospital.php
+Farmacias | https://sedescochabamba.gob.bo/farmacia.php
+Odontología | https://sedescochabamba.gob.bo/odontologia.php
+Laboratorios | https://sedescochabamba.gob.bo/laboratorio.php
+Ambulancias | https://sedescochabamba.gob.bo/ambulancia.php
+Servicios Medicos | https://sedescochabamba.gob.bo/servmedico.php
+Registro Profesional | https://sedescochabamba.gob.bo/rpi.php
+Unidad de Salud Ambiental | https://sedescochabamba.gob.bo/usa.php
+S.S.S.R.O. - A.S.S.O. | https://sedescochabamba.gob.bo/sssro.php
+Sobre Nosotros | https://sedescochabamba.gob.bo/sobreNosotros.php
+Comunicación | https://sedescochabamba.gob.bo/boletin.php
+Noticias | https://sedescochabamba.gob.bo/noticias.php
+Boletín Informativo | https://sedescochabamba.gob.bo/boletin.php
+Anuncios | https://sedescochabamba.gob.bo/anuncio.php
+Materiales | https://sedescochabamba.gob.bo/materiales.php
+Audiencias Publicas | https://sedescochabamba.gob.bo/audienciasPublicas.php
+Contacto | https://sedescochabamba.gob.bo/contactos.php
+Trámites | https://sedescochabamba.gob.bo/tramites.php
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=472
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=443
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=392
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=385
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=360
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=343
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=327
+(Leer más...) | https://sedescochabamba.gob.bo/boletin.php?idp=306
+ | https://sedescochabamba.gob.bo/boletin.php
