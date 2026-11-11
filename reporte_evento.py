@@ -19,7 +19,7 @@ def clasifica(tags):
     if em in ("ambulance_station", "rescue_station") or re.search(r"cruz roja|defensa civil|rescate|sar\b|suma|emergencia", n, re.I): return "rescate"
     if a in ("hospital", "clinic", "doctors") or h in ("hospital", "clinic", "centre", "doctor") or re.search(r"hospital|cl[ií]nica|centro de salud|policl[ií]nico|puesto de salud|cns|caja nacional", n, re.I): return "salud"
     return None
-def instituciones(lat, lon, radio_m=8000):
+def instituciones(lat, lon, radio_m=18000):
     out = []
     q = '[out:json][timeout:50];(nwr["amenity"~"^(hospital|clinic|fire_station|police)$"](around:%d,%f,%f);nwr["healthcare"~"hospital|centre|clinic"](around:%d,%f,%f);nwr["emergency"~"ambulance_station|rescue_station"](around:%d,%f,%f););out center tags 300;' % (radio_m, lat, lon, radio_m, lat, lon, radio_m, lat, lon)
     fuente = None
@@ -70,8 +70,8 @@ def qr(url):
 def pagina_geo(e, lat, lon, src, inst, fuente_inst):
     sel = []; n = 0
     for k, nom, col in CAT:
-        for o in [o for o in inst if o["cat"] == k][:e.get("max_por_categoria", 5)]: n += 1; o = dict(o, n=n, color=col, nomcat=nom); sel.append(o)
-    mp, red = mapa(lat, lon, 12, 1060, 560, e["radio_m"], sel)
+        for o in [o for o in inst if o["cat"] == k][:e.get("max_por_categoria", 4)]: n += 1; o = dict(o, n=n, color=col, nomcat=nom); sel.append(o)
+    mp, red = mapa(lat, lon, 11, 1060, 600, e["radio_m"], sel)
     filas = "".join('<tr><td><span class="pn" style="background:%s">%d</span></td><td>%s</td><td>%s</td><td style="text-align:right">%.1f km</td></tr>' % (o["color"], o["n"], E(o["nomcat"]), E(o["nombre"]), o["km"]) for o in sel)
     leyenda = "".join('<span class="lg"><i style="background:%s"></i>%s</span>' % (c, nm) for k, nm, c in CAT)
     qrs = "".join('<div class="q"><div class="qs">%s</div><div><b>%s</b><br><span>%s</span></div></div>' % (qr(f["url"]), E(f["medio"]), E(f["titulo"][:70])) for f in e.get("fuentes", []))
