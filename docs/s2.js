@@ -1,5 +1,15 @@
 /* Sala de Situación Bolivia 2.0 — núcleo compartido (cabecera, datos, gráficos, guía) */
 (function () { var t = "dark"; try { t = localStorage.getItem("sala_theme") || "dark"; } catch (e) {} document.documentElement.setAttribute("data-theme", t); })();
+  /* fuera de alcance: prensa de otros países o deportes/figuras retóricas ("sequía" de un equipo); solo se retira si no hay señal boliviana en el titular */
+  var REX_EXT = /\b(los angeles|eaton|california|nueva york|brooklyn|manchester|roma|milan|polonia|cracovia|beirut|libano|gaza|israel|ucrania|zaporiyia|rusia|ruso|bulgaria|bulgara|estados unidos|ee\.? ?uu|eeuu|trump|arlington|washington|argentina|buenos aires|peru|mexico|madrid|grecia|italia|francia|paris|londres|alemania|china|japon|corea|india|pakistan|iran|irak|siria|turquia|egipto|cairo|tanzania|nigeria|sudan|rd congo|congo|colombia|bogota|venezuela|brasil|paraguay|uruguay|ecuador|panama|cuba|haiti|honduras|guatemala|nicaragua|costa rica|puerto rico|everest|nepal|australia|canada|portugal|la palma|dublin|evreux|espana|espanol|espanola|espanolas|mundial|premier league|champions|libertadores)\b/;
+  var REX_FIG = /(sequia atigrada|dias? de sequia|regresa a la victoria|resucita ante|goleada|partido|campeonato|fecha fifa|seleccion boliviana|delantero|torneo|liga de)/;
+  var REX_BO = /(bolivia|boliviano|boliviana|cruceñ|crucen|pacen|palteñ|alten|cochabamba|la paz|santa cruz|oruro|potosi|sucre|tarija|beni|pando|chuquisaca)/;
+  function fueraDeAlcance(e) {
+    if (e.origen !== "prensa") return false;
+    var t = String(e.titulo || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (REX_FIG.test(t)) return true;
+    return REX_EXT.test(t) && !REX_BO.test(t) && !(e.departamentos || []).length;
+  }
   /* hechos únicos en el navegador: une notas de prensa del mismo hecho (mismo asunto, ±36 h, departamento compatible) para que el hecho muestre todos sus medios y cifras */
   function unirHechos(ev) {
     var STOP = {}; "de la el los las en y a un una por con del al que se su sus para es lo como mas tras deja dejo hay habria segun bolivia santa cruz paz cochabamba https http www html local noticias".split(" ").forEach(function (w) { STOP[w] = 1; });
@@ -94,7 +104,7 @@ var S2 = (function () {
   function datos() {
     var k = ["eventos_unificados", "transito", "data", "focos_puntos", "focos_complejos", "sequia", "caudales", "sismos_oficiales", "senamhi_alertas", "epidemio_oficial", "focos_propension", "focos_detectados", "estado_fuentes", "textos_hechos"];
     return Promise.all(k.map(function (n) { return opt(n + ".json"); }).concat([opt("geo_dep.geojson"), opt("geo_mun.geojson")])).then(function (r) {
-      var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = unirHechos((o.eventos_unificados && o.eventos_unificados.eventos) || []); return o;
+      var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = unirHechos(((o.eventos_unificados && o.eventos_unificados.eventos) || []).filter(function (e) { return !fueraDeAlcance(e); })); return o;
     });
   }
   function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
