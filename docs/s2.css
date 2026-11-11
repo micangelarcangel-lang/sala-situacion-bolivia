@@ -187,3 +187,24 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 :root[data-theme=dark] table th{background:#12161d}
 :root[data-theme=dark] .fmod{background:#07090d}
 :root[data-theme=dark] hr,:root[data-theme=dark] td,:root[data-theme=dark] th{border-color:#222a36}
+/* ===== Tema negro v3.1: negro puro real, bordes nítidos, tarjetas de color más vivas y legibles ===== */
+:root[data-theme=dark]{--line:#343e4e;--mut:#b6c2d3;--ink:#f7f9fc}
+:root[data-theme=dark] body{background:#000;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+:root[data-theme=dark] .hdr,:root[data-theme=dark] #hdr{background:#000;border-bottom:1px solid #2b3442}
+:root[data-theme=dark] .tipo,:root[data-theme=dark] .mhero{background:linear-gradient(150deg,var(--c) 0%,color-mix(in srgb,var(--c) 78%,#000) 100%);box-shadow:none;border:1px solid color-mix(in srgb,var(--c) 55%,#fff 20%)}
+:root[data-theme=dark] .tipo:hover{box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 70%,#fff);transform:translateY(-2px)}
+:root[data-theme=dark] .tipo::before,:root[data-theme=dark] .mhero::before{background:rgba(255,255,255,.07)}
+:root[data-theme=dark] .tipo-n{text-shadow:none}
+:root[data-theme=dark] .tipo-ic{background:rgba(0,0,0,.28)}
+:root[data-theme=dark] .pill,:root[data-theme=dark] .mhero .src span{background:rgba(0,0,0,.34);border:1px solid rgba(255,255,255,.22)}
+:root[data-theme=dark] .tipo-ej,:root[data-theme=dark] .tipo-f{opacity:1}
+:root[data-theme=dark] .kpi{background:#0b0d12;border:1px solid #343e4e;border-left:4px solid var(--k)}
+:root[data-theme=dark] .card,:root[data-theme=dark] .alert,:root[data-theme=dark] .ayuda,:root[data-theme=dark] .fcard{border:1px solid #343e4e;box-shadow:none}
+:root[data-theme=dark] .btn{background:#10141b;border:1px solid #5b687c;box-shadow:none}
+:root[data-theme=dark] .btn:hover{background:#1a212d;border-color:#8fc4f5;box-shadow:none}
+:root[data-theme=dark] .btn.p{background:#1d6fb8;border-color:#7ab9f2;box-shadow:none}
+:root[data-theme=dark] .btn.p:hover{background:#2680d0}
+:root[data-theme=dark] select,:root[data-theme=dark] input[type=text],:root[data-theme=dark] input[type=date]{border-color:#5b687c}
+:root[data-theme=dark] .foot{background:#05080d;border-top:1px solid #2b3442;color:#c5d1e0}
+:root[data-theme=dark] .foot a{color:#8fc4f5}
+:root[data-theme=dark] .alert .t,:root[data-theme=dark] .card h2{color:#fff}

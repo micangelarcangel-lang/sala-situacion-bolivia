@@ -324,7 +324,8 @@
   function limpiaTit(t) { return String(t || "").replace(/:[a-z_]+:/g, "").replace(/<!channel>/g, "").replace(/\s+/g, " ").trim(); }
   function reportes() {
     S.cargar("reportes/lista.json").then(function (L) {
-      L.sort(function (a, b) { return (b.fecha || "").localeCompare(a.fecha || ""); });
+      function clave(x) { var m = /^(\d\d)\/(\d\d) (\d\d:\d\d)/.exec(x.titulo || ""); if (m) return new Date().getFullYear() + "-" + m[2] + "-" + m[1] + "T" + m[3]; var f = x.fecha || ""; return f.length === 10 ? f + "T07:00" : f; }
+      L.sort(function (a, b) { return clave(b).localeCompare(clave(a)); });
       var tipos = {}; L.forEach(function (x) { tipos[x.tipo] = (tipos[x.tipo] || 0) + 1; });
       $("rChips").innerHTML = '<button class="chip on" data-r="">Todos (' + L.length + ')</button>' + Object.keys(tipos).map(function (k) { return '<button class="chip" data-r="' + k + '">' + (TIPOREP[k] || k) + ' (' + tipos[k] + ')</button>'; }).join("");
       var u = L.filter(function (x) { return x.tipo === "diario"; })[0] || L[0]; if (u) $("rUlt").href = "reportes/" + u.archivo;
