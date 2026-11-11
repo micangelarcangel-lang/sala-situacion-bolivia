@@ -18,7 +18,7 @@ for u in [l.strip() for l in open(sys.argv[1], encoding="utf8") if l.strip() and
         try: x = requests.get(u, headers=UA, timeout=60, allow_redirects=True)
         except requests.exceptions.SSLError:  # sitios públicos de gobierno con cadena de certificados incompleta: lectura de solo lectura
             import urllib3; urllib3.disable_warnings(); x = requests.get(u, headers=UA, timeout=60, allow_redirects=True, verify=False); r["ssl"] = "sin verificar (certificado del sitio incompleto)"
-  r["http"] = x.status_code; ct = x.headers.get("content-type", "").lower(); r["tipo"] = ct; r["bytes"] = len(x.content)
+        r["http"] = x.status_code; ct = x.headers.get("content-type", "").lower(); r["tipo"] = ct; r["bytes"] = len(x.content)
         if x.status_code >= 400: raise RuntimeError("HTTP %d" % x.status_code)
         if "pdf" in ct or u.lower().endswith(".pdf"):
             t = pdf_texto(x.content, f"{OUT}/{s}.pdf") if len(x.content) < 25e6 else "[PDF demasiado grande]"; open(f"{OUT}/{s}.txt", "w", encoding="utf8").write(t); r["chars"] = len(t)

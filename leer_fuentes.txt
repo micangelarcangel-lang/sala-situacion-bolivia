@@ -7,3 +7,4 @@ https://data.who.int/countries/068
 https://www.ecdc.europa.eu/en/dengue-monthly
 https://app7.dge.gob.pe/maps2/shiny_pfa_web/
 # 1794362327
+# 1794362485
