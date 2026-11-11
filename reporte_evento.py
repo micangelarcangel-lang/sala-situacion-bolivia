@@ -49,9 +49,9 @@ ESQUEMA = """<svg viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg" font-
 <rect x="318" y="150" width="62" height="22" rx="4" fill="#2e9e5b"/><text x="321" y="164" fill="#fff" font-size="9">Ambulancias</text>
 <path d="M300 180 L300 196" stroke="#2e9e5b" stroke-width="3"/><text x="330" y="60" font-size="9" fill="#5a6b80">Fuga de gas (hipótesis)</text><path d="M326 62 L246 82" stroke="#5a6b80" stroke-dasharray="3 3"/></svg>"""
 def main(f):
-    e = json.load(open(f, encoding="utf8")); g = (interseccion(e["calle"], e["anillo"]) or [None])[:3] if e.get("calle") else None
-    g = g if g and g[0] else (geocodifica(e["geocodificar"]) or (e["lat_ref"], e["lon_ref"], "referencia aproximada (no se pudo geocodificar)"))
-    lat, lon, src = g; m1, r1 = mapa(lat, lon, 11, 520, 250, e["radio_m"]); m2, r2 = mapa(lat, lon, 15, 520, 250, e["radio_m"])
+    e = json.load(open(f, encoding="utf8")); g = None if e.get("usar_referencia") else ((interseccion(e["calle"], e["anillo"]) or [None])[:3] if e.get("calle") else None)
+    g = g if g and g[0] else ((None if e.get("usar_referencia") else geocodifica(e["geocodificar"])) or (e["lat_ref"], e["lon_ref"], e.get("fuente_ref", "referencia aproximada")))
+    lat, lon, src = g; m1, r1 = mapa(lat, lon, 11, 520, 200, e["radio_m"]); m2, r2 = mapa(lat, lon, 15, 520, 200, e["radio_m"])
     h = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), e["plantilla"]), encoding="utf8").read()
     for k, v in (("{{MAPA_CIUDAD}}", m1), ("{{MAPA_DETALLE}}", m2), ("{{ESQUEMA}}", ESQUEMA), ("{{FUENTE_GEO}}", E(src)), ("{{RED}}", "" if r1 and r2 else " (mapa base no disponible en este entorno)")): h = h.replace(k, v)
     os.makedirs("datos/v3/investigacion", exist_ok=True); tmp = tempfile.mkdtemp(); hp = os.path.join(tmp, "r.html"); open(hp, "w", encoding="utf8").write(h)
