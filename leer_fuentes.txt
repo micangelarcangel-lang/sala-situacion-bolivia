@@ -1,10 +1,5 @@
-# una URL por línea
-https://inlasa.gob.bo/wp-content/uploads/2026/10/Boletin-epidemiologia-HANTAVIRUS.pdf
-https://inlasa.gob.bo/boletines/
-https://vigilancia.inlasa.gob.bo/dashboard-vigilancia/
-https://opendata.paho.org/es/indicadores-basicos
-https://data.who.int/countries/068
-https://www.ecdc.europa.eu/en/dengue-monthly
-https://app7.dge.gob.pe/maps2/shiny_pfa_web/
-# 1794362327
-# 1794362485
+https://nominatim.openstreetmap.org/search?format=json&limit=5&q=D%C3%A9cimo+Anillo+Santa+Cruz+de+la+Sierra+Bolivia
+https://nominatim.openstreetmap.org/search?format=json&limit=5&q=Avenida+Banzer+10%C2%BA+anillo+Santa+Cruz+Bolivia
+https://nominatim.openstreetmap.org/search?format=json&limit=5&q=10+Anillo+y+Banzer+Santa+Cruz+Bolivia
+https://overpass-api.de/api/interpreter?data=[out:json];way["name"~"Banzer"](-17.80,-63.30,-17.50,-63.00);out+tags+center+30;
+https://overpass-api.de/api/interpreter?data=[out:json];way["name"~"D[eé]cimo|10"]["highway"](-17.80,-63.30,-17.50,-63.00);out+tags+center+30;
