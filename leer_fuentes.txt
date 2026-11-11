@@ -1,2 +1,1 @@
-https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3Bway%5B%22name%22~%22Banzer%22%5D%28-17.85%2C-63.35%2C-17.40%2C-62.95%29%3Bout%20tags%20center%2060%3B
-https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3B%28way%5B%22name%22~%22%5BDd%5D%5Be%C3%A9%5Dcimo%7C10.%3F%20%3F%5BAa%5Dnillo%7CAnillo%2010%7CD%5Be%C3%A9%5Dcimo%20Anillo%22%5D%28-17.85%2C-63.35%2C-17.40%2C-62.95%29%3Brelation%5B%22name%22~%22%5BDd%5D%5Be%C3%A9%5Dcimo%7CAnillo%2010%7C10.%3F%20%3F%5BAa%5Dnillo%22%5D%28-17.85%2C-63.35%2C-17.40%2C-62.95%29%3B%29%3Bout%20tags%20center%2060%3B
+https://sedescochabamba.gob.bo/boletin.php

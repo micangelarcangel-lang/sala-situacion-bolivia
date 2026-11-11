@@ -1,6 +1,14 @@
 ﻿id,fecha_local,lat,lon,prof_km,mag,provincia,departamento,fuente
+20261110T210217_-20.837_-67.85,2026-11-10 21:02:17,-20.837,-67.85,159.7,3.0,Nor Lipez,Potosí,Observatorio San Calixto
+20261109T195112_-17.658_-69.371,2026-11-09 19:51:12,-17.658,-69.371,160.0,3.3,Pacajes,La Paz,Observatorio San Calixto
+20261105T171454_-22.266_-67.61,2026-11-05 17:14:54,-22.266,-67.61,165.7,3.4,Sud Lipez,Potosí,Observatorio San Calixto
+20261105T151057_-17.392_-67.123,2026-11-05 15:10:57,-17.392,-67.123,310.2,4.0,Inquisivi,La Paz,Observatorio San Calixto
+20261104T063820_-19.537_-67.453,2026-11-04 06:38:20,-19.537,-67.453,241.0,3.5,Ladislao Cabrera,Oruro,Observatorio San Calixto
+20261103T163156_-21.243_-65.778,2026-11-03 16:31:56,-21.243,-65.778,287.0,3.3,Sud Chichas,Potosí,Observatorio San Calixto
+20261103T012850_-21.233_-67.49,2026-11-03 01:28:50,-21.233,-67.49,167.6,3.0,Nor Lipez,Potosí,Observatorio San Calixto
 20261102T145422_-17.413_-64.507,2026-11-02 14:54:22,-17.413,-64.507,27.3,4.3,José Carrasco,Cochabamba,Observatorio San Calixto
 20261102T114814_-21.507_-66.862,2026-11-02 11:48:14,-21.507,-66.862,188.5,3.5,Sud Lipez,Potosí,Observatorio San Calixto
+20261101T123409_-22.35_-67.527,2026-11-01 12:34:09,-22.35,-67.527,119.7,3.1,Sud Lipez,Potosí,Observatorio San Calixto
 20261101T050435_-17.403_-64.229,2026-11-01 05:04:35,-17.403,-64.229,27.4,3.1,Ichilo,Santa Cruz,Observatorio San Calixto
 20261029T160622_-19.368_-67.8,2026-10-29 16:06:22,-19.368,-67.8,171.1,3.0,Ladislao Cabrera,Oruro,Observatorio San Calixto
 20261028T232707_-21.463_-66.773,2026-10-28 23:27:07,-21.463,-66.773,210.0,3.0,Sud Lipez,Potosí,Observatorio San Calixto

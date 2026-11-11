@@ -2,7 +2,7 @@
 """Reporte rápido de evento: página 1 = reporte de situación (plantilla); página 2 = geolocalización con las instituciones de respuesta
 más cercanas (salud, bomberos, policía, rescate) tomadas de OpenStreetMap, y códigos QR a las fuentes.
 Uso: python reporte_evento.py datos/v3/eventos/<id>.json  →  datos/v3/investigacion/EVENTO_<id>.pdf (+ _instituciones.json)"""
-import base64, io, json, math, os, re, shutil, subprocess, sys, tempfile, time, urllib.parse, urllib.request
+import datetime as dt, base64, io, json, math, os, re, shutil, subprocess, sys, tempfile, time, urllib.parse, urllib.request
 from html import escape as E
 from PIL import Image, ImageDraw, ImageFont
 import boletin_html as BH
@@ -76,13 +76,23 @@ def pagina_geo(e, lat, lon, src, inst, fuente_inst):
     leyenda = "".join('<span class="lg"><i style="background:%s"></i>%s</span>' % (c, nm) for k, nm, c in CAT)
     qrs = "".join('<div class="q"><div class="qs">%s</div><div><b>%s</b><br><span>%s</span></div></div>' % (qr(f["url"]), E(f["medio"]), E(f["titulo"][:70])) for f in e.get("fuentes", []))
     return mp, red, '<div class="pg2"><div class="top">CENTRO COORDINADOR DE EMERGENCIAS EN SALUD · SALA DE SITUACIÓN BOLIVIA · GEOLOCALIZACIÓN DEL EVENTO</div><h2 style="margin-top:12px">Geolocalización y capacidad de respuesta cercana</h2><div class="mpf"><img src="%s"></div><div class="lgs">%s<span class="lg"><i class="ev"></i>Ubicación estimada del evento (círculo = incertidumbre)</span></div><p class="nt">Ubicación: %s. Distancias en línea recta desde el punto estimado, no por ruta; sirven para priorizar, no para calcular tiempos. Instituciones tomadas de %s; pueden faltar o estar desactualizadas: validar con el SEDES y el COE departamental.</p><table><tr><th>N.º</th><th>Tipo</th><th>Institución</th><th>Distancia</th></tr>%s</table><h2>Códigos QR a las fuentes</h2><div class="qrs">%s</div></div>' % (mp, leyenda, E(src), E(fuente_inst or "OpenStreetMap"), filas or '<tr><td colspan="4">No se pudo obtener instituciones cercanas en este momento.</td></tr>', qrs), sel
+def tokens_tiempo(e):
+    """numeración del reporte, horas transcurridas desde el hecho y calendario de los siguientes (R2 = R1 + 6 h, R3 = R1 + 12 h; luego entra al boletín diario de las 07:00)"""
+    ISO = lambda x: dt.datetime.fromisoformat(x); hecho, corte = ISO(e["hecho_iso"]), ISO(e["corte_iso"]); r1 = ISO(e.get("primer_reporte_iso", e["corte_iso"])); n = int(e.get("numero", 1))
+    m = int((corte - hecho).total_seconds() // 60); fh = lambda m: "%d h %02d min" % (m // 60, m % 60)
+    fx = lambda d: d.strftime("%d/%m %H:%M"); sig = []
+    for k, off in ((2, 6), (3, 12)):
+        if k > n: sig.append("Reporte %d: %s (+%d h del primero)" % (k, fx(r1 + dt.timedelta(hours=off)), off))
+    sig.append("luego se integra al boletín diario de las 07:00 y a los consolidados semanal y mensual")
+    return {"N": str(n), "HORAS": fh(m), "CORTE": corte.strftime("%d/%m/%Y %H:%M"), "HECHO": hecho.strftime("%H:%M"), "PROX": "; ".join(sig)}
 def main(f):
     e = json.load(open(f, encoding="utf8")); lat, lon, src = e["lat_ref"], e["lon_ref"], e["fuente_ref"]
     inst, fuente_inst = instituciones(lat, lon); mp, red, geo, sel = pagina_geo(e, lat, lon, src, inst, fuente_inst)
     h = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), e["plantilla"]), encoding="utf8").read().replace("{{GEO}}", geo)
+    for k, v in tokens_tiempo(e).items(): h = h.replace("{{%s}}" % k, v)
     os.makedirs("datos/v3/investigacion", exist_ok=True); json.dump({"punto": [lat, lon], "fuente_punto": src, "fuente_instituciones": fuente_inst, "instituciones": sel, "todas": inst[:60]}, open(f"datos/v3/investigacion/EVENTO_{e['id']}_instituciones.json", "w", encoding="utf8"), ensure_ascii=False, indent=1)
     tmp = tempfile.mkdtemp(); hp = os.path.join(tmp, "r.html"); open(hp, "w", encoding="utf8").write(h)
     exe = next((shutil.which(x) for x in ("google-chrome", "chromium", "chromium-browser") if shutil.which(x)), None)
-    subprocess.run([exe, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--allow-file-access-from-files", "--virtual-time-budget=4000", "--print-to-pdf=" + os.path.abspath(f"datos/v3/investigacion/EVENTO_{e['id']}.pdf"), "file://" + hp], check=True, timeout=120, capture_output=True)
+    subprocess.run([exe, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--allow-file-access-from-files", "--virtual-time-budget=4000", "--print-to-pdf=" + os.path.abspath(f"datos/v3/investigacion/EVENTO_{e['id']}_R{e.get('numero', 1)}.pdf"), "file://" + hp], check=True, timeout=120, capture_output=True)
     print("ok", len(inst), fuente_inst, red)
 main(sys.argv[1])
