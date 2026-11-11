@@ -1,23 +1,23 @@
 [
  {
-  "hecho_id": "noticia:qu50sh",
-  "fecha_hora_local": "2026-11-10 19:24",
-  "ts_ms": 1794353086000,
-  "titulo": "Reportan explosión en una empresa farmacéutica de la zona norte de Santa Cruz - Red Uno",
+  "hecho_id": "noticia:760ueg",
+  "fecha_hora_local": "2026-11-10 19:58",
+  "ts_ms": 1794355134000,
+  "titulo": "Cuatro personas heridas tras explosión en farmacéutica de la zona norte cruceña - Red Uno",
   "tipo_amenaza": "tecnológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
   "fallecidos_max": 0,
-  "heridos_max": 0,
+  "heridos_max": 4,
   "cifras_discrepantes": "no",
-  "n_notas": 1,
+  "n_notas": 2,
   "fuentes": "Red Uno",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNbzd3MzI5S1BIeG5YZFVtX3NMSko5SHpXSV96OGpyczVUVzRZSmViaVRZN2FrQy1udDhOMjV3SjR4VXBrZjQ3WGp2dnBCQ0dRcm80U2lKV3czRk5UcWctM1JkaVpHLW5GM0U1enVoTnphemJjQUxLRHJUZVVKMFlsWUdQdlV3c0UxOTZpa2JtQ2tLbmdBd09Kc2JvSG8zQXFOMVRQTVlPaVdMVU1Qc3FleE5n?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNLTlqT0JVSUxtdHM1ZlpOczY3bXhjeUpKREtJOFRPV3BJcnhkLTViMUxUVGE1ZnZCOXJtUzJ3aWoyZl9WWUdkQ0tYbTJZaGU4YTR1c2hWT2ZpS1REZHJrUXJvQWU0ZFpIZnpaVlN3Zmd2UXI4V2IwanRlSEpQSi0tT0xRaEZoREFyaV82VC1mSW9NWVlUdjhPWDVCSVJCR2h1RnpRRTZhZ3RpaWVCY2U3WWR1ZVJjaU01bDdmOXpOOU9pdFBaZVo5NQ?oc=5 | https://news.google.com/rss/articles/CBMisgFBVV95cUxNbzd3MzI5S1BIeG5YZFVtX3NMSko5SHpXSV96OGpyczVUVzRZSmViaVRZN2FrQy1udDhOMjV3SjR4VXBrZjQ3WGp2dnBCQ0dRcm80U2lKV3czRk5UcWctM1JkaVpHLW5GM0U1enVoTnphemJjQUxLRHJUZVVKMFlsWUdQdlV3c0UxOTZpa2JtQ2tLbmdBd09Kc2JvSG8zQXFOMVRQTVlPaVdMVU1Qc3FleE5n?oc=5"
  },
  {
   "hecho_id": "noticia:1m9t87z",
