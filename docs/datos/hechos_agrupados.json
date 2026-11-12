@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:o3ket",
+  "fecha_hora_local": "2026-11-12 15:32",
+  "ts_ms": 1794511925000,
+  "titulo": "Lluvias dejan calles anegadas y alcantarillas desbordadas en Cochabamba - Red Uno",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPd2lvd0dKUVBaVkI1alRUUm91UVhiblVjNmxvVmxPSlRic1BzcVVadjJSTjU5d0p5eUhxRVU4MWZMWjNJeG5uSWNxcjRNUXZUSHpkVWxFaVlJcUVIWlN3TmI5eUZiaUdxbUFWZmhJbkowa3hSV05LRmI5Q2l2YTIya0ZneUYxTW5WOE9JN09lazVtNGN2MTE0N2htOWY0UzBULWNMTWJXeG1VcVFCdzJGenVHY01SRk5TTFRJRmF3?oc=5"
+ },
+ {
   "hecho_id": "noticia:1f7p1ey",
   "fecha_hora_local": "2026-11-12 13:39",
   "ts_ms": 1794505187000,
