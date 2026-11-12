@@ -4,7 +4,7 @@ Uso:  python alerta_sismo.py --probar     (muestra el mensaje, no envía ni guar
 NO está conectado a ningún cron ni a sala.yml: la integración al flujo automático de main requiere aprobación."""
 import json, math, os, sys
 MAG_MIN, PROF_MAX = 4.0, 100.0
-ESTADO = "datos/v3/alerta_sismo_estado.json"
+ESTADO = "docs/alerta_sismo_estado.json"
 
 def km(lo1, la1, lo2, la2):
     r = math.pi / 180; a = math.sin((la2 - la1) * r / 2) ** 2 + math.cos(la1 * r) * math.cos(la2 * r) * math.sin((lo2 - lo1) * r / 2) ** 2
@@ -41,7 +41,10 @@ def main():
     probar = "--probar" in sys.argv
     sis = json.load(open("docs/sismos_oficiales.json", encoding="utf8"))["sismos"]
     munis = json.load(open("docs/geo_mun.geojson", encoding="utf8"))["features"]
+    primera = not os.path.exists(ESTADO) and not probar
     visto = set(json.load(open(ESTADO))) if os.path.exists(ESTADO) and not probar else set()
+    if primera:  # primera ejecución: marca lo ya ocurrido sin enviar, para no inundar el correo
+        visto = {s["id"] for s in sis}; os.makedirs("docs", exist_ok=True); json.dump(sorted(visto), open(ESTADO, "w")); print("estado inicial creado:", len(visto)); return
     nuevos = [s for s in sis if s["mag"] >= MAG_MIN and s["prof_km"] <= PROF_MAX and s["id"] not in visto]
     if probar and not nuevos:  # para la prueba, usa el mayor sismo del registro
         nuevos = sorted(sis, key=lambda s: -s["mag"])[:1]
@@ -51,7 +54,7 @@ def main():
             import correo; correo.enviar(t, "<p>" + c.replace("\n", "<br>") + "</p>", c, [], log=print)
         visto.add(s["id"])
     if not probar:
-        os.makedirs(os.path.dirname(ESTADO), exist_ok=True); json.dump(sorted(visto), open(ESTADO, "w"))
+        json.dump(sorted(visto), open(ESTADO, "w"))
     print("sismos avisados:", len(nuevos))
 
 if __name__ == "__main__": main()
