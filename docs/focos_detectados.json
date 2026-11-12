@@ -208,6 +208,13 @@
    "La Paz": 51,
    "Chuquisaca": 7,
    "Pando": 18
+  },
+  "2026-11-12": {
+   "Santa Cruz": 252,
+   "Cochabamba": 6,
+   "Beni": 42,
+   "La Paz": 2,
+   "Tarija": 1
   }
  },
  "municipios": {
@@ -607,11 +614,28 @@
    "San Rafael (Santa Cruz)": 26,
    "Pailón (Santa Cruz)": 23,
    "Concepción (Santa Cruz)": 23
+  },
+  "2026-11-12": {
+   "San José (Santa Cruz)": 94,
+   "El Puente (Santa Cruz)": 31,
+   "San Andrés (Beni)": 25,
+   "Yapacaní (Santa Cruz)": 17,
+   "San Rafael (Santa Cruz)": 13,
+   "Roboré (Santa Cruz)": 12,
+   "Pailón (Santa Cruz)": 12,
+   "San Miguel (Santa Cruz)": 11,
+   "Concepción (Santa Cruz)": 10,
+   "San Julián (Santa Cruz)": 9,
+   "Santa Rosa (Santa Cruz)": 8,
+   "Villa Tunari (Cochabamba)": 6,
+   "San Borja (Beni)": 6,
+   "Portachuelo (Santa Cruz)": 6,
+   "Mineros (Santa Cruz)": 5
   }
  },
- "actualizado": "2026-11-12T07:08:39.871323Z",
+ "actualizado": "2026-11-12T08:36:46.010657Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2022,
+ "detecciones_fuera_de_limites": 2081,
  "slack_dia": "2026-11-12"
 }
