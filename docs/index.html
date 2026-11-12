@@ -15,7 +15,11 @@
   <div class="card" id="cAlertas"><h2><span class="i">__I_ALERT__</span>Alertas y eventos prioritarios</h2><div class="cap">Avisos naranja/rojos vigentes, complejos de incendio mayores, ríos sobre umbral y sismos relevantes. <b>Toque uno</b> para ver su informe.</div><div id="prior"></div></div>
   <div class="card"><h2><span class="i">__I_INFO__</span>¿Cuán confiable es lo que se ve?</h2><div class="cap">Triangulación: cuántas familias de fuentes independientes coinciden en cada evento.</div><div class="ch s" id="chConf"></div><div class="how"><b>Alta</b> = 3 o más familias (p. ej. oficial + satélite + prensa). <b>Media</b> = 2. <b>Baja</b> = 1 sola fuente.</div></div>
  </div>
- <div class="grid g2" style="margin-bottom:16px">
+  <div class="seccion"><h2 class="sec-t">Lo que más se mueve <small>· los 3 tipos de evento con más actividad inusual; rotan solos con los datos</small></h2></div>
+ <div class="hotbar"><div class="chips" id="hotW"><button class="chip on" data-w="0">Automático</button><button class="chip" data-w="1">24 horas</button><button class="chip" data-w="7">7 días</button><button class="chip" data-w="30">30 días</button></div><span class="nota" id="hotN"></span></div>
+ <div class="grid g3 hotgrid" id="hot" style="margin-bottom:16px"></div>
+ <div class="seccion"><h2 class="sec-t">Panorama general <small>· todos los tipos, últimos 30 días</small></h2></div>
+<div class="grid g2" style="margin-bottom:16px">
   <div class="card"><h2><span class="i">__I_PULSE__</span>Evolución diaria por tipo de evento</h2><div class="cap">Eventos registrados por día, apilados por categoría (últimos 30 días).</div><div class="ch" id="chEvol"></div></div>
   <div class="card"><h2><span class="i">__I_MAP__</span>¿Dónde se concentra? Departamento × tipo</h2><div class="cap">Mapa de calor: más oscuro = más eventos (últimos 30 días).</div><div class="ch" id="chHeat"></div></div>
  </div>
@@ -149,9 +153,9 @@
 </section>
 
 <section id="t-rep" style="display:none">
- <div class="callout">__I_INFO__<div><p><b>Reportes en PDF.</b> Se generan solos: <b>alertas inmediatas</b> cuando hay un hecho grave, <b>reporte diario</b> (07:00), <b>semanal</b> (lunes) y <b>por solicitud</b>. Para el informe de un hecho puntual (un accidente, un sismo de hoy, un brote) use <b>Crear informe específico</b>.</p></div></div>
- <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn p" href="informes.html">__I_DOC__Crear informe específico</a><a class="btn" id="rUlt" href="#" target="_blank" rel="noopener">__I_DL__Último reporte diario (PDF)</a><a class="btn" href="reportes/index.html" target="_blank" rel="noopener">__I_LIST__Ver todos</a></div>
- <div class="card"><div class="chips" id="rChips"></div><div class="nota" id="rN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:640px"><table id="tRep"></table></div></div>
+ <div class="callout">__I_INFO__<div><p><b>Boletines PDF.</b> Archivo de lo que el sistema genera solo: <b>diarios</b> (07:00), <b>semanales</b>, <b>mensuales</b> y <b>anuales</b>, además de las <b>alertas inmediatas</b> y los informes <b>a pedido</b>. Para pedir un informe nuevo use <a href="informes.html">Generar informe</a>.</p></div></div>
+ <div class="repnav" id="rChips"></div>
+ <div id="repOut"></div>
 </section>
 
 <section id="t-dat" style="display:none">

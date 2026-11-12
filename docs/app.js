@@ -329,17 +329,21 @@
     S.cargar("reportes/lista.json").then(function (L) {
       function clave(x) { var m = /^(\d\d)\/(\d\d) (\d\d:\d\d)/.exec(x.titulo || ""); if (m) return new Date().getFullYear() + "-" + m[2] + "-" + m[1] + "T" + m[3]; var f = x.fecha || ""; return f.length === 10 ? f + "T07:00" : f; }
       L.sort(function (a, b) { return clave(b).localeCompare(clave(a)); });
-      var tipos = {}; L.forEach(function (x) { tipos[x.tipo] = (tipos[x.tipo] || 0) + 1; });
-      $("rChips").innerHTML = '<button class="chip on" data-r="">Todos (' + L.length + ')</button>' + Object.keys(tipos).map(function (k) { return '<button class="chip" data-r="' + k + '">' + (TIPOREP[k] || k) + ' (' + tipos[k] + ')</button>'; }).join("");
-      var u = L.filter(function (x) { return x.tipo === "diario"; })[0] || L[0]; if (u) $("rUlt").href = "reportes/" + u.archivo;
-      function pinta() {
-        var F = L.filter(function (x) { return !REPSEL || x.tipo === REPSEL; });
-        $("rN").textContent = F.length + " reportes (los más recientes primero)";
-        $("tRep").innerHTML = '<tr><th>Fecha</th><th>Tipo</th><th>Título</th><th></th></tr>' + F.slice(0, 200).map(function (x) { return '<tr><td style="white-space:nowrap">' + S.esc((x.fecha || "").replace("T", " ")) + '</td><td>' + (TIPOREP[x.tipo] || x.tipo) + '</td><td>' + S.esc(limpiaTit(x.titulo)) + '</td><td><a class="btn s" href="reportes/' + S.esc(x.archivo) + '" target="_blank" rel="noopener">' + X.ic("dl") + 'PDF</a></td></tr>'; }).join("");
+      var G = {prog: ["Programados", ["diario", "semanal", "mensual", "anual"]], alerta: ["Alertas inmediatas", ["alerta"]], pedido: ["A pedido", ["solicitud", "hecho", "brote", "evento", "sismos", "otro"]]}, SEL = REPSEL && G[REPSEL] ? REPSEL : "prog";
+      function n(g) { return L.filter(function (x) { return G[g][1].indexOf(x.tipo) >= 0; }).length; }
+      function fila(x) { return '<a class="rep-i" href="reportes/' + S.esc(x.archivo) + '" target="_blank" rel="noopener">' + X.ic("doc") + '<span class="rep-f">' + S.esc((clave(x) || "").replace("T", " ").slice(0, 16)) + '</span><span class="rep-t">' + S.esc(limpiaTit(x.titulo)) + '</span></a>'; }
+      function col(titulo, tipo, vacio, nota) {
+        var Q = L.filter(function (x) { return x.tipo === tipo; });
+        return '<div class="card rep-c"><h2>' + titulo + ' <small>' + Q.length + '</small></h2><div class="cap">' + nota + '</div>' + (Q.length ? Q.slice(0, 10).map(fila).join("") + (Q.length > 10 ? '<div class="nota" style="margin-top:6px">Más antiguos: <a href="reportes/index.html" target="_blank" rel="noopener">índice completo</a></div>' : "") : '<p class="vacio">' + vacio + '</p>') + '</div>';
       }
-      $("rChips").onclick = function (e) { var b = e.target.closest("[data-r]"); if (!b) return; REPSEL = b.dataset.r; [].forEach.call($("rChips").children, function (c) { c.classList.toggle("on", c === b); }); pinta(); };
+      function pinta() {
+        $("rChips").innerHTML = Object.keys(G).map(function (k) { return '<button class="chip' + (k === SEL ? " on" : "") + '" data-r="' + k + '">' + G[k][0] + ' (' + (k === "prog" ? n(k) : n(k)) + ')</button>'; }).join("");
+        if (SEL === "prog") $("repOut").innerHTML = '<div class="grid g2">' + col("Diarios", "diario", "Aún no hay.", "Se generan cada día a las 07:00.") + col("Semanales", "semanal", "Aún no hay.", "Consolidado de la semana.") + col("Mensuales", "mensual", "Aún no hay.", "Consolidado del mes.") + col("Anuales", "anual", "Aún no se genera ningún informe anual. Está previsto publicarlo al cierre del año.", "Consolidado del año.") + '</div>';
+        else { var F = L.filter(function (x) { return G[SEL][1].indexOf(x.tipo) >= 0; }); $("repOut").innerHTML = '<div class="card"><div class="nota" style="margin-bottom:6px">' + F.length + ' boletines (los más recientes primero)</div>' + F.slice(0, 200).map(fila).join("") + '</div>'; }
+      }
+      $("rChips").onclick = function (e) { var b = e.target.closest("[data-r]"); if (!b) return; SEL = REPSEL = b.dataset.r; pinta(); };
       pinta();
-    }).catch(function () { $("rN").textContent = "Aún no hay reportes generados."; });
+    }).catch(function () { $("repOut").innerHTML = '<p class="vacio">Aún no hay reportes generados.</p>'; });
   }
 
   /* ---------- DATOS ---------- */
@@ -517,6 +521,40 @@
     [].forEach.call(document.querySelectorAll(".foot a"), function (a) { a.setAttribute("data-tip", a.textContent.indexOf("Descargar") >= 0 ? "Ir a la pestaña Datos" : a.textContent.indexOf("PDF") >= 0 ? "Ir a Reportes PDF" : "Crear un informe específico"); });
   }
 
+
+  /* ---------- "Lo que más se mueve": los 3 tipos con más actividad inusual, con la gráfica que mejor los describe ---------- */
+  var HOTW = 0;
+  function interes() {
+    var ev = D.ev.filter(function (e) { return e.origen !== "modelo" && e.categoria && e.categoria !== "otra"; }), now = Date.now(), cats = S.CAT.slice(0, 7);
+    function vic(e) { var c = e.cifras || {}; return (c.fallecidos || 0) + (c.heridos || 0); }
+    var hist = (now - ev.reduce(function (a, e) { return Math.min(a, e.ts || now); }, now)) / DIA;
+    function evalua(cat, W) {
+      var E = ev.filter(function (e) { return e.categoria === cat; }), en = E.filter(function (e) { return e.ts > now - W * DIA; }), prev = E.filter(function (e) { return e.ts <= now - W * DIA && e.ts > now - 2 * W * DIA; }).length;
+      var ok = hist >= 2 * W && prev >= 2, ratio = ok ? Math.min(6, (en.length + 1) / (prev + 1)) : null, nv = en.reduce(function (a, e) { return Math.max(a, e.nivel != null ? e.nivel : 0); }, 0), v = en.reduce(function (a, e) { return a + vic(e); }, 0);
+      var score = en.length ? 1.5 * (ratio ? Math.log2(ratio) : 0) + .8 * nv + .6 * Math.log2(1 + v) + .2 * Math.log2(1 + en.length) : -9;
+      return {cat: cat, W: W, en: en, ratio: ratio, nv: nv, v: v, score: score};
+    }
+    var VENT = hist >= 60 ? [1, 7, 30] : [1, 7];
+    var R = cats.map(function (c) { return HOTW ? evalua(c, HOTW) : VENT.map(function (w) { return evalua(c, w); }).sort(function (a, b) { return b.score - a.score; })[0]; }).filter(function (o) { return o.en.length; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 3);
+    var WT = {1: "24 h", 7: "7 días", 30: "30 días"}, NIVT = ["", "amarilla", "naranja", "roja"], SEC = {"geológica": ["Magnitud máx.", "M"], "climatológica": ["Focos detectados", ""], "tecnológica": ["Víctimas", ""], "antropogénica": ["Víctimas", ""]};
+    $("hotN").textContent = HOTW ? "Ventana fija: " + WT[HOTW] + "." : "Cada tipo se muestra en la ventana (24 h o 7 días; 30 días cuando hay historial) donde más destaca. Comparación con el período anterior.";
+    [].forEach.call($("hotW").children, function (b) { b.classList.toggle("on", +b.dataset.w === HOTW); });
+    $("hot").innerHTML = R.length ? R.map(function (o, i) { return '<div class="card hot-c" style="--c:' + (S.COLCAT[o.cat] || "#888") + '"><div class="hot-h"><span class="hot-k">' + o.cat + '</span><span class="hot-w">' + WT[o.W] + '</span></div><div class="hot-m"><b>' + o.en.length + '</b> evento' + (o.en.length > 1 ? "s" : "") + (o.ratio == null ? "" : o.ratio >= 1.4 ? ' · <span class="up">▲ ' + o.ratio.toFixed(1).replace(".", ",") + '× el período anterior</span>' : o.ratio <= .7 ? ' · <span class="dn">▼ menos que el período anterior</span>' : " · similar al período anterior") + (o.nv >= 1 ? ' · nivel máx. ' + NIVT[o.nv] : "") + (o.v ? " · " + o.v + " víctimas" : "") + '</div><div class="ch s" id="hot' + i + '"></div><div class="hot-l" id="hotL' + i + '"></div><a class="hot-a" href="modulo.html?t=' + encodeURIComponent(o.cat) + '">Abrir módulo ' + o.cat + ' →</a></div>'; }).join("") : '<p class="vacio">Sin actividad registrada en la ventana elegida.</p>';
+    R.forEach(function (o, i) {
+      var col = S.COLCAT[o.cat] || "#888", hrs = o.W === 1, nb = hrs ? 24 : o.W, lab = [], bars = [], ln = [], sec = SEC[o.cat] || ["Nivel máx.", ""], i0 = now - o.W * DIA;
+      for (var b = 0; b < nb; b++) { bars.push(0); ln.push(0); if (hrs) { var d = new Date(i0 + (b + 1) * 36e5); lab.push(("0" + new Date(d.getTime() - 4 * 36e5 + d.getTimezoneOffset() * 6e4).getHours()).slice(-2) + " h"); } else lab.push(S.diaKey(now - (nb - 1 - b) * DIA).slice(5).split("-").reverse().join("/")); }
+      o.en.forEach(function (e) {
+        var b = hrs ? Math.min(23, Math.floor((e.ts - i0) / 36e5)) : (function () { var k = S.diaKey(e.ts).slice(5).split("-").reverse().join("/"); return lab.indexOf(k); })(); if (b < 0) return;
+        bars[b]++; var c = e.cifras || {};
+        if (o.cat === "geológica") ln[b] = Math.max(ln[b], c.magnitud || 0); else if (o.cat === "climatológica") ln[b] += c.detecciones || 0; else if (sec[0] === "Víctimas") ln[b] += vic(e); else ln[b] = Math.max(ln[b], e.nivel || 0);
+      });
+      X.chart("hot" + i, {tooltip: {trigger: "axis"}, legend: {top: 0, data: ["Eventos", sec[0]]}, grid: {left: 34, right: 40, top: 34, bottom: 24}, xAxis: {type: "category", data: lab, axisLabel: {interval: hrs ? 3 : (nb > 10 ? 4 : 0)}}, yAxis: [{type: "value", minInterval: 1}, {type: "value", splitLine: {show: false}, minInterval: sec[0] === "Nivel máx." ? 1 : undefined, max: sec[0] === "Nivel máx." ? 3 : undefined}], series: [{name: "Eventos", type: "bar", data: bars, itemStyle: {color: col, borderRadius: [3, 3, 0, 0]}}, {name: sec[0], type: "line", yAxisIndex: 1, data: ln, smooth: true, symbol: "circle", symbolSize: 5, lineStyle: {width: 2, color: "#f5b700"}, itemStyle: {color: "#f5b700"}}]});
+      var seen = {}, top = o.en.slice().sort(function (a, b) { return (b.nivel || 0) - (a.nivel || 0) || vic(b) - vic(a) || b.ts - a.ts; }).filter(function (e) { var k = String(e.titulo || "").replace(/\(.*?\)/g, "").trim().toLowerCase().slice(0, 50); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 3);
+      $("hotL" + i).innerHTML = top.map(function (e) { return '<a href="' + fichaUrl(e.id) + '" title="' + S.esc(e.titulo) + '">' + S.esc(e.titulo.length > 78 ? e.titulo.slice(0, 76) + "…" : e.titulo) + '</a>'; }).join("");
+    });
+  }
+  $("hotW").onclick = function (e) { var b = e.target.closest("[data-w]"); if (!b) return; HOTW = +b.dataset.w; interes(); };
+
   /* ---------- pestañas ---------- */
   function mostrar(t) {
     TABS.forEach(function (x) { if (x[4]) return; $("t-" + x[0]).style.display = x[0] === t ? "" : "none"; });
@@ -540,7 +578,7 @@
     ]);
   }
   X.datos().then(function (d) {
-    D = d; derivar(); pie(); var h = (location.hash || "#res").slice(1); mostrar(TABS.some(function (t) { return !t[4] && t[0] === h; }) ? h : "res");
+    D = d; derivar(); pie(); var h = (location.hash || "#res").slice(1); mostrar(TABS.some(function (t) { return !t[4] && t[0] === h; }) ? h : "res"); try { interes(); } catch (e) { console.error("interes", e); }
     ayudas();
   }).catch(function (e) { $("heroT").textContent = "No se pudieron cargar los datos: " + e.message; });
 })();
