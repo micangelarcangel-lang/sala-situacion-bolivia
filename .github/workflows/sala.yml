@@ -48,6 +48,13 @@ jobs:
           HORAS: ${{ github.event.inputs.horas }}
           BUSCAR: ${{ github.event.inputs.buscar }}
         run: python ejecutar.py
+      - name: Alerta de sismo M>=4,0 (si falla, no detiene el sistema)
+        continue-on-error: true
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+        run: python alerta_sismo.py
       - name: Guardar resultados en el repositorio
         run: |
           git config user.name "sala-bot"
