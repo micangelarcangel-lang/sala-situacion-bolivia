@@ -3,8 +3,14 @@
 <title>Centro de informes — Sala de Situación Bolivia</title>
 <link rel="stylesheet" href="s2.css"><script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script></head>
 <body><div id="hdr"></div><div class="wrap">
-<div class="callout" id="ayuda"></div>
-<h2 style="margin:6px 0 10px;font-size:17px" class="noimp">1 · Informe de UN evento específico</h2>
+<h1 class="pg-t noimp">Generar informe</h1><p class="pg-s noimp">Informes a pedido, con gráficos y PDF. Elija qué necesita:</p>
+<div class="opc noimp" id="opciones">
+ <a class="opc-c" href="#s1">__LIST__<h3>Un hecho</h3><p>Un sismo, accidente, brote o incendio concreto. Ficha con mapa, tabla y gráficos.</p><span class="opc-b">Buscar el hecho</span></a>
+ <form class="opc-c" action="tema.html" method="get">__INFO__<h3>Un tema</h3><p>Una enfermedad, un lugar o un tipo de hecho en toda la base: sarampión, dengue Caranavi, bloqueo.</p><span class="opc-f"><input type="text" name="q" placeholder="Escriba el tema" required><button class="btn p s" type="submit">Generar</button></span></form>
+ <a class="opc-c" href="#s2">__DOC__<h3>Un período</h3><p>Consolidado por fechas, departamento, fuente y tipo: diario, semanal, mensual o a medida.</p><span class="opc-b">Armar el informe</span></a>
+</div>
+<p class="nota noimp" style="margin:10px 0 0">¿Busca los boletines que el sistema genera solo (alertas, diarios, semanales)? Están en <a href="index.html#rep">Tablero → Boletines PDF</a>.</p>
+<h2 id="s1" style="margin:22px 0 10px;font-size:17px" class="noimp">Informe de un hecho</h2>
 <div class="card noimp"><div class="cap">Busque el hecho (un sismo de hoy, un accidente, un brote, un complejo de incendio, un aviso…) y abra su informe con mapa, tablas, gráficos y PDF.</div>
  <div class="filtros"><label>Tipo de evento<select id="eTipo"><option value="">Todos</option><option value="sismo">Sismo</option><option value="foco">Incendio / focos de calor</option><option value="senamhi">Aviso SENAMHI</option><option value="epidemiologia">Brote / epidemiología</option><option value="prensa">Hecho reportado (accidente, incendio, derrumbe…)</option><option value="sequia">Sequía</option><option value="caudal">Río / crecida</option></select></label>
  <label>Período<select id="ePer"><option value="1">Hoy</option><option value="2">48 horas</option><option value="7" selected>7 días</option><option value="30">30 días</option><option value="400">Todo</option></select></label>
@@ -13,7 +19,7 @@
  <div class="nota" id="eN" style="margin:10px 0 4px"></div><div style="overflow:auto;max-height:420px"><table id="eT"></table></div>
  <div style="margin-top:10px"><a class="btn" id="bPed" target="_blank" rel="noopener" href="#">¿No aparece el hecho? Pedir informe ampliado desde la prensa</a></div></div>
 
-<h2 style="margin:22px 0 10px;font-size:17px">2 · Informe consolidado (diario, semanal, mensual o a medida)</h2>
+<h2 id="s2" style="margin:22px 0 10px;font-size:17px">Informe de un período</h2>
 <div class="card noimp"><div class="filtros">
  <label>Período<select id="per"><option value="1">Hoy</option><option value="2">48 horas</option><option value="7" selected>Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="400">Todo el historial</option><option value="x">Fechas exactas…</option></select></label>
  <label id="lD" style="display:none">Desde<input type="date" id="desde"></label><label id="lH" style="display:none">Hasta<input type="date" id="hasta"></label>
@@ -21,16 +27,16 @@
  <label>Fuente<select id="org"><option value="">Todas</option><option value="of">Solo oficiales</option><option value="prensa">Solo prensa</option></select></label>
  <label>Nivel mínimo<select id="niv"><option value="-1">Todos</option><option value="1">Amarilla o más</option><option value="2">Naranja o más</option><option value="3">Solo roja</option></select></label></div>
  <div class="chips" id="cats" style="margin-top:10px"></div>
- <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn p" onclick="window.print()">__PRINT__Guardar como PDF / imprimir</button><button class="btn" id="bcsv">__DL__CSV</button><button class="btn" id="bxls">__DL__Excel</button><button class="btn" id="bjs">__DL__JSON</button><a class="btn" href="datos/eventos_unificados.csv">__DL__Base completa (CSV)</a><a class="btn" href="reportes/">__DOC__Informes PDF automáticos</a></div></div>
+ <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn p" onclick="window.print()">__PRINT__Guardar como PDF / imprimir</button><button class="btn" id="bcsv">__DL__CSV</button><button class="btn" id="bxls">__DL__Excel</button><button class="btn" id="bjs">__DL__JSON</button><a class="btn" href="datos/eventos_unificados.csv">__DL__Base completa (CSV)</a><a class="btn" href="index.html#rep">__DOC__Boletines automáticos</a></div></div>
 <div id="out" style="margin-top:16px"></div>
 </div>
 <script>
 (function(){
 var S=SALA,X=S2,$=function(i){return document.getElementById(i)},DIA=864e5,D,CAT={};
 X.header("informes.html");
-$("ayuda").innerHTML=X.ic("info")+'<div><p><b>Centro de informes.</b> Aquí genera (1) el informe de <b>un evento puntual</b> —con su mapa, tablas y gráficos propios según el tipo— y (2) informes <b>consolidados</b> por período, departamento y tipo. Todos se guardan como PDF con el botón «Guardar como PDF / imprimir». Los informes PDF automáticos diarios, semanales y mensuales están en <a href="reportes/">Informes PDF</a>.</p></div>';
 $("bPed").href=S.URL_PEDIR;
 [].forEach.call(document.querySelectorAll(".btn"),function(b){b.innerHTML=b.innerHTML.replace("__PRINT__",X.ic("print")).replace(/__DL__/g,X.ic("dl")).replace("__DOC__",X.ic("doc"))});
+[].forEach.call(document.querySelectorAll(".opc-c"),function(b){b.innerHTML=b.innerHTML.replace("__LIST__",X.ic("list")).replace("__INFO__",X.ic("info")).replace("__DOC__",X.ic("doc"))});
 function fichaUrl(id){return"evento.html?id="+encodeURIComponent(id)}
 X.datos().then(function(d){D=d;X.live(d.eventos_unificados&&d.eventos_unificados.generado);
  S.DEPS.forEach(function(x){["eDep","dep"].forEach(function(i){var o=document.createElement("option");o.textContent=x;$(i).appendChild(o)})});
