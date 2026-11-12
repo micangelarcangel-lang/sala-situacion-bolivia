@@ -20,6 +20,26 @@
   "enlaces": "https://open-meteo.com/"
  },
  {
+  "hecho_id": "noticia:dhhuzj",
+  "fecha_hora_local": "2026-11-11 17:35",
+  "ts_ms": 1794432928000,
+  "titulo": "Tras riada en Liriuni, Alcalde de Quillacollo y gobernador Loza llegan a la zona y aseguran trabajo - Opinión Bolivia",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Opinión Bolivia",
+  "lat": -17.25,
+  "lon": -66.328,
+  "lugar": "Quillacollo, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Quillacollo",
+  "enlaces": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQa3cwYmpCNGlCT25YeFdPZTJUVVdDZEdJUFo2VEo1YnEyV2EwQ3JvTDNHMXRtdTZtVWpKZW5TR1lWQ0ZMeVl1QjA2NTZQUUVBU3A1WW9QcmVqaXZBVFN5MFRodWlrNUpKMHpnWGVJLURhMzBTeUZYRlJlbGtHQ1hrNTY2cWt5ZXRYbG5TR0NVTl9vcWI0Y0E1NjgwLWJlbnFmOVdvV3FSN3pUcEVQNld5QXhjQkV3RGVUUmVNV18tMGVIcUlfendxUnl6TlcyRXdNVkprQm9IX2NsS0lscUxJ0gHfAUFVX3lxTFBrdzBiakI0aUJPblh4V09lMlRVV0NkR0lQWjZUSjVicTJXYTBDcm9MM0cxdG11Nm1VakplblNHWVZDRkx5WXVCMDY1NlBRRUFTcDVZb1ByZWppdkFUU3kwVGh1aWs1SkowemdYZUktRGEzMFN5RlhGUmVsa0dDWGs1NjZxa3lldFhsblNHQ1VOX29xYjRjQTU2ODAtYmVucWY5V29XcVI3elRwRVA2V3lBeGNCRXdEZVRSZU1XXy0wZUhxSV96d3FSeXpOVzJFd01WSmtCb0hfY2xLSWxxTEk?oc=5"
+ },
+ {
   "hecho_id": "noticia:1mowind",
   "fecha_hora_local": "2026-11-11 16:12",
   "ts_ms": 1794427961000,
