@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:khac8t",
+  "fecha_hora_local": "2026-11-12 10:38",
+  "ts_ms": 1794494316000,
+  "titulo": "Yapacaní: violento enfrentamiento entre policías y personas que intentaron linchar a dos acusados de robar motos - EL DÍA - Noticias de Bolivia para el mundo",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo",
+  "lat": -16.716,
+  "lon": -64.461,
+  "lugar": "Yapacaní, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Yapacaní",
+  "enlaces": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxNbFh3eVNQQ3hzMmtzZzhUZzhnUnk2YUU1Z196YjJYWW9IaDJJVFE2Z09YeGg4cGpqenpYcy0wWEVfbVo5bW0xb0dNUGNSQzRYWkQ5ZGNmTkVHcG1ndldvU1RXMkM0LWdHbENsVVcwb0w3MDFucnJ6aFdBZ1VYSndBTEZ2ZDROcW13b0k0dEpXUTRGZGI0czhOUFRrVk1mcWo4V3RNYkhBUWtuSmlZc2lWRURGelhFdUFtTTNYdUZTMWhtWm1RUEhxUjdIb0d2bDdNVGFVRlZYYjJUYWtkZU5sakJpd3Y4cENpS1ByVUhiSXg?oc=5"
+ },
+ {
   "hecho_id": "noticia:1eyxycl",
   "fecha_hora_local": "2026-11-12 09:58",
   "ts_ms": 1794491927000,
