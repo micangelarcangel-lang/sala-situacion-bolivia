@@ -5,7 +5,7 @@
 <script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js"></script><script src="s2.js"></script></head>
 <body><div id="hdr"></div><div class="wrap">
 <div class="card noimp" style="border-top:5px solid #8e24aa">
- <h2 style="font-size:18px">Informe por tema</h2>
+ <a class="nota" href="informes.html">← Generar informe</a><h2 style="font-size:18px;margin-top:6px">Informe por tema</h2>
  <div class="cap">Escriba un tema (una enfermedad, un lugar, un tipo de hecho) y la plataforma reúne <b>todo lo que ha registrado</b>, une las notas que cuentan lo mismo y calcula su <b>confianza</b>. Ejemplos: <i>sarampión</i>, <i>dengue Caranavi</i>, <i>bloqueo</i>, <i>incendio Chiquitania</i>.</div>
  <div class="filtros">
   <label style="flex:1;min-width:240px">Tema<input type="text" id="q" placeholder="ej. sarampión, dengue, accidente Oruro…" style="width:100%" autofocus></label>
@@ -20,7 +20,7 @@
 <script>
 (function () {
   var S = SALA, X = S2, $ = function (i) { return document.getElementById(i); }, DIA = 864e5, D = {}, ITEMS = [], F = [], PROF = null, QACT = "";
-  X.header("tema.html");
+  X.header("informes.html");
   function norm(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim(); }
   function slug(q) { return norm(q).replace(/ /g, "_").slice(0, 60) || "tema"; }
   function coincide(txt, q) { var t = norm(txt), ok = true; norm(q).split(" ").forEach(function (w) { if (w.length < 3) return; var r = w.length > 5 && w.slice(-1) === "s" ? w.slice(0, -1) : w; if (t.indexOf(r.slice(0, 7)) < 0) ok = false; }); return ok; }
