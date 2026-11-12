@@ -269,3 +269,19 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 @media(max-width:1560px){.hdr .sub{display:none}}
 @media(max-width:1100px){.hdr .util{border-left:0;margin-left:0}.hdr .nv-i{padding:0 10px}}
 .btn{white-space:nowrap}
+/* v4: panel "Lo que más se mueve" y archivo de boletines */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:1100px){.g3{grid-template-columns:1fr}}
+.hotbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.hot-c{border-top:4px solid var(--c);display:flex;flex-direction:column;gap:6px}
+.hot-h{display:flex;justify-content:space-between;align-items:center}.hot-k{font-size:17px;font-weight:800;text-transform:capitalize;color:var(--ink)}
+.hot-w{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px;border:1px solid var(--line);color:var(--mut)}
+.hot-m{font-size:13px;color:var(--mut)}.hot-m b{font-size:22px;color:var(--ink)}
+.hot-c .ch.s{height:210px}
+.hot-l{display:flex;flex-direction:column;gap:3px;border-top:1px solid var(--line);padding-top:7px}
+.hot-l a{font-size:12.5px;line-height:1.35;color:var(--ink);text-decoration:none}.hot-l a:hover{text-decoration:underline}
+.hot-a{font-size:12.5px;font-weight:700;color:var(--brand2);text-decoration:none;margin-top:2px}
+.repnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.rep-c h2 small{font-weight:600;color:var(--mut);font-size:12px;margin-left:6px}
+.rep-i{display:flex;gap:10px;align-items:center;padding:7px 4px;border-top:1px solid var(--line);color:var(--ink)!important;text-decoration:none!important;font-size:13px}
+.rep-i:hover{background:var(--soft)}.rep-i svg{width:16px;height:16px;flex:none;color:var(--brand2)}
+.rep-f{font-variant-numeric:tabular-nums;color:var(--mut);white-space:nowrap;font-size:12px}.rep-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
