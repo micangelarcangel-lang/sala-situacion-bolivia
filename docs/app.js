@@ -65,6 +65,9 @@
       else if (e.origen === "prensa" && e.nivel >= 2 && e.ts > now - 2 * DIA) s = 55 + e.nivel;
       if (s) pr.push([s, e]);
     });
+    /* un mismo asunto aparece una sola vez: se conserva el registro más reciente (p. ej. el mismo complejo de focos en días distintos) */
+    var uniq = {}; pr.forEach(function (p) { var e = p[1], k = e.origen + "|" + String(e.titulo || "").replace(/\(.*?\)/g, "").replace(/\s+/g, " ").trim().toLowerCase() + "|" + (e.lugar || ""); if (!uniq[k] || (e.ts || 0) > (uniq[k][1].ts || 0)) uniq[k] = p; });
+    pr = Object.keys(uniq).map(function (k) { return uniq[k]; });
     pr.sort(function (a, b) { return b[0] - a[0] || b[1].ts - a[1].ts; });
     $("prior").innerHTML = pr.slice(0, 6).map(function (p) {
       var e = p[1], c = e.nivel != null ? COLNIV[e.nivel] : (S.COLCAT[e.categoria] || "#999");
