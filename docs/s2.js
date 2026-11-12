@@ -7,10 +7,12 @@
   /* la prensa "climatológica" por la palabra "quemadura/quemado" (agresiones, vehículos, edificios) pasa a antropogénica; el incendio forestal, la sequía y El Niño se quedan */
   var REX_QUEMA = /(quemadur|quemad[oa]s?\b|queman |incendiaron|vehiculos? incendiad|incendio (en|de) (un |una )?(inmueble|vivienda|casa|vehiculo|auto|negocio|local))/, REX_CLIMA = /(forestal|chaqueo|pastizal|sequia|el nino|helada|focos|incendio de (monte|vegetacion))/;
   function reclasifica(e) { if (e.origen === "prensa" && e.categoria === "climatológica") { var t = String(e.titulo || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); if (REX_QUEMA.test(t) && !REX_CLIMA.test(t)) return Object.assign({}, e, {categoria: "antropogénica"}); } return e; }
+  var REX_GEO_RUIDO = /(?:^|[^a-z])(?:ma|progre|neo)?sismo\b.*\b(?:bursatil|politico|electoral|mediatico)|\bmasismo\b|\b(?:terremoto|sismo|temblor)\b.{0,25}\b(?:politico|electoral|bursatil)|\b(?:terremoto|sismo)\b.{0,60}\b(?:salomon|indonesia|japon|turquia|filipinas|nepal|taiwan|nueva zelanda|iran|mexico|california|alaska)\b/;
   function fueraDeAlcance(e) {
     if (e.origen !== "prensa") return false;
     var t = String(e.titulo || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     if (REX_FIG.test(t)) return true;
+    if (REX_GEO_RUIDO.test(t)) return true;
     return REX_EXT.test(t) && !REX_BO.test(t);
   }
   /* hechos únicos en el navegador: une notas de prensa del mismo hecho (mismo asunto, ±36 h, departamento compatible) para que el hecho muestre todos sus medios y cifras */
