@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1nxqn63",
+  "fecha_hora_local": "2026-11-12 18:24",
+  "ts_ms": 1794522250000,
+  "titulo": "La Alcaldía de Montero impulsa campaña contra el dengue - El Mundo Bolivia",
+  "tipo_amenaza": "biológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Mundo Bolivia",
+  "lat": -17.337,
+  "lon": -63.239,
+  "lugar": "Montero, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Montero",
+  "enlaces": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOWVF0WVNWUWJTUS1GWXpiN1JtLUY0QjFlU0UtOS1Xd2dZR3FIcHBfYmk0WWFkbUo1NHlPbXYzN0hfc3VvQmN0OHhOWmpmMDJuZWt6aEl0QW43YnlHQjJ0cmlZUXhndmphcVNQV2owdkVpTUpLTGZZY2ljYVdjTXBTRlhRUkVMUQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:n2uv0v",
   "fecha_hora_local": "2026-11-12 16:23",
   "ts_ms": 1794515038000,
