@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1jcsd72",
+  "fecha_hora_local": "2026-11-12 21:49",
+  "ts_ms": 1794534540000,
+  "titulo": "¡Terror y milagro en el norte! Un extraño remolino en el río Bermejo desvió la tormenta, arrasó Embarcación y los vecinos claman: \"¡Gracias San Jorge!\" - Informate Salta",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "Informate Salta",
+  "lat": -22.721,
+  "lon": -64.326,
+  "lugar": "Bermejo, Tarija",
+  "departamento": "Tarija",
+  "municipio": "Bermejo",
+  "enlaces": "https://news.google.com/rss/articles/CBMiywJBVV95cUxOc2I5QXJUQnNFa0RnZXozbEdpM1Zhc2YyQTh0SmpsMjlaWF9tZUo1TjdKbG14OE5zaGE3YVdlUm1XTC1FRWpyYlNJUDZGc0JMbUFKejRCejdhTnNLMHZsNjVqZzduVWQ0TlJtWXQyaVBGRWQyTVZFd1lFREpvTUdrby13bGJDUEc2QnhQREtjbmpMSmNPMDBvVWp6NUxqXzBWZXFmWW14WDZrQmZ5R2VwRHl1V3V2ZzhZVk9WU2VuOHdCWWhPNV95aTJGZGRvQlNLOGg5WHNMMGw5TkpkVWdlbE1HNHVGSXgtbGk1VWtRczVxRWNqNzZXMkUyck00NmQwMk9ITjZkQmtpbnNzdDhwTjg1YlpndnZKSHZUYmlZZVRtNHFPNjFtaGxOLTFPbXY3NDdZcWFiWUhNYURmQ3R1aWhQTjZ3dXNNRURV0gHLAkFVX3lxTE5zYjlBclRCc0VrRGdlejNsR2kzVmFzZjJBOHRKamwyOVpYX21lSjVON0psbXg4TnNoYTdhV2VSbVdMLUVFanJiU0lQNkZzQkxtQUp6NEJ6N2FOc0swdmw2NWpnN25VZDROUm1ZdDJpUEZFZDJNVkV3WUVESm9NR2tvLXdsYkNQRzZCeFBES2NuakxKY08wMG9Vano1TGpfMFZlcWZZbXhYNmtCZnlHZXBEeXVXdXZnOFlWT1ZTZW44d0JZaE81X3lpMkZkZG9CU0s4aDlYc0wwbDlOSmRVZ2VsTUc0dUZJeC1saTVVa1FzNXFFY2o3NlcyRTJyTTQ2ZDAyT0hONmRCa2luc3N0OHBOODViWmd2dkpIdlRiaVllVG00cU82MW1obE4tMU9tdjc0N1lxYWJZSE1hRGZDdHVpaFBONnd1c01FRFU?oc=5 | https://news.google.com/rss/articles/CBMivAJBVV95cUxQakpYbW1aZHN5Vi1KUzUyVklMTm1zRkhyeHFpWEFqY1pWU016SkdhcVV5V0Y1bnJXd2J1bWZkRlJjTjRNRzU1RGJlOWpReC1qUy1qZFM0LTRRX21TMTl6QkFKcVRZeXg3U0hSNUN3VklYczdhcWNuSlBzSlNyUkdLLTRjWE5rYVVHVmluVy00dnBCSGl2SWFQeUtpVjNVXzVrb1lMSEJYc3l0NUl5X255dmJoSUJlb2xyTU5ycklYbloycGZlVTEwWGFHVk5COWZxNFIyb3RrYmJfeEhPNkZyeklDV3pZQUFFNnEyOFptR0dOMmhINFRuVkFrdWpoMXNuX0ZKN3lEcXRIc01BaUExYjZZX2tVRE8zaFpaSWM3cm1paFVSWUhQejRFcnNQWDEwMV9YOTZLUGUwSlFS0gHLAkFVX3lxTE5zYjlBclRCc0VrRGdlejNsR2kzVmFzZjJBOHRKamwyOVpYX21lSjVON0psbXg4TnNoYTdhV2VSbVdMLUVFanJiU0lQNkZzQkxtQUp6NEJ6N2FOc0swdmw2NWpnN25VZDROUm1ZdDJpUEZFZDJNVkV3WUVESm9NR2tvLXdsYkNQRzZCeFBES2NuakxKY08wMG9Vano1TGpfMFZlcWZZbXhYNmtCZnlHZXBEeXVXdXZnOFlWT1ZTZW44d0JZaE81X3lpMkZkZG9CU0s4aDlYc0wwbDlOSmRVZ2VsTUc0dUZJeC1saTVVa1FzNXFFY2o3NlcyRTJyTTQ2ZDAyT0hONmRCa2luc3N0OHBOODViWmd2dkpIdlRiaVllVG00cU82MW1obE4tMU9tdjc0N1lxYWJZSE1hRGZDdHVpaFBONnd1c01FRFU?oc=5"
+ },
+ {
   "hecho_id": "noticia:mveqz9",
   "fecha_hora_local": "2026-11-12 21:03",
   "ts_ms": 1794531796000,
