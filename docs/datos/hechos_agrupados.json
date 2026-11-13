@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:mveqz9",
+  "fecha_hora_local": "2026-11-12 21:03",
+  "ts_ms": 1794531796000,
+  "titulo": "Derrumbe de un edificio en Brooklyn deja ocho muertos - EL DÍA - Noticias de Bolivia para el mundo",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 8,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "EL DÍA - Noticias de Bolivia para el mundo",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPX1dBZm4yWE5vSHBCYzJhZDhpTmZfLW4wTlpPTXdKV2VLQjJ0bWEzYUJYMVRaQVBRMHhoTlFLNjNjQ3ctSDdMakRwSzBaeVVtLS1GV2wzcTRmRUlhR3dtSEJwSDdqVWxxeWFjeG1oaVI5SzRRR0hGYXJTaTFiSTZMTzgtNHBWQzhrTmtfRU9uRXJIODNPZHZVd0VtR0RzMHpkVEhCR3lSVQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:1m89okq",
   "fecha_hora_local": "2026-11-12 20:50",
   "ts_ms": 1794531025000,
