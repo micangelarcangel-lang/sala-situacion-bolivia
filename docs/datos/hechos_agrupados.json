@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:18rkysp",
+  "fecha_hora_local": "2026-11-13 10:36",
+  "ts_ms": 1794580604000,
+  "titulo": "Derrumbe bloquea la ruta hacia La Asunta (10:36) - El Diario - Bolivia",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "El Diario - Bolivia",
+  "lat": -16.065,
+  "lon": -67.137,
+  "lugar": "La Asunta, La Paz",
+  "departamento": "La Paz",
+  "municipio": "La Asunta",
+  "enlaces": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOOVFkbF9rTnk1b0JkTzVUcFFMM0hCb3Y1U2ZKbXA0RDNjZHk3N0dNenoxR0lqWGJ4TGFBU0ZZN2RwUWRVMFQ2VTAxbkJFTVhHekQwMkVqVEpQcElXTS1pRUpsMEJJVFI1X2YtQzMyV2lkQ3d0bV9KdE5tejEtUlk2RkJsWi1zekV3SFVyemFRQWdZOTQ?oc=5 | https://news.google.com/rss/articles/CBMiuAFBVV95cUxOR2Zfa19wU0k1SFZlNmRKRWFxVEFBTlhSSGk4UjNzRHJEUmMtRHZVZ05NdTJBU0paQnhEVGx2TXY0UU1Kb1N5MEJrSjN1R2RyejRZUzJueTMySjU2Wjg4NDVBWlFucGZiY2RXZks1V2xsYWNsdGhJeWlyUEJxYTZ4LWdlTldueC1GZ0NsdUg5RDc4WjJiNF81QzVFX0JVUVlfeDhfX2c3WmotUEd5djF6VEk0MXdpZlVP?oc=5"
+ },
+ {
   "hecho_id": "noticia:6r8qs2",
   "fecha_hora_local": "2026-11-13 08:53",
   "ts_ms": 1794574387000,
@@ -3910,14 +3930,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 2,
-  "fuentes": "El Diario - Bolivia; Red Uno",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
   "lat": -15.813,
   "lon": -67.463,
   "lugar": "Caranavi, La Paz",
   "departamento": "La Paz",
   "municipio": "Caranavi",
-  "enlaces": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQUTE4dEFxMlZrWmNWUXN0OVp5bDBXMmpLZmNHRGxVQnJQcTdjTTdZYmIxcm1sajRsMnN4THk0SUVRamlGYm9HS0lKUnl3X1BuYTF3eHdVbzBCRFMwVjg4TTNNQlNiQnI0VGtVamRVNTk2Zk1EVXFhbGFIQWk2b0VCTjRDMEdCUC1DbXNteDQzN21MbWxUSFdGc0xEX0N2VlJwSEtiM1NsRUxjVnZPMW5veXdueGh5NnhoRFZsWC1ObUhoVl9aNXpQZVZZYTNwODB4Sms0aw?oc=5 | https://news.google.com/rss/articles/CBMiuAFBVV95cUxOR2Zfa19wU0k1SFZlNmRKRWFxVEFBTlhSSGk4UjNzRHJEUmMtRHZVZ05NdTJBU0paQnhEVGx2TXY0UU1Kb1N5MEJrSjN1R2RyejRZUzJueTMySjU2Wjg4NDVBWlFucGZiY2RXZks1V2xsYWNsdGhJeWlyUEJxYTZ4LWdlTldueC1GZ0NsdUg5RDc4WjJiNF81QzVFX0JVUVlfeDhfX2c3WmotUEd5djF6VEk0MXdpZlVP?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQUTE4dEFxMlZrWmNWUXN0OVp5bDBXMmpLZmNHRGxVQnJQcTdjTTdZYmIxcm1sajRsMnN4THk0SUVRamlGYm9HS0lKUnl3X1BuYTF3eHdVbzBCRFMwVjg4TTNNQlNiQnI0VGtVamRVNTk2Zk1EVXFhbGFIQWk2b0VCTjRDMEdCUC1DbXNteDQzN21MbWxUSFdGc0xEX0N2VlJwSEtiM1NsRUxjVnZPMW5veXdueGh5NnhoRFZsWC1ObUhoVl9aNXpQZVZZYTNwODB4Sms0aw?oc=5"
  },
  {
   "hecho_id": "noticia:139orfq",
