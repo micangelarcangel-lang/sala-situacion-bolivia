@@ -181,7 +181,7 @@
    "Chuquisaca": 15
   },
   "2026-11-08": {
-   "Beni": 23,
+   "Beni": 24,
    "Potosí": 1,
    "Santa Cruz": 1
   },
@@ -561,7 +561,7 @@
   },
   "2026-11-08": {
    "San Joaquín (Beni)": 16,
-   "Magdalena (Beni)": 5,
+   "Magdalena (Beni)": 6,
    "Guayaramerín (Beni)": 2,
    "Caiza \"D\" (Potosí)": 1,
    "San José (Santa Cruz)": 1
@@ -635,9 +635,9 @@
    "Ascención de Guarayos (Santa Cruz)": 20
   }
  },
- "actualizado": "2026-11-12T23:39:28.541577Z",
+ "actualizado": "2026-11-13T00:57:02.429494Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2202,
- "slack_dia": "2026-11-12"
+ "detecciones_fuera_de_limites": 1888,
+ "slack_dia": "2026-11-13"
 }
