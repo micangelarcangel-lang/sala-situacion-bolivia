@@ -219,9 +219,12 @@
    "Pando": 4
   },
   "2026-11-13": {
-   "Santa Cruz": 354,
-   "Cochabamba": 3,
-   "Beni": 59
+   "Santa Cruz": 583,
+   "Cochabamba": 6,
+   "Beni": 60,
+   "Tarija": 17,
+   "Chuquisaca": 15,
+   "La Paz": 1
   }
  },
  "municipios": {
@@ -640,26 +643,26 @@
    "Ascención de Guarayos (Santa Cruz)": 20
   },
   "2026-11-13": {
-   "San José (Santa Cruz)": 89,
-   "Roboré (Santa Cruz)": 33,
-   "Pailón (Santa Cruz)": 33,
+   "San José (Santa Cruz)": 124,
+   "Roboré (Santa Cruz)": 82,
+   "Pailón (Santa Cruz)": 44,
+   "San Ignacio (Santa Cruz)": 32,
+   "El Puente (Santa Cruz)": 31,
+   "Charagua (Santa Cruz)": 28,
    "Concepción (Santa Cruz)": 28,
    "San Miguel (Santa Cruz)": 26,
-   "San Ignacio (Santa Cruz)": 24,
-   "El Puente (Santa Cruz)": 24,
+   "Santa Rosa (Santa Cruz)": 23,
+   "Yapacaní (Santa Cruz)": 23,
    "San Joaquín (Beni)": 23,
    "San Andrés (Beni)": 21,
+   "San Juan (Santa Cruz)": 20,
    "San Rafael (Santa Cruz)": 18,
-   "Charagua (Santa Cruz)": 15,
-   "Reyes (Beni)": 14,
-   "San Juan (Santa Cruz)": 11,
-   "San Pedro (Santa Cruz)": 10,
-   "San Javier (Santa Cruz)": 7
+   "Ascención de Guarayos (Santa Cruz)": 18
   }
  },
- "actualizado": "2026-11-13T19:28:35.157761Z",
+ "actualizado": "2026-11-13T20:26:39.957421Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1991,
+ "detecciones_fuera_de_limites": 2160,
  "slack_dia": "2026-11-13"
 }
