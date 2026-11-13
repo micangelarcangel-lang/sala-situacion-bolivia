@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "clima:Cochabamba:2026-11-13:lluvia:1",
+  "fecha_hora_local": "2026-11-13 04:05",
+  "ts_ms": 1794557138337,
+  "titulo": "Cochabamba 2026-11-13: 32.1 mm de lluvia pronosticados",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Open-Meteo (pronóstico)",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://open-meteo.com/"
+ },
+ {
   "hecho_id": "noticia:1jcsd72",
   "fecha_hora_local": "2026-11-12 21:49",
   "ts_ms": 1794534540000,
