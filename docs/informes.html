@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Centro de informes — Sala de Situación Bolivia</title>
-<link rel="stylesheet" href="s2.css"><script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script></head>
+<link rel="stylesheet" href="s2.css"><script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script><script src="clima.js"></script></head>
 <body><div id="hdr"></div><div class="wrap">
 <h1 class="pg-t noimp">Generar informe</h1><p class="pg-s noimp">Informes a pedido, con gráficos y PDF. Elija qué necesita:</p>
 <div class="opc noimp" id="opciones">
@@ -65,6 +65,7 @@ function cons(){var now=Date.now(),per=$("per").value,dep=$("dep").value,org=$("
   '<div class="grid g2" style="margin-top:16px"><div class="card"><h2>Eventos por tipo</h2><div class="ch s" id="r1"></div></div><div class="card"><h2>Evolución diaria</h2><div class="ch s" id="r2"></div></div>'+
   '<div class="card"><h2>Departamento × tipo</h2><div class="ch s" id="r3"></div></div><div class="card"><h2>Niveles de alerta</h2><div class="ch s" id="r4"></div></div></div>'+
   '<div class="card rompe" style="margin-top:16px"><h2>Detalle de eventos</h2><div style="overflow:auto"><table><tr><th>Fecha</th><th>Tipo</th><th>Evento</th><th>Lugar</th><th>Nivel</th><th>Confianza</th><th>Fuente</th></tr>'+F.slice(0,400).map(function(e){return'<tr><td style="white-space:nowrap">'+S.fecha(e.ts)+'</td><td>'+S.esc(e.categoria)+'</td><td><a href="'+fichaUrl(e.id)+'">'+S.esc(e.titulo)+'</a></td><td>'+S.esc(e.lugar||(e.departamentos||[]).join(", "))+'</td><td>'+S.badgeNivel(e)+'</td><td>'+(X.confBadge(e)||"")+'</td><td>'+S.esc(e.fuente||"")+'</td></tr>'}).join("")+'</table></div><div class="foot nota" style="margin-top:8px">Información preliminar de fuentes oficiales, satélites, modelos abiertos y prensa. Sala de Situación Bolivia.</div></div>';
+ if(CAT["meteorológica"]!==false||CAT["climatológica"]!==false){var mb=document.createElement("div");mb.style.marginTop="16px";$("out").insertBefore(mb,$("out").children[2]);CLIMA.informe(mb,dep)}
  X.chart("r1",{tooltip:{trigger:"item"},series:[{type:"pie",radius:["38%","70%"],itemStyle:{borderRadius:5,borderColor:"#fff",borderWidth:2},data:cats.filter(function(c){return porC[c]}).map(function(c){return{name:c,value:porC[c],itemStyle:{color:S.COLCAT[c]}}}),label:{formatter:"{b}: {c}"}}]});
  var ds=Object.keys(porDia).sort();X.chart("r2",{tooltip:{trigger:"axis"},legend:{top:0,type:"scroll"},grid:{left:34,right:10,top:36,bottom:26},xAxis:{type:"category",data:ds.map(function(k){return k.slice(5)}),boundaryGap:false},yAxis:{type:"value"},series:cats.map(function(c){return{name:c,type:"line",stack:"t",smooth:true,symbol:"none",areaStyle:{opacity:.75},lineStyle:{width:1},itemStyle:{color:S.COLCAT[c]},data:ds.map(function(k){return(porDia[k][c]||0)})}})});
  var hd=[],hm=1;S.DEPS.forEach(function(d,y){cats.forEach(function(c,x){var n=F.filter(function(e){return e.categoria===c&&(e.departamentos||[]).indexOf(d)>=0}).length;hm=Math.max(hm,n);hd.push([x,y,n||null])})});
