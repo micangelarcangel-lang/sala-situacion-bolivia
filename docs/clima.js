@@ -32,23 +32,47 @@ var CLIMA = (function () {
   function get(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }); }
   function hoyLP() { return new Date(Date.now() - 4 * 36e5).toISOString().slice(0, 10); }
   function isoMas(s, d) { return new Date(Date.parse(s + "T12:00:00Z") + d * DIA).toISOString().slice(0, 10); }
-  var V = "temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max,et0_fao_evapotranspiration";
-  function bajarClima(p) {
-    var hoy = hoyLP(), q = "latitude=" + p.lat + "&longitude=" + p.lon + "&daily=" + V + "&timezone=America%2FLa_Paz";
-    var a = get("https://archive-api.open-meteo.com/v1/archive?" + q + "&start_date=1940-01-01&end_date=" + isoMas(hoy, -6));
-    var f = get("https://api.open-meteo.com/v1/forecast?" + q + "&past_days=14&forecast_days=7").catch(function () { return null; });
-    return Promise.all([a, f]).then(function (r) {
-      var M = {}, ks = ["temperature_2m_max", "temperature_2m_min", "precipitation_sum", "wind_gusts_10m_max", "et0_fao_evapotranspiration"];
-      [r[0], r[1]].forEach(function (j, w) { if (!j || !j.daily) return; j.daily.time.forEach(function (t, i) { var o = M[t] = M[t] || {}; ks.forEach(function (k, z) { var v = j.daily[k] ? j.daily[k][i] : null; if (v != null && (w === 1 || o[z] == null)) o[z] = v; }); if (w === 1) o.fc = t > hoy ? 1 : 0; }); });
-      var T = Object.keys(M).sort(), out = {d: T, tx: [], tn: [], pr: [], wg: [], et: [], hoy: hoy, fc: []};
-      T.forEach(function (t) { var o = M[t]; out.tx.push(o[0] == null ? null : o[0]); out.tn.push(o[1] == null ? null : o[1]); out.pr.push(o[2] == null ? null : o[2]); out.wg.push(o[3] == null ? null : o[3]); out.et.push(o[4] == null ? null : o[4]); out.fc.push(t > hoy); });
-      return out;
+  var V5 = "temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max,et0_fao_evapotranspiration", V3 = "temperature_2m_max,temperature_2m_min,precipitation_sum", KS = ["temperature_2m_max", "temperature_2m_min", "precipitation_sum", "wind_gusts_10m_max", "et0_fao_evapotranspiration"];
+  /* Open-Meteo limita el "peso" de las consultas (≈600 por minuto, 10 000 por día): una serie de 80 años en una sola llamada la rechaza (HTTP 429).
+     Por eso se baja por tramos, en dos fases, con presupuesto por minuto, reintentos y caché local (IndexedDB) de los años ya cerrados. */
+  var GASTO = [];
+  function esperar(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function presupuesto(w) { var now = Date.now(); GASTO = GASTO.filter(function (g) { return now - g[0] < 61000; }); var s = GASTO.reduce(function (a, g) { return a + g[1]; }, 0); if (s + w <= 520) { GASTO.push([now, w]); return Promise.resolve(); } var t = GASTO.length ? 61500 - (now - GASTO[0][0]) : 1000; return esperar(Math.max(1000, t)).then(function () { return presupuesto(w); }); }
+  function peso(a, b, nv) { return Math.max(1, Math.ceil((Date.parse(b) - Date.parse(a)) / DIA / 14 * nv / 10)); }
+  function getR(u, n) { n = n || 0; return fetch(u).then(function (r) { if (r.status === 429 && n < 3) { if (ST.msg) ST.msg("Open-Meteo pide esperar (límite de consultas); reintentando en " + 20 * (n + 1) + " s…"); return esperar(20000 * (n + 1)).then(function () { return getR(u, n + 1); }); } if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }); }
+  var _db = null;
+  function idb() { if (_db) return _db; return _db = new Promise(function (res) { try { var r = indexedDB.open("sala-clima", 1); r.onupgradeneeded = function () { r.result.createObjectStore("c"); }; r.onsuccess = function () { res(r.result); }; r.onerror = function () { res(null); }; } catch (e) { res(null); } }); }
+  function idbGet(k) { return idb().then(function (db) { return !db ? null : new Promise(function (res) { try { var q = db.transaction("c").objectStore("c").get(k); q.onsuccess = function () { res(q.result || null); }; q.onerror = function () { res(null); }; } catch (e) { res(null); } }); }); }
+  function idbSet(k, v) { idb().then(function (db) { if (!db) return; try { db.transaction("c", "readwrite").objectStore("c").put(v, k); } catch (e) {} }); }
+  function tramo(p, c, nv) {
+    var key = p.lat + "," + p.lon + "," + c.id + c.b;
+    return (c.cache ? idbGet(key) : Promise.resolve(null)).then(function (h) {
+      if (h) return h;
+      return presupuesto(peso(c.a, c.b, nv)).then(function () { return getR(c.url); }).then(function (j) { if (c.cache && j && j.daily) idbSet(key, j.daily); return j.daily; });
     });
   }
-  function bajarCaudal(p) {
-    var hoy = hoyLP();
-    return get("https://flood-api.open-meteo.com/v1/flood?latitude=" + p.lat + "&longitude=" + p.lon + "&daily=river_discharge&start_date=1984-01-01&end_date=" + isoMas(hoy, 7) + "&timezone=America%2FLa_Paz").then(function (j) { return {d: j.daily.time, q: j.daily.river_discharge, hoy: hoy}; });
+  function unir(listas, hoy) {
+    var M = {}; listas.forEach(function (d, w) { if (!d || !d.time) return; d.time.forEach(function (t, i) { var o = M[t] = M[t] || {}; KS.forEach(function (k, z) { var v = d[k] ? d[k][i] : null; if (v != null) o[z] = v; }); }); });
+    var T = Object.keys(M).sort(), out = {d: T, tx: [], tn: [], pr: [], wg: [], et: [], hoy: hoy, fc: []};
+    T.forEach(function (t) { var o = M[t]; out.tx.push(o[0] == null ? null : o[0]); out.tn.push(o[1] == null ? null : o[1]); out.pr.push(o[2] == null ? null : o[2]); out.wg.push(o[3] == null ? null : o[3]); out.et.push(o[4] == null ? null : o[4]); out.fc.push(t > hoy); });
+    return out;
   }
+  function bajarClima(p, cb) {
+    var hoy = hoyLP(), Y = +hoy.slice(0, 4), fin = isoMas(hoy, -6), q = "latitude=" + p.lat + "&longitude=" + p.lon + "&timezone=America%2FLa_Paz";
+    function C(id, a, b, v, fase, cache) { return {id: id, a: a, b: b, v: v, fase: fase, cache: cache, url: "https://archive-api.open-meteo.com/v1/archive?" + q + "&daily=" + v + "&start_date=" + a + "&end_date=" + b}; }
+    var T = [C("a", "1940-01-01", "1969-12-31", V3, 2, 1), C("b", "1970-01-01", "1990-12-31", V3, 2, 1), C("c", "1991-01-01", "2005-12-31", V5, 1, 1), C("d", "2006-01-01", (Y - 1) + "-12-31", V5, 1, 1), C("e", Y + "-01-01", fin, V5, 1, 0)].filter(function (c) { return c.b >= c.a; });
+    var fc = get("https://api.open-meteo.com/v1/forecast?" + q + "&daily=" + V5 + "&past_days=14&forecast_days=7").then(function (j) { return j.daily; }).catch(function () { return null; });
+    var got = {};
+    function fase(n) { return T.filter(function (c) { return c.fase === n; }).reduce(function (pr, c) { return pr.then(function () { if (ST.msg) ST.msg("Descargando " + c.a.slice(0, 4) + "–" + c.b.slice(0, 4) + "…"); return tramo(p, c, c.v === V5 ? 5 : 3).then(function (d) { got[c.id] = d; }); }); }, Promise.resolve()); }
+    function armar() { return unir(["a", "b", "c", "d", "e"].map(function (k) { return got[k]; }).concat([got.fc]), hoy); }
+    return fase(1).then(function () { return fc; }).then(function (f) { got.fc = f; cb(armar(), false); return fase(2).then(function () { cb(armar(), true); }, function (e) { if (ST.msg) ST.msg("No se pudo bajar 1940–1990 (" + e.message + "); se muestran los datos desde 1991."); cb(armar(), true); }); });
+  }
+  function bajarCaudal(p) {
+    var hoy = hoyLP(), Y = +hoy.slice(0, 4), q = "latitude=" + p.lat + "&longitude=" + p.lon + "&daily=river_discharge&timezone=America%2FLa_Paz";
+    var a = {id: "q", a: "1984-01-01", b: (Y - 1) + "-12-31", cache: 1, url: "https://flood-api.open-meteo.com/v1/flood?" + q + "&start_date=1984-01-01&end_date=" + (Y - 1) + "-12-31"}, b = {id: "q", a: Y + "-01-01", b: isoMas(hoy, 7), cache: 0, url: "https://flood-api.open-meteo.com/v1/flood?" + q + "&start_date=" + Y + "-01-01&end_date=" + isoMas(hoy, 7)};
+    return tramo(p, a, 1).then(function (d1) { return tramo(p, b, 1).then(function (d2) { var T = (d1.time || []).concat(d2.time || []), Qv = (d1.river_discharge || []).concat(d2.river_discharge || []); return {d: T, q: Qv, hoy: hoy}; }); });
+  }
+
   /* ---------- análisis ---------- */
   function fecha(s) { return {y: +s.slice(0, 4), m: +s.slice(5, 7) - 1, dd: +s.slice(8, 10)}; }
   function doyDe(y, m, d) { return Math.round((Date.UTC(y, m, d) - Date.UTC(y, 0, 1)) / DIA); }
@@ -297,7 +321,7 @@ var CLIMA = (function () {
     O = o; ST.modo = modo; var M = MODOS[modo];
     return '<div class="secb" id="s-mon" style="--c:' + o.col + '">' + M.t + '</div>' +
       '<div class="card cl-top"><div class="cl-bar"><label>Lugar de análisis<select id="clLug"></select></label><label>Ventana<span class="seg" id="clVen"><button type="button" data-n="30">1 mes</button><button type="button" class="on" data-n="90">90 días</button><button type="button" data-n="180">180 días</button><button type="button" data-n="365">1 año</button></span></label><button class="btn s" id="clCsv" type="button">' + X.ic("dl") + 'Serie (CSV)</button></div>' +
-      '<div class="cl-lect" id="clLect"><span class="nota">Consultando la serie histórica…</span></div><div class="nota" id="clFte"></div></div>' +
+      '<div class="cl-lect" id="clLect"><span class="nota">Consultando la serie histórica…</span></div><div class="nota" id="clFte"></div><div class="nota" id="clFte2" style="color:var(--accent,#58a6ff)"></div></div>' +
       '<div class="card" id="clFicha" style="display:none;margin-bottom:14px"></div>' +
       '<div class="grid g4" id="clKpi" style="margin:12px 0"></div><div class="grid g3" id="clGraf">' + M.L.map(function (k) { var d = (CQ[k] || CH[k]); return card(d.t, "", "cl_" + k); }).join("") + '</div>';
   }
@@ -310,10 +334,11 @@ var CLIMA = (function () {
   }
   function cargar() {
     var p = ST.lugar, tok = ++ST.tok, key = p.lat + "," + p.lon;
-    $("clKpi").innerHTML = ""; $("clLect").innerHTML = '<span class="nota">Consultando la serie histórica de ' + E(p.n) + '… (puede tardar unos segundos)</span>';
-    var pc = ST.cache[key] ? Promise.resolve(ST.cache[key]) : bajarClima(p).then(function (r) { var A = analizar(r); ST.cache[key] = A; return A; });
+    ST.msg = function (t) { if (tok === ST.tok && $("clFte2")) $("clFte2").textContent = t; };
+    $("clKpi").innerHTML = ""; $("clLect").innerHTML = '<span class="nota">Consultando la serie histórica de ' + E(p.n) + '… la primera vez en cada lugar tarda; después queda guardada en su navegador.</span>';
+    if (ST.cache[key]) { ST.an = ST.cache[key]; ST.msg(""); var pq0 = ST.modo === "hidro" ? bajarCaudal(p).then(analizarQ).catch(function () { return null; }) : Promise.resolve(null); pq0.then(function (q) { if (tok !== ST.tok) return; ST.q = q; pintar(); }); return; }
     var pq = ST.modo === "hidro" ? bajarCaudal(p).then(analizarQ).catch(function () { return null; }) : Promise.resolve(null);
-    Promise.all([pc, pq]).then(function (r) { if (tok !== ST.tok) return; ST.an = r[0]; ST.q = r[1]; pintar(); }).catch(function (e) { if (tok !== ST.tok) return; $("clLect").innerHTML = '<span class="nota">No se pudo consultar Open-Meteo ahora (' + E(e.message) + '). Revise su conexión y vuelva a elegir el lugar.</span>'; });
+    bajarClima(p, function (raw, fin) { pq.then(function (q) { if (tok !== ST.tok) return; var A = analizar(raw); ST.an = A; ST.q = q; if (fin) { ST.cache[key] = A; ST.msg(""); } else ST.msg("Datos 1991–hoy listos; completando la serie 1940–1990 en segundo plano…"); pintar(); }); }).catch(function (e) { if (tok !== ST.tok) return; $("clLect").innerHTML = '<span class="nota">No se pudo consultar Open-Meteo ahora (' + E(e.message) + '). Si dice HTTP 429 es el límite de consultas gratuitas: espere un minuto y vuelva a elegir el lugar.</span>'; });
   }
   function elegir(p, desdeUsuario) {
     ST.lugar = p; var s = $("clLug"); if (p.mun) s.value = ""; else s.value = p.k;
@@ -333,8 +358,9 @@ var CLIMA = (function () {
   function informe(el, dep) {
     var c = CAPS.filter(function (x) { return x[3] === dep; })[0] || CAPS[0], p = {n: c[0] + " (" + c[3] + ")", lat: c[1], lon: c[2]}, L = ["temp", "pacum", "anom", "anual", "spi", "extremos"];
     el.innerHTML = '<div class="card"><h2>Monitoreo del fenómeno en el tiempo · ' + E(p.n) + '</h2><div class="cap">Serie histórica completa (reanálisis ERA5, Open-Meteo), normal OMM ' + R0 + '–' + R1 + '. ' + (dep ? "" : "Referencia: La Paz (elija un departamento para cambiarla). ") + 'Estimación del modelo, no estación del SENAMHI.</div><div class="nota" id="rmLect">Consultando…</div></div><div class="grid g2" style="margin-top:12px">' + L.map(function (k) { return card(CH[k].t, "", "rm_" + k); }).join("") + '</div>';
-    ST.modo = "meteo"; ST.lugar = p; ST.n = 90; ST.q = null;
-    bajarClima(p).then(function (r) { var A = analizar(r); ST.an = A; $("rmLect").innerHTML = lectura(A, actuales(A)); L.forEach(function (k) { $("rm_" + k + "c").textContent = CH[k].c(A); try { CH[k].f(A, "rm_" + k); } catch (e) { console.error(k, e); } }); }).catch(function (e) { $("rmLect").textContent = "No se pudo consultar Open-Meteo (" + e.message + ")."; });
+    ST.modo = "meteo"; ST.lugar = p; ST.n = 90; ST.q = null; ST.an = null;
+    ST.msg = function (t) { var n = $("rmLect"); if (n && !ST.an) n.textContent = t; };
+    bajarClima(p, function (r, fin) { if (!fin) return; var A = analizar(r); ST.an = A; $("rmLect").innerHTML = lectura(A, actuales(A)); L.forEach(function (k) { $("rm_" + k + "c").textContent = CH[k].c(A); try { CH[k].f(A, "rm_" + k); } catch (e) { console.error(k, e); } }); }).catch(function (e) { $("rmLect").textContent = "No se pudo consultar Open-Meteo (" + e.message + "). Si es HTTP 429, espere un minuto y recargue."; });
   }
   function irMun(k) { if (ST.mun && ST.mun[k]) elegir(ST.mun[k], false); }
   return {irMun: irMun, seccion: seccion, iniciar: iniciar, analizar: analizar, informe: informe, MODOS: MODOS};
