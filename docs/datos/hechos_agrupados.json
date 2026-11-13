@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:7pwo0i",
+  "fecha_hora_local": "2026-11-13 05:34",
+  "ts_ms": 1794562456000,
+  "titulo": "Las lluvias colmataron los sumideros en tres zonas de la ciudad - El Potosí",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQM0haWEZXNHpHMFhpRVFJOXNHQk1hNjN4QkxTdUdSblBpSEhLRmV1YjhDbEdybTNrZ2xtd0ZGS1R0SEhKaGpvMFB3VC1INU03TUt4UUNEcHg0bmlqWWh3X2ZJdGlXcU92VVFtaFhtR1A2QW53c1FhQnN3QUhXX1FGYkgzUGFsbTVMZXlyc01sYmVTNmRNdDNtcjVVWG9HVmJSRUxHNUdCVQ?oc=5"
+ },
+ {
   "hecho_id": "gdacs:WF1033775:0",
   "fecha_hora_local": "2026-11-13 05:06",
   "ts_ms": 1794560802000,
