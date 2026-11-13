@@ -302,3 +302,13 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 .cl-lect{font-size:14px;line-height:1.6;padding:10px 12px;border-left:4px solid var(--accent,#58a6ff);background:var(--soft);border-radius:8px;margin-bottom:6px}
 .cl-fh{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:start}.cl-fb h3{margin:0 0 2px;font-size:18px}
 @media(max-width:700px){.cl-fh{grid-template-columns:1fr}}
+
+/* ===== Explorador municipal ===== */
+.xm-h{display:flex;align-items:baseline;gap:10px;margin:4px 0 10px}.xm-h h3{margin:0;font-size:20px}
+.xm-g{align-items:start}.xm-b{display:flex;gap:14px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.xm-k{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.xm-k>div{background:var(--soft);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column}.xm-k b{font-size:22px}.xm-k span{font-size:11.5px;color:var(--mut)}
+.xm-t{margin:12px 0 6px;font-size:13px}.xm-l{max-height:300px;overflow:auto}
+.hovpop .maplibregl-popup-content{padding:5px 9px!important;border-radius:8px!important;font:12.5px system-ui;pointer-events:none}
+.hovpop .maplibregl-popup-tip{display:none}
+@media(max-width:900px){.xm-g{grid-template-columns:1fr}}

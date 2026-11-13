@@ -287,18 +287,16 @@ var CLIMA = (function () {
   }
   function ficha(A, p) {
     var box = $("clFicha"); if (!box) return;
-    if (!p.mun) { box.style.display = "none"; return; }
-    var av = (O.avisos ? O.avisos(p.n) : []), r = A ? A.raw : null, h = '<div class="cl-fh"><div class="cl-svg">' + svgMun(p.mun, av.length ? "#e8743b" : "#1d6fb8") + '</div><div class="cl-fb"><h3>' + E(p.mun.properties.n) + '</h3><div class="nota">Municipio · ' + E(p.dep) + ' · punto de análisis ' + p.lat + ', ' + p.lon + '</div>';
-    h += '<div style="margin:8px 0">' + (av.length ? av.map(function (a) { return '<a class="alert" href="' + E(S.urlOk(a.pdf || a.url)) + '" target="_blank" rel="noopener" style="--c:' + O.colN[Math.max(0, a._n)] + ';color:inherit;text-decoration:none"><div style="flex:1"><div class="t">' + E(a.titulo) + '</div><div class="m">Vigente ' + E(a.inicio || "") + ' → ' + E(a.fin || "") + '</div></div><span class="badge b' + Math.max(0, a._n) + '">' + O.nivT[Math.max(0, a._n)] + '</span></a>'; }).join("") : '<div class="nota">Sin aviso SENAMHI vigente para este municipio.</div>') + '</div>';
-    if (r) { var i0 = A.iObs + 1, L = []; for (var i = i0; i < Math.min(A.n, i0 + 7); i++) L.push(i); h += L.length ? '<table class="t-mun"><tr><th>Pronóstico</th>' + L.map(function (i) { return '<th>' + lab(A, i) + '</th>'; }).join("") + '</tr><tr><td>Máx. °C</td>' + L.map(function (i) { return '<td>' + f1(r.tx[i], 0) + '</td>'; }).join("") + '</tr><tr><td>Mín. °C</td>' + L.map(function (i) { return '<td>' + f1(r.tn[i], 0) + '</td>'; }).join("") + '</tr><tr><td>Lluvia mm</td>' + L.map(function (i) { return '<td>' + f1(r.pr[i], 0) + '</td>'; }).join("") + '</tr></table>' : ""; }
-    h += '<div class="nota" style="margin-top:6px">Las gráficas de abajo muestran la serie histórica de este municipio.</div></div></div>';
-    box.innerHTML = h; box.style.display = "";
+    if (!p.mun || !A) { box.style.display = "none"; return; }
+    var r = A.raw, i0 = A.iObs + 1, L = []; for (var i = i0; i < Math.min(A.n, i0 + 7); i++) L.push(i);
+    box.innerHTML = '<h3 style="margin:0 0 4px;font-size:16px">Municipio de ' + E(p.mun.properties.n) + ' (' + E(p.dep) + ')</h3><div class="nota" style="margin-bottom:6px">Las gráficas de abajo son de este municipio (punto ' + p.lat + ', ' + p.lon + '). Pronóstico de 7 días:</div>' + (L.length ? '<table class="t-mun"><tr><th></th>' + L.map(function (i) { return '<th>' + lab(A, i) + '</th>'; }).join("") + '</tr><tr><td>Máx. °C</td>' + L.map(function (i) { return '<td>' + f1(r.tx[i], 0) + '</td>'; }).join("") + '</tr><tr><td>Mín. °C</td>' + L.map(function (i) { return '<td>' + f1(r.tn[i], 0) + '</td>'; }).join("") + '</tr><tr><td>Lluvia mm</td>' + L.map(function (i) { return '<td>' + f1(r.pr[i], 0) + '</td>'; }).join("") + '</tr></table>' : "");
+    box.style.display = "";
   }
   /* ---------- armado ---------- */
   function seccion(modo, o) {
     O = o; ST.modo = modo; var M = MODOS[modo];
     return '<div class="secb" id="s-mon" style="--c:' + o.col + '">' + M.t + '</div>' +
-      '<div class="card cl-top"><div class="cl-bar"><label>Lugar de análisis<select id="clLug"></select></label><label>Buscar municipio<input type="text" id="clMun" list="clDL" placeholder="Escriba un municipio…" autocomplete="off"></label><label>Ventana<span class="seg" id="clVen"><button type="button" data-n="30">1 mes</button><button type="button" class="on" data-n="90">90 días</button><button type="button" data-n="180">180 días</button><button type="button" data-n="365">1 año</button></span></label><button class="btn s" id="clCsv" type="button">' + X.ic("dl") + 'Serie (CSV)</button></div><datalist id="clDL"></datalist>' +
+      '<div class="card cl-top"><div class="cl-bar"><label>Lugar de análisis<select id="clLug"></select></label><label>Ventana<span class="seg" id="clVen"><button type="button" data-n="30">1 mes</button><button type="button" class="on" data-n="90">90 días</button><button type="button" data-n="180">180 días</button><button type="button" data-n="365">1 año</button></span></label><button class="btn s" id="clCsv" type="button">' + X.ic("dl") + 'Serie (CSV)</button></div>' +
       '<div class="cl-lect" id="clLect"><span class="nota">Consultando la serie histórica…</span></div><div class="nota" id="clFte"></div></div>' +
       '<div class="card" id="clFicha" style="display:none;margin-bottom:14px"></div>' +
       '<div class="grid g4" id="clKpi" style="margin:12px 0"></div><div class="grid g3" id="clGraf">' + M.L.map(function (k) { var d = (CQ[k] || CH[k]); return card(d.t, "", "cl_" + k); }).join("") + '</div>';
@@ -320,14 +318,12 @@ var CLIMA = (function () {
   function elegir(p, desdeUsuario) {
     ST.lugar = p; var s = $("clLug"); if (p.mun) s.value = ""; else s.value = p.k;
     try { var u = new URL(location.href); u.searchParams.set("lug", p.k); history.replaceState(null, "", u.toString()); } catch (e) {}
-    ficha(null, p); if (p.mun || desdeUsuario) resaltar(p); cargar();
+    ficha(null, p); if (!p.mun && desdeUsuario) resaltar(p); cargar();
   }
   function iniciar(modo, o) {
     O = o; ST.modo = modo; lugares();
-    var s = $("clLug"); s.innerHTML = '<option value="">— municipio elegido —</option><optgroup label="Capitales de departamento">' + ST.caps.map(function (c) { return '<option value="' + E(c.k) + '">' + E(c.n) + '</option>'; }).join("") + '</optgroup>';
-    $("clDL").innerHTML = Object.keys(ST.mun).sort().map(function (k) { return '<option value="' + E(k) + '"></option>'; }).join("");
-    s.onchange = function () { if (s.value) { $("clMun").value = ""; elegir(pideLugar(s.value), true); } };
-    $("clMun").onchange = $("clMun").oninput = function () { var v = $("clMun").value.trim(), m = ST.mun[v]; if (m) elegir(m, true); };
+    var s = $("clLug"); s.innerHTML = '<option value="">— municipio (elegido arriba) —</option><optgroup label="Capitales de departamento">' + ST.caps.map(function (c) { return '<option value="' + E(c.k) + '">' + E(c.n) + '</option>'; }).join("") + '</optgroup>';
+    s.onchange = function () { if (s.value) elegir(pideLugar(s.value), true); };
     $("clVen").onclick = function (e) { var b = e.target.closest("[data-n]"); if (!b) return; ST.n = +b.dataset.n; [].forEach.call($("clVen").children, function (c) { c.classList.toggle("on", c === b); }); if (ST.an) pintar(); };
     $("clCsv").onclick = function () { var A = ST.an; if (!A) return; var r = A.raw, L = ["fecha,tmax_c,tmin_c,lluvia_mm,rafaga_kmh,et0_mm"]; for (var i = 0; i < A.n; i++) L.push([r.d[i], r.tx[i], r.tn[i], r.pr[i], r.wg[i], r.et[i]].map(function (v) { return v == null ? "" : v; }).join(",")); var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + L.join("\n")], {type: "text/csv"})); a.download = "serie_" + ST.lugar.n.replace(/[^a-z0-9]+/gi, "_") + ".csv"; a.click(); };
     var q = new URLSearchParams(location.search).get("lug"), ini = q ? pideLugar(q) : (modo === "hidro" ? ST.caps[7] : ST.caps[0]);
@@ -340,5 +336,6 @@ var CLIMA = (function () {
     ST.modo = "meteo"; ST.lugar = p; ST.n = 90; ST.q = null;
     bajarClima(p).then(function (r) { var A = analizar(r); ST.an = A; $("rmLect").innerHTML = lectura(A, actuales(A)); L.forEach(function (k) { $("rm_" + k + "c").textContent = CH[k].c(A); try { CH[k].f(A, "rm_" + k); } catch (e) { console.error(k, e); } }); }).catch(function (e) { $("rmLect").textContent = "No se pudo consultar Open-Meteo (" + e.message + ")."; });
   }
-  return {seccion: seccion, iniciar: iniciar, analizar: analizar, informe: informe, MODOS: MODOS};
+  function irMun(k) { if (ST.mun && ST.mun[k]) elegir(ST.mun[k], false); }
+  return {irMun: irMun, seccion: seccion, iniciar: iniciar, analizar: analizar, informe: informe, MODOS: MODOS};
 })();
