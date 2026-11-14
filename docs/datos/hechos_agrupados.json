@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:100uxnv",
+  "fecha_hora_local": "2026-11-13 21:06",
+  "ts_ms": 1794618409000,
+  "titulo": "Bus de la Uagrm sufre vuelco lateral en ruta a Santa Cruz - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPRkZfN255a0pSbEJadXN3UGJGYmtFSWN3bGRGV2ZnX1Y3UDJNMmlDQ2dTODRuZkw3M0wyUUNmY1hxSEV0aDRib0FhZU5kM0ZORlVHYVY2cHY3NS0wckZtc0dMVmlOVGczRUluUXh5dEYwUHljc25LUFFMVjJQTFg1c0FqN2x4WUdEUGFYM214RUdlRkdjR1BqSFdoeFI0dWtDWnprT2pOQW5Vdw?oc=5"
+ },
+ {
   "hecho_id": "noticia:zhs6nm",
   "fecha_hora_local": "2026-11-13 18:01",
   "ts_ms": 1794607282000,
