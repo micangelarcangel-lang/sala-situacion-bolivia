@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-14T18:37:30.765427Z",
+ "actualizado": "2026-11-14T19:39:01.348998Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261114T140354_-22.265_-64.129",
+   "fecha_local": "2026-11-14 14:03:54",
+   "lat": -22.265,
+   "lon": -64.129,
+   "prof_km": 583.3,
+   "mag": 5.0,
+   "provincia": "Aniceto Arce",
+   "departamento": "Tarija",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261114T134909_-19.961_-64.771",
    "fecha_local": "2026-11-14 13:49:09",

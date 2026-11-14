@@ -1,7 +1,26 @@
 {
- "actualizado": "2026-11-14T18:37:40.148045Z",
+ "actualizado": "2026-11-14T19:39:10.098423Z",
  "dia": "2026-11-14",
  "complejos": [
+  {
+   "n": 105,
+   "frp_mw": 1096.0,
+   "lat": -18.194,
+   "lon": -60.142,
+   "departamento": "Santa Cruz",
+   "municipio": "San José",
+   "municipios": [
+    "San José",
+    "Roboré"
+   ],
+   "bbox": [
+    -60.258,
+    -18.265,
+    -60.102,
+    -18.118
+   ],
+   "id": "2026-11-14:1"
+  },
   {
    "n": 73,
    "frp_mw": 872.0,
@@ -18,7 +37,26 @@
     -59.439,
     -18.541
    ],
-   "id": "2026-11-14:1"
+   "id": "2026-11-14:2"
+  },
+  {
+   "n": 55,
+   "frp_mw": 795.1,
+   "lat": -16.271,
+   "lon": -64.165,
+   "departamento": "Santa Cruz",
+   "municipio": "San Juan",
+   "municipios": [
+    "San Juan",
+    "Santa Rosa"
+   ],
+   "bbox": [
+    -64.211,
+    -16.308,
+    -64.112,
+    -16.22
+   ],
+   "id": "2026-11-14:3"
   },
   {
    "n": 9,
@@ -36,29 +74,31 @@
     -63.764,
     -21.925
    ],
-   "id": "2026-11-14:2"
+   "id": "2026-11-14:4"
   },
   {
-   "n": 90,
-   "frp_mw": 486.6,
-   "lat": -18.166,
-   "lon": -60.17,
+   "n": 38,
+   "frp_mw": 480.9,
+   "lat": -15.986,
+   "lon": -64.652,
    "departamento": "Santa Cruz",
-   "municipio": "San José",
+   "municipio": "Yapacaní",
    "municipios": [
-    "San José"
+    "Yapacaní",
+    "Villa Tunari",
+    "Chimoré"
    ],
    "bbox": [
-    -60.258,
-    -18.265,
-    -60.107,
-    -18.122
+    -64.866,
+    -16.004,
+    -64.626,
+    -15.974
    ],
-   "id": "2026-11-14:3"
+   "id": "2026-11-14:5"
   },
   {
-   "n": 27,
-   "frp_mw": 351.6,
+   "n": 28,
+   "frp_mw": 359.3,
    "lat": -16.823,
    "lon": -60.906,
    "departamento": "Santa Cruz",
@@ -72,32 +112,49 @@
     -60.896,
     -16.815
    ],
-   "id": "2026-11-14:4"
+   "id": "2026-11-14:6"
   },
   {
-   "n": 27,
-   "frp_mw": 302.2,
-   "lat": -16.275,
-   "lon": -64.183,
+   "n": 9,
+   "frp_mw": 295.9,
+   "lat": -18.149,
+   "lon": -63.436,
    "departamento": "Santa Cruz",
-   "municipio": "San Juan",
+   "municipio": "El Torno",
    "municipios": [
-    "San Juan",
-    "Santa Rosa"
+    "El Torno"
    ],
    "bbox": [
-    -64.209,
-    -16.292,
-    -64.123,
-    -16.221
+    -63.481,
+    -18.233,
+    -63.403,
+    -18.106
    ],
-   "id": "2026-11-14:5"
+   "id": "2026-11-14:7"
   },
   {
-   "n": 16,
-   "frp_mw": 256.0,
+   "n": 19,
+   "frp_mw": 284.7,
+   "lat": -18.139,
+   "lon": -59.51,
+   "departamento": "Santa Cruz",
+   "municipio": "Roboré",
+   "municipios": [
+    "Roboré"
+   ],
+   "bbox": [
+    -59.514,
+    -18.145,
+    -59.497,
+    -18.135
+   ],
+   "id": "2026-11-14:8"
+  },
+  {
+   "n": 17,
+   "frp_mw": 276.9,
    "lat": -17.554,
-   "lon": -61.187,
+   "lon": -61.188,
    "departamento": "Santa Cruz",
    "municipio": "Pailón",
    "municipios": [
@@ -109,31 +166,13 @@
     -61.182,
     -17.548
    ],
-   "id": "2026-11-14:6"
+   "id": "2026-11-14:9"
   },
   {
-   "n": 19,
-   "frp_mw": 251.0,
-   "lat": -15.987,
-   "lon": -64.64,
-   "departamento": "Santa Cruz",
-   "municipio": "Yapacaní",
-   "municipios": [
-    "Yapacaní"
-   ],
-   "bbox": [
-    -64.66,
-    -15.999,
-    -64.626,
-    -15.974
-   ],
-   "id": "2026-11-14:7"
-  },
-  {
-   "n": 30,
-   "frp_mw": 233.3,
-   "lat": -17.607,
-   "lon": -59.801,
+   "n": 34,
+   "frp_mw": 265.9,
+   "lat": -17.597,
+   "lon": -59.789,
    "departamento": "Santa Cruz",
    "municipio": "San José",
    "municipios": [
@@ -145,11 +184,11 @@
     -59.569,
     -17.471
    ],
-   "id": "2026-11-14:8"
+   "id": "2026-11-14:10"
   },
   {
-   "n": 11,
-   "frp_mw": 216.2,
+   "n": 12,
+   "frp_mw": 222.8,
    "lat": -18.155,
    "lon": -61.999,
    "departamento": "Santa Cruz",
@@ -161,9 +200,27 @@
     -62.03,
     -18.165,
     -61.992,
-    -18.153
+    -18.141
    ],
-   "id": "2026-11-14:9"
+   "id": "2026-11-14:11"
+  },
+  {
+   "n": 11,
+   "frp_mw": 203.1,
+   "lat": -16.149,
+   "lon": -63.358,
+   "departamento": "Santa Cruz",
+   "municipio": "El Puente",
+   "municipios": [
+    "El Puente"
+   ],
+   "bbox": [
+    -63.369,
+    -16.199,
+    -63.325,
+    -16.131
+   ],
+   "id": "2026-11-14:12"
   },
   {
    "n": 23,
@@ -181,25 +238,25 @@
     -58.02,
     -18.663
    ],
-   "id": "2026-11-14:10"
+   "id": "2026-11-14:13"
   },
   {
-   "n": 16,
-   "frp_mw": 185.1,
-   "lat": -18.139,
-   "lon": -59.509,
+   "n": 39,
+   "frp_mw": 184.5,
+   "lat": -17.493,
+   "lon": -60.324,
    "departamento": "Santa Cruz",
-   "municipio": "Roboré",
+   "municipio": "San José",
    "municipios": [
-    "Roboré"
+    "San José"
    ],
    "bbox": [
-    -59.514,
-    -18.145,
-    -59.497,
-    -18.135
+    -60.495,
+    -17.651,
+    -60.202,
+    -17.21
    ],
-   "id": "2026-11-14:11"
+   "id": "2026-11-14:14"
   },
   {
    "n": 16,
@@ -217,7 +274,7 @@
     -61.337,
     -17.73
    ],
-   "id": "2026-11-14:12"
+   "id": "2026-11-14:15"
   },
   {
    "n": 23,
@@ -235,7 +292,26 @@
     -64.993,
     -13.609
    ],
-   "id": "2026-11-14:13"
+   "id": "2026-11-14:16"
+  },
+  {
+   "n": 18,
+   "frp_mw": 144.6,
+   "lat": -16.628,
+   "lon": -63.958,
+   "departamento": "Santa Cruz",
+   "municipio": "Santa Rosa",
+   "municipios": [
+    "Santa Rosa",
+    "San Juan"
+   ],
+   "bbox": [
+    -64.098,
+    -16.795,
+    -63.733,
+    -16.561
+   ],
+   "id": "2026-11-14:17"
   },
   {
    "n": 15,
@@ -253,7 +329,99 @@
     -62.101,
     -18.305
    ],
-   "id": "2026-11-14:14"
+   "id": "2026-11-14:18"
+  },
+  {
+   "n": 11,
+   "frp_mw": 136.4,
+   "lat": -20.448,
+   "lon": -64.274,
+   "departamento": "Chuquisaca",
+   "municipio": "Huacareta",
+   "municipios": [
+    "Huacareta",
+    "Azurduy",
+    "Incahuasi"
+   ],
+   "bbox": [
+    -64.363,
+    -20.488,
+    -64.127,
+    -20.424
+   ],
+   "id": "2026-11-14:19"
+  },
+  {
+   "n": 14,
+   "frp_mw": 135.9,
+   "lat": -12.641,
+   "lon": -66.529,
+   "departamento": "Beni",
+   "municipio": "Santa Rosa",
+   "municipios": [
+    "Santa Rosa"
+   ],
+   "bbox": [
+    -66.542,
+    -12.651,
+    -66.513,
+    -12.629
+   ],
+   "id": "2026-11-14:20"
+  },
+  {
+   "n": 18,
+   "frp_mw": 122.1,
+   "lat": -16.172,
+   "lon": -63.655,
+   "departamento": "Santa Cruz",
+   "municipio": "El Puente",
+   "municipios": [
+    "El Puente"
+   ],
+   "bbox": [
+    -63.68,
+    -16.2,
+    -63.651,
+    -16.117
+   ],
+   "id": "2026-11-14:21"
+  },
+  {
+   "n": 13,
+   "frp_mw": 110.4,
+   "lat": -14.413,
+   "lon": -67.075,
+   "departamento": "Beni",
+   "municipio": "Reyes",
+   "municipios": [
+    "Reyes"
+   ],
+   "bbox": [
+    -67.081,
+    -14.423,
+    -67.068,
+    -14.404
+   ],
+   "id": "2026-11-14:22"
+  },
+  {
+   "n": 11,
+   "frp_mw": 101.6,
+   "lat": -13.306,
+   "lon": -63.619,
+   "departamento": "Beni",
+   "municipio": "Magdalena",
+   "municipios": [
+    "Magdalena"
+   ],
+   "bbox": [
+    -63.63,
+    -13.309,
+    -63.605,
+    -13.303
+   ],
+   "id": "2026-11-14:23"
   },
   {
    "n": 12,
@@ -272,187 +440,23 @@
     -62.554,
     -15.946
    ],
-   "id": "2026-11-14:15"
-  },
-  {
-   "n": 13,
-   "frp_mw": 86.9,
-   "lat": -17.595,
-   "lon": -60.301,
-   "departamento": "Santa Cruz",
-   "municipio": "San José",
-   "municipios": [
-    "San José"
-   ],
-   "bbox": [
-    -60.334,
-    -17.651,
-    -60.258,
-    -17.502
-   ],
-   "id": "2026-11-14:16"
+   "id": "2026-11-14:24"
   },
   {
    "n": 14,
-   "frp_mw": 78.6,
-   "lat": -17.869,
-   "lon": -59.691,
-   "departamento": "Santa Cruz",
-   "municipio": "Roboré",
-   "municipios": [
-    "Roboré"
-   ],
-   "bbox": [
-    -59.753,
-    -17.885,
-    -59.623,
-    -17.81
-   ],
-   "id": "2026-11-14:17"
-  },
-  {
-   "n": 8,
-   "frp_mw": 65.6,
-   "lat": -17.672,
-   "lon": -62.896,
-   "departamento": "Santa Cruz",
-   "municipio": "Cotoca",
-   "municipios": [
-    "Cotoca",
-    "Okinawa Uno"
-   ],
-   "bbox": [
-    -62.931,
-    -17.689,
-    -62.89,
-    -17.547
-   ],
-   "id": "2026-11-14:18"
-  },
-  {
-   "n": 10,
-   "frp_mw": 59.2,
-   "lat": -18.747,
-   "lon": -62.886,
+   "frp_mw": 88.0,
+   "lat": -18.739,
+   "lon": -62.901,
    "departamento": "Santa Cruz",
    "municipio": "Charagua",
    "municipios": [
     "Charagua"
    ],
    "bbox": [
-    -62.891,
+    -62.956,
     -18.751,
     -62.884,
-    -18.746
-   ],
-   "id": "2026-11-14:19"
-  },
-  {
-   "n": 14,
-   "frp_mw": 46.6,
-   "lat": -15.858,
-   "lon": -64.306,
-   "departamento": "Santa Cruz",
-   "municipio": "El Puente",
-   "municipios": [
-    "El Puente",
-    "San Andrés"
-   ],
-   "bbox": [
-    -64.361,
-    -15.877,
-    -64.229,
-    -15.831
-   ],
-   "id": "2026-11-14:20"
-  },
-  {
-   "n": 8,
-   "frp_mw": 46.0,
-   "lat": -16.914,
-   "lon": -63.38,
-   "departamento": "Santa Cruz",
-   "municipio": "San Pedro",
-   "municipios": [
-    "San Pedro"
-   ],
-   "bbox": [
-    -63.383,
-    -16.919,
-    -63.377,
-    -16.91
-   ],
-   "id": "2026-11-14:21"
-  },
-  {
-   "n": 15,
-   "frp_mw": 42.2,
-   "lat": -17.336,
-   "lon": -60.368,
-   "departamento": "Santa Cruz",
-   "municipio": "San José",
-   "municipios": [
-    "San José"
-   ],
-   "bbox": [
-    -60.492,
-    -17.381,
-    -60.203,
-    -17.21
-   ],
-   "id": "2026-11-14:22"
-  },
-  {
-   "n": 13,
-   "frp_mw": 41.7,
-   "lat": -13.137,
-   "lon": -66.877,
-   "departamento": "Beni",
-   "municipio": "Reyes",
-   "municipios": [
-    "Reyes"
-   ],
-   "bbox": [
-    -66.885,
-    -13.156,
-    -66.853,
-    -13.131
-   ],
-   "id": "2026-11-14:23"
-  },
-  {
-   "n": 9,
-   "frp_mw": 41.6,
-   "lat": -18.035,
-   "lon": -62.257,
-   "departamento": "Santa Cruz",
-   "municipio": "Pailón",
-   "municipios": [
-    "Pailón"
-   ],
-   "bbox": [
-    -62.262,
-    -18.05,
-    -62.25,
-    -18.003
-   ],
-   "id": "2026-11-14:24"
-  },
-  {
-   "n": 11,
-   "frp_mw": 35.7,
-   "lat": -16.081,
-   "lon": -60.757,
-   "departamento": "Santa Cruz",
-   "municipio": "San Ignacio",
-   "municipios": [
-    "San Ignacio"
-   ],
-   "bbox": [
-    -60.856,
-    -16.098,
-    -60.747,
-    -16.049
+    -18.701
    ],
    "id": "2026-11-14:25"
   }
