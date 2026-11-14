@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-14T17:31:26.667827Z",
+ "actualizado": "2026-11-14T18:37:30.765427Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261114T134909_-19.961_-64.771",
+   "fecha_local": "2026-11-14 13:49:09",
+   "lat": -19.961,
+   "lon": -64.771,
+   "prof_km": 18.4,
+   "mag": 3.1,
+   "provincia": "Nor Cinti",
+   "departamento": "Chuquisaca",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261112T143753_-21.401_-66.631",
    "fecha_local": "2026-11-12 14:37:53",
