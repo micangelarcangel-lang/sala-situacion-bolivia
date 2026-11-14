@@ -89,5 +89,5 @@ var PERFIL = (function () {
       if (dk && document.getElementById("pfEn")) { var dibuja = function () { var e = document.getElementById("pfEn").value, Y = snis.d[e], s = Array(12).fill(0), ny = 0; Object.keys(Y).forEach(function (y) { var v = Y[y][dk]; if (v) { ny++; v.forEach(function (x, i) { s[i] += x; }); } }); X.chart("pfSn", {tooltip: {trigger: "axis"}, grid: {left: 44, right: 10, top: 10, bottom: 24}, xAxis: {type: "category", data: MES}, yAxis: {type: "value"}, series: [{type: "bar", data: s.map(function (v) { return ny ? Math.round(v / ny) : 0; }), itemStyle: {color: "#8e24aa"}}]}); }; document.getElementById("pfEn").onchange = dibuja; dibuja(); }
     });
   }
-  return {render: render, zona: zona, amenazas: amenazas};
+  return {render: render, zona: zona, amenazas: amenazas, clima: clima};
 })();

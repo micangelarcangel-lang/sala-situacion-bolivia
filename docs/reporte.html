@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Reporte — Sala de Situación Bolivia</title>
-<script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script>
+<script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script><script src="clima.js"></script><script src="perfil.js"></script><script src="territorio.js"></script>
 <style>
 :root{--ink:#0f1b2d;--mut:#5b6b82;--line:#d9e0ea;--soft:#f4f7fb;--az:#1d4f91}
 *{box-sizing:border-box}
@@ -80,7 +80,7 @@ function chip(c){return'<span class="chip" style="background:'+(S.COLCAT[c]||"#7
 function munDeDetalle(e){var m=/Municipios?: ([^.]*)\./.exec(e.detalle||"");return m?m[1]:""}
 
 function jget(u){return fetch(u).then(function(r){return r.json()}).catch(function(){return null})}
-X.datos().then(function(D){return Promise.all([jget("poblacion_mun.json"),jget("establecimientos_salud.json"),jget("servicios_emergencia.json")]).then(function(x){D.pob=x[0];D.est=x[1];D.emer=x[2];return D})}).then(function(D){
+X.datos().then(function(D){var Q0=new URLSearchParams(location.search),d0=Q0.get("dep")||"",m0=Q0.get("mun")||"";return(d0?TERR.contexto(D,d0,m0).then(function(c){D.ctx=c}).catch(function(){}):Promise.resolve()).then(function(){return D})}).then(function(D){return Promise.all([jget("poblacion_mun.json"),jget("establecimientos_salud.json"),jget("servicios_emergencia.json")]).then(function(x){D.pob=x[0];D.est=x[1];D.emer=x[2];return D})}).then(function(D){
  var id=P.get("id");
  if(id){hecho(D,id)}else{seleccion(D)}
 }).catch(function(err){$("app").innerHTML='<div class="hoja vacio">No se pudo cargar el reporte: '+esc(err.message)+'</div>'});
@@ -200,20 +200,20 @@ function hecho(D,id){
 
 /* ============ REPORTE DE UNA SELECCIÓN ============ */
 function seleccion(D){
- var per=P.get("per")||"1",dep=P.get("dep")||"",org=P.get("org")||"",nv=+(P.get("niv")||-1),now=Date.now(),a,b=now;
+ var per=P.get("per")||"1",dep=P.get("dep")||"",mun=P.get("mun")||"",org=P.get("org")||"",nv=+(P.get("niv")||-1),now=Date.now(),a,b=now;
  var CATS=S.CAT.slice(0,7),cs=(P.get("cat")||"").split(",").filter(function(c){return CATS.indexOf(c)>=0});if(!cs.length)cs=CATS;
  if(per==="x"){a=P.get("desde")?new Date(P.get("desde")+"T00:00:00-04:00").getTime():0;b=P.get("hasta")?new Date(P.get("hasta")+"T23:59:59-04:00").getTime():now}else a=now-(+per)*DIA;
- var F=D.ev.filter(function(e){if(e.ts<a||e.ts>b||e.origen==="modelo")return false;if(cs.indexOf(e.categoria)<0)return false;if(dep&&(e.departamentos||[]).indexOf(dep)<0)return false;if(org==="of"&&!e.oficial)return false;if(org==="prensa"&&e.origen!=="prensa")return false;if(nv>=0&&!(e.nivel!=null&&e.nivel>=nv))return false;return true}).sort(function(x,y){return y.ts-x.ts});
+ var F=D.ev.filter(function(e){if(e.ts<a||e.ts>b||e.origen==="modelo")return false;if(cs.indexOf(e.categoria)<0)return false;if(dep&&(e.departamentos||[]).indexOf(dep)<0)return false;if(mun&&!TERR.pertenece(D,e,dep,mun))return false;if(org==="of"&&!e.oficial)return false;if(org==="prensa"&&e.origen!=="prensa")return false;if(nv>=0&&!(e.nivel!=null&&e.nivel>=nv))return false;return true}).sort(function(x,y){return y.ts-x.ts});
  var per_t=per==="1"?"últimas 24 horas":per==="2"?"últimas 48 horas":per==="x"?"período seleccionado":per==="400"?"todo el historial":per==="365"?"últimos 12 meses":"últimos "+per+" días";
- var tit=(cs.length===CATS.length?"Todos los eventos":cs.map(function(c){return c}).join(" y "))+" · "+(dep||"Bolivia")+" · "+per_t;
+ var tit=(cs.length===CATS.length?"Todos los eventos":cs.map(function(c){return c}).join(" y "))+" · "+(mun?mun+" ("+dep+")":dep||"Bolivia")+" · "+per_t;
  document.title="Reporte — "+tit;
  var num="REPORTE DE SITUACIÓN N.º "+S.diaKey(now).replace(/-/g,"");
  var focos=F.filter(function(e){return e.origen==="foco"}),otros=F.filter(function(e){return e.origen!=="foco"});
  var of=F.filter(function(e){return e.oficial}).length;
  var det=0,mw=0;focos.forEach(function(e){det+=(e.cifras||{}).detecciones||0;mw+=(e.cifras||{}).frp_mw||0});
  var h='<div class="hoja">'+hdr("REPORTE DE SITUACIÓN",num);
- h+='<h1>'+esc(dep?dep:"Bolivia")+' · '+per_t+'</h1><div class="sub">Cobertura: '+(a?S.fecha(a):"inicio del registro")+' a '+S.fecha(b)+' (hora La Paz) · Tipos: '+(cs.length===CATS.length?"todos":esc(cs.join(", ")))+' · Fuente: '+(org==="of"?"solo oficiales":org==="prensa"?"solo prensa":"todas")+(nv>=0?' · Nivel: '+["verde","amarilla o más","naranja o más","solo roja"][nv]:'')+'</div>';
- if(!F.length){$("app").innerHTML=h+'<h2>Resultado</h2><p>No hay eventos registrados con estos criterios en el período. Pruebe ampliar el período o el territorio.</p>'+pie()+'</div>';return}
+ h+='<h1>'+esc(mun?mun+" ("+dep+")":dep?dep:"Bolivia")+' · '+per_t+'</h1><div class="sub">Cobertura: '+(a?S.fecha(a):"inicio del registro")+' a '+S.fecha(b)+' (hora La Paz) · Tipos: '+(cs.length===CATS.length?"todos":esc(cs.join(", ")))+' · Fuente: '+(org==="of"?"solo oficiales":org==="prensa"?"solo prensa":"todas")+(nv>=0?' · Nivel: '+["verde","amarilla o más","naranja o más","solo roja"][nv]:'')+'</div>';
+ if(!F.length){$("app").innerHTML=h+'<h2>Resultado</h2><p>No hay eventos registrados con estos criterios en el período. Pruebe ampliar el período o el territorio.</p>'+(D.ctx||'')+pie()+'</div>';return}
  var ks=kpi("Eventos",F.length,of+" de fuente oficial","#1d6fb8");
  if(focos.length)ks+=kpi("Detecciones de calor",det,focos.length+" complejos","#ef6c00")+kpi("Potencia radiativa",Math.round(mw)+" MW","suma de detecciones","#c62828");
  else ks+=kpi("Oficiales",of,"SENAMHI, San Calixto, etc.","#0aa3a3");
@@ -223,7 +223,7 @@ function seleccion(D){
  var porC={};F.forEach(function(e){porC[e.categoria]=(porC[e.categoria]||0)+1});
  var lect="Entre "+(a?S.fecha(a,true):"el inicio")+" y "+S.fecha(b,true)+" el sistema registra <b>"+F.length+" evento(s)</b> en "+esc(dep||"Bolivia")+": "+Object.keys(porC).map(function(c){return porC[c]+" "+c}).join(", ")+".";
  if(focos.length)lect+=" Los satélites detectaron <b>"+det+" focos de calor</b> agrupados en "+focos.length+" complejo(s), con potencia radiativa acumulada de "+Math.round(mw)+" MW. Las detecciones incluyen quemas agrícolas y no equivalen a incendios confirmados.";
- h+='<h2>1. Lectura de la situación</h2><p style="margin:0">'+lect+'</p>';
+ h+='<h2>1. Lectura de la situación</h2><p style="margin:0">'+lect+'</p>'+(D.ctx||'');
  /* gráficos */
  var dias={};F.forEach(function(e){var k=S.diaKey(e.ts);dias[k]=(dias[k]||0)+1});var dk=Object.keys(dias).sort();
  h+='<h2>2. Distribución</h2><div class="dos" style="grid-template-columns:1fr 1fr"><div><div class="ch" id="g1"></div><div class="nota" style="text-align:center">Eventos por tipo</div></div><div><div class="ch" id="g2"></div><div class="nota" style="text-align:center">'+(per==="1"||per==="2"?"Eventos por tipo de fuente":"Eventos por día")+'</div></div></div>';
