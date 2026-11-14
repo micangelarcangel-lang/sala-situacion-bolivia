@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reporte — Sala de Situación Bolivia</title>
+<script src="vendor/echarts.min.js"></script><script src="lib.js"></script><script src="s2.js"></script>
+<style>
+:root{--ink:#0f1b2d;--mut:#5b6b82;--line:#d9e0ea;--soft:#f4f7fb;--az:#1d4f91}
+*{box-sizing:border-box}
+body{margin:0;background:#e9edf3;color:var(--ink);font:13.5px/1.5 Inter,system-ui,Segoe UI,Arial,sans-serif}
+.bar{position:sticky;top:0;z-index:5;background:#0f1b2d;color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar b{font-size:14px}.bar .sp{flex:1}.bar span.h{font-size:12px;color:#b9c6da}
+.btn{display:inline-block;border:0;border-radius:8px;padding:9px 14px;font:600 13px inherit;cursor:pointer;text-decoration:none;background:#2b3a52;color:#fff}
+.btn.p{background:#1d6fb8}
+.hoja{width:210mm;max-width:100%;min-height:297mm;margin:16px auto;background:#fff;padding:14mm 14mm 12mm;box-shadow:0 2px 14px rgba(0,0,0,.15);position:relative}
+.cab{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--az);padding-bottom:8px;margin-bottom:10px}
+.cab .org{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.cab .tt{font-size:12px;font-weight:800;color:var(--az);letter-spacing:.05em}
+.cab .n{text-align:right;font-size:11.5px;color:var(--mut)}
+h1{font-size:21px;line-height:1.25;margin:6px 0 2px}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--az);border-bottom:1px solid var(--line);padding-bottom:3px;margin:14px 0 6px}
+.sub{color:var(--mut);font-size:12.5px}
+.meta4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.k{border:1px solid var(--line);border-left:4px solid var(--c,#1d6fb8);border-radius:6px;padding:6px 8px;background:var(--soft)}
+.k .l{font-size:10.5px;text-transform:uppercase;color:var(--mut);letter-spacing:.04em}.k .v{font-size:17px;font-weight:800;line-height:1.2}.k .d{font-size:10.5px;color:var(--mut)}
+.nota{font-size:11px;color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+th{background:var(--soft);text-align:left;font-size:10.5px;text-transform:uppercase;color:var(--mut);padding:4px 6px;border-bottom:1px solid var(--line)}
+td{padding:4px 6px;border-bottom:1px solid #edf0f5;vertical-align:top}
+.mapaz{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:6px}
+.dos{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;align-items:start}
+.caja{border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:#fbfcfe}
+.ficha{border:1px solid var(--line);border-radius:6px;padding:7px 10px;margin:6px 0;break-inside:avoid}
+.ficha .t{font-weight:700}
+.ch{height:210px}
+.pie{margin-top:14px;border-top:1px solid var(--line);padding-top:6px;font-size:10.5px;color:var(--mut)}
+.chip{display:inline-block;padding:1px 7px;border-radius:10px;color:#fff;font-size:10.5px;font-weight:700}
+.vacio{padding:30px;text-align:center}
+@media print{
+ body{background:#fff}.bar{display:none!important}
+ .hoja{margin:0;box-shadow:none;width:auto;min-height:0;padding:0}
+ @page{size:A4;margin:12mm}
+ h2,.ficha,.k,tr{break-inside:avoid}
+ .pb{break-before:page}
+}
+@media(max-width:700px){.meta4{grid-template-columns:repeat(2,1fr)}.dos{grid-template-columns:1fr}.hoja{padding:12px}}
+</style></head>
+<body>
+<div class="bar"><b>Vista previa del reporte</b><span class="h">Revise y luego pulse el botón. En la ventana de impresión elija «Guardar como PDF».</span><span class="sp"></span><a class="btn" href="javascript:history.back()">← Volver</a><button class="btn p" onclick="window.print()">Descargar PDF</button></div>
+<div id="app"><div class="hoja vacio">Preparando reporte…</div></div>
+<script>
+(function(){
+var S=SALA,X=S2,DIA=864e5,$=function(i){return document.getElementById(i)},esc=S.esc;
+var P=new URLSearchParams(location.search);
+var ORI={
+ foco:"Los satélites NASA FIRMS (VIIRS) detectan anomalías térmicas; la Sala las descarga, las agrupa por cercanía en «complejos» y las ubica en municipios. Una detección no equivale a un incendio confirmado.",
+ sismo:"El Observatorio San Calixto publica su boletín sísmico; la Sala lo lee automáticamente y calcula clase, profundidad y sismos cercanos.",
+ senamhi:"El SENAMHI publica avisos oficiales de amenaza; la Sala los lee del sitio oficial y extrae nivel, territorios y vigencia.",
+ prensa:"La Sala lee titulares y notas de medios bolivianos, los agrupa por hecho, ubica el lugar y contrasta cifras entre medios. Información no oficial hasta ser confirmada.",
+ caudal:"El modelo GloFAS (Copernicus) pronostica caudales; la Sala los compara con la serie histórica (P90). Es un indicador de modelo, no una alerta oficial.",
+ sequia:"Índices de sequía calculados por la Sala con reanálisis y pronóstico de modelo (Open-Meteo).",
+ epidemiologia:"La Sala consulta fuentes OPS/OMS y boletines epidemiológicos oficiales disponibles.",
+ gdacs:"Alertas internacionales del sistema GDACS (ONU/UE) filtradas para Bolivia.",usgs:"Catálogo sísmico del USGS filtrado para Bolivia."};
+var KL={detecciones:["Detecciones","#ef6c00",""],frp_mw:["Potencia radiativa","#c62828"," MW"],magnitud:["Magnitud","#8d6e63",""],profundidad_km:["Profundidad","#2a7fd1"," km"],fallecidos:["Fallecidos","#7a1f2b",""],heridos:["Heridos","#f26a1b",""],notas:["Notas de prensa","#1d6fb8",""],caudal_max_10d_m3s:["Caudal máx. 10 d","#00897b"," m³/s"]};
+function hdr(tipo,num){return'<div class="cab"><div><div class="org">Sala de Situación Bolivia · CCES Nacional · Ministerio de Salud y Deportes</div><div class="tt">'+tipo+'</div></div><div class="n">'+num+'<br>Corte: '+S.fecha(Date.now())+' (La Paz)</div></div>'}
+function pie(f){return'<div class="pie">Reporte generado automáticamente por la Sala de Situación Bolivia con datos abiertos y oficiales. '+(f||"")+' Información preliminar sujeta a verificación; no reemplaza comunicados de las instituciones competentes.</div>'}
+function pol(g){return g.type==="Polygon"?[g.coordinates]:g.coordinates}
+function centro(f){var xs=0,ys=0,n=0;pol(f.geometry)[0][0].forEach(function(c){xs+=c[0];ys+=c[1];n++});return[xs/n,ys/n]}
+function mapaZ(b,o){var kx=Math.cos((b[1]+b[3])/2*Math.PI/180),W=900,sc=W/((b[2]-b[0])*kx),H=Math.round((b[3]-b[1])*sc);
+ function x(l){return((l-b[0])*kx*sc).toFixed(1)}function y(l){return((b[3]-l)*sc).toFixed(1)}
+ function path(g){var d="";pol(g).forEach(function(p){p.forEach(function(r){d+="M"+r.map(function(c){return x(c[0])+","+y(c[1])}).join("L")+"Z"})});return d}
+ var s='<svg class="mapaz" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" fill="#eaf1f8"/>';
+ ((o.dep&&o.dep.features)||[]).forEach(function(f){s+='<path d="'+path(f.geometry)+'" fill="#fff" stroke="#4b5a70" stroke-width="1.8" fill-rule="evenodd"/>'});
+ ((o.mun&&o.mun.features)||[]).forEach(function(f){s+='<path d="'+path(f.geometry)+'" fill="none" stroke="#9aa6b8" stroke-width=".7" fill-rule="evenodd"/>'});
+ if(o.rect)s+='<rect x="'+x(o.rect[0])+'" y="'+y(o.rect[3])+'" width="'+((o.rect[2]-o.rect[0])*kx*sc).toFixed(1)+'" height="'+((o.rect[3]-o.rect[1])*sc).toFixed(1)+'" fill="#d7263d" fill-opacity=".08" stroke="#d7263d" stroke-width="2.5" stroke-dasharray="8 5"/>';
+ (o.pts||[]).forEach(function(p){if(p.ring)s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+p.r+'" fill="none" stroke="'+p.color+'" stroke-width="4"/><circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r*2.2)+'" fill="none" stroke="'+p.color+'" stroke-width="2" opacity=".5"/>';else s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r||4)+'" fill="'+(p.color||"#d7263d")+'" fill-opacity=".65" stroke="#7a5b00" stroke-width="1"/>'});
+ (o.labels||[]).forEach(function(l){s+='<text x="'+x(l.lon)+'" y="'+y(l.lat)+'" font-size="20" text-anchor="middle" fill="#0f1b2d" font-weight="700" style="paint-order:stroke;stroke:#fff;stroke-width:5px">'+esc(l.t)+'</text>'});
+ return s+'<text x="14" y="30" font-size="20" fill="#4b5a70">N ↑</text></svg>'}
+function kpi(l,v,d,c){return'<div class="k" style="--c:'+c+'"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="d">'+(d||"&nbsp;")+'</div></div>'}
+function chip(c){return'<span class="chip" style="background:'+(S.COLCAT[c]||"#777")+'">'+esc(c)+'</span>'}
+function munDeDetalle(e){var m=/Municipios?: ([^.]*)\./.exec(e.detalle||"");return m?m[1]:""}
+
+X.datos().then(function(D){
+ var id=P.get("id");
+ if(id){hecho(D,id)}else{seleccion(D)}
+}).catch(function(err){$("app").innerHTML='<div class="hoja vacio">No se pudo cargar el reporte: '+esc(err.message)+'</div>'});
+
+/* ============ REPORTE DE UN HECHO ============ */
+function hecho(D,id){
+ var _hh=((D.transito||{}).hechos||[]);var _mm=_hh.filter(function(z){return z.id===id||(z.notas||[]).some(function(n){return n.id===id})})[0];if(_mm)id=_mm.id;
+ var e=D.ev.filter(function(z){return z.id===id})[0],TH=null;
+ if(!e&&_mm){TH=_mm;e={id:TH.id,origen:"prensa",categoria:"antropogénica",titulo:TH.titulo,ts:TH.ts,ts_ult:TH.ultima_nota||TH.ts,lugar:TH.lugar||TH.departamento,departamentos:[TH.departamento],lat:TH.lat,lon:TH.lon,nivel:TH.fallecidos?3:TH.heridos?2:1,fuente:(TH.medios||[]).join(", "),url:(TH.enlaces[0]||{}).url||"",detalle:"",cifras:{fallecidos:TH.fallecidos,heridos:TH.heridos,notas:TH.n_notas},medios:TH.medios,confianza:TH.confianza}}
+ if(!e){$("app").innerHTML='<div class="hoja vacio"><b>No se encontró el hecho solicitado.</b><br>Puede haber salido del historial.</div>';return}
+ document.title="Reporte preliminar — "+e.titulo;
+ var hrs=Math.max(0,(Date.now()-e.ts)/36e5),hT=hrs<48?Math.round(hrs)+" h":Math.round(hrs/24)+" días";
+ var num="REPORTE PRELIMINAR N.º "+S.diaKey(Date.now()).replace(/-/g,"")+"-"+(e.id.replace(/[^a-z0-9]/gi,"").slice(-5).toUpperCase());
+ var h='<div class="hoja">'+hdr("REPORTE PRELIMINAR DE EVENTO",num);
+ h+='<div>'+chip(e.categoria)+' <span class="sub">'+esc(e.nivel_txt||"")+'</span></div><h1>'+esc(e.titulo)+'</h1><div class="sub">'+esc(e.lugar||(e.departamentos||[]).join(", ")||"Bolivia")+'</div>';
+ /* KPIs */
+ var c=e.cifras||{},ks='';Object.keys(c).forEach(function(k){if(KL[k]&&c[k]!=null&&ks.split("class=\"k\"").length<5)ks+=kpi(KL[k][0],c[k]+KL[k][2],"",KL[k][1])});
+ var all=kpi("Hecho",S.fecha(e.ts,true),"hora La Paz","#1d6fb8")+kpi("Transcurrido",hT,"desde el hecho hasta el corte","#0aa3a3")+ks;
+ var n=all.split('class="k"').length-1;if(n<4)all+=kpi("Fuente",esc((e.fuente||e.origen).slice(0,28)),e.oficial?"oficial":"no oficial","#546e7a");
+ h+='<div class="meta4">'+all+'</div>';
+ /* cómo se obtuvo */
+ h+='<h2>1. Cómo obtuvo la información el sistema</h2><p style="margin:0">'+esc(ORI[e.origen]||"Fuente automática de la Sala de Situación.")+' <b>Fuente: '+esc(e.fuente||e.origen)+'.</b></p>';
+ /* resumen */
+ var t=((D.textos_hechos||{}).hechos||{})[e.id],tx=t&&t.notas.filter(function(n){return n.texto})[0];
+ var res=e.detalle||(tx&&tx.texto)||((e.origen==="prensa")?"Hecho reportado por "+((e.medios||[]).join(", ")||e.fuente)+" en "+(e.lugar||"Bolivia")+"."+((c.fallecidos||c.heridos)?" Cifras de prensa: "+(c.fallecidos||0)+" fallecido(s) y "+(c.heridos||0)+" herido(s).":""):"");
+ h+='<h2>2. Descripción</h2><p style="margin:0">'+esc(res||"Sin detalle adicional de la fuente.")+'</p>';
+ /* mapa */
+ if(e.lat!=null&&e.lon!=null){
+  var b=e.bbox?[e.bbox[0]-.7,e.bbox[1]-.6,e.bbox[2]+.7,e.bbox[3]+.6]:e.origen==="sismo"?[e.lon-2.2,e.lat-1.8,e.lon+2.2,e.lat+1.8]:[e.lon-1.2,e.lat-.9,e.lon+1.2,e.lat+.9];
+  var mf=(D.geoMun.features||[]).filter(function(f){return pol(f.geometry).some(function(p){return p[0].some(function(c){return c[0]>b[0]&&c[0]<b[2]&&c[1]>b[1]&&c[1]<b[3]})})});
+  var lb=(D.geoDep.features||[]).map(function(f){var q=centro(f);return{lon:q[0],lat:q[1],t:f.properties.n}}).filter(function(l){return l.lon>b[0]&&l.lon<b[2]&&l.lat>b[1]&&l.lat<b[3]});
+  var pts=[{lat:e.lat,lon:e.lon,r:12,color:"#d7263d",ring:true}];
+  if(e.origen==="sismo"){(D.sismos_oficiales.sismos||[]).forEach(function(s){if("sismo:"+s.id!==e.id&&s.lon>b[0]&&s.lon<b[2]&&s.lat>b[1]&&s.lat<b[3])pts.push({lat:s.lat,lon:s.lon,r:3+s.mag*2,color:"#f5b700"})})}
+  var rect=e.origen==="foco"&&e.bbox?e.bbox:null;
+  h+='<h2>3. Localización</h2><div class="dos"><div>'+mapaZ(b,{dep:{features:D.geoDep.features},mun:{features:mf},pts:pts,rect:rect,labels:lb})+'</div><div class="caja"><b>'+esc(e.lugar||"")+'</b><br><span class="nota">Coordenadas: '+e.lat.toFixed(3)+', '+e.lon.toFixed(3)+'</span>'+(munDeDetalle(e)?'<p style="margin:6px 0 0"><b>Municipios:</b> '+esc(munDeDetalle(e))+'</p>':'')+'<p class="nota" style="margin:6px 0 0">'+(e.origen==="sismo"?'Rojo: epicentro. Amarillo: otros sismos en la zona (tamaño = magnitud).':e.origen==="foco"?'Anillo rojo: centro del complejo; recuadro: extensión de las detecciones.':'Posición aproximada según el lugar nombrado por la fuente.')+' Líneas finas: límites municipales.</p></div></div>';
+ }
+ /* cronología / medios */
+ var NT=(t&&t.notas)||(TH?(TH.enlaces||[]).map(function(n){return{medio:n.medio,titulo:n.titulo,url:n.url,ts:n.ts}}):[]);
+ NT=NT.slice().sort(function(a,b){return(a.ts||0)-(b.ts||0)});
+ /* trazabilidad */
+ var rows=[{ts:e.ts,f:e.fuente||e.origen,d:"Registro principal de este reporte",u:e.url,es:e.oficial?"oficial":"no oficial"}];
+ NT.slice(0,10).forEach(function(n){rows.push({ts:n.ts,f:n.medio,d:n.titulo,u:n.url,es:n.texto?"nota leída":"solo titular"})});
+ if(rows.length<4)D.ev.filter(function(o){return o.id!==e.id&&o.categoria===e.categoria&&Math.abs(o.ts-e.ts)<2*DIA&&(o.departamentos||[]).some(function(d){return(e.departamentos||[]).indexOf(d)>=0})}).sort(function(a,b){return b.ts-a.ts}).slice(0,6).forEach(function(o){rows.push({ts:o.ts,f:o.fuente||o.origen,d:o.titulo,u:o.url,es:"registro relacionado"})});
+ h+='<h2>4. Trazabilidad de fuentes</h2><table><tr><th style="width:92px">Hora</th><th style="width:130px">Fuente</th><th>Registro</th><th style="width:90px">Estado</th></tr>'+rows.slice(0,10).map(function(r){return'<tr><td>'+(r.ts?S.fecha(r.ts,true):"—")+'</td><td>'+esc(r.f||"")+'</td><td>'+esc((r.d||"").slice(0,140))+(S.urlOk(r.u)?'<br><span class="nota">'+esc(r.u.replace(/^https?:\/\//,"").slice(0,70))+'</span>':'')+'</td><td>'+esc(r.es)+'</td></tr>'}).join("")+'</table>';
+ if(e.confianza)h+='<p class="nota" style="margin:4px 0 0">Confianza <b>'+esc(e.confianza.nivel)+'</b>: '+esc(e.confianza.razon||("respaldo de "+(e.confianza.fuentes_independientes||1)+" fuente(s) independiente(s)"))+'. «Baja» significa que aún no lo confirma otro medio, no que sea falso.</p>';
+ /* relevancia */
+ var REL={foco:"Humo y calidad del aire: posible aumento de consultas respiratorias en la zona; revisar establecimientos de salud cercanos.",sismo:"Si la magnitud es ≥ 4,0 y la profundidad ≤ 100 km, verificar daños en establecimientos de salud del área.",senamhi:"Aviso oficial vigente: verificar rutas de acceso y continuidad de servicios en los territorios citados.",caudal:"Posible crecida: riesgo para acceso a establecimientos y brotes posteriores (diarreas, leptospirosis).",prensa:"Verificar afectación a personas y a servicios de salud; contrastar con comunicado oficial."};
+ h+='<h2>5. Relevancia para salud pública y seguimiento</h2><p style="margin:0">'+esc(REL[e.origen]||"Sin lectura específica para este tipo de registro.")+' <span class="nota">(Criterio automático por tipo de evento — por validar con el CCES.)</span></p><p style="margin:4px 0 0"><b>Próximos reportes:</b> actualización a las +6 h y +12 h del corte; luego pasa al reporte diario de las 07:00.</p>';
+ h+=pie("Fuente: "+esc(e.fuente||e.origen)+".")+'</div>';
+ $("app").innerHTML=h;
+}
+
+/* ============ REPORTE DE UNA SELECCIÓN ============ */
+function seleccion(D){
+ var per=P.get("per")||"1",dep=P.get("dep")||"",org=P.get("org")||"",nv=+(P.get("niv")||-1),now=Date.now(),a,b=now;
+ var CATS=S.CAT.slice(0,7),cs=(P.get("cat")||"").split(",").filter(function(c){return CATS.indexOf(c)>=0});if(!cs.length)cs=CATS;
+ if(per==="x"){a=P.get("desde")?new Date(P.get("desde")+"T00:00:00-04:00").getTime():0;b=P.get("hasta")?new Date(P.get("hasta")+"T23:59:59-04:00").getTime():now}else a=now-(+per)*DIA;
+ var F=D.ev.filter(function(e){if(e.ts<a||e.ts>b||e.origen==="modelo")return false;if(cs.indexOf(e.categoria)<0)return false;if(dep&&(e.departamentos||[]).indexOf(dep)<0)return false;if(org==="of"&&!e.oficial)return false;if(org==="prensa"&&e.origen!=="prensa")return false;if(nv>=0&&!(e.nivel!=null&&e.nivel>=nv))return false;return true}).sort(function(x,y){return y.ts-x.ts});
+ var per_t=per==="1"?"últimas 24 horas":per==="2"?"últimas 48 horas":per==="x"?"período seleccionado":per==="400"?"todo el historial":per==="365"?"últimos 12 meses":"últimos "+per+" días";
+ var tit=(cs.length===CATS.length?"Todos los eventos":cs.map(function(c){return c}).join(" y "))+" · "+(dep||"Bolivia")+" · "+per_t;
+ document.title="Reporte — "+tit;
+ var num="REPORTE DE SITUACIÓN N.º "+S.diaKey(now).replace(/-/g,"");
+ var focos=F.filter(function(e){return e.origen==="foco"}),otros=F.filter(function(e){return e.origen!=="foco"});
+ var of=F.filter(function(e){return e.oficial}).length;
+ var det=0,mw=0;focos.forEach(function(e){det+=(e.cifras||{}).detecciones||0;mw+=(e.cifras||{}).frp_mw||0});
+ var h='<div class="hoja">'+hdr("REPORTE DE SITUACIÓN",num);
+ h+='<h1>'+esc(dep?dep:"Bolivia")+' · '+per_t+'</h1><div class="sub">Cobertura: '+(a?S.fecha(a):"inicio del registro")+' a '+S.fecha(b)+' (hora La Paz) · Tipos: '+(cs.length===CATS.length?"todos":esc(cs.join(", ")))+' · Fuente: '+(org==="of"?"solo oficiales":org==="prensa"?"solo prensa":"todas")+(nv>=0?' · Nivel: '+["verde","amarilla o más","naranja o más","solo roja"][nv]:'')+'</div>';
+ if(!F.length){$("app").innerHTML=h+'<h2>Resultado</h2><p>No hay eventos registrados con estos criterios en el período. Pruebe ampliar el período o el territorio.</p>'+pie()+'</div>';return}
+ var ks=kpi("Eventos",F.length,of+" de fuente oficial","#1d6fb8");
+ if(focos.length)ks+=kpi("Detecciones de calor",det,focos.length+" complejos","#ef6c00")+kpi("Potencia radiativa",Math.round(mw)+" MW","suma de detecciones","#c62828");
+ else ks+=kpi("Oficiales",of,"SENAMHI, San Calixto, etc.","#0aa3a3");
+ ks+=kpi("Más reciente",S.fecha(F[0].ts,true),"hora La Paz","#546e7a");
+ h+='<div class="meta4">'+ks+'</div>';
+ /* lectura */
+ var porC={};F.forEach(function(e){porC[e.categoria]=(porC[e.categoria]||0)+1});
+ var lect="Entre "+(a?S.fecha(a,true):"el inicio")+" y "+S.fecha(b,true)+" el sistema registra <b>"+F.length+" evento(s)</b> en "+esc(dep||"Bolivia")+": "+Object.keys(porC).map(function(c){return porC[c]+" "+c}).join(", ")+".";
+ if(focos.length)lect+=" Los satélites detectaron <b>"+det+" focos de calor</b> agrupados en "+focos.length+" complejo(s), con potencia radiativa acumulada de "+Math.round(mw)+" MW. Las detecciones incluyen quemas agrícolas y no equivalen a incendios confirmados.";
+ h+='<h2>1. Lectura de la situación</h2><p style="margin:0">'+lect+'</p>';
+ /* gráficos */
+ var dias={};F.forEach(function(e){var k=S.diaKey(e.ts);dias[k]=(dias[k]||0)+1});var dk=Object.keys(dias).sort();
+ h+='<h2>2. Distribución</h2><div class="dos" style="grid-template-columns:1fr 1fr"><div><div class="ch" id="g1"></div><div class="nota" style="text-align:center">Eventos por tipo</div></div><div><div class="ch" id="g2"></div><div class="nota" style="text-align:center">'+(per==="1"||per==="2"?"Eventos por tipo de fuente":"Eventos por día")+'</div></div></div>';
+ /* focos por municipio */
+ var sec=3;
+ if(focos.length){
+  var pm={};focos.forEach(function(e){var m=munDeDetalle(e)||e.lugar||"sin municipio";var k=m.split(",")[0].trim()+" ("+((e.departamentos||[])[0]||"")+")";var o=pm[k]=pm[k]||{d:0,mw:0,n:0};o.d+=(e.cifras||{}).detecciones||0;o.mw+=(e.cifras||{}).frp_mw||0;o.n++});
+  var L=Object.keys(pm).sort(function(x,y){return pm[y].d-pm[x].d});
+  h+='<h2>'+(sec++)+'. Focos de calor por municipio (principales '+Math.min(10,L.length)+' de '+L.length+')</h2><table><tr><th>Municipio (departamento)</th><th style="width:90px">Detecciones</th><th style="width:90px">MW</th><th style="width:80px">Complejos</th></tr>'+L.slice(0,10).map(function(k){return'<tr><td>'+esc(k)+'</td><td>'+pm[k].d+'</td><td>'+Math.round(pm[k].mw)+'</td><td>'+pm[k].n+'</td></tr>'}).join("")+'</table>';
+  var puntos=focos.filter(function(e){return e.lat!=null}).map(function(e){return{lat:e.lat,lon:e.lon,r:3+Math.min(10,Math.sqrt((e.cifras||{}).detecciones||1)*.8),color:"#ef6c00"}});
+  if(puntos.length){var lo=puntos.map(function(p){return p.lon}),la=puntos.map(function(p){return p.lat});var bb=[Math.min.apply(0,lo)-1,Math.min.apply(0,la)-.8,Math.max.apply(0,lo)+1,Math.max.apply(0,la)+.8];
+   h+='<h2>'+(sec++)+'. Mapa de complejos</h2><div style="max-width:60%">'+mapaZ(bb,{dep:{features:D.geoDep.features},pts:puntos,labels:(D.geoDep.features||[]).map(function(f){var q=centro(f);return{lon:q[0],lat:q[1],t:f.properties.n}}).filter(function(l){return l.lon>bb[0]&&l.lon<bb[2]&&l.lat>bb[1]&&l.lat<bb[3]})})+'</div><div class="nota">Cada círculo es un complejo de detecciones (tamaño = n.º de detecciones).</div>'}
+ }
+ /* principales hechos */
+ if(otros.length){
+  var top=otros.slice().sort(function(x,y){return((y.nivel||0)-(x.nivel||0))||(y.ts-x.ts)}).slice(0,10);
+  h+='<h2>'+(sec++)+'. Hechos principales ('+top.length+' de '+otros.length+')</h2>'+top.map(function(e){return'<div class="ficha"><div class="t">'+chip(e.categoria)+' '+esc(e.titulo)+'</div><div class="nota">'+S.fecha(e.ts)+' · '+esc(e.lugar||(e.departamentos||[]).join(", ")||"Bolivia")+' · '+esc(e.fuente||e.origen)+(e.oficial?' · oficial':'')+(e.nivel_txt&&e.nivel!=null?' · '+esc(e.nivel_txt):'')+'</div>'+(e.detalle?'<div style="font-size:12px;margin-top:2px">'+esc(e.detalle.slice(0,230))+(e.detalle.length>230?"…":"")+'</div>':'')+'</div>'}).join("");
+ }
+ h+='<h2>'+sec+'. Alcance y limitaciones</h2><p style="margin:0" class="nota">Este reporte resume y no lista todos los registros. El detalle completo ('+F.length+' registros) se descarga como Excel/CSV desde «Informes». Las detecciones satelitales y las notas de prensa son preliminares; los valores de modelo no reemplazan estaciones oficiales.</p>';
+ h+=pie("Fuentes: NASA FIRMS, SENAMHI, Observatorio San Calixto, prensa boliviana, modelos abiertos.")+'</div>';
+ $("app").innerHTML=h;
+ var tc=Object.keys(porC);
+ var c1=echarts.init($("g1"),null,{renderer:"svg"});c1.setOption({animation:false,grid:{left:96,right:20,top:6,bottom:20},xAxis:{type:"value",minInterval:1},yAxis:{type:"category",data:tc,axisLabel:{fontSize:11}},series:[{type:"bar",data:tc.map(function(c){return{value:porC[c],itemStyle:{color:S.COLCAT[c]}}}),label:{show:true,position:"right"}}]});
+ var c2=echarts.init($("g2"),null,{renderer:"svg"});
+ if(per==="1"||per==="2"){var po={};F.forEach(function(e){var k=e.oficial?"Oficial":e.origen==="foco"?"Satélite":"Prensa / otras";po[k]=(po[k]||0)+1});var pk=Object.keys(po);c2.setOption({animation:false,grid:{left:96,right:20,top:6,bottom:20},xAxis:{type:"value",minInterval:1},yAxis:{type:"category",data:pk},series:[{type:"bar",data:pk.map(function(k){return po[k]}),itemStyle:{color:"#1d6fb8"},label:{show:true,position:"right"}}]})}
+ else c2.setOption({animation:false,grid:{left:34,right:10,top:10,bottom:26},xAxis:{type:"category",data:dk.map(function(k){return k.slice(5)}),axisLabel:{fontSize:10}},yAxis:{type:"value",minInterval:1},series:[{type:"bar",data:dk.map(function(k){return dias[k]}),itemStyle:{color:"#1d6fb8"}}]});
+}
+})();
+</script></body></html>
