@@ -1,8 +1,8 @@
 {
- "generado_local": "2026-11-14 10:38",
+ "generado_local": "2026-11-14 11:32",
  "zona_horaria": "America/La_Paz (UTC-4)",
- "registros_eventos": 539,
- "registros_hechos": 276,
+ "registros_eventos": 541,
+ "registros_hechos": 277,
  "alcance": "Solo hechos de Bolivia. Datos preliminares de fuentes abiertas, sin validación oficial.",
  "fuentes": [
   "USGS (sismos)",
@@ -17,5 +17,5 @@
   "Fallecidos y heridos son cifras de prensa, sin validar. En un hecho se toma el máximo reportado, no la suma.",
   "La ubicación puede ser aproximada (ver metodo_ubicacion)."
  ],
- "cita_sugerida": "Sala de Situación Bolivia – CCES. Base de eventos de amenazas (datos preliminares de fuentes abiertas). Consulta: 2026-11-14 10:38."
+ "cita_sugerida": "Sala de Situación Bolivia – CCES. Base de eventos de amenazas (datos preliminares de fuentes abiertas). Consulta: 2026-11-14 11:32."
 }
