@@ -660,9 +660,9 @@
    "Ascención de Guarayos (Santa Cruz)": 18
   }
  },
- "actualizado": "2026-11-13T23:13:17.570156Z",
+ "actualizado": "2026-11-14T00:08:38.602521Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2160,
- "slack_dia": "2026-11-13"
+ "detecciones_fuera_de_limites": 2066,
+ "slack_dia": "2026-11-14"
 }
