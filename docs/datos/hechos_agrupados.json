@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:13gn5lp",
+  "fecha_hora_local": "2026-11-14 15:56",
+  "ts_ms": 1794686209000,
+  "titulo": "Sismo de magnitud 5.0 sacude la provincia Aniceto Arce de Tarija - Red Uno",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "Red Uno",
+  "lat": -21.53,
+  "lon": -64.73,
+  "lugar": "Tarija, Tarija",
+  "departamento": "Tarija",
+  "municipio": "Tarija",
+  "enlaces": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMmhIaFB3em5VWExKcXFfS3gzMS16Njd0VDJhWnNtdW16MHVTRXJvaWRwWlluWWZFR2VIRktYaXVZMDFvbUVwSmJaTGFyVzFoQVVGdVcwNmdqLURDVXZfSkk2ZWpVNjM1UXNNQ2Q2eUxUWVVzeVUzLWx0MDlUY3lXQklQeU9ZSFp4UjliTHoxdEhoeWtUWUV6ei1jZjFaMWRzeGNDdWU0VGZiRzZxVExjTmRHRWk?oc=5 | https://news.google.com/rss/articles/CBMiwwFBVV95cUxOT296eVJ2Rmx0RlNINzZsYkhQMDFnLWV5b0pwckpyRldVZWJLU3o3UlFUeWxaZWFGdkQ5YXlpUlZCdjJDS0FmTUZNeERzbTFYclNfVFNFVmdBb0F0MHF3SndzWGZZbVpmdUhVV014S1VnWURBY2xseFhpZS1PTWxCOHNWVlJzQ0xFQXd5U3FQNXAtR3JFQU5ncGhIZF92ZENFLTJNT0lIRTZDZHg4aHNQajBEMTZLVDdkM0Y0dTljRHlNbms?oc=5"
+ },
+ {
   "hecho_id": "noticia:1m124wh",
   "fecha_hora_local": "2026-11-14 15:21",
   "ts_ms": 1794684077000,
@@ -4438,26 +4458,6 @@
   "departamento": "Santa Cruz",
   "municipio": "San Julián",
   "enlaces": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNZ0YtaDRJMk8zWGljWk1Mc2RGU1VESEVXdU1tZWR2MThna3g3eXdYZjJwUzJ3OUdQRkcwTHJXSmxYejdPMnhtT01JOFN1dGtod203R1hnaUNYWFBnZThtOWJKSlVRalg2cENDMkhkV1J6MDVFeTNmVUZCMmR0ekRQVTFRZldRcm5MUUxFN0NDTlFTUm9TWGE5TTlB?oc=5"
- },
- {
-  "hecho_id": "noticia:43tofu",
-  "fecha_hora_local": "2026-10-27 12:14",
-  "ts_ms": 1793117696000,
-  "titulo": "¡Tembló en Cochabamba! Reportan sismo de magnitud 3,7 en la provincia Carrasco - Red Uno",
-  "tipo_amenaza": "geológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Red Uno",
-  "lat": -17.39,
-  "lon": -66.16,
-  "lugar": "Cochabamba, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Cochabamba",
-  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOT296eVJ2Rmx0RlNINzZsYkhQMDFnLWV5b0pwckpyRldVZWJLU3o3UlFUeWxaZWFGdkQ5YXlpUlZCdjJDS0FmTUZNeERzbTFYclNfVFNFVmdBb0F0MHF3SndzWGZZbVpmdUhVV014S1VnWURBY2xseFhpZS1PTWxCOHNWVlJzQ0xFQXd5U3FQNXAtR3JFQU5ncGhIZF92ZENFLTJNT0lIRTZDZHg4aHNQajBEMTZLVDdkM0Y0dTljRHlNbms?oc=5"
  },
  {
   "hecho_id": "noticia:1aj4cp3",
