@@ -71,17 +71,82 @@ function mapaZ(b,o){var kx=Math.cos((b[1]+b[3])/2*Math.PI/180),W=900,sc=W/((b[2]
  ((o.dep&&o.dep.features)||[]).forEach(function(f){s+='<path d="'+path(f.geometry)+'" fill="#fff" stroke="#4b5a70" stroke-width="1.8" fill-rule="evenodd"/>'});
  ((o.mun&&o.mun.features)||[]).forEach(function(f){s+='<path d="'+path(f.geometry)+'" fill="none" stroke="#9aa6b8" stroke-width=".7" fill-rule="evenodd"/>'});
  if(o.rect)s+='<rect x="'+x(o.rect[0])+'" y="'+y(o.rect[3])+'" width="'+((o.rect[2]-o.rect[0])*kx*sc).toFixed(1)+'" height="'+((o.rect[3]-o.rect[1])*sc).toFixed(1)+'" fill="#d7263d" fill-opacity=".08" stroke="#d7263d" stroke-width="2.5" stroke-dasharray="8 5"/>';
- (o.pts||[]).forEach(function(p){if(p.ring)s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+p.r+'" fill="none" stroke="'+p.color+'" stroke-width="4"/><circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r*2.2)+'" fill="none" stroke="'+p.color+'" stroke-width="2" opacity=".5"/>';else s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r||4)+'" fill="'+(p.color||"#d7263d")+'" fill-opacity=".65" stroke="#7a5b00" stroke-width="1"/>'});
+ if(o.circ)s+='<circle cx="'+x(o.circ.lon)+'" cy="'+y(o.circ.lat)+'" r="'+(o.circ.km/111.32*sc).toFixed(1)+'" fill="#d7263d" fill-opacity=".04" stroke="#d7263d" stroke-width="2" stroke-dasharray="10 6"/>';
+ (o.pts||[]).forEach(function(p){if(p.sq)s+='<rect x="'+(x(p.lon)-7)+'" y="'+(y(p.lat)-7)+'" width="14" height="14" fill="'+p.color+'" stroke="#fff" stroke-width="1.5"/>';else if(p.tri)s+='<polygon points="'+x(p.lon)+','+(y(p.lat)-8)+' '+(+x(p.lon)+8)+','+(+y(p.lat)+6)+' '+(x(p.lon)-8)+','+(+y(p.lat)+6)+'" fill="'+p.color+'" stroke="#fff" stroke-width="1.5"/>';else if(p.ring)s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+p.r+'" fill="none" stroke="'+p.color+'" stroke-width="4"/><circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r*2.2)+'" fill="none" stroke="'+p.color+'" stroke-width="2" opacity=".5"/>';else s+='<circle cx="'+x(p.lon)+'" cy="'+y(p.lat)+'" r="'+(p.r||4)+'" fill="'+(p.color||"#d7263d")+'" fill-opacity=".65" stroke="#7a5b00" stroke-width="1"/>'});
  (o.labels||[]).forEach(function(l){s+='<text x="'+x(l.lon)+'" y="'+y(l.lat)+'" font-size="20" text-anchor="middle" fill="#0f1b2d" font-weight="700" style="paint-order:stroke;stroke:#fff;stroke-width:5px">'+esc(l.t)+'</text>'});
  return s+'<text x="14" y="30" font-size="20" fill="#4b5a70">N ↑</text></svg>'}
 function kpi(l,v,d,c){return'<div class="k" style="--c:'+c+'"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="d">'+(d||"&nbsp;")+'</div></div>'}
 function chip(c){return'<span class="chip" style="background:'+(S.COLCAT[c]||"#777")+'">'+esc(c)+'</span>'}
 function munDeDetalle(e){var m=/Municipios?: ([^.]*)\./.exec(e.detalle||"");return m?m[1]:""}
 
-X.datos().then(function(D){
+function jget(u){return fetch(u).then(function(r){return r.json()}).catch(function(){return null})}
+X.datos().then(function(D){return Promise.all([jget("poblacion_mun.json"),jget("establecimientos_salud.json"),jget("servicios_emergencia.json")]).then(function(x){D.pob=x[0];D.est=x[1];D.emer=x[2];return D})}).then(function(D){
  var id=P.get("id");
  if(id){hecho(D,id)}else{seleccion(D)}
 }).catch(function(err){$("app").innerHTML='<div class="hoja vacio">No se pudo cargar el reporte: '+esc(err.message)+'</div>'});
+
+
+/* ============ ANÁLISIS DE RIESGO: FOCOS DE CALOR ============ */
+function hav(a,b,c,d){var R=6371,r=Math.PI/180,dl=(c-a)*r,dn=(d-b)*r,q=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(dn/2)*Math.sin(dn/2);return 2*R*Math.asin(Math.sqrt(q))}
+function areaKm2(g){var t=0;pol(g).forEach(function(p){p.forEach(function(r,i){var a=0,m=r[0][1]*Math.PI/180,k=111.32*Math.cos(m);for(var j=0;j<r.length-1;j++)a+=(r[j][0]*k*r[j+1][1]*111.32)-(r[j+1][0]*k*r[j][1]*111.32);a=Math.abs(a/2);t+=i===0?a:-a})});return t}
+function fmt(n){return Math.round(n).toLocaleString("es-BO")}
+function analisisFoco(D,e){
+ if(!D.pob)return null;
+ var anio=Math.min(2034,new Date().getFullYear()),dep0=(e.departamentos||[])[0]||"";
+ var cx=((D.focos_complejos||{}).complejos||[]).filter(function(c){return e.id.indexOf(c.id)>=0&&c.departamento===dep0})[0];
+ var nms=cx?cx.municipios:(munDeDetalle(e)||"").split(",").map(function(x){return x.trim()}).filter(Boolean);
+ var det=(e.cifras||{}).detecciones||0,mw=(e.cifras||{}).frp_mw||0;
+ /* municipios afectados */
+ var afe=[],popA=0;
+ nms.forEach(function(m){var k=dep0+"|"+m,p=D.pob.municipios[k],f=(D.geoMun.features||[]).filter(function(z){return z.properties.n===m&&z.properties.d===dep0})[0];if(!p)return;var h=p.est[anio],ar=f?areaKm2(f.geometry):0;popA+=h;afe.push({m:m,h:h,ar:ar,d:ar?h/ar:null})});
+ /* población en 50 km (municipios con centro ≤50 km) */
+ var cerca=[],pop50=0;
+ (D.geoMun.features||[]).forEach(function(f){var q=centro(f),km=hav(e.lat,e.lon,q[1],q[0]);if(km<=50){var p=D.pob.municipios[f.properties.d+"|"+f.properties.n];if(p){pop50+=p.est[anio];cerca.push({m:f.properties.n,d:f.properties.d,h:p.est[anio],km:km})}}});
+ afe.forEach(function(a){if(!cerca.some(function(c){return c.m===a.m&&c.d===dep0})){cerca.push({m:a.m,d:dep0,h:a.h,km:0});pop50+=a.h}});
+ cerca.sort(function(a,b){return b.h-a.h});
+ /* servicios cercanos */
+ function serv(L,tipoF){var r=(L||[]).filter(function(p){return!tipoF||tipoF(p)}).map(function(p){return{n:p[2]||"(sin nombre)",t:p[3],km:hav(e.lat,e.lon,p[0],p[1]),lat:p[0],lon:p[1],op:p[4]}}).sort(function(a,b){return a.km-b.km});return r}
+ var SA=serv((D.est||{}).puntos),BO=serv(((D.emer||{}).puntos||[]).filter(function(p){return p[3]==="bomberos"||p[3]==="rescate"})),PO=serv(((D.emer||{}).puntos||[]).filter(function(p){return p[3]==="policía"}));
+ function nCerca(L,k){return L.filter(function(x){return x.km<=k}).length}
+ /* tendencia departamental (VIIRS) */
+ var dias=((D.focos_detectados||{}).dias)||{},ks=Object.keys(dias).sort(),u3=ks.slice(-3),p4=ks.slice(-7,-3);
+ function sm(a){return a.reduce(function(t,k){return t+(dias[k][dep0]||0)},0)/(a.length||1)}
+ var a3=sm(u3),a4=sm(p4),tend=a4>0?a3/a4:null;
+ /* propensión SENAMHI */
+ var pr=(D.focos_propension||{}).dias||{},pk=Object.keys(pr).sort(),pd=pk[pk.length-1],reg=(pr[pd]||[]).filter(function(r){return r.departamento===dep0});
+ var nivP=reg.some(function(r){return/muy/i.test(r.propension)})?2:reg.some(function(r){return/^propensa/i.test(r.propension)})?1:0;
+ /* puntaje */
+ var f1=(det>=100||mw>=1000)?2:(det>=30||mw>=300)?1:0,f2=(pop50>=100000)?2:(pop50>=20000)?1:0,f3=tend==null?0:tend>1.25?1:0,f4=nivP,f5=(nCerca(BO,50)?0:1)+(nCerca(SA,25)?0:1);
+ var tot=f1+f2+f3+f4+f5,niv=tot>=7?"ALTO":tot>=4?"MEDIO":"BAJO",col=tot>=7?"#c62828":tot>=4?"#ef6c00":"#2e7d32";
+ var fila=function(a,b,c,p,mx){return'<tr><td><b>'+a+'</b></td><td>'+b+'</td><td style="width:70px;text-align:center">'+p+' / '+mx+'</td></tr>'};
+ var h='<div class="dos" style="grid-template-columns:1fr 1fr;margin-bottom:8px"><div class="caja" style="border-left:6px solid '+col+'"><div class="nota">NIVEL DE RIESGO PARA LA SALUD</div><div style="font-size:26px;font-weight:800;color:'+col+'">'+niv+'</div><div class="nota">Puntaje '+tot+' de 10 · criterio automático, por validar con CCES</div></div>'+
+  '<div class="caja"><b>Población expuesta</b><br>Municipio(s) afectado(s): <b>'+fmt(popA)+'</b> hab. ('+anio+')<br>Municipios afectados y los de centro a ≤50 km: <b>'+fmt(pop50)+'</b> hab.<div class="nota">Proyección INE (Censo 2024). El centro de cada municipio es aproximado.</div></div></div>';
+ h+='<table><tr><th style="width:21%">Factor</th><th>Lectura</th><th>Puntos</th></tr>'+
+  fila("1. Intensidad",det+" detecciones · "+fmt(mw)+" MW (satélite VIIRS)","",f1,2)+
+  fila("2. Exposición","Población dentro de 50 km: "+fmt(pop50)+" hab."+(cerca[0]?" Mayor: "+esc(cerca[0].m)+" ("+fmt(cerca[0].h)+" hab., a "+Math.round(cerca[0].km)+" km)":""),"",f2,2)+
+  fila("3. Tendencia","Detecciones en "+esc(dep0)+": últimos 3 días "+Math.round(a3)+"/día frente a "+Math.round(a4)+"/día en los 4 días previos"+(tend==null?"":" ("+(tend>1.25?"en aumento":tend<.75?"en descenso":"estable")+")"),"",f3,1)+
+  fila("4. Propagación","SENAMHI "+(pd?"("+pd+")":"")+": "+(reg.length?reg.map(function(r){return esc(r.region)+" "+esc(r.propension.toLowerCase())+" (viento "+r.viento_kmh.join("–")+" km/h, HR "+r.hr.join("–")+"%)"}).join("; "):"sin pronóstico para el departamento"),"",f4,2)+
+  fila("5. Respuesta cercana","Bomberos/rescate ≤50 km: "+nCerca(BO,50)+" · establecimientos de salud ≤25 km: "+nCerca(SA,25),"",f5,2)+'</table>'+
+  '<p class="nota" style="margin:3px 0 0">Reglas: intensidad ≥100 detecciones o ≥1000 MW = 2 puntos (≥30 o ≥300 = 1); población a 50 km ≥100.000 = 2 (≥20.000 = 1); tendencia +25 % = 1; propensión «propensa» = 1, «muy propensa» = 2; sin bomberos a 50 km = 1; sin establecimiento a 25 km = 1. Alto ≥7, medio 4–6, bajo ≤3. La propagación usa el pronóstico regional del SENAMHI (no hay modelo de viento propio).</p>';
+ /* municipios afectados */
+ if(afe.length)h+='<h2 style="margin-top:10px">Municipios afectados</h2><table><tr><th>Municipio</th><th style="width:110px">Población '+anio+'</th><th style="width:110px">Superficie</th><th style="width:110px">Densidad</th></tr>'+afe.map(function(a){return'<tr><td>'+esc(a.m)+'</td><td>'+fmt(a.h)+'</td><td>'+(a.ar?fmt(a.ar)+" km²":"—")+'</td><td>'+(a.d?a.d.toFixed(1)+" hab/km²":"—")+'</td></tr>'}).join("")+'</table>';
+ /* recursos cercanos */
+ function tb(t,L,vac){return'<b>'+t+'</b>'+(L.length?'<table>'+L.slice(0,3).map(function(x){return'<tr><td>'+esc(x.n.slice(0,44))+'</td><td style="width:60px;text-align:right">'+Math.round(x.km)+' km</td></tr>'}).join("")+'</table>':'<div class="nota">'+vac+'</div>')}
+ h+='<h2 style="margin-top:10px">Recursos más cercanos (fuente referencial)</h2><div class="dos" style="grid-template-columns:1fr 1fr 1fr">'+
+  '<div class="caja">'+tb("Salud (hospital, clínica, consultorio)",SA,"Ninguno registrado en la fuente")+'<div class="nota">'+nCerca(SA,25)+' a ≤25 km · '+nCerca(SA,50)+' a ≤50 km</div></div>'+
+  '<div class="caja">'+tb("Bomberos / rescate",BO,"Ninguno registrado en la fuente")+'<div class="nota">'+nCerca(BO,50)+' a ≤50 km</div></div>'+
+  '<div class="caja">'+tb("Policía",PO,"Ninguna registrada en la fuente")+'<div class="nota">'+nCerca(PO,50)+' a ≤50 km</div></div></div>'+
+  '<p class="nota" style="margin:3px 0 0">Datos de OpenStreetMap (octubre 2026): mapeo voluntario con cobertura incompleta. «Ninguno registrado» no significa que no exista. Por validar con el registro oficial del SNIS.</p>';
+ h+='<h2 style="margin-top:10px">Complicaciones esperables para la salud</h2><p style="margin:0">Infecciones respiratorias agudas, descompensación de asma y EPOC, irritación ocular, quemaduras e intoxicación por humo o monóxido de carbono. Mayor vulnerabilidad: menores de 5 años, adultos mayores, embarazadas y personas con enfermedad crónica. Recomendación: vigilar las consultas respiratorias de los establecimientos de salud listados en los próximos días.</p>';
+ /* mapa */
+ var b=[e.lon-.75,e.lat-.55,e.lon+.75,e.lat+.55],pts=[];
+ SA.forEach(function(x){if(x.lon>b[0]&&x.lon<b[2]&&x.lat>b[1]&&x.lat<b[3])pts.push({lat:x.lat,lon:x.lon,r:5,color:"#1565c0",op:.9})});
+ BO.forEach(function(x){if(x.lon>b[0]&&x.lon<b[2]&&x.lat>b[1]&&x.lat<b[3])pts.push({lat:x.lat,lon:x.lon,sq:1,color:"#ef6c00"})});
+ PO.forEach(function(x){if(x.lon>b[0]&&x.lon<b[2]&&x.lat>b[1]&&x.lat<b[3])pts.push({lat:x.lat,lon:x.lon,tri:1,color:"#37474f"})});
+ pts.push({lat:e.lat,lon:e.lon,r:12,color:"#d7263d",ring:true});
+ var lm=cerca.filter(function(c){return c.h>=15000}).slice(0,6).map(function(c){var f=(D.geoMun.features||[]).filter(function(z){return z.properties.n===c.m&&z.properties.d===c.d})[0],q=centro(f);return{lon:q[0],lat:q[1],t:c.m+" ("+(c.h>=1000?Math.round(c.h/1000)+" mil":c.h)+")"}}).filter(function(l){return l.lon>b[0]&&l.lon<b[2]&&l.lat>b[1]&&l.lat<b[3]});
+ return{html:h,b:b,pts:pts,labels:lm,circ:{lat:e.lat,lon:e.lon,km:50}}
+}
 
 /* ============ REPORTE DE UN HECHO ============ */
 function hecho(D,id){
@@ -107,13 +172,15 @@ function hecho(D,id){
  h+='<h2>2. Descripción</h2><p style="margin:0">'+esc(res||"Sin detalle adicional de la fuente.")+'</p>';
  /* mapa */
  if(e.lat!=null&&e.lon!=null){
-  var b=e.bbox?[e.bbox[0]-.7,e.bbox[1]-.6,e.bbox[2]+.7,e.bbox[3]+.6]:e.origen==="sismo"?[e.lon-2.2,e.lat-1.8,e.lon+2.2,e.lat+1.8]:[e.lon-1.2,e.lat-.9,e.lon+1.2,e.lat+.9];
+  var AN=e.origen==="foco"?analisisFoco(D,e):null;
+  var b=AN?AN.b:e.bbox?[e.bbox[0]-.7,e.bbox[1]-.6,e.bbox[2]+.7,e.bbox[3]+.6]:e.origen==="sismo"?[e.lon-2.2,e.lat-1.8,e.lon+2.2,e.lat+1.8]:[e.lon-1.2,e.lat-.9,e.lon+1.2,e.lat+.9];
   var mf=(D.geoMun.features||[]).filter(function(f){return pol(f.geometry).some(function(p){return p[0].some(function(c){return c[0]>b[0]&&c[0]<b[2]&&c[1]>b[1]&&c[1]<b[3]})})});
-  var lb=(D.geoDep.features||[]).map(function(f){var q=centro(f);return{lon:q[0],lat:q[1],t:f.properties.n}}).filter(function(l){return l.lon>b[0]&&l.lon<b[2]&&l.lat>b[1]&&l.lat<b[3]});
-  var pts=[{lat:e.lat,lon:e.lon,r:12,color:"#d7263d",ring:true}];
+  var lb=AN?AN.labels:(D.geoDep.features||[]).map(function(f){var q=centro(f);return{lon:q[0],lat:q[1],t:f.properties.n}}).filter(function(l){return l.lon>b[0]&&l.lon<b[2]&&l.lat>b[1]&&l.lat<b[3]});
+  var pts=AN?AN.pts:[{lat:e.lat,lon:e.lon,r:12,color:"#d7263d",ring:true}];
   if(e.origen==="sismo"){(D.sismos_oficiales.sismos||[]).forEach(function(s){if("sismo:"+s.id!==e.id&&s.lon>b[0]&&s.lon<b[2]&&s.lat>b[1]&&s.lat<b[3])pts.push({lat:s.lat,lon:s.lon,r:3+s.mag*2,color:"#f5b700"})})}
   var rect=e.origen==="foco"&&e.bbox?e.bbox:null;
-  h+='<h2>3. Localización</h2><div class="dos"><div>'+mapaZ(b,{dep:{features:D.geoDep.features},mun:{features:mf},pts:pts,rect:rect,labels:lb})+'</div><div class="caja"><b>'+esc(e.lugar||"")+'</b><br><span class="nota">Coordenadas: '+e.lat.toFixed(3)+', '+e.lon.toFixed(3)+'</span>'+(munDeDetalle(e)?'<p style="margin:6px 0 0"><b>Municipios:</b> '+esc(munDeDetalle(e))+'</p>':'')+'<p class="nota" style="margin:6px 0 0">'+(e.origen==="sismo"?'Rojo: epicentro. Amarillo: otros sismos en la zona (tamaño = magnitud).':e.origen==="foco"?'Anillo rojo: centro del complejo; recuadro: extensión de las detecciones.':'Posición aproximada según el lugar nombrado por la fuente.')+' Líneas finas: límites municipales.</p></div></div>';
+  h+='<h2>3. Localización</h2><div class="dos"><div>'+mapaZ(b,{dep:{features:D.geoDep.features},mun:{features:mf},pts:pts,rect:rect,labels:lb,circ:AN?AN.circ:null})+'</div><div class="caja"><b>'+esc(e.lugar||"")+'</b><br><span class="nota">Coordenadas: '+e.lat.toFixed(3)+', '+e.lon.toFixed(3)+'</span>'+(munDeDetalle(e)?'<p style="margin:6px 0 0"><b>Municipios:</b> '+esc(munDeDetalle(e))+'</p>':'')+'<p class="nota" style="margin:6px 0 0">'+(e.origen==="sismo"?'Rojo: epicentro. Amarillo: otros sismos en la zona (tamaño = magnitud).':e.origen==="foco"?'Anillo rojo: centro del complejo; recuadro: extensión de las detecciones; círculo punteado: radio de 50 km. <b>Azul</b> establecimientos de salud · <b>cuadro naranja</b> bomberos/rescate · <b>triángulo gris</b> policía.':'Posición aproximada según el lugar nombrado por la fuente.')+' Líneas finas: límites municipales.</p></div></div>';
+  if(AN)h+='<h2>4. Análisis de riesgo para la salud</h2>'+AN.html;
  }
  /* cronología / medios */
  var NT=(t&&t.notas)||(TH?(TH.enlaces||[]).map(function(n){return{medio:n.medio,titulo:n.titulo,url:n.url,ts:n.ts}}):[]);
@@ -122,11 +189,11 @@ function hecho(D,id){
  var rows=[{ts:e.ts,f:e.fuente||e.origen,d:"Registro principal de este reporte",u:e.url,es:e.oficial?"oficial":"no oficial"}];
  NT.slice(0,10).forEach(function(n){rows.push({ts:n.ts,f:n.medio,d:n.titulo,u:n.url,es:n.texto?"nota leída":"solo titular"})});
  if(rows.length<4)D.ev.filter(function(o){return o.id!==e.id&&o.categoria===e.categoria&&Math.abs(o.ts-e.ts)<2*DIA&&(o.departamentos||[]).some(function(d){return(e.departamentos||[]).indexOf(d)>=0})}).sort(function(a,b){return b.ts-a.ts}).slice(0,6).forEach(function(o){rows.push({ts:o.ts,f:o.fuente||o.origen,d:o.titulo,u:o.url,es:"registro relacionado"})});
- h+='<h2>4. Trazabilidad de fuentes</h2><table><tr><th style="width:92px">Hora</th><th style="width:130px">Fuente</th><th>Registro</th><th style="width:90px">Estado</th></tr>'+rows.slice(0,10).map(function(r){return'<tr><td>'+(r.ts?S.fecha(r.ts,true):"—")+'</td><td>'+esc(r.f||"")+'</td><td>'+esc((r.d||"").slice(0,140))+(S.urlOk(r.u)?'<br><span class="nota">'+esc(r.u.replace(/^https?:\/\//,"").slice(0,70))+'</span>':'')+'</td><td>'+esc(r.es)+'</td></tr>'}).join("")+'</table>';
+ h+='<h2>'+(AN?5:4)+'. Trazabilidad de fuentes</h2><table><tr><th style="width:92px">Hora</th><th style="width:130px">Fuente</th><th>Registro</th><th style="width:90px">Estado</th></tr>'+rows.slice(0,10).map(function(r){return'<tr><td>'+(r.ts?S.fecha(r.ts,true):"—")+'</td><td>'+esc(r.f||"")+'</td><td>'+esc((r.d||"").slice(0,140))+(S.urlOk(r.u)?'<br><span class="nota">'+esc(r.u.replace(/^https?:\/\//,"").slice(0,70))+'</span>':'')+'</td><td>'+esc(r.es)+'</td></tr>'}).join("")+'</table>';
  if(e.confianza)h+='<p class="nota" style="margin:4px 0 0">Confianza <b>'+esc(e.confianza.nivel)+'</b>: '+esc(e.confianza.razon||("respaldo de "+(e.confianza.fuentes_independientes||1)+" fuente(s) independiente(s)"))+'. «Baja» significa que aún no lo confirma otro medio, no que sea falso.</p>';
  /* relevancia */
  var REL={foco:"Humo y calidad del aire: posible aumento de consultas respiratorias en la zona; revisar establecimientos de salud cercanos.",sismo:"Si la magnitud es ≥ 4,0 y la profundidad ≤ 100 km, verificar daños en establecimientos de salud del área.",senamhi:"Aviso oficial vigente: verificar rutas de acceso y continuidad de servicios en los territorios citados.",caudal:"Posible crecida: riesgo para acceso a establecimientos y brotes posteriores (diarreas, leptospirosis).",prensa:"Verificar afectación a personas y a servicios de salud; contrastar con comunicado oficial."};
- h+='<h2>5. Relevancia para salud pública y seguimiento</h2><p style="margin:0">'+esc(REL[e.origen]||"Sin lectura específica para este tipo de registro.")+' <span class="nota">(Criterio automático por tipo de evento — por validar con el CCES.)</span></p><p style="margin:4px 0 0"><b>Próximos reportes:</b> actualización a las +6 h y +12 h del corte; luego pasa al reporte diario de las 07:00.</p>';
+ h+='<h2>'+(AN?6:5)+'. Relevancia para salud pública y seguimiento</h2><p style="margin:0">'+esc(REL[e.origen]||"Sin lectura específica para este tipo de registro.")+' <span class="nota">(Criterio automático por tipo de evento — por validar con el CCES.)</span></p><p style="margin:4px 0 0"><b>Próximos reportes:</b> actualización a las +6 h y +12 h del corte; luego pasa al reporte diario de las 07:00.</p>';
  h+=pie("Fuente: "+esc(e.fuente||e.origen)+".")+'</div>';
  $("app").innerHTML=h;
 }
