@@ -54,6 +54,15 @@
  "internacional": [
   {
    "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Middle East respiratory syndrome (MERS) – Qatar",
+   "fecha": "2026-11-13",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626",
+   "resumen": "On 29 October 2026, the National International Health Regulations (IHR) Focal Point of the State of Qatar notified the World Health Organization (WHO) of two laboratory-confirmed cases of Middle East respiratory syndrome (MERS). The cases were confirmed on 5 and 25 August 2026 and are the first MERS cases reported from Qatar since 2022. MERS is a viral zoonotic infection, principally transmitted to humans through direct or indirect contact with infected dromedary camels. Both patients were men a",
+   "slug": "2026-DON626",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Ebola disease caused by Bundibugyo virus, Democratic Republic of the Congo, Kenya and Nigeria",
    "fecha": "2026-11-06",
    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON625",
@@ -307,7 +316,8 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON615",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON625",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON624",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626"
  ],
- "actualizado": "2026-11-14T03:46:14.038332Z"
+ "actualizado": "2026-11-14T04:48:09.124294Z"
 }
