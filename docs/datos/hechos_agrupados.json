@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1f9fw9k",
+  "fecha_hora_local": "2026-11-14 05:22",
+  "ts_ms": 1794648149000,
+  "titulo": "Santa Cruz: Incendio de magnitud afecta más de 6.000 hectáreas en San José de Chiquitos - Prensa Mercosur",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 4,
+  "fuentes": "El Potosí; La Patria Bolivia; Prensa Mercosur",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQZUFlY0ZaVzZfclVzb3RJVDdmaTNDaVUya1BJUlh1cVRQaVJXSHkybFk1NVdhaklNZlZndW1QeV9xeVdTWmd0R1k3S213eGVGU2Y3SHNaVl83YWoyMWdRMnRjMG5TOWhWRjM1RDBvZ2k4eUFlalY2cG1mMENYbVg4emY5TWR0LUY1Y0N3QjJRQjhncEhkT3J5bi1MbWtYZ0pmaUhYZ0piLWZtOWxTZXBhcURTYWhrVjgwdmxhYWwxbDU0enc?oc=5 | https://news.google.com/rss/articles/CBMiygFBVV95cUxNS3gxU2NrencweGlHUHF3aWVHU1ozRG90MWZEcGNtRllHYzJQMWU4el9kVThlSkNjRTJhVnFqQnZhSEwwMlg5aldaNC1Bb05LR1puQjZnaUhab1NjSnA0R0JmU0hlbEF5ck0yd1BzZTZyQU5JWms5cnRsZzM2cFVsWFNMckxiaUVteDhUclBZTnN4akctSEgybEhLaE9JRC1iOGlkUDBrSnUxcFZDVFhGRU42eHp2UERiR2tvNmo4VDJTLW5XNzRYU2dB?oc=5 | https://news.google.com/rss/articles/CBMilgFBVV95cUxOYmswMkdmaEVDbWxjTU5GSW5RTk90cjh3RWRiUjd0UDREZFNvU2ltVWZlZE80aEZLUTBoUDBoWUVmdm9BUnAwOV9TWW4tUEtDU2lfNWtKa2pQVnRQZzBBVnNITDdQdkRvekwzUTFROWZLWW5wSnlYNV9NRi1mcENkV3NXWUNCdktldFdkcTNMNUR3NnRqSHc?oc=5"
+ },
+ {
   "hecho_id": "noticia:100uxnv",
   "fecha_hora_local": "2026-11-13 21:06",
   "ts_ms": 1794618409000,
@@ -18,26 +38,6 @@
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
   "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPRkZfN255a0pSbEJadXN3UGJGYmtFSWN3bGRGV2ZnX1Y3UDJNMmlDQ2dTODRuZkw3M0wyUUNmY1hxSEV0aDRib0FhZU5kM0ZORlVHYVY2cHY3NS0wckZtc0dMVmlOVGczRUluUXh5dEYwUHljc25LUFFMVjJQTFg1c0FqN2x4WUdEUGFYM214RUdlRkdjR1BqSFdoeFI0dWtDWnprT2pOQW5Vdw?oc=5"
- },
- {
-  "hecho_id": "noticia:o2x58r",
-  "fecha_hora_local": "2026-11-13 20:58",
-  "ts_ms": 1794617903000,
-  "titulo": "Santa Cruz: Incendio de magnitud afecta más de 6.000 hectáreas en San José de Chiquitos - El Potosí",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 3,
-  "fuentes": "El Potosí; La Patria Bolivia",
-  "lat": -17.781,
-  "lon": -63.139,
-  "lugar": "Santa Cruz, Santa Cruz",
-  "departamento": "Santa Cruz",
-  "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNS3gxU2NrencweGlHUHF3aWVHU1ozRG90MWZEcGNtRllHYzJQMWU4el9kVThlSkNjRTJhVnFqQnZhSEwwMlg5aldaNC1Bb05LR1puQjZnaUhab1NjSnA0R0JmU0hlbEF5ck0yd1BzZTZyQU5JWms5cnRsZzM2cFVsWFNMckxiaUVteDhUclBZTnN4akctSEgybEhLaE9JRC1iOGlkUDBrSnUxcFZDVFhGRU42eHp2UERiR2tvNmo4VDJTLW5XNzRYU2dB?oc=5 | https://news.google.com/rss/articles/CBMilgFBVV95cUxOYmswMkdmaEVDbWxjTU5GSW5RTk90cjh3RWRiUjd0UDREZFNvU2ltVWZlZE80aEZLUTBoUDBoWUVmdm9BUnAwOV9TWW4tUEtDU2lfNWtKa2pQVnRQZzBBVnNITDdQdkRvekwzUTFROWZLWW5wSnlYNV9NRi1mcENkV3NXWUNCdktldFdkcTNMNUR3NnRqSHc?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5"
  },
  {
   "hecho_id": "noticia:zhs6nm",
