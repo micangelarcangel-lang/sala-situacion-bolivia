@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "gdacs:WF1033835:0",
+  "fecha_hora_local": "2026-11-14 08:04",
+  "ts_ms": 1794657861000,
+  "titulo": "Green forest fire notification in Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "GDACS",
+  "lat": -18.15601,
+  "lon": -60.17722,
+  "lugar": "Bolivia",
+  "departamento": "Santa Cruz",
+  "municipio": "San José",
+  "enlaces": "http://www.gdacs.org/report.aspx?eventtype=WF&eventid=1033835"
+ },
+ {
   "hecho_id": "noticia:1f9fw9k",
   "fecha_hora_local": "2026-11-14 05:22",
   "ts_ms": 1794648149000,
@@ -10,14 +30,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 4,
-  "fuentes": "El Potosí; La Patria Bolivia; Prensa Mercosur",
+  "n_notas": 5,
+  "fuentes": "ANF Agencia de Noticias Fides Bolivia; El Potosí; La Patria Bolivia; Prensa Mercosur",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQZUFlY0ZaVzZfclVzb3RJVDdmaTNDaVUya1BJUlh1cVRQaVJXSHkybFk1NVdhaklNZlZndW1QeV9xeVdTWmd0R1k3S213eGVGU2Y3SHNaVl83YWoyMWdRMnRjMG5TOWhWRjM1RDBvZ2k4eUFlalY2cG1mMENYbVg4emY5TWR0LUY1Y0N3QjJRQjhncEhkT3J5bi1MbWtYZ0pmaUhYZ0piLWZtOWxTZXBhcURTYWhrVjgwdmxhYWwxbDU0enc?oc=5 | https://news.google.com/rss/articles/CBMiygFBVV95cUxNS3gxU2NrencweGlHUHF3aWVHU1ozRG90MWZEcGNtRllHYzJQMWU4el9kVThlSkNjRTJhVnFqQnZhSEwwMlg5aldaNC1Bb05LR1puQjZnaUhab1NjSnA0R0JmU0hlbEF5ck0yd1BzZTZyQU5JWms5cnRsZzM2cFVsWFNMckxiaUVteDhUclBZTnN4akctSEgybEhLaE9JRC1iOGlkUDBrSnUxcFZDVFhGRU42eHp2UERiR2tvNmo4VDJTLW5XNzRYU2dB?oc=5 | https://news.google.com/rss/articles/CBMilgFBVV95cUxOYmswMkdmaEVDbWxjTU5GSW5RTk90cjh3RWRiUjd0UDREZFNvU2ltVWZlZE80aEZLUTBoUDBoWUVmdm9BUnAwOV9TWW4tUEtDU2lfNWtKa2pQVnRQZzBBVnNITDdQdkRvekwzUTFROWZLWW5wSnlYNV9NRi1mcENkV3NXWUNCdktldFdkcTNMNUR3NnRqSHc?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQZUFlY0ZaVzZfclVzb3RJVDdmaTNDaVUya1BJUlh1cVRQaVJXSHkybFk1NVdhaklNZlZndW1QeV9xeVdTWmd0R1k3S213eGVGU2Y3SHNaVl83YWoyMWdRMnRjMG5TOWhWRjM1RDBvZ2k4eUFlalY2cG1mMENYbVg4emY5TWR0LUY1Y0N3QjJRQjhncEhkT3J5bi1MbWtYZ0pmaUhYZ0piLWZtOWxTZXBhcURTYWhrVjgwdmxhYWwxbDU0enc?oc=5 | https://news.google.com/rss/articles/CBMiygFBVV95cUxNS3gxU2NrencweGlHUHF3aWVHU1ozRG90MWZEcGNtRllHYzJQMWU4el9kVThlSkNjRTJhVnFqQnZhSEwwMlg5aldaNC1Bb05LR1puQjZnaUhab1NjSnA0R0JmU0hlbEF5ck0yd1BzZTZyQU5JWms5cnRsZzM2cFVsWFNMckxiaUVteDhUclBZTnN4akctSEgybEhLaE9JRC1iOGlkUDBrSnUxcFZDVFhGRU42eHp2UERiR2tvNmo4VDJTLW5XNzRYU2dB?oc=5 | https://news.google.com/rss/articles/CBMi1gFBVV95cUxNTG1lOFJ3RDhlem9qOExxWExkdTFTOW5XOWQ1UWNzZHNlWjVoeWQzRVVKejVpNFVuWWVnajh6eUNVQUc4d3U3ejlrUFhOX2VJWERuY2ZrcEtqS09od0ptMElYa2lIVmVWRE1NcVZMdExhRlY1V2VLRzEyYVlKRnVzUDRlaC10cFA4VG1tWWZkeVVYYnhlR0RlcG01VVNRdTJQMU1ybURVY0VzNmxKTU9SNHd0R0dZeU1FcU5aUFBqdlBZVVh6RmJUemtxTnNjZ2ppdWVBYURB?oc=5"
  },
  {
   "hecho_id": "noticia:100uxnv",
