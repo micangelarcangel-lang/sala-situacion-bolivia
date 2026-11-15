@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:cef2gl",
+  "fecha_hora_local": "2026-11-14 23:17",
+  "ts_ms": 1794712622000,
+  "titulo": "Triple choque dejó nueve heridos en la ruta N° 34 - El Tribuno de Jujuy",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 9,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Tribuno de Jujuy",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPZnBZUFpHbFRreG1tWk1mWEI4cFRJVHpHOEtzS0lBbEpNQkFKakVwT1NIWW1aTnRHSkNlWTltSkNkajJTc3pIcHNMclhPazFBVHZ3SjZKMXpuOHFZZDFTUnI3dzN2SWVrVXVBQWRhTEpoRGhET29Qd09VRXZrLVpoMHRsZDVxcU40Ymx0Q0xONHFIeDNFcE5TVDd3T2VFVFRHZnVnclloS1pjYUlqcUHSAa4BQVVfeXFMT2ZwWVBaR2xUa3htbVpNZlhCOHBUSVR6RzhLc0tJQWxKTUJBSmpFcE9TSFltWk50R0pDZVk5bUpDZGoyU3N6SHBzTHJYT2sxQVR2d0o2SjF6bjhxWWQxU1JyN3czdklla1V1QUFkYUxKaERoRE9vUHdPVUV2ay1aaDB0bGQ1cXFONGJsdENMTjRxSHgzRXBOU1Q3d09lRVRUR2Z1Z3JZaEtaY2FJanFB?oc=5"
+ },
+ {
   "hecho_id": "clima:Santa Cruz:2026-11-15:lluvia:1",
   "fecha_hora_local": "2026-11-14 21:05",
   "ts_ms": 1794704731324,
