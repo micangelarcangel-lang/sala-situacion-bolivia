@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:kaedp3",
+  "fecha_hora_local": "2026-11-15 08:46",
+  "ts_ms": 1794746810000,
+  "titulo": "Lluvias inundan calles, viviendas y dejan vehículos atrapados en Cochabamba - Red Uno",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQVkFMVE14VUZpWEw3cUxYR2NCZnlBVWlZcXEya0dCMmFSNG55R25vdlR2cHkwclNGY0UycDRBRlVLRHo4SWZlRlBCTXBSVGFfLVRuRWx6YnBXUDJwLXhfV1M2TkhocWZuV2pYT1hzMVU5ekRJRzA0QUdVb2JRMGs5ODlIZmpHcEY0dFc0V3I2QWRrellIbHNFWG1zWWZZaDhZY0FmQ1NyVjJSV1hUZXhTZGtleFJ0dTlad0JxSWNCdndZRDQ?oc=5 | https://news.google.com/rss/articles/CBMi2AFBVV95cUxOXzl2ckJnTjJXMkNWQzFJRzhPbFdCbXhaODlOT3ZpWmtSSFliQW90VDBBRzlLXzVQSzB3R1NSUGItUkNySlJtNXpQYk42OHYwQ0tPOFNKMXRaOVpoWmYxalR3Tk11T0NCUjQ1T1dXNnc4TVBBeHNkbjM4ZDZDeUVESVFfanQ1QXB5VWRNTEFYWXdZQ1psd3hYMWFLRnZWX0hXVTZtMGs0aFR0TTd4c3JzWWVHTDRuMHgzUmhKSXl1R21vSW52WFdFeGtoZUsxblhPOXZ0anF4bnI?oc=5"
+ },
+ {
   "hecho_id": "noticia:cef2gl",
   "fecha_hora_local": "2026-11-14 23:17",
   "ts_ms": 1794712622000,
@@ -538,26 +558,6 @@
   "departamento": "Potosí",
   "municipio": "Cotagaita",
   "enlaces": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPWXBuSmJXcU51aGZRb2RuMnFyeV9KTWhMbTk2dkJLWE5zY01BazZ4WVpVaVExZFRYMDgzWXprYXNnU1FMV0g3YUdIV0dsWUlOeUptcE80MkRrOFctcEkxY2JPbjFtd2ltelloSWh0blR4UGdYTGE5Rk1fcjUzamRUMUxYbmVwTng0Q09WQ2dvaVJoRHFSb3J4SFhZU2pjLTYtX3BwZ1N0Y2dmRjdiTmROS2h6SFRaREZmMFBOSFJQNUtMZERKZnRGNEU1QWdJVnQ0ZEQ0?oc=5"
- },
- {
-  "hecho_id": "noticia:npsduq",
-  "fecha_hora_local": "2026-11-13 08:16",
-  "ts_ms": 1794572207000,
-  "titulo": "Segundo día de lluvias en Cochabamba deja calles anegadas, vehículos afectados y un árbol caído - Red Uno",
-  "tipo_amenaza": "meteorológica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "Red Uno",
-  "lat": -17.39,
-  "lon": -66.16,
-  "lugar": "Cochabamba, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Cochabamba",
-  "enlaces": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOXzl2ckJnTjJXMkNWQzFJRzhPbFdCbXhaODlOT3ZpWmtSSFliQW90VDBBRzlLXzVQSzB3R1NSUGItUkNySlJtNXpQYk42OHYwQ0tPOFNKMXRaOVpoWmYxalR3Tk11T0NCUjQ1T1dXNnc4TVBBeHNkbjM4ZDZDeUVESVFfanQ1QXB5VWRNTEFYWXdZQ1psd3hYMWFLRnZWX0hXVTZtMGs0aFR0TTd4c3JzWWVHTDRuMHgzUmhKSXl1R21vSW52WFdFeGtoZUsxblhPOXZ0anF4bnI?oc=5"
  },
  {
   "hecho_id": "noticia:o5vpx9",
