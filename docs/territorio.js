@@ -67,8 +67,8 @@ var TERR = (function () {
 
   /* ---------- barra de navegación territorial (reemplaza el menú nacional) ---------- */
   function barra(T, d, m) {
-    X.header("departamento.html");
-    var deps = Object.keys(T.DEP).sort(), h = '<nav class="tnav" aria-label="Navegación territorial"><a href="index.html">Tablero</a><span class="tsep">›</span>' + (d ? '<a href="departamento.html">Bolivia</a><span class="tsep">›</span>' : '<b>Bolivia</b>');
+    X.header("explorador.html");
+    var deps = Object.keys(T.DEP).sort(), h = '<nav class="tnav" aria-label="Navegación territorial"><a href="index.html">Tablero</a><span class="tsep">›</span>' + (d ? '<a href="explorador.html">Bolivia</a><span class="tsep">›</span>' : '<b>Bolivia</b>');
     if (d) h += (m ? '<a href="departamento.html?d=' + encodeURIComponent(d) + '">' + S.esc(d) + '</a>' : '<b>' + S.esc(d) + '</b>');
     if (m) h += '<span class="tsep">›</span><b>' + S.esc(m.n) + '</b>';
     h += '<span class="sp"></span><label>Departamento <select id="nvDep"><option value="">Elegir…</option>' + deps.map(function (x) { return '<option' + (x === d ? " selected" : "") + '>' + x + '</option>'; }).join("") + '</select></label>';
@@ -422,7 +422,7 @@ var TERR = (function () {
       }
     });
   }
-  function paginaDep(d) {
+  function paginaDep(d) { if (!d) { location.replace("explorador.html"); return; }
     cargar().then(function (T) {
       var app = document.getElementById("app"), L = T.DEP[d];
       if (!d || !L) { paginaBolivia(); return; }
@@ -501,5 +501,5 @@ var TERR = (function () {
   /* datos para dibujar el mapa de servicios del reporte (lo dibuja reporte.html con su propio SVG) */
   function datosMapa(d, mn) { return cargar().then(function (T) { var m = mn ? T.M[d + "|" + mn] : null, L = m ? [m] : T.DEP[d] || [], bb = pad(unir(L), m ? .12 : .05), pts = []; T.est.forEach(function (p) { if (p[1] >= bb[0] && p[1] <= bb[2] && p[0] >= bb[1] && p[0] <= bb[3]) pts.push({lat: p[0], lon: p[1], color: COL.salud, sq: 1}); }); T.emer.forEach(function (p) { if (p[1] >= bb[0] && p[1] <= bb[2] && p[0] >= bb[1] && p[0] <= bb[3]) pts.push({lat: p[0], lon: p[1], color: COL[p[3]], tri: p[3] !== "policía", ring: p[3] === "policía"}); }); return {bb: bb, sel: L.map(function (x) { return x.f; }), todos: m ? (T.DEP[d] || []).map(function (x) { return x.f; }) : L.map(function (x) { return x.f; }), pts: pts}; }); }
   function iniciar(d, mn) { return cargar().then(function (T) { fichaInit(T, d, mn ? T.M[d + "|" + mn] : null, "r", false); }); }
-  return {pertenece: pertenece, dep: paginaDep, mun: paginaMun, contexto: contexto, datosMapa: datosMapa, cargar: cargar, iniciar: iniciar};
+  return {pertenece: pertenece, dep: paginaDep, mun: paginaMun, contexto: contexto, datosMapa: datosMapa, cargar: cargar, iniciar: iniciar, api: {indices: indices, NIVR: NIVR, nivelR: nivelR, cenPoly: cenPoly, fmt: fmt, avisosT: avisosT, estilos: estilos}};
 })();
