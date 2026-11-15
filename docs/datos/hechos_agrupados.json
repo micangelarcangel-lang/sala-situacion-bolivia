@@ -40,6 +40,26 @@
   "enlaces": "https://open-meteo.com/"
  },
  {
+  "hecho_id": "noticia:1sthxi6",
+  "fecha_hora_local": "2026-11-14 20:03",
+  "ts_ms": 1794701011000,
+  "titulo": "Rescatan a tres niños atrapados por el humo tras incendio en una textilería de Cochabamba - eju.tv",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "El Potosí; eju.tv",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOamJsd0c5b2ZVNmY5UGxZNzlXUXlMMGNMNGV3ajgzNDRfTmRoRkZselQ4bHFkdXpBZkwxenpRTEYtbkt5ZlptZlh3MmtReVRFS2Q5RTJMRy1BUzBHS3RZbmYyRWFMMmVwdEFIQXBIWVZPSnpCSENfSnNvcHUxYWxYRmJkMnFCOEk0dDdRWUxkMENwMElCbzJ1SHNpZ0VjUnJnWk5ETmpoM0ptdUZVLTMwbml4NA?oc=5 | https://news.google.com/rss/articles/CBMiugFBVV95cUxPMm9MQTJJeUc5UlBPTWZTMVZnQUtfRmdTOWxLUHFMd3VCcEN4QUVaVW5KOHV4NUdlZWdBOUp2aEs4WVpjZXV5SjA4aERQNGMxYWxJT291X09vRkdVYlV4ZzktNHhSeXpCZjM4SXU3bU5sUHNIT29DblN4N1MxNHA4cHE0cXNxTVRZN1ZVbnF2dlUzd2E3aDZHVi1fZUtKbmEyZERmcG5qQkFvOEdGQUs0WVhxMEZGNGI5d0E?oc=5"
+ },
+ {
   "hecho_id": "noticia:1jyhham",
   "fecha_hora_local": "2026-11-14 19:53",
   "ts_ms": 1794700403000,
@@ -58,26 +78,6 @@
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
   "enlaces": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPT1JhVGFkemNaaGZVZGdlWE9mVW5wb2NJNHRlMDBoN3g0MS1TQkVSVDZpSEptYVYtN0tUM2h0NFhKWVJZZGZ0Rmx5Y0ZqV2ozOUxtNzI5WGIycDFBNWQ5LWxQQzRCR29Mb0RiOEMyeHJzZzlZNXZQd05CU3RNZVdiSVpiZl9NOFJJY3NFU1J6LXZxbXdTZS1xel94VzdMY3lMLXRHX0V5RkdsTDJqYWd5UEpaazR5dWRySDJsamNIeW4xV0RucFRxQw?oc=5"
- },
- {
-  "hecho_id": "noticia:17igfaw",
-  "fecha_hora_local": "2026-11-14 19:38",
-  "ts_ms": 1794699503000,
-  "titulo": "Cochabamba: Rescatan a tres niños atrapados tras incendio en una textilería - El Potosí",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 0,
-  "nivel_preliminar": "verde",
-  "fallecidos_max": 0,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "El Potosí",
-  "lat": -17.39,
-  "lon": -66.16,
-  "lugar": "Cochabamba, Cochabamba",
-  "departamento": "Cochabamba",
-  "municipio": "Cochabamba",
-  "enlaces": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPMm9MQTJJeUc5UlBPTWZTMVZnQUtfRmdTOWxLUHFMd3VCcEN4QUVaVW5KOHV4NUdlZWdBOUp2aEs4WVpjZXV5SjA4aERQNGMxYWxJT291X09vRkdVYlV4ZzktNHhSeXpCZjM4SXU3bU5sUHNIT29DblN4N1MxNHA4cHE0cXNxTVRZN1ZVbnF2dlUzd2E3aDZHVi1fZUtKbmEyZERmcG5qQkFvOEdGQUs0WVhxMEZGNGI5d0E?oc=5"
  },
  {
   "hecho_id": "noticia:2sqjtu",
