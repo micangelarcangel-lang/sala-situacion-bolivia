@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Informe de evento — Sala de Situación Bolivia</title>
-<link rel="stylesheet" href="s2.css"><script src="vendor/echarts.min.js"></script><script src="lib.js?v=20261115e"></script><script src="s2.js?v=20261115b"></script>
+<link rel="stylesheet" href="s2.css?v=20261115h"><script src="vendor/echarts.min.js"></script><script src="lib.js?v=20261115h"></script><script src="s2.js?v=20261115h"></script>
 <style>.mapaz{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.big{font-size:22px;font-weight:800}.t-tit{font-size:24px;font-weight:800;line-height:1.25;margin:8px 0 4px}.meta{color:var(--mut);font-size:13px}
 .foot{margin-top:18px;color:var(--mut);font-size:11.5px;border-top:1px solid var(--line);padding-top:8px}.acciones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.rsm{font-size:15px;line-height:1.55}</style></head>
 <body><div id="hdr"></div><div class="wrap" id="app"><div class="card vacio">Cargando informe…</div></div>
@@ -62,13 +62,16 @@ var _hh=((D.transito||{}).hechos||[]);if(!_hh.some(function(z){return z.id===id}
   bloque+=sec("Cómo interpretar","info",'<p>Magnitud <b>'+mag+'</b> ('+cl+') a <b>'+pf+' km</b> de profundidad ('+tp+'). Los sismos profundos (&gt;70 km) son frecuentes en el altiplano y la zona subandina y se sienten menos en superficie que uno superficial de igual magnitud. Esta ficha no incluye intensidad macrosísmica; la percepción reportada debe confirmarse con el Observatorio San Calixto.</p>');
  }
  else if(o==="foco"){
-  var bb=e.bbox||[e.lon-.4,e.lat-.4,e.lon+.4,e.lat+.4],pad=Math.max(.35,(bb[2]-bb[0])*.8),vb=[bb[0]-pad,bb[1]-pad*.75,bb[2]+pad,bb[3]+pad*.75];
-  var P=(D.focos_puntos&&D.focos_puntos.puntos||[]).filter(function(p){return p[1]>=bb[0]-.05&&p[1]<=bb[2]+.05&&p[0]>=bb[1]-.05&&p[0]<=bb[3]+.05});
+  var dd=e.lat==null&&!e.bbox&&e.departamentos&&e.departamentos[0],gf=dd&&((D.geoDep&&D.geoDep.features)||[]).filter(function(f){return f.properties.n===dd})[0],bb;
+  if(gf){bb=[180,90,-180,-90];(function rec(c){if(typeof c[0]==="number"){bb=[Math.min(bb[0],c[0]),Math.min(bb[1],c[1]),Math.max(bb[2],c[0]),Math.max(bb[3],c[1])]}else c.forEach(rec)})(gf.geometry.coordinates)}
+  else bb=e.bbox||[e.lon-.4,e.lat-.4,e.lon+.4,e.lat+.4];
+  var pad=gf?.15:Math.max(.35,(bb[2]-bb[0])*.8),vb=[bb[0]-pad,bb[1]-pad*.75,bb[2]+pad,bb[3]+pad*.75];
+  var P=(D.focos_puntos&&D.focos_puntos.puntos||[]).filter(function(p){return gf?p[4]===dd:(p[1]>=bb[0]-.05&&p[1]<=bb[2]+.05&&p[0]>=bb[1]-.05&&p[0]<=bb[3]+.05)});
   var pd={},mm={},frp=0;P.forEach(function(p){pd[p[3]]=pd[p[3]]||{n:0,f:0};pd[p[3]].n++;pd[p[3]].f+=p[2]||0;frp+=p[2]||0;if(p[5])mm[p[5]]=(mm[p[5]]||0)+1});
   var dias=(D.focos_puntos&&D.focos_puntos.dias)||[],mx=P.reduce(function(a,p){return Math.max(a,p[2]||0)},0);
   k=kpi("Detecciones (10 días)",P.length,"dentro del área del evento","#d7263d")+kpi("Potencia radiativa",Math.round(frp)+" MW","FRP acumulada","#c0392b")+kpi("Foco más intenso",Math.round(mx)+" MW","máximo individual","#f26a1b")+kpi("Municipios",Object.keys(mm).length,Object.keys(mm).filter(Boolean).slice(0,3).join(", "),"#8d6e63");
   var fc=function(f){var c=Math.min(1,(f||5)/40);return c>.6?"#7a0026":c>.3?"#e31a1c":"#fd8d3c"};
-  bloque=sec("Mapa de focos de calor","map",mapaZ(vb,{dep:dep,mun:mun,rect:bb,pts:P.map(function(p){return{lat:p[0],lon:p[1],r:3+Math.min(9,(p[2]||0)/5),color:fc(p[2]),op:.55,t:p[3]+" · "+p[5]+" · "+p[2]+" MW"}}),titulo:"Focos"})+'<div class="cap" style="margin-top:6px">Cada círculo es una detección satelital (VIIRS NOAA-21); color y tamaño según potencia (MW). Recuadro rojo: área del complejo. Las quemas agrícolas también se detectan: no equivale a incendio confirmado.</div>');
+  bloque=sec("Mapa de focos de calor","map",mapaZ(vb,{dep:dep,mun:mun,rect:gf?null:bb,pts:P.map(function(p){return{lat:p[0],lon:p[1],r:3+Math.min(9,(p[2]||0)/5),color:fc(p[2]),op:.55,t:p[3]+" · "+p[5]+" · "+p[2]+" MW"}}),titulo:"Focos"})+'<div class="cap" style="margin-top:6px">Cada círculo es una detección satelital (VIIRS NOAA-21); color y tamaño según potencia (MW). Recuadro rojo: área del complejo. Las quemas agrícolas también se detectan: no equivale a incendio confirmado.</div>');
   bloque+=sec("Evolución en el área","pulse",'<div class="ch s" id="c1"></div>')+sec("Municipios afectados","list",'<div class="ch s" id="c2"></div>');
   ch.push(function(){X.chart("c1",{tooltip:{trigger:"axis"},legend:{top:0},grid:{left:44,right:46,top:34,bottom:28},xAxis:{type:"category",data:dias.map(function(d){return d.slice(5)})},yAxis:[{type:"value",name:"Focos"},{type:"value",name:"MW",splitLine:{show:false}}],series:[{name:"Focos",type:"bar",itemStyle:{color:"#f26a1b",borderRadius:[4,4,0,0]},data:dias.map(function(d){return(pd[d]||{n:0}).n})},{name:"Potencia (MW)",type:"line",yAxisIndex:1,smooth:true,itemStyle:{color:"#7a0026"},data:dias.map(function(d){return Math.round((pd[d]||{f:0}).f)})}]});
    var ks=Object.keys(mm).sort(function(a,b){return mm[b]-mm[a]}).slice(0,10);X.chart("c2",{tooltip:{},series:[{type:"treemap",roam:false,breadcrumb:{show:false},label:{formatter:"{b}\n{c}",fontSize:13},itemStyle:{borderColor:"#fff",gapWidth:2},levels:[{colorSaturation:[.4,.8]}],data:ks.map(function(m){return{name:m,value:mm[m]}}),color:["#bd0026","#e31a1c","#fc4e2a","#fd8d3c","#feb24c"]}]})});

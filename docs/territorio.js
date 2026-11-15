@@ -67,8 +67,7 @@ var TERR = (function () {
 
   /* ---------- barra de navegación territorial (reemplaza el menú nacional) ---------- */
   function barra(T, d, m) {
-    X.header("");
-    var nv = document.querySelector(".hdr .nv"); if (nv) nv.style.display = "none";
+    X.header("departamento.html");
     var deps = Object.keys(T.DEP).sort(), h = '<nav class="tnav" aria-label="Navegación territorial"><a href="index.html">Tablero</a><span class="tsep">›</span>' + (d ? '<a href="departamento.html">Bolivia</a><span class="tsep">›</span>' : '<b>Bolivia</b>');
     if (d) h += (m ? '<a href="departamento.html?d=' + encodeURIComponent(d) + '">' + S.esc(d) + '</a>' : '<b>' + S.esc(d) + '</b>');
     if (m) h += '<span class="tsep">›</span><b>' + S.esc(m.n) + '</b>';

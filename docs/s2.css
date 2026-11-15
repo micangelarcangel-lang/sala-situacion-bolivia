@@ -322,3 +322,12 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 .in-dock,.mtools.in-dock,.mtools.mctx.in-dock{position:static!important;transform:none!important;max-width:none!important;box-shadow:none!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;padding:8px 4px!important;margin:0!important;display:flex;flex-direction:column;align-items:flex-start;gap:5px;opacity:1}
 .in-dock:last-child{border-bottom:0!important}
 :root[data-theme=dark] .mdock-b,:root[data-theme=dark] .mdock-body{background:rgba(8,10,14,.94);border-color:#475266}
+
+/* navegación siempre visible: el contenedor #hdr es el que queda fijo (un hijo no puede fijarse dentro de un padre del alto del encabezado) */
+#hdr{position:sticky;top:0;z-index:60}.hdr{position:relative!important}
+.mbar{top:var(--hh,0px)!important}.tnav{position:sticky;top:var(--hh,0px);z-index:40;background:var(--bg);padding:8px 0;margin-top:0!important}
+[id^="s-"],[id^="sec-"]{scroll-margin-top:calc(var(--hh,0px) + 70px)}
+@media print{#hdr{position:static}}
+
+#hdr.min .tiposnav,#hdr.min .hdr .sub{display:none}
+svg.mapaz{max-height:620px;width:100%;height:auto}
