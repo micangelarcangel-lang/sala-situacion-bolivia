@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Reporte — Sala de Situación Bolivia</title>
-<script src="vendor/echarts.min.js"></script><script src="lib.js?v=20261115c"></script><script src="s2.js?v=20261115b"></script><script src="clima.js?v=20261115b"></script><script src="perfil.js?v=20261115b"></script><script src="territorio.js?v=20261115b"></script>
+<script src="vendor/echarts.min.js"></script><script src="lib.js?v=20261115e"></script><script src="s2.js?v=20261115b"></script><script src="clima.js?v=20261115b"></script><script src="perfil.js?v=20261115b"></script><script src="territorio.js?v=20261115b"></script>
 <style>
 :root{--ink:#0f1b2d;--mut:#5b6b82;--line:#d9e0ea;--soft:#f4f7fb;--az:#1d4f91}
 *{box-sizing:border-box}
@@ -214,7 +214,7 @@ function seleccion(D){
  var h='<div class="hoja">'+hdr("REPORTE DE SITUACIÓN",num);
  h+='<h1>'+esc(mun?mun+" ("+dep+")":dep?dep:"Bolivia")+' · '+per_t+'</h1><div class="sub">Cobertura: '+(a?S.fecha(a):"inicio del registro")+' a '+S.fecha(b)+' (hora La Paz) · Tipos: '+(cs.length===CATS.length?"todos":esc(cs.join(", ")))+' · Fuente: '+(org==="of"?"solo oficiales":org==="prensa"?"solo prensa":"todas")+(nv>=0?' · Nivel: '+["verde","amarilla o más","naranja o más","solo roja"][nv]:'')+'</div>';
  function mapaTerrito(){if(dep&&$("mapaTerr"))TERR.datosMapa(dep,mun).then(function(R){var dd=(D.geoDep.features||[]).filter(function(f){return f.properties.n===dep});var o=mun?{dep:{features:R.sel},mun:{features:R.todos},pts:R.pts}:{dep:{features:dd},mun:{features:R.todos},pts:R.pts};$("mapaTerr").innerHTML='<div style="max-width:'+((R.bb[3]-R.bb[1])>(R.bb[2]-R.bb[0])*1.2?'40':'62')+'%;margin:6px 0 0">'+mapaZ(R.bb,o)+'</div><div class="nota">Servicios registrados en OpenStreetMap (mapeo voluntario, incompleto): cuadrado verde = salud · triángulo = bomberos/rescate · círculo = policía.</div>'}).catch(function(){});}
- if(!F.length){$("app").innerHTML=h+'<h2>Resultado</h2><p>No hay eventos registrados con estos criterios en el período. Pruebe ampliar el período o el territorio.</p>'+(D.ctx||'')+pie()+'</div>';mapaTerrito();return}
+ if(!F.length){$("app").innerHTML=h+'<h2>Resultado</h2><p>No hay eventos registrados con estos criterios en el período. Pruebe ampliar el período o el territorio.</p>'+(D.ctx||'')+pie()+'</div>';mapaTerrito();if(dep&&window.TERR)TERR.iniciar(dep,mun);return}
  var ks=kpi("Eventos",F.length,of+" de fuente oficial","#1d6fb8");
  if(focos.length)ks+=kpi("Detecciones de calor",det,focos.length+" complejos","#ef6c00")+kpi("Potencia radiativa",Math.round(mw)+" MW","suma de detecciones","#c62828");
  else ks+=kpi("Oficiales",of,"SENAMHI, San Calixto, etc.","#0aa3a3");
@@ -246,7 +246,7 @@ function seleccion(D){
  h+='<h2>'+sec+'. Alcance y limitaciones</h2><p style="margin:0" class="nota">Este reporte resume y no lista todos los registros. El detalle completo ('+F.length+' registros) se descarga como Excel/CSV desde «Informes». Las detecciones satelitales y las notas de prensa son preliminares; los valores de modelo no reemplazan estaciones oficiales.</p>';
  h+=pie("Fuentes: NASA FIRMS, SENAMHI, Observatorio San Calixto, prensa boliviana, modelos abiertos.")+'</div>';
  $("app").innerHTML=h;
- mapaTerrito();
+ mapaTerrito();if(dep&&window.TERR)TERR.iniciar(dep,mun);
  var tc=Object.keys(porC);
  var c1=echarts.init($("g1"),null,{renderer:"svg"});c1.setOption({animation:false,grid:{left:96,right:20,top:6,bottom:20},xAxis:{type:"value",minInterval:1},yAxis:{type:"category",data:tc,axisLabel:{fontSize:11}},series:[{type:"bar",data:tc.map(function(c){return{value:porC[c],itemStyle:{color:S.COLCAT[c]}}}),label:{show:true,position:"right"}}]});
  var c2=echarts.init($("g2"),null,{renderer:"svg"});
