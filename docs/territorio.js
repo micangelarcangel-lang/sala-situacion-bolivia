@@ -25,6 +25,7 @@ var TERR = (function () {
       T.focos = (D.focos_puntos && D.focos_puntos.puntos) || []; T.dias = (D.focos_puntos && D.focos_puntos.dias) || [];
       ((D.geoMun || {}).features || []).forEach(function (f) { var k = f.properties.d + "|" + f.properties.n, p = T.pob && T.pob.municipios[k], m = {k: k, d: f.properties.d, n: f.properties.n, f: f, bb: bbox(f.geometry), km2: area(f.geometry), pob: p ? p.est[ANIO] : null, est: [], bom: [], pol: [], res: [], foc: 0}; T.M[k] = m; T.lista.push(m); (T.DEP[m.d] = T.DEP[m.d] || []).push(m); });
       function donde(lat, lon) { for (var i = 0; i < T.lista.length; i++) { var m = T.lista[i]; if (lon >= m.bb[0] && lon <= m.bb[2] && lat >= m.bb[1] && lat <= m.bb[3] && dentro(m.f.geometry, lat, lon)) return m; } return null; }
+      T.donde = donde;
       T.est.forEach(function (p) { var m = donde(p[0], p[1]); if (m) m.est.push(p); });
       T.emer.forEach(function (p) { var m = donde(p[0], p[1]); if (m) (p[3] === "bomberos" ? m.bom : p[3] === "rescate" ? m.res : m.pol).push(p); });
       T.focos.forEach(function (p) { var m = donde(p[0], p[1]); if (m) m.foc++; });
@@ -90,9 +91,80 @@ var TERR = (function () {
     document.getElementById("rpPer").onchange = u; document.getElementById("rpCat").onchange = u; u();
   }
 
+
+  /* ---------- iconos por naturaleza del punto (dibujados en canvas) ---------- */
+  var ICO = {};
+  function dibuja(tipo) {
+    if (ICO[tipo]) return ICO[tipo];
+    var c = document.createElement("canvas"); c.width = c.height = 64; var g = c.getContext("2d"); g.lineCap = "round"; g.lineJoin = "round";
+    function disco(col) { g.beginPath(); g.arc(32, 32, 28, 0, 6.2832); g.fillStyle = col; g.fill(); g.lineWidth = 4; g.strokeStyle = "#fff"; g.stroke(); }
+    function llama(x, y, s, col) { g.save(); g.translate(x, y); g.scale(s, s); g.beginPath(); g.moveTo(0, -20); g.bezierCurveTo(12, -8, 16, 0, 14, 8); g.bezierCurveTo(12, 18, 4, 22, 0, 22); g.bezierCurveTo(-6, 22, -14, 18, -14, 8); g.bezierCurveTo(-14, 2, -10, -2, -6, -6); g.bezierCurveTo(-5, 0, -2, 2, 0, 2); g.bezierCurveTo(2, -6, 0, -14, 0, -20); g.closePath(); g.fillStyle = col; g.fill(); g.restore(); }
+    if (tipo === "salud") { disco("#2e7d32"); g.fillStyle = "#fff"; g.fillRect(27, 15, 10, 34); g.fillRect(15, 27, 34, 10); }
+    else if (tipo === "policía") { g.beginPath(); g.moveTo(32, 4); g.lineTo(56, 13); g.lineTo(56, 32); g.quadraticCurveTo(56, 53, 32, 61); g.quadraticCurveTo(8, 53, 8, 32); g.lineTo(8, 13); g.closePath(); g.fillStyle = "#1565c0"; g.fill(); g.lineWidth = 4; g.strokeStyle = "#fff"; g.stroke(); g.beginPath(); for (var i = 0; i < 10; i++) { var r = i % 2 ? 6 : 15, a = -1.5708 + i * 0.6283; g.lineTo(32 + r * Math.cos(a), 33 + r * Math.sin(a)); } g.closePath(); g.fillStyle = "#fff"; g.fill(); }
+    else if (tipo === "bomberos") { disco("#c62828"); llama(32, 33, 1, "#fff"); }
+    else if (tipo === "rescate") { disco("#ef6c00"); g.strokeStyle = "#fff"; g.lineWidth = 10; g.beginPath(); g.arc(32, 32, 14, 0, 6.2832); g.stroke(); g.strokeStyle = "#ef6c00"; g.lineWidth = 12; [0.785, 2.356, 3.927, 5.498].forEach(function (a) { g.beginPath(); g.moveTo(32 + 8 * Math.cos(a), 32 + 8 * Math.sin(a)); g.lineTo(32 + 20 * Math.cos(a), 32 + 20 * Math.sin(a)); g.stroke(); }); }
+    else if (tipo.indexOf("rio") === 0) { disco(["#2a9d8f", "#f5b700", "#f26a1b", "#d7263d"][+tipo.slice(3)] || "#2a9d8f"); g.strokeStyle = "#fff"; g.lineWidth = 5; [24, 38].forEach(function (y) { g.beginPath(); for (var x = 14; x <= 50; x += 2) { var yy = y + 4 * Math.sin((x - 14) / 36 * 6.2832 * 1.5); x === 14 ? g.moveTo(x, yy) : g.lineTo(x, yy); } g.stroke(); }); }
+    else if (tipo === "complejo") { llama(32, 34, 1.25, "#fff"); llama(32, 34, 1.05, "#e53935"); llama(32, 40, .55, "#ffca28"); }
+    return (ICO[tipo] = {url: c.toDataURL(), data: g.getImageData(0, 0, 64, 64).data});
+  }
+  function ico(tipo, px) { return '<img src="' + dibuja(tipo).url + '" width="' + (px || 16) + '" height="' + (px || 16) + '" alt="" style="vertical-align:middle">'; }
+
+  /* ---------- indicadores de riesgo del municipio (método tipo INFORM, relativo a los 339 municipios) ---------- */
+  function percentiles(vals) { var s = vals.filter(function (v) { return v != null && !isNaN(v); }).slice().sort(function (a, b) { return a - b; }); return function (v) { if (v == null || isNaN(v) || !s.length) return null; var lo = 0, hi = s.length; while (lo < hi) { var md = (lo + hi) >> 1; if (s[md] < v) lo = md + 1; else hi = md; } var a = lo; lo = a; hi = s.length; while (lo < hi) { var m2 = (lo + hi) >> 1; if (s[m2] <= v) lo = m2 + 1; else hi = m2; } return (a + lo) / 2 / s.length; }; }
+  var NIVR = [[2, "Muy bajo", "#2e9e5b"], [4, "Bajo", "#8bc34a"], [6, "Medio", "#f5b700"], [8, "Alto", "#f26a1b"], [11, "Muy alto", "#d7263d"]];
+  function nivelR(v) { for (var i = 0; i < NIVR.length; i++) if (v < NIVR[i][0]) return NIVR[i]; return NIVR[4]; }
+  function indices(T) {
+    if (T._ri) return T._ri;
+    var D = T.D, ahora = Date.now(), evc = {};
+    D.ev.forEach(function (e) { if (e.origen === "foco" || e.origen === "modelo" || e.ts < ahora - 30 * DIA || e.lat == null || e.lon == null) return; var mm = T.donde(+e.lat, +e.lon); if (mm) evc[mm.k] = (evc[mm.k] || 0) + 1; });
+    var raw = T.lista.map(function (m) {
+      var c = centroM(m), nb = (T.nb && T.nb.municipios[m.k]) || {}, ed = (T.ed && T.ed.municipios[m.k]) || {}, hp = m.est.some(esHosp) ? 0 : ((cercano(T.est, c[0], c[1], esHosp) || {}).km), bo = (m.bom.length || m.res.length) ? 0 : ((cercano(T.emer, c[0], c[1], function (p) { return p[3] === "bomberos" || p[3] === "rescate"; }) || {}).km), pa = paM(T, m.k);
+      return {m: m, nbi: nb.nbi24, ext: nb.ext24, agua: nb.agua24, anal: ed.alf24 != null ? 100 - ed.alf24 : null, estu: ed.est24, sal: nb.sal24, hosp: hp, bomb: bo, estab: m.pob ? m.est.length / m.pob * 1e4 : null, veh: pa != null && m.pob ? pa / m.pob * 1000 : null, hist: antM(T, m.k).n, ev: evc[m.k] || 0};
+    });
+    var P = {}; ["nbi", "ext", "agua", "anal", "estu", "sal", "hosp", "bomb", "estab", "veh", "hist"].forEach(function (k) { P[k] = percentiles(raw.map(function (r) { return r[k]; })); });
+    var VUL = [["nbi", "Pobreza por NBI", 1, "%"], ["ext", "Pobreza extrema", 1, "%"], ["agua", "Agua y saneamiento inadecuados", 1, "%"], ["anal", "Analfabetismo", 1, "%"], ["estu", "Pocos años de estudio", -1, " años"], ["sal", "Inadecuada atención en salud", 1, "%"]];
+    var CAP = [["hosp", "Distancia al hospital", 1, " km"], ["bomb", "Distancia a bomberos/rescate", 1, " km"], ["estab", "Pocos establecimientos por habitante", -1, " /10.000 hab."], ["veh", "Pocos vehículos por habitante", -1, " /1.000 hab."]];
+    function comp(r, L) { var o = []; L.forEach(function (d) { var p = P[d[0]](r[d[0]]); if (p == null) return; var s = d[2] > 0 ? p : 1 - p; o.push({n: d[1], v: r[d[0]], u: d[3], s: s}); }); return o; }
+    function media(o) { return o.length ? o.reduce(function (a, b) { return a + b.s; }, 0) / o.length * 10 : null; }
+    var out = {}, arr = [];
+    raw.forEach(function (r) {
+      var V = comp(r, VUL), Lc = comp(r, CAP), m = r.m, hist = P.hist(r.hist) * 10, av = m.av < 0 ? 0 : [1, 4, 7, 10][m.av], fo = m.foc >= 100 ? 10 : m.foc >= 30 ? 7 : m.foc >= 10 ? 4 : m.foc >= 1 ? 2 : 0, ev = r.ev >= 5 ? 8 : r.ev >= 2 ? 5 : r.ev >= 1 ? 3 : 0, act = Math.max(av, fo, ev);
+      var Av = media(V), Lv = media(Lc), Am = 0.6 * hist + 0.4 * act;
+      var R = Math.cbrt(Math.max(.5, Am) * Math.max(.5, Av == null ? 5 : Av) * Math.max(.5, Lv == null ? 5 : Lv));
+      var A = [{n: "Antecedentes de desastres (DesInventar)", v: r.hist, u: " registros", s: hist / 10}, {n: "Avisos SENAMHI vigentes", v: m.av < 0 ? "ninguno" : S.NIVTXT[m.av].toLowerCase(), u: "", s: av / 10}, {n: "Focos de calor", v: m.foc, u: " en " + T.dias.length + " d", s: fo / 10}, {n: "Eventos del sistema (30 d)", v: r.ev, u: "", s: ev / 10}];
+      var o = {k: m.k, d: m.d, A: Am, V: Av, L: Lv, R: R, niv: nivelR(R), cA: A, cV: V, cL: Lc, hist: hist, act: act};
+      out[m.k] = o; arr.push(o);
+    });
+    arr.slice().sort(function (a, b) { return b.R - a.R; }).forEach(function (o, i) { o.rank = i + 1; });
+    var byD = {}; arr.forEach(function (o) { (byD[o.d] = byD[o.d] || []).push(o); }); Object.keys(byD).forEach(function (d) { byD[d].sort(function (a, b) { return b.R - a.R; }).forEach(function (o, i) { o.rankD = i + 1; o.nD = byD[d].length; }); });
+    out._n = arr.length; return (T._ri = out);
+  }
+  function factores(o) { var f = []; [["V", "cV", "Vulnerabilidad"], ["L", "cL", "Capacidad de respuesta"], ["A", "cA", "Amenaza"]].forEach(function (z) { o[z[1]].slice().sort(function (a, b) { return b.s - a.s; }).slice(0, 2).forEach(function (c) { if (c.s >= .6) f.push({g: z[2], c: c}); }); }); return f; }
+  function barraR(t, v, col) { return '<div class="rb"><span>' + t + '</span><div class="rt"><i style="width:' + Math.min(100, v * 10) + '%;background:' + col + '"></i></div><b>' + fmt(v, 1) + '</b></div>'; }
+  function lista(cs) { return '<ul class="rl">' + cs.slice().sort(function (a, b) { return b.s - a.s; }).map(function (c) { return '<li><span>' + S.esc(c.n) + '</span><em>' + (typeof c.v === "number" ? fmt(c.v, c.v < 10 ? 1 : 0) : S.esc(c.v)) + S.esc(c.u) + '</em><i style="width:' + Math.round(c.s * 100) + 'px;background:' + (c.s >= .75 ? "#d7263d" : c.s >= .5 ? "#f5b700" : "#8bc34a") + '"></i></li>'; }).join("") + '</ul>'; }
+  function bloqueRiesgo(T, m) {
+    var o = indices(T)[m.k], n = o.niv, f = factores(o);
+    var h = '<div class="card riesgo" style="border-top:4px solid ' + n[2] + '"><h2>Indicadores de riesgo del municipio</h2><div class="cap">Lectura automática a partir de amenaza, vulnerabilidad y capacidad de respuesta. <b>Por validar con el CCES.</b></div><div class="rg"><div class="rbig" style="background:' + n[2] + '"><b>' + fmt(o.R, 1) + '</b><span>de 10</span><em>' + n[1] + '</em></div><div class="rbars">' + barraR("Amenaza", o.A, "#7b1fa2") + barraR("Vulnerabilidad", o.V == null ? 0 : o.V, "#1d6fb8") + barraR("Falta de capacidad de respuesta", o.L == null ? 0 : o.L, "#ef6c00") + '<p class="nota" style="margin:6px 0 0">Puesto ' + o.rankD + ' de ' + o.nD + ' municipios de ' + S.esc(m.d) + ' (1 = mayor riesgo).</p></div></div>';
+    h += '<p style="margin:10px 0 4px"><b>Qué lo explica</b></p>' + (f.length ? '<ul class="rl2">' + f.map(function (x) { return '<li><b>' + x.g + ':</b> ' + S.esc(x.c.n) + ' — ' + (typeof x.c.v === "number" ? fmt(x.c.v, x.c.v < 10 ? 1 : 0) : S.esc(x.c.v)) + S.esc(x.c.u) + '</li>'; }).join("") + '</ul>' : '<p class="nota">Ningún factor destaca por encima de lo habitual.</p>');
+    h += '<div class="grid g3" style="margin-top:8px"><div><b>Amenaza</b>' + lista(o.cA) + '</div><div><b>Vulnerabilidad</b>' + (o.cV.length ? lista(o.cV) : '<p class="nota">sin dato</p>') + '</div><div><b>Capacidad de respuesta</b>' + (o.cL.length ? lista(o.cL) : '<p class="nota">sin dato</p>') + '</div></div>';
+    h += '<details style="margin-top:8px"><summary class="nota">Cómo se calcula</summary><p class="nota">Cada indicador se convierte en un percentil frente a los 339 municipios (0 = mejor, 10 = peor) y cada componente es el promedio de los suyos. <b>Amenaza</b> = 60 % antecedentes DesInventar + 40 % el mayor de aviso SENAMHI, focos de calor o eventos recientes. <b>Vulnerabilidad</b> = NBI, pobreza extrema, agua y saneamiento, analfabetismo, años de estudio y atención en salud (Censo 2024). <b>Falta de capacidad</b> = distancia en línea recta al hospital y a bomberos/rescate (OSM), establecimientos y vehículos por habitante. <b>Riesgo</b> = raíz cúbica de (Amenaza × Vulnerabilidad × Falta de capacidad). Niveles: &lt;2 muy bajo, &lt;4 bajo, &lt;6 medio, &lt;8 alto, ≥8 muy alto. Es un índice relativo entre municipios, no una probabilidad, y las amenazas climáticas por zona se ven en el perfil de abajo. Los datos de OSM son incompletos y DesInventar termina en 2015.</p></details></div>';
+    return h;
+  }
+  function bloqueRiesgoDep(T, d) {
+    var I = indices(T), L = T.DEP[d].map(function (m) { return I[m.k]; }), tot = L.reduce(function (s, o) { return s + (T.M[o.k].pob || 0); }, 0) || 1;
+    var Rw = L.reduce(function (s, o) { return s + o.R * (T.M[o.k].pob || 0); }, 0) / tot, n = nivelR(Rw), cnt = NIVR.map(function (x) { return L.filter(function (o) { return o.niv[1] === x[1]; }).length; });
+    var top = L.slice().sort(function (a, b) { return b.R - a.R; }).slice(0, 10);
+    return '<div class="card riesgo" style="border-top:4px solid ' + n[2] + '"><h2>Riesgo de los municipios del departamento</h2><div class="cap">Índice 0–10 por municipio (amenaza × vulnerabilidad × falta de capacidad de respuesta). <b>Por validar con el CCES.</b></div><div class="rg"><div class="rbig" style="background:' + n[2] + '"><b>' + fmt(Rw, 1) + '</b><span>de 10</span><em>' + n[1] + '</em></div><div class="rbars"><p class="nota" style="margin:0 0 6px">Media del departamento ponderada por población. Municipios por nivel:</p><div class="rdist">' + NIVR.map(function (x, i) { return cnt[i] ? '<span style="flex:' + cnt[i] + ';background:' + x[2] + '" title="' + x[1] + ': ' + cnt[i] + '">' + cnt[i] + '</span>' : ""; }).join("") + '</div><div class="rleg">' + NIVR.map(function (x) { return '<span><i style="background:' + x[2] + '"></i>' + x[1] + '</span>'; }).join("") + '</div></div></div>' +
+      '<p style="margin:10px 0 4px"><b>Municipios de mayor riesgo</b></p>' + tabla(["Municipio", "Riesgo", "Amenaza", "Vulnerab.", "Falta capac.", "Principal factor"], top.map(function (o) { var f = factores(o)[0]; return ['<a href="municipio.html?d=' + encodeURIComponent(d) + '&m=' + encodeURIComponent(T.M[o.k].n) + '">' + S.esc(T.M[o.k].n) + '</a>', '<b style="color:' + o.niv[2] + '">' + fmt(o.R, 1) + '</b> <span class="nota">' + o.niv[1] + '</span>', fmt(o.A, 1), o.V == null ? SD : fmt(o.V, 1), o.L == null ? SD : fmt(o.L, 1), f ? S.esc(f.c.n) : "—"]; })) + '<p class="nota">Índice relativo entre los 339 municipios del país. Úselo para priorizar la mirada, no como probabilidad de ocurrencia.</p></div>';
+  }
+
   /* ---------- mapa con TODAS las capas del mapa nacional + servicios ---------- */
   var VARS = [
     ["none", "Sin color", null],
+    ["riesgo", "Índice de riesgo (0–10)", function (m, T) { return indices(T)[m.k].R; }, "lin", "/10"],
+    ["amen", "Amenaza (0–10)", function (m, T) { return indices(T)[m.k].A; }, "lin", "/10"],
+    ["vul", "Vulnerabilidad (0–10)", function (m, T) { return indices(T)[m.k].V; }, "lin", "/10"],
+    ["cap", "Falta de capacidad de respuesta (0–10)", function (m, T) { return indices(T)[m.k].L; }, "lin", "/10"],
     ["pob", "Población", function (m) { return m.pob; }, "raiz", "hab."],
     ["dens", "Densidad", function (m) { return densidad(m); }, "raiz", "hab/km²"],
     ["his", "Desastres históricos (DesInventar)", function (m, T) { return antM(T, m.k).n; }, "raiz", "registros"],
@@ -122,9 +194,9 @@ var TERR = (function () {
     var nAv = o.munis.filter(function (m) { return m.av >= 0; }).length;
     /* panel de capas (misma estructura que el mapa nacional) */
     var panel = '<div class="card lay" id="' + uid + 'L"><h2>Capas</h2><div class="sec">Servicios (OpenStreetMap)</div>' +
-      [["salud", "Salud"], ["bomberos", "Bomberos"], ["rescate", "Rescate"], ["policía", "Policía"]].map(function (x) { return '<label><input type="checkbox" data-c="' + x[0] + '" checked><i class="dot" style="background:' + COL[x[0]] + '"></i>' + x[1] + ' <span class="nota">(' + nF[x[0]] + ')</span></label>'; }).join("") +
-      '<div class="sec">Incendios (NASA FIRMS)</div><label><input type="checkbox" data-c="heat" checked> Mapa de calor de focos</label><label><input type="checkbox" data-c="comp" checked> Complejos de incendio <span class="nota">(' + cap.comp.features.length + ')</span></label><div class="nota" id="' + uid + 'D">Últimos ' + Math.min(3, T.dias.length) + ' días</div><input type="range" id="' + uid + 'R" min="1" max="' + Math.max(1, T.dias.length) + '" value="' + Math.min(3, Math.max(1, T.dias.length)) + '">' +
-      '<div class="sec">Otros eventos</div><label><input type="checkbox" data-c="sis" checked> Sismos <span class="nota">(' + cap.sis.features.length + ')</span></label><label><input type="checkbox" data-c="rio" checked> Ríos (GloFAS) <span class="nota">(' + cap.rio.features.length + ')</span></label><label><input type="checkbox" data-c="evs" checked> Otros eventos con ubicación <span class="nota">(' + cap.evs.features.length + ')</span></label>' +
+      [["salud", "Salud"], ["bomberos", "Bomberos"], ["rescate", "Rescate"], ["policía", "Policía"]].map(function (x) { return '<label><input type="checkbox" data-c="' + x[0] + '" checked>' + ico(x[0], 18) + ' ' + x[1] + ' <span class="nota">(' + nF[x[0]] + ')</span></label>'; }).join("") +
+      '<div class="sec">Incendios (NASA FIRMS)</div><label><input type="checkbox" data-c="heat" checked> Mapa de calor de focos</label><label><input type="checkbox" data-c="comp" checked>' + ico("complejo", 18) + ' Complejos de incendio <span class="nota">(' + cap.comp.features.length + ')</span></label><div class="nota" id="' + uid + 'D">Últimos ' + Math.min(3, T.dias.length) + ' días</div><input type="range" id="' + uid + 'R" min="1" max="' + Math.max(1, T.dias.length) + '" value="' + Math.min(3, Math.max(1, T.dias.length)) + '">' +
+      '<div class="sec">Otros eventos</div><label><input type="checkbox" data-c="sis" checked> Sismos <span class="nota">(' + cap.sis.features.length + ')</span></label><label><input type="checkbox" data-c="rio" checked>' + ico("rio0", 18) + ' Estaciones de ríos (GloFAS) <span class="nota">(' + cap.rio.features.length + ')</span></label><label><input type="checkbox" data-c="evs" checked> Otros eventos con ubicación <span class="nota">(' + cap.evs.features.length + ')</span></label>' +
       '<div class="sec">Colorear ' + o.unidad + ' por</div>' + VARS.map(function (v, i) { return '<label><input type="radio" name="' + uid + 'F" value="' + v[0] + '"' + (i === 0 ? " checked" : "") + '> ' + v[1] + '</label>'; }).join("") +
       '<div class="sec">Mapa base</div><label><input type="radio" name="' + uid + 'B" value="osm" checked> Calles y relieve (OSM)</label><label><input type="radio" name="' + uid + 'B" value="sat"> Imagen satelital (Esri)</label><label><input type="radio" name="' + uid + 'B" value="none"> Sin mapa base</label>' +
       '<div class="leg" id="' + uid + 'G"></div><p class="nota">Red vial y ríos del mapa topográfico: siguiente fase.</p></div>';
@@ -151,24 +223,35 @@ var TERR = (function () {
       m.addLayer({id: "mun-f", type: "fill", source: "mun", paint: {"fill-color": "#1d6fb8", "fill-opacity": ["case", ["==", ["get", "sel"], 1], .22, .06]}});
       m.addLayer({id: "mun-l", type: "line", source: "mun", paint: {"line-color": "#0b3b6e", "line-width": ["case", ["==", ["get", "sel"], 1], 3, .8], "line-opacity": .85}});
       m.addSource("focos", {type: "geojson", data: focosGeo(Math.min(3, T.dias.length) || 1)});
-      m.addLayer({id: "heat", type: "heatmap", source: "focos", paint: {"heatmap-weight": ["interpolate", ["linear"], ["get", "frp"], 0, .3, 50, 1], "heatmap-intensity": 1.2, "heatmap-radius": 22, "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, "rgba(254,178,76,0)", .3, "#feb24c", .6, "#f03b20", 1, "#7a0026"]}});
-      m.addLayer({id: "focoPt", type: "circle", source: "focos", minzoom: 8, paint: {"circle-radius": 4, "circle-color": "#f03b20", "circle-stroke-color": "#fff", "circle-stroke-width": 1}});
+      m.addLayer({id: "heat", type: "heatmap", source: "focos", paint: {"heatmap-weight": ["interpolate", ["linear"], ["get", "frp"], 0, .35, 50, 1], "heatmap-intensity": 1.6, "heatmap-radius": 26, "heatmap-opacity": .9, "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, "rgba(255,120,0,0)", .15, "rgba(255,140,0,.55)", .4, "rgba(255,69,0,.8)", .7, "rgba(214,25,25,.92)", 1, "rgba(122,0,38,1)"]}});
+      m.addLayer({id: "focoHalo", type: "circle", source: "focos", minzoom: 7, paint: {"circle-radius": 13, "circle-color": "rgba(255,60,0,.38)", "circle-blur": 1, "circle-opacity": .9}});
+      m.addLayer({id: "focoPt", type: "circle", source: "focos", minzoom: 7, paint: {"circle-radius": 3.6, "circle-color": "#ff3d00", "circle-stroke-color": "#ffd180", "circle-stroke-width": 1.4}});
+      ["salud", "bomberos", "rescate", "policía", "complejo", "rio0", "rio1", "rio2", "rio3"].forEach(function (k) { var d = dibuja(k).data; m.addImage("i-" + k, {width: 64, height: 64, data: d}); });
+      var TAM = ["interpolate", ["linear"], ["zoom"], 5, .26, 8, .42, 11, .62, 14, .8];
       Object.keys(cap).forEach(function (k) {
         m.addSource("c-" + k, {type: "geojson", data: cap[k]});
-        var paint = {"circle-opacity": .92, "circle-stroke-color": "#fff", "circle-stroke-width": 1.2};
-        if (COL[k]) { paint["circle-radius"] = k === "salud" || k === "policía" ? 3.5 : 6; paint["circle-color"] = COL[k]; }
-        else if (k === "sis") { paint["circle-radius"] = ["interpolate", ["linear"], ["get", "mag"], 2, 4, 6, 18]; paint["circle-color"] = ["interpolate", ["linear"], ["get", "p"], 0, "#d7263d", 100, "#f5b700", 300, "#2a7fd1"]; }
-        else if (k === "rio") { paint["circle-radius"] = 8; paint["circle-color"] = ["match", ["get", "v"], 0, "#2a9d8f", 1, "#f5b700", 2, "#f26a1b", "#d7263d"]; paint["circle-stroke-width"] = 2; }
-        else if (k === "comp") { paint["circle-radius"] = ["interpolate", ["linear"], ["get", "n"], 8, 7, 120, 20]; paint["circle-color"] = "rgba(215,38,61,.15)"; paint["circle-stroke-color"] = "#d7263d"; paint["circle-stroke-width"] = 2.5; }
-        else if (k === "evs") { paint["circle-radius"] = 6.5; paint["circle-color"] = ["get", "c"]; }
-        m.addLayer({id: "c-" + k, type: "circle", source: "c-" + k, paint: paint}); pop("c-" + k);
+        if (COL[k]) { m.addLayer({id: "c-" + k, type: "symbol", source: "c-" + k, layout: {"icon-image": "i-" + k, "icon-size": k === "salud" || k === "policía" ? TAM : ["interpolate", ["linear"], ["zoom"], 5, .36, 8, .55, 11, .78, 14, .95], "icon-allow-overlap": true}}); }
+        else if (k === "rio") { m.addLayer({id: "c-rio", type: "symbol", source: "c-rio", layout: {"icon-image": ["concat", "i-rio", ["to-string", ["get", "v"]]], "icon-size": ["interpolate", ["linear"], ["zoom"], 5, .5, 9, .7, 13, .9], "icon-allow-overlap": true}}); }
+        else if (k === "comp") {
+          m.addLayer({id: "c-comp-h", type: "circle", source: "c-comp", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "n"], 8, 20, 120, 40], "circle-color": "rgba(255,70,0,.40)", "circle-blur": 1, "circle-opacity": .9}});
+          m.addLayer({id: "c-comp", type: "symbol", source: "c-comp", layout: {"icon-image": "i-complejo", "icon-size": ["interpolate", ["linear"], ["get", "n"], 8, .5, 120, .9], "icon-allow-overlap": true}});
+        }
+        else if (k === "sis") {
+          m.addLayer({id: "c-sis-h", type: "circle", source: "c-sis", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 9, 6, 34], "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#6a1b9a", "circle-stroke-width": 1.6, "circle-stroke-opacity": .55}});
+          m.addLayer({id: "c-sis", type: "circle", source: "c-sis", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 4, 6, 18], "circle-color": ["interpolate", ["linear"], ["get", "p"], 0, "#d7263d", 100, "#f5b700", 300, "#2a7fd1"], "circle-opacity": .85, "circle-stroke-color": "#fff", "circle-stroke-width": 1.2}});
+        }
+        else { m.addLayer({id: "c-" + k, type: "circle", source: "c-" + k, paint: {"circle-radius": 6.5, "circle-color": ["get", "c"], "circle-opacity": .92, "circle-stroke-color": "#fff", "circle-stroke-width": 1.4}}); }
+        pop("c-" + k);
       });
+      /* pulso suave de los halos de fuego */
+      var tp = 0; var pulso = setInterval(function () { if (!m.getLayer("focoHalo")) return; tp += .18; try { m.setPaintProperty("focoHalo", "circle-radius", 13 + 4 * Math.sin(tp)); m.setPaintProperty("c-comp-h", "circle-opacity", .65 + .3 * Math.sin(tp)); } catch (e) { clearInterval(pulso); } }, 90);
       pop("focoPt");
       m.on("mousemove", "mun-f", function (e) { if (m.queryRenderedFeatures(e.point).some(function (f) { return /^c-|^focoPt/.test(f.layer.id); })) { popup.remove(); return; } var p = e.features[0].properties; m.getCanvas().style.cursor = o.click ? "pointer" : ""; popup.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + S.esc(p.n) + '</b>' + S.esc(p.txt && p.txt !== "" ? p.txt : "") + (o.click ? ' · clic para abrir' : "") + '</div>').addTo(m); });
       m.on("mouseleave", "mun-f", function () { popup.remove(); });
+      ["c-salud", "c-bomberos", "c-rescate", "c-policía", "c-rio", "c-comp"].forEach(function (id) { m.on("mouseenter", id, function () { popup.remove(); }); });
       if (o.click) m.on("click", "mun-f", function (e) { if (m.queryRenderedFeatures(e.point).some(function (f) { return /^c-|^focoPt/.test(f.layer.id); })) return; o.click(e.features[0].properties); });
       var P = document.getElementById(uid + "L");
-      P.querySelectorAll("input[data-c]").forEach(function (i) { i.onchange = function () { var c = i.dataset.c; if (c === "heat") { ver("heat", i.checked); ver("focoPt", i.checked); } else ver("c-" + c, i.checked); }; });
+      P.querySelectorAll("input[data-c]").forEach(function (i) { i.onchange = function () { var c = i.dataset.c; if (c === "heat") { ver("heat", i.checked); ver("focoPt", i.checked); ver("focoHalo", i.checked); } else { ver("c-" + c, i.checked); if (c === "comp") ver("c-comp-h", i.checked); if (c === "sis") ver("c-sis-h", i.checked); } }; });
       P.querySelectorAll("input[name=" + uid + "F]").forEach(function (r) { r.onchange = function () { colorear(r.value); }; });
       P.querySelectorAll("input[name=" + uid + "B]").forEach(function (r) { r.onchange = function () { ver("osm", r.value === "osm"); ver("sat", r.value === "sat"); }; });
       var R = document.getElementById(uid + "R"); R.oninput = function () { document.getElementById(uid + "D").textContent = this.value == 1 ? "Último día" : "Últimos " + this.value + " días"; m.getSource("focos").setData(focosGeo(+this.value)); };
@@ -223,6 +306,7 @@ var TERR = (function () {
       var sinE = L.filter(function (x) { return !x.est.length; }), sinB = L.filter(function (x) { return !x.bom.length && !x.res.length; }), sinP = L.filter(function (x) { return !x.pol.length; });
       var h = '<h1 class="th">' + S.esc(d) + '</h1><div class="cap">Departamento: información propia de este nivel. Para ver un municipio, elíjalo en el mapa, en la tabla o en el selector superior.</div>';
       h += kpis([[fmt(pd), "habitantes " + ANIO + " (INE)"], [fmt(km2) + " km²", L.length + " municipios · " + fmt(pd / km2, 1) + " hab/km²"], [av.length, "avisos SENAMHI vigentes"], [rec.length, "eventos del sistema, 30 días"], [fmt(nF), "focos de calor, últimos " + T.dias.length + " días"], [sq && sq.spi3 != null ? sq.spi3.toFixed(2) : "—", "sequía SPI-3" + (sq ? " · " + S.esc(sq.clase3) : "")], [fmt(ant.n), "desastres históricos (" + fmt(ant.m) + " fallecidos)"]]);
+      h += bloqueRiesgoDep(T, d);
       h += '<section class="msec"><h2>Mapa del departamento</h2><div class="cap">Capas del mapa nacional más servicios, a escala departamental. Coloree los municipios por la variable que le interese; haga clic en uno para abrir su ficha.</div><div id="tMapa"></div></section>';
       h += '<div class="card"><h2>Municipios</h2><div class="cap">Ordene por la columna que le interese.</div><div class="mb-g" id="ordBtn"></div><div id="tabMun"></div></div>';
       h += '<div class="grid g2"><div class="card"><h2>Red de servicios</h2>' + kpis([[nE, "establecimientos de salud (OSM)"], [nB, "bomberos / rescate"], [nP, "policía"]]) + '<p class="nota" style="margin:0">Municipios sin registro en OSM (puede ser vacío de mapeo y no ausencia real): salud <b>' + sinE.length + '</b> · bomberos o rescate <b>' + sinB.length + '</b> · policía <b>' + sinP.length + '</b> de ' + L.length + '.</p></div><div class="card"><h2>Antecedentes de desastres</h2><div class="cap">Tipos más registrados (DesInventar, hasta 2015; con subregistro)</div><div id="chAnt" style="height:220px"></div></div></div>';
@@ -251,6 +335,7 @@ var TERR = (function () {
       var pam = paM(T, m.k);
       var h = '<h1 class="th">' + S.esc(n) + ' <small>municipio de ' + S.esc(d) + '</small></h1><div class="cap">Municipio: información propia de este nivel. Lo que falta aparece como <b>sin dato</b>.</div>';
       h += kpis([[fmt(m.pob), "habitantes " + ANIO + " (INE)"], [fmt(m.km2) + " km²", fmt(densidad(m), 1) + " hab/km²"], [av.length, "avisos SENAMHI vigentes"], [m.foc, "focos de calor, últimos " + T.dias.length + " días"], [m.est.length, "establecimientos de salud (OSM)"], [enM.length ? "En el municipio" : hp ? "≈" + Math.round(hp.km) + " km" : "sin dato", "hospital más cercano (línea recta)"], [ant.n, "desastres históricos (DesInventar)"]]);
+      h += bloqueRiesgo(T, m);
       h += '<section class="msec"><h2>Mapa del municipio</h2><div class="cap">Capas del mapa nacional más servicios, a escala municipal. El municipio aparece resaltado dentro de su departamento.</div><div id="tMapa"></div></section>';
       h += '<div class="grid g2"><div class="card"><h2>Condiciones de vida</h2><div class="cap">Censo 2024 (INE) y, cuando existe, Censo 2012.</div>' + tabla(["Indicador", "2024", "2012"], filasPropias(T.nb && T.nb.municipios[m.k], NBI).concat(filasPropias(T.ed && T.ed.municipios[m.k], EDI)).concat([["Vehículos registrados por 1.000 hab. (2025)", pam != null && m.pob ? fmt(pam / m.pob * 1000, 0) : SD, '<span class="nota">—</span>'], ["Índice de Desarrollo Humano (PNUD)", SD, SD]])) + '<p class="nota">NBI = necesidades básicas insatisfechas (método INE).</p></div>';
       function fil(t, x) { return '<tr><td>' + t + '</td><td>' + (x ? S.esc(x.p[2] || "(sin nombre en OSM)") : "sin dato") + '</td><td style="text-align:right">' + (x ? "≈" + Math.round(x.km) + " km" : SD) + '</td></tr>'; }
@@ -276,11 +361,15 @@ var TERR = (function () {
       if (av.length) h += '<p class="nota" style="margin:3px 0 0">Avisos vigentes: ' + av.map(function (a) { return S.esc(a.titulo) + " (" + S.esc((a.nivel || "").toLowerCase()) + ")"; }).join("; ") + '.</p>';
       h += '<div id="mapaTerr"></div>';
       if (m) { var c = centroM(m), hp = cercano(T.est, c[0], c[1], esHosp), bo = cercano(T.emer, c[0], c[1], function (p) { return p[3] === "bomberos" || p[3] === "rescate"; }); h += '<p style="margin:4px 0 0">Hospital más cercano al centro del municipio: <b>' + (m.est.some(esHosp) ? "dentro del municipio" : hp ? S.esc(hp.p[2]) + ", ≈" + Math.round(hp.km) + " km en línea recta" : "sin dato") + '</b>. Bomberos o rescate más cercano: <b>' + (m.bom.length || m.res.length ? "dentro del municipio" : bo ? S.esc(bo.p[2]) + ", ≈" + Math.round(bo.km) + " km" : "sin dato") + '</b>. <span class="nota">Distancias en línea recta, referenciales.</span></p>'; }
-      else {
-        var top = L.filter(function (x) { return T.nb && T.nb.municipios[x.k]; }).sort(function (a, b) { return T.nb.municipios[b.k].nbi24 - T.nb.municipios[a.k].nbi24; }).slice(0, 8);
-        h += '<h2>Municipios de mayor pobreza por NBI</h2><table><tr><th>Municipio</th><th style="width:90px">Población</th><th style="width:90px">NBI %</th><th style="width:100px">Alfabet. %</th><th style="width:100px">Estab. salud</th></tr>' + top.map(function (x) { return '<tr><td>' + S.esc(x.n) + '</td><td style="text-align:right">' + fmt(x.pob) + '</td><td style="text-align:right">' + fmt(T.nb.municipios[x.k].nbi24, 1) + '</td><td style="text-align:right">' + v1(T.ed && T.ed.municipios[x.k], "alf24") + '</td><td style="text-align:right">' + x.est.length + '</td></tr>'; }).join("") + '</table><p class="nota" style="margin:2px 0 0">Municipios del departamento sin establecimiento de salud registrado en OSM: ' + L.filter(function (x) { return !x.est.length; }).length + ' de ' + L.length + ' (puede ser vacío de mapeo).</p>';
+      var I = indices(T);
+      function fz(cs) { return cs.slice().sort(function (x, y) { return y.s - x.s; }).slice(0, 3).map(function (c) { return S.esc(c.n) + " (" + (typeof c.v === "number" ? fmt(c.v, c.v < 10 ? 1 : 0) : S.esc(c.v)) + S.esc(c.u) + ")"; }).join("; "); }
+      if (m) {
+        var o = I[m.k];
+        h += '<h2>Indicadores de riesgo del municipio</h2><p style="margin:0">Riesgo <b>' + fmt(o.R, 1) + ' / 10 (' + o.niv[1].toLowerCase() + ')</b>, puesto ' + o.rankD + ' de ' + o.nD + ' municipios de ' + S.esc(d) + '. <span class="nota">Índice relativo entre municipios; por validar con el CCES.</span></p><table><tr><th style="width:22%">Componente</th><th style="width:10%">Valor (0–10)</th><th>Factores que más pesan</th></tr><tr><td><b>Amenaza</b></td><td>' + fmt(o.A, 1) + '</td><td>' + fz(o.cA) + '</td></tr><tr><td><b>Vulnerabilidad</b></td><td>' + (o.V == null ? "sin dato" : fmt(o.V, 1)) + '</td><td>' + fz(o.cV) + '</td></tr><tr><td><b>Falta de capacidad de respuesta</b></td><td>' + (o.L == null ? "sin dato" : fmt(o.L, 1)) + '</td><td>' + fz(o.cL) + '</td></tr></table><p class="nota" style="margin:2px 0 0">Riesgo = raíz cúbica de (amenaza × vulnerabilidad × falta de capacidad). Servicios de OSM (incompletos); antecedentes DesInventar hasta 2015.</p>';
+      } else {
+        var LL = L.map(function (x) { return I[x.k]; }), cnt = NIVR.map(function (x) { return LL.filter(function (o2) { return o2.niv[1] === x[1]; }).length; }), top = LL.slice().sort(function (x, y) { return y.R - x.R; }).slice(0, 10), tot = L.reduce(function (s, x) { return s + (x.pob || 0); }, 0) || 1, Rw = LL.reduce(function (s, o2) { return s + o2.R * (T.M[o2.k].pob || 0); }, 0) / tot;
+        h += '<h2>Riesgo de los municipios del departamento</h2><p style="margin:0">Índice medio (ponderado por población): <b>' + fmt(Rw, 1) + ' / 10 (' + nivelR(Rw)[1].toLowerCase() + ')</b>. Municipios por nivel: ' + NIVR.map(function (x, i) { return x[1].toLowerCase() + " " + cnt[i]; }).join(" · ") + '.</p><table><tr><th>Municipio</th><th style="width:70px">Riesgo</th><th style="width:70px">Amenaza</th><th style="width:80px">Vulnerab.</th><th style="width:90px">Falta capac.</th><th>Factor principal</th></tr>' + top.map(function (o2) { var f = factores(o2)[0]; return '<tr><td>' + S.esc(T.M[o2.k].n) + '</td><td style="text-align:right"><b>' + fmt(o2.R, 1) + '</b> ' + o2.niv[1].toLowerCase() + '</td><td style="text-align:right">' + fmt(o2.A, 1) + '</td><td style="text-align:right">' + (o2.V == null ? "—" : fmt(o2.V, 1)) + '</td><td style="text-align:right">' + (o2.L == null ? "—" : fmt(o2.L, 1)) + '</td><td>' + (f ? S.esc(f.c.n) : "—") + '</td></tr>'; }).join("") + '</table><p class="nota" style="margin:2px 0 0">Índice relativo entre los 339 municipios; por validar con el CCES. Servicios de OSM (incompletos).</p>';
       }
-      h += '<h2>Condiciones de vida (Censo 2024, INE)</h2>' + '<table><tr><th>Indicador</th><th style="width:90px;text-align:right">2024</th><th style="width:90px;text-align:right">2012</th></tr>' + filasPropias(m ? T.nb && T.nb.municipios[m.k] : T.nb && T.nb.departamentos[d], NBI).concat(filasPropias(m ? T.ed && T.ed.municipios[m.k] : T.ed && T.ed.departamentos[d], EDI)).map(function (f) { return '<tr><td>' + f[0] + '</td><td style="text-align:right">' + f[1] + '</td><td style="text-align:right">' + f[2] + '</td></tr>'; }).join("") + '</table><p class="nota" style="margin:2px 0 0">IDH (PNUD): sin dato.</p>';
       h += '<h2>Antecedentes históricos (DesInventar, hasta 2015)</h2><p style="margin:0">' + (ant.n ? fmt(ant.n) + " registro(s) de desastres, " + fmt(ant.m) + " fallecido(s), " + fmt(ant.a) + " afectado(s). Principales: " + topTipos(ant, 5).map(function (t) { return S.esc(t) + " (" + ant.tipos[t] + ")"; }).join(", ") + "." : "Sin antecedentes registrados en DesInventar para este territorio.") + ' <span class="nota">Subregistro probable; la base termina en 2015.</span></p>';
       if (!m || !window.PERFIL) return h;
       var ce = centroM(m);
