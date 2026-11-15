@@ -687,7 +687,7 @@
     var P = munPorDep(), cnt = xmConteos(), sd = $("xmDep"), sm = $("xmMun"); if (!sd) return;
     sd.onchange = function () { var d = sd.value; if (!d) { sm.disabled = true; sm.innerHTML = '<option value="">Primero elija el departamento</option>'; return; } sm.disabled = false; sm.innerHTML = '<option value="">Elija el municipio (' + P[d].length + ')…</option>' + P[d].map(function (f, i) { var k = f.properties.n + " (" + d + ")", c = cnt[k]; return '<option value="' + i + '">' + S.esc(f.properties.n) + (c ? " (" + c + ")" : "") + '</option>'; }).join(""); };
     sm.onchange = function () { if (sm.value === "") return; var f = P[sd.value][+sm.value]; xmFicha(f); try { var u = new URL(location.href); u.searchParams.set("mun", f.properties.n + " (" + f.properties.d + ")"); history.replaceState(null, "", u.toString()); } catch (e) {} };
-    var q = new URLSearchParams(location.search).get("mun"); if (q) { var i = q.lastIndexOf(" ("), n = q.slice(0, i), d = q.slice(i + 2, -1); if (P[d]) { sd.value = d; sd.onchange(); var j = P[d].findIndex(function (f) { return f.properties.n === n; }); if (j >= 0) { sm.value = String(j); sm.onchange(); } } }
+    var q = new URLSearchParams(location.search).get("mun"); if (q) { var i0 = q.lastIndexOf(" ("); if (i0 > 0) { location.replace("municipio.html?d=" + encodeURIComponent(q.slice(i0 + 2, -1)) + "&m=" + encodeURIComponent(q.slice(0, i0))); return; } var i = q.lastIndexOf(" ("), n = q.slice(0, i), d = q.slice(i + 2, -1); if (P[d]) { sd.value = d; sd.onchange(); var j = P[d].findIndex(function (f) { return f.properties.n === n; }); if (j >= 0) { sm.value = String(j); sm.onchange(); } } }
   }
   /* ---------- armado de la página ---------- */
   var CATS_INF = {"salud": "antropogénica"};
