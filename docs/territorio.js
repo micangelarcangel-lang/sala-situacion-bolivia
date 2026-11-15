@@ -155,7 +155,7 @@ var TERR = (function () {
     var Rw = L.reduce(function (s, o) { return s + o.R * (T.M[o.k].pob || 0); }, 0) / tot, n = nivelR(Rw), cnt = NIVR.map(function (x) { return L.filter(function (o) { return o.niv[1] === x[1]; }).length; });
     var top = L.slice().sort(function (a, b) { return b.R - a.R; }).slice(0, 10);
     return '<div class="card riesgo" style="border-top:4px solid ' + n[2] + '"><h2>Riesgo de los municipios del departamento</h2><div class="cap">Índice 0–10 por municipio (amenaza × vulnerabilidad × falta de capacidad de respuesta). <b>Por validar con el CCES.</b></div><div class="rg"><div class="rbig" style="background:' + n[2] + '"><b>' + fmt(Rw, 1) + '</b><span>de 10</span><em>' + n[1] + '</em></div><div class="rbars"><p class="nota" style="margin:0 0 6px">Media del departamento ponderada por población. Municipios por nivel:</p><div class="rdist">' + NIVR.map(function (x, i) { return cnt[i] ? '<span style="flex:' + cnt[i] + ';background:' + x[2] + '" title="' + x[1] + ': ' + cnt[i] + '">' + cnt[i] + '</span>' : ""; }).join("") + '</div><div class="rleg">' + NIVR.map(function (x) { return '<span><i style="background:' + x[2] + '"></i>' + x[1] + '</span>'; }).join("") + '</div></div></div>' +
-      '<p style="margin:10px 0 4px"><b>Municipios de mayor riesgo</b></p>' + tabla(["Municipio", "Riesgo", "Amenaza", "Vulnerab.", "Falta capac.", "Principal factor"], top.map(function (o) { var f = factores(o)[0]; return ['<a href="municipio.html?d=' + encodeURIComponent(d) + '&m=' + encodeURIComponent(T.M[o.k].n) + '">' + S.esc(T.M[o.k].n) + '</a>', '<b style="color:' + o.niv[2] + '">' + fmt(o.R, 1) + '</b> <span class="nota">' + o.niv[1] + '</span>', fmt(o.A, 1), o.V == null ? SD : fmt(o.V, 1), o.L == null ? SD : fmt(o.L, 1), f ? S.esc(f.c.n) : "—"]; })) + '<p class="nota">Índice relativo entre los 339 municipios del país. Úselo para priorizar la mirada, no como probabilidad de ocurrencia.</p></div>';
+      '<details style="margin-top:10px" open><summary><b>Municipios de mayor riesgo</b></summary>' + tabla(["Municipio", "Riesgo", "Amenaza", "Vulnerab.", "Falta capac.", "Principal factor"], top.map(function (o) { var f = factores(o)[0]; return ['<a href="municipio.html?d=' + encodeURIComponent(d) + '&m=' + encodeURIComponent(T.M[o.k].n) + '">' + S.esc(T.M[o.k].n) + '</a>', '<b style="color:' + o.niv[2] + '">' + fmt(o.R, 1) + '</b> <span class="nota">' + o.niv[1] + '</span>', fmt(o.A, 1), o.V == null ? SD : fmt(o.V, 1), o.L == null ? SD : fmt(o.L, 1), f ? S.esc(f.c.n) : "—"]; })) + '</details><p class="nota">Índice relativo entre los 339 municipios del país. Úselo para priorizar la mirada, no como probabilidad de ocurrencia.</p></div>';
   }
 
   /* ---------- mapa con TODAS las capas del mapa nacional + servicios ---------- */
@@ -194,7 +194,7 @@ var TERR = (function () {
     var nAv = o.munis.filter(function (m) { return m.av >= 0; }).length;
     /* panel de capas (misma estructura que el mapa nacional) */
     var panel = '<div class="card lay" id="' + uid + 'L"><h2>Capas</h2><div class="sec">Servicios (OpenStreetMap)</div>' +
-      [["salud", "Salud"], ["bomberos", "Bomberos"], ["rescate", "Rescate"], ["policía", "Policía"]].map(function (x) { return '<label><input type="checkbox" data-c="' + x[0] + '" checked>' + ico(x[0], 18) + ' ' + x[1] + ' <span class="nota">(' + nF[x[0]] + ')</span></label>'; }).join("") +
+      [["salud", "Salud", 1], ["bomberos", "Bomberos"], ["rescate", "Rescate"], ["policía", "Policía", 1]].map(function (x) { return '<label><input type="checkbox" data-c="' + x[0] + '"' + (x[2] ? "" : " checked") + '>' + ico(x[0], 18) + ' ' + x[1] + ' <span class="nota">(' + nF[x[0]] + (x[2] ? ", al acercar" : "") + ')</span></label>'; }).join("") +
       '<div class="sec">Incendios (NASA FIRMS)</div><label><input type="checkbox" data-c="heat" checked> Mapa de calor de focos</label><label><input type="checkbox" data-c="comp" checked>' + ico("complejo", 18) + ' Complejos de incendio <span class="nota">(' + cap.comp.features.length + ')</span></label><div class="nota" id="' + uid + 'D">Últimos ' + Math.min(3, T.dias.length) + ' días</div><input type="range" id="' + uid + 'R" min="1" max="' + Math.max(1, T.dias.length) + '" value="' + Math.min(3, Math.max(1, T.dias.length)) + '">' +
       '<div class="sec">Otros eventos</div><label><input type="checkbox" data-c="sis" checked> Sismos <span class="nota">(' + cap.sis.features.length + ')</span></label><label><input type="checkbox" data-c="rio" checked>' + ico("rio0", 18) + ' Estaciones de ríos (GloFAS) <span class="nota">(' + cap.rio.features.length + ')</span></label><label><input type="checkbox" data-c="evs" checked> Otros eventos con ubicación <span class="nota">(' + cap.evs.features.length + ')</span></label>' +
       '<div class="sec">Colorear ' + o.unidad + ' por</div>' + VARS.map(function (v, i) { return '<label><input type="radio" name="' + uid + 'F" value="' + v[0] + '"' + (i === 0 ? " checked" : "") + '> ' + v[1] + '</label>'; }).join("") +
@@ -230,7 +230,7 @@ var TERR = (function () {
       var TAM = ["interpolate", ["linear"], ["zoom"], 5, .26, 8, .42, 11, .62, 14, .8];
       Object.keys(cap).forEach(function (k) {
         m.addSource("c-" + k, {type: "geojson", data: cap[k]});
-        if (COL[k]) { m.addLayer({id: "c-" + k, type: "symbol", source: "c-" + k, layout: {"icon-image": "i-" + k, "icon-size": k === "salud" || k === "policía" ? TAM : ["interpolate", ["linear"], ["zoom"], 5, .36, 8, .55, 11, .78, 14, .95], "icon-allow-overlap": true}}); }
+        if (COL[k]) { m.addLayer({id: "c-" + k, type: "symbol", source: "c-" + k, minzoom: k === "salud" || k === "policía" ? 9 : 0, layout: {"icon-image": "i-" + k, "icon-size": k === "salud" || k === "policía" ? TAM : ["interpolate", ["linear"], ["zoom"], 5, .36, 8, .55, 11, .78, 14, .95], "icon-allow-overlap": true}}); }
         else if (k === "rio") { m.addLayer({id: "c-rio", type: "symbol", source: "c-rio", layout: {"icon-image": ["concat", "i-rio", ["to-string", ["get", "v"]]], "icon-size": ["interpolate", ["linear"], ["zoom"], 5, .5, 9, .7, 13, .9], "icon-allow-overlap": true}}); }
         else if (k === "comp") {
           m.addLayer({id: "c-comp-h", type: "circle", source: "c-comp", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "n"], 8, 20, 120, 40], "circle-color": "rgba(255,70,0,.40)", "circle-blur": 1, "circle-opacity": .9}});
@@ -255,7 +255,8 @@ var TERR = (function () {
       P.querySelectorAll("input[name=" + uid + "F]").forEach(function (r) { r.onchange = function () { colorear(r.value); }; });
       P.querySelectorAll("input[name=" + uid + "B]").forEach(function (r) { r.onchange = function () { ver("osm", r.value === "osm"); ver("sat", r.value === "sat"); }; });
       var R = document.getElementById(uid + "R"); R.oninput = function () { document.getElementById(uid + "D").textContent = this.value == 1 ? "Último día" : "Últimos " + this.value + " días"; m.getSource("focos").setData(focosGeo(+this.value)); };
-      colorear("none");
+      ["salud", "policía"].forEach(function (k) { ver("c-" + k, false); });
+      var v0 = o.unidad === "municipios" ? "riesgo" : "none"; P.querySelector("input[name=" + uid + "F][value=" + v0 + "]").checked = true; colorear(v0);
     });
     return m;
   }
@@ -306,12 +307,14 @@ var TERR = (function () {
       var sinE = L.filter(function (x) { return !x.est.length; }), sinB = L.filter(function (x) { return !x.bom.length && !x.res.length; }), sinP = L.filter(function (x) { return !x.pol.length; });
       var h = '<h1 class="th">' + S.esc(d) + '</h1><div class="cap">Departamento: información propia de este nivel. Para ver un municipio, elíjalo en el mapa, en la tabla o en el selector superior.</div>';
       h += kpis([[fmt(pd), "habitantes " + ANIO + " (INE)"], [fmt(km2) + " km²", L.length + " municipios · " + fmt(pd / km2, 1) + " hab/km²"], [av.length, "avisos SENAMHI vigentes"], [rec.length, "eventos del sistema, 30 días"], [fmt(nF), "focos de calor, últimos " + T.dias.length + " días"], [sq && sq.spi3 != null ? sq.spi3.toFixed(2) : "—", "sequía SPI-3" + (sq ? " · " + S.esc(sq.clase3) : "")], [fmt(ant.n), "desastres históricos (" + fmt(ant.m) + " fallecidos)"]]);
-      h += bloqueRiesgoDep(T, d);
       h += '<section class="msec"><h2>Mapa del departamento</h2><div class="cap">Capas del mapa nacional más servicios, a escala departamental. Coloree los municipios por la variable que le interese; haga clic en uno para abrir su ficha.</div><div id="tMapa"></div></section>';
+      h += bloqueRiesgoDep(T, d);
       h += '<div class="card"><h2>Municipios</h2><div class="cap">Ordene por la columna que le interese.</div><div class="mb-g" id="ordBtn"></div><div id="tabMun"></div></div>';
+      h += '<details class="cmp"><summary>Más información del departamento: servicios, condiciones de vida y salud</summary>';
       h += '<div class="grid g2"><div class="card"><h2>Red de servicios</h2>' + kpis([[nE, "establecimientos de salud (OSM)"], [nB, "bomberos / rescate"], [nP, "policía"]]) + '<p class="nota" style="margin:0">Municipios sin registro en OSM (puede ser vacío de mapeo y no ausencia real): salud <b>' + sinE.length + '</b> · bomberos o rescate <b>' + sinB.length + '</b> · policía <b>' + sinP.length + '</b> de ' + L.length + '.</p></div><div class="card"><h2>Antecedentes de desastres</h2><div class="cap">Tipos más registrados (DesInventar, hasta 2015; con subregistro)</div><div id="chAnt" style="height:220px"></div></div></div>';
       h += '<div class="grid g2"><div class="card"><h2>Condiciones de vida</h2><div class="cap">Censo 2024 (INE). Comparable con 2012 solo en este mismo departamento.</div>' + tabla(["Indicador", "2024", "2012"], filasPropias(T.nb && T.nb.departamentos[d], NBI).concat(filasPropias(T.ed && T.ed.departamentos[d], EDI)).concat([["Índice de Desarrollo Humano (PNUD)", SD, SD]])) + '</div>' + bloqueSector(T, d) + '</div>';
       h += '<div class="card"><h2>Salud: línea base del departamento</h2><div id="tSnis"></div></div>';
+      h += '</details>';
       h += '<div class="grid g2"><div class="card"><h2>Avisos SENAMHI vigentes</h2>' + listaAv(av) + '</div><div class="card"><h2>Situación actual</h2>' + listaEv(rec, 8) + '</div></div>';
       h += bloqueReporte(d, null) + compDep(T, d);
       app.innerHTML = h; barra(T, d, null); ligarReporte(d, null); barras("chAnt", ant); snisDep(T, d, document.getElementById("tSnis"));
@@ -335,13 +338,15 @@ var TERR = (function () {
       var pam = paM(T, m.k);
       var h = '<h1 class="th">' + S.esc(n) + ' <small>municipio de ' + S.esc(d) + '</small></h1><div class="cap">Municipio: información propia de este nivel. Lo que falta aparece como <b>sin dato</b>.</div>';
       h += kpis([[fmt(m.pob), "habitantes " + ANIO + " (INE)"], [fmt(m.km2) + " km²", fmt(densidad(m), 1) + " hab/km²"], [av.length, "avisos SENAMHI vigentes"], [m.foc, "focos de calor, últimos " + T.dias.length + " días"], [m.est.length, "establecimientos de salud (OSM)"], [enM.length ? "En el municipio" : hp ? "≈" + Math.round(hp.km) + " km" : "sin dato", "hospital más cercano (línea recta)"], [ant.n, "desastres históricos (DesInventar)"]]);
-      h += bloqueRiesgo(T, m);
       h += '<section class="msec"><h2>Mapa del municipio</h2><div class="cap">Capas del mapa nacional más servicios, a escala municipal. El municipio aparece resaltado dentro de su departamento.</div><div id="tMapa"></div></section>';
+      h += bloqueRiesgo(T, m);
+      h += '<details class="cmp"><summary>Más información del municipio: condiciones de vida y servicios</summary>';
       h += '<div class="grid g2"><div class="card"><h2>Condiciones de vida</h2><div class="cap">Censo 2024 (INE) y, cuando existe, Censo 2012.</div>' + tabla(["Indicador", "2024", "2012"], filasPropias(T.nb && T.nb.municipios[m.k], NBI).concat(filasPropias(T.ed && T.ed.municipios[m.k], EDI)).concat([["Vehículos registrados por 1.000 hab. (2025)", pam != null && m.pob ? fmt(pam / m.pob * 1000, 0) : SD, '<span class="nota">—</span>'], ["Índice de Desarrollo Humano (PNUD)", SD, SD]])) + '<p class="nota">NBI = necesidades básicas insatisfechas (método INE).</p></div>';
       function fil(t, x) { return '<tr><td>' + t + '</td><td>' + (x ? S.esc(x.p[2] || "(sin nombre en OSM)") : "sin dato") + '</td><td style="text-align:right">' + (x ? "≈" + Math.round(x.km) + " km" : SD) + '</td></tr>'; }
       function dnt(t, L2, x) { return L2.length ? '<tr><td>' + t + '</td><td>' + S.esc(L2[0][2] || "(sin nombre en OSM)") + '</td><td style="text-align:right">en el municipio</td></tr>' : fil(t, x); }
       h += '<div class="card"><h2>Red de servicios y distancia a la atención</h2><div class="cap">Distancia en <b>línea recta</b> desde el centro aproximado del municipio (no por carretera). Sin lista de establecimientos de referencia con nivel de atención: se usa el hospital más cercano registrado en OSM.</div><table class="tt"><tr><th>Servicio</th><th>Más cercano</th><th style="text-align:right">Distancia</th></tr>' + dnt("Hospital", enM, hp) + dnt("Bomberos", m.bom, bo) + dnt("Rescate", m.res, re) + dnt("Policía", m.pol, po) + '</table>' + kpis([[m.est.length, "establecimientos de salud"], [m.bom.length + m.res.length, "bomberos / rescate"], [m.pol.length, "policía"]]) + '<p class="nota">OpenStreetMap: mapeo voluntario con cobertura incompleta; «0» no significa que no exista.</p></div></div>';
       h += '<div class="card" id="tPerfil"></div>';
+      h += '</details>';
       h += '<div class="grid g2"><div class="card"><h2>Avisos SENAMHI vigentes</h2>' + listaAv(av) + '</div><div class="card"><h2>Situación actual</h2>' + listaEv(rec, 8) + '</div></div>';
       h += bloqueReporte(d, m) + compMun(T, m);
       app.innerHTML = h; barra(T, d, m); ligarReporte(d, n);
