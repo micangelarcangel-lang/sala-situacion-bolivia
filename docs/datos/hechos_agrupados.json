@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:192wgla",
+  "fecha_hora_local": "2026-11-15 15:33",
+  "ts_ms": 1794771216000,
+  "titulo": "Granizada y riada dejan 230 familias damnificadas en Culpina - La Patria Bolivia",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Patria Bolivia",
+  "lat": -20.826,
+  "lon": -64.632,
+  "lugar": "Culpina, Chuquisaca",
+  "departamento": "Chuquisaca",
+  "municipio": "Culpina",
+  "enlaces": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPclJCTzhDLWpiM1VDdFNBX2pFTmVkYlpRaWR5Q2M3QmdNLTU3aHJqU0tJNXRzMHZFQ0VrbGplSjdDdkZXc3NfMDJmUExQNktYMlZKQ3lGTDdMdWdtVkJMQkVlX2NOMGJ2aWhETU50SV95OVBBN004VnJoaFVhQ1lZLVlhMzJhRFZQb2E4LUEycFM2VlU0ejd4MzFJTmZ6VTQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:w4xwpb",
   "fecha_hora_local": "2026-11-15 15:06",
   "ts_ms": 1794769612000,
