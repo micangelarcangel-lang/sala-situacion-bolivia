@@ -1,6 +1,6 @@
 /* Módulo Geológica: sismos (mapa de epicentros por magnitud y profundidad), exposición por radio, derrumbes/deslizamientos de prensa y antecedentes. */
 var GEO = (function () {
-  var S = SALA, X = S2, A, T, Q = [], P = [], st = {p: 30, m: 0, pr: true}, sel = null, map = null, DEPC = {}, rq = 0;
+  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], st = {p: 30, m: 0, pr: true}, sel = null, map = null, DEPC = {}, rq = 0;
   var PROF = [[70, "Superficial (< 70 km)", "#d7263d"], [300, "Intermedio (70–300 km)", "#f2a41b"], [1e5, "Profundo (> 300 km)", "#4f5bd5"]];
   var BOL = /bolivia|la paz|potos|cochabamba|santa cruz|tarija|oruro|beni|pando|chuquisaca|yungas|el alto/i;
   function esc(s) { return S.esc(s == null ? "" : String(s)); }
@@ -28,7 +28,8 @@ var GEO = (function () {
     });
     return out;
   }
-  function filtrado() { var t0 = st.p ? Date.now() - st.p * 864e5 : 0; return Q.filter(function (q) { return q.ts >= t0 && q.mag >= st.m; }); }
+  function enLugar(q) { if (!LG.d) return true; if (LG.m) { var m = T.M[LG.d + "|" + LG.m]; if (!m._c) m._c = A.cenPoly(m.f.geometry); return hav(q.lat, q.lon, m._c[1], m._c[0]) <= 50; } return q.dep === LG.d; }
+  function filtrado() { var t0 = st.p ? Date.now() - st.p * 864e5 : 0; return Q.filter(function (q) { return q.ts >= t0 && q.mag >= st.m && enLugar(q); }); }
   function expo(q) {
     var r = {n50: 0, n100: 0, p50: 0, p100: 0, sd: 0, h100: 0, mu: []};
     T.lista.forEach(function (m) { if (!m._c) m._c = A.cenPoly(m.f.geometry); var d = hav(q.lat, q.lon, m._c[1], m._c[0]); if (d <= 100) { r.n100++; r.p100 += m.pob || 0; if (m.pob == null) r.sd++; r.h100 += m.est.filter(function (p) { return /hospital/i.test(p[2]); }).length; r.mu.push({m: m, d: d}); if (d <= 50) { r.n50++; r.p50 += m.pob || 0; } } });
@@ -38,12 +39,12 @@ var GEO = (function () {
   function html() {
     return '<nav class="tnav"><a href="index.html">Tablero</a><span class="tsep">›</span><b>Tipo de evento · Geológica</b></nav><h1 class="th">Geológica <small>sismos, derrumbes y deslizamientos</small></h1>' +
       '<div class="cap">Fuentes: Observatorio San Calixto (boletín sísmico), USGS y prensa. Historia disponible desde el 22-oct-2026: <b>sirve para vigilancia, no para estimar frecuencia ni amenaza</b>. Información preliminar.</div>' +
-      '<div class="xq"><div class="xs1"><b>Período</b><select id="gP"><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="0">Todo lo disponible</option></select></div>' +
+      '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período</b><select id="gP"><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="0">Todo lo disponible</option></select></div>' +
       '<div class="xs1"><b>Magnitud mínima</b><select id="gM"><option value="0">Todas</option><option value="3.5">≥ 3,5</option><option value="4">≥ 4</option><option value="5">≥ 5</option></select></div>' +
       '<div class="xs1"><b>Capas</b><label><input type="checkbox" id="gPr" checked> Derrumbes y deslizamientos (prensa)</label></div></div>' +
       '<div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="gN" checked> Departamentos</label></div><div class="xmap" id="gMap"></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
       '<div class="xside"><div id="gUlt"></div><div id="gK"></div><div id="gDet"></div></div></div>' +
-      '<div class="xg2"><div class="xc"><h3>Magnitud en el tiempo</h3><div id="gCh" style="height:240px"></div><p class="nota">Cada punto es un sismo; el color indica la profundidad.</p></div><div class="xc"><h3>Por departamento</h3><div id="gDep"></div></div></div>' +
+      '<div class="xg2"><div class="xc"><h3>Magnitud en el tiempo</h3><div id="gCh" style="height:240px"></div><p class="nota">Cada punto es un sismo; el color indica la profundidad.</p></div><div class="xc"><h3 id="gDepT">Por departamento</h3><div id="gDep"></div></div></div>' +
       '<div class="xc" style="margin-top:12px"><div class="xtabs"><button class="on" data-s="gTs">Sismos (lista)</button><button data-s="gTm">Derrumbes y deslizamientos</button><button data-s="gTp">Prensa sobre sismos</button><button data-s="gTa">Antecedentes 1970–2015</button></div><div id="gTs"></div><div id="gTm" style="display:none"></div><div id="gTp" style="display:none"></div><div id="gTa" style="display:none"></div></div>';
   }
   function $(i) { return document.getElementById(i); }
@@ -53,7 +54,7 @@ var GEO = (function () {
     var o = ""; Object.keys(DEPC).forEach(function (d) { var p = map.project(DEPC[d]); o += '<span style="left:' + p.x.toFixed(0) + 'px;top:' + (p.y - 34 + 34).toFixed(0) + 'px">' + esc(d) + '</span>'; }); l.innerHTML = o;
   }
   function geoSism(L) { return {type: "FeatureCollection", features: L.map(function (q) { return {type: "Feature", geometry: {type: "Point", coordinates: [q.lon, q.lat]}, properties: {id: q.id, mag: q.mag, c: PROF[q.prof == null ? 1 : pc(q.prof)][2], s: sel && sel.id === q.id ? 1 : 0}}; })}; }
-  function geoPrensa() { return {type: "FeatureCollection", features: st.pr ? P.mm.filter(function (e) { return e.lat != null; }).map(function (e) { return {type: "Feature", geometry: {type: "Point", coordinates: [e.lon, e.lat]}, properties: {t: e.titulo, f: e.fuente || "", u: e.metodo || "ubicación aproximada"}}; }) : []}; }
+  function geoPrensa() { return {type: "FeatureCollection", features: st.pr ? P.mm.filter(function (e) { return e.lat != null && LUGAR.ev(T, LG, e); }).map(function (e) { return {type: "Feature", geometry: {type: "Point", coordinates: [e.lon, e.lat]}, properties: {t: e.titulo, f: e.fuente || "", u: e.metodo || "ubicación aproximada"}}; }) : []}; }
   function geoExp() {
     var f = []; if (sel) { var r = expo(sel); r.mu.forEach(function (x) { f.push({type: "Feature", geometry: x.m.f.geometry, properties: {n: x.d <= 50 ? 2 : 1}}); }); f.push({type: "Feature", geometry: {type: "Polygon", coordinates: [circulo(sel.lat, sel.lon, 100)]}, properties: {r: 100}}, {type: "Feature", geometry: {type: "Polygon", coordinates: [circulo(sel.lat, sel.lon, 50)]}, properties: {r: 50}}); }
     return {type: "FeatureCollection", features: f};
@@ -72,7 +73,7 @@ var GEO = (function () {
       map.addSource("dep", {type: "geojson", data: {type: "FeatureCollection", features: T.D.geoDep.features}});
       map.addSource("ex", {type: "geojson", data: geoExp()}); map.addSource("sis", {type: "geojson", data: geoSism([])}); map.addSource("pr", {type: "geojson", data: geoPrensa()});
       map.addLayer({id: "d-f", type: "fill", source: "dep", paint: {"fill-color": "#ffffff", "fill-opacity": .08}});
-      map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": "#10233d", "line-width": 1.2, "line-opacity": .8}});
+      LUGAR.capa(map); map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": "#10233d", "line-width": 1.2, "line-opacity": .8}});
       map.addLayer({id: "ex-f", type: "fill", source: "ex", filter: ["has", "n"], paint: {"fill-color": "#f26a1b", "fill-opacity": ["match", ["get", "n"], 2, .4, .18]}});
       map.addLayer({id: "ex-l", type: "line", source: "ex", filter: ["has", "r"], paint: {"line-color": "#10233d", "line-width": 1.5, "line-dasharray": [3, 2]}});
       map.addLayer({id: "pr", type: "circle", source: "pr", paint: {"circle-radius": 7, "circle-color": "#7b4a2b", "circle-stroke-color": "#fff", "circle-stroke-width": 2}});
@@ -82,7 +83,7 @@ var GEO = (function () {
       map.on("click", "sis", function (e) { sel = Q.filter(function (z) { return z.id === e.features[0].properties.id; })[0] || null; selecciona(); });
       map.on("mousemove", "pr", function (e) { var p = e.features[0].properties; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.t) + '</b>' + esc(p.f) + ' · ' + esc(p.u) + '</div>').addTo(map); }); map.on("mouseleave", "pr", function () { pop.remove(); });
       map.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); map.on("resize", rotular);
-      map._ok = 1; map.resize(); map.fitBounds([[-70.2, -23.2], [-56.8, -8.8]], {padding: 10, duration: 0}); dibuja();
+      map._ok = 1; LUGAR.ajusta(map, T, LG, false); dibuja();
     });
     document.querySelectorAll(".xtool button").forEach(function (b) { b.onclick = function () { document.querySelectorAll(".xtool button").forEach(function (z) { z.classList.toggle("on", z === b); }); map.setLayoutProperty("osm", "visibility", b.dataset.b === "osm" ? "visible" : "none"); map.setLayoutProperty("sat", "visibility", b.dataset.b === "sat" ? "visible" : "none"); }; });
   }
@@ -100,9 +101,9 @@ var GEO = (function () {
   }
   function dibuja() {
     var L = filtrado(); if (sel && !L.some(function (q) { return q.id === sel.id; })) sel = null;
-    leyenda(); $("gH").innerHTML = '<b>' + L.length + ' sismos</b> · ' + (st.p ? 'últimos ' + st.p + ' días' : 'todo el período disponible') + (st.m ? ' · M ≥ ' + st.m : '') + ' <span class="nota">— Magnitudes y profundidades preliminares; pueden diferir entre San Calixto y USGS.</span>';
+    leyenda(); $("gH").innerHTML = '<b>' + L.length + ' sismos</b> en ' + esc(LUGAR.etiqueta(LG)) + (LG.m ? ' (≤ 50 km del centro del municipio)' : "") + ' · ' + (st.p ? 'últimos ' + st.p + ' días' : 'todo el período disponible') + (st.m ? ' · M ≥ ' + st.m : '') + ' <span class="nota">— Magnitudes y profundidades preliminares; pueden diferir entre San Calixto y USGS.</span>';
     if (map && map._ok) { map.getSource("sis").setData(geoSism(L)); map.getSource("pr").setData(geoPrensa()); map.getSource("ex").setData(geoExp()); rotular(); }
-    ultimo(L); kpis(L); grafico(L); porDep(L); lista(L); detalle();
+    tabsPrensa(); ultimo(L); kpis(L); grafico(L); porDep(L); lista(L); detalle();
   }
   function ultimo(L) {
     var q = L[0]; if (!q) { $("gUlt").innerHTML = '<div class="xc"><h3>Último sismo</h3><p class="nota">Sin sismos con este filtro.</p></div>'; return; }
@@ -120,7 +121,7 @@ var GEO = (function () {
     ch.off("click"); ch.on("click", function (p) { sel = p.data[3]; selecciona(); });
   }
   function porDep(L) {
-    var o = {}; L.forEach(function (q) { var d = o[q.dep] || (o[q.dep] = {n: 0, mx: 0}); d.n++; d.mx = Math.max(d.mx, q.mag); }); var k = Object.keys(o).sort(function (a, b) { return o[b].n - o[a].n; }), mx = k.length ? o[k[0]].n : 1;
+    var o = {}; $("gDepT").textContent = LG.d ? "Por municipio (epicentro)" : "Por departamento"; L.forEach(function (q) { var kk = q.dep; if (LG.d) { var mu = T.donde(q.lat, q.lon); kk = mu ? mu.n : "fuera de Bolivia"; } var d = o[kk] || (o[kk] = {n: 0, mx: 0}); d.n++; d.mx = Math.max(d.mx, q.mag); }); var k = Object.keys(o).sort(function (a, b) { return o[b].n - o[a].n; }), mx = k.length ? o[k[0]].n : 1;
     $("gDep").innerHTML = k.length ? '<table class="xt2">' + k.map(function (d) { return '<tr><td>' + esc(d) + '</td><td style="width:42%"><div class="xt" style="height:9px;background:var(--soft);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:' + (o[d].n / mx * 100) + '%;background:#4f6fd5"></i></div></td><td style="text-align:right">' + o[d].n + ' <span class="nota">· M máx ' + fmt(o[d].mx, 1) + '</span></td></tr>'; }).join("") + '</table>' : '<p class="nota">Sin sismos.</p>';
   }
   function lista(L) {
@@ -134,6 +135,10 @@ var GEO = (function () {
     $("gTa").innerHTML = '<p class="nota"><b>Limitación:</b> DesInventar (UNDRR) cubre 1970–2015, con subregistro, y no incluye eventos recientes. Solo sirve de contexto.</p><table class="xt2"><tr><th align="left">Departamento</th><th>Deslizamientos</th><th>Fallecidos</th><th>Sismos</th><th>Fallecidos</th></tr>' + fil.map(function (r) { return '<tr><td>' + esc(r.d) + '</td><td align="center">' + r.f[0][0] + '</td><td align="center">' + r.f[0][1] + '</td><td align="center">' + r.f[1][0] + '</td><td align="center">' + r.f[1][1] + '</td></tr>'; }).join("") + '</table>';
   }
 
+  function tabsPrensa() {
+      $("gTm").innerHTML = '<p class="nota">Reportes de prensa. La posición es aproximada (se deduce del lugar nombrado) y no es la del evento exacto. ' + P.sin.length + ' notas más no tienen lugar identificable y no se grafican.</p>' + noticias(P.mm.filter(function (e) { return LUGAR.ev(T, LG, e); }), "Sin reportes en este lugar.");
+      $("gTp").innerHTML = '<p class="nota">Notas de prensa sobre sismos: sirven para corroborar, no se grafican (el mapa usa las fuentes instrumentales). ' + (P.desc ? P.desc + ' notas clasificadas como geológicas se descartaron por no referirse a Bolivia (p. ej. terremotos en otros países o usos figurados).' : '') + '</p>' + noticias(P.sis.filter(function (e) { return LUGAR.ev(T, LG, e); }), "Sin notas en este lugar.");
+  }
   function iniciar() {
     TERR.cargar().then(function (t) {
       T = t; A = TERR.api; A.estilos(); X.header("modulo.html"); document.title = "Geológica — Sala de Situación Bolivia";
@@ -142,10 +147,8 @@ var GEO = (function () {
       Q = preparar(T.D, off); P = prensa(T.D);
       $("app").innerHTML = html();
       (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
-      $("gP").onchange = function () { st.p = +this.value; dibuja(); }; $("gM").onchange = function () { st.m = +this.value; dibuja(); }; $("gPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("gN").onchange = rotular;
+      LUGAR.init(T, $("lgBox"), LG, function () { sel = null; dibuja(); LUGAR.ajusta(map, T, LG); }); $("gP").onchange = function () { st.p = +this.value; dibuja(); }; $("gM").onchange = function () { st.m = +this.value; dibuja(); }; $("gPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("gN").onchange = rotular;
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });
-      $("gTm").innerHTML = '<p class="nota">Reportes de prensa. La posición es aproximada (se deduce del lugar nombrado) y no es la del evento exacto. ' + P.sin.length + ' notas más no tienen lugar identificable y no se grafican.</p>' + noticias(P.mm, "Sin reportes.");
-      $("gTp").innerHTML = '<p class="nota">Notas de prensa sobre sismos: sirven para corroborar, no se grafican (el mapa usa las fuentes instrumentales). ' + (P.desc ? P.desc + ' notas clasificadas como geológicas se descartaron por no referirse a Bolivia (p. ej. terremotos en otros países o usos figurados).' : '') + '</p>' + noticias(P.sis, "Sin notas.");
       antecedentes(); crearMapa(); dibuja();
     });
   }
