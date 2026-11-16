@@ -3,7 +3,7 @@ var MAPA = (function () {
   var S = SALA, X = S2, A, T, EX = {municipios: {}, departamentos: {}, pais: {}}, SAL = null, I = null, esc = S.esc, fmt;
   var G = {n: "mun", d: "", nom: true, base: "carto", cmp: false, cortes: "q", act: 0};
   var P = [{i: "nbi", y: null}, {i: "riesgo", y: null}];
-  var CAT = [], CI = {}, CACHE = {}, sel = null, panes = [], timer = null;
+  var MIX = {name: "Mi índice", items: []}, CAT = [], CI = {}, CACHE = {}, sel = null, panes = [], timer = null;
   var PAL = {
     rd: ["#fde8e4", "#f9b3a5", "#ef6f5b", "#c8321f", "#7a1010"], or: ["#fff1d6", "#ffc973", "#f59a3d", "#d9621b", "#8f2d0a"],
     bl: ["#e6f0fb", "#a9cdee", "#5aa0dc", "#2a6fb5", "#123f7c"], gr: ["#e8f5e6", "#b4dcae", "#6fbd7a", "#2f8f4e", "#0d5a2f"], pu: ["#f0eaf7", "#cdb7e6", "#a07fd0", "#7048ae", "#432379"], te: ["#e0f5f2", "#9fdcd3", "#4fbdb0", "#1f8f87", "#0b5a58"]
@@ -78,6 +78,7 @@ var MAPA = (function () {
       var da = T.ind.desmonte_ha.anios;
       add({id: "desm", g: "Ambiente (solo departamental)", t: "Superficie autorizada para desmonte", u: " ha", dec: 0, lv: ["dep"], pal: "or", yrs: da.filter(function (y) { return y >= 2010; }), yd: da[da.length - 1], src: "INE / ABT, Superficie autorizada para desmonte", def: "Hectáreas autorizadas para desmonte en el año.", nota: "Es una autorización, no deforestación medida.", dep: function (d, y) { var v = T.ind.desmonte_ha.datos[d]; return v ? v[da.indexOf(y)] : null; }});
     }
+    add({id: "mix", g: "Mezcla de indicadores (construya su índice)", t: "Mi índice", u: "", dec: 1, pal: "rd", src: "Cálculo con los indicadores elegidos (ver abajo del mapa)", def: "Índice 0–10 construido por usted: cada indicador se convierte en percentil entre los territorios (0 = menor, 10 = mayor), se invierte si «más es mejor» y se promedia con los pesos elegidos.", nota: "Es relativo entre territorios y NO es una probabilidad. Los pesos son una propuesta por validar con el CCES.", lv: ["dep", "mun"]});
     CAT.forEach(function (o) { if (o.yd == null && o.yrs) o.yd = o.yrs[o.yrs.length - 1]; });
   }
 
@@ -88,12 +89,23 @@ var MAPA = (function () {
   }
   function yDef(pn) { var o = CI[P[pn].i]; return o.yrs ? (P[pn].y != null && o.yrs.indexOf(P[pn].y) >= 0 ? P[pn].y : o.yd) : null; }
   function valores(id, lv, y) {
+    if (id === "mix") return mixVals(lv);
     var key = id + "|" + lv + "|" + y; if (CACHE[key]) return CACHE[key];
     var o = CI[id], r = {};
     if (lv === "dep") { var f = o.dep; if (!f) return (CACHE[key] = r); var all = ((T.D.geoDep || {}).features || []).map(function (z) { return z.properties.n; }); all.forEach(function (d) { var v = f(d, y); if (v != null && !isNaN(v)) r[d] = +v; }); }
     else { var g = o.mun; if (!g) return (CACHE[key] = r); T.lista.forEach(function (m) { var v = g(m, y); if (v != null && !isNaN(v)) r[m.k] = +v; }); }
     return (CACHE[key] = r);
   }
+  function yPor(o) { return o.yrs ? o.yd : null; }
+  function pctl(vs) { var k = Object.keys(vs), a = k.map(function (q) { return vs[q]; }).sort(function (x, y) { return x - y; }), n = a.length, r = {}; k.forEach(function (q) { var v = vs[q], lo = 0, hi = n; while (lo < hi) { var mid = (lo + hi) >> 1; if (a[mid] < v) lo = mid + 1; else hi = mid; } var first = lo; hi = n; while (lo < hi) { var m2 = (lo + hi) >> 1; if (a[m2] <= v) lo = m2 + 1; else hi = m2; } r[q] = n > 1 ? ((first + lo - 1) / 2) / (n - 1) : .5; }); return r; }
+  function mixCalc(lv) {
+    var items = MIX.items.filter(function (it) { return CI[it.id] && CI[it.id].lv.indexOf(lv) >= 0; }), tw = items.reduce(function (s, it) { return s + it.w; }, 0), out = {}, det = {}, PC = items.map(function (it) { var o = CI[it.id], vs = valores(it.id, lv, yPor(o)); return {it: it, o: o, vs: vs, pc: pctl(vs)}; });
+    if (!items.length) return {v: out, d: det};
+    var keys = lv === "dep" ? ((T.D.geoDep || {}).features || []).map(function (f) { return f.properties.n; }) : T.lista.map(function (m) { return m.k; });
+    keys.forEach(function (k) { var sw = 0, sc = 0, dd = []; PC.forEach(function (z) { var p = z.pc[k]; if (p == null) { dd.push({n: z.o.t, v: null, p: null, c: 0}); return; } if (z.it.dir < 0) p = 1 - p; sw += z.it.w; sc += z.it.w * p; dd.push({n: z.o.t, v: z.vs[k], o: z.o, p: p, w: z.it.w, c: z.it.w * p}); }); if (sw / tw >= .6) { out[k] = sc / sw * 10; det[k] = {items: dd, sw: sw}; } });
+    return {v: out, d: det};
+  }
+  function mixVals(lv) { var sg = lv + JSON.stringify(MIX.items), c = CACHE.mix; if (c && c.sg === sg) return c.v; var r = mixCalc(lv); CACHE.mix = {sg: sg, v: r.v, d: r.d}; return r.v; }
   function fnum(o, v) { return v == null ? "sin dato" : fmt(v, o.dec) + (o.u || ""); }
   function clases(o, vals) {
     var pal = o.pal ? PAL[o.pal] : null, neu = osc() ? "#303846" : "#e4e9f0", a = vals.slice().sort(function (x, y) { return x - y; });
@@ -175,7 +187,7 @@ var MAPA = (function () {
 
   /* ---------------- interacción ---------------- */
   function url() { var u = new URL(location.href), q = u.searchParams; ["n", "i", "y", "d", "j", "yb", "c", "k"].forEach(function (x) { q.delete(x); }); q.set("n", G.n); q.set("i", P[0].i); if (P[0].y != null) q.set("y", P[0].y); if (G.d) q.set("d", G.d); if (G.cmp) { q.set("c", 1); q.set("j", P[1].i); if (P[1].y != null) q.set("yb", P[1].y); } history.replaceState(null, "", u.toString()); }
-  function refresca() { panes.forEach(function (p) { p.dibuja(false); }); lateral(); catalogoUI(); url(); }
+  function refresca() { panes.forEach(function (p) { p.dibuja(false); }); lateral(); catalogoUI(); mixUI(); url(); }
   function seleccionar(k) { sel = sel === k ? null : k; panes.forEach(function (p) { p.resalta(); }); lateral(); }
   function animar(pn) { var o = CI[P[pn].i]; if (timer) { clearInterval(timer); timer = null; return; } var i = Math.max(0, o.yrs.indexOf(yDef(pn))); timer = setInterval(function () { i = (i + 1) % o.yrs.length; P[pn].y = o.yrs[i]; refresca(); if (i === o.yrs.length - 1) { clearInterval(timer); timer = null; } }, 1100); }
   function pon(id) {
@@ -194,9 +206,35 @@ var MAPA = (function () {
     CAT.forEach(function (o) { if (q && (o.t + " " + o.g).toLowerCase().indexOf(q) < 0) return; if (!grupos[o.g]) { grupos[o.g] = []; ord.push(o.g); } grupos[o.g].push(o); });
     var h = G.cmp ? '<div class="mab"><button data-a="0" class="' + (G.act === 0 ? "on" : "") + '">Mapa A</button><button data-a="1" class="' + (G.act === 1 ? "on" : "") + '">Mapa B</button></div>' : "";
     h += ord.map(function (g) { var has = grupos[g].some(function (o) { return o.id === P[0].i || (G.cmp && o.id === P[1].i); }); return '<details' + (has || q ? " open" : "") + '><summary>' + esc(g) + '</summary>' + grupos[g].map(function (o) { var off = o.lv.indexOf(G.n) < 0, cl = "mi" + (o.id === P[0].i ? " A" : "") + (G.cmp && o.id === P[1].i ? " B" : ""); return '<button class="' + cl + '" data-i="' + o.id + '" title="' + esc(o.def) + '">' + esc(o.t) + '<em>' + (o.lv.length === 1 ? "solo " + (o.lv[0] === "dep" ? "dpto." : "mun.") : (o.yrs ? o.yrs.length + " períodos" : "")) + '</em></button>'; }).join("") + '</details>'; }).join("");
+    var qs = $("mqs"); if (qs) { qs.innerHTML = Object.keys(CAT.reduce(function (a, o) { a[o.g] = 1; return a; }, {})).map(function (g) { return '<optgroup label="' + esc(g) + '">' + CAT.filter(function (o) { return o.g === g; }).map(function (o) { return '<option value="' + o.id + '"' + (o.id === P[G.act].i ? " selected" : "") + (o.lv.indexOf(G.n) < 0 ? " disabled" : "") + '>' + esc(o.t) + '</option>'; }).join("") + '</optgroup>'; }).join(""); qs.onchange = function () { pon(qs.value); }; }
     box.innerHTML = h || '<p class="nota">Sin resultados.</p>';
     box.querySelectorAll(".mi").forEach(function (b) { b.onclick = function () { pon(b.dataset.i); }; });
     box.querySelectorAll(".mab button").forEach(function (b) { b.onclick = function () { G.act = +b.dataset.a; catalogoUI(); }; });
+  }
+  var PRE = [
+    {n: "Incendios forestales", i: [["focos", 3, 1], ["antec", 1, 1], ["est10", 1, -1], ["nbi", 1, 1]]},
+    {n: "Inundación / crecida", i: [["antec", 2, 1], ["avisos", 2, 1], ["nbi", 1, 1], ["agua", 1, 1], ["est10", 1, -1], ["pob", 1, 1]]},
+    {n: "Sismo", i: [["pob", 2, 1], ["dens", 1, 1], ["nbi", 1, 1], ["mat", 2, 1], ["est10", 1, -1]]},
+    {n: "Brotes / epidemias", i: [["agua", 2, 1], ["sal", 2, 1], ["dens", 1, 1], ["est10", 1, -1], ["ext", 1, 1]]},
+    {n: "Vulnerabilidad social", i: [["nbi", 1, 1], ["ext", 1, 1], ["agua", 1, 1], ["alf", 1, -1], ["estu", 1, -1], ["sal", 1, 1]]}
+  ];
+  function mixSet(it, nombre) { MIX.items = it.map(function (z) { return {id: z[0], w: z[1], dir: z[2]}; }).filter(function (z) { return CI[z.id]; }); MIX.name = nombre || "Mi índice"; mixCambio(); }
+  function mixCambio() { CI.mix.t = MIX.name; CACHE.mix = null; if (P.some(function (p) { return p.i === "mix"; })) refresca(); else mixUI(); }
+  function mixUI() {
+    var el = $("mmix"); if (!el) return; var lv = G.n;
+    var h = '<h3>Mezcla de indicadores · cree su índice de riesgo</h3><p class="nota">Cada indicador se convierte en percentil entre los territorios (0 = el menor, 10 = el mayor); «más es mejor» lo invierte. Se promedia con los pesos elegidos. Es un índice <b>relativo</b>, no una probabilidad; los pesos de las plantillas son una propuesta <b>por validar con el CCES</b>.</p><div class="chips">' + PRE.map(function (p, i) { return '<button data-p="' + i + '">' + esc(p.n) + '</button>'; }).join("") + '<button data-p="x">Vaciar</button></div>';
+    if (!MIX.items.length) h += '<p class="nota">Elija una plantilla o agregue indicadores.</p>';
+    else h += '<div class="mxr mxh"><span>Indicador</span><span>Peso</span><span>Sentido</span><span></span></div>' + MIX.items.map(function (z, i) { var o = CI[z.id], off = o.lv.indexOf(lv) < 0; return '<div class="mxr"><span>' + esc(o.t) + (off ? ' <em class="nota">(no existe a nivel ' + (lv === "dep" ? "departamental" : "municipal") + '; se omite)</em>' : "") + '</span><select data-w="' + i + '">' + [1, 2, 3, 4, 5].map(function (w) { return '<option' + (w === z.w ? " selected" : "") + '>' + w + '</option>'; }).join("") + '</select><select data-d="' + i + '"><option value="1"' + (z.dir > 0 ? " selected" : "") + '>más es peor</option><option value="-1"' + (z.dir < 0 ? " selected" : "") + '>más es mejor</option></select><button data-r="' + i + '" aria-label="Quitar">✕</button></div>'; }).join("");
+    var usados = MIX.items.map(function (z) { return z.id; });
+    h += '<div class="mxa"><select id="mxs"><option value="">+ Agregar indicador…</option>' + CAT.filter(function (o) { return o.id !== "mix" && !o.cat || o.id === "avisos"; }).filter(function (o) { return o.id !== "mix" && usados.indexOf(o.id) < 0; }).map(function (o) { return '<option value="' + o.id + '">' + esc(o.t) + '</option>'; }).join("") + '</select><input id="mxn" value="' + esc(MIX.name) + '" aria-label="Nombre del índice"><button class="btn p" id="mxg">Mostrar en el mapa</button></div>';
+    el.innerHTML = h;
+    el.querySelectorAll("[data-p]").forEach(function (b) { b.onclick = function () { if (b.dataset.p === "x") mixSet([], "Mi índice"); else { mixSet(PRE[+b.dataset.p].i, "Riesgo: " + PRE[+b.dataset.p].n); pon("mix"); } }; });
+    el.querySelectorAll("[data-w]").forEach(function (b) { b.onchange = function () { MIX.items[+b.dataset.w].w = +b.value; mixCambio(); }; });
+    el.querySelectorAll("[data-d]").forEach(function (b) { b.onchange = function () { MIX.items[+b.dataset.d].dir = +b.value; mixCambio(); }; });
+    el.querySelectorAll("[data-r]").forEach(function (b) { b.onclick = function () { MIX.items.splice(+b.dataset.r, 1); mixCambio(); }; });
+    var sa = $("mxs"); sa.onchange = function () { if (sa.value) { MIX.items.push({id: sa.value, w: 1, dir: CI[sa.value].pal === "bl" && /alf|asis|estu|sup|est10/.test(sa.value) ? -1 : 1}); mixCambio(); } };
+    $("mxn").onchange = function () { MIX.name = this.value || "Mi índice"; mixCambio(); };
+    $("mxg").onclick = function () { if (!MIX.items.length) { alert("Agregue al menos un indicador."); return; } pon("mix"); $("mmaps").scrollIntoView({behavior: "smooth", block: "start"}); };
   }
   function stats(pane) { var v = pane.U.map(function (u) { return pane.vals[u.k]; }).filter(function (z) { return z != null; }).sort(function (a, b) { return a - b; }); if (!v.length) return null; return {n: v.length, min: v[0], max: v[v.length - 1], med: v.length % 2 ? v[(v.length - 1) / 2] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2}; }
   var rkTab = "alto";
@@ -216,6 +254,7 @@ var MAPA = (function () {
     var el = $("mfi"); if (!el) return; if (!sel) { el.innerHTML = '<h3>Territorio</h3><p class="nota">Haga clic en una zona del mapa o en la lista para ver todos sus indicadores.</p>'; return; }
     var u = panes[0].U.filter(function (z) { return z.k === sel; })[0]; if (!u) { el.innerHTML = '<h3>Territorio</h3><p class="nota">El territorio seleccionado no está en la vista actual.</p>'; return; }
     var h = '<h3>' + esc(u.n) + (G.n === "mun" ? ' <span class="nota">' + esc(u.d) + '</span>' : "") + '</h3>', g0 = null;
+    if (P[0].i === "mix" && CACHE.mix && CACHE.mix.d[u.k]) { var dm = CACHE.mix.d[u.k], tw = dm.sw; h += '<div class="sg">Qué aporta a «' + esc(MIX.name) + '» (' + fmt(CACHE.mix.v[u.k], 1) + ')</div>' + dm.items.filter(function (z) { return z.p != null; }).sort(function (a, b) { return b.c - a.c; }).map(function (z) { return '<div class="sl"><span>' + esc(z.n) + ' <span class="nota">' + esc(fnum(z.o, z.v)) + '</span></span><b>' + fmt(z.c / tw * 10, 1) + '</b><span class="rkn">p' + Math.round(z.p * 100) + '</span></div>'; }).join(""); }
     CAT.forEach(function (o) { if (o.lv.indexOf(G.n) < 0) return; var y = o.yrs ? o.yd : null, vs = valores(o.id, G.n, y), v = vs[u.k]; if (o.cat) { h += (g0 !== o.g ? '<div class="sg">' + esc(o.g) + '</div>' : "") + '<div class="sl"><span>' + esc(o.t) + '</span><b>' + esc(AVT[Math.round(v == null ? 0 : v)]) + '</b><span></span></div>'; g0 = o.g; return; } var tot = Object.keys(vs).length, n = 0; Object.keys(vs).forEach(function (k) { if (vs[k] > v) n++; }); if (g0 !== o.g) { h += '<div class="sg">' + esc(o.g) + '</div>'; g0 = o.g; } h += '<div class="sl"><span>' + esc(o.t) + (y != null ? ' <span class="nota">' + esc(o.yl ? o.yl(y) : y) + '</span>' : "") + '</span><b>' + esc(fnum(o, v)) + '</b><span class="rkn">' + (v != null ? "#" + (n + 1) + "/" + tot : "") + '</span></div>'; });
     h += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">' + (G.n === "mun" ? '<a class="btn p" href="municipio.html?d=' + encodeURIComponent(u.d) + '&m=' + encodeURIComponent(u.n) + '">Ficha completa</a><a class="btn" target="_blank" rel="noopener" href="reporte.html?dep=' + encodeURIComponent(u.d) + '&mun=' + encodeURIComponent(u.n) + '&per=30">Reporte PDF</a>' : '<button class="btn p" id="mvm">Ver sus municipios</button><a class="btn" href="departamento.html?d=' + encodeURIComponent(u.d) + '">Ficha del departamento</a>') + '</div>';
     el.innerHTML = h; var b = $("mvm"); if (b) b.onclick = function () { G.d = u.d; sel = null; fijaNivel("mun"); };
@@ -238,7 +277,7 @@ var MAPA = (function () {
       P.forEach(function (p) { if (CI[p.i].lv.indexOf(G.n) < 0) G.n = CI[p.i].lv[0]; });
       var deps = Object.keys(T.DEP).sort();
       document.title = "Mapa de Bolivia — Sala de Situación Bolivia";
-      app.innerHTML = '<nav class="tnav" aria-label="Ruta"><a href="index.html">Tablero</a><span class="tsep">›</span><b>Territorios · Mapa</b></nav><div class="mtop"><div class="ms"><b>1 · Nivel</b><div class="seg" id="mn"><button data-n="dep">Departamentos</button><button data-n="mun">Municipios</button></div></div><div class="ms"><b>2 · Dónde</b><select id="md"><option value="">Todo Bolivia</option>' + deps.map(function (d) { return '<option>' + esc(d) + '</option>'; }).join("") + '</select></div><div class="ms"><b>3 · Cortes de color</b><div class="seg" id="mc"><button data-c="q">Cuantiles</button><button data-c="e">Intervalos iguales</button></div></div><div class="mgo"><span class="nota" style="font-size:12px">Elija el indicador en la lista de la izquierda. Pase el cursor o haga clic en una zona.</span><button id="mcmp">Comparar dos mapas</button><button id="mcp">Copiar enlace</button></div></div><div class="mg"><div class="mcat"><h3>Indicadores</h3><input type="search" id="mq" placeholder="Buscar indicador…"><div id="mcat"></div></div><div><div class="mmaps" id="mmaps"></div></div><div class="msd" id="msd"></div></div>';
+      app.innerHTML = '<nav class="tnav" aria-label="Ruta"><a href="index.html">Tablero</a><span class="tsep">›</span><b>Territorios · Mapa</b></nav><div class="mtop"><div class="ms"><b>1 · Nivel</b><div class="seg" id="mn"><button data-n="dep">Departamentos</button><button data-n="mun">Municipios</button></div></div><div class="ms"><b>2 · Dónde</b><select id="md"><option value="">Todo Bolivia</option>' + deps.map(function (d) { return '<option>' + esc(d) + '</option>'; }).join("") + '</select></div><div class="ms"><b>3 · Cortes de color</b><div class="seg" id="mc"><button data-c="q">Cuantiles</button><button data-c="e">Intervalos iguales</button></div></div><div class="mgo"><span class="nota" style="font-size:12px">Elija el indicador (lista o selector) y toque una zona del mapa.</span><button id="mcmp">Comparar dos mapas</button><button id="mcp">Copiar enlace</button></div></div><div class="mqs"><b>Indicador en el mapa</b><select id="mqs"></select></div><div class="mg"><div class="mcat"><h3>Indicadores</h3><input type="search" id="mq" placeholder="Buscar indicador…"><div id="mcat"></div></div><div><div class="mmaps" id="mmaps"></div><div class="mc mmix" id="mmix"></div></div><div class="msd" id="msd"></div></div>';
       sincroniza(); $("md").value = G.d;
       document.querySelectorAll("#mn button").forEach(function (b) { b.onclick = function () { fijaNivel(b.dataset.n); }; });
       document.querySelectorAll("#mc button").forEach(function (b) { b.classList.toggle("on", b.dataset.c === G.cortes); b.onclick = function () { G.cortes = b.dataset.c; document.querySelectorAll("#mc button").forEach(function (z) { z.classList.toggle("on", z === b); }); refresca(); }; });
@@ -251,7 +290,7 @@ var MAPA = (function () {
   function armar() {
     var m = $("mmaps"); panes.forEach(function (p) { try { p.map.remove(); } catch (e) {} }); panes = []; m.innerHTML = '<div class="mp" id="mpa"></div>' + (G.cmp ? '<div class="mp" id="mpb"></div>' : ""); m.classList.toggle("dos", G.cmp); $("mcmp").classList.toggle("on", G.cmp); $("mcmp").textContent = G.cmp ? "Cerrar comparación" : "Comparar dos mapas";
     panes.push(Pane(0, $("mpa"))); if (G.cmp) { panes.push(Pane(1, $("mpb"))); G.act = 0; var a = panes[0], b = panes[1], lk = 0; [[a, b], [b, a]].forEach(function (z) { z[0].map.on("move", function () { if (lk) return; lk = 1; z[1].map.jumpTo({center: z[0].map.getCenter(), zoom: z[0].map.getZoom()}); lk = 0; }); }); } else G.act = 0;
-    setTimeout(function () { panes.forEach(function (p) { p.map.resize(); }); }, 80); url();
+    setTimeout(function () { panes.forEach(function (p) { p.map.resize(); }); }, 80); mixUI(); url();
   }
   return {iniciar: iniciar};
 })();
