@@ -58,10 +58,29 @@ var DIST = (function () {
     }
     sel.onchange = dib; dib();
   }
+
+  function salud(host) {
+    fetch("salud_dep.json?v=20261116c").then(function (r) { return r.json(); }).then(function (J) {
+      var cs = getComputedStyle(document.body), tx = cs.color, dep = Object.keys(J.dc.dep).filter(function (d) { return d !== "BOLIVIA"; }).sort(function (a, b) { return J.dc.dep[b][2] - J.dc.dep[a][2]; });
+      host.innerHTML = '<div class="dsb"><div><h3 style="margin:0">Salud infantil por departamento</h3><div class="nota">Menores de 5 años. Cada celda es un dato oficial del INE; no hay cifras municipales para estos indicadores.</div></div></div><div class="shg"><div><div class="nota shh">Infección respiratoria aguda (IRA), % de menores de 5 años</div><div id="shA" class="shc"></div></div><div><div class="nota shh">Enfermedad diarreica aguda (EDA), % de menores de 5 años</div><div id="shB" class="shc"></div></div><div><div class="nota shh">Desnutrición crónica (talla para la edad), % — 2008 → 2016 → 2023</div><div id="shC" class="shc"></div></div></div><div class="nota">' + esc(J.meta.fuente) + '. ' + esc(J.meta.nota) + '.</div>';
+      function heat(id, K, col) {
+        var o = J[K], ys = o.anios, d2 = dep.slice().reverse(), data = [], mx = 0;
+        d2.forEach(function (d, i) { o.dep[d].forEach(function (c, j) { if (c.v != null) { data.push([j, i, c.v, c.m ? "*" : ""]); mx = Math.max(mx, c.v); } }); });
+        var ch = echarts.init(document.getElementById(id), null, {renderer: "svg"});
+        ch.setOption({textStyle: {color: tx}, grid: {left: 84, right: 8, top: 4, bottom: 34}, tooltip: {formatter: function (p) { return d2[p.value[1]] + " · " + ys[p.value[0]] + "<br><b>" + p.value[2].toFixed(1) + " %</b>" + p.value[3]; }}, xAxis: {type: "category", data: ys, splitArea: {show: false}, axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: tx, fontSize: 10, interval: 0}}, yAxis: {type: "category", data: d2, axisLine: {show: false}, axisTick: {show: false}, axisLabel: {color: tx, fontSize: 11}}, visualMap: {dimension: 2, min: 10, max: mx, calculable: false, orient: "horizontal", left: "center", bottom: 0, itemWidth: 10, itemHeight: 90, show: false, inRange: {color: col}}, series: [{type: "heatmap", data: data, label: {show: true, fontSize: 9, color: function (p) { return p.value[2] >= (K === "eda" ? 27 : 52) ? "#fff" : "#111"; }, formatter: function (p) { return Math.round(p.value[2]) + p.value[3]; }}, itemStyle: {borderColor: cs.backgroundColor, borderWidth: 1.5, borderRadius: 3}}]});
+        window.addEventListener("resize", function () { ch.resize(); });
+      }
+      heat("shA", "ira", ["#fff3c4", "#f9b44c", "#e4572e", "#8c1d40"]); heat("shB", "eda", ["#e3f2fd", "#7fb8e6", "#2f78c4", "#123a7a"]);
+      var cc = echarts.init(document.getElementById("shC"), null, {renderer: "svg"}), ser = dep.map(function (d, i) { return {name: d, type: "line", data: J.dc.dep[d], symbolSize: 7, lineStyle: {width: 2}, endLabel: {show: true, formatter: "{a}", color: tx, fontSize: 10}, emphasis: {focus: "series"}, labelLayout: {moveOverlap: "shiftY"}}; });
+      ser.push({name: "Bolivia", type: "line", data: J.dc.dep.BOLIVIA, symbolSize: 8, lineStyle: {width: 3, type: "dashed", color: "#d7263d"}, itemStyle: {color: "#d7263d"}, endLabel: {show: true, formatter: "Bolivia", color: "#d7263d", fontSize: 10, fontWeight: 700}, labelLayout: {moveOverlap: "shiftY"}});
+      cc.setOption({textStyle: {color: tx}, color: ["#6c8ebf", "#e4572e", "#2e9e5b", "#b58900", "#8e5ea2", "#17a2b8", "#d17a22", "#5c6b73", "#c2185b"], grid: {left: 34, right: 78, top: 8, bottom: 26}, tooltip: {trigger: "axis"}, xAxis: {type: "category", data: J.dc.anios, boundaryGap: false, axisLabel: {color: tx}}, yAxis: {type: "value", axisLabel: {color: tx, formatter: "{value} %"}, splitLine: {lineStyle: {opacity: .15}}}, series: ser});
+      window.addEventListener("resize", function () { cc.resize(); });
+    }).catch(function () { host.innerHTML = '<p class="nota">No se pudo cargar los datos de salud infantil.</p>'; });
+  }
   function css() {
     if (document.getElementById("dscss")) return; var s = document.createElement("style"); s.id = "dscss";
-    s.textContent = ".dsc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px}.dsb{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px}.dsb select{padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:inherit;font:inherit;max-width:360px}.dsw{position:relative}.dsw svg{width:100%;height:auto;display:block}.dp{cursor:pointer}.dp:hover{stroke:#fff;stroke-width:2}.dstt{display:none;position:absolute;z-index:5;background:rgba(9,13,21,.94);color:#fff;border-radius:8px;padding:7px 10px;font-size:12px;pointer-events:none;width:180px}";
+    s.textContent = ".dsc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px}.dsb{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px}.dsb select{padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:inherit;font:inherit;max-width:360px}.dsw{position:relative}.dsw svg{width:100%;height:auto;display:block}.dp{cursor:pointer}.dp:hover{stroke:#fff;stroke-width:2}.shg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.shc{height:300px}.shh{margin-bottom:2px;font-weight:600}.dstt{display:none;position:absolute;z-index:5;background:rgba(9,13,21,.94);color:#fff;border-radius:8px;padding:7px 10px;font-size:12px;pointer-events:none;width:180px}";
     document.head.appendChild(s);
   }
-  return {montar: montar, css: css};
+  return {montar: montar, salud: salud, css: css};
 })();
