@@ -2,6 +2,8 @@
 var DIST = (function () {
   var S = SALA, A;
   function esc(s) { return S.esc(s == null ? "" : String(s)); }
+  var X = {};
+  function ex(m, k) { var x = X[m.k]; return x ? x[k] : null; }
   var IND = [
     ["R", "Riesgo (índice relativo 0–10)", function (m, T, I) { return I[m.k].R; }, ""],
     ["A", "Amenaza", function (m, T, I) { return I[m.k].A; }, ""],
@@ -12,6 +14,9 @@ var DIST = (function () {
     ["agua", "Agua y saneamiento inadecuados (INE 2024)", function (m, T) { var x = T.nb && T.nb.municipios[m.k]; return x ? x.agua24 : null; }, " %"],
     ["sal", "Inadecuada atención en salud (INE 2024)", function (m, T) { var x = T.nb && T.nb.municipios[m.k]; return x ? x.sal24 : null; }, " %"],
     ["anal", "Analfabetismo (INE 2024)", function (m, T) { var x = T.ed && T.ed.municipios[m.k]; return x && x.alf24 != null ? 100 - x.alf24 : null; }, " %"],
+    ["asi", "Asistencia escolar 4–17 años (INE 2024)", function (m) { return ex(m, "asi24"); }, " %"],
+    ["emi", "Viviendas con emigrantes (INE 2024)", function (m) { return ex(m, "emi24"); }, " %"],
+    ["fall", "Viviendas con fallecidos declarados (INE 2024)", function (m) { return ex(m, "fall24"); }, " %"],
     ["est", "Años promedio de estudio (INE 2024)", function (m, T) { var x = T.ed && T.ed.municipios[m.k]; return x ? x.est24 : null; }, " años"]
   ];
   function kde(vals, lo, hi, n) {
@@ -22,6 +27,9 @@ var DIST = (function () {
   function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return ((h >>> 0) % 1000) / 1000; }
   function med(a) { var b = a.slice().sort(function (x, y) { return x - y; }), n = b.length; return n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2; }
   function montar(T, host, st) {
+    fetch("ine_extra_mun.json?v=20261116b").then(function (r) { return r.json(); }).then(function (j) { X = j.municipios || {}; }).catch(function () {}).then(function () { montar2(T, host, st); });
+  }
+  function montar2(T, host, st) {
     A = TERR.api; var I = A.indices(T); st = st || {};
     host.innerHTML = '<div class="dsb"><div><h3 style="margin:0">Cómo se reparte entre los municipios</h3><div class="nota">Cada punto es un municipio; el violín muestra dónde se concentran. Color del punto = nivel de riesgo del municipio. Clic en un punto abre su ficha.</div></div><select id="dsi">' + IND.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + '</option>'; }).join("") + '</select></div><div class="dsw"><svg id="dss" viewBox="0 0 1000 440" role="img" aria-label="Distribución por departamento"></svg><div id="dst" class="dstt"></div></div><div class="nota" id="dsn"></div>';
     var sel = host.querySelector("#dsi"), svg = host.querySelector("#dss"), tip = host.querySelector("#dst");
@@ -42,7 +50,7 @@ var DIST = (function () {
         G[d].forEach(function (z) { var jx = (hash(z.m.k) - .5) * hw * 1.1, r = 2.6 + Math.min(3.4, Math.sqrt((z.m.pob || 0) / 20000)); pts += '<a href="municipio.html?d=' + encodeURIComponent(z.m.d) + '&amp;m=' + encodeURIComponent(z.m.n) + '"><circle class="dp" cx="' + (cx + jx).toFixed(1) + '" cy="' + y(z.v).toFixed(1) + '" r="' + r.toFixed(1) + '" fill="' + A.nivelR(I[z.m.k].R)[2] + '" stroke="#0b1220" stroke-width=".6" opacity=".9" data-n="' + esc(z.m.n) + '" data-d="' + esc(z.m.d) + '" data-v="' + (Math.round(z.v * 10) / 10) + '" data-p="' + (z.m.pob || 0) + '" data-r="' + (Math.round(I[z.m.k].R * 10) / 10) + '"/></a>'; });
       });
       svg.innerHTML = o + pts;
-      host.querySelector("#dsn").textContent = def[1] + ": " + all.length + " municipios con dato. Tamaño del punto = población. Fuente: INE (Censo 2024) y cálculo del sistema; el riesgo es relativo y está por validar con CCES.";
+      host.querySelector("#dsn").textContent = def[1] + ": " + all.length + " municipios con dato. Tamaño del punto = población. Fuente: INE (Censo 2024) y cálculo del sistema; el riesgo es relativo y está por validar con CCES." + (def[0] === "fall" ? " Son viviendas que declararon algún fallecido en el período del Censo: no es una tasa de mortalidad." : "") + (all.length < T.lista.length ? " Municipios sin dato: " + (T.lista.length - all.length) + " (nombre no coincide entre fuentes)." : "");
       svg.querySelectorAll(".dp").forEach(function (c) {
         c.onmousemove = function (e) { var b = svg.parentNode.getBoundingClientRect(); tip.style.display = "block"; tip.style.left = Math.min(b.width - 190, e.clientX - b.left + 12) + "px"; tip.style.top = (e.clientY - b.top + 12) + "px"; tip.innerHTML = '<b>' + c.dataset.n + '</b> · ' + c.dataset.d + '<br>' + def[1].split(" (")[0] + ': <b>' + c.dataset.v + def[3] + '</b><br>Riesgo ' + c.dataset.r + ' · ' + Number(c.dataset.p).toLocaleString("es-BO") + ' hab.'; };
         c.onmouseleave = function () { tip.style.display = "none"; };
