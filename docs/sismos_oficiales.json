@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-16T00:15:39.835061Z",
+ "actualizado": "2026-11-16T02:54:06.450324Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261115T213858_-21.406_-67.772",
+   "fecha_local": "2026-11-15 21:38:58",
+   "lat": -21.406,
+   "lon": -67.772,
+   "prof_km": 152.6,
+   "mag": 3.4,
+   "provincia": "Nor Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261114T140354_-22.265_-64.129",
    "fecha_local": "2026-11-14 14:03:54",
