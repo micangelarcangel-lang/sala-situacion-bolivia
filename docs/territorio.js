@@ -67,8 +67,8 @@ var TERR = (function () {
 
   /* ---------- barra de navegación territorial (reemplaza el menú nacional) ---------- */
   function barra(T, d, m) {
-    X.header("explorador.html");
-    var deps = Object.keys(T.DEP).sort(), h = '<nav class="tnav" aria-label="Navegación territorial"><a href="index.html">Tablero</a><span class="tsep">›</span>' + (d ? '<a href="explorador.html">Bolivia</a><span class="tsep">›</span>' : '<b>Bolivia</b>');
+    X.header("mapa.html");
+    var deps = Object.keys(T.DEP).sort(), h = '<nav class="tnav" aria-label="Navegación territorial"><a href="index.html">Tablero</a><span class="tsep">›</span>' + (d ? '<a href="mapa.html">Bolivia</a><span class="tsep">›</span>' : '<b>Bolivia</b>');
     if (d) h += (m ? '<a href="departamento.html?d=' + encodeURIComponent(d) + '">' + S.esc(d) + '</a>' : '<b>' + S.esc(d) + '</b>');
     if (m) h += '<span class="tsep">›</span><b>' + S.esc(m.n) + '</b>';
     h += '<span class="sp"></span><label>Departamento <select id="nvDep"><option value="">Elegir…</option>' + deps.map(function (x) { return '<option' + (x === d ? " selected" : "") + '>' + x + '</option>'; }).join("") + '</select></label>';
@@ -422,7 +422,7 @@ var TERR = (function () {
       }
     });
   }
-  function paginaDep(d) { if (!d) { location.replace("explorador.html"); return; }
+  function paginaDep(d) { if (!d) { location.replace("mapa.html"); return; }
     cargar().then(function (T) {
       var app = document.getElementById("app"), L = T.DEP[d];
       if (!d || !L) { paginaBolivia(); return; }

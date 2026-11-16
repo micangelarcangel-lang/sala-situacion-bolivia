@@ -27,7 +27,7 @@ var DIST = (function () {
   function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return ((h >>> 0) % 1000) / 1000; }
   function med(a) { var b = a.slice().sort(function (x, y) { return x - y; }), n = b.length; return n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2; }
   function montar(T, host, st) {
-    fetch("ine_extra_mun.json?v=20261116b").then(function (r) { return r.json(); }).then(function (j) { X = j.municipios || {}; }).catch(function () {}).then(function () { montar2(T, host, st); });
+    fetch("ine_extra_mun.json?v=20261116d").then(function (r) { return r.json(); }).then(function (j) { X = j.municipios || {}; }).catch(function () {}).then(function () { montar2(T, host, st); });
   }
   function montar2(T, host, st) {
     A = TERR.api; var I = A.indices(T); st = st || {};
@@ -60,7 +60,7 @@ var DIST = (function () {
   }
 
   function salud(host) {
-    fetch("salud_dep.json?v=20261116c").then(function (r) { return r.json(); }).then(function (J) {
+    fetch("salud_dep.json?v=20261116d").then(function (r) { return r.json(); }).then(function (J) {
       var cs = getComputedStyle(document.body), tx = cs.color, dep = Object.keys(J.dc.dep).filter(function (d) { return d !== "BOLIVIA"; }).sort(function (a, b) { return J.dc.dep[b][2] - J.dc.dep[a][2]; });
       host.innerHTML = '<div class="dsb"><div><h3 style="margin:0">Salud infantil por departamento</h3><div class="nota">Menores de 5 años. Cada celda es un dato oficial del INE; no hay cifras municipales para estos indicadores.</div></div></div><div class="shg"><div><div class="nota shh">Infección respiratoria aguda (IRA), % de menores de 5 años</div><div id="shA" class="shc"></div></div><div><div class="nota shh">Enfermedad diarreica aguda (EDA), % de menores de 5 años</div><div id="shB" class="shc"></div></div><div><div class="nota shh">Desnutrición crónica (talla para la edad), % — 2008 → 2016 → 2023</div><div id="shC" class="shc"></div></div></div><div class="nota">' + esc(J.meta.fuente) + '. ' + esc(J.meta.nota) + '.</div>';
       function heat(id, K, col) {

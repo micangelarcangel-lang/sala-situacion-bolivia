@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Propuesta 2 — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<style>
+:root{--bg:#0a0b0d;--pn:#12151a;--pn2:#171b22;--ln:#252b35;--tx:#e9edf3;--mu:#8b95a5;--ac:#f5b700;--ok:#3ddc84;--na:#f26a1b;--ro:#e5484d}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font:12.5px/1.35 "Inter",system-ui,sans-serif}
+.app{display:grid;grid-template-rows:48px 1fr 28px;height:100vh;min-height:760px}
+.top{display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--pn);border-bottom:1px solid var(--ln);position:relative}
+.top:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#d52b1e 33%,#f9e300 33% 66%,#007934 66%)}
+.lg{font-weight:800;letter-spacing:.03em;margin-right:6px}.lg small{display:block;font-weight:500;color:var(--mu);font-size:9.5px;letter-spacing:.04em;margin-top:-2px}
+.ws{display:flex;gap:2px}.ws a{padding:6px 12px;border-radius:7px;color:var(--mu);font-weight:600}.ws a.on{background:#232933;color:#fff;box-shadow:inset 0 -2px var(--ac)}
+.sp{flex:1}.sr{background:#0d0f13;border:1px solid var(--ln);border-radius:8px;padding:6px 10px;color:var(--mu);width:230px}
+.bt{background:#1b2028;border:1px solid var(--ln);border-radius:8px;padding:6px 10px;color:var(--tx);font-weight:600}.st{display:flex;gap:6px;align-items:center;color:var(--mu);font-size:11px}.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 7px var(--ok)}
+.main{display:grid;grid-template-columns:288px minmax(0,1fr) 372px;gap:10px;padding:10px;min-height:0}
+.col{display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:12px;padding:11px 12px}.card h3{margin:0 0 8px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);display:flex;justify-content:space-between;align-items:center}.card h3 a{color:var(--ac);text-transform:none;letter-spacing:0;font-weight:600}
+.step{display:grid;grid-template-columns:22px 1fr;gap:8px;margin-bottom:9px}.step i{width:22px;height:22px;border-radius:50%;background:var(--ac);color:#000;font-style:normal;font-weight:800;display:grid;place-items:center;font-size:11.5px}.step b{display:block;margin-bottom:4px}
+.seg{display:flex;flex-wrap:wrap;gap:4px}.seg span{padding:4px 9px;border:1px solid var(--ln);border-radius:7px;background:#0d0f13;color:var(--mu);font-weight:600}.seg span.on{background:#2b2410;border-color:var(--ac);color:var(--ac)}
+.sel{background:#0d0f13;border:1px solid var(--ln);border-radius:7px;padding:6px 9px;color:var(--tx);display:flex;justify-content:space-between}
+.go{width:100%;background:var(--ac);color:#000;border:0;border-radius:9px;padding:9px;font-weight:800;font-size:13px;margin-top:2px}
+.lay label{display:flex;gap:8px;align-items:center;margin:5px 0}.lay i.c{width:9px;height:9px;border-radius:50%}.lay em{margin-left:auto;font-style:normal;color:var(--mu)}.lay .inf{width:16px;height:16px;border:1px solid var(--ln);border-radius:50%;display:grid;place-items:center;font-size:10px;color:var(--mu);font-style:normal}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}.mp{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--ln);background:#090c11}.mp .m{position:absolute;inset:0}
+.hd{position:absolute;z-index:5;top:8px;left:8px;right:8px;display:flex;gap:6px;align-items:center}.hd .t{background:rgba(10,11,13,.9);border:1px solid var(--ln);border-radius:9px;padding:6px 10px;font-weight:700;flex:1}.hd .t small{display:block;color:var(--mu);font-weight:500;font-size:10.5px}
+.lab{position:absolute;inset:0;pointer-events:none;z-index:2}.lab span{position:absolute;transform:translate(-50%,-50%);font-size:9.5px;font-weight:700;color:#dbe6f6;text-shadow:0 0 4px #000,0 0 3px #000;text-transform:uppercase;letter-spacing:.04em}
+.lg2{position:absolute;z-index:5;left:8px;bottom:8px;background:rgba(10,11,13,.92);border:1px solid var(--ln);border-radius:9px;padding:7px 9px;font-size:11px}.lg2 b{display:block;color:var(--mu);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}.lg2 span{display:flex;gap:6px;align-items:center;margin:2px 0}.lg2 i{width:14px;height:9px;border-radius:2px}
+.tm{position:absolute;z-index:5;right:8px;bottom:8px;display:flex;background:rgba(10,11,13,.92);border:1px solid var(--ln);border-radius:9px;overflow:hidden}.tm span{padding:5px 9px;color:var(--mu);font-weight:700;border-right:1px solid var(--ln)}.tm span:last-child{border:0}.tm span.on{background:var(--ac);color:#000}
+.live{display:grid;grid-template-rows:auto 1fr}.chs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}.chs span{padding:3px 8px;border-radius:6px;background:#0d0f13;border:1px solid var(--ln);color:var(--mu);font-size:11px;font-weight:700}.chs span.on{background:var(--ro);border-color:var(--ro);color:#fff}
+.pl{aspect-ratio:16/9;border-radius:9px;background:repeating-linear-gradient(135deg,#14181f 0 12px,#10131a 12px 24px);border:1px dashed #3a4352;display:grid;place-items:center;text-align:center;color:var(--mu)}.pl b{color:var(--tx);display:block}
+.conv{display:flex;gap:9px;padding:7px 0;border-top:1px solid var(--ln)}.conv:first-of-type{border:0}.sc{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;font-weight:800;color:#fff;flex:none}.conv small{color:var(--mu)}.chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}.chips span{font-size:10px;padding:1px 6px;border-radius:8px;background:#1f2631;color:#b9c6dc}
+.al{display:flex;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--ln)}.al:first-of-type{border:0}.bd{padding:2px 7px;border-radius:5px;font-size:10px;font-weight:800;color:#fff}
+.foot{display:flex;gap:16px;align-items:center;padding:0 14px;background:var(--pn);border-top:1px solid var(--ln);color:var(--mu);font-size:10.5px;overflow:hidden;white-space:nowrap}.foot b{color:var(--ok)}
+.note{color:var(--mu);font-size:11px}
+</style>
+<script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261116d"></script></head>
+<body><div class="app">
+<div class="top"><div class="lg">SALA DE SITUACIÓN<small>BOLIVIA · CCES</small></div>
+<div class="ws"><a class="on">Principal</a><a>Salud</a><a>Incendios</a><a>Hídrico</a><a>+</a></div><div class="sp"></div>
+<div class="sr">⌕ Buscar municipio, río o evento…</div><div class="bt">Copiar enlace</div><div class="bt">Insertar</div><div class="bt">⛶</div><div class="st"><span class="dot"></span>En línea · <span id="hora"></span></div></div>
+<div class="main">
+<div class="col"><div class="card"><h3>Explorar</h3>
+<div class="step"><i>1</i><div><b>Qué ver</b><div class="seg"><span class="on">Riesgo</span><span>Geológica</span><span>Meteorológica</span><span>Hidrológica</span><span>Focos</span><span>Salud</span></div></div></div>
+<div class="step"><i>2</i><div><b>Nivel</b><div class="seg"><span>Departamento</span><span class="on">Municipio</span></div></div></div>
+<div class="step"><i>3</i><div><b>Dónde</b><div class="sel">Todo Bolivia <span>▾</span></div></div></div>
+<div class="step"><i>4</i><div><b>Cuándo</b><div class="seg"><span>24 h</span><span>3 d</span><span class="on">7 d</span><span>14 d</span></div></div></div>
+<button class="go">IR →</button></div>
+<div class="card lay"><h3>Capas <a>buscar</a></h3><div id="lay"></div></div>
+<div class="card"><h3>Comparar</h3><p class="note" style="margin:0">Dos mapas lado a lado, cada uno con su propia variable, como en el explorador del CDC. Pulse <b style="color:var(--ac)">Cambiar variable</b> en cualquiera.</p></div></div>
+<div class="cmp"><div class="mp"><div class="m" id="mA"></div><div class="lab" id="lA"></div><div class="hd"><div class="t">Índice de riesgo por municipio<small>relativo · por validar con CCES</small></div></div><div class="lg2" id="gA"></div></div>
+<div class="mp"><div class="m" id="mB"></div><div class="lab" id="lB"></div><div class="hd"><div class="t">Focos de calor por municipio<small>NASA FIRMS · últimos 7 días</small></div></div><div class="lg2" id="gB"></div><div class="tm"><span>24 h</span><span>3 d</span><span class="on">7 d</span><span>14 d</span></div></div></div>
+<div class="col"><div class="card live"><h3>Transmisiones en vivo <a>ver todas</a></h3><div class="chs"><span class="on">Unitel</span><span>Red Uno</span><span>ATB</span><span>Bolivia TV</span><span>Erbol</span></div><div class="pl"><div><b>Canal por configurar</b>Se incrusta el reproductor oficial de YouTube<br>de cada medio (requiere confirmar el canal)</div></div></div>
+<div class="card"><h3>Convergencia territorial <a>ver todas</a></h3><div id="cv"></div><p class="note" style="margin:6px 0 0">Varias señales a la vez en un mismo lugar, 7 días. No es un pronóstico; puntaje relativo.</p></div>
+<div class="card"><h3>Alertas oficiales vigentes <a>ver todas</a></h3><div id="al"></div></div></div></div>
+<div class="foot" id="ft"></div></div>
+<script src="territorio.js?v=20261116d"></script>
+<script>
+(function(){var S=SALA,A,T,esc=S.esc;function $(i){return document.getElementById(i)}
+var NC=["#2e9e5b","#f5b700","#f26a1b","#d7263d"],CF=["#2a313c","#ffd966","#ff9e3d","#e5471f","#8b0a1f"];
+function hav(a,b,c,d){var r=Math.PI/180,dl=(c-a)*r,dn=(d-b)*r,q=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(dn/2)*Math.sin(dn/2);return 12742*Math.asin(Math.sqrt(q))}
+TERR.cargar().then(function(t){T=t;A=TERR.api;return fetch("sismos_oficiales.json").then(function(r){return r.json()})}).then(function(off){
+var D=T.D,I=A.indices(T),now=Date.now(),dias=T.dias.slice(-7),f7=T.focos.filter(function(p){return dias.indexOf(p[3])>=0});
+var sis=(off.sismos||[]).map(function(s){return {ts:Date.parse(s.fecha_local.replace(" ","T")+"-04:00"),lat:s.lat,lon:s.lon,mag:s.mag}}).filter(function(q){return q.ts>now-7*864e5});
+var hid=T.avisos.filter(function(a){return /HIDROL/i.test(a.titulo||"")||a.tipo==="hidrológica"}),met=T.avisos.filter(function(a){return !(/HIDROL/i.test(a.titulo||"")||a.tipo==="hidrológica")});
+$("hora").textContent=new Date().toLocaleString("es-BO",{timeZone:"America/La_Paz",day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit",hour12:false});
+$("lay").innerHTML=[["#e5484d","Riesgo por municipio","339"],["#ffb02e","Sismos",sis.length],["#ef6c00","Focos de calor",A.fmt(f7.length)],["#00897b","Estaciones de ríos","9"],["#1e88e5","Avisos SENAMHI",T.avisos.length],["#8d6e63","Derrumbes (prensa)","—"]].map(function(x,i){return '<label><input type="checkbox" '+(i<3?"checked":"")+'><i class="c" style="background:'+x[0]+'"></i>'+x[1]+'<em>'+x[2]+'</em><i class="inf">i</i></label>'}).join("");
+var cnt={};f7.forEach(function(p){var m=T.donde(p[0],p[1]);if(m)cnt[m.k]=(cnt[m.k]||0)+1});
+function fc(v){return v<1?CF[0]:v<10?CF[1]:v<50?CF[2]:v<200?CF[3]:CF[4]}
+function mk(id,lid,gid,feats,leg){var map=new maplibregl.Map({container:id,style:{version:8,sources:{},layers:[{id:"bg",type:"background",paint:{"background-color":"#090c11"}}]},bounds:[[-69.8,-23],[-57,-9]],fitBoundsOptions:{padding:{top:60,bottom:20,left:10,right:10}},attributionControl:false,interactive:true});
+map.on("load",function(){map.addSource("m",{type:"geojson",data:{type:"FeatureCollection",features:feats}});map.addSource("d",{type:"geojson",data:{type:"FeatureCollection",features:D.geoDep.features}});
+map.addLayer({id:"f",type:"fill",source:"m",paint:{"fill-color":["get","c"],"fill-opacity":.85}});map.addLayer({id:"l",type:"line",source:"m",paint:{"line-color":"#090c11","line-width":.35}});map.addLayer({id:"d",type:"line",source:"d",paint:{"line-color":"#b9c8e0","line-width":1.2,"line-opacity":.8}});
+function lab(){var o="";D.geoDep.features.forEach(function(f){var p=map.project(A.cenPoly(f.geometry));o+='<span style="left:'+p.x+'px;top:'+p.y+'px">'+esc(f.properties.n)+'</span>'});$(lid).innerHTML=o}map.on("move",lab);lab()});
+$(gid).innerHTML='<b>'+leg[0]+'</b>'+leg[1].map(function(x){return '<span><i style="background:'+x[0]+'"></i>'+x[1]+'</span>'}).join("");return map}
+var A1=mk("mA","lA","gA",T.lista.map(function(m){return {type:"Feature",geometry:m.f.geometry,properties:{c:A.nivelR(I[m.k].R)[2]}}}),["Nivel de riesgo",A.NIVR.map(function(n){return [n[2],n[1]]})]);
+var B1=mk("mB","lB","gB",T.lista.map(function(m){return {type:"Feature",geometry:m.f.geometry,properties:{c:fc(cnt[m.k]||0)}}}),["Focos en 7 días",[[CF[0],"Ninguno"],[CF[1],"1–9"],[CF[2],"10–49"],[CF[3],"50–199"],[CF[4],"200 o más"]]]);
+var lk=0;[[A1,B1],[B1,A1]].forEach(function(p){p[0].on("move",function(){if(lk)return;lk=1;p[1].jumpTo({center:p[0].getCenter(),zoom:p[0].getZoom()});lk=0})});
+var conv=T.lista.map(function(m){if(!m._c)m._c=A.cenPoly(m.f.geometry);var sg=[],r=I[m.k].R;if(r>=6)sg.push("riesgo alto "+A.fmt(r,1));if(cnt[m.k]>=10)sg.push(cnt[m.k]+" focos");if(m.av>=0)sg.push("aviso "+["verde","amarillo","naranja","rojo"][Math.min(3,m.av)]);var sq=sis.filter(function(q){return hav(q.lat,q.lon,m._c[1],m._c[0])<=50});if(sq.length)sg.push(sq.length+" sismo ≤50 km");return {m:m,sg:sg,sc:sg.length*25}}).filter(function(x){return x.sg.length>=2}).sort(function(a,b){return b.sc-a.sc||(I[b.m.k].R-I[a.m.k].R)}).slice(0,4);
+$("cv").innerHTML=conv.map(function(x){return '<div class="conv"><div class="sc" style="background:'+(x.sc>=75?"#d7263d":x.sc>=50?"#f26a1b":"#c79a00")+'">'+x.sc+'</div><div><b>'+esc(x.m.n)+' <small>'+esc(x.m.d)+'</small></b><div class="chips">'+x.sg.map(function(s){return '<span>'+esc(s)+'</span>'}).join("")+'</div></div></div>'}).join("");
+var al=[].concat(hid.map(function(a){return {t:"Hidrológico N° "+a.numero,n:a.nivel_num,d:(a.departamentos||[]).join(", ")}}),met.map(function(a){return {t:"Meteorológico · "+(a.fenomeno||""),n:a.nivel_num,d:(a.departamentos||[]).join(", ")}}));
+$("al").innerHTML=al.map(function(a){var n=Math.min(3,a.n==null?1:a.n);return '<div class="al"><span class="bd" style="background:'+NC[n]+'">'+["VERDE","AMARILLO","NARANJA","ROJO"][n]+'</span><div><b>'+esc(a.t)+'</b><div class="note">'+esc(a.d)+'</div></div></div>'}).join("")||'<p class="note">Sin alertas vigentes.</p>';
+$("ft").innerHTML='<span>Fuentes:</span><span><b>●</b> SENAMHI</span><span><b>●</b> San Calixto</span><span><b>●</b> USGS</span><span><b>●</b> NASA FIRMS</span><span><b>●</b> GloFAS</span><span><b>●</b> Prensa abierta</span><span style="margin-left:auto">Una noticia o aviso no equivale a un incidente confirmado · información preliminar</span>';
+window.__ready=1});})();
+</script></body></html>

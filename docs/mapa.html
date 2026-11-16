@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa de Bolivia — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css?v=20261116d">
+<style>
+.mw{max-width:none;padding:10px 14px}
+.mtop{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:10px}
+.ms{display:flex;flex-direction:column;gap:4px;font-size:13px}.ms>b{font-size:11.5px;color:var(--brand2);text-transform:uppercase;letter-spacing:.04em}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}.seg button{border:0;background:var(--card);color:var(--ink);padding:7px 14px;font:inherit;font-weight:600;cursor:pointer}.seg button.on{background:#0b4f94;color:#fff}
+.ms select,.ms input[type=search]{padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.mgo{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mgo button,.btnl{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:7px 12px;font:inherit;cursor:pointer}.mgo button.on{background:#0b4f94;color:#fff;border-color:#0b4f94}
+.mg{display:grid;grid-template-columns:268px minmax(0,1fr) 330px;gap:10px;align-items:start}
+.mcat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;max-height:calc(100vh - 170px);overflow:auto;position:sticky;top:8px}
+.mcat h3{margin:2px 0 6px;font-size:13px}.mcat input[type=search]{width:100%;margin-bottom:6px}
+.mcat details{border-top:1px solid var(--line);padding:4px 0}.mcat summary{cursor:pointer;font-weight:700;font-size:12.5px;padding:4px 0}
+.mi{display:flex;gap:6px;align-items:flex-start;width:100%;text-align:left;border:0;background:none;color:var(--ink);font:inherit;font-size:12.5px;padding:5px 6px;border-radius:7px;cursor:pointer}
+.mi:hover{background:var(--soft)}.mi.A{background:rgba(29,111,184,.18);box-shadow:inset 3px 0 #1d6fb8}.mi.B{background:rgba(245,183,0,.2);box-shadow:inset 3px 0 #f5b700}.mi.off{opacity:.38;cursor:not-allowed}
+.mi em{font-style:normal;font-size:10.5px;color:var(--mut);margin-left:auto;white-space:nowrap}
+.mab{display:flex;gap:6px;margin-bottom:6px}.mab button{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px;font:inherit;font-weight:700;cursor:pointer}.mab button.on{background:#0b4f94;color:#fff}
+.mmaps{display:grid;gap:10px}.mmaps.dos{grid-template-columns:1fr 1fr}
+.mp{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.mph{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}.mph b{font-size:14.5px}.mph .sb{font-size:12px;color:var(--mut)}
+.mph .yr{display:flex;gap:6px;align-items:center}.mph select{padding:4px 6px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}.mph button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:3px 9px;cursor:pointer;font:inherit}
+.mmap{position:relative;height:calc(100vh - 235px);min-height:480px;max-height:820px}.tnav{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:2px 0 10px;font-size:14px}.tnav a{color:var(--brand2);font-weight:600}.tnav .tsep{color:var(--mut)}.mmap .m{position:absolute;inset:0}
+.mlb{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}.mlb span{position:absolute;transform:translate(-50%,-50%);font-size:11px;font-weight:600;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000,0 0 2px #000,0 0 5px #000;white-space:nowrap}.mlb span.d{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+.mlg{position:absolute;left:10px;bottom:30px;z-index:3;background:rgba(9,13,21,.9);color:#fff;border-radius:10px;padding:8px 11px;font-size:12px;max-width:260px;pointer-events:none}.mlg b{display:block;margin-bottom:3px}.mlg span{display:flex;align-items:center;gap:7px;margin-top:3px}.mlg i{display:inline-block;width:15px;height:10px;border-radius:2px}.mlg em{font-style:normal;color:#aab4c6;margin-left:auto;padding-left:8px}
+.mtool{position:absolute;z-index:3;top:8px;left:8px;display:flex;gap:5px;flex-wrap:wrap}.mtool button,.mtool label{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:4px 9px;font:inherit;font-size:12.5px;cursor:pointer;display:flex;gap:5px;align-items:center}.mtool button.on{background:#0b4f94;color:#fff;border-color:#0b4f94}
+.msd{display:flex;flex-direction:column;gap:10px}.mc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}.mc h3{margin:0 0 6px;font-size:13.5px}.mc p{margin:4px 0;font-size:12.8px;line-height:1.45}.mc .nota{color:var(--mut);font-size:12px}
+.mk{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0}.mk div b{display:block;font-size:19px;line-height:1.1}.mk div span{font-size:11.5px;color:var(--mut)}
+.rk{width:100%;border-collapse:collapse;font-size:12.5px}.rk td{padding:3px 4px;border-bottom:1px solid var(--line);cursor:pointer}.rk tr:hover,.rk tr.on{background:var(--soft)}.rk td:last-child{text-align:right;font-weight:700;white-space:nowrap}.rk i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.tabs{display:flex;gap:4px;margin-bottom:4px}.tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:3px 9px;font:inherit;font-size:12px;cursor:pointer}.tabs button.on{background:#0b4f94;color:#fff}
+.sl{display:grid;grid-template-columns:1fr auto auto;gap:6px;font-size:12.3px;padding:3px 0;border-bottom:1px dashed var(--line)}.sl .rkn{color:var(--mut)}.sg{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--brand2);margin:8px 0 2px}
+.cor{background:rgba(245,183,0,.14);border:1px solid rgba(245,183,0,.5);border-radius:10px;padding:8px 11px;font-size:12.8px}
+.maplibregl-popup{z-index:8}.pop{font-size:12.5px}.pop b{display:block}
+@media(max-width:1100px){.mg{grid-template-columns:1fr}.mcat{position:static;max-height:300px}.mmaps.dos{grid-template-columns:1fr}}
+</style>
+<script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261116d"></script></head>
+<body><div id="hdr"></div><div class="wrap mw" id="app"><p class="vacio">Cargando datos…</p></div>
+<div class="foot" id="foot"><span>Sala de Situación Bolivia · información preliminar de fuentes abiertas</span><span><a href="index.html">Volver al inicio</a></span></div>
+<script src="clima.js?v=20261116d"></script><script src="perfil.js?v=20261116d"></script><script src="territorio.js?v=20261116d"></script><script src="mapa.js?v=20261116d"></script><script>MAPA.iniciar()</script></body></html>
