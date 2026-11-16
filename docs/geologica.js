@@ -103,7 +103,7 @@ var GEO = (function () {
     var L = filtrado(); if (sel && !L.some(function (q) { return q.id === sel.id; })) sel = null;
     leyenda(); $("gH").innerHTML = '<b>' + L.length + ' sismos</b> en ' + esc(LUGAR.etiqueta(LG)) + (LG.m ? ' (≤ 50 km del centro del municipio)' : "") + ' · ' + (st.p ? 'últimos ' + st.p + ' días' : 'todo el período disponible') + (st.m ? ' · M ≥ ' + st.m : '') + ' <span class="nota">— Magnitudes y profundidades preliminares; pueden diferir entre San Calixto y USGS.</span>';
     if (map && map._ok) { map.getSource("sis").setData(geoSism(L)); map.getSource("pr").setData(geoPrensa()); map.getSource("ex").setData(geoExp()); rotular(); }
-    tabsPrensa(); ultimo(L); kpis(L); grafico(L); porDep(L); lista(L); detalle();
+    antecedentes(); tabsPrensa(); ultimo(L); kpis(L); grafico(L); porDep(L); lista(L); detalle();
   }
   function ultimo(L) {
     var q = L[0]; if (!q) { $("gUlt").innerHTML = '<div class="xc"><h3>Último sismo</h3><p class="nota">Sin sismos con este filtro.</p></div>'; return; }
@@ -115,6 +115,7 @@ var GEO = (function () {
     $("gK").innerHTML = '<div class="xc"><div class="xk"><div><b>' + L.length + '</b><span>sismos</span></div><div><b>' + (mx ? fmt(mx.mag, 1) : "—") + '</b><span>magnitud máx.</span></div><div><b>' + c4 + '</b><span>de M ≥ 4</span></div></div>' + (td ? '<p class="nota" style="margin:8px 0 0">Más activo: <b>' + esc(td) + '</b> (' + cd[td] + ').</p>' : '') + '</div>';
   }
   function grafico(L) {
+    var el0 = $("gCh"); el0.style.height = L.length ? "240px" : "90px"; if (!L.length) { var c0 = echarts.getInstanceByDom(el0); if (c0) c0.dispose(); el0.innerHTML = '<p class="nota" style="padding:18px 4px">Sin sismos con este filtro. En zonas de baja sismicidad es lo esperable; pruebe «Todo lo disponible» (el registro empieza el 22-oct-2026).</p>'; return; } if (!echarts.getInstanceByDom(el0)) el0.innerHTML = "";
     var ch = echarts.getInstanceByDom($("gCh")) || echarts.init($("gCh"), null, {renderer: "svg"}), tx = X.css("--mut") || "#888", ln = X.css("--line") || "#ccc";
     ch.setOption({animation: false, grid: {left: 38, right: 12, top: 10, bottom: 28}, tooltip: {formatter: function (p) { var q = p.data[3]; return 'M ' + fmt(q.mag, 1) + ' · ' + esc(q.lugar) + '<br>' + hora(q.ts) + (q.prof != null ? ' · ' + fmt(q.prof) + ' km' : ''); }}, xAxis: {type: "time", axisLabel: {color: tx, fontSize: 11}, axisLine: {lineStyle: {color: ln}}, splitLine: {show: false}}, yAxis: {type: "value", name: "M", nameTextStyle: {color: tx}, min: 2.5, axisLabel: {color: tx, fontSize: 11}, splitLine: {lineStyle: {color: ln}}},
       series: PROF.map(function (p, i) { return {type: "scatter", name: p[1], symbolSize: 9, itemStyle: {color: p[2], opacity: .85, borderColor: "#fff", borderWidth: .8}, data: L.filter(function (q) { return (q.prof == null ? 1 : pc(q.prof)) === i; }).map(function (q) { return [q.ts, q.mag, q.prof, q]; })}; })}, true);
@@ -130,9 +131,9 @@ var GEO = (function () {
   }
   function noticias(L, vacio) { return L.length ? '<table class="xt2">' + L.map(function (e) { return '<tr><td style="white-space:nowrap">' + hora(e.ts) + '</td><td>' + (e.url ? '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.titulo) + '</a>' : esc(e.titulo)) + '</td><td class="nota">' + esc(e.fuente || "") + '</td><td class="nota">' + esc((e.departamentos || []).join(", ") || (e.lat == null ? "sin coordenada" : "")) + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">' + vacio + '</p>'; }
   function antecedentes() {
-    var h = T.dh && T.dh.departamentos || {}, tipos = ["Deslizamiento", "Sismo", "Aluvión", "Alud"], k = Object.keys(h).sort();
+    var h = T.dh && T.dh.departamentos || {}, tipos = ["Deslizamiento", "Sismo", "Aluvión", "Alud"], k = Object.keys(h).sort().filter(function (d) { return !LG.d || d === LG.d; });
     var fil = k.map(function (d) { var f = tipos.map(function (t) { return h[d][t] || [0, 0, 0]; }); return {d: d, f: f, tot: f[0][0] + f[1][0]}; }).sort(function (a, b) { return b.tot - a.tot; });
-    $("gTa").innerHTML = '<p class="nota"><b>Limitación:</b> DesInventar (UNDRR) cubre 1970–2015, con subregistro, y no incluye eventos recientes. Solo sirve de contexto.</p><table class="xt2"><tr><th align="left">Departamento</th><th>Deslizamientos</th><th>Fallecidos</th><th>Sismos</th><th>Fallecidos</th></tr>' + fil.map(function (r) { return '<tr><td>' + esc(r.d) + '</td><td align="center">' + r.f[0][0] + '</td><td align="center">' + r.f[0][1] + '</td><td align="center">' + r.f[1][0] + '</td><td align="center">' + r.f[1][1] + '</td></tr>'; }).join("") + '</table>';
+    $("gTa").innerHTML = (LG.m ? '<p class="nota">DesInventar no está cargado por municipio en esta página: se muestra el departamento <b>' + esc(LG.d) + '</b>.</p>' : "") + '<p class="nota"><b>Limitación:</b> DesInventar (UNDRR) cubre 1970–2015, con subregistro, y no incluye eventos recientes. Solo sirve de contexto.</p><table class="xt2"><tr><th align="left">Departamento</th><th>Deslizamientos</th><th>Fallecidos</th><th>Sismos</th><th>Fallecidos</th></tr>' + fil.map(function (r) { return '<tr><td>' + esc(r.d) + '</td><td align="center">' + r.f[0][0] + '</td><td align="center">' + r.f[0][1] + '</td><td align="center">' + r.f[1][0] + '</td><td align="center">' + r.f[1][1] + '</td></tr>'; }).join("") + '</table>';
   }
 
   function tabsPrensa() {
@@ -149,7 +150,7 @@ var GEO = (function () {
       (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
       LUGAR.init(T, $("lgBox"), LG, function () { sel = null; dibuja(); LUGAR.ajusta(map, T, LG); }); $("gP").onchange = function () { st.p = +this.value; dibuja(); }; $("gM").onchange = function () { st.m = +this.value; dibuja(); }; $("gPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("gN").onchange = rotular;
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });
-      antecedentes(); crearMapa(); dibuja();
+      crearMapa(); dibuja();
     });
   }
   return {iniciar: iniciar};
