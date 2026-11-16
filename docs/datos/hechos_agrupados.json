@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:59wgj0",
+  "fecha_hora_local": "2026-11-16 17:12",
+  "ts_ms": 1794863563000,
+  "titulo": "Colisión frontal deja 14 heridos en Huanuni - La Patria Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 1,
+  "heridos_max": 14,
+  "cifras_discrepantes": "sí",
+  "n_notas": 3,
+  "fuentes": "La Patria Bolivia",
+  "lat": -18.274,
+  "lon": -66.717,
+  "lugar": "Huanuni, Oruro",
+  "departamento": "Oruro",
+  "municipio": "Huanuni",
+  "enlaces": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNb1RnRGYwa3EzQ0RxUUhXdFd1ZkV6aW5Qdm9kSWo4Nk5lU1hQQUpqNS1rNVVmRl9tRF9tREFWTzdSUVgwcGxKeldtV1puRzdzR2dzb2Q1OXoyUnkzc3NkM1Z1UW91eXlxU1BGT0d3c2RTajF2V0JOVFd1Y2hGQy1qOUhWODBRdw?oc=5 | https://news.google.com/rss/articles/CBMilgFBVV95cUxQSmhoYVFzcm82WEhDamw5VW05OWVuckxtUzVMc0ZxWmI2RTFHeG0wRVFfSVA3eHUyaFBfR1FpU2piRjlxSnVOeDM1Qzk3MkdLbHlrTlZtN0VJMnlleUFyckVVOFhwSWVTQW42OG0wWDdiM3o5MWJVdlV6ckg5eXpwSkVVOGJ2UlozM3VsUmV3SkpoVEMxS0E?oc=5 | https://news.google.com/rss/articles/CBMingFBVV95cUxQdkpzZ3FsTHhaakxoVEljMVQ3QUZBelRpS2R0U3p6TGhhZENLX2tmVWhyOVpkdGlJMWhYTjE5elFWZEFmVk8xTG5jenhuNmJubHJ6dllHS2RaSnpsVm9LSjE1ZHJXUHhJOGlXU0xja0tpd2V5T3h3eVJFU3ctWEU4SEMwRjhlV3c4Y21DNnRMQXVlajRmck5UVURJRldadw?oc=5"
+ },
+ {
   "hecho_id": "noticia:ozies7",
   "fecha_hora_local": "2026-11-16 16:06",
   "ts_ms": 1794859560000,
@@ -70,14 +90,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 2,
+  "n_notas": 3,
   "fuentes": "El Tribuno; La Patria Bolivia",
   "lat": -17.25,
   "lon": -66.328,
   "lugar": "Quillacollo, Cochabamba",
   "departamento": "Cochabamba",
   "municipio": "Quillacollo",
-  "enlaces": "https://news.google.com/rss/articles/CBMingFBVV95cUxQb3RNUUtXbWU5YUJHX3Rhc2p3MHNtdTlQeXo4WkdwU3lkQzZ6YVZIcE8zTmlEbmg4QkVtX1VnSl9vbVVKb0I0d2pTWVFNUTZnUERKUUdGYldsSUk0OWppWXhxMXFhWlR3ZVNEZXdweWZ2WWlSWVFIQmRNdmRwaVNLTWxtS2FsX1JScm1oSWMzMk81dU11UThtMllzZGYxZw?oc=5 | https://news.google.com/rss/articles/CBMi7AFBVV95cUxQS29sd2VfNGZHRkZkRW83S0haeGM3cnk5cEhoUlNWU3hkQVR3LS1oTDMzTEZuSkgwRkh4ekp3dDhyRFV1TGpzRWliMDZRbVRKUm14b1M3aWZBc0JYQVoxV01WU2pnbTYyX1NSN3ZPbHFNcV9mZlNvOHBSQVJsalpJYmV5UktqR2EydktuS0pPanpyRC1TSGpLZHZ6MjhuNUdiLWJIMzB4Rng1TTdidWxVUVR3Z0hOcEZLT0tFYzMxM2tsNS1YdnlJcjBKNkljMVUxQlM3ZG1FRmZGME9hVURHWG1BWi0zODY1OXlxcdIB8gFBVV95cUxNUnl0cDh6TjlLdm1Jcl9jT3pEeng5ZHN4YTFSaTJPa3VQQTNOMUZBY2lrdEdxUlhQRlVXMVRwOTFaUmdWVVZoNV8zN2RCaEpEaERDd3Fkb2gxRGpMS0FHamdSbk5fZElTdFpkbC1wQmJZSEVaem9uZThsWElvTVhQS1JPb1VjNWlFQjRzdW5RV3hUdjNXVXZtOWswSmduVkVaZ3J0cTIyeGFkZE5RTGt6aHdreDBKM1F1bm1OcnhTRHpPOWJQVnlqMU9UeGVwTGlsTExOS01tWTlkM1lNV3NPVThJZjdzSWVwTGxJblU4aGdrUQ?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMingFBVV95cUxQb3RNUUtXbWU5YUJHX3Rhc2p3MHNtdTlQeXo4WkdwU3lkQzZ6YVZIcE8zTmlEbmg4QkVtX1VnSl9vbVVKb0I0d2pTWVFNUTZnUERKUUdGYldsSUk0OWppWXhxMXFhWlR3ZVNEZXdweWZ2WWlSWVFIQmRNdmRwaVNLTWxtS2FsX1JScm1oSWMzMk81dU11UThtMllzZGYxZw?oc=5 | https://news.google.com/rss/articles/CBMipAFBVV95cUxPTE5KNk1iU0hEQWRHRjZuSllYSVZERGVCTEJiLXBBWWJTem9JMVpaYTA0TTE2RzY2SWxtUVVwMUpSSUV6LTBYd2xfS2VlbmlMOTFBTlBxb09nNTZBOVJtc01wWmF0amhCdkxNcHNrdUVaeC1OWXFoVzl0bTh5eUxSZDM2ampxbXFUc09OU0d1dGl5WU1YUW5qb19QLUk1cVg0eWxtcQ?oc=5 | https://news.google.com/rss/articles/CBMi7AFBVV95cUxQS29sd2VfNGZHRkZkRW83S0haeGM3cnk5cEhoUlNWU3hkQVR3LS1oTDMzTEZuSkgwRkh4ekp3dDhyRFV1TGpzRWliMDZRbVRKUm14b1M3aWZBc0JYQVoxV01WU2pnbTYyX1NSN3ZPbHFNcV9mZlNvOHBSQVJsalpJYmV5UktqR2EydktuS0pPanpyRC1TSGpLZHZ6MjhuNUdiLWJIMzB4Rng1TTdidWxVUVR3Z0hOcEZLT0tFYzMxM2tsNS1YdnlJcjBKNkljMVUxQlM3ZG1FRmZGME9hVURHWG1BWi0zODY1OXlxcdIB8gFBVV95cUxNUnl0cDh6TjlLdm1Jcl9jT3pEeng5ZHN4YTFSaTJPa3VQQTNOMUZBY2lrdEdxUlhQRlVXMVRwOTFaUmdWVVZoNV8zN2RCaEpEaERDd3Fkb2gxRGpMS0FHamdSbk5fZElTdFpkbC1wQmJZSEVaem9uZThsWElvTVhQS1JPb1VjNWlFQjRzdW5RV3hUdjNXVXZtOWswSmduVkVaZ3J0cTIyeGFkZE5RTGt6aHdreDBKM1F1bm1OcnhTRHpPOWJQVnlqMU9UeGVwTGlsTExOS01tWTlkM1lNV3NPVThJZjdzSWVwTGxJblU4aGdrUQ?oc=5"
  },
  {
   "hecho_id": "noticia:1k23ba7",
@@ -810,7 +830,7 @@
   "fallecidos_max": 2,
   "heridos_max": 25,
   "cifras_discrepantes": "sí",
-  "n_notas": 7,
+  "n_notas": 6,
   "fuentes": "Bolivia.com; El Mundo Bolivia; La Patria Bolivia; Prensa Mercosur; Urgentebo; eju.tv",
   "lat": -17.97,
   "lon": -67.11,
@@ -3578,26 +3598,6 @@
   "departamento": "Potosí",
   "municipio": "Potosí",
   "enlaces": "https://open-meteo.com/"
- },
- {
-  "hecho_id": "noticia:1bo6mll",
-  "fecha_hora_local": "2026-11-03 16:38",
-  "ts_ms": 1793738297000,
-  "titulo": "Colisión frontal deja un fallecido en ruta Pazña – Avicaya - La Patria Bolivia",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 1,
-  "nivel_preliminar": "amarilla",
-  "fallecidos_max": 1,
-  "heridos_max": 0,
-  "cifras_discrepantes": "no",
-  "n_notas": 1,
-  "fuentes": "La Patria Bolivia",
-  "lat": -18.637,
-  "lon": -66.949,
-  "lugar": "Pazña, Oruro",
-  "departamento": "Oruro",
-  "municipio": "Pazña",
-  "enlaces": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQSmhoYVFzcm82WEhDamw5VW05OWVuckxtUzVMc0ZxWmI2RTFHeG0wRVFfSVA3eHUyaFBfR1FpU2piRjlxSnVOeDM1Qzk3MkdLbHlrTlZtN0VJMnlleUFyckVVOFhwSWVTQW42OG0wWDdiM3o5MWJVdlV6ckg5eXpwSkVVOGJ2UlozM3VsUmV3SkpoVEMxS0E?oc=5"
  },
  {
   "hecho_id": "noticia:1ipkqc8",
