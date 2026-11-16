@@ -1,12 +1,12 @@
 {
- "actualizado": "2026-11-16T19:53:51.868125Z",
+ "actualizado": "2026-11-16T20:46:28.437162Z",
  "dia": "2026-11-16",
  "complejos": [
   {
-   "n": 90,
-   "frp_mw": 766.7,
+   "n": 97,
+   "frp_mw": 885.1,
    "lat": -16.935,
-   "lon": -60.575,
+   "lon": -60.574,
    "departamento": "Santa Cruz",
    "municipio": "San Rafael",
    "municipios": [
@@ -39,10 +39,10 @@
    "id": "2026-11-16:2"
   },
   {
-   "n": 18,
-   "frp_mw": 164.5,
-   "lat": -17.141,
-   "lon": -61.467,
+   "n": 25,
+   "frp_mw": 394.3,
+   "lat": -17.17,
+   "lon": -61.456,
    "departamento": "Santa Cruz",
    "municipio": "San Miguel",
    "municipios": [
@@ -50,11 +50,85 @@
    ],
    "bbox": [
     -61.478,
-    -17.273,
+    -17.289,
     -61.324,
-    -17.131
+    -17.13
    ],
    "id": "2026-11-16:3"
+  },
+  {
+   "n": 13,
+   "frp_mw": 240.7,
+   "lat": -11.951,
+   "lon": -66.644,
+   "departamento": "Beni",
+   "municipio": "Riberalta",
+   "municipios": [
+    "Riberalta",
+    "Reyes"
+   ],
+   "bbox": [
+    -66.768,
+    -12.099,
+    -66.608,
+    -11.902
+   ],
+   "id": "2026-11-16:4"
+  },
+  {
+   "n": 33,
+   "frp_mw": 240.2,
+   "lat": -12.33,
+   "lon": -65.039,
+   "departamento": "Beni",
+   "municipio": "Puerto Siles",
+   "municipios": [
+    "Puerto Siles"
+   ],
+   "bbox": [
+    -65.077,
+    -12.357,
+    -65.009,
+    -12.294
+   ],
+   "id": "2026-11-16:5"
+  },
+  {
+   "n": 12,
+   "frp_mw": 156.0,
+   "lat": -14.618,
+   "lon": -64.041,
+   "departamento": "Beni",
+   "municipio": "San Javier",
+   "municipios": [
+    "San Javier"
+   ],
+   "bbox": [
+    -64.053,
+    -14.664,
+    -64.009,
+    -14.601
+   ],
+   "id": "2026-11-16:6"
+  },
+  {
+   "n": 20,
+   "frp_mw": 102.5,
+   "lat": -16.035,
+   "lon": -61.687,
+   "departamento": "Santa Cruz",
+   "municipio": "Concepción",
+   "municipios": [
+    "Concepción",
+    "San Ignacio"
+   ],
+   "bbox": [
+    -61.714,
+    -16.099,
+    -61.587,
+    -16.01
+   ],
+   "id": "2026-11-16:7"
   },
   {
    "n": 8,
@@ -72,25 +146,7 @@
     -64.208,
     -15.138
    ],
-   "id": "2026-11-16:4"
-  },
-  {
-   "n": 14,
-   "frp_mw": 50.0,
-   "lat": -16.042,
-   "lon": -61.708,
-   "departamento": "Santa Cruz",
-   "municipio": "Concepción",
-   "municipios": [
-    "Concepción"
-   ],
-   "bbox": [
-    -61.714,
-    -16.047,
-    -61.703,
-    -16.035
-   ],
-   "id": "2026-11-16:5"
+   "id": "2026-11-16:8"
   },
   {
    "n": 8,
@@ -108,25 +164,7 @@
     -60.902,
     -16.817
    ],
-   "id": "2026-11-16:6"
-  },
-  {
-   "n": 14,
-   "frp_mw": 18.4,
-   "lat": -12.336,
-   "lon": -65.042,
-   "departamento": "Beni",
-   "municipio": "Puerto Siles",
-   "municipios": [
-    "Puerto Siles"
-   ],
-   "bbox": [
-    -65.064,
-    -12.357,
-    -65.012,
-    -12.302
-   ],
-   "id": "2026-11-16:7"
+   "id": "2026-11-16:9"
   }
  ]
 }

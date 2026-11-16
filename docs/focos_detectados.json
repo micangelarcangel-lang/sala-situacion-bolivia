@@ -246,10 +246,15 @@
    "La Paz": 3
   },
   "2026-11-16": {
-   "Santa Cruz": 84,
-   "Beni": 45,
-   "La Paz": 1,
-   "Tarija": 2
+   "Santa Cruz": 150,
+   "Beni": 158,
+   "La Paz": 17,
+   "Tarija": 13,
+   "Chuquisaca": 9,
+   "Potosí": 2,
+   "Cochabamba": 1,
+   "Oruro": 1,
+   "Pando": 9
   }
  },
  "municipios": {
@@ -719,26 +724,26 @@
    "Oruro (Oruro)": 2
   },
   "2026-11-16": {
-   "San Rafael (Santa Cruz)": 46,
-   "Reyes (Beni)": 20,
-   "San Miguel (Santa Cruz)": 18,
-   "Puerto Siles (Beni)": 14,
-   "Exaltación (Beni)": 5,
-   "Charagua (Santa Cruz)": 5,
-   "Ascención de Guarayos (Santa Cruz)": 5,
-   "San Ignacio (Santa Cruz)": 5,
-   "Magdalena (Beni)": 3,
-   "Guayaramerín (Beni)": 2,
-   "Villa Montes (Tarija)": 2,
-   "Concepción (Santa Cruz)": 2,
-   "El Carmen Rivero Tórrez (Santa Cruz)": 1,
-   "San Ramón (Beni)": 1,
-   "Pailón (Santa Cruz)": 1
+   "San Rafael (Santa Cruz)": 53,
+   "Puerto Siles (Beni)": 33,
+   "Reyes (Beni)": 32,
+   "San Miguel (Santa Cruz)": 26,
+   "Exaltación (Beni)": 24,
+   "San Javier (Beni)": 20,
+   "Riberalta (Beni)": 15,
+   "Ascención de Guarayos (Santa Cruz)": 11,
+   "Concepción (Santa Cruz)": 11,
+   "El Puente (Santa Cruz)": 9,
+   "Yacuiba (Tarija)": 8,
+   "San Julián (Santa Cruz)": 8,
+   "Guayaramerín (Beni)": 7,
+   "Charagua (Santa Cruz)": 7,
+   "San Andrés (Beni)": 7
   }
  },
- "actualizado": "2026-11-16T19:53:51.868125Z",
+ "actualizado": "2026-11-16T20:46:28.437162Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 2054,
+ "detecciones_fuera_de_limites": 2149,
  "slack_dia": "2026-11-16"
 }
