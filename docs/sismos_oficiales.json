@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-16T05:50:59.711878Z",
+ "actualizado": "2026-11-16T08:32:35.103824Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261116T024726_-14.414_-68.336",
+   "fecha_local": "2026-11-16 02:47:26",
+   "lat": -14.414,
+   "lon": -68.336,
+   "prof_km": 700.0,
+   "mag": 5.0,
+   "provincia": "Franz Tamayo",
+   "departamento": "La Paz",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261115T213858_-21.406_-67.772",
    "fecha_local": "2026-11-15 21:38:58",
