@@ -23,7 +23,7 @@ var DIST = (function () {
   function med(a) { var b = a.slice().sort(function (x, y) { return x - y; }), n = b.length; return n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2; }
   function montar(T, host, st) {
     A = TERR.api; var I = A.indices(T); st = st || {};
-    host.innerHTML = '<div class="dsb"><div><h3 style="margin:0">Cómo se reparte entre los municipios</h3><div class="nota">Cada punto es un municipio; el violín muestra dónde se concentran. Color del punto = nivel de riesgo del municipio. Clic en un punto abre su ficha.</div></div><select id="dsi">' + IND.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + '</option>'; }).join("") + '</select></div><div class="dsw"><svg id="dss" viewBox="0 0 1000 425" role="img" aria-label="Distribución por departamento"></svg><div id="dst" class="dstt"></div></div><div class="nota" id="dsn"></div>';
+    host.innerHTML = '<div class="dsb"><div><h3 style="margin:0">Cómo se reparte entre los municipios</h3><div class="nota">Cada punto es un municipio; el violín muestra dónde se concentran. Color del punto = nivel de riesgo del municipio. Clic en un punto abre su ficha.</div></div><select id="dsi">' + IND.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + '</option>'; }).join("") + '</select></div><div class="dsw"><svg id="dss" viewBox="0 0 1000 440" role="img" aria-label="Distribución por departamento"></svg><div id="dst" class="dstt"></div></div><div class="nota" id="dsn"></div>';
     var sel = host.querySelector("#dsi"), svg = host.querySelector("#dss"), tip = host.querySelector("#dst");
     function dib() {
       var def = IND.filter(function (x) { return x[0] === sel.value; })[0], G = {}, all = [];
