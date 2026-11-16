@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1k23ba7",
+  "fecha_hora_local": "2026-11-16 14:06",
+  "ts_ms": 1794852396000,
+  "titulo": "Gobernación de Santa Cruz denuncia que incendio en Taperas fue provocado por traficantes de tierras - La Patria Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 2,
+  "fuentes": "La Patria Bolivia",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPSFZCUjZtZm10Z0VlX1htaHVQNHdmakZuX2NqYVd5aC1wZGhHNnFSOW1LejByWGZWdmdpYy1QY2sycEhnVGdsb2JUTE5lTjNFTmxoak56M1VmUGN2LWpxUHJvWlRnTkZCOUFwZ3hGU2dUbjZUMUdyemlWUkFwQ3lWeWdEY2tRcG01YTh0WHZYQWRxektuSDNadjFBcw?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5"
+ },
+ {
   "hecho_id": "clima:Santa Cruz:2026-11-16:viento:1",
   "fecha_hora_local": "2026-11-16 13:05",
   "ts_ms": 1794848732808,
@@ -830,14 +850,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 2,
-  "fuentes": "La Patria Bolivia; Red Uno",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOaHpOZ2l2LW5KQjBCaVpyZ3VMRTV0ZFRldnk5YUpVUUtyU3RUcGt1UXhNVEtiVGk5dlhaNDAzSFlOY1Z4TlpIM3VMZUo0ODRhVmkwSkx3NFNvMWJVRFpSdTdPd1RWMk0ybUxXcjc0UF9hN3lnU09UQXFFMW1ZMklDYU1UVmxDcGZaT3U2UzdMc1JEUExlQ2lsZVEtZ0VRRkJwOUUzcFVGSWtkREV4QUFOcWV4anRmYjZ4Ukxacw?oc=5 | https://news.google.com/rss/articles/CBMimAFBVV95cUxQbHdpcUF6dXpjaW1TT1ZmdGJtUUVLMTNMRTVqVkFUdkNsZlRvenVkckFUWmI4NDFmc2ZHd2RVcWRSSE5YRVpOTUlESGw2V3JONXpwS0RISGNZd01SejNuMkY4NzFYYXp4aWo2RE9VMkFYUkVwZ3JRRmM5MWlRSjlBWk16azdkQ3FjdEtkaWc5NERkTzk2SllVOQ?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOaHpOZ2l2LW5KQjBCaVpyZ3VMRTV0ZFRldnk5YUpVUUtyU3RUcGt1UXhNVEtiVGk5dlhaNDAzSFlOY1Z4TlpIM3VMZUo0ODRhVmkwSkx3NFNvMWJVRFpSdTdPd1RWMk0ybUxXcjc0UF9hN3lnU09UQXFFMW1ZMklDYU1UVmxDcGZaT3U2UzdMc1JEUExlQ2lsZVEtZ0VRRkJwOUUzcFVGSWtkREV4QUFOcWV4anRmYjZ4Ukxacw?oc=5"
  },
  {
   "hecho_id": "usgs:us7000ty9z",
