@@ -36,6 +36,12 @@ jobs:
       - name: Navegador para portales con JavaScript (si falla, el sistema sigue sin él)
         continue-on-error: true
         run: python -m playwright install --with-deps chromium
+      - name: Retención de reportes PDF, 90 días (si falla, no detiene el sistema)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RETENCION_DIAS: "90"
+        run: python retener_reportes.py
       - name: Descargar datos y generar reportes
         env:
           DATOS_URL: ${{ secrets.DATOS_URL }}
