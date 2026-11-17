@@ -1,9 +1,9 @@
 [
  {
-  "hecho_id": "noticia:jyxfry",
-  "fecha_hora_local": "2026-11-17 09:58",
-  "ts_ms": 1794923903000,
-  "titulo": "Gobierno destina Bs 5,5 millones para reparar viviendas afectadas por explosión en Viacha - Acortar.link",
+  "hecho_id": "noticia:1t5g5qu",
+  "fecha_hora_local": "2026-11-17 10:51",
+  "ts_ms": 1794927060000,
+  "titulo": "Gobierno autoriza transferencia de Bs 5,5 millones para reparar casas dañadas por la explosión en Viacha - ANF Agencia de Noticias Fides Bolivia",
   "tipo_amenaza": "tecnológica",
   "nivel_num": 0,
   "nivel_preliminar": "verde",
@@ -17,7 +17,7 @@
   "lugar": "Viacha, La Paz",
   "departamento": "La Paz",
   "municipio": "Viacha",
-  "enlaces": "https://news.google.com/rss/articles/CBMiQEFVX3lxTFB2RGl0T1c2QkpsSm1yWDdnMEtKc0NNczA5Wlh3aDVPa0UydXNzaUl5eklkS2JCcE1VM2JSV2tnbXM?oc=5 | https://news.google.com/rss/articles/CBMi5AFBVV95cUxOaWl5SmVXaW5UbU1IeC16c3VSaDlkRTRDWklac0c5YlFobml3a29OSnlnbkhEYkpLQW5RZXlyS3BxcnByalA2QUxodXpNeWxHVFp4SnU3WnlrdjdzTnpqdC16YWVIenpra0d6eVZiZEdWZTBCakZzRFRJMC1hZmlESDB4STNxQWxyTFNIcXl3NmZKMVpnLXdrQkhVRk9TUHR5dE90ZkRDWUhGRGJyY0NieEFWV2RQVDI5OW96YVZZWkpzZExJbmlxbXJNUzY0MWtKZ2R5aEJMSkdiTjBiNUY3cktvXzfSAeQBQVVfeXFMTmlpeUplV2luVG1NSHgtenN1Umg5ZEU0Q1pJWnNHOWJRaG5pd2tvTkp5Z25IRGJKS0FuUWV5cktwcXJwcmpQNkFMaHV6TXlsR1RaeEp1N1p5a3Y3c056anQtemFlSHp6a2tHenlWYmRHVmUwQmpGc0RUSTAtYWZpREgweEkzcUFsckxTSHF5dzZmSjFaZy13a0JIVUZPU1B0eXRPdGZEQ1lIRkRicmNDYnhBVldkUFQyOTlvemFWWVpKc2RMSW5pcW1yTVM2NDFrSmdkeWhCTEpHYk4wYjVGN3JLb183?oc=5 | https://news.google.com/rss/articles/CBMi9AFBVV95cUxQbW4zeEV5SDl3T3pwV2ZCQnZZcUhjZlZGWjVQQ1hDWVpVQVBLelNTQzBCaEU2REowSUgtWUlyLUlCUHhHX3NLb3YxYzhJVWp5STJwVmVNV0VVVmh6VldHYjJ4c0dWc285YzdFVkU2TnNNWEkydlMwQUMydXZMbDJlUjFVRzd5M2J4NldjTTBNR0JSUzYwNjdjWmNsOUFwWS1fZlRXTjdncXI2c1dVSnlpMmhlUE1MX1JBU1VRdEc3RS1nbmwwRU5JY2xKd3lZSTFUeFJtMkUwQ2NYTXFtemoyZmF3OFpDQWpENTJYSnFyeXRJdGxV?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQeUt4cUw4TFlGWU5nOHo5NDNJOHVlTEEydGFudUNwQlZxLWhyV1h3SlVwbktYQTJfNG12ZFNaTFdKTloyRG9QZVZiR2JqM3I2eEs4eDBFWGRTN0VQbVZwXzJrcEZsNWdwT0tQX3VjaVB2ejV2N1AyYkVMV2FWNHhySGNmLXZmWFhENVFTWkpmRmVUTnE4dnhfbmVLbUwzTmpQak0yc0VWU3Yxcl9XbHYzeFYtcEFyZ3Z2by1iZmNtVERaQjVaVjA5NzBucUg5X0JCMThteGQxcXRZVnM?oc=5 | https://news.google.com/rss/articles/CBMiQEFVX3lxTFB2RGl0T1c2QkpsSm1yWDdnMEtKc0NNczA5Wlh3aDVPa0UydXNzaUl5eklkS2JCcE1VM2JSV2tnbXM?oc=5 | https://news.google.com/rss/articles/CBMi5AFBVV95cUxOaWl5SmVXaW5UbU1IeC16c3VSaDlkRTRDWklac0c5YlFobml3a29OSnlnbkhEYkpLQW5RZXlyS3BxcnByalA2QUxodXpNeWxHVFp4SnU3WnlrdjdzTnpqdC16YWVIenpra0d6eVZiZEdWZTBCakZzRFRJMC1hZmlESDB4STNxQWxyTFNIcXl3NmZKMVpnLXdrQkhVRk9TUHR5dE90ZkRDWUhGRGJyY0NieEFWV2RQVDI5OW96YVZZWkpzZExJbmlxbXJNUzY0MWtKZ2R5aEJMSkdiTjBiNUY3cktvXzfSAeQBQVVfeXFMTmlpeUplV2luVG1NSHgtenN1Umg5ZEU0Q1pJWnNHOWJRaG5pd2tvTkp5Z25IRGJKS0FuUWV5cktwcXJwcmpQNkFMaHV6TXlsR1RaeEp1N1p5a3Y3c056anQtemFlSHp6a2tHenlWYmRHVmUwQmpGc0RUSTAtYWZpREgweEkzcUFsckxTSHF5dzZmSjFaZy13a0JIVUZPU1B0eXRPdGZEQ1lIRkRicmNDYnhBVldkUFQyOTlvemFWWVpKc2RMSW5pcW1yTVM2NDFrSmdkeWhCTEpHYk4wYjVGN3JLb183?oc=5"
  },
  {
   "hecho_id": "noticia:19ko86o",
@@ -1878,6 +1878,26 @@
   "departamento": "Cochabamba",
   "municipio": "Cochabamba",
   "enlaces": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPd2lvd0dKUVBaVkI1alRUUm91UVhiblVjNmxvVmxPSlRic1BzcVVadjJSTjU5d0p5eUhxRVU4MWZMWjNJeG5uSWNxcjRNUXZUSHpkVWxFaVlJcUVIWlN3TmI5eUZiaUdxbUFWZmhJbkowa3hSV05LRmI5Q2l2YTIya0ZneUYxTW5WOE9JN09lazVtNGN2MTE0N2htOWY0UzBULWNMTWJXeG1VcVFCdzJGenVHY01SRk5TTFRJRmF3?oc=5"
+ },
+ {
+  "hecho_id": "noticia:vrmr8f",
+  "fecha_hora_local": "2026-11-12 15:06",
+  "ts_ms": 1794510387000,
+  "titulo": "A dos meses de la explosión en Viacha, afectados denuncian que el Gobierno se olvidó del resarcimiento a viviendas - ANF Agencia de Noticias Fides Bolivia",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "ANF Agencia de Noticias Fides Bolivia",
+  "lat": -16.742,
+  "lon": -68.313,
+  "lugar": "Viacha, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Viacha",
+  "enlaces": "https://news.google.com/rss/articles/CBMi9AFBVV95cUxQbW4zeEV5SDl3T3pwV2ZCQnZZcUhjZlZGWjVQQ1hDWVpVQVBLelNTQzBCaEU2REowSUgtWUlyLUlCUHhHX3NLb3YxYzhJVWp5STJwVmVNV0VVVmh6VldHYjJ4c0dWc285YzdFVkU2TnNNWEkydlMwQUMydXZMbDJlUjFVRzd5M2J4NldjTTBNR0JSUzYwNjdjWmNsOUFwWS1fZlRXTjdncXI2c1dVSnlpMmhlUE1MX1JBU1VRdEc3RS1nbmwwRU5JY2xKd3lZSTFUeFJtMkUwQ2NYTXFtemoyZmF3OFpDQWpENTJYSnFyeXRJdGxV?oc=5"
  },
  {
   "hecho_id": "noticia:dswfk5",
