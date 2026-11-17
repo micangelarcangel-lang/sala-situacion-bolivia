@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:ccaza2",
+  "fecha_hora_local": "2026-11-17 13:00",
+  "ts_ms": 1794934802000,
+  "titulo": "Sarampión: los casos bajaron de 444 a 76; aunque en Santa Cruz aún no se ha cerrado el brote epidémico - El Deber",
+  "tipo_amenaza": "biológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Deber",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNckpqcVhFN2JmbVJCRzJWakl4ZURRNWYzcGhtbFhxNDAyUEFDWlRrbTdsUlRwZEp2bFo0ejBwVDU1bDlBUjFKRDVOMVc5RUVSekt6UU9HYklwX2dsbUJTYjZUckl0T3BWbzZiYUxTUGZRc1Z6YkFvUWdRTnZGQmdTRmFreEhyLUsxYjBwNnBnZ0xRemZwNGRwNG9JQzA3dTJmanF4Y3VnMFdXMzVZTWN0Y1BWTlpVS0ZHdDYza1RkTS1SVGtmcGlxVDBVT2Q2YWM?oc=5"
+ },
+ {
   "hecho_id": "noticia:11s2yg0",
   "fecha_hora_local": "2026-11-17 12:20",
   "ts_ms": 1794932443000,
