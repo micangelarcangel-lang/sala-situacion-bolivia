@@ -60,4 +60,15 @@ jobs:
           git config user.name "sala-bot"
           git config user.email "sala-bot@users.noreply.github.com"
           git add docs
-          git diff --staged --quiet || (git commit -m "Actualización automática" && git push)
+          if git diff --staged --quiet; then echo "Sin cambios que guardar"; exit 0; fi
+          git commit -m "Actualización automática"
+          # Si alguien más subió cambios mientras corría el ciclo, se rebasa y se reintenta;
+          # si no se logra, el ciclo falla de forma visible (no se pierde en silencio).
+          for intento in 1 2 3 4 5; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "Intento $intento fallido; se reintenta en $((intento * ${REINTENTO_S:-5})) s"
+            git rebase --abort 2>/dev/null || true
+            sleep $((intento * ${REINTENTO_S:-5}))
+          done
+          echo "::error::No se pudieron guardar los resultados tras 5 intentos"
+          exit 1
