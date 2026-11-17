@@ -287,6 +287,14 @@
    "url": "https://www.paho.org/es/documentos/alerta-epidemiologica-uso-indebido-medicamentos-agonistas-receptor-glp-1-sus",
    "slug": "alerta-epidemiologica-uso-indebido-medicamentos-agonistas-receptor-glp-1-sus",
    "menciona_bolivia": null
+  },
+  {
+   "fuente": "OPS/OMS",
+   "titulo": "Alerta epidemiologica recoleccion consumo hongos silvestres region americas 17 noviembre",
+   "fecha": "",
+   "url": "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
+   "slug": "alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
+   "menciona_bolivia": false
   }
  ],
  "vistos": [
@@ -317,7 +325,8 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON625",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON624",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626",
+  "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre"
  ],
- "actualizado": "2026-11-17T21:49:58.219465Z"
+ "actualizado": "2026-11-17T22:50:47.934561Z"
 }
