@@ -130,14 +130,30 @@ var TERR = (function () {
     raw.forEach(function (r) {
       var V = comp(r, VUL), Lc = comp(r, CAP), m = r.m, hist = P.hist(r.hist) * 10, av = m.av < 0 ? 0 : [1, 4, 7, 10][m.av], fo = m.foc >= 100 ? 10 : m.foc >= 30 ? 7 : m.foc >= 10 ? 4 : m.foc >= 1 ? 2 : 0, ev = r.ev >= 5 ? 8 : r.ev >= 2 ? 5 : r.ev >= 1 ? 3 : 0, act = Math.max(av, fo, ev);
       var Av = media(V), Lv = media(Lc), Am = 0.6 * hist + 0.4 * act;
-      var R = Math.cbrt(Math.max(.5, Am) * Math.max(.5, Av == null ? 5 : Av) * Math.max(.5, Lv == null ? 5 : Lv));
+      /* Sin imputación: si falta todo un componente, se calcula con los disponibles y se marca como parcial. */
+      var pz = [Math.max(.5, Am)]; if (Av != null) pz.push(Math.max(.5, Av)); if (Lv != null) pz.push(Math.max(.5, Lv));
+      var R = Math.pow(pz.reduce(function (a, b) { return a * b; }, 1), 1 / pz.length), falta = [];
+      VUL.forEach(function (d) { if (!V.some(function (c) { return c.n === d[1]; })) falta.push({g: "la vulnerabilidad", n: d[1], t: VUL.length, h: V.length}); });
+      CAP.forEach(function (d) { if (!Lc.some(function (c) { return c.n === d[1]; })) falta.push({g: "la capacidad de respuesta", n: d[1], t: CAP.length, h: Lc.length}); });
       var A = [{n: "Antecedentes de desastres (DesInventar)", v: r.hist, u: " registros", s: hist / 10}, {n: "Avisos SENAMHI vigentes", v: m.av < 0 ? "ninguno" : S.NIVTXT[m.av].toLowerCase(), u: "", s: av / 10}, {n: "Focos de calor", v: m.foc, u: " en " + T.dias.length + " d", s: fo / 10}, {n: "Eventos del sistema (30 d)", v: r.ev, u: "", s: ev / 10}];
-      var o = {k: m.k, d: m.d, A: Am, V: Av, L: Lv, R: R, niv: nivelR(R), cA: A, cV: V, cL: Lc, hist: hist, act: act};
+      var o = {k: m.k, d: m.d, A: Am, V: Av, L: Lv, R: R, niv: nivelR(R), cA: A, cV: V, cL: Lc, hist: hist, act: act, falta: falta, parcial: pz.length < 3, sinHist: r.hist === 0};
       out[m.k] = o; arr.push(o);
     });
     arr.slice().sort(function (a, b) { return b.R - a.R; }).forEach(function (o, i) { o.rank = i + 1; });
     var byD = {}; arr.forEach(function (o) { (byD[o.d] = byD[o.d] || []).push(o); }); Object.keys(byD).forEach(function (d) { byD[d].sort(function (a, b) { return b.R - a.R; }).forEach(function (o, i) { o.rankD = i + 1; o.nD = byD[d].length; }); });
     out._n = arr.length; return (T._ri = out);
+  }
+  /* Aviso de calidad de datos: nunca se inventa un valor; lo que falta se dice. */
+  function avisoDatos(o) {
+    var t = [];
+    if (o.parcial) t.push("<b>Índice parcial:</b> falta un componente completo; se calculó con los disponibles.");
+    if (o.falta && o.falta.length) {
+      var g = {}; o.falta.forEach(function (f) { (g[f.g] = g[f.g] || {t: f.t, h: f.h, n: []}).n.push(f.n.toLowerCase()); });
+      Object.keys(g).forEach(function (k) { t.push("<b>Datos incompletos:</b> " + k + " se calculó con " + g[k].h + " de " + g[k].t + " indicadores (falta: " + g[k].n.join(", ") + "). No se imputó ningún valor."); });
+    }
+    if (o.sinHist) t.push("<b>Sin registros históricos:</b> DesInventar no tiene eventos para este municipio (la base termina en 2015 y subregistra). Que no haya registro no significa que no haya amenaza.");
+    if (!t.length) return "";
+    return '<div class="avd" role="note" style="margin:10px 0;padding:8px 12px;border-left:3px solid #f5b700;background:rgba(245,183,0,.12);font-size:13px;line-height:1.45">' + t.join("<br>") + "</div>";
   }
   function factores(o) { var f = []; [["V", "cV", "Vulnerabilidad"], ["L", "cL", "Capacidad de respuesta"], ["A", "cA", "Amenaza"]].forEach(function (z) { o[z[1]].slice().sort(function (a, b) { return b.s - a.s; }).slice(0, 2).forEach(function (c) { if (c.s >= .6) f.push({g: z[2], c: c}); }); }); return f; }
   /* ---------- ficha de riesgo (página y reporte) ---------- */
@@ -194,7 +210,7 @@ var TERR = (function () {
     var I = indices(T), L = T.DEP[d], LL = L.map(function (x) { return I[x.k]; }), all = T.lista.map(function (x) { return I[x.k]; });
     if (m) {
       var o = I[m.k], mdA = med(LL.map(function (z) { return z.A; })), mdV = med(LL.map(function (z) { return z.V; })), mdL = med(LL.map(function (z) { return z.L; })), mnA = med(all.map(function (z) { return z.A; })), mnV = med(all.map(function (z) { return z.V; })), mnL = med(all.map(function (z) { return z.L; }));
-      return '<section class="fch" style="border-top:4px solid ' + o.niv[2] + '"><h2>Ficha de riesgo · ' + S.esc(m.n) + '</h2><div class="sub">Amenaza × vulnerabilidad × falta de capacidad de respuesta, medidos frente a los 339 municipios del país. Lectura automática <b>por validar con el CCES</b>.</div>' +
+      return '<section class="fch" style="border-top:4px solid ' + o.niv[2] + '"><h2>Ficha de riesgo · ' + S.esc(m.n) + '</h2><div class="sub">Amenaza × vulnerabilidad × falta de capacidad de respuesta, medidos frente a los 339 municipios del país. Lectura automática <b>por validar con el CCES</b>.</div>' + avisoDatos(o) +
         '<div class="fg"><div class="fbox gz"><h3>Nivel de riesgo</h3>' + gauge(o.R, o.niv) + '<div class="pos">Puesto <b>' + o.rankD + '</b> de ' + o.nD + ' en ' + S.esc(d) + ' · <b>' + o.rank + '</b> de ' + I._n + ' en Bolivia</div></div>' +
         '<div class="fbox"><h3>Componentes (0 = mejor · 10 = peor)</h3>' + bullet("Amenaza", o.A, mdA, mnA) + bullet("Vulnerabilidad", o.V, mdV, mnV) + bullet("Falta de capacidad de respuesta", o.L, mdL, mnL) + '<div class="bk"><span><u></u>mediana del departamento</span><span><u class="n"></u>mediana de Bolivia</span></div></div>' +
         '<div class="fbox"><h3>Posición entre los municipios del departamento</h3>' + strip(T, d, m.k) + '</div></div>' +
