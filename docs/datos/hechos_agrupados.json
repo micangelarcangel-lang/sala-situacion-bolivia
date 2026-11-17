@@ -60,6 +60,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPUHZwSV8tT0w3WlVKeTFEeTlvZHE5YmY1YnZ1TGJvOUxGemFRYmtHV0tLbmdWU3hfdUMyTlBkeFBuZDRRRFIyRjhqZU96T2ROQ2ZCQVlsRExuVkw4dkRObHVzQTRNd3o3WF9xVVZKb2hmZ01kZHJnNnFhRUVmcTgtOWFublVPWko3aUNSOFRHQS1vRFJRS0JOVzZhcWg?oc=5"
  },
  {
+  "hecho_id": "noticia:fhwbho",
+  "fecha_hora_local": "2026-11-17 14:08",
+  "ts_ms": 1794938933000,
+  "titulo": "Retiran escombros en la Av. 6 de Agosto tras el colapso de plataforma en Cochabamba - Red Uno",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNSGZrZVFnck52QVhUYzk1c0V1YVk1eS14cVp2TTNYZ2w4Y1U0SjRldlNraDgtd3BhMUxNa29LcVhWS0pva1kwQ2ZuX0VRYlA4TzRNdGEyajFnRDRVVWVZeHBTcFQ4ZENQLTcwNVI2My15dXlGZjlnZnhFbVdOSjdNRVIzT3Q2Z1NpZjQ0bVl4UmJFUHJSYm9wd2hWTXU1N2V0dTBMMHJOM05tN3EyTF8yYzFNYXFnTTNKWmVnQ193SnZrS0ZuZnZtbHhiWkk?oc=5"
+ },
+ {
   "hecho_id": "noticia:ccaza2",
   "fecha_hora_local": "2026-11-17 13:00",
   "ts_ms": 1794934802000,
