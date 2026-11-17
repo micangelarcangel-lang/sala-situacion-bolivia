@@ -40,6 +40,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNbE1hTkJDaTZWdGtvQjJJQ05acmo1Q2VmM0R4UFlwblY5bmtmc0x2N25NeTU5SUhuaXBwemx1WjRabTJJYklIRTl3XzJldC1KMWZGVTF1cndQLWxiMk9ZWE56dTZuMGlZc0dzbHg3ek9kZzFuQm1aVjZJZ2NQaE00TExVNHo4SGFzRlNlUk5ERnRpdl9jWnFWamdMV3l1bEQ0NE56NzJxaElQaXFaSXVYakRBUGNsOVlwa0MwZ09NZC1Dd29taGJQLUw1WV9tdWZvbjR2YWxuWUZGWXpkYVE?oc=5"
  },
  {
+  "hecho_id": "noticia:142wepb",
+  "fecha_hora_local": "2026-11-17 15:00",
+  "ts_ms": 1794942031000,
+  "titulo": "Mizque busca ayuda luego de daños por granizada (15:00) - El Diario - Bolivia",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "El Diario - Bolivia",
+  "lat": -18.081,
+  "lon": -65.395,
+  "lugar": "Mizque, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Mizque",
+  "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPUHZwSV8tT0w3WlVKeTFEeTlvZHE5YmY1YnZ1TGJvOUxGemFRYmtHV0tLbmdWU3hfdUMyTlBkeFBuZDRRRFIyRjhqZU96T2ROQ2ZCQVlsRExuVkw4dkRObHVzQTRNd3o3WF9xVVZKb2hmZ01kZHJnNnFhRUVmcTgtOWFublVPWko3aUNSOFRHQS1vRFJRS0JOVzZhcWg?oc=5"
+ },
+ {
   "hecho_id": "noticia:ccaza2",
   "fecha_hora_local": "2026-11-17 13:00",
   "ts_ms": 1794934802000,

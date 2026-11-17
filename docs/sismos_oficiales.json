@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-17T20:55:06.484278Z",
+ "actualizado": "2026-11-17T21:49:52.810416Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261117T164541_-20.461_-64.06",
+   "fecha_local": "2026-11-17 16:45:41",
+   "lat": -20.461,
+   "lon": -64.06,
+   "prof_km": 29.9,
+   "mag": 3.3,
+   "provincia": "Hernando Siles",
+   "departamento": "Chuquisaca",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261117T110019_-21.518_-66.734",
    "fecha_local": "2026-11-17 11:00:19",
