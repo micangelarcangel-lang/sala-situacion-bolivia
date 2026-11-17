@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "clima:Sucre:2026-11-17:viento:1",
+  "fecha_hora_local": "2026-11-16 20:05",
+  "ts_ms": 1794873932867,
+  "titulo": "Sucre 2026-11-17: 70.9 km/h de ráfagas pronosticadas",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Open-Meteo (pronóstico)",
+  "lat": -19.03,
+  "lon": -65.26,
+  "lugar": "Sucre",
+  "departamento": "Chuquisaca",
+  "municipio": "Sucre",
+  "enlaces": "https://open-meteo.com/"
+ },
+ {
   "hecho_id": "noticia:1t4lkre",
   "fecha_hora_local": "2026-11-16 18:43",
   "ts_ms": 1794869018000,
