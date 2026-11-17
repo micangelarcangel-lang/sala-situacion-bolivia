@@ -60,6 +60,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBHdXJ2bDAxRkVKOXZENnJhSHdJUlJZVnljYlFXYlh5NHBzc1FTZVVjUnFGWWwyRXRrYkVsWDZQU0ViX1JhdzJqNHFTbUI0T0lkVkZYMXVIWHQxLTU2aXVMTA?oc=5"
  },
  {
+  "hecho_id": "noticia:ibia9d",
+  "fecha_hora_local": "2026-11-16 22:37",
+  "ts_ms": 1794883028000,
+  "titulo": "Cuatro municipios de Cochabamba registran inundaciones y daños por las lluvias - La Octava",
+  "tipo_amenaza": "hidrológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "La Octava",
+  "lat": -17.39,
+  "lon": -66.16,
+  "lugar": "Cochabamba, Cochabamba",
+  "departamento": "Cochabamba",
+  "municipio": "Cochabamba",
+  "enlaces": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPNGt6b19HVWIxS0VBNmdURk01WkU4VGd5bWxPTHdJbDgxUF9CT3VtMUMzXzAyNzFla0ZQQ0lJMFFrRTlQY3Jzc1B0eXJCcTlFR3R2MFVVQjBtZm9kYWt6d3Y4YUsyU3g1M21uOXBfRmZlSkhKYlh1QnhONnl4UDQyei1BM29vc2JGSzJvaUYzR0FuaElBUUNKZVRnNDBEeHRGam02WTZkdW1RbV9RelVBVVR2TQ?oc=5"
+ },
+ {
   "hecho_id": "noticia:18w5h1o",
   "fecha_hora_local": "2026-11-16 22:29",
   "ts_ms": 1794882572000,
