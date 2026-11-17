@@ -20,6 +20,26 @@
   "enlaces": "https://open-meteo.com/"
  },
  {
+  "hecho_id": "noticia:pimg07",
+  "fecha_hora_local": "2026-11-16 19:57",
+  "ts_ms": 1794873430000,
+  "titulo": "¿Estás preparado para un sismo? Esto no puede faltar en tu mochila de emergencia - Red Uno",
+  "tipo_amenaza": "geológica",
+  "nivel_num": 1,
+  "nivel_preliminar": "amarilla",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": "",
+  "lon": "",
+  "lugar": "",
+  "departamento": "",
+  "municipio": "",
+  "enlaces": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQVnByN0dHYTI1WlNlLVlLdWlack0wWXJhZTJJeU1qcVh0N1g0VUFlRlRTMFlhb0M3UVFkLVc0UGhsWjd2Nl9QcEdfbEtBZ0syRXV5TTJhRWFrc011dDdzaTFuVk5FVXF3a2FvSGhhaERjUDZoWnkyZU5RUW5aeUpKTWZ2S3c0RWRSZzduMEE4V0FySWNQam1zaTBlR3dlRmNOa1NOZjRyVGhrQ0Q3VUJkVDlDWmpBNzlySENLamU0M3lJZFVvU0E?oc=5"
+ },
+ {
   "hecho_id": "noticia:1t4lkre",
   "fecha_hora_local": "2026-11-16 18:43",
   "ts_ms": 1794869018000,
