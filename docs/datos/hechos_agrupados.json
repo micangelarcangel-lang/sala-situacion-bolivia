@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:1aoz49w",
+  "fecha_hora_local": "2026-11-17 15:34",
+  "ts_ms": 1794944063000,
+  "titulo": "Video muestra fuerte choque entre tres vehículos en Santa Cruz - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNbE1hTkJDaTZWdGtvQjJJQ05acmo1Q2VmM0R4UFlwblY5bmtmc0x2N25NeTU5SUhuaXBwemx1WjRabTJJYklIRTl3XzJldC1KMWZGVTF1cndQLWxiMk9ZWE56dTZuMGlZc0dzbHg3ek9kZzFuQm1aVjZJZ2NQaE00TExVNHo4SGFzRlNlUk5ERnRpdl9jWnFWamdMV3l1bEQ0NE56NzJxaElQaXFaSXVYakRBUGNsOVlwa0MwZ09NZC1Dd29taGJQLUw1WV9tdWZvbjR2YWxuWUZGWXpkYVE?oc=5"
+ },
+ {
   "hecho_id": "noticia:ccaza2",
   "fecha_hora_local": "2026-11-17 13:00",
   "ts_ms": 1794934802000,
