@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:3uc5d7",
+  "fecha_hora_local": "2026-11-17 08:04",
+  "ts_ms": 1794917079000,
+  "titulo": "Sedes alerta por riesgos del calor y posibles brotes de dengue en Santa Cruz - Red PAT",
+  "tipo_amenaza": "biológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red PAT",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQdGZKZ293SklQV2d3X2V1OVlTTC1JSk5nN2RuT2t4VWhpYjdQTjBCNHQwNlJTdWhONmxQdGwzdVIzTFc3ZUh1cHRMejdvS2NsMEcxSUU3SWhqMjNqbGFKX2dnSGh5a3FUaHAyTllIM1Rrc0xJTnFtZ1A5VXBvOTI3QmVpSHZJTFRUbllFVnMtSUJYSy1QUElVT0xWcnBGT1hsSk9ILU9xUGpTdw?oc=5"
+ },
+ {
   "hecho_id": "noticia:1s0trg8",
   "fecha_hora_local": "2026-11-17 05:33",
   "ts_ms": 1794907994000,
