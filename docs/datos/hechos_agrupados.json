@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:ddtlwz",
+  "fecha_hora_local": "2026-11-17 16:30",
+  "ts_ms": 1794947429000,
+  "titulo": "Incendio en restaurante de El Alto tras presunta fuga de GLP - Red Uno",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -16.448,
+  "lon": -68.216,
+  "lugar": "El Alto, La Paz",
+  "departamento": "La Paz",
+  "municipio": "El Alto",
+  "enlaces": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPdDVWb192aFhPbjBnQUNZSkV4OWhKa1F3dHh5VVF5Ql9vRVJIeDJERmxnS29HbE45RDBmM3UybWttOGZGVFoyd3hMS0tWc1Y4eHEzMTZucFdjQjNUdjlURUduTDBYSDdCNUNuT2tvTmtoN0dGRDVSSC1ISUJZNkl6NW9paENENVdhSUxiWkcxZkJnelRLa0ZNeEhfMUo4WkFxMVdnNDdvY3FVSEZiZjVF?oc=5"
+ },
+ {
   "hecho_id": "noticia:1aoz49w",
   "fecha_hora_local": "2026-11-17 15:34",
   "ts_ms": 1794944063000,

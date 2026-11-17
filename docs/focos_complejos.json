@@ -1,7 +1,79 @@
 {
- "actualizado": "2026-11-17T19:59:58.135527Z",
+ "actualizado": "2026-11-17T20:55:12.777146Z",
  "dia": "2026-11-17",
  "complejos": [
+  {
+   "n": 24,
+   "frp_mw": 1733.9,
+   "lat": -12.528,
+   "lon": -63.852,
+   "departamento": "Beni",
+   "municipio": "Magdalena",
+   "municipios": [
+    "Magdalena"
+   ],
+   "bbox": [
+    -63.894,
+    -12.535,
+    -63.844,
+    -12.515
+   ],
+   "id": "2026-11-17:1"
+  },
+  {
+   "n": 39,
+   "frp_mw": 1085.6,
+   "lat": -13.706,
+   "lon": -64.627,
+   "departamento": "Beni",
+   "municipio": "San Ramón",
+   "municipios": [
+    "San Ramón"
+   ],
+   "bbox": [
+    -64.667,
+    -13.721,
+    -64.613,
+    -13.663
+   ],
+   "id": "2026-11-17:2"
+  },
+  {
+   "n": 18,
+   "frp_mw": 831.7,
+   "lat": -13.2,
+   "lon": -65.287,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.299,
+    -13.205,
+    -65.265,
+    -13.185
+   ],
+   "id": "2026-11-17:3"
+  },
+  {
+   "n": 50,
+   "frp_mw": 406.9,
+   "lat": -12.325,
+   "lon": -65.036,
+   "departamento": "Beni",
+   "municipio": "Puerto Siles",
+   "municipios": [
+    "Puerto Siles"
+   ],
+   "bbox": [
+    -65.078,
+    -12.357,
+    -65.007,
+    -12.286
+   ],
+   "id": "2026-11-17:4"
+  },
   {
    "n": 25,
    "frp_mw": 403.0,
@@ -18,7 +90,97 @@
     -61.324,
     -17.129
    ],
-   "id": "2026-11-17:1"
+   "id": "2026-11-17:5"
+  },
+  {
+   "n": 8,
+   "frp_mw": 400.0,
+   "lat": -16.846,
+   "lon": -63.041,
+   "departamento": "Santa Cruz",
+   "municipio": "San Julián",
+   "municipios": [
+    "San Julián"
+   ],
+   "bbox": [
+    -63.045,
+    -16.85,
+    -63.039,
+    -16.84
+   ],
+   "id": "2026-11-17:6"
+  },
+  {
+   "n": 16,
+   "frp_mw": 385.6,
+   "lat": -12.744,
+   "lon": -66.741,
+   "departamento": "Beni",
+   "municipio": "Reyes",
+   "municipios": [
+    "Reyes"
+   ],
+   "bbox": [
+    -66.792,
+    -12.751,
+    -66.736,
+    -12.701
+   ],
+   "id": "2026-11-17:7"
+  },
+  {
+   "n": 32,
+   "frp_mw": 362.9,
+   "lat": -12.474,
+   "lon": -64.225,
+   "departamento": "Beni",
+   "municipio": "Magdalena",
+   "municipios": [
+    "Magdalena"
+   ],
+   "bbox": [
+    -64.233,
+    -12.482,
+    -64.216,
+    -12.462
+   ],
+   "id": "2026-11-17:8"
+  },
+  {
+   "n": 9,
+   "frp_mw": 358.9,
+   "lat": -19.134,
+   "lon": -68.503,
+   "departamento": "Oruro",
+   "municipio": "Sabaya",
+   "municipios": [
+    "Sabaya"
+   ],
+   "bbox": [
+    -68.509,
+    -19.137,
+    -68.494,
+    -19.131
+   ],
+   "id": "2026-11-17:9"
+  },
+  {
+   "n": 27,
+   "frp_mw": 343.8,
+   "lat": -13.201,
+   "lon": -66.414,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -66.441,
+    -13.324,
+    -66.368,
+    -13.189
+   ],
+   "id": "2026-11-17:10"
   },
   {
    "n": 46,
@@ -36,25 +198,25 @@
     -60.553,
     -16.926
    ],
-   "id": "2026-11-17:2"
+   "id": "2026-11-17:11"
   },
   {
-   "n": 38,
-   "frp_mw": 245.4,
-   "lat": -12.33,
-   "lon": -65.039,
-   "departamento": "Beni",
-   "municipio": "Puerto Siles",
+   "n": 16,
+   "frp_mw": 281.5,
+   "lat": -16.501,
+   "lon": -58.83,
+   "departamento": "Santa Cruz",
+   "municipio": "San Matías",
    "municipios": [
-    "Puerto Siles"
+    "San Matías"
    ],
    "bbox": [
-    -65.078,
-    -12.357,
-    -65.007,
-    -12.294
+    -58.85,
+    -16.508,
+    -58.819,
+    -16.493
    ],
-   "id": "2026-11-17:3"
+   "id": "2026-11-17:12"
   },
   {
    "n": 13,
@@ -73,25 +235,99 @@
     -66.608,
     -11.902
    ],
-   "id": "2026-11-17:4"
+   "id": "2026-11-17:13"
   },
   {
-   "n": 18,
-   "frp_mw": 171.6,
-   "lat": -13.55,
-   "lon": -62.278,
+   "n": 15,
+   "frp_mw": 219.8,
+   "lat": -15.517,
+   "lon": -67.782,
+   "departamento": "La Paz",
+   "municipio": "Teoponte",
+   "municipios": [
+    "Teoponte",
+    "Guanay"
+   ],
+   "bbox": [
+    -67.981,
+    -15.596,
+    -67.676,
+    -15.477
+   ],
+   "id": "2026-11-17:14"
+  },
+  {
+   "n": 23,
+   "frp_mw": 205.0,
+   "lat": -12.74,
+   "lon": -65.085,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.194,
+    -12.856,
+    -65.01,
+    -12.623
+   ],
+   "id": "2026-11-17:15"
+  },
+  {
+   "n": 20,
+   "frp_mw": 186.7,
+   "lat": -14.412,
+   "lon": -67.179,
+   "departamento": "Beni",
+   "municipio": "Reyes",
+   "municipios": [
+    "Reyes",
+    "Puerto Menor de Rurrenabaque"
+   ],
+   "bbox": [
+    -67.346,
+    -14.496,
+    -67.017,
+    -14.373
+   ],
+   "id": "2026-11-17:16"
+  },
+  {
+   "n": 19,
+   "frp_mw": 182.1,
+   "lat": -13.549,
+   "lon": -62.279,
    "departamento": "Beni",
    "municipio": "Baures",
    "municipios": [
     "Baures"
    ],
    "bbox": [
-    -62.291,
+    -62.295,
     -13.564,
     -62.273,
     -13.537
    ],
-   "id": "2026-11-17:5"
+   "id": "2026-11-17:17"
+  },
+  {
+   "n": 12,
+   "frp_mw": 172.3,
+   "lat": -13.429,
+   "lon": -67.434,
+   "departamento": "La Paz",
+   "municipio": "Ixiamas",
+   "municipios": [
+    "Ixiamas"
+   ],
+   "bbox": [
+    -67.439,
+    -13.437,
+    -67.425,
+    -13.409
+   ],
+   "id": "2026-11-17:18"
   },
   {
    "n": 12,
@@ -109,7 +345,63 @@
     -64.009,
     -14.601
    ],
-   "id": "2026-11-17:6"
+   "id": "2026-11-17:19"
+  },
+  {
+   "n": 9,
+   "frp_mw": 120.1,
+   "lat": -15.367,
+   "lon": -67.582,
+   "departamento": "La Paz",
+   "municipio": "Teoponte",
+   "municipios": [
+    "Teoponte"
+   ],
+   "bbox": [
+    -67.667,
+    -15.386,
+    -67.569,
+    -15.329
+   ],
+   "id": "2026-11-17:20"
+  },
+  {
+   "n": 14,
+   "frp_mw": 111.3,
+   "lat": -17.204,
+   "lon": -60.273,
+   "departamento": "Santa Cruz",
+   "municipio": "San Rafael",
+   "municipios": [
+    "San Rafael",
+    "San José"
+   ],
+   "bbox": [
+    -60.385,
+    -17.267,
+    -60.203,
+    -17.064
+   ],
+   "id": "2026-11-17:21"
+  },
+  {
+   "n": 9,
+   "frp_mw": 107.6,
+   "lat": -19.34,
+   "lon": -63.9,
+   "departamento": "Chuquisaca",
+   "municipio": "Villa Vaca Guzmán",
+   "municipios": [
+    "Villa Vaca Guzmán",
+    "Padilla"
+   ],
+   "bbox": [
+    -63.998,
+    -19.42,
+    -63.867,
+    -19.301
+   ],
+   "id": "2026-11-17:22"
   },
   {
    "n": 8,
@@ -127,7 +419,7 @@
     -62.306,
     -18.643
    ],
-   "id": "2026-11-17:7"
+   "id": "2026-11-17:23"
   },
   {
    "n": 11,
@@ -145,97 +437,25 @@
     -60.733,
     -15.913
    ],
-   "id": "2026-11-17:8"
+   "id": "2026-11-17:24"
   },
   {
    "n": 11,
-   "frp_mw": 78.0,
-   "lat": -16.044,
-   "lon": -61.687,
-   "departamento": "Santa Cruz",
-   "municipio": "Concepción",
-   "municipios": [
-    "Concepción"
-   ],
-   "bbox": [
-    -61.694,
-    -16.102,
-    -61.683,
-    -16.006
-   ],
-   "id": "2026-11-17:9"
-  },
-  {
-   "n": 8,
-   "frp_mw": 39.2,
-   "lat": -13.015,
-   "lon": -63.926,
+   "frp_mw": 95.7,
+   "lat": -14.954,
+   "lon": -65.322,
    "departamento": "Beni",
-   "municipio": "Magdalena",
+   "municipio": "San Ignacio",
    "municipios": [
-    "Magdalena"
+    "San Ignacio"
    ],
    "bbox": [
-    -63.928,
-    -13.019,
-    -63.924,
-    -13.002
+    -65.383,
+    -14.961,
+    -65.311,
+    -14.934
    ],
-   "id": "2026-11-17:10"
-  },
-  {
-   "n": 8,
-   "frp_mw": 35.5,
-   "lat": -21.779,
-   "lon": -63.498,
-   "departamento": "Tarija",
-   "municipio": "Yacuiba",
-   "municipios": [
-    "Yacuiba"
-   ],
-   "bbox": [
-    -63.518,
-    -21.795,
-    -63.445,
-    -21.762
-   ],
-   "id": "2026-11-17:11"
-  },
-  {
-   "n": 14,
-   "frp_mw": 28.9,
-   "lat": -12.468,
-   "lon": -64.224,
-   "departamento": "Beni",
-   "municipio": "Magdalena",
-   "municipios": [
-    "Magdalena"
-   ],
-   "bbox": [
-    -64.231,
-    -12.475,
-    -64.216,
-    -12.464
-   ],
-   "id": "2026-11-17:12"
-  },
-  {
-   "n": 11,
-   "frp_mw": 14.5,
-   "lat": -12.689,
-   "lon": -66.914,
-   "departamento": "Beni",
-   "municipio": "Reyes",
-   "municipios": [
-    "Reyes"
-   ],
-   "bbox": [
-    -66.918,
-    -12.699,
-    -66.904,
-    -12.681
-   ],
-   "id": "2026-11-17:13"
+   "id": "2026-11-17:25"
   }
  ]
 }
