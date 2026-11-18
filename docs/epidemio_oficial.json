@@ -295,6 +295,14 @@
    "url": "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
    "slug": "alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
    "menciona_bolivia": false
+  },
+  {
+   "fuente": "OPS/OMS",
+   "titulo": "Alerta epidemiologica influenza estacional otros virus respiratorios inicio temporada 0",
+   "fecha": "",
+   "url": "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0",
+   "slug": "alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0",
+   "menciona_bolivia": false
   }
  ],
  "vistos": [
@@ -326,7 +334,8 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON624",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626",
-  "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre"
+  "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
+  "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0"
  ],
- "actualizado": "2026-11-18T01:01:31.483748Z"
+ "actualizado": "2026-11-18T02:34:05.626450Z"
 }
