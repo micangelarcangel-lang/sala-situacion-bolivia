@@ -112,11 +112,12 @@ def cifras(texto):
     """Mayores cifras de fallecidos y heridos que menciona un texto (cifras de prensa, sin validar).
     Para cada palabra clave busca el número más cercano antes (hasta 5 palabras) o, si no hay, justo después."""
     t = norm(texto)
+    t = re.sub(r"(?<=\d)[.,](?=\d{3}(?!\d))", "", t)   # «5.387» es 5387, no «5» y «387»
     fall = her = 0
     for frase in re.split(r"[.;!?\n]+", t):
         tok = re.findall(r"[a-z0-9%]+", frase)
         for i, w in enumerate(tok):
-            if w.startswith(("fallec", "muert", "muri", "perdieron")):
+            if w.startswith(("fallec", "muert", "muri", "muer", "perdieron")):
                 tipo = "f"
             elif w.startswith(("herid", "lesionad")):
                 tipo = "h"
@@ -125,7 +126,7 @@ def cifras(texto):
             v = None
             for j in range(i - 1, max(i - 13, -1), -1):
                 x = tok[j]
-                if x.startswith(("fallec", "muert", "muri", "herid", "lesionad")):
+                if x.startswith(("fallec", "muert", "muri", "muer", "herid", "lesionad")):
                     break
                 if x in _VAGOS:  # «varios heridos»: no hay cifra
                     break

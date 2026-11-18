@@ -111,7 +111,37 @@ def revisar(r):
     if cat != r.get("categoria"):
         r["categoria"] = cat
         r["reclasificado"] = True
+    _cifras_respaldadas(r)
     return r
+
+
+_PLURAL_VICT = re.compile(r"\b(fallecidos|muertos|muertes|heridos|lesionados|victimas|decesos)\b")
+_SINIESTRO = re.compile(r"\b(choque|colision|vuelco|vuelca|accidente|explosion|incendio|derrumbe|deslizamiento|mazamorra|naufragio|tragedia|atentado|tiroteo|balacera|ataque|masacre)\b")
+
+
+def _cifras_respaldadas(r):
+    """Una cifra de víctimas de 10 o más que el titular no menciona viene de texto ajeno (resúmenes de feeds que mezclan titulares) o de un error de lectura.
+    Se conserva solo si el titular habla de víctimas en plural o de un siniestro; una cifra de 100 o más que el titular no respalda nunca se conserva.
+    Las cifras que el titular sí respalda y las pequeñas no se tocan. Si algo falla, no se cambia nada."""
+    try:
+        c = r.get("cifras")
+        if not isinstance(c, dict) or r.get("origen") != "prensa":
+            return
+        import informe_hecho as ih
+        tit = str(r.get("titulo") or "")
+        ft, ht = ih.cifras(tit)
+        t = n(tit)
+        plausible = bool(_PLURAL_VICT.search(t) or _SINIESTRO.search(t)) and not re.search(r"\d[.,]\d{3}\b", tit)
+        for k, v in (("fallecidos", ft), ("heridos", ht)):
+            x = c.get(k) or 0
+            if v == 0 and x >= 10 and (x >= 100 or not plausible):
+                c[k] = 0
+                c["corregida"] = True
+            elif v > 0 and x >= 5 * v + 10:   # el titular dice «un conscripto» (1) y la cifra guardada dice 17: manda el titular
+                c[k] = v
+                c["corregida"] = True
+    except Exception:
+        pass
 
 
 TEMAS = (("sequia", r" (sequi|deficit hidrico|falta de lluvia)"), ("granizada", r" granizad|granizo"), ("nevada", r" nevad"), ("viento", r" viento"), ("lluvia", r" lluvi"), ("helada", r" helada"),

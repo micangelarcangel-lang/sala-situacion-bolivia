@@ -347,7 +347,7 @@ def captar(docs, geo=None, horas=72, log=print):
             if k in vistos:
                 continue
             vistos.add(k)
-            fa, he = ih.cifras(tit + ". " + det)
+            fa, he = ih.cifras(tit + ". " + det if len(det) <= 280 else tit)   # un detalle largo suele mezclar titulares ajenos
             nivel = 3 if (fa >= 10 or he >= 30) else 2 if (fa >= 3 or he >= 10) else 1
             lat = lon = None; lugar, metodo = "", "sin ubicar"
             if geo:
