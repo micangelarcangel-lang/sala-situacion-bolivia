@@ -331,3 +331,14 @@ html{scroll-behavior:smooth}.secb{scroll-margin-top:70px}
 
 #hdr.min .tiposnav,#hdr.min .hdr .sub{display:none}
 svg.mapaz{max-height:620px;width:100%;height:auto}
+
+/* Cabecera en una sola fila en escritorio: relleno compacto, sin subtítulo salvo pantallas muy anchas */
+.hdr .hdr-row{gap:10px;max-width:1700px}
+.hdr h1{font-size:19px}
+.hdr .nv{gap:2px}
+.hdr .nv-i{padding:0 9px;gap:6px;font-size:13px}
+.hdr .nv-i svg{width:16px;height:16px}
+.hdr .util{margin-left:2px;padding-left:6px}
+.hdr .ghost{padding:0 7px;gap:5px;font-size:12px}
+@media(max-width:1900px){.hdr .sub{display:none}}
+@media(max-width:1380px) and (min-width:1101px){.hdr .live{display:none}.hdr h1{font-size:17px}}
