@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:mnj28p",
+  "fecha_hora_local": "2026-11-18 06:34",
+  "ts_ms": 1794998048000,
+  "titulo": "Gobierno concentra acciones contra el sarampión en Santa Cruz, La Paz y El Alto - Red Uno",
+  "tipo_amenaza": "biológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 1,
+  "fuentes": "Red Uno",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNaXlpb0gzVThwQll4akoxMXd1U3dSTUpJNHlvdkFjajlEN2VvRTZMcGlMMTFYRmMxUmo5SzJlOWpsaFFIX1IzTDdVTldVcjJ1NVFBNXVWU1RhX3dIajNXc1lmNTBtUVpaQVpGcldvSUZGUE9kelVZV3ZZMHpsU2FFNTFGZmFFZUFaWklSTmZJdzB5TjdEb0hHZEJDeGs1RF9zWHVuZUFIS1Q4WUNGZU5BUWFkRUZQbmxYelFQa2NFOUZvdUFZeWhPT1c0VWg?oc=5"
+ },
+ {
   "hecho_id": "clima:Santa Cruz:2026-11-19:viento:1",
   "fecha_hora_local": "2026-11-18 01:05",
   "ts_ms": 1794978331704,
