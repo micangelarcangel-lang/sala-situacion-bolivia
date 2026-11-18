@@ -54,6 +54,15 @@
  "internacional": [
   {
    "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Chikungunya virus disease - Switzerland",
+   "fecha": "2026-11-17",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627",
+   "resumen": "On 4 November 2026, health authorities in the canton of Ticino, Switzerland, in coordination with federal authorities, reported four locally acquired cases of chikungunya virus disease. These are the first reported locally acquired chikungunya cases in Switzerland. The earliest reported symptom onset was 10 August 2026, although this infection was identified retrospectively and the source of infection could not be identified. All cases were identified in October 2026. None of the affected indivi",
+   "slug": "2026-DON627",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Middle East respiratory syndrome (MERS) – Qatar",
    "fecha": "2026-11-13",
    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626",
@@ -335,7 +344,8 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON623",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626",
   "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
-  "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0"
+  "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627"
  ],
- "actualizado": "2026-11-18T06:00:04.559992Z"
+ "actualizado": "2026-11-18T07:15:57.810833Z"
 }
