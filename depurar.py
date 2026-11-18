@@ -14,16 +14,18 @@ BO = ("bolivia", "bolivian", "la paz", "el alto", "cochabamba", "santa cruz", "o
       "yungas", "caranavi", "chapare", "quillacollo", "sacaba", "montero", "yacuiba", "villazon", "uyuni", "riberalta", "camiri", "cuatro canadas", "el sillar")
 # ciudades/hechos extranjeros concretos: se descartan aunque aparezca una palabra boliviana (p. ej. «hospitales de La Paz, de Getafe…»)
 EXT_FUERTE = ("getafe", "toledo", "madrid", "adamuz", "urda", "barcelona", "valencia", "sevilla", "bogota", "medellin", "lima peru", "buenos aires", "santiago de chile", "sao paulo",
-              "rio de janeiro", "ciudad de mexico", "el bronco", "texas", "california", "nueva york", "pensilvania", "florida", "kiev", "gaza", "tel aviv", "teheran")
+              "rio de janeiro", "ciudad de mexico", "el bronco", "texas", "california", "nueva york", "pensilvania", "florida", "kiev", "gaza", "tel aviv", "teheran",
+              "damasco", "siria", "corcega", "galapagos", "montevideo", "brooklyn", "praga", "guinea", "los angeles", "eaton", "salomon", "casa blanca", "trump")
 EXT_PAIS = ("espana", "mexico", "mexican", "chile", "chileno", "argentin", "peru ", "peruano", "brasil ", "colombia", "venezuela", "ecuador", "paraguay", "uruguay", "estados unidos",
             "ee uu", "china", "india", "japon", "rusia", "ucrania", "italia", "francia", "alemania", "reino unido", "turquia", "iran", "israel", "cuba", "guatemala", "honduras", "nicaragua", "haiti",
             "filipinas", "indonesia", "nepal", "pakistan", "africa", "europa")
 NO_EVENTO = re.compile(r" (dia de los muertos|dia del|dia de la|horoscopo|receta|concierto de|sindicad|imputad|acusad|homicidio culposo|aprehension|aprehendid|operativo policial|decomis|"
-                       r"desafian la lluvia|vendedores|candidato|elecciones|campana electoral|aniversario|feria|futbol|partido de|resultados de la loteria) ")
+                       r"desafian la lluvia|vendedores|candidato|elecciones|campana electoral|aniversario|feria|futbol|partido de|resultados de la loteria|"
+                       r"viral|viraliza|viralizan|viralizo|tiktok|ojo de la tormenta|interpol|con rabia|brote psicotico|cumbiera|cumbia|jugaran|jugara|plantel|clasico|seleccion|horoscopo) ")
 
 # (categoría, patrón) en orden de prioridad
 REGLAS = [
-    ("antropogénica", re.compile(r" (choque|choca|chocan|colision|colisiona|colisionar|vuelco|volco|volcadura|volcaron|embarranc|atropell|accidente de transito|accidente en (la )?(carretera|ruta|via|tramo|avenida)|accidente vehicular|accidente de moto|accidente de bus) ")),
+    ("antropogénica", re.compile(r" (choque|choca|chocan|colision|colisiona|colisionar|vuelco|volco|volcadura|volcaron|embarranc\w*|atropell\w*|accidente de transito|accidente en (la )?(carretera|ruta|via|tramo|avenida)|accidente vehicular|accidente de moto|accidente de bus) ")),
     ("climatológica", re.compile(r" (sequia|deficit hidrico|falta de lluvias?|sin lluvias|incendios? forestal|chaqueo|quema de pastiz|focos de calor|afectacion por incendios|incendios? en la chiquitania) ")),
     ("tecnológica", re.compile(r" (derrame|explosion|explota|fuga de gas|fuga de amoniaco|colapso (del|de la|de un|de una)|colapsa|se desploma|desplome) ")),
     ("geológica", re.compile(r" (sismo|temblor|temblo|terremoto|derrumbe|deslizamiento|mazamorra|socavon|volcan|erupcion) ")),
@@ -32,9 +34,54 @@ REGLAS = [
 BIO_TERMINOS = REGLAS[-1][1]
 
 
+def _rx(*pal):
+    return re.compile(r" (" + "|".join(pal) + r") ")
+
+
+# términos que PROMUEVEN una nota sin clasificar («otra») a un tipo de peligro: palabras completas, sin ambigüedad
+PROMO = [
+    ("geológica", _rx("sismo", "sismos", "temblor", "temblores", "terremoto", "derrumbe", "derrumbes", "deslizamiento", "deslizamientos", "mazamorra", "mazamorras", "socavon", "hundimiento", "hundimientos", "volcan", "erupcion")),
+    ("hidrológica", _rx("inundacion", "inundaciones", "inundado", "inundados", "inundada", "inundadas", "desborde", "desbordes", "desbordo", "crecida", "crecidas", "riada", "riadas", "anegamiento", "anegamientos")),
+    ("climatológica", _rx("sequia", "sequias", "deficit hidrico", "incendio forestal", "incendios forestales", "chaqueo", "quemas", "focos de calor", "super nino", "fenomeno de el nino", "fenomeno del nino", "ola de calor")),
+    ("meteorológica", _rx("granizada", "granizadas", "nevada", "nevadas", "helada", "heladas", "ventarron", "tormenta electrica", "frente frio", "surazo", "aviso meteorologico")),
+    ("biológica", _rx("dengue", "chikungunya", "chikunguna", "coxsackie", "influenza", "sarampion", "tosferina", "fiebre amarilla", "brote de", "brotes de", "epidemia", "zoonosis", "ebola", "mpox", "difteria", "leptospirosis", "malaria", "chagas")),
+]
+# términos que MANTIENEN un tipo de peligro; si la nota no contiene ninguno (palabra completa), vuelve a «otra»
+VALIDA = {
+    "geológica": _rx("sismo", "sismos", "sismico", "temblor", "temblores", "temblo", "terremoto", "derrumbe", "derrumbes", "deslizamiento", "deslizamientos", "mazamorra", "socavon", "hundimiento", "hundimientos",
+                     "volcan", "erupcion", "desprendimiento", "caida de rocas", "rajaduras", "grietas"),
+    "hidrológica": _rx("inundacion", "inundaciones", "inundado", "inundados", "inundada", "inundadas", "desborde", "desbordes", "desbordo", "desbordan", "crecida", "crecidas", "riada", "riadas", "anegamiento",
+                       "anegamientos", "anegado", "rio", "rios", "cauce", "aviso hidrologico", "mazamorra", "mazamorras"),
+    "meteorológica": _rx("granizada", "granizadas", "granizo", "nevada", "nevadas", "helada", "heladas", "lluvia", "lluvias", "tormenta", "tormentas", "viento", "vientos", "ventarron", "ola de calor", "ola de frio",
+                         "frente frio", "surazo", "temperatura", "temperaturas", "precipitacion", "precipitaciones", "aviso meteorologico", "senamhi", "pronostico", "pronostican", "ascenso termico", "calor", "frio",
+                         "ciclon", "tornado", "friaje", "senamhi"),
+    "climatológica": _rx("sequia", "sequias", "deficit hidrico", "incendio forestal", "incendios forestales", "incendio", "incendios", "chaqueo", "quema", "quemas", "focos de calor", "super nino",
+                         "fenomeno de el nino", "fenomeno del nino", "la nina", "ola de calor", "falta de lluvias", "sin lluvias", "clima", "climatico", "chiquitania", "hectareas quemadas", "superficie quemada"),
+    "tecnológica": _rx("derrame", "derrames", "explosion", "explosiones", "explota", "explosiona", "explosionan", "explosivo", "explosivos", "fuga", "colapso", "colapsa", "desplome", "se desploma", "intoxicacion", "contaminacion", "gas", "incendio",
+                       "incendios", "mina", "minera", "quimico", "combustible", "emanacion"),
+}
+EL_NINO = re.compile(r" el nino ")
+NINO_FENOMENO = re.compile(r" (fenomeno|clima|climatic\w*|sequia|lluvias?|emergencias?|alertas?|calor|enos|extremo|riesgo|familias|prepar\w*|impacto|desastres|nina|incendios?|inundac\w*|afecta\w*|2026|2027|oceano|pacifico|super) ")
+NINO_NINO = re.compile(r" (mordido|herido|rescat\w*|desaparec\w*|menor|bebe|asesin\w*|violad\w*|golpead\w*|murio|fallec\w*|perros?|anos) ")
+
+
+def _valida(c, t):
+    rx = VALIDA.get(c)
+    if rx is None:
+        return True
+    if rx.search(t):
+        if c == "climatológica" and EL_NINO.search(t) and not re.search(r" (sequia|incendio\w*|chaqueo|quemas?|focos de calor|super nino|fenomeno de el nino|fenomeno del nino|la nina|ola de calor|clima\w*) ", t):
+            return bool(NINO_FENOMENO.search(t)) and not NINO_NINO.search(t)
+        return True
+    # «el niño» como fenómeno climático (no el niño de una persona)
+    return c == "climatológica" and bool(EL_NINO.search(t)) and bool(NINO_FENOMENO.search(t)) and not NINO_NINO.search(t)
+
+
 def revisar(r):
     """r: evento de prensa (dict con titulo, categoria…). Devuelve None si se descarta, o r (posiblemente reclasificado)."""
     t = n(r.get("titulo"))
+    if re.match(r"\s*https?://", str(r.get("titulo") or "")):   # un titular que es solo un enlace no dice qué pasó
+        return None
     if NO_EVENTO.search(t):
         return None
     if any(" " + k + " " in t or k in t for k in EXT_FUERTE):
@@ -50,6 +97,17 @@ def revisar(r):
     else:
         if cat == "biológica" and not BIO_TERMINOS.search(t):
             cat = "tecnológica" if re.search(r" (mina|minera|quimic|gas|combustible) ", t) else cat
+    # el tipo asignado debe estar respaldado por una palabra completa del titular; si no, vuelve a «otra» (p. ej. «barriada» no es riada, «progresismo» no es sismo)
+    try:
+        if cat in VALIDA and not _valida(cat, t):
+            cat = "otra"
+        if cat == "otra":
+            for c, rx in PROMO:
+                if rx.search(t) and (c != "climatológica" or not EL_NINO.search(t) or _valida(c, t)):
+                    cat = c
+                    break
+    except Exception:   # la validación nunca debe detener al sistema: ante un error se conserva la categoría anterior
+        pass
     if cat != r.get("categoria"):
         r["categoria"] = cat
         r["reclasificado"] = True
