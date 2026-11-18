@@ -161,6 +161,7 @@ def avisos_meteo(previo, geo, limite=12):
             try:
                 d, m, n = _zonas(r["dropArea"], geo)
                 a.update({"departamentos": d, "municipios": m, "n_municipios": n})
+                a.pop("error_zonas", None)   # un error de una ejecución anterior ya no aplica
             except Exception as e:
                 a["error_zonas"] = type(e).__name__ + ": " + str(e)[:60]
         a["texto"] = a.get("descripcion", "")
