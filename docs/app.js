@@ -49,6 +49,8 @@
     fr.push(sis7.length ? sis7.length + " sismos en 7 días (máx. M " + mx.toFixed(1) + ")" : "sin sismos registrados en 7 días");
     if (seq.length) fr.push("déficit de lluvia (SPI-3) en " + seq.join(", ")); if (rios.length) fr.push(rios.length + " río" + (rios.length > 1 ? "s" : "") + " con caudal sobre lo normal");
     $("heroT").textContent = "Hoy: " + fr.join(" · ") + ".";
+    $("parteH").innerHTML = '<div class="hp-eye">Parte de situación · ' + new Date().toLocaleDateString("es-BO", {weekday: "long", day: "numeric", month: "long", timeZone: "America/La_Paz"}) + '</div><div class="hp-b"><div class="hp-l">' + fr.map(function (f, i) { return '<div class="hp-ln"><i style="background:' + ["#4c8dff", "#ff8a3d", "#a67cff", "#19b8a6", "#19b8a6"][i] + '"></i>' + S.esc(f.charAt(0).toUpperCase() + f.slice(1)) + '</div>'; }).join("") + '</div><a class="btn p" href="centro.html">Abrir el Centro de mando</a></div>';
+    if (window.EVI) EVI.tabla($("eviM"), D);
     $("kpis").innerHTML = kpi("Avisos SENAMHI vigentes", D.avisos.length, av2.length + " naranja/rojo", av2.length ? "#f26a1b" : "#2e9e5b", "shield") +
       kpi("Focos de calor (último día)", nHoy.toLocaleString("es-BO"), di ? (nHoy >= nAyer ? '<span class="up">▲ ' : '<span class="dn">▼ ') + Math.abs(nHoy - nAyer).toLocaleString("es-BO") + "</span> vs. día anterior" : "NASA FIRMS", "#d7263d", "fire") +
       kpi("Sismos en 7 días", sis7.length, sis7.length ? "máxima M " + mx.toFixed(1) : "—", "#8d6e63", "pulse") +
@@ -467,18 +469,21 @@
     "tecnológica": {n: "Tecnológica", ej: "Derrames, explosiones, incendios de edificios, colapsos", fu: "Prensa", ic: "bolt"},
     "antropogénica": {n: "Antropogénica", ej: "Accidentes de tránsito, conflictos, bloqueos", fu: "Prensa · GDELT", ic: "car"}
   };
+  /* los focos de calor llegan como un registro por municipio y día: se cuentan una vez por municipio para no inflar las tarjetas */
+  function unico(A) { var v = {}; return A.filter(function (e) { if (e.origen !== "foco") return true; var k = e.lugar || e.id; if (v[k]) return false; v[k] = 1; return true; }); }
   function tipos() {
     var now = Date.now(), tr7 = ((D.transito && D.transito.resumen) || {}).hechos_7d || 0;
     $("tipos").innerHTML = S.CAT.slice(0, 7).map(function (c) {
-      var df = TIPDEF[c], col = S.COLCAT[c], L = D.ev.filter(function (e) { return e.categoria === c && e.origen !== "modelo" && e.ts > now - 30 * DIA; });
+      var df = TIPDEF[c], col = S.COLCAT[c], L = unico(D.ev.filter(function (e) { return e.categoria === c && e.origen !== "modelo" && e.ts > now - 30 * DIA; }));
       var n24 = L.filter(function (e) { return e.ts > now - DIA; }).length, mx = L.reduce(function (a, e) { return Math.max(a, e.nivel == null ? -1 : e.nivel); }, -1);
-      var of = L.filter(function (e) { return e.oficial || ["senamhi", "sismo", "epidemiologia"].indexOf(e.origen) >= 0; }).length;
-      var extra = c === "antropogénica" ? tr7 + ' hechos de tránsito en 7 días' : of + ' de fuente oficial · ' + (L.length - of) + ' prensa/satélite';
+      var of = L.filter(function (e) { return e.origen !== "foco" && (e.oficial || ["senamhi", "sismo", "epidemiologia"].indexOf(e.origen) >= 0); }).length;
+      var sat = L.filter(function (e) { return e.origen === "foco"; }).length;
+      var extra = c === "antropogénica" ? tr7 + ' hechos de tránsito en 7 días' : sat ? of + ' oficial · ' + sat + ' municipios con focos de calor (satélite) · ' + (L.length - of - sat) + ' prensa' : of + ' de fuente oficial · ' + (L.length - of) + ' prensa/satélite';
       return '<button class="tipo" data-c="' + c + '" style="--c:' + col + '" data-tip="Abrir el módulo de amenazas ' + c + 's: mapa, gráficos e informes"><div class="tipo-top"><span class="tipo-ic">' + X.ic(df.ic) + '</span><span class="tipo-n">' + L.length + '</span></div>' +
         '<div class="tipo-t">' + df.n + '</div><div class="tipo-ej">' + df.ej + '</div><div class="tipo-m"><span class="pill">' + n24 + ' en 24 h</span>' + (mx >= 0 ? '<span class="pill" style="background:' + COLNIV[Math.min(3, Math.floor(mx))] + ';color:' + (mx === 1 ? '#222' : '#fff') + '">nivel máx. ' + S.NIVTXT[Math.min(3, Math.floor(mx))].toLowerCase() + '</span>' : '') + '</div>' +
         '<div class="tipo-f">' + (L.length ? extra : 'Sin eventos en 30 días') + '<br><span>Fuentes: ' + df.fu + '</span></div></button>';
     }).join("") + (function () {
-      var L = D.ev.filter(function (e) { return e.origen !== "modelo" && e.ts > now - 30 * DIA; }), ok = L.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length;
+      var L = unico(D.ev.filter(function (e) { return e.origen !== "modelo" && e.ts > now - 30 * DIA; })), ok = L.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length;
       return '<button class="tipo" data-c="__todos__" style="--c:#0b3b6e" data-tip="Abrir la tabla con todos los eventos"><div class="tipo-top"><span class="tipo-ic">' + X.ic("list") + '</span><span class="tipo-n">' + L.length + '</span></div><div class="tipo-t">Todos los eventos</div>' +
         '<div class="tipo-ej">Base unificada de todas las fuentes, con triangulación</div><div class="tipo-m"><span class="pill">' + ok + ' con confianza media o alta</span></div><div class="tipo-f">' + (D.transito ? trLista().length + ' hechos de tránsito unidos por medios' : '') + '<br><span>Tabla descargable en CSV, Excel y JSON</span></div></button>';
     })();

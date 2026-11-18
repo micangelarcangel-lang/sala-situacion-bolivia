@@ -42,7 +42,7 @@ var GEO = (function () {
       '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período</b><select id="gP"><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="0">Todo lo disponible</option></select></div>' +
       '<div class="xs1"><b>Magnitud mínima</b><select id="gM"><option value="0">Todas</option><option value="3.5">≥ 3,5</option><option value="4">≥ 4</option><option value="5">≥ 5</option></select></div>' +
       '<div class="xs1"><b>Capas</b><label><input type="checkbox" id="gPr" checked> Derrumbes y deslizamientos (prensa)</label></div></div>' +
-      '<div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="gN" checked> Departamentos</label></div><div class="xmap" id="gMap"></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
+      '<div id="eviP"></div><div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="gN" checked> Departamentos</label></div><div class="xmap" id="gMap"></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
       '<div class="xside"><div id="gUlt"></div><div id="gK"></div><div id="gDet"></div></div></div>' +
       '<div class="xg2"><div class="xc"><h3>Magnitud en el tiempo</h3><div id="gCh" style="height:240px"></div><p class="nota">Cada punto es un sismo; el color indica la profundidad.</p></div><div class="xc"><h3 id="gDepT">Por departamento</h3><div id="gDep"></div></div></div>' +
       '<div class="xc" style="margin-top:12px"><div class="xtabs"><button class="on" data-s="gTs">Sismos (lista)</button><button data-s="gTm">Derrumbes y deslizamientos</button><button data-s="gTp">Prensa sobre sismos</button><button data-s="gTa">Antecedentes 1970–2015</button></div><div id="gTs"></div><div id="gTm" style="display:none"></div><div id="gTp" style="display:none"></div><div id="gTa" style="display:none"></div></div>';
@@ -158,7 +158,7 @@ var GEO = (function () {
       return fetch("sismos_oficiales.json").then(function (r) { return r.json(); }).catch(function () { return {sismos: []}; });
     }).then(function (off) {
       Q = preparar(T.D, off); P = prensa(T.D);
-      $("app").innerHTML = html();
+      $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "geológica", T.D);
       (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
       LUGAR.init(T, $("lgBox"), LG, function () { sel = null; dibuja(); LUGAR.ajusta(map, T, LG); }); $("gP").onchange = function () { st.p = +this.value; dibuja(); }; $("gM").onchange = function () { st.m = +this.value; dibuja(); }; $("gPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("gN").onchange = rotular;
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });

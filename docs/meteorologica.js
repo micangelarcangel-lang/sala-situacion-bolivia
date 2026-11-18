@@ -27,7 +27,7 @@ var MET = (function () {
       '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período</b><select id="mP"><option value="vig">Vigentes hoy</option><option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="todo">Todo lo disponible</option></select></div>' +
       '<div class="xs1"><b>Fenómeno</b><select id="mF"><option value="">Todos</option>' + Object.keys(fens).sort().map(function (f) { return '<option>' + esc(f) + '</option>'; }).join("") + '</select></div>' +
       '<div class="xs1"><b>Capas</b><label><input type="checkbox" id="mPr" checked> Reportes de prensa</label></div></div>' +
-      '<div class="xhelp" id="mH"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="mN" checked> Departamentos</label></div><div class="xmap" id="mMap"></div><div class="xleg" id="mL"></div><div class="xlab" id="mLb"></div></div>' +
+      '<div id="eviP"></div><div class="xhelp" id="mH"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="mN" checked> Departamentos</label></div><div class="xmap" id="mMap"></div><div class="xleg" id="mL"></div><div class="xlab" id="mLb"></div></div>' +
       '<div class="xside"><div id="mK"></div><div id="mDet"></div><div id="mLs"></div></div></div>' +
       '<div class="xc" style="margin-top:12px"><h3>Cronología de avisos</h3><div id="mGm" class="nota"></div><div id="mG"></div><p class="nota">Cada barra es un aviso, del primer al último día de vigencia; el color es el nivel.</p></div>' +
       '<div class="xc" style="margin-top:12px"><div class="xtabs"><button class="on" data-s="mTa">Avisos (lista)</button><button data-s="mTf">Pronóstico de modelo</button><button data-s="mTp">Prensa</button></div><div id="mTa"></div><div id="mTf" style="display:none"></div><div id="mTp" style="display:none"></div></div>';
@@ -97,7 +97,7 @@ var MET = (function () {
     kpis(L); lateral(L); gantt(L); tablas(L); detalle();
   }
   function iniciar() {
-    TERR.cargar().then(function (t) { T = t; A = TERR.api; A.estilos(); X.header("modulo.html"); document.title = "Meteorológica — Sala de Situación Bolivia"; preparar(T.D); $("app").innerHTML = html();
+    TERR.cargar().then(function (t) { T = t; A = TERR.api; A.estilos(); X.header("modulo.html"); document.title = "Meteorológica — Sala de Situación Bolivia"; preparar(T.D); $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "meteorológica", T.D);
       (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
       LUGAR.init(T, $("lgBox"), LG, function () { sel = null; dibuja(); LUGAR.ajusta(map, T, LG); }); $("mP").onchange = function () { st.p = this.value; dibuja(); }; $("mF").onchange = function () { st.f = this.value; dibuja(); }; $("mPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("mN").onchange = rotular;
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });

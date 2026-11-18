@@ -3,16 +3,20 @@
 <title>Sala de Situación Bolivia</title>
 <link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css?v=20261116d">
 <script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261116d"></script></head>
+<style>.hp{border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--card),var(--soft));padding:14px 18px;margin:6px 0 16px}.hp-eye{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700}.hp-b{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:6px}.hp-l{flex:1 1 560px;min-width:0}.hp-ln{display:flex;gap:10px;align-items:flex-start;margin:5px 0;font-size:14.5px;line-height:1.4}.hp-ln i{flex:0 0 10px;height:10px;border-radius:50%;margin-top:6px}</style>
 <body><div id="hdr"></div>
 <div class="wrap">
 
 <section id="t-res">
  <span id="heroT" hidden></span>
+ <div class="hp" id="parteH"></div>
  <div class="seccion"><h2 class="sec-t">Explorar por territorio <small>Bolivia › Departamento › Municipio · mapa, ficha de riesgo y reporte de cada uno</small></h2></div>
  <div class="card" style="margin-bottom:16px"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="btn p" href="mapa.html">Explorar Bolivia por territorios</a><span class="nota">o entre directo a un departamento:</span><a class="btn s" href="departamento.html?d=Beni">Beni</a><a class="btn s" href="departamento.html?d=Chuquisaca">Chuquisaca</a><a class="btn s" href="departamento.html?d=Cochabamba">Cochabamba</a><a class="btn s" href="departamento.html?d=La%20Paz">La Paz</a><a class="btn s" href="departamento.html?d=Oruro">Oruro</a><a class="btn s" href="departamento.html?d=Pando">Pando</a><a class="btn s" href="departamento.html?d=Potosí">Potosí</a><a class="btn s" href="departamento.html?d=Santa%20Cruz">Santa Cruz</a><a class="btn s" href="departamento.html?d=Tarija">Tarija</a></div></div>
  <div class="seccion"><h2 class="sec-t">Tipos de evento <small>(Ley 602, art. 36) · últimos 30 días · toque una tarjeta para ver sus eventos</small></h2></div>
  <div class="tipos" id="tipos"></div>
  <div class="grid g4" id="kpis" style="margin-bottom:16px"></div>
+ <div class="seccion"><h2 class="sec-t">Triangulación por tipo de evento <small>· qué familias de fuentes independientes respaldan cada tipo (7 días) y dónde el sistema está ciego</small></h2></div>
+ <div class="card" id="eviM" style="margin-bottom:16px"></div>
  <div class="grid g21" style="margin-bottom:16px">
   <div class="card" id="cAlertas"><h2><span class="i">__I_ALERT__</span>Alertas y eventos prioritarios</h2><div class="cap">Avisos naranja/rojos vigentes, complejos de incendio mayores, ríos sobre umbral y sismos relevantes. <b>Toque uno</b> para ver su informe.</div><div id="prior"></div></div>
   <div class="card"><h2><span class="i">__I_INFO__</span>¿Cuán confiable es lo que se ve?</h2><div class="cap">Triangulación: cuántas familias de fuentes independientes coinciden en cada evento.</div><div class="ch s" id="chConf"></div><div class="how"><b>Alta</b> = 3 o más familias (p. ej. oficial + satélite + prensa). <b>Media</b> = 2. <b>Baja</b> = 1 sola fuente.</div></div>
@@ -166,5 +170,5 @@
 </section>
 </div>
 <div class="foot" id="foot"></div>
-<script src="app.js?v=20261116d"></script>
+<script src="evidencia.js?v=20261118a"></script><script src="app.js?v=20261118a"></script>
 </body></html>

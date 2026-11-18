@@ -66,21 +66,6 @@ var CMD = (function () {
   }
   function catAviso(a) { var t = a.tipo || ((/HIDROL/i.test(a.titulo || "") ? "hidrológica" : /METEOR/i.test(a.titulo || "") ? "meteorológica" : /GEOL/i.test(a.titulo || "") ? "geológica" : "")); return t; }
 
-  /* ---------- matriz de evidencia por tipo de evento ---------- */
-  function matriz() {
-    var D = T.D, hay = {}, c7 = {}, desde = AHORA - 7 * DIA;
-    TIPOS.forEach(function (t) { hay[t[0]] = {}; c7[t[0]] = {}; });
-    D.ev.forEach(function (e) {
-      var f = MAPF[e.origen], c = TIPOS.some(function (t) { return t[0] === e.categoria; }) ? e.categoria : "otra"; if (!f) return;
-      hay[c][f] = 1;
-      if (e.ts >= desde) { var k = e.origen === "foco" ? "f:" + (e.lugar || e.id) : e.id; (c7[c][f] = c7[c][f] || {})[k] = 1; }
-    });
-    return TIPOS.map(function (t) {
-      var fam = {}, n = 0; FAM.forEach(function (f) { var c = c7[t[0]][f.k] ? Object.keys(c7[t[0]][f.k]).length : 0; fam[f.k] = {c: c, hay: !!hay[t[0]][f.k]}; if (c) n++; });
-      return {k: t[0], n: t[1], fam: fam, nf: n, nHay: FAM.filter(function (f) { return hay[t[0]][f.k]; }).length};
-    });
-  }
-
   /* ---------- HTML ---------- */
   function actual(iso) { var t = typeof iso === "number" ? iso : ms(iso); return t ? X.ago(t) : "sin dato"; }
   function html() {
@@ -128,20 +113,7 @@ var CMD = (function () {
     h += '<div class="cm-act"><a class="btn p s" href="municipio.html?d=' + encodeURIComponent(o.m.d) + '&m=' + encodeURIComponent(o.m.n) + '">Ficha completa</a><a class="btn s" href="reporte.html?dep=' + encodeURIComponent(o.m.d) + '&mun=' + encodeURIComponent(o.m.n) + '">Reporte</a></div>';
     box.innerHTML = h;
   }
-  function tablaMatriz() {
-    var M = matriz(), h = '<table class="cm-t"><thead><tr><th>Tipo de evento</th>' + FAM.map(function (f) { return '<th style="--c:' + f.c + '"><i></i>' + f.n + '</th>'; }).join("") + '<th style="text-align:left">Lectura</th></tr></thead><tbody>';
-    M.forEach(function (r) {
-      h += '<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;background:' + (S.COLCAT[r.k] || "#999") + '"></span>' + r.n + '</td>';
-      FAM.forEach(function (f) { var c = r.fam[f.k]; h += !c.hay ? '<td class="cm-nf" title="Sin fuente conectada de esta familia para este tipo">sin fuente</td>' : c.c === 0 ? '<td><span class="cm-z" title="Fuente conectada, sin señal en 7 días">0</span></td>' : '<td><span class="cm-d" style="--c:' + f.c + ';--s:' + Math.round(Math.max(22, Math.min(46, 16 + 5 * Math.sqrt(c.c)))) + 'px" title="' + c.c + ' hechos en 7 días">' + (c.c > 99 ? "99+" : c.c) + '</span></td>'; });
-      h += '<td><span class="cm-lec" style="--c:' + cv(r.nf) + '">' + (r.nf === 0 ? 'Sin señal' : r.nf === 1 ? 'Una fuente' : 'Coinciden ' + r.nf) + '</span> <small style="color:var(--mut)">de ' + r.nHay + (r.nHay === 1 ? ' conectada' : ' conectadas') + '</small></td></tr>';
-    });
-    h += '</tbody></table>';
-    var ciegos = M.filter(function (r) { return r.k !== "otra" && r.nHay <= 2; });
-    if (ciegos.length) h += '<div class="cm-ciego"><b>Puntos ciegos del sistema:</b> ' + ciegos.map(function (r) { var q = FAM.filter(function (f) { return r.fam[f.k].hay; }).map(function (f) { return f.n.toLowerCase(); }); return '<b>' + r.n + '</b> solo tiene ' + (q.length ? q.join(" y ") : 'ninguna fuente') ; }).join("; ") + '. Con tan pocas familias casi no hay con qué triangular: es donde conviene conectar más fuentes.</div>';
-    var otra = M.filter(function (r) { return r.k === "otra"; })[0];
-    if (otra && otra.nf) h += '<div class="cm-warn">Parte de los hechos de prensa no se pudo clasificar por tipo («Sin clasificar»); la clasificación es por palabras clave y puede mejorar.</div>';
-    $("cmM").innerHTML = h;
-  }
+  function tablaMatriz() { EVI.tabla($("cmM"), T.D); }
 
   /* ---------- mapa ---------- */
   function colorFeat(o) {

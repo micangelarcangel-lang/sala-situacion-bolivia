@@ -90,24 +90,49 @@ def _nivel_texto(nombre):
     return "ROJO" if n.startswith("ROJ") else "NARANJA" if n.startswith("NARAN") else "AMARILLO" if n.startswith("AMAR") else n
 
 
+def _valida(g):
+    """Geometría válida: si tiene autointersecciones o vértices repetidos se repara (make_valid / buffer(0))."""
+    from shapely.validation import make_valid
+    if g.is_valid:
+        return g
+    try:
+        g2 = make_valid(g)
+    except Exception:
+        g2 = g.buffer(0)
+    return g2 if g2.is_valid else g.buffer(0)
+
+
+def _inter(a, b):
+    """Intersección tolerante: si GEOS falla por topología (TopologyException) repara ambas y reintenta; último recurso, mínima holgura."""
+    try:
+        return a.intersection(b)
+    except Exception:
+        pass
+    try:
+        return _valida(a).intersection(_valida(b))
+    except Exception:
+        return a.buffer(1e-7).intersection(b.buffer(1e-7))
+
+
 def _zonas(poligono, geo):
     """Departamentos y municipios que cruza el polígono del aviso (límites geoBoundaries)."""
     from shapely.geometry import shape
-    g = shape(poligono)
-    if not g.is_valid:
-        g = g.buffer(0)
-    g = g.simplify(0.005)
+    g = _valida(shape(poligono))
+    g = _valida(g.simplify(0.005))
     if g.is_empty or g.area == 0:
         return [], [], 0
     deps = []
     for u in geo["dep"]:
-        if u["_s"].intersects(g) and u["_s"].intersection(g).area / g.area >= 0.02:
-            deps.append((u["_s"].intersection(g).area, u["n"]))
+        s = _valida(u["_s"])
+        if s.intersects(g):
+            a = _inter(s, g).area
+            if a / g.area >= 0.02:
+                deps.append((a, u["n"]))
     muns = []
     for u in geo["mun"]:
-        s = u["_s"]
+        s = _valida(u["_s"])
         if s.intersects(g):
-            a = s.intersection(g).area
+            a = _inter(s, g).area
             if a / s.area >= 0.2 or a / g.area >= 0.05:
                 muns.append((a, u["n"] + " (" + u["d"] + ")"))
     deps = [n for a, n in sorted(deps, reverse=True)]
