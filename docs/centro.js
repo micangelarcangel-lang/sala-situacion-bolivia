@@ -104,6 +104,7 @@ var CMD = (function () {
   function ficha() {
     var o = sel && R[sel], box = $("cmFi"); if (!o) { box.innerHTML = '<div style="color:var(--mut);font-size:13px">Toque un municipio del mapa o de la lista para ver qué dice cada fuente.</div>'; return; }
     var s = SG[o.m.k], h = '<h3>' + esc(o.m.n) + ' <small>' + esc(o.m.d) + '</small></h3><div style="margin-top:4px;font-size:12.5px"><span class="cm-cv" style="--c:' + cv(o.n) + '">' + o.n + ' ' + (o.n === 1 ? 'fuente' : 'fuentes') + '</span> &nbsp;riesgo base: <b>' + (o.ri ? esc(o.ri.niv[1]) + ' (' + fmt(o.R, 1) + ')' : 'sin dato') + '</b> <small style="color:var(--mut)">· relativo entre municipios</small></div>' + (o.n >= 2 ? '<div style="margin-top:6px;font-size:12.8px"><b>Coinciden en ' + esc(o.cat) + ':</b> ' + o.f.map(function (k) { return FC[k].n.toLowerCase(); }).join(' + ') + '.</div>' : (o.n === 1 ? '<div style="margin-top:6px;font-size:12.8px;color:var(--mut)">Ningún tipo de peligro tiene dos fuentes distintas aquí: por confirmar.</div>' : ''));
+    h += tend(o.m.k);
     function fila(k, ok, tx) { return '<div class="cm-fr' + (ok ? '' : ' no') + '" style="--c:' + FC[k].c + '"><i></i><div><b>' + FC[k].n + ':</b> ' + tx + '</div></div>'; }
     h += fila("ofi", s.ofi.length, s.ofi.length ? s.ofi.map(function (a) { return '<a href="' + esc(a.url || a.pdf) + '" target="_blank" rel="noopener">' + esc((a.nivel || "").toLowerCase()) + ' · ' + esc(a.fenomeno || a.titulo) + '</a> (hasta ' + fechaC(a.fin) + ')'; }).join("; ") : 'sin aviso vigente');
     h += fila("ins", s.ins.length, s.ins.length ? s.ins.map(function (q) { return 'M ' + String(q.mag).replace(".", ",") + ', ' + esc(q.fecha_local.slice(5, 10).split("-").reverse().join("/")) + ', prof. ' + fmt(q.prof_km) + ' km'; }).join("; ") : 'sin sismo M≥4 en 7 días');
@@ -112,6 +113,21 @@ var CMD = (function () {
     h += fila("pre", s.pre.length, s.pre.length ? s.pre.slice().sort(function (a, b) { return ((b.categoria === o.cat) - (a.categoria === o.cat)) || b.ts - a.ts; }).slice(0, 3).map(function (e) { var ok = o.n >= 2 && e.categoria === o.cat; return '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.titulo.length > 90 ? e.titulo.slice(0, 88) + "…" : e.titulo) + '</a> <small>(' + esc(e.fuente) + ' · ' + (ok ? '<b>corrobora: ' + esc(e.categoria) + '</b>' : 'otro tema: ' + esc(e.categoria)) + ')</small>'; }).join("<br>") + (s.pre.length > 3 ? '<br><small>y ' + (s.pre.length - 3) + ' más</small>' : '') : 'sin notas con ubicación en 7 días');
     h += '<div class="cm-act"><a class="btn p s" href="municipio.html?d=' + encodeURIComponent(o.m.d) + '&m=' + encodeURIComponent(o.m.n) + '">Ficha completa</a><a class="btn s" href="reporte.html?dep=' + encodeURIComponent(o.m.d) + '&mun=' + encodeURIComponent(o.m.n) + '">Reporte</a></div>';
     box.innerHTML = h;
+  }
+  /* Tendencia del riesgo diario (docs/riesgo_historial.json, lo escribe riesgo.yml). Con menos de 2 días no se inventa una tendencia. */
+  var HIST = null;
+  function tend(k) {
+    var f = HIST && HIST.fechas, v = HIST && HIST.municipios && HIST.municipios[k];
+    if (!f || !v) return "";
+    var pts = []; f.forEach(function (d, i) { if (v[i] != null) pts.push([d, v[i]]); });
+    var fd = function (d) { return d.slice(8) + "/" + d.slice(5, 7); };
+    if (pts.length < 2) return '<div style="margin-top:6px;font-size:12px;color:var(--mut)">Tendencia del riesgo: la serie diaria comenzó el ' + (f[0] ? fd(f[0]) : "—") + '; se mostrará con 2 días o más.</div>';
+    var u = pts[pts.length - 1], ref = pts[0], lim = Date.parse(u[0]) - 7 * DIA;
+    pts.forEach(function (q) { if (Date.parse(q[0]) <= lim) ref = q; });
+    var dl = u[1] - ref[1], dd = Math.round((Date.parse(u[0]) - Date.parse(ref[0])) / DIA), W = 120, H = 28, mn = Math.min.apply(null, pts.map(function (q) { return q[1]; })), mx = Math.max.apply(null, pts.map(function (q) { return q[1]; })), rg = (mx - mn) || 1;
+    var d = pts.map(function (q, i) { return (i / (pts.length - 1) * (W - 6) + 3).toFixed(1) + "," + (H - 4 - (q[1] - mn) / rg * (H - 8)).toFixed(1); }).join(" ");
+    var col = Math.abs(dl) < .2 ? "var(--mut)" : dl > 0 ? "#d7263d" : "#2e9e5b";
+    return '<div style="margin-top:6px;display:flex;gap:10px;align-items:center;font-size:12.3px"><svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-label="Riesgo diario"><polyline points="' + d + '" fill="none" stroke="' + col + '" stroke-width="2" stroke-linejoin="round"/></svg><span>Riesgo diario ' + (Math.abs(dl) < .2 ? 'estable' : (dl > 0 ? '<b style="color:' + col + '">↑ sube ' : '<b style="color:' + col + '">↓ baja ') + fmt(Math.abs(dl), 1) + '</b>') + ' <small style="color:var(--mut)">en ' + dd + ' d</small></span></div>';
   }
   function tablaMatriz() { EVI.tabla($("cmM"), T.D); }
 
@@ -168,7 +184,10 @@ var CMD = (function () {
   }
   function iniciar() {
     TERR.cargar().then(function (t) {
-      T = t; A = TERR.api; A.estilos(); X.header("centro.html"); document.title = "Centro de mando — Sala de Situación Bolivia";
+      T = t;
+      return fetch("riesgo_historial.json?t=" + Date.now()).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (h) { HIST = h; });
+    }).then(function () {
+      A = TERR.api; A.estilos(); X.header("centro.html"); document.title = "Centro de mando — Sala de Situación Bolivia";
       X.live(T.D.eventos_unificados && T.D.eventos_unificados.generado); calcular(); $("app").innerHTML = html(); parte(); lista(); tablaMatriz(); leyenda(); crearMapa();
       [].forEach.call(document.querySelectorAll("#cmT button"), function (b) { b.onclick = function () { modo = b.dataset.m; [].forEach.call(document.querySelectorAll("#cmT button"), function (z) { z.classList.toggle("on", z === b); }); refrescar(); }; });
       function vis(id, l) { $(id).onchange = function () { if (map && map.getLayer(l)) map.setLayoutProperty(l, "visibility", this.checked ? "visible" : "none"); }; }
