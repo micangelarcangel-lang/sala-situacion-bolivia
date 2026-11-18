@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:19vbiyi",
+  "fecha_hora_local": "2026-11-18 13:24",
+  "ts_ms": 1795022643000,
+  "titulo": "Santa Cruz: Senamhi emite alerta naranja por ráfagas de hasta 90 km/h - El Mundo Bolivia",
+  "tipo_amenaza": "meteorológica",
+  "nivel_num": 2,
+  "nivel_preliminar": "naranja",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 3,
+  "fuentes": "El Mundo Bolivia; Opinión Bolivia",
+  "lat": -17.781,
+  "lon": -63.139,
+  "lugar": "Santa Cruz, Santa Cruz",
+  "departamento": "Santa Cruz",
+  "municipio": "Santa Cruz de la Sierra",
+  "enlaces": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQYmJtbF9fTmdVSzYxYVVpZ3hhNjdMOHAwZWNRNmdzbUpIdm5aOWFEY1BLSUREZWIxNXlmNTJKUE1MeThCRTFlcW0zV09ObjVlTG9kTmV4S0VNcm1NT0JEU1VhTkI5cGl3RmJuQWM2VVhjOWI3RV9mTWdLa00yeEN4Yk9QM0hjZkhua3JPcXZhZDFoaDBBVnBiTzJJZF8?oc=5 | https://news.google.com/rss/articles/CBMivAFBVV95cUxPQ2JSbjdXNGI5U2tKc3owQzFOT2VpZjZpM1paeFYzaVRURF9XMnRfc0sxVTd0RjVQZS1vSWN0UHJGaW1mblFBblduZ3lKcVJEUVF3TG4zcG00d3hjNFJrX29BSDRESk5YcmFNMlZ1NVVYalRjSDYtaXF6bFA3SnNpdS1BZGUzc3B4OW5PZFBNUXg2ZUJlSThNVVJRTzF4U2wtMGhabTdJdnJLRF83S19pSlZXTThiLTN3ZFBRRtIBvAFBVV95cUxPQ2JSbjdXNGI5U2tKc3owQzFOT2VpZjZpM1paeFYzaVRURF9XMnRfc0sxVTd0RjVQZS1vSWN0UHJGaW1mblFBblduZ3lKcVJEUVF3TG4zcG00d3hjNFJrX29BSDRESk5YcmFNMlZ1NVVYalRjSDYtaXF6bFA3SnNpdS1BZGUzc3B4OW5PZFBNUXg2ZUJlSThNVVJRTzF4U2wtMGhabTdJdnJLRF83S19pSlZXTThiLTN3ZFBRRg?oc=5 | https://news.google.com/rss/articles/CBMilwFBVV95cUxQZmYxQkgxZmhxZTBHb1pGN3cxU1pUWkJPSEIxcFlIYnNnU2hlRWt6TXB3OHFkMjVvWkg0em5FQnpBRWtDc3l1Q0NhUlA1WmxWYzB6M052eGVBZWxRSmYtYWxDdjlubTZzOVNwVzJGUXk1SUZYeERqSE4wWjhjLU9UUzNEX2NFS0tyM1FyUVFDQXROTVJOVms4?oc=5"
+ },
+ {
   "hecho_id": "noticia:1ac91wg",
   "fecha_hora_local": "2026-11-18 09:03",
   "ts_ms": 1795007016000,
@@ -860,24 +880,24 @@
   "enlaces": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNWWxvaHVsUDdFaFo4NEpuS0wySU0wbThkRU5LTEFjYmlpcFY2MlVFZUZQMnBUOEg0bmI0aVUyeFJERThGM2J3Qmh3aWxzcTFvWGdWRXFwZHc0Nk1ndU1oMnlxeFpIenAzb2lRQ1NxZ3hPY1ZESkIzYXRCcWlGMWRta1JLOHFkNUdBZnNXdlhNcVR3cnd6UHEtS0k5RnBQZUQ0WVU0ZHQwbnBZY2FreFB6WnZVY0h3QlNIVThHMzRrSXNLNmp0d2EyVGxhUm16ZGE4N2ZpUzM0NjlTQlVkZGxEbw?oc=5"
  },
  {
-  "hecho_id": "noticia:19vbiyi",
+  "hecho_id": "noticia:14slcaf",
   "fecha_hora_local": "2026-11-16 08:05",
   "ts_ms": 1794830740000,
-  "titulo": "Santa Cruz: Senamhi emite alerta naranja por ráfagas de hasta 90 km/h - El Mundo Bolivia",
+  "titulo": "Emiten alerta naranja en Santa Cruz por vientos de hasta 90 km/h que se extenderán por cuatro días - Red Uno",
   "tipo_amenaza": "meteorológica",
   "nivel_num": 2,
   "nivel_preliminar": "naranja",
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 4,
-  "fuentes": "El Mundo Bolivia; Red Uno; eju.tv",
+  "n_notas": 3,
+  "fuentes": "Red Uno; eju.tv",
   "lat": -17.781,
   "lon": -63.139,
   "lugar": "Santa Cruz, Santa Cruz",
   "departamento": "Santa Cruz",
   "municipio": "Santa Cruz de la Sierra",
-  "enlaces": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOU1EyTEhmaldiNWFReVV2bm5KZlNXTmJVR2IwMnA2dVhueXBxSGFpd0haWk9pSWtCejIyVEx4bkZ2SkhLWEMzNzFMeG42SzZzai1nUGNLc1JvdlFkZWo4YXVOaVlmRVRpdmtHWkt6RlJ0ZzNBcWpQY01iT0tTcHJZbVFBai1hYWFuMW91U2FrZVJ2djVKLV9HUzZjVlNNT1U?oc=5 | https://news.google.com/rss/articles/CBMiuAFBVV95cUxOeURzeEZKaDNHd3VYVXRHVXhvVGFOcG9CeVNSZ2loWWdlT203ZFlGWDNPZTNBUlhpaW5oemJ0TXBwQlNVTjBNZVNldWdDMk1yM184Q2hYTERoRUJsSWdyc0lOYkxoNXR2RXpreXRNcHI3RW93MWkteFN2QmFqNUNSY2VBQV9QdkoydmlfMTVFd3pVb0ZCVlVkOUl4bzlObXRPdkVXQWROWEpzWVh1VEQtbElvTDJXdHZn?oc=5 | https://news.google.com/rss/articles/CBMilwFBVV95cUxQZmYxQkgxZmhxZTBHb1pGN3cxU1pUWkJPSEIxcFlIYnNnU2hlRWt6TXB3OHFkMjVvWkg0em5FQnpBRWtDc3l1Q0NhUlA1WmxWYzB6M052eGVBZWxRSmYtYWxDdjlubTZzOVNwVzJGUXk1SUZYeERqSE4wWjhjLU9UUzNEX2NFS0tyM1FyUVFDQXROTVJOVms4?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOU1EyTEhmaldiNWFReVV2bm5KZlNXTmJVR2IwMnA2dVhueXBxSGFpd0haWk9pSWtCejIyVEx4bkZ2SkhLWEMzNzFMeG42SzZzai1nUGNLc1JvdlFkZWo4YXVOaVlmRVRpdmtHWkt6RlJ0ZzNBcWpQY01iT0tTcHJZbVFBai1hYWFuMW91U2FrZVJ2djVKLV9HUzZjVlNNT1U?oc=5 | https://news.google.com/rss/articles/CBMiuAFBVV95cUxOeURzeEZKaDNHd3VYVXRHVXhvVGFOcG9CeVNSZ2loWWdlT203ZFlGWDNPZTNBUlhpaW5oemJ0TXBwQlNVTjBNZVNldWdDMk1yM184Q2hYTERoRUJsSWdyc0lOYkxoNXR2RXpreXRNcHI3RW93MWkteFN2QmFqNUNSY2VBQV9QdkoydmlfMTVFd3pVb0ZCVlVkOUl4bzlObXRPdkVXQWROWEpzWVh1VEQtbElvTDJXdHZn?oc=5 | https://news.google.com/rss/articles/CBMi4AFBVV95cUxNakR0T0lPQ1pTVTBmSmRvWGU5b0Q4a25MNlFmckJDOUF2SEZxYnNVQUV5c0NvX3ZqelR0ZGF0cTR4Si1VNlRtdDhWRVF1U2tIeGl5N3FXVHdTRUZaLVQ0VkQ4cjhpQ3BXMjIyYmw4Y3V1eFRVbVh6SHRHZG5BTDBDb1Z0WXp3SS1hQ1YyT2RjdWF4ZHNGaHg5ZTVfZHFMVjFDS0x0QlpoY0x2eUwtQmE3TmpEaC1NV2EzNk1IQVRMWTJUVTJqOTRQVUNDd3BFdmRYOXBGeDR5RnN3T3lCSE5zUA?oc=5"
  },
  {
   "hecho_id": "noticia:104i2qt",
