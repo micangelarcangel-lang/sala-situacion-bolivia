@@ -100,6 +100,26 @@
   "enlaces": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNaXlpb0gzVThwQll4akoxMXd1U3dSTUpJNHlvdkFjajlEN2VvRTZMcGlMMTFYRmMxUmo5SzJlOWpsaFFIX1IzTDdVTldVcjJ1NVFBNXVWU1RhX3dIajNXc1lmNTBtUVpaQVpGcldvSUZGUE9kelVZV3ZZMHpsU2FFNTFGZmFFZUFaWklSTmZJdzB5TjdEb0hHZEJDeGs1RF9zWHVuZUFIS1Q4WUNGZU5BUWFkRUZQbmxYelFQa2NFOUZvdUFZeWhPT1c0VWg?oc=5"
  },
  {
+  "hecho_id": "noticia:udvptr",
+  "fecha_hora_local": "2026-11-18 06:17",
+  "ts_ms": 1794997061000,
+  "titulo": "Colisión de dos trenes deja 46 heridos y 4 de gravedad - El Diario - Bolivia",
+  "tipo_amenaza": "antropogénica",
+  "nivel_num": 3,
+  "nivel_preliminar": "roja",
+  "fallecidos_max": 7,
+  "heridos_max": 46,
+  "cifras_discrepantes": "sí",
+  "n_notas": 3,
+  "fuentes": "El Diario - Bolivia; El Potosí",
+  "lat": -19.58,
+  "lon": -65.75,
+  "lugar": "Potosí, Potosí",
+  "departamento": "Potosí",
+  "municipio": "Potosí",
+  "enlaces": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPazUyQUZoTl9aM0RWZDVDUTlOU1BzUXNhR3hncno3dkprWF95dVRPb3IzQUhWelZaT1BaVm4zdFYxaUhBQ3djeG01ZTBNMjhDSXFKVFZxX3d5bTVjY1NUM2Q1MU1GU0JhN1YwSnJvdkRRd1B2RmljMkFnZi1MX2ZkQmVVS2pCelN0aU1zUnlFOW02LTRWbFBhcDJ3QlNETDg?oc=5 | https://news.google.com/rss/articles/CBMixgFBVV95cUxNQXRWMmZ3WDFvZTFpSEN4dWQtU29EcWhveGpXMDNWU2ZiMGxmczJIU3ZXMTF6SkdxbnBQdV9UQ0ZxVENfQS1waXRrZjBHd2hxblZ3SHM5OUxMS2M1SFRiWUNqQ01XSkNmeUZmekIwNS1XZmhHbWc2WGl3b0p1TnR3ek10NGVReDBqVGU3MnhNUWFXRk02TUdJbURCeXBXQ3F5YjlzdGYxODRDMGdnVnhnYjc0VUVmMmwydnBfbW96cUprdVVYYkE?oc=5 | https://news.google.com/rss/articles/CBMivgFBVV95cUxOOFZGa1otWnVncGoySlFobGpPbkM5WUV3dkxyVGFNU0VlVEwzVWRHbFR2WFFoZ2l5QzNiUEcxODNZd1RldWQ1WnNod2drbUhwc0hQbHYxSGpFN1VuRTVPNk9zOElnNnczRWhiLWUxYkhvaUE0QVhUcEt3Z2M1MHRzcG1mUG56NmFpcF9KdGRqVVZnak9TVTVPNzV0X0FKY01vOGYwUkctSFBValViTFNwLWpIWl82NkthdWd0UmF3?oc=5"
+ },
+ {
   "hecho_id": "clima:Santa Cruz:2026-11-19:viento:1",
   "fecha_hora_local": "2026-11-18 01:05",
   "ts_ms": 1794978331704,
@@ -3118,26 +3138,6 @@
   "departamento": "La Paz",
   "municipio": "Nuestra Señora de La Paz",
   "enlaces": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNMHdBVXBiWnMwaUpvRklleTRULTk4dVdEWlZXT29PeDJBN1Y1WnBpSzhwRzV2cWR1LTJHcFpiX1prNDdvQk9xNzV4R0s2QnFFRXlKQXptWU1TSlJ5ZXR6eG9veTY2UVhYSHJ6d2VUNWRfdXVrZWQ1UG9pdmlGeDB0bHQzT2lTckFXUWdLRnBKUUR0R0phZmR0aXRR?oc=5 | https://news.google.com/rss/articles/CBMixgFBVV95cUxQdWhnNzl3SUJBRFRnT0Z6SzNPSlh0RGZBQzRIZUhCZmtscklaLWdfVFZEWW8tXzlNclAtMzhsRW02VDdtYk85ZmNIeU01OWxXMVJybTRZZDE1UklBWXA2MllyM0RsTlkzdkVUakIySkpxM1Z0TkFvaDZPNEdGcGczY2E2MTYyWm9GaVZrd2pKbTdqRXM0S3RrVXMwSkpQXzd0Qnd0eDFISWVNbklJeTdicS1GcnNJODFEbmJFbnBXRlVUSnp0aWc?oc=5"
- },
- {
-  "hecho_id": "noticia:1x6b70a",
-  "fecha_hora_local": "2026-11-08 22:39",
-  "ts_ms": 1794191958000,
-  "titulo": "El Cairo: Dos trenes colisionan en la provincia egipcia de Giza y deja siete fallecidos - El Potosí",
-  "tipo_amenaza": "antropogénica",
-  "nivel_num": 2,
-  "nivel_preliminar": "naranja",
-  "fallecidos_max": 7,
-  "heridos_max": 0,
-  "cifras_discrepantes": "sí",
-  "n_notas": 2,
-  "fuentes": "El Potosí",
-  "lat": -19.58,
-  "lon": -65.75,
-  "lugar": "Potosí, Potosí",
-  "departamento": "Potosí",
-  "municipio": "Potosí",
-  "enlaces": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNQXRWMmZ3WDFvZTFpSEN4dWQtU29EcWhveGpXMDNWU2ZiMGxmczJIU3ZXMTF6SkdxbnBQdV9UQ0ZxVENfQS1waXRrZjBHd2hxblZ3SHM5OUxMS2M1SFRiWUNqQ01XSkNmeUZmekIwNS1XZmhHbWc2WGl3b0p1TnR3ek10NGVReDBqVGU3MnhNUWFXRk02TUdJbURCeXBXQ3F5YjlzdGYxODRDMGdnVnhnYjc0VUVmMmwydnBfbW96cUprdVVYYkE?oc=5 | https://news.google.com/rss/articles/CBMivgFBVV95cUxOOFZGa1otWnVncGoySlFobGpPbkM5WUV3dkxyVGFNU0VlVEwzVWRHbFR2WFFoZ2l5QzNiUEcxODNZd1RldWQ1WnNod2drbUhwc0hQbHYxSGpFN1VuRTVPNk9zOElnNnczRWhiLWUxYkhvaUE0QVhUcEt3Z2M1MHRzcG1mUG56NmFpcF9KdGRqVVZnak9TVTVPNzV0X0FKY01vOGYwUkctSFBValViTFNwLWpIWl82NkthdWd0UmF3?oc=5"
  },
  {
   "hecho_id": "clima:Oruro:2026-11-08:viento:1",
