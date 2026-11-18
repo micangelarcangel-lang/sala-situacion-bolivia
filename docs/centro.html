@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Centro de mando — Sala de Situación Bolivia</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css?v=20261116d">
+<style>
+.cm{--ofi:#4c8dff;--ins:#a67cff;--sat:#ff8a3d;--mod:#19b8a6;--pre:#8d98ab}
+.cm-top{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:14px;margin:4px 0 14px}
+.cm-parte{background:linear-gradient(160deg,var(--card),var(--soft));border:1px solid var(--line);border-radius:16px;padding:16px 20px}
+.cm-eye{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.cm-parte h1{font-size:26px;line-height:1.2;margin:6px 0 10px}
+.cm-parte h1 b{color:#ff5d5d}
+.cm-ln{display:flex;gap:10px;align-items:flex-start;margin:7px 0;font-size:14.5px;line-height:1.4}
+.cm-ln i{flex:0 0 10px;height:10px;border-radius:50%;margin-top:6px;background:var(--c)}
+.cm-ln small{color:var(--mut)}
+.cm-fam{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.cm-f{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:12px;padding:9px 10px;min-width:0}
+.cm-f b{display:block;font-size:13px}.cm-f span{display:block;font-size:11px;color:var(--mut);line-height:1.3;margin-top:2px}
+.cm-f em{display:block;font-style:normal;font-size:11.5px;margin-top:5px;font-weight:600}
+.cm-main{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:14px;align-items:start}
+.cm-tool{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px;font-size:13px}
+.cm-tool button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;cursor:pointer}
+.cm-tool button.on{background:#0b4f94;color:#fff;border-color:#0b4f94;font-weight:700}
+.cm-tool label{display:flex;gap:5px;align-items:center;color:var(--mut)}
+.cm-tool .sp{flex:1}
+.cm-mw{position:relative}
+.cm-map{height:min(70vh,640px);min-height:440px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--soft)}
+.cm-lab{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2;border-radius:14px}
+.cm-lab span{position:absolute;transform:translate(-50%,-50%);font-size:11px;font-weight:700;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000,0 0 2px #000,0 0 5px #000;white-space:nowrap}
+.cm-lab span.sel{font-size:13px;font-weight:800}
+.cm-leg{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:12px;color:var(--mut)}
+.cm-leg span{display:flex;gap:6px;align-items:center}.cm-leg i{width:16px;height:11px;border-radius:3px;display:inline-block;border:1px solid rgba(128,128,128,.4)}
+.cm-side{display:flex;flex-direction:column;gap:12px}
+.cm-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.cm-box h2{font-size:15px;margin:0 0 2px}.cm-box .cap{font-size:12px;color:var(--mut);margin-bottom:8px}
+.cm-rk{list-style:none;margin:0;padding:0;max-height:330px;overflow:auto}
+.cm-rk li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 4px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:8px}
+.cm-rk li:last-child{border-bottom:0}.cm-rk li:hover,.cm-rk li.on{background:var(--soft)}
+.cm-rk .n{font-weight:800;color:var(--mut);font-size:12px;text-align:center}
+.cm-rk .t{min-width:0}.cm-rk .t b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm-rk .t small{color:var(--mut);font-size:11.5px}
+.cm-ch{display:flex;gap:3px}.cm-ch i{width:11px;height:11px;border-radius:50%;background:var(--c);display:inline-block}.cm-ch i.off{background:transparent;border:1.5px solid var(--line)}
+.cm-cv{font-weight:800;font-size:12px;border-radius:8px;padding:2px 8px;color:#fff;background:var(--c)}
+.cm-fi h3{font-size:16px;margin:0}.cm-fi h3 small{font-weight:500;color:var(--mut);font-size:12.5px}
+.cm-fr{display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;margin:8px 0;font-size:12.8px;line-height:1.35}
+.cm-fr i{width:11px;height:11px;border-radius:50%;background:var(--c);margin-top:3px}.cm-fr.no i{background:transparent;border:1.5px solid var(--line)}
+.cm-fr.no{color:var(--mut)}.cm-fr a{color:var(--brand2)}
+.cm-act{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.cm-mx{margin-top:16px}.cm-mx h2{font-size:18px;margin:0}.cm-mx .cap{font-size:13px;color:var(--mut);margin:2px 0 10px}
+.cm-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+.cm-t th{font-size:11.5px;color:var(--mut);font-weight:700;text-align:center;padding:6px 6px;border-bottom:2px solid var(--line)}
+.cm-t th:first-child{text-align:left}.cm-t th i{display:block;height:3px;border-radius:2px;background:var(--c);margin-bottom:5px}
+.cm-t td{padding:5px 6px;border-bottom:1px solid var(--line);text-align:center;height:46px}
+.cm-t td:first-child{text-align:left;font-weight:600;white-space:nowrap}.cm-t td:last-child{text-align:left;font-size:12.5px}
+.cm-d{display:inline-flex;align-items:center;justify-content:center;width:var(--s);height:var(--s);border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:11.5px}
+.cm-z{color:var(--mut);opacity:.55}
+.cm-nf{background:repeating-linear-gradient(135deg,transparent 0 5px,var(--line) 5px 6px);color:var(--mut);font-size:11px}
+.cm-lec{display:inline-block;border-radius:8px;padding:2px 9px;font-weight:700;font-size:12px;color:#fff;background:var(--c)}
+.cm-ciego{margin-top:10px;padding:10px 14px;border-left:4px solid #f5b700;background:var(--soft);border-radius:0 10px 10px 0;font-size:13.2px;line-height:1.45}
+.cm-nota{margin:14px 0 6px;font-size:12px;color:var(--mut);line-height:1.5}
+.cm-warn{margin-top:8px;padding:8px 12px;border-radius:10px;background:rgba(245,183,0,.13);border:1px solid rgba(245,183,0,.45);font-size:12.8px}
+@media(max-width:1100px){.cm-top,.cm-main{grid-template-columns:minmax(0,1fr)}.cm-fam{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261118a"></script></head>
+<body><div id="hdr"></div><div class="wrap cm" id="app"><p class="vacio">Cargando…</p></div>
+<div class="foot" id="foot"><span>Sala de Situación Bolivia · información preliminar de fuentes abiertas</span><span><a href="index.html">Volver al inicio</a></span></div>
+<script src="clima.js?v=20261116d"></script><script src="perfil.js?v=20261116d"></script><script src="territorio.js?v=20261117b"></script><script src="centro.js?v=20261118a"></script><script>CMD.iniciar()</script></body></html>
