@@ -1,5 +1,25 @@
 [
  {
+  "hecho_id": "noticia:f6huvz",
+  "fecha_hora_local": "2026-11-17 19:53",
+  "ts_ms": 1794959601000,
+  "titulo": "Viacha espera la reparación de viviendas dañadas por explosiones - Red Uno",
+  "tipo_amenaza": "tecnológica",
+  "nivel_num": 0,
+  "nivel_preliminar": "verde",
+  "fallecidos_max": 0,
+  "heridos_max": 0,
+  "cifras_discrepantes": "no",
+  "n_notas": 6,
+  "fuentes": "ANF Agencia de Noticias Fides Bolivia; Acortar.link; Opinión Bolivia; Red Uno",
+  "lat": -16.742,
+  "lon": -68.313,
+  "lugar": "Viacha, La Paz",
+  "departamento": "La Paz",
+  "municipio": "Viacha",
+  "enlaces": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOdTMxbzhZUjhMRDhjS255Mmg2YkliYWdOeEdMMFpHYkpSWUZqLWxybE1TRl92dUVKWnlSZDQ4WWE4Rnl3NFBCVkQ4QVlnSi1jb3NkTVlPUEl1MTBXc0p4OWtYTkVFVDFpaHQwV1p6R0J4SG9SZEd5MlVoWExLY1pBVVE4SVhSdUdVd3NYdWdreGM3aTZELWZCSF9QS1FoNWx3VFpqWW5MdzhjVEl6Sm1ObXlnenA?oc=5 | https://news.google.com/rss/articles/CBMi6AFBVV95cUxOYVBNRmU0dlBMZnNKcG9sTnA2NXMzczZ1THBFYUNoR1luWTR0T205MkVEYmpyancxT1FwMldTTEhVY2twSWJGRkY2SmJPZjk2RzVQYkg2WEJIb3hXa2JSeTZ1bjFJd3l1REVsUXhFVEIyckQyN0pwS1JJcFV5OHgxMkFHcVF2OWN6WUg1aGZ6NWxjTnJ6TnVxVTB5MGpBazBYVXpVTEhNeGdPc19lQW5aRERPOEhQMzFUNGlnZDczb2pwNGhLYWNYS3AxV0djbUl3Vm9VTHJ6NDJBNGUtU0xlUlozSXk0SWtE?oc=5 | https://news.google.com/rss/articles/CBMi2wFBVV95cUxQeUt4cUw4TFlGWU5nOHo5NDNJOHVlTEEydGFudUNwQlZxLWhyV1h3SlVwbktYQTJfNG12ZFNaTFdKTloyRG9QZVZiR2JqM3I2eEs4eDBFWGRTN0VQbVZwXzJrcEZsNWdwT0tQX3VjaVB2ejV2N1AyYkVMV2FWNHhySGNmLXZmWFhENVFTWkpmRmVUTnE4dnhfbmVLbUwzTmpQak0yc0VWU3Yxcl9XbHYzeFYtcEFyZ3Z2by1iZmNtVERaQjVaVjA5NzBucUg5X0JCMThteGQxcXRZVnM?oc=5"
+ },
+ {
   "hecho_id": "noticia:ddtlwz",
   "fecha_hora_local": "2026-11-17 16:30",
   "ts_ms": 1794947429000,
@@ -130,14 +150,14 @@
   "fallecidos_max": 0,
   "heridos_max": 0,
   "cifras_discrepantes": "no",
-  "n_notas": 6,
-  "fuentes": "ANF Agencia de Noticias Fides Bolivia; Acortar.link; La Patria Bolivia; Opinión Bolivia; Red Uno",
+  "n_notas": 1,
+  "fuentes": "La Patria Bolivia",
   "lat": -16.742,
   "lon": -68.313,
   "lugar": "Viacha, La Paz",
   "departamento": "La Paz",
   "municipio": "Viacha",
-  "enlaces": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQNmhucWdrNGQ1WTFFamxhd1lTZVowQ19jNmJaZ05SMGtiQWVHcG9USS15Y2lhaWpwNzVCRTV5ak56T0h1QXppb0tRbzg2VDBscGlzYjFaZGs5Q0RIV0tXVWU1RnFMeGlPblEtZWVQQnhpYmlMUzlOdkVLMWVPRmY3dkJhM3ZxN0s0V3YyOTA0QkpHY3ByYmR2bQ?oc=5 | https://news.google.com/rss/articles/CBMi6AFBVV95cUxOYVBNRmU0dlBMZnNKcG9sTnA2NXMzczZ1THBFYUNoR1luWTR0T205MkVEYmpyancxT1FwMldTTEhVY2twSWJGRkY2SmJPZjk2RzVQYkg2WEJIb3hXa2JSeTZ1bjFJd3l1REVsUXhFVEIyckQyN0pwS1JJcFV5OHgxMkFHcVF2OWN6WUg1aGZ6NWxjTnJ6TnVxVTB5MGpBazBYVXpVTEhNeGdPc19lQW5aRERPOEhQMzFUNGlnZDczb2pwNGhLYWNYS3AxV0djbUl3Vm9VTHJ6NDJBNGUtU0xlUlozSXk0SWtE?oc=5 | https://news.google.com/rss/articles/CBMi2wFBVV95cUxQeUt4cUw4TFlGWU5nOHo5NDNJOHVlTEEydGFudUNwQlZxLWhyV1h3SlVwbktYQTJfNG12ZFNaTFdKTloyRG9QZVZiR2JqM3I2eEs4eDBFWGRTN0VQbVZwXzJrcEZsNWdwT0tQX3VjaVB2ejV2N1AyYkVMV2FWNHhySGNmLXZmWFhENVFTWkpmRmVUTnE4dnhfbmVLbUwzTmpQak0yc0VWU3Yxcl9XbHYzeFYtcEFyZ3Z2by1iZmNtVERaQjVaVjA5NzBucUg5X0JCMThteGQxcXRZVnM?oc=5"
+  "enlaces": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQNmhucWdrNGQ1WTFFamxhd1lTZVowQ19jNmJaZ05SMGtiQWVHcG9USS15Y2lhaWpwNzVCRTV5ak56T0h1QXppb0tRbzg2VDBscGlzYjFaZGs5Q0RIV0tXVWU1RnFMeGlPblEtZWVQQnhpYmlMUzlOdkVLMWVPRmY3dkJhM3ZxN0s0V3YyOTA0QkpHY3ByYmR2bQ?oc=5"
  },
  {
   "hecho_id": "noticia:19ko86o",
