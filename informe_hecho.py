@@ -139,6 +139,8 @@ def cifras(texto):
                 for j in range(i + 1, min(i + 4, len(tok))):
                     x = tok[j]
                     n = int(x) if x.isdigit() else NUM.get(x)
+                    if n == 1 and j > i + 1 and w.endswith("s"):   # «heridos en un choque»: con el plural, ese «un» es artículo, no una cantidad («muerte de un joven» sí es 1)
+                        continue
                     if n and not (j + 1 < len(tok) and tok[j + 1] in _UNIDAD):
                         v = n; break
                     if x.startswith(("herid", "fallecid", "muert", "lesionad")):
