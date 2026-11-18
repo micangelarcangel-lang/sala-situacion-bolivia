@@ -268,11 +268,15 @@
    "Potosí": 4
   },
   "2026-11-18": {
-   "Beni": 57,
-   "Santa Cruz": 136,
-   "La Paz": 9,
-   "Chuquisaca": 1,
-   "Oruro": 3
+   "Beni": 329,
+   "Santa Cruz": 346,
+   "La Paz": 73,
+   "Chuquisaca": 15,
+   "Oruro": 3,
+   "Tarija": 21,
+   "Potosí": 1,
+   "Cochabamba": 7,
+   "Pando": 7
   }
  },
  "municipios": {
@@ -776,26 +780,26 @@
    "Guayaramerín (Beni)": 18
   },
   "2026-11-18": {
-   "Concepción (Santa Cruz)": 26,
-   "San José (Santa Cruz)": 19,
+   "Magdalena (Beni)": 53,
+   "El Puente (Santa Cruz)": 51,
+   "San Andrés (Beni)": 47,
+   "Exaltación (Beni)": 37,
+   "Concepción (Santa Cruz)": 33,
+   "Huacaraje (Beni)": 31,
+   "San José (Santa Cruz)": 29,
+   "San Javier (Beni)": 28,
+   "Santa Rosa (Santa Cruz)": 26,
+   "San Ramón (Beni)": 23,
+   "Santa Ana (Beni)": 23,
+   "Cabezas (Santa Cruz)": 21,
    "San Ignacio (Santa Cruz)": 19,
-   "San Rafael (Santa Cruz)": 12,
-   "Pailón (Santa Cruz)": 10,
-   "San Ramón (Beni)": 10,
-   "San Miguel (Santa Cruz)": 9,
-   "San Andrés (Beni)": 9,
-   "Magdalena (Beni)": 8,
-   "Guayaramerín (Beni)": 7,
-   "El Puente (Santa Cruz)": 7,
-   "Luribay (La Paz)": 6,
-   "Santa Rosa (Beni)": 6,
-   "General Saavedra (Santa Cruz)": 5,
-   "Ascención de Guarayos (Santa Cruz)": 5
+   "Yacuiba (Tarija)": 18,
+   "Guayaramerín (Beni)": 16
   }
  },
- "actualizado": "2026-11-18T19:55:21.548656Z",
+ "actualizado": "2026-11-18T20:51:29.031826Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1908,
+ "detecciones_fuera_de_limites": 2030,
  "slack_dia": "2026-11-18"
 }
