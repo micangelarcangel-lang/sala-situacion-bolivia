@@ -28,7 +28,7 @@ var HID = (function () {
       '<div class="cap">Los <b>avisos</b> son oficiales (SENAMHI) y se publican por departamento, ríos y poblaciones, no por municipio. El <b>caudal</b> es un indicador de modelo (GloFAS, 9 puntos), no un aviso. No hay capa de ríos ni cuencas en este sistema (pendiente). Información preliminar.</div>' +
       '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período de avisos</b><select id="hP"><option value="vig">Vigentes hoy</option><option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="todo">Todo lo disponible</option></select></div>' +
       '<div class="xs1"><b>Capas</b><label><input type="checkbox" id="hPr" checked> Reportes de prensa</label></div></div>' +
-      '<div class="xhelp" id="hH"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="hN" checked> Departamentos</label></div><div class="xmap" id="hMap"></div><div class="xleg" id="hL"></div><div class="xlab" id="hLb"></div></div>' +
+      '<div class="xhelp" id="hH"></div><div id="hTri"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="hN" checked> Departamentos</label></div><div class="xmap" id="hMap"></div><div class="xleg" id="hL"></div><div class="xlab" id="hLb"></div></div>' +
       '<div class="xside"><div id="hK"></div><div id="hAv"></div><div id="hSt"></div></div></div>' +
       '<div class="xc" style="margin-top:12px"><h3>Avisos por departamento en el tiempo</h3><div id="hGm" class="nota"></div><div id="hG"></div><p class="nota">Cada barra es un aviso, del primer al último día de vigencia; el color es el nivel.</p></div>' +
       '<div class="xc" style="margin-top:12px"><div class="xtabs"><button class="on" data-s="hTa">Avisos (lista)</button><button data-s="hTc">Caudales (9 puntos)</button><button data-s="hTp">Prensa</button><button data-s="hTh">Antecedentes 1970–2015</button></div><div id="hTa"></div><div id="hTc" style="display:none"></div><div id="hTp" style="display:none"></div><div id="hTh" style="display:none"></div></div>';
@@ -64,8 +64,8 @@ var HID = (function () {
   }
   function kpis(L) {
     var o = nivDep(L), mx = L.reduce(function (a, x) { return Math.max(a, x._n); }, -1), rios = {}; L.forEach(function (a) { (a.rios || []).forEach(function (r) { rios[r] = 1; }); });
-    var ms = Object.keys(MEN), pob = ms.reduce(function (s, k) { return s + (T.M[k].pob || 0); }, 0), vig = AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY; });
-    $("hK").innerHTML = '<div class="xc"><div class="xk"><div><b>' + L.length + '</b><span>avisos</span></div><div><b style="color:' + (mx < 0 ? "inherit" : NC[Math.min(3, mx)]) + '">' + (mx < 0 ? "—" : NT[Math.min(3, mx)]) + '</b><span>nivel máximo</span></div><div><b>' + Object.keys(o).length + '</b><span>departamentos</span></div><div><b>' + Object.keys(rios).length + '</b><span>ríos citados</span></div></div><p class="nota" style="margin:8px 0 0">' + (ms.length ? ms.length + ' municipios mencionados por nombre (' + A.fmt(pob) + ' hab. en total; <b>no es la población en riesgo</b>). ' : '') + (vig.length ? vig.length + ' aviso(s) vigente(s) hoy.' : '<b>No hay avisos hidrológicos vigentes hoy.</b>') + '</p></div>';
+    var ms = Object.keys(MEN), pob = ms.reduce(function (s, k) { return s + (T.M[k].pob || 0); }, 0), vig = AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY; }), modAltos = ST.filter(function (p) { return enS(p) && (p.nivel || 0) >= 2; }).length;
+    $("hK").innerHTML = '<div class="xc"><div class="xk"><div><b>' + L.length + '</b><span>avisos</span></div><div><b style="color:' + (mx < 0 ? "inherit" : NC[Math.min(3, mx)]) + '">' + (mx < 0 ? "—" : NT[Math.min(3, mx)]) + '</b><span>nivel máximo</span></div><div><b>' + Object.keys(o).length + '</b><span>departamentos</span></div><div><b>' + Object.keys(rios).length + '</b><span>ríos citados</span></div></div><p class="nota" style="margin:8px 0 0">' + (ms.length ? ms.length + ' municipios mencionados por nombre (' + A.fmt(pob) + ' hab. en total; <b>no es la población en riesgo</b>). ' : '') + (vig.length ? vig.length + ' aviso(s) vigente(s) hoy.' : '<b>No hay avisos hidrológicos vigentes hoy.</b>') + (modAltos ? ' El modelo GloFAS marca <b>' + modAltos + ' punto' + (modAltos === 1 ? '' : 's') + ' sobre el umbral alto (P90)</b>: ver triangulación.' : '') + '</p></div>';
   }
   function tarjetaAviso(L) {
     var a = selA != null && L.indexOf(selA) >= 0 ? selA : L[0]; selA = a || null;
@@ -101,11 +101,81 @@ var HID = (function () {
     var h = (T.dh && T.dh.departamentos) || {}, tp = ["Inundación", "Riada", "Aluvión", "Desbordamiento", "Flujo Lodo"], fil = Object.keys(h).sort().filter(function (d) { return !LG.d || d === LG.d; }).map(function (d) { var n = 0, mu = 0, af = 0; tp.forEach(function (t) { var x = h[d][t]; if (x) { n += x[0]; mu += x[1]; af += x[2]; } }); return {d: d, n: n, mu: mu, af: af}; }).sort(function (a, b) { return b.n - a.n; });
     $("hTh").innerHTML = '<p class="nota"><b>Limitación:</b> DesInventar (UNDRR) cubre 1970–2015, con subregistro, y no incluye eventos recientes. Suma inundación, riada, aluvión, desbordamiento y flujo de lodo. Solo es contexto.</p><table class="xt2"><tr><th align="left">Departamento</th><th>Eventos</th><th>Fallecidos</th><th>Afectados</th></tr>' + fil.map(function (r) { return '<tr><td>' + esc(r.d) + '</td><td align="center">' + r.n + '</td><td align="center">' + r.mu + '</td><td align="center">' + A.fmt(r.af) + '</td></tr>'; }).join("") + '</table>';
   }
+  /* ---------- Triangulación por punto de río: modelo GloFAS – aviso SENAMHI – prensa ---------- */
+  function normP(s) { return norm(s).replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim(); }
+  function vigDep(d) { return AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY && (a.departamentos || []).indexOf(d) >= 0; }); }
+  function ultDep(d) { var u = null; AV.forEach(function (a) { if ((a.departamentos || []).indexOf(d) >= 0 && (!u || a.fin > u.fin)) u = a; }); return u; }
+  function prDep(d) { var t = Date.now() - 30 * DIA; return PR.filter(function (e) { return e.ts >= t && (e.departamentos || []).indexOf(d) >= 0; }); }
+  function prLoc(p, L) { var re = new RegExp("(^| )" + normP(p.nombre) + "( |$)"); return L.filter(function (e) { return re.test(normP((e.titulo || "") + " " + (e.lugar || ""))); }); }
+  function lecturaP(p) {
+    var alto = (p.nivel || 0) >= 2, av = vigDep(p.departamento).length > 0;
+    if (alto && av) return {k: "conc", t: "Concordante", c: "#d7263d", f: "#fff", d: "El modelo y el SENAMHI señalan crecida en el departamento."};
+    if (alto) return {k: "mod", t: "Solo modelo", c: "#f26a1b", f: "#111", d: "Sin aviso oficial vigente: vigilar y confirmar con el SENAMHI."};
+    if (av) return {k: "of", t: "Solo oficial", c: "#f5b700", f: "#111", d: "Hay aviso oficial vigente en el departamento; el aviso puede referirse a otros ríos que el modelo no cubre."};
+    return {k: "no", t: "Sin señal", c: "#2e9e5b", f: "#fff", d: "Ninguna de las tres fuentes señala crecida en este punto."};
+  }
+  function cssTri() {
+    if ($("hTriCss")) return; var s = document.createElement("style"); s.id = "hTriCss";
+    s.textContent = ".hx-head{padding:9px 13px;margin:4px 0 12px;background:var(--soft);border-radius:8px;font-size:13.5px;line-height:1.55}.hx-head p{margin:2px 0}.hx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:12px}" +
+      ".hx-card{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:10px 12px;background:var(--card);cursor:pointer}.hx-card:hover,.hx-card:focus{outline:2px solid var(--brand2);outline-offset:1px}" +
+      ".hx-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.hx-top b{display:block;font-size:15px}.hx-top .hx-r{font-size:12px;color:var(--mut)}" +
+      ".hx-chip{font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap}.hx-ch{height:128px;margin:6px 0 2px}" +
+      ".hx-src{display:grid;grid-template-columns:64px 1fr;gap:3px 8px;margin:4px 0;font-size:12px;line-height:1.4}.hx-src dt{font-weight:700;color:var(--brand2);text-transform:uppercase;font-size:10.5px;letter-spacing:.03em;padding-top:1px}.hx-src dd{margin:0}" +
+      ".hx-rd{font-size:12px;margin:5px 0 0;color:var(--mut)}.hx-rd b{color:var(--ink)}";
+    document.head.appendChild(s);
+  }
+  function miniGraf(el, p) {
+    var tx = X.css("--mut") || "#888", ln = X.css("--line") || "#ccc", i = p.fechas.indexOf(p.hoy); if (i < 0) i = p.fechas.length - 1;
+    var pas = p.caudal_m3s.map(function (v, k) { return k <= i ? v : null; }), fut = p.caudal_m3s.map(function (v, k) { return k >= i ? v : null; });
+    var ban = (p.p90 || []).map(function (v, k) { return Math.max(0, v - (p.p50 || [])[k]); }), ch = echarts.init(el, null, {renderer: "svg"});
+    ch.setOption({animation: false, grid: {left: 42, right: 8, top: 20, bottom: 20},
+      tooltip: {trigger: "axis", confine: true, formatter: function (ps) { var k = ps[0].dataIndex; return fechaC(p.fechas[k]) + (k > i ? " (previsto)" : "") + '<br>Caudal modelado: <b>' + A.fmt(p.caudal_m3s[k]) + '</b> m³/s<br>Mediana: ' + A.fmt((p.p50 || [])[k]) + ' · P90: ' + A.fmt((p.p90 || [])[k]); }},
+      xAxis: {type: "category", data: p.fechas, boundaryGap: false, axisLabel: {color: tx, fontSize: 9.5, interval: 13, formatter: function (v) { return fechaC(v); }}, axisLine: {lineStyle: {color: ln}}, axisTick: {show: false}},
+      yAxis: {type: "value", min: 0, splitNumber: 2, axisLabel: {color: tx, fontSize: 9.5, formatter: function (v) { return v >= 1000 ? (v / 1000) + " mil" : v; }}, splitLine: {lineStyle: {color: ln}}},
+      series: [{type: "line", data: p.p50 || [], stack: "b", symbol: "none", lineStyle: {opacity: 0}, silent: true},
+        {type: "line", data: ban, stack: "b", symbol: "none", lineStyle: {opacity: 0}, areaStyle: {color: "#8a97a8", opacity: .28}, silent: true},
+        {type: "line", data: p.p90 || [], symbol: "none", lineStyle: {width: 1, type: "dashed", color: "#d7263d"}, silent: true},
+        {type: "line", data: pas, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8"}, markLine: {symbol: "none", silent: true, label: {formatter: "hoy", color: tx, fontSize: 9.5}, lineStyle: {color: tx, type: "solid", width: 1}, data: [{xAxis: p.fechas[i]}]}},
+        {type: "line", data: fut, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8", type: "dashed"}}]});
+  }
+  function triang() {
+    var box = $("hTri"); if (!box) return; cssTri();
+    [].forEach.call(box.querySelectorAll(".hx-ch"), function (e) { var c = echarts.getInstanceByDom(e); if (c) c.dispose(); });
+    var Lp = ST.map(function (p, i) { return {p: p, i: i}; }).filter(function (x) { return enS(x.p); }).sort(function (a, b) { return (b.p.ratio_p90_max_10d || 0) - (a.p.ratio_p90_max_10d || 0); });
+    if (!Lp.length) { box.innerHTML = '<section class="xc" style="margin-top:12px"><h3>Situación hidrológica hoy · triangulación</h3><p class="nota">Sin puntos de río del modelo en el filtro elegido. El modelo GloFAS cubre solo 9 puntos de grandes ríos.</p></section>'; return; }
+    var vig = AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY && enA(a); }), u = null, Ls = Lp.map(function (x) { return x.p; });
+    AV.forEach(function (a) { if (enA(a) && (!u || a.fin > u.fin)) u = a; });
+    var altos = Ls.filter(function (p) { return (p.nivel || 0) >= 2; }), g = {mod: [], conc: [], of: []};
+    Ls.forEach(function (p) { var k = lecturaP(p).k; if (g[k]) g[k].push(p); });
+    var nom = function (L) { return L.map(function (p) { return '<b>' + esc(p.nombre) + '</b> (' + esc(p.rio) + ')'; }).join(", "); };
+    var l1 = altos.length ? '<b>' + altos.length + ' de ' + Ls.length + ' punto' + (Ls.length === 1 ? '' : 's') + '</b> con caudal modelado sobre el umbral alto (P90): ' + altos.map(function (p) { return '<b>' + esc(p.nombre) + '</b> · ' + esc(p.rio) + ' (' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del P90)'; }).join("; ") + '.' : '<b>Ningún punto</b> de los ' + Ls.length + ' supera el umbral alto (P90) según el modelo.';
+    var l2 = (vig.length ? '<b>' + vig.length + ' aviso' + (vig.length === 1 ? '' : 's') + ' hidrológico' + (vig.length === 1 ? '' : 's') + ' vigente' + (vig.length === 1 ? '' : 's') + '</b> del SENAMHI hoy' : '<b>Sin aviso hidrológico vigente</b> del SENAMHI hoy') + (u ? ' (el más reciente, N° ' + esc(u.numero || "s/n") + ', nivel ' + NT[Math.min(3, u._n)].toLowerCase() + ', ' + (u.fin >= HOY ? 'vigente hasta' : 'terminó') + ' el ' + fechaC(u.fin) + ')' : '') + '.';
+    var cr = g.conc.length ? "#d7263d" : g.mod.length ? "#f26a1b" : g.of.length ? "#f5b700" : "#2e9e5b";
+    var l3 = g.conc.length ? 'Lectura: el modelo y el SENAMHI coinciden en ' + nom(g.conc) + '.' : g.mod.length ? 'Lectura: señal solo del modelo en ' + nom(g.mod) + '; sin confirmación oficial. Vigilar y confirmar con el SENAMHI.' : g.of.length ? 'Lectura: hay aviso oficial vigente y el modelo no marca crecida en los puntos monitoreados (el aviso puede referirse a otros ríos).' : 'Lectura: sin señal de crecida en ninguna de las fuentes hoy.';
+    var act = (T.D.caudales || {}).actualizado, actT = act ? new Date(act).toLocaleString("es-BO", {timeZone: "America/La_Paz", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"}) : "sin dato";
+    box.innerHTML = '<section class="xc" style="margin-top:12px"><h3>Situación hidrológica hoy · triangulación modelo – SENAMHI – prensa</h3>' +
+      '<div class="hx-head" style="border-left:5px solid ' + cr + '"><p>' + l1 + '</p><p>' + l2 + '</p><p><b>' + l3.replace(/^Lectura: /, "Lectura: ") + '</b></p><p class="nota" style="margin:4px 0 0">Lectura automática, por validar con el CCES. Modelo actualizado: ' + esc(actT) + ' (hora de Bolivia).</p></div>' +
+      '<div class="hx-grid">' + Lp.map(function (x) {
+        var p = x.p, lec = lecturaP(p), vd = vigDep(p.departamento), ud = ultDep(p.departamento), pd = prDep(p.departamento), pl = prLoc(p, pd);
+        var ofi = vd.length ? '<b>' + vd.length + ' aviso' + (vd.length === 1 ? '' : 's') + ' vigente' + (vd.length === 1 ? '' : 's') + '</b> en ' + esc(p.departamento) + ' (nivel ' + NT[Math.min(3, Math.max.apply(0, vd.map(function (a) { return a._n; })))].toLowerCase() + ')' : 'Sin aviso vigente' + (ud ? ' · último en ' + esc(p.departamento) + ': N° ' + esc(ud.numero || "s/n") + ', ' + NT[Math.min(3, ud._n)].toLowerCase() + ', terminó el ' + fechaC(ud.fin) : ' · sin avisos hidrológicos registrados en ' + esc(p.departamento));
+        return '<article class="hx-card" data-i="' + x.i + '" tabindex="0" role="button" style="--c:' + lec.c + '" aria-label="' + esc(p.nombre + ', ' + p.rio + ': ' + lec.t) + '"><div class="hx-top"><div><b>' + esc(p.nombre) + '</b><span class="hx-r">' + esc(p.rio) + ' · ' + esc(p.departamento) + '</span></div><span class="hx-chip" style="background:' + lec.c + ';color:' + lec.f + '">' + lec.t + '</span></div>' +
+          '<div class="hx-ch" role="img" aria-label="Caudal modelado en ' + esc(p.nombre) + ': ' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del umbral P90 en los próximos 10 días"></div>' +
+          '<dl class="hx-src"><dt>Modelo</dt><dd>' + esc(p.estado) + ' · ' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del P90 (máx. 10 d: ' + A.fmt(p.caudal_max_10d) + ' m³/s)</dd><dt>SENAMHI</dt><dd>' + ofi + '</dd><dt>Prensa</dt><dd>' + pd.length + ' nota' + (pd.length === 1 ? '' : 's') + ' hidrológica' + (pd.length === 1 ? '' : 's') + ' en ' + esc(p.departamento) + ' (30 d) · ' + (pl.length ? '<b>' + pl.length + ' mencionan la localidad</b>' : 'ninguna menciona la localidad') + '</dd></dl>' +
+          '<p class="hx-rd"><b>' + lec.t + ':</b> ' + lec.d.charAt(0).toLowerCase() + lec.d.slice(1) + '</p></article>';
+      }).join("") + '</div>' +
+      '<p class="nota" style="margin:8px 0 0">Gráficos: línea azul = caudal modelado por GloFAS (continua hasta hoy, discontinua = previsión; no es caudal observado); banda gris = entre la mediana (P50) y el umbral alto (P90) de la climatología 1993–2022 para cada fecha; línea roja discontinua = P90. Es un indicador de modelo en grandes ríos, no una alerta oficial. La prensa se cuenta por departamento; «mencionan la localidad» es coincidencia por nombre, por validar. Clic en una tarjeta para ver el detalle y ubicarla en el mapa.</p></section>';
+    Lp.forEach(function (x) { var c = box.querySelector('.hx-card[data-i="' + x.i + '"] .hx-ch'); if (c) miniGraf(c, x.p); });
+    [].forEach.call(box.querySelectorAll(".hx-card"), function (c) {
+      var ir = function () { selS = +c.dataset.i; if (map && map._ok) map.getSource("st").setData(geoSt()); caudal(); $("hSt").scrollIntoView({behavior: "smooth", block: "center"}); };
+      c.onclick = ir; c.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ir(); } };
+    });
+    if (!window._hxRs) { window._hxRs = 1; window.addEventListener("resize", function () { [].forEach.call(document.querySelectorAll("#hTri .hx-ch"), function (e) { var c = echarts.getInstanceByDom(e); if (c) c.resize(); }); }); }
+  }
   function dibuja() {
     var L = filtrados(); leyenda();
     $("hH").innerHTML = '<b>' + L.length + ' aviso' + (L.length === 1 ? "" : "s") + ' hidrológico' + (L.length === 1 ? "" : "s") + '</b> en ' + esc(LUGAR.etiqueta(LG)) + (LG.m ? (MEN[LG.d + "|" + LG.m] != null ? " — <b>el municipio figura por nombre</b> en un aviso" : " — el municipio <b>no figura por nombre</b> en los avisos (el aviso es del departamento)") : "") + ' · ' + ({vig: "vigentes hoy", 7: "últimos 7 días", 30: "últimos 30 días", todo: "todo lo disponible"})[st.p] + ' <span class="nota">— Fuente: SENAMHI. Los avisos se publican por departamento; el color del mapa no implica que todo el departamento esté en riesgo.</span>';
     if (map && map._ok) { map.getSource("d").setData(geoDep(L)); map.getSource("men").setData(geoMen(L)); map.getSource("pr").setData(geoPr()); rotular(); } else MEN = menc(L);
-    kpis(L); tarjetaAviso(L); caudal(); gantt(L); tablas(L);
+    kpis(L); triang(); tarjetaAviso(L); caudal(); gantt(L); tablas(L);
   }
   function iniciar() {
     TERR.cargar().then(function (t) { T = t; A = TERR.api; A.estilos(); X.header("modulo.html"); document.title = "Hidrológica — Sala de Situación Bolivia"; preparar(T.D); $("app").innerHTML = html();
