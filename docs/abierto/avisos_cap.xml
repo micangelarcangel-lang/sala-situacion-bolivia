@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Reproducción en CAP 1.2 de los avisos vigentes de SENAMHI; la fuente oficial es senamhi.gob.bo. Municipios por intersección de polígonos (aproximado). -->
+<!-- Reproducción en CAP 1.2 de los avisos vigentes de SENAMHI; la fuente oficial es senamhi.gob.bo. Municipios por intersección de polígonos (aproximado). Severidad según el color del aviso: amarilla = Moderate, naranja = Severe, roja = Extreme (convención de la sala, no de SENAMHI). -->
 <alerts xmlns:cap="urn:oasis:names:tc:emergency:cap:1.2">
   <alert>
     <identifier>senamhi-96-26</identifier>
