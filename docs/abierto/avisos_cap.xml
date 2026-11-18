@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reproducción en CAP 1.2 de los avisos vigentes de SENAMHI; la fuente oficial es senamhi.gob.bo. Municipios por intersección de polígonos (aproximado). -->
+<alerts xmlns:cap="urn:oasis:names:tc:emergency:cap:1.2">
+  <alert>
+    <identifier>senamhi-96-26</identifier>
+    <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
+    <sent>2026-11-17T18:16:48-04:00</sent>
+    <status>Actual</status>
+    <msgType>Alert</msgType>
+    <source>SENAMHI Bolivia</source>
+    <scope>Public</scope>
+    <info>
+      <language>es-BO</language>
+      <category>Met</category>
+      <event>Ascenso de temperaturas</event>
+      <urgency>Expected</urgency>
+      <severity>Severe</severity>
+      <certainty>Likely</certainty>
+      <effective>2026-11-18T00:00:00-04:00</effective>
+      <expires>2026-11-20T23:59:59-04:00</expires>
+      <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
+      <headline>AVISO METEOROLÓGICO N° 96/26 — Ascenso de temperaturas</headline>
+      <description>SE PRONOSTICA TEMPERATURAS MÁXIMAS POR ENCIMA DE SU PROMEDIO, ALCANZANDO TEMPERATURAS ENTRE 36 °C Y 41 °C DESDE EL DÍA MIÉRCOLES 18 HASTA EL DÍA VIERNES 20 DE NOVIEMBRE EN:</description>
+      <web>https://sena.senamhi.gob.bo/public/forecast-public-reports/652</web>
+      <area>
+        <areaDesc>Charagua (Santa Cruz), San Ignacio (Santa Cruz), Concepción (Santa Cruz), San Matías (Santa Cruz), San José (Santa Cruz), Baures (Beni), Urubicha (Santa Cruz), Exaltación (Beni), Magdalena (Beni), Pailón (Santa Cruz), Puerto Suarez (Santa Cruz), Villa Montes (Tarija), El Carmen Rivero Tórrez (Santa Cruz), San Andrés (Beni), San Rafael (Santa Cruz), San Miguel (Santa Cruz), Ascención de Guarayos (Santa Cruz), San Javier (Beni), San Joaquín (Beni), Macharetí (Chuquisaca), San Ramón (Beni), El Puente (Santa Cruz), Roboré (Santa Cruz), Huacaraje (Beni), San Julián (Santa Cruz), Cabezas (Santa Cruz), Cuatro Cañadas (Santa Cruz), Loreto (Beni), Yacuiba (Tarija), Caraparí (Tarija), Gutiérrez (Santa Cruz), San Antonio de Lomerio (Santa Cruz), San Javier (Santa Cruz), Puerto Siles (Beni), Trinidad (Beni), Boyuibe (Santa Cruz), Puerto Quijarro (Santa Cruz), Lagunillas (Santa Cruz), Camiri (Santa Cruz), Huacaya (Chuquisaca), Cuevo (Santa Cruz), San Ramón (Santa Cruz)</areaDesc>
+      </area>
+    </info>
+  </alert>
+  <alert>
+    <identifier>senamhi-95-26</identifier>
+    <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
+    <sent>2026-11-15T17:48:26-04:00</sent>
+    <status>Actual</status>
+    <msgType>Alert</msgType>
+    <source>SENAMHI Bolivia</source>
+    <scope>Public</scope>
+    <info>
+      <language>es-BO</language>
+      <category>Met</category>
+      <event>Viento moderado, temporalmente fuerte</event>
+      <urgency>Expected</urgency>
+      <severity>Severe</severity>
+      <certainty>Likely</certainty>
+      <effective>2026-11-16T00:00:00-04:00</effective>
+      <expires>2026-11-18T23:59:59-04:00</expires>
+      <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
+      <headline>AVISO METEOROLÓGICO N° 95/26 — Viento moderado, temporalmente fuerte</headline>
+      <description>SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DE DIRECCIÓN NOROESTE, CON VELOCIDADES ENTRE 60 Y 90 km/h, A REGISTRARSE DESDE EL DÍA LUNES 16 HASTA EL DÍA MIÉRCOLES 18 DE NOVIEMBRE DE 2026, AFECTANDO A:</description>
+      <web>https://sena.senamhi.gob.bo/public/forecast-public-reports/651</web>
+      <area>
+        <areaDesc>Charagua (Santa Cruz), Pailón (Santa Cruz), Yapacaní (Santa Cruz), El Puente (Santa Cruz), San Julián (Santa Cruz), Cuatro Cañadas (Santa Cruz), Santa Rosa (Santa Cruz), San Pedro (Santa Cruz), Cabezas (Santa Cruz), Buena Vista (Santa Cruz), San Juan (Santa Cruz), Warnes (Santa Cruz), Santa Cruz de la Sierra (Santa Cruz), San Carlos (Santa Cruz), Portachuelo (Santa Cruz), Okinawa Uno (Santa Cruz), La Guardia (Santa Cruz), Porongo (Santa Cruz), El Torno (Santa Cruz), Fernández Alonso (Santa Cruz), Cotoca (Santa Cruz), San Antonio de Lomerio (Santa Cruz), General Saavedra (Santa Cruz), Mineros (Santa Cruz), San Ramón (Santa Cruz), Colpa Bélgica (Santa Cruz), Montero (Santa Cruz)</areaDesc>
+      </area>
+    </info>
+  </alert>
+</alerts>

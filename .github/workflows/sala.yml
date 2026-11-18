@@ -61,6 +61,9 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
         run: python alerta_sismo.py
+      - name: Datos abiertos (GeoJSON, CAP, CSV, Data Package; si falla, no detiene el sistema)
+        continue-on-error: true
+        run: python exportar_abiertos.py docs
       - name: Guardar resultados en el repositorio
         run: |
           git config user.name "sala-bot"

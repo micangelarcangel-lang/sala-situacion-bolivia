@@ -6,6 +6,12 @@
 <div class="callout" id="ay"></div>
 <div class="grid g4" id="k" style="margin-bottom:16px"></div>
 <div class="card"><h2>Fuentes consultadas en cada ciclo</h2><div style="overflow:auto"><table id="t"><tr><th>Fuente</th><th>Institución</th><th>Estado</th><th>Detalle del último ciclo</th></tr></table></div></div>
+<div class="card" style="margin-top:16px"><h2>Datos abiertos para integrar con otros sistemas</h2><p>Los datos de la sala se publican en formatos estándar, actualizados en cada ciclo, para que otros sistemas los lean sin pedir permiso. <b>Información preliminar de fuentes abiertas</b>; el índice de riesgo es relativo entre municipios y está por validar con el CCES. Licencia por definir; cada fuente original conserva la suya.</p>
+<table><tr><th>Archivo</th><th>Estándar</th><th>Contenido</th></tr>
+<tr><td><a href="abierto/eventos.geojson">eventos.geojson</a></td><td>GeoJSON (RFC 7946)</td><td>Hechos con ubicación: tipo, nivel, fecha, fuente, confianza.</td></tr>
+<tr><td><a href="abierto/avisos_cap.xml">avisos_cap.xml</a></td><td>CAP 1.2 (OASIS)</td><td>Avisos vigentes de SENAMHI con los municipios alcanzados.</td></tr>
+<tr><td><a href="abierto/riesgo_municipal.csv">riesgo_municipal.csv</a></td><td>CSV UTF-8</td><td>Índice de riesgo diario de los 339 municipios (riesgo, amenaza, vulnerabilidad, falta de capacidad).</td></tr>
+<tr><td><a href="abierto/datapackage.json">datapackage.json</a></td><td>Frictionless Data Package</td><td>Descripción de los tres archivos anteriores.</td></tr></table></div>
 <div class="card" style="margin-top:16px"><h2>Cómo se triangula la información</h2><p>Cada evento se agrupa en una <b>familia de fuente</b>: <b>Oficial nacional</b> (SENAMHI, Observatorio San Calixto, MSD), <b>Satélite</b> (NASA FIRMS, GDACS), <b>Internacional</b> (USGS, OMS/OPS), <b>Modelo</b> (ERA5, GloFAS, Open-Meteo) y <b>Prensa</b>. La confianza es <b>Alta</b> con 3 o más familias, <b>Media</b> con 2 (o 3 medios de prensa distintos) y <b>Baja</b> con 1. Los modelos son indicadores, no alertas oficiales.</p></div>
 </div><script>
 (function(){var S=SALA,X=S2;X.header("fuentes.html");
