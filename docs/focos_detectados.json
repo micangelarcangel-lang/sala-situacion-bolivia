@@ -279,9 +279,14 @@
    "Pando": 7
   },
   "2026-11-19": {
-   "Beni": 38,
-   "Santa Cruz": 67,
-   "Chuquisaca": 1
+   "Beni": 225,
+   "Santa Cruz": 140,
+   "Chuquisaca": 6,
+   "Potosí": 1,
+   "Oruro": 17,
+   "Cochabamba": 12,
+   "La Paz": 84,
+   "Pando": 9
   }
  },
  "municipios": {
@@ -802,26 +807,26 @@
    "Guayaramerín (Beni)": 16
   },
   "2026-11-19": {
-   "San Ignacio (Santa Cruz)": 43,
-   "Magdalena (Beni)": 13,
-   "El Puente (Santa Cruz)": 10,
-   "Huacaraje (Beni)": 9,
-   "Reyes (Beni)": 8,
-   "Concepción (Santa Cruz)": 4,
-   "Ascención de Guarayos (Santa Cruz)": 4,
-   "Guayaramerín (Beni)": 2,
-   "San Juan (Santa Cruz)": 2,
-   "Urubicha (Santa Cruz)": 2,
-   "Santa Ana (Beni)": 2,
-   "Puerto Menor de Rurrenabaque (Beni)": 2,
-   "Baures (Beni)": 1,
-   "Azurduy (Chuquisaca)": 1,
-   "Santa Rosa (Santa Cruz)": 1
+   "San Ignacio (Santa Cruz)": 62,
+   "Reyes (Beni)": 43,
+   "Magdalena (Beni)": 40,
+   "El Puente (Santa Cruz)": 30,
+   "Huacaraje (Beni)": 29,
+   "Santa Ana (Beni)": 28,
+   "Salinas de Garcí Mendoza (Oruro)": 16,
+   "Ixiamas (La Paz)": 16,
+   "Palos Blancos (La Paz)": 15,
+   "San Borja (Beni)": 14,
+   "San Andrés (Beni)": 12,
+   "San Ignacio (Beni)": 12,
+   "Teoponte (La Paz)": 12,
+   "Apolo (La Paz)": 12,
+   "Exaltación (Beni)": 11
   }
  },
- "actualizado": "2026-11-19T18:57:53.349750Z",
+ "actualizado": "2026-11-19T20:00:54.305055Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1886,
+ "detecciones_fuera_de_limites": 1921,
  "slack_dia": "2026-11-19"
 }
