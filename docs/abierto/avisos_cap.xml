@@ -27,30 +27,4 @@
       </area>
     </info>
   </alert>
-  <alert>
-    <identifier>senamhi-95-26</identifier>
-    <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
-    <sent>2026-11-15T17:48:26-04:00</sent>
-    <status>Actual</status>
-    <msgType>Alert</msgType>
-    <source>SENAMHI Bolivia</source>
-    <scope>Public</scope>
-    <info>
-      <language>es-BO</language>
-      <category>Met</category>
-      <event>Viento moderado, temporalmente fuerte</event>
-      <urgency>Expected</urgency>
-      <severity>Severe</severity>
-      <certainty>Likely</certainty>
-      <effective>2026-11-16T00:00:00-04:00</effective>
-      <expires>2026-11-18T23:59:59-04:00</expires>
-      <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
-      <headline>AVISO METEOROLÓGICO N° 95/26 — Viento moderado, temporalmente fuerte</headline>
-      <description>SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DE DIRECCIÓN NOROESTE, CON VELOCIDADES ENTRE 60 Y 90 km/h, A REGISTRARSE DESDE EL DÍA LUNES 16 HASTA EL DÍA MIÉRCOLES 18 DE NOVIEMBRE DE 2026, AFECTANDO A:</description>
-      <web>https://sena.senamhi.gob.bo/public/forecast-public-reports/651</web>
-      <area>
-        <areaDesc>Charagua (Santa Cruz), Pailón (Santa Cruz), Yapacaní (Santa Cruz), El Puente (Santa Cruz), San Julián (Santa Cruz), Cuatro Cañadas (Santa Cruz), Santa Rosa (Santa Cruz), San Pedro (Santa Cruz), Cabezas (Santa Cruz), Buena Vista (Santa Cruz), San Juan (Santa Cruz), Warnes (Santa Cruz), Santa Cruz de la Sierra (Santa Cruz), San Carlos (Santa Cruz), Portachuelo (Santa Cruz), Okinawa Uno (Santa Cruz), La Guardia (Santa Cruz), Porongo (Santa Cruz), El Torno (Santa Cruz), Fernández Alonso (Santa Cruz), Cotoca (Santa Cruz), San Antonio de Lomerio (Santa Cruz), General Saavedra (Santa Cruz), Mineros (Santa Cruz), San Ramón (Santa Cruz), Colpa Bélgica (Santa Cruz), Montero (Santa Cruz)</areaDesc>
-      </area>
-    </info>
-  </alert>
 </alerts>

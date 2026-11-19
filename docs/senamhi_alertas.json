@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-18T23:46:55.051918Z",
+ "actualizado": "2026-11-19T01:00:45.597379Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -116,7 +116,7 @@
    "n_municipios": 27,
    "texto": "SE PRONOSTICAN VIENTOS MODERADOS, TEMPORALMENTE FUERTES, DE DIRECCIÓN NOROESTE, CON VELOCIDADES ENTRE 60 Y 90 km/h, A REGISTRARSE DESDE EL DÍA LUNES 16 HASTA EL DÍA MIÉRCOLES 18 DE NOVIEMBRE DE 2026, AFECTANDO A:",
    "numero": "95/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
