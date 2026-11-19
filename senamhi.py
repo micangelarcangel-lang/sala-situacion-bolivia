@@ -150,6 +150,8 @@ def avisos_meteo(previo, geo, limite=12):
             continue
         clave = URL_VER + str(r["id"])
         a = dict(previo.get(clave, {}))
+        if a.get("departamentos") and a.get("municipios"):
+            a.pop("error_zonas", None)   # ya tiene zonas: un error de una ejecución anterior no aplica
         ini, fin = (r.get("date") or ["", ""])[:2]
         nivel = _nivel_texto((r.get("ForecastTypeAlert") or {}).get("alertType"))
         fen = (r.get("ForecastTypeEvent") or {}).get("eventType", "")
