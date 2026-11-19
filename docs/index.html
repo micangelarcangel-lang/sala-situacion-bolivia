@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sala de Situación Bolivia</title>
-<link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css?v=20261118b">
-<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261116d"></script></head>
+<link rel="stylesheet" href="vendor/maplibre-gl.css"><link rel="stylesheet" href="s2.css?v=20261119a">
+<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261119a"></script><link rel="stylesheet" href="vida.css?v=20261119a"><script src="fondo_datos.js?v=20261119a" defer></script><script src="fondo.js?v=20261119a" defer></script><script src="vida.js?v=20261119a" defer></script></head>
 <style>.hp{border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--card),var(--soft));padding:14px 18px;margin:6px 0 16px}.hp-eye{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700}.hp-b{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:6px}.hp-l{flex:1 1 560px;min-width:0}.hp-ln{display:flex;gap:10px;align-items:flex-start;margin:5px 0;font-size:14.5px;line-height:1.4}.hp-ln i{flex:0 0 10px;height:10px;border-radius:50%;margin-top:6px}.cmd{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:14px;margin:6px 0 16px;align-items:stretch}.cmd .hp{margin:0}.terr{display:flex;flex-direction:column;gap:8px;margin:0}.terr h2{margin:0}.terr .cap{margin:0}.terr label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mut);font-weight:600}.terr select{width:100%}.terr-b{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}.pan-t{margin:2px 0 12px}.pan[hidden]{display:none}@media(max-width:1100px){.cmd{grid-template-columns:minmax(0,1fr)}}.cmd .hp{display:flex;flex-direction:column;gap:10px}.kp{gap:10px}.kp .kpi{padding:12px 14px}.kp .kpi .v{font-size:28px}.kp .kpi .d{font-size:12px}.hp-x{display:flex;flex-direction:column}.hp-x .hp-ln{margin:2px 0;font-size:13.5px}.hp-f{display:flex;gap:12px;align-items:center;margin-top:auto;flex-wrap:wrap}</style>
 <body><div id="hdr"></div>
 <div class="wrap">
@@ -19,19 +19,19 @@
    <div class="terr-b"><button class="btn p" id="tGo" disabled>Abrir ficha</button><a class="btn" href="mapa.html">Mapa de territorios</a></div>
   </div>
  </div>
- <div class="seccion"><h2 class="sec-t">Tipos de evento <small>(Ley 602, art. 36) · últimos 30 días · toque una tarjeta para abrir su módulo</small></h2></div>
+ <div class="seccion"><h2 class="sec-t">Entrar por tipo de amenaza <small>(Ley 602, art. 36) · últimos 30 días · cada tarjeta abre su módulo con mapa, gráficos e informes</small></h2></div>
  <div class="tipos" id="tipos"></div>
  <div class="grid g21" style="margin-bottom:16px">
   <div class="card" id="cAlertas"><h2><span class="i">__I_ALERT__</span>Prioridades de hoy</h2><div class="cap">Avisos naranja/rojos vigentes, complejos de incendio mayores, ríos sobre umbral y sismos relevantes. <b>Toque uno</b> para ver su informe.</div><div id="prior"></div></div>
   <div class="card"><h2><span class="i">__I_INFO__</span>¿Cuán confiable es lo que se ve?</h2><div class="cap">Triangulación: cuántas familias de fuentes independientes coinciden en cada evento.</div><div class="ch s" id="chConf"></div><div class="how"><b>Alta</b> = 3 o más familias (p. ej. oficial + satélite + prensa). <b>Media</b> = 2. <b>Baja</b> = 1 sola fuente.</div></div>
  </div>
- <div class="seccion"><h2 class="sec-t">Triangulación por tipo de evento <small>· qué familias de fuentes independientes respaldan cada tipo (7 días) y dónde el sistema está ciego</small></h2></div>
- <div class="card" id="eviM" style="margin-bottom:16px"></div>
- <div class="seccion"><h2 class="sec-t">Lo que más se mueve <small>· los 3 tipos con más actividad inusual; rotan solos con los datos</small></h2></div>
+  <div class="seccion"><h2 class="sec-t">Lo que más se mueve <small>· los 3 tipos con más actividad inusual; rotan solos con los datos</small></h2></div>
  <div class="hotbar"><div class="chips" id="hotW"><button class="chip on" data-w="0">Automático</button><button class="chip" data-w="1">24 horas</button><button class="chip" data-w="7">7 días</button><button class="chip" data-w="30">30 días</button></div><span class="nota" id="hotN"></span></div>
  <div class="grid g3 hotgrid" id="hot" style="margin-bottom:16px"></div>
- <div class="seccion"><h2 class="sec-t">Panorama general <small>· todos los tipos, últimos 30 días</small></h2></div>
- <div class="chips pan-t" id="panT"><button class="chip on" data-p="0">Evolución y calendario</button><button class="chip" data-p="1">Dónde y qué</button><button class="chip" data-p="2">Fuentes y medios</button><button class="chip" data-p="3">Sismos</button></div>
+ <div class="seccion"><h2 class="sec-t">Triangulación por tipo de evento <small>· qué familias de fuentes independientes respaldan cada tipo (7 días) y dónde el sistema está ciego</small></h2></div>
+ <div class="card" id="eviM" style="margin-bottom:16px"></div>
+<div class="seccion"><h2 class="sec-t">Panorama general <small>· todos los tipos, últimos 30 días</small></h2></div>
+ <div class="chips pan-t" id="panT"><button class="chip on" data-p="0">Evolución y calendario</button><button class="chip" data-p="1">Dónde y qué</button><button class="chip" data-p="2">Fuentes y medios</button></div>
  <div class="pan" data-p="0">
   <div class="grid g2" style="margin-bottom:16px">
    <div class="card"><h2><span class="i">__I_PULSE__</span>Evolución diaria por tipo de evento</h2><div class="cap">Eventos registrados por día, apilados por categoría (últimos 30 días).</div><div class="ch" id="chEvol"></div></div>
@@ -50,9 +50,6 @@
    <div class="card"><h2><span class="i">__I_LIST__</span>Tipo de evento → fuente</h2><div class="cap">Anillo interior: tipo (Ley 602). Exterior: de qué fuente viene (30 días).</div><div class="ch" id="chSun"></div></div>
   </div>
   <div class="card" style="margin-bottom:16px"><h2><span class="i">__I_DOC__</span>Medios que más reportan</h2><div class="cap">Notas de prensa por medio (últimos 30 días).</div><div class="ch" id="chMed"></div></div>
- </div>
- <div class="pan" data-p="3" hidden>
-  <div class="card"><h2><span class="i">__I_PULSE__</span>Sismos de los últimos días</h2><div class="cap">Cada círculo es un sismo: tamaño = magnitud, color = profundidad (km).</div><div class="ch" id="chSis"></div></div>
  </div>
 </section>
 
@@ -183,5 +180,5 @@
 </section>
 </div>
 <div class="foot" id="foot"></div>
-<script src="evidencia.js?v=20261118a"></script><script src="app.js?v=20261119a"></script>
+<script src="evidencia.js?v=20261118a"></script><script src="app.js?v=20261119b"></script>
 </body></html>

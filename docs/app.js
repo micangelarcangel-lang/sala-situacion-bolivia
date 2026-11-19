@@ -5,7 +5,7 @@
     ["sal", "Salud", "virus", "Eventos biológicos: brotes, epidemias, boletín del Ministerio de Salud y alertas OPS/OMS"], ["tra", "Tránsito", "car", "Accidentes detectados en la prensa, con nivel de confianza por número de medios"],
     ["inc", "Incendios", "fire", "Focos de calor por satélite (NASA FIRMS) y complejos de incendio"], ["seq", "Sequías", "sun", "Índice de sequía SPI por departamento"], ["rio", "Ríos", "water", "Caudales de ríos y riesgo de crecida (modelo GloFAS)"],
     ["ev", "Eventos", "list", "Tabla de todos los eventos con filtros por tipo, departamento y municipio; descarga en CSV/Excel/JSON"], ["rep", "Boletines PDF", "doc", "Archivo de los boletines automáticos: alertas, diarios, semanales, mensuales y reportes preliminares"], ["dat", "Descargas", "db", "Descargar la base de datos completa (CSV, Excel, JSON, GeoJSON)"], ["sal2", "Impacto en salud", "heart", "Vista transversal: víctimas de todos los tipos de evento y contexto de salud de Bolivia", "modulo.html?t=salud"]];
-  X.header("index.html", TABS.filter(function (t) { return ["res", "map", "ev", "rep", "dat", "sal2"].indexOf(t[0]) >= 0; }));
+  X.header("index.html");
   var wrap = document.querySelector(".wrap"), IC = {INFO: "info", ALERT: "shield", PULSE: "pulse", MAP: "map", LIST: "list", FIRE: "fire", SUN: "sun", WATER: "water", DL: "dl", DOC: "doc"};
   wrap.innerHTML = wrap.innerHTML.replace(/__I_(\w+)__/g, function (_, k) { return X.ic(IC[k]); });
   function $(id) { return document.getElementById(id); }
@@ -96,7 +96,7 @@
     ev.forEach(function (e) { if (e.ts < now - 30 * DIA && e.origen !== "sequia" && e.origen !== "epidemiologia") return; var a = fam[e.origen] || e.origen, b = e.categoria; lk[a + "|" + b] = (lk[a + "|" + b] || 0) + 1; nodes[a] = 1; nodes[b] = 1; });
     X.chart("chSank", {tooltip: {trigger: "item"}, series: [{type: "sankey", left: 8, right: 90, top: 8, bottom: 8, nodeGap: 10, emphasis: {focus: "adjacency"}, lineStyle: {color: "gradient", curveness: .5, opacity: .45}, label: {color: X.css("--ink"), fontSize: 12},
       data: Object.keys(nodes).map(function (n) { return {name: n, itemStyle: {color: S.COLCAT[n] || "#1d6fb8"}}; }), links: Object.keys(lk).map(function (k) { var p = k.split("|"); return {source: p[0], target: p[1], value: lk[k]}; })}]});
-    X.chart("chSis", {tooltip: {formatter: function (p) { var s = p.data[3]; return "<b>M " + p.data[1] + "</b><br>" + s.fecha_local + "<br>" + s.provincia + ", " + s.departamento + "<br>Prof. " + s.prof_km + " km"; }}, grid: {left: 40, right: 14, top: 14, bottom: 60}, xAxis: {type: "time"}, yAxis: {type: "value", name: "Magnitud", min: 2, nameTextStyle: {color: X.css("--mut")}},
+    if ($("chSis")) X.chart("chSis", {tooltip: {formatter: function (p) { var s = p.data[3]; return "<b>M " + p.data[1] + "</b><br>" + s.fecha_local + "<br>" + s.provincia + ", " + s.departamento + "<br>Prof. " + s.prof_km + " km"; }}, grid: {left: 40, right: 14, top: 14, bottom: 60}, xAxis: {type: "time"}, yAxis: {type: "value", name: "Magnitud", min: 2, nameTextStyle: {color: X.css("--mut")}},
       visualMap: {dimension: 2, min: 0, max: 300, orient: "horizontal", left: "center", bottom: 0, itemWidth: 12, itemHeight: 120, text: ["profundo", "superficial"], inRange: {color: ["#d7263d", "#f5b700", "#2a7fd1"]}, textStyle: {color: X.css("--mut")}},
       series: [{type: "scatter", symbolSize: function (v) { return 5 + Math.pow(v[1], 2) * 1.2; }, itemStyle: {opacity: .85, borderColor: "#fff", borderWidth: 1}, data: D.sis.map(function (s) { return [s.ts, s.mag, s.prof_km, s]; })}]});
   }
@@ -483,12 +483,12 @@
       var sat = L.filter(function (e) { return e.origen === "foco"; }).length;
       var extra = c === "antropogénica" ? tr7 + ' hechos de tránsito en 7 días' : sat ? of + ' oficial · ' + sat + ' municipios con focos de calor (satélite) · ' + (L.length - of - sat) + ' prensa' : of + ' de fuente oficial · ' + (L.length - of) + ' prensa/satélite';
       return '<button class="tipo" data-c="' + c + '" style="--c:' + col + '" data-tip="Abrir el módulo de amenazas ' + c + 's: mapa, gráficos e informes"><div class="tipo-top"><span class="tipo-ic">' + X.ic(df.ic) + '</span><span class="tipo-n">' + L.length + '</span></div>' +
-        '<div class="tipo-t">' + df.n + '</div><div class="tipo-ej">' + df.ej + '</div><div class="tipo-m"><span class="pill">' + n24 + ' en 24 h</span>' + (mx >= 0 ? '<span class="pill" style="background:' + COLNIV[Math.min(3, Math.floor(mx))] + ';color:' + (mx === 1 ? '#222' : '#fff') + '">nivel máx. ' + S.NIVTXT[Math.min(3, Math.floor(mx))].toLowerCase() + '</span>' : '') + '</div>' +
+        '<div class="tipo-t">' + df.n + '</div><div class="tipo-ej">' + df.ej + '</div><div class="tipo-m"><span class="pill">' + n24 + ' en 24 h</span>' + (mx >= 0 ? '<span class="pill" style="background:' + COLNIV[Math.min(3, Math.floor(mx))] + ';color:' + (mx === 1 ? '#222' : '#fff') + '">nivel máx. ' + S.NIVTXT[Math.min(3, Math.floor(mx))].toLowerCase() + '</span>' : '') + '<span class="tipo-go">Abrir ' + X.ic("arrow") + '</span></div>' +
         '<div class="tipo-f">' + (L.length ? extra : 'Sin eventos en 30 días') + '<br><span>Fuentes: ' + df.fu + '</span></div></button>';
     }).join("") + (function () {
       var L = unico(D.ev.filter(function (e) { return e.origen !== "modelo" && e.ts > now - 30 * DIA; })), ok = L.filter(function (e) { return e.confianza && e.confianza.nivel !== "Baja"; }).length;
       return '<button class="tipo" data-c="__todos__" style="--c:#0b3b6e" data-tip="Abrir la tabla con todos los eventos"><div class="tipo-top"><span class="tipo-ic">' + X.ic("list") + '</span><span class="tipo-n">' + L.length + '</span></div><div class="tipo-t">Todos los eventos</div>' +
-        '<div class="tipo-ej">Base unificada de todas las fuentes, con triangulación</div><div class="tipo-m"><span class="pill">' + ok + ' con confianza media o alta</span></div><div class="tipo-f">' + (D.transito ? trLista().length + ' hechos de tránsito unidos por medios' : '') + '<br><span>Tabla descargable en CSV, Excel y JSON</span></div></button>';
+        '<div class="tipo-ej">Base unificada de todas las fuentes, con triangulación</div><div class="tipo-m"><span class="pill">' + ok + ' con confianza media o alta</span><span class="tipo-go">Abrir ' + X.ic("arrow") + '</span></div><div class="tipo-f">' + (D.transito ? trLista().length + ' hechos de tránsito unidos por medios' : '') + '<br><span>Tabla descargable en CSV, Excel y JSON</span></div></button>';
     })();
     $("tipos").onclick = function (e) { var b = e.target.closest(".tipo"); if (!b) return; if (b.dataset.c !== "__todos__") { location.href = "modulo.html?t=" + encodeURIComponent(b.dataset.c); return; } irEventos(b.dataset.c); };
   }
@@ -585,18 +585,16 @@
   /* ---------- pestañas ---------- */
   function mostrar(t) {
     TABS.forEach(function (x) { if (x[4]) return; $("t-" + x[0]).style.display = x[0] === t ? "" : "none"; });
-    [].forEach.call(document.querySelectorAll(".tab"), function (b) { b.classList.toggle("on", b.dataset.t === t); });
     if (D && !INIT[t]) { INIT[t] = 1; ({res: resumen, map: mapaGeneral, sal: salud, inc: incendios, seq: sequia, rio: rios, ev: eventos, tra: transito, rep: reportes, dat: datosTab}[t])(); }
     setTimeout(function () { X.resizeAll(); for (var k in MAPS) try { MAPS[k].resize(); } catch (e) {} }, 40);
     history.replaceState(null, "", "#" + t);
   }
-  $("tabs").onclick = function (e) { var b = e.target.closest(".tab"); if (b && b.dataset.t) { mostrar(b.dataset.t); window.scrollTo(0, 0); } };
-  window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (TABS.some(function (t) { return !t[4] && t[0] === h; })) mostrar(h); });
+  window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (TABS.some(function (t) { return !t[4] && t[0] === h; })) { mostrar(h); window.scrollTo(0, 0); } });
   window.SALA_GUIA = guia;
   function guia() {
     X.tour([
-      {t: "Menú principal", x: "<b>Tablero</b>: vigilancia en vivo (esta pantalla). <b>Generar informe</b>: informes a pedido, de un hecho, de un tema o de un período. <b>Fuentes y estado</b>: de dónde vienen los datos.", sel: ".hdr .nv", antes: function () { mostrar("res"); }},
-      {t: "Secciones del Tablero", x: "<b>Resumen</b>, <b>Mapa</b> general, tabla de <b>Eventos</b>, <b>Boletines PDF</b> (archivo de los informes automáticos) y <b>Descargas</b>. «Impacto en salud» abre la vista transversal de víctimas.", sel: "#tabs"},
+      {t: "Menú principal", x: "Cinco puertas: <b>Hoy</b> (resumen y Centro de mando), <b>Amenazas</b> (los 7 tipos de evento), <b>Territorio</b> (mapa y fichas por departamento y municipio), <b>Informes</b> y <b>Datos y fuentes</b>. Pase el ratón o pulse para ver su contenido.", sel: ".hdr .nv", antes: function () { mostrar("res"); }},
+      {t: "Apariencia", x: "Cambie el <b>tema</b> (oscuro o claro), el <b>estilo de los botones</b> (cristal, relieve 3D o plano), el <b>fondo animado</b> y el <b>movimiento</b>.", sel: "#btnAp"},
       {t: "Tipos de evento", x: "Las 7 tarjetas son los tipos de evento de la Ley 602; cada una abre su módulo con mapa, gráficos, registro e informes. La octava reúne <b>todos</b> los eventos.", sel: "#tipos"},
       {t: "Alertas prioritarias", x: "Toque una alerta para abrir su informe, con mapa, tablas y PDF. La etiqueta de <b>confianza</b> indica cuántas fuentes independientes la respaldan.", sel: "#cAlertas"},
       {t: "Mapa general", x: "Capas a la izquierda y mapa a la derecha: avisos del SENAMHI, sequía por territorio y focos de calor por día.", sel: "#layers", antes: function () { mostrar("map"); }},
