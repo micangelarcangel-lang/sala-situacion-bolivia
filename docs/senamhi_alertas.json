@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-19T02:16:59.679494Z",
+ "actualizado": "2026-11-19T03:25:06.607396Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -13,7 +13,6 @@
    "pdf": "https://sena.senamhi.gob.bo/public/forecast-public-reports/652",
    "url": "https://sena.senamhi.gob.bo/public/forecast-public-reports/652",
    "descripcion": "SE PRONOSTICA TEMPERATURAS MÁXIMAS POR ENCIMA DE SU PROMEDIO, ALCANZANDO TEMPERATURAS ENTRE 36 °C Y 41 °C DESDE EL DÍA MIÉRCOLES 18 HASTA EL DÍA VIERNES 20 DE NOVIEMBRE EN:",
-   "error_zonas": "GEOSException: TopologyException: side location conflict at -64.39506104651",
    "texto": "SE PRONOSTICA TEMPERATURAS MÁXIMAS POR ENCIMA DE SU PROMEDIO, ALCANZANDO TEMPERATURAS ENTRE 36 °C Y 41 °C DESDE EL DÍA MIÉRCOLES 18 HASTA EL DÍA VIERNES 20 DE NOVIEMBRE EN:",
    "numero": "96/26",
    "vigente": true,
