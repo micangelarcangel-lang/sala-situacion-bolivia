@@ -194,11 +194,20 @@ def _correo_reporte(n, t, evs, ahora_ms, horas_env):
         return
     horas = 24 * 31 if n.startswith("mensual_") else 168 if n.startswith("semanal_") else 24 if n.startswith("diario_") else int(horas_env or 24)
     ven = [dict(e) for e in evs if e["ts"] >= ahora_ms - horas * 3600000 and not (e["tipo"] == "sin clasificar" and e["nivel"] == 0)]
+    try:   # si el PDF se hizo con el motor nuevo, el correo muestra exactamente sus cifras (sin un segundo cálculo distinto)
+        import reporte_situacion as _rs0
+        _mismo = _rs0.RESUMENES.get(n)
+    except Exception:
+        _mismo = None
     grupos = rp.agrupar_hechos(ven)
     grupos.sort(key=lambda g: (-(g.get("nivel") or 0), -((g.get("fall") or 0) + (g.get("her") or 0)), -g["ts"]))
     fall = sum(g.get("fall") or 0 for g in grupos); her = sum(g.get("her") or 0 for g in grupos)
     resumen = [("Hechos", len(grupos)), ("Nivel naranja/rojo", sum(1 for g in grupos if (g.get("nivel") or 0) >= 2)), ("Fallecidos*", fall), ("Heridos*", her)]
+    if _mismo:
+        resumen = _mismo["resumen"]
     top = [(g["titulo"][:120], f"{g.get('tipo','')} · {g.get('lugar') or 'Bolivia'}" + (f" · {g.get('fall') or 0} fallecido(s), {g.get('her') or 0} herido(s)" if (g.get('fall') or g.get('her')) else "")) for g in [x for x in grupos if 'pronosticadas' not in x['titulo']][:8]]
+    if _mismo:
+        top = _mismo["top"]
     limpio = _re.sub(r":[a-z_]+:|<!channel>|\*", "", t).strip()
     nombre = {"diario": "Reporte diario", "semanal": "Reporte semanal", "mensual": "Reporte mensual"}.get(n.split("_")[0], limpio[:80])
     pdf_url = base_url() + "reportes/" + n

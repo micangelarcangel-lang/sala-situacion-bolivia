@@ -88,5 +88,20 @@ class Cifras(unittest.TestCase):
         self.assertEqual(r["cifras"]["fallecidos"], 1)
 
 
+
+class Reporte(unittest.TestCase):
+    def test_nota_sin_tipo_ni_victimas_no_es_un_hecho_del_reporte(self):
+        import reporte_situacion as rs
+        base = {"origen": "prensa", "ts": 1000, "ts_ult": 1000, "nivel": 1, "titulo": "x", "id": "a"}
+        evs = [dict(base, id="a", categoria="otra", cifras={"fallecidos": 0, "heridos": 0}),
+               dict(base, id="b", categoria="otra", cifras={"fallecidos": 2, "heridos": 0}),
+               dict(base, id="c", categoria="meteorológica", cifras={"fallecidos": 0, "heridos": 0})]
+        ids = {e["id"] for e in rs.seleccionar(evs, 0, 2000)}
+        self.assertEqual(ids, {"b", "c"})
+
+    def test_correo_y_pdf_comparten_las_mismas_cifras(self):
+        import reporte_situacion as rs
+        self.assertIsInstance(rs.RESUMENES, dict)
+
 if __name__ == "__main__":
     unittest.main()

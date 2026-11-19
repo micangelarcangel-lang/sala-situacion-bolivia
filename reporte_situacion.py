@@ -15,6 +15,8 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import BaseDocTemplate, PageTemplate, Frame, Paragraph, Spacer, Table, TableStyle, Image, PageBreak, KeepTogether
 import reporte_pdf as rp
 
+RESUMENES = {}   # nombre del PDF -> {"resumen": [(etiqueta, valor)], "top": [(titulo, detalle)]}: el correo usa las MISMAS cifras que el PDF
+
 TZ = dt.timezone(dt.timedelta(hours=-4))
 DIA = 86400000
 CATCOL = {"geológica": "#8d6e63", "meteorológica": "#1e88e5", "hidrológica": "#00897b", "climatológica": "#ef6c00", "biológica": "#8e24aa", "tecnológica": "#546e7a", "antropogénica": "#c62828"}
@@ -101,6 +103,10 @@ def seleccionar(eventos, ini, fin):
             continue
         if o == "sismo" and (_mag(e) or 0) < 4.0:
             continue
+        if o == "prensa" and e.get("categoria") == "otra":
+            c = e.get("cifras") or {}
+            if not (c.get("fallecidos") or c.get("heridos")) and (e.get("nivel") or 0) < 2:
+                continue   # nota sin tipo de peligro, sin víctimas y sin nivel: no es un hecho para un reporte de emergencias
         if o == "epidemiologia" and not (e.get("menciona_bolivia") or (e.get("confianza") or {}).get("nivel") in ("Alta", "Media")):
             continue
         vig = False
@@ -347,6 +353,13 @@ def build(docs, salida, periodo="diario", horas=24, ahora=None, geo=None, etique
     vic_f = sum((e.get("cifras") or {}).get("fallecidos", 0) for e in hechos if e["origen"] == "prensa"); vic_h = sum((e.get("cifras") or {}).get("heridos", 0) for e in hechos if e["origen"] == "prensa")
     conf_n = sum(1 for e in hechos if (e.get("confianza") or {}).get("nivel") in ("Alta", "Media"))
     cl = dict(ind.get("climatológica", [])); kf = next((k for k in cl if k.startswith("Focos de calor")), "")
+    def _det(e):
+        c = e.get("cifras") or {}
+        lugar = e.get("lugar") or ", ".join(e.get("departamentos") or []) or "Bolivia"
+        v = f" · {c.get('fallecidos', 0)} fallecido(s), {c.get('heridos', 0)} herido(s)" if e["origen"] == "prensa" and (c.get("fallecidos") or c.get("heridos")) else ""
+        return f"{e['categoria']} · {lugar}{v}"
+    RESUMENES[os.path.basename(salida)] = {"resumen": [("Hechos relevantes", len(hechos)), ("Confianza media/alta", conf_n), ("Fallecidos*", vic_f), ("Heridos*", vic_h)],
+                                           "top": [(e["titulo"][:120], _det(e)) for e in top[:8]]}
     kp = [(len(hechos), "Hechos relevantes"), (conf_n, "Con confianza media/alta"), (vic_f, "Fallecidos*"), (vic_h, "Heridos*"), (cl.get(kf, 0), "Focos de calor (último día)"),
           (dict(ind.get("meteorológica", [])).get("Avisos SENAMHI vigentes", 0) + dict(ind.get("hidrológica", [])).get("Avisos SENAMHI vigentes", 0), "Avisos SENAMHI vigentes")]
     t = Table([[Paragraph(str(v), st["kv"]) for v, _ in kp], [Paragraph(l, st["kl"]) for _, l in kp]], colWidths=[PW / 6] * 6)
