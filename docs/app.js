@@ -34,7 +34,7 @@
 
   /* ---------- RESUMEN ---------- */
   function resumen() {
-    tipos();
+    tipos(); menuTerr();
     var ev = D.ev, now = Date.now(), ult24 = ev.filter(function (e) { return e.ts > now - DIA && e.origen !== "modelo" && e.origen !== "epidemiologia"; });
     var av2 = D.avisos.filter(function (a) { return nivN(a.nivel) >= 2; }), avR = D.avisos.filter(function (a) { return nivN(a.nivel) === 3; });
     var nHoy = 0, nAyer = 0; D.P.forEach(function (p) { if (p[3] === D.ultDia) nHoy++; });
@@ -49,7 +49,10 @@
     fr.push(sis7.length ? sis7.length + " sismos en 7 días (máx. M " + mx.toFixed(1) + ")" : "sin sismos registrados en 7 días");
     if (seq.length) fr.push("déficit de lluvia (SPI-3) en " + seq.join(", ")); if (rios.length) fr.push(rios.length + " río" + (rios.length > 1 ? "s" : "") + " con caudal sobre lo normal");
     $("heroT").textContent = "Hoy: " + fr.join(" · ") + ".";
-    $("parteH").innerHTML = '<div class="hp-eye">Parte de situación · ' + new Date().toLocaleDateString("es-BO", {weekday: "long", day: "numeric", month: "long", timeZone: "America/La_Paz"}) + '</div><div class="hp-b"><div class="hp-l">' + fr.map(function (f, i) { return '<div class="hp-ln"><i style="background:' + ["#4c8dff", "#ff8a3d", "#a67cff", "#19b8a6", "#19b8a6"][i] + '"></i>' + S.esc(f.charAt(0).toUpperCase() + f.slice(1)) + '</div>'; }).join("") + '</div><a class="btn p" href="centro.html">Abrir el Centro de mando</a></div>';
+    var ext = [];
+    if (mayor) ext.push("Mayor complejo de focos de calor: " + mayor.municipio + " (" + mayor.departamento + ", " + mayor.n + " focos)");
+    if (rios.length) ext.push(rios.length + " río" + (rios.length > 1 ? "s" : "") + " con caudal sobre lo normal: " + rios.map(function (r) { return (r.rio || "") + (r.nombre ? " (" + r.nombre + ")" : ""); }).filter(Boolean).slice(0, 3).join(", "));
+    $("parteH").innerHTML = '<div class="hp-eye">Parte de situación · ' + new Date().toLocaleDateString("es-BO", {weekday: "long", day: "numeric", month: "long", timeZone: "America/La_Paz"}) + '</div><div class="grid g4 kp" id="kpis"></div>' + (ext.length ? '<div class="hp-x">' + ext.map(function (f, i) { return '<div class="hp-ln"><i style="background:' + ["#ff8a3d", "#19b8a6"][i] + '"></i>' + S.esc(f.replace(/:\s*$/, "")) + '</div>'; }).join("") + '</div>' : "") + '<div class="hp-f"><a class="btn p" href="centro.html">Abrir el Centro de mando</a><span class="nota">Dónde coinciden hoy las fuentes independientes</span></div>';
     if (window.EVI) EVI.tabla($("eviM"), D);
     $("kpis").innerHTML = kpi("Avisos SENAMHI vigentes", D.avisos.length, av2.length + " naranja/rojo", av2.length ? "#f26a1b" : "#2e9e5b", "shield") +
       kpi("Focos de calor (último día)", nHoy.toLocaleString("es-BO"), di ? (nHoy >= nAyer ? '<span class="up">▲ ' : '<span class="dn">▼ ') + Math.abs(nHoy - nAyer).toLocaleString("es-BO") + "</span> vs. día anterior" : "NASA FIRMS", "#d7263d", "fire") +
@@ -362,14 +365,14 @@
     $("gDat").innerHTML = A.map(function (a) { return '<div class="card"><h2>' + S.esc(a[0]) + '</h2><div class="cap">' + S.esc(a[1]) + '</div><div style="display:flex;gap:8px;flex-wrap:wrap">' + a[2].map(function (f) { return '<a class="btn" href="' + f[1] + '" download>' + X.ic("dl") + f[0] + '</a>'; }).join("") + '</div></div>'; }).join("");
   }
   function pie() {
-    var t = D.eventos_unificados && D.eventos_unificados.generado; $("foot").innerHTML = '<span><i class="dot"></i> Base de datos conectada' + (t ? " · actualizada " + X.ago(t) : "") + '</span><span>' + (D.ev || []).length + ' eventos · ' + trLista().length + ' hechos de tránsito</span><span><a href="informes.html">Generar reporte</a> · <a href="#rep" onclick="document.querySelector(\'[data-t=rep]\').click();return false">Ver PDF</a> · <a href="#dat" onclick="document.querySelector(\'[data-t=dat]\').click();return false">Descargar datos</a></span>';
+    var t = D.eventos_unificados && D.eventos_unificados.generado; $("foot").innerHTML = '<span><i class="dot"></i> Base de datos conectada' + (t ? " · actualizada " + X.ago(t) : "") + '</span><span>' + (D.ev || []).length + ' eventos · ' + trLista().length + ' hechos de tránsito</span>';
   }
 
   function graficosExtra(ev, now) {
     var util = ev.filter(function (e) { return e.origen !== "modelo" && e.origen !== "foco"; }), k;
     var cal = {}; util.forEach(function (e) { if (e.ts > now - 120 * DIA) { k = S.diaKey(e.ts); cal[k] = (cal[k] || 0) + 1; } });
     var cd = Object.keys(cal).map(function (x) { return [x, cal[x]]; }), mx = Math.max.apply(null, [1].concat(cd.map(function (x) { return x[1]; })));
-    X.chart("chCal", {tooltip: {formatter: function (p) { return p.value[0] + ": <b>" + p.value[1] + "</b> eventos"; }}, visualMap: {min: 0, max: mx, show: false, inRange: {color: [X.css("--soft"), "#1d6fb8", "#d7263d"]}}, calendar: {range: [S.diaKey(now - 120 * DIA), S.diaKey(now)], cellSize: [15, 15], top: 28, left: 30, right: 10, itemStyle: {borderWidth: 2, borderColor: X.css("--card"), color: X.css("--soft")}, splitLine: {show: false}, dayLabel: {color: X.css("--mut"), nameMap: "ES"}, monthLabel: {color: X.css("--mut"), nameMap: "ES"}, yearLabel: {show: false}}, series: [{type: "heatmap", coordinateSystem: "calendar", data: cd}]});
+    X.chart("chCal", {tooltip: {formatter: function (p) { return p.value[0] + ": <b>" + p.value[1] + "</b> eventos"; }}, visualMap: {min: 0, max: mx, show: false, inRange: {color: [X.css("--soft"), "#1d6fb8", "#d7263d"]}}, calendar: {range: [S.diaKey(now - 120 * DIA), S.diaKey(now)], cellSize: ["auto", 16], top: 28, left: 30, right: 10, itemStyle: {borderWidth: 2, borderColor: X.css("--card"), color: X.css("--soft")}, splitLine: {show: false}, dayLabel: {color: X.css("--mut"), nameMap: "ES"}, monthLabel: {color: X.css("--mut"), nameMap: "ES"}, yearLabel: {show: false}}, series: [{type: "heatmap", coordinateSystem: "calendar", data: cd}]});
     var mm = {}; util.filter(function (e) { return e.origen === "prensa" && e.ts > now - 30 * DIA; }).forEach(function (e) { (e.medios && e.medios.length ? e.medios : [e.fuente]).forEach(function (m) { if (m) { m = m.replace(/ - .*/, ""); mm[m] = (mm[m] || 0) + 1; } }); });
     var mk = Object.keys(mm).sort(function (a, b) { return mm[a] - mm[b]; }).slice(-10);
     X.chart("chMed", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, grid: {left: 120, right: 24, top: 8, bottom: 18}, xAxis: {type: "value", minInterval: 1}, yAxis: {type: "category", data: mk, axisLabel: {width: 110, overflow: "truncate"}}, series: [{type: "bar", data: mk.map(function (m) { return mm[m]; }), itemStyle: {color: "#0aa3a3", borderRadius: [0, 5, 5, 0]}, label: {show: true, position: "right"}}]});
@@ -560,6 +563,24 @@
     });
   }
   $("hotW").onclick = function (e) { var b = e.target.closest("[data-w]"); if (!b) return; HOTW = +b.dataset.w; interes(); };
+
+  /* ---------- Ir a un territorio (menú) y pestañas de «Panorama general» ---------- */
+  function menuTerr() {
+    var d = $("tDepSel"), m = $("tMunSel"), go = $("tGo"); if (!d || d.dataset.ok) return; d.dataset.ok = 1;
+    var deps = S.DEPS.slice().sort(function (a, b) { return a.localeCompare(b, "es"); });
+    deps.forEach(function (x) { var o = document.createElement("option"); o.value = o.textContent = x; d.appendChild(o); });
+    function url() { return d.value ? (m.value ? "municipio.html?d=" + encodeURIComponent(d.value) + "&m=" + encodeURIComponent(m.value) : "departamento.html?d=" + encodeURIComponent(d.value)) : null; }
+    function est() { go.disabled = !d.value; go.textContent = m.value ? "Abrir ficha del municipio" : d.value ? "Abrir ficha del departamento" : "Abrir ficha"; }
+    d.onchange = function () { llenaMun("tDepSel", "tMunSel", "Todo el departamento"); est(); };
+    m.onchange = est; go.onclick = function () { var u = url(); if (u) location.href = u; }; est();
+  }
+  var PANT = $("panT");
+  if (PANT) PANT.onclick = function (e) {
+    var b = e.target.closest("[data-p]"); if (!b) return;
+    [].forEach.call(PANT.querySelectorAll(".chip"), function (c) { c.classList.toggle("on", c === b); });
+    [].forEach.call(document.querySelectorAll(".pan"), function (p) { p.hidden = p.dataset.p !== b.dataset.p; });
+    setTimeout(function () { X.resizeAll(); }, 30);
+  };
 
   /* ---------- pestañas ---------- */
   function mostrar(t) {
