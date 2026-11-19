@@ -58,6 +58,8 @@ def _indice(geo):
 
 def ubicar_por_nombre(geo, texto):
     """Devuelve (lat, lon, lugar, metodo). Prefiere municipio; si no, departamento (aproximado)."""
+    # el nombre del medio que Google Noticias pega al titular («… - El Potosí») no es un lugar del hecho
+    texto = re.sub(r"\s[-–—|]\s(?:el potos[ií]|el alte[nñ]o|la patria|opini[oó]n|el diario|el d[ií]a|el deber|red uno|unitel|eju\.?\s?tv|br[uú]jula digital|la raz[oó]n|los tiempos|correo del sur|anf|fides|erbol|visi[oó]n 360|ox[ií]geno|atb|el mundo|p[aá]gina siete|urgente\.bo)\b", " ", str(texto or ""), flags=re.I)
     t = " " + norm(texto) + " "
     mun, dep = _indice(geo)
     mejor = None

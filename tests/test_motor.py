@@ -34,6 +34,29 @@ class Clasificacion(unittest.TestCase):
         self.assertEqual(cat("Minibús se embarranca en la zona alta del barrio minero San José", "geológica"), "antropogénica")
 
 
+class Alcance(unittest.TestCase):
+    def test_hechos_extranjeros_se_descartan(self):
+        for t in ("Al menos 64 heridos en una colisión entre dos trenes en la provincia egipcia de Giza",
+                  "Al menos 21 muertos por un choque entre un camión y un autobús en el sur de Tanzania",
+                  "Seis muertos en Polonia por un tirador fascinado por la extrema derecha"):
+            self.assertIsNone(cat(t), t)
+
+    def test_hechos_en_bolivia_con_extranjeros_se_conservan(self):
+        for t in ("Detención domiciliaria en caso de atropello a youtuber Surcoreano",
+                  "DICTAN DETENCIÓN DOMICILIARIA A CHOFER IMPLICADO EN LA MUERTE DE CICLISTA COREANO",
+                  "Colisión de dos buses en la carretera Oruro-Potosí deja 12 heridos"):
+            self.assertIsNotNone(cat(t), t)
+
+    def test_nombre_del_medio_no_es_un_lugar(self):
+        import busqueda
+        from shapely.geometry import Point
+        geo = {"mun": [{"n": "Potosí", "d": "Potosí", "_s": Point(-65.75, -19.58).buffer(.1)}], "dep": []}
+        con_medio = busqueda.ubicar_por_nombre(geo, "Colisión de dos trenes deja 46 heridos - El Potosí")
+        con_lugar = busqueda.ubicar_por_nombre(geo, "Colisión de dos buses en Potosí deja 12 heridos - El Diario")
+        self.assertNotEqual(con_medio[3], "nombre de municipio en el titular")
+        self.assertEqual(con_lugar[3], "nombre de municipio en el titular")
+
+
 class Cifras(unittest.TestCase):
     def test_lecturas_basicas(self):
         self.assertEqual(ih.cifras("Mueren 3 personas en un accidente en la carretera a Oruro"), (3, 0))

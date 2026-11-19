@@ -18,7 +18,12 @@ EXT_FUERTE = ("getafe", "toledo", "madrid", "adamuz", "urda", "barcelona", "vale
               "damasco", "siria", "corcega", "galapagos", "montevideo", "brooklyn", "praga", "guinea", "los angeles", "eaton", "salomon", "casa blanca", "trump")
 EXT_PAIS = ("espana", "mexico", "mexican", "chile", "chileno", "argentin", "peru ", "peruano", "brasil ", "colombia", "venezuela", "ecuador", "paraguay", "uruguay", "estados unidos",
             "ee uu", "china", "india", "japon", "rusia", "ucrania", "italia", "francia", "alemania", "reino unido", "turquia", "iran", "israel", "cuba", "guatemala", "honduras", "nicaragua", "haiti",
-            "filipinas", "indonesia", "nepal", "pakistan", "africa", "europa")
+            "filipinas", "indonesia", "nepal", "pakistan", "africa", "europa",
+            "egipt", "egipci", "belgica", "polonia", "polac", "tanzan", "senegal", "bulgar", "congo", " rdc ", "afganist", "sudan", "etiopia", "nigeria", "kenia", "somalia",
+            "libano", "yemen", "irak", "iraq", "arabia saudi", "emiratos", "taiwan", "tailandia", "vietnam", "myanmar", "bangladesh", "sri lanka", "australia", "nueva zelanda",
+            "canada ", "portugal", "grecia", "suiza", "austria", "holanda", "paises bajos", "suecia", "noruega", "finlandia", "dinamarca", "irlanda", "escocia",
+            "inglaterra", "londres", "paris", "berlin", "moscu", "pekin", "washington", "zaporiyia", "cracovia", "frafurt", "francfort", "frankfurt", "marruecos", "argelia",
+            "tunez", "libia", "mozambique", "angola", "zimbabue", "uganda", "camerun", "ghana", "costa rica", "panama", "dominicana", "puerto rico", "el salvador", "jamaica")
 NO_EVENTO = re.compile(r" (dia de los muertos|dia del|dia de la|horoscopo|receta|concierto de|sindicad|imputad|acusad|homicidio culposo|aprehension|aprehendid|operativo policial|decomis|"
                        r"desafian la lluvia|vendedores|candidato|elecciones|campana electoral|aniversario|feria|futbol|partido de|resultados de la loteria|"
                        r"viral|viraliza|viralizan|viralizo|tiktok|ojo de la tormenta|interpol|con rabia|brote psicotico|cumbiera|cumbia|jugaran|jugara|plantel|clasico|seleccion|horoscopo) ")
