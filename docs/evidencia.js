@@ -81,11 +81,16 @@ var EVI = (function () {
   function css() {
     if (document.getElementById("eviCss")) return;
     var s = document.createElement("style"); s.id = "eviCss";
-    s.textContent = ".ev-p{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:14px 16px;margin:14px 0}.ev-top{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}" +
-      ".ev-eye{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700}.ev-p h2{font-size:19px;line-height:1.3;margin:4px 0 0;max-width:900px}.ev-p h2 b{box-shadow:inset 0 -3px 0 var(--c)}" +
-      ".ev-lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:10px;margin-top:12px}.ev-l{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:10px 12px;background:var(--soft);min-width:0}" +
+    s.textContent = ".ev-p{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:12px 16px 12px;margin:14px 0}.ev-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}" +
+      ".ev-eye{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:700}.ev-lec{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:5px}.ev-bd{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:4px 12px;font-weight:800;font-size:13.5px;color:#fff;background:var(--v)}.ev-bd i{width:8px;height:8px;border-radius:50%;background:#fff;opacity:.9}.ev-sb{font-size:13.5px;color:var(--ink)}.ev-sb b{font-weight:700}" +
+      ".ev-acc{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.ev-fams{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}@media(max-width:900px){.ev-fams{grid-template-columns:repeat(2,minmax(0,1fr))}}" +
+      ".ev-f{position:relative;border:1px solid var(--line);border-radius:12px;padding:8px 10px 8px 12px;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:9px;align-items:center;min-width:0;background:var(--soft)}.ev-f::before{content:'';position:absolute;left:0;top:9px;bottom:9px;width:4px;border-radius:0 4px 4px 0;background:var(--c)}" +
+      ".ev-f .ev-fi{grid-row:1/3;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent)}.ev-f .ev-fi svg{width:21px;height:21px}.ev-f b{font-size:12.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ev-f .ev-v{font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:baseline;min-width:0}.ev-f .ev-v strong{font-size:21px;line-height:1;color:var(--ink);font-weight:800}.ev-f .ev-v span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px}" +
+      ".ev-f.off{background:transparent}.ev-f.off .ev-v strong{color:var(--mut);font-weight:700}.ev-f.off .ev-fi{opacity:.55}.ev-f.nf{background:repeating-linear-gradient(135deg,transparent 0 6px,color-mix(in srgb,var(--mut) 16%,transparent) 6px 7px);border-style:dashed}.ev-f.nf::before{opacity:.35}.ev-f.nf .ev-fi{opacity:.4}.ev-f.nf .ev-v span{white-space:normal;line-height:1.2}" +
+      ".ev-dt{margin-top:10px;border-top:1px solid var(--line);padding-top:6px}.ev-dt>summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--brand2);padding:4px 0;list-style:none;display:inline-flex;align-items:center;gap:6px}.ev-dt>summary::-webkit-details-marker{display:none}.ev-dt>summary::before{content:'▸';transition:transform .2s}.ev-dt[open]>summary::before{transform:rotate(90deg)}" +
+      ".ev-lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:10px;margin-top:8px}.ev-l{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:10px 12px;background:var(--soft);min-width:0}" +
       ".ev-l.off{background:transparent}.ev-lh{display:flex;justify-content:space-between;gap:8px;align-items:center}.ev-lh b{font-size:13.5px}.ev-chip{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;color:#fff;background:var(--c)}.ev-l.off .ev-chip{background:transparent;color:var(--mut);border:1px solid var(--line)}" +
-      ".ev-n{font-size:30px;font-weight:800;line-height:1.1;margin-top:6px}.ev-n small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:1px}.ev-l ul{list-style:none;margin:8px 0 0;padding:0;font-size:12.5px;line-height:1.35}.ev-l li{margin:6px 0}.ev-l li span{display:block;color:var(--mut);font-size:11.5px}.ev-l a{color:var(--brand2)}.ev-nt{margin-top:6px;font-size:11.5px;color:var(--mut)}" +
+      ".ev-n{font-size:26px;font-weight:800;line-height:1.1;margin-top:6px}.ev-n small{display:block;font-size:12px;font-weight:500;color:var(--mut);margin-top:1px}.ev-l ul{list-style:none;margin:8px 0 0;padding:0;font-size:12.5px;line-height:1.35}.ev-l li{margin:6px 0}.ev-l li span{display:block;color:var(--mut);font-size:11.5px}.ev-l a{color:var(--brand2)}.ev-nt{margin-top:6px;font-size:11.5px;color:var(--mut)}" +
       ".ev-ciego{margin-top:10px;padding:9px 13px;border-left:4px solid #f5b700;background:var(--soft);border-radius:0 10px 10px 0;font-size:13px;line-height:1.45}.ev-nota{margin-top:8px;font-size:11.5px;color:var(--mut)}" +
       ".cm-t{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}.cm-t th{font-size:11.5px;color:var(--mut);font-weight:700;text-align:center;padding:6px;border-bottom:2px solid var(--line)}.cm-t th:first-child{text-align:left}.cm-t th i{display:block;height:3px;border-radius:2px;background:var(--c);margin-bottom:5px}" +
       ".cm-t td{padding:5px 6px;border-bottom:1px solid var(--line);text-align:center;height:46px}.cm-t td:first-child{text-align:left;font-weight:600;white-space:nowrap}.cm-t td:last-child{text-align:left;font-size:12.5px}.cm-d{display:inline-flex;align-items:center;justify-content:center;width:var(--s);height:var(--s);border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:11.5px}" +
@@ -102,12 +107,20 @@ var EVI = (function () {
     var sig = con.filter(function (f) { return SG[f].n > 0; }), dm = {};
     sig.forEach(function (f) { SG[f].deps.forEach(function (d) { (dm[d] = dm[d] || []).push(f); }); });
     var coin = Object.keys(dm).filter(function (d) { return dm[d].length >= 2; }).sort(function (a, b) { return dm[b].length - dm[a].length; });
-    var head;
-    if (!sig.length) head = 'Sin señal de ninguna fuente conectada en los últimos 7 días.';
-    else if (sig.length === 1) head = 'Solo <b>' + FC[sig[0]].n.toLowerCase() + '</b> tiene señal: <b>por confirmar</b>' + (con.length > 1 ? '; las otras familias conectadas no ven nada' : '; es la única familia conectada para este tipo') + '.';
-    else if (coin.length) head = 'Coinciden <b>' + sig.length + ' familias</b> de fuentes. Mismo departamento: ' + coin.slice(0, 3).map(function (d) { return '<b>' + esc(d) + '</b> (' + dm[d].map(function (f) { return FC[f].n.toLowerCase(); }).join(" + ") + ')'; }).join("; ") + '.';
-    else head = 'Hay señal en <b>' + sig.length + ' familias</b>, pero en lugares distintos: <b>no se refuerzan entre sí</b>.';
-    var h = '<section class="ev-p" style="--c:' + col + '"><div class="ev-top"><div><div class="ev-eye">Triangulación · ' + esc(tipo) + ' · últimos 7 días</div><h2>' + head + '</h2></div><a class="btn s" href="centro.html">Ver todos los tipos en el Centro de mando</a></div><div class="ev-lanes">';
+    var nH = con.length, bd, bc, sb = "";
+    if (!sig.length) { bd = "Sin señal"; bc = CV[0]; sb = "Ninguna fuente conectada ve algo en los últimos 7 días."; }
+    else if (sig.length === 1) { bd = "Una sola fuente"; bc = CV[1]; sb = 'Solo <b>' + FC[sig[0]].n.toLowerCase() + '</b> ve algo: queda <b>por confirmar</b>.'; }
+    else if (coin.length) { bd = "Coinciden " + sig.length + " de " + nH; bc = CV[Math.min(sig.length, 4)]; sb = 'Mismo lugar: ' + coin.slice(0, 3).map(function (d) { return '<b>' + esc(d) + '</b>'; }).join(", ") + '.'; }
+    else { bd = "Lugares distintos"; bc = CV[1]; sb = 'Hay señal en ' + sig.length + ' fuentes, pero no coinciden en el mismo lugar.'; }
+    var ICF = {ofi: "shield", ins: "pulse", sat: "radar", mod: "cube", pre: "news"};
+    var h = '<section class="ev-p" style="--c:' + col + '"><div class="ev-top"><div><div class="ev-eye">Corroboración de fuentes independientes · últimos 7 días</div><div class="ev-lec"><span class="ev-bd" style="--v:' + bc + '"><i></i>' + bd + '</span><span class="ev-sb">' + sb + '</span></div></div><div class="ev-acc"><a class="btn s" href="centro.html">Todos los tipos</a></div></div><div class="ev-fams">';
+    ord.forEach(function (f) {
+      var c = FC[f];
+      if (!H[tipo][f]) { h += '<div class="ev-f nf" style="--c:' + c.c + '" title="Sin fuente conectada de esta familia para ' + esc(tipo) + '"><span class="ev-fi">' + X.ic(ICF[f]) + '</span><b>' + c.n + '</b><div class="ev-v"><span>sin fuente conectada</span></div></div>'; return; }
+      var s = SG[f], on = s.n > 0, u = String(s.unit || "").replace(/ \(\d+ d\)$/, "");
+      h += '<div class="ev-f' + (on ? '' : ' off') + '" style="--c:' + c.c + '" title="' + esc(c.d + ": " + s.n + " " + u) + '"><span class="ev-fi">' + X.ic(ICF[f]) + '</span><b>' + c.n + '</b><div class="ev-v"><strong>' + fmt(s.n) + '</strong><span>' + esc(u) + '</span></div></div>';
+    });
+    h += '</div><details class="ev-dt"><summary>Ver detalle por fuente</summary><div class="ev-lanes">';
     con.forEach(function (f) {
       var s = SG[f], on = s.n > 0;
       h += '<div class="ev-l' + (on ? '' : ' off') + '" style="--c:' + FC[f].c + '"><div class="ev-lh"><b>' + FC[f].n + '</b><span class="ev-chip">' + (on ? 'Con señal' : 'Sin señal') + '</span></div><div class="ev-n">' + fmt(s.n) + '<small>' + esc(s.unit) + '</small></div>' +
@@ -115,7 +128,7 @@ var EVI = (function () {
     });
     h += '</div>';
     if (ciegos.length) h += '<div class="ev-ciego"><b>Punto ciego:</b> para ' + esc(tipo) + ' el sistema no tiene conectada ninguna fuente ' + ciegos.map(function (f) { return '<b>' + FC[f].n.toLowerCase() + '</b>'; }).join(", ") + (con.length <= 1 ? '. Con una sola familia no se puede triangular: todo lo que aparece aquí queda <b>por confirmar</b>.' : '.') + '</div>';
-    h += '<div class="ev-nota">Familias independientes = distinta forma de producir la información. Lectura automática, por validar con el CCES. Una coincidencia entre familias refuerza un hecho, pero no lo confirma por sí sola.</div></section>';
+    h += '<div class="ev-nota">Familias independientes = distinta forma de producir la información. Lectura automática, por validar con el CCES. Una coincidencia entre familias refuerza un hecho, pero no lo confirma por sí sola.</div></details></section>';
     el.innerHTML = h;
   }
 
