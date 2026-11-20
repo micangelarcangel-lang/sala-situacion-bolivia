@@ -26,8 +26,24 @@
 @media(max-width:1000px){.xg,.xrow.dos{grid-template-columns:1fr}.xgo{margin-left:0}}
 .xg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.xtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.xtabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 12px;font:inherit;cursor:pointer}.xtabs button.on{background:#0b4f94;color:#fff;border-color:#0b4f94}.xt2 th{font-size:11.5px;color:var(--mut);font-weight:600;padding:4px 5px}.xleg .xs{display:flex;align-items:center;gap:4px}.xlab span{font-size:12px;font-weight:700;opacity:.9}@media(max-width:1000px){.xg2{grid-template-columns:1fr}}
 .lgl{font-size:12px}
+.gpulso{display:grid;grid-template-columns:minmax(300px,1.15fr) minmax(0,1.25fr) minmax(0,1fr);gap:12px;margin-bottom:12px}
+.gult{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px}
+.eye{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.gl-m{display:flex;gap:16px;align-items:center}.gl-n{position:relative;width:98px;height:98px;flex:none;display:grid;place-items:center}.gl-n i{display:none}
+.gl-n b{position:relative;z-index:2;font-size:21px;font-weight:800;color:#fff;background:var(--c);border-radius:50%;width:68px;height:68px;display:grid;place-items:center;box-shadow:0 6px 22px color-mix(in srgb,var(--c) 55%,transparent)}
+.gl-n u{position:absolute;inset:0;border-radius:50%;border:2px solid var(--c);opacity:0;animation:glr 3s ease-out infinite}.gl-n u:nth-child(2){animation-delay:1s}.gl-n u:nth-child(3){animation-delay:2s}
+@keyframes glr{0%{transform:scale(.62);opacity:.75}100%{transform:scale(1.12);opacity:0}}
+:root[data-mov=off] .gl-n u{animation:none;opacity:.22}@media(prefers-reduced-motion:reduce){.gl-n u{animation:none;opacity:.22}}
+.gl-lug{font-size:17px;font-weight:700;line-height:1.2}.gl-sub{font-size:13px;color:var(--mut);margin-top:2px}
+.gkp{display:grid;grid-template-columns:1fr 1fr;gap:12px}.gkp .kpi{display:flex;flex-direction:column;justify-content:center}.gkp .kpi .v{font-size:32px}
+.gsp h3{font-size:13px;margin:0 0 2px}.gmm{height:272px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:rgba(128,150,190,.06)}
+.gfi-h{display:flex;gap:12px;align-items:center;margin-bottom:8px}.gfi-m{flex:none;min-width:58px;height:58px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:17px;display:grid;place-items:center;padding:0 4px;box-shadow:0 4px 16px color-mix(in srgb,var(--c) 50%,transparent)}.gfi-h h3{margin:0;font-size:15px}.gfi-t td:first-child{color:var(--mut)}
+.gdet{margin-top:12px}.gdet summary{cursor:pointer;font-weight:600;font-size:13.5px}.xdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.gfi .xval{background:rgba(128,150,190,.16)}.gfi-t th,.gfi-t td{white-space:nowrap}.gfi-t td:first-child{white-space:normal}
+.xt2 th{background:rgba(128,150,190,.14);color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;padding:6px 6px}
+@media(max-width:1100px){.gpulso{grid-template-columns:1fr}}
 </style>
-<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261119b"></script><link rel="stylesheet" href="vida.css?v=20261119a"><script src="fondo_datos.js?v=20261119a" defer></script><script src="fondo.js?v=20261119a" defer></script><script src="vida.js?v=20261119a" defer></script></head>
+<script src="vendor/echarts.min.js"></script><script src="vendor/maplibre-gl.js"></script><script src="lib.js?v=20261116d"></script><script src="s2.js?v=20261119b"></script><link rel="stylesheet" href="vida.css?v=20261119b"><script src="fondo_datos.js?v=20261119a" defer></script><script src="fondo.js?v=20261119a" defer></script><script src="vida.js?v=20261119a" defer></script></head>
 <body><div id="hdr"></div><div class="wrap" id="app"><p class="vacio">Cargando…</p></div>
 <div class="foot" id="foot"><span>Sala de Situación Bolivia · información preliminar de fuentes abiertas</span><span>Fuentes: SENAMHI, USGS, NASA FIRMS, GloFAS, OPS/OMS y prensa</span></div>
-<script src="clima.js?v=20261116d"></script><script src="perfil.js?v=20261116d"></script><script src="territorio.js?v=20261116d"></script><script src="lugar.js?v=20261116d"></script><script src="evidencia.js?v=20261118a"></script><script src="geologica.js?v=20261116d"></script><script>GEO.iniciar()</script></body></html>
+<script src="clima.js?v=20261116d"></script><script src="perfil.js?v=20261116d"></script><script src="territorio.js?v=20261116d"></script><script src="lugar.js?v=20261116d"></script><script src="evidencia.js?v=20261118a"></script><script src="geologica.js?v=20261119a"></script><script>GEO.iniciar()</script></body></html>
