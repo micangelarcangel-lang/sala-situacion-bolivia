@@ -117,6 +117,8 @@ var S2 = (function () {
       '<span class="util">' + ap + '<button class="ghost" id="btnTour" type="button" data-tip="Recorrido guiado de esta página (1 minuto)">' + ic("help") + '<span class="nx-lb">Guía de uso</span></button></span></div>';
     document.getElementById("hdr").innerHTML = h + '</div>'; (function () { var e = document.getElementById("hdr"); function hh() { document.documentElement.style.setProperty("--hh", e.offsetHeight + "px"); } hh(); setTimeout(hh, 250); setTimeout(hh, 1200); window.addEventListener("resize", hh); if (window.ResizeObserver) new ResizeObserver(hh).observe(e); var mn = false; window.addEventListener("scroll", function () { var v = window.scrollY > 160; if (v !== mn) { mn = v; e.classList.toggle("min", v); } }, {passive: true}); })(); if (!window.__tips) { window.__tips = 1; tips(); }
     menus();
+    /* indicador de actualización en todas las páginas, aunque no usen el cargador común */
+    setTimeout(function () { try { S.cargar("eventos_unificados.json").then(function (d) { if (d && d.generado) live(d.generado); }).catch(function () {}); } catch (e) {} }, 0);
     var bg = document.getElementById("btnTour"); if (bg) bg.onclick = function () { (window.SALA_GUIA || guiaPagina)(); };
   }
   /* menús desplegables del encabezado y panel de apariencia */
@@ -185,7 +187,7 @@ var S2 = (function () {
   function datos() {
     var k = ["eventos_unificados", "transito", "data", "focos_puntos", "focos_complejos", "sequia", "caudales", "sismos_oficiales", "senamhi_alertas", "epidemio_oficial", "focos_propension", "focos_detectados", "estado_fuentes", "textos_hechos"];
     return Promise.all(k.map(function (n) { return opt(n + ".json"); }).concat([opt("geo_dep.geojson"), opt("geo_mun.geojson")])).then(function (r) {
-      var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = unirHechos(((o.eventos_unificados && o.eventos_unificados.eventos) || []).filter(function (e) { return !fueraDeAlcance(e); }).map(reclasifica)); return o;
+      var o = {}; k.forEach(function (n, i) { o[n] = r[i]; }); o.geoDep = r[k.length]; o.geoMun = r[k.length + 1]; o.ev = unirHechos(((o.eventos_unificados && o.eventos_unificados.eventos) || []).filter(function (e) { return !fueraDeAlcance(e); }).map(reclasifica)); try { live(o.eventos_unificados && o.eventos_unificados.generado); } catch (e) {} return o;
     });
   }
   function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
