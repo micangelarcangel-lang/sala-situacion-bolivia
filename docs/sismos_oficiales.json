@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-20T02:05:19.541893Z",
+ "actualizado": "2026-11-20T03:17:16.159457Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261119T224528_-20.396_-67.256",
+   "fecha_local": "2026-11-19 22:45:28",
+   "lat": -20.396,
+   "lon": -67.256,
+   "prof_km": 213.7,
+   "mag": 3.2,
+   "provincia": "Daniel Campos",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261119T033525_-22.161_-67.211",
    "fecha_local": "2026-11-19 03:35:25",
