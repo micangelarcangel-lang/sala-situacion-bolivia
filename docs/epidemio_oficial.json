@@ -54,6 +54,15 @@
  "internacional": [
   {
    "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Ebola disease caused by Bundibugyo virus- Democratic Republic of the Congo, Kenya and Nigeria",
+   "fecha": "2026-11-20",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630",
+   "resumen": "Since the publication of the previous Disease Outbreak News on 6 November 2026, additional confirmed cases and deaths have been reported in the Democratic Republic of the Congo. While some areas have seen a slight decline in cases, sustained, high-level transmission continues overall in the country. As of 17 November 2026, a total of 11 613 confirmed cases, including 5678 deaths (crude case fatality ratio: 48.9%), have been reported across 68 health zones in eight provinces, with active transmis",
+   "slug": "2026-DON630",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Chikungunya virus disease - Switzerland",
    "fecha": "2026-11-17",
    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627",
@@ -345,7 +354,8 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON626",
   "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
   "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630"
  ],
- "actualizado": "2026-11-21T03:03:21.240322Z"
+ "actualizado": "2026-11-21T11:39:03.704287Z"
 }

@@ -1,7 +1,31 @@
 {
- "actualizado": "2026-11-21T03:03:14.019063Z",
+ "actualizado": "2026-11-21T11:38:56.940500Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
+  {
+   "publicada": "2026-11-20 23:35:41",
+   "inicio": "2026-11-20",
+   "fin": "2026-11-28",
+   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 50/2026",
+   "nivel": "NARANJA",
+   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1549.pdf",
+   "error_pdf": "HTTPError: HTTP Error 404: Not Found",
+   "numero": "50/2026",
+   "vigente": true,
+   "nivel_num": 2
+  },
+  {
+   "publicada": "2026-11-20 23:28:16",
+   "inicio": "2026-11-20",
+   "fin": "2026-11-28",
+   "titulo": "AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 49/2026",
+   "nivel": "AMARILLO",
+   "pdf": "https://www.senamhi.gob.bo/pdf_alertas/alerta_1548.pdf",
+   "error_pdf": "HTTPError: HTTP Error 404: Not Found",
+   "numero": "49/2026",
+   "vigente": true,
+   "nivel_num": 1
+  },
   {
    "tipo": "meteorológica",
    "publicada": "2026-11-19 22:32:46",

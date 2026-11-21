@@ -2,6 +2,58 @@
 <!-- Reproducción en CAP 1.2 de los avisos vigentes de SENAMHI; la fuente oficial es senamhi.gob.bo. Municipios por intersección de polígonos (aproximado). Severidad según el color del aviso: amarilla = Moderate, naranja = Severe, roja = Extreme (convención de la sala, no de SENAMHI). -->
 <alerts xmlns:cap="urn:oasis:names:tc:emergency:cap:1.2">
   <alert>
+    <identifier>senamhi-50-2026</identifier>
+    <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
+    <sent>2026-11-20T23:35:41-04:00</sent>
+    <status>Actual</status>
+    <msgType>Alert</msgType>
+    <source>SENAMHI Bolivia</source>
+    <scope>Public</scope>
+    <info>
+      <language>es-BO</language>
+      <category>Met</category>
+      <event>Amenaza hidrológica</event>
+      <urgency>Expected</urgency>
+      <severity>Severe</severity>
+      <certainty>Likely</certainty>
+      <effective>2026-11-20T00:00:00-04:00</effective>
+      <expires>2026-11-28T23:59:59-04:00</expires>
+      <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
+      <headline>AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 50/2026</headline>
+      <description></description>
+      <web>https://www.senamhi.gob.bo/pdf_alertas/alerta_1549.pdf</web>
+      <area>
+        <areaDesc>Bolivia</areaDesc>
+      </area>
+    </info>
+  </alert>
+  <alert>
+    <identifier>senamhi-49-2026</identifier>
+    <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
+    <sent>2026-11-20T23:28:16-04:00</sent>
+    <status>Actual</status>
+    <msgType>Alert</msgType>
+    <source>SENAMHI Bolivia</source>
+    <scope>Public</scope>
+    <info>
+      <language>es-BO</language>
+      <category>Met</category>
+      <event>Amenaza hidrológica</event>
+      <urgency>Unknown</urgency>
+      <severity>Unknown</severity>
+      <certainty>Likely</certainty>
+      <effective>2026-11-20T00:00:00-04:00</effective>
+      <expires>2026-11-28T23:59:59-04:00</expires>
+      <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
+      <headline>AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 49/2026</headline>
+      <description></description>
+      <web>https://www.senamhi.gob.bo/pdf_alertas/alerta_1548.pdf</web>
+      <area>
+        <areaDesc>Bolivia</areaDesc>
+      </area>
+    </info>
+  </alert>
+  <alert>
     <identifier>senamhi-97-26</identifier>
     <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
     <sent>2026-11-19T22:32:46-04:00</sent>
