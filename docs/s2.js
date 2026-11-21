@@ -81,7 +81,7 @@ var S2 = (function () {
 
   var PAGINA = (location.pathname.split("/").pop() || "index.html");
   function header(activo, tabs) {
-    var oscuro = document.documentElement.getAttribute("data-theme") === "dark", Tq = new URLSearchParams(location.search).get("t") || (PAGINA === "geologica.html" ? "geológica" : PAGINA === "meteorologica.html" ? "meteorológica" : PAGINA === "hidrologica.html" ? "hidrológica" : "");
+    var oscuro = document.documentElement.getAttribute("data-theme") === "dark", Tq = new URLSearchParams(location.search).get("t") || (PAGINA === "geologica.html" ? "geológica" : PAGINA === "meteorologica.html" ? "meteorológica" : PAGINA === "hidrologica.html" ? "hidrológica" : PAGINA === "climatologica.html" ? "climatológica" : "");
     var TN = [["geológica", "Geológica", "mount", "Sismos, deslizamientos, actividad volcánica"], ["meteorológica", "Meteorológica", "sun", "Tormentas, granizo, heladas, vientos, olas de calor o frío"], ["hidrológica", "Hidrológica", "water", "Inundaciones, desbordes, crecidas, riadas"], ["climatológica", "Climatológica", "fire", "Sequía, incendios forestales, El Niño / La Niña"], ["biológica", "Biológica (salud)", "virus", "Brotes, epidemias, zoonosis, intoxicaciones"], ["tecnológica", "Tecnológica", "bolt", "Derrames, explosiones, incendios de edificios, colapsos"], ["antropogénica", "Antropogénica", "car", "Accidentes de tránsito, conflictos, bloqueos"]];
     var GRUPOS = [
       {k: "hoy", t: "Hoy", i: "home", it: [["index.html#res", "Resumen del día", "home", "Parte de situación, alertas prioritarias y tipos de evento"], ["centro.html", "Centro de mando", "radar", "Dónde coinciden hoy las fuentes independientes"], ["modulo.html?t=salud", "Impacto en salud", "heart", "Víctimas y afectación de todos los tipos de evento"]]},
@@ -93,7 +93,7 @@ var S2 = (function () {
     function grupoActivo() {
       var h = location.hash.slice(1), p = PAGINA;
       if (p === "centro.html") return "hoy";
-      if (p === "modulo.html" || p === "geologica.html" || p === "meteorologica.html" || p === "hidrologica.html") return Tq === "salud" ? "hoy" : "amen";
+      if (p === "modulo.html" || p === "geologica.html" || p === "meteorologica.html" || p === "hidrologica.html" || p === "climatologica.html") return Tq === "salud" ? "hoy" : "amen";
       if (p === "mapa.html" || p === "departamento.html" || p === "municipio.html") return "terr";
       if (p === "informes.html" || p === "reporte.html" || p === "tema.html" || p === "informe.html") return "inf";
       if (p === "fuentes.html" || p === "indicadores.html" || p === "explorador.html") return "dat";
