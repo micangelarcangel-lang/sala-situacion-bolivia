@@ -246,7 +246,7 @@
    "La Paz": 3
   },
   "2026-11-16": {
-   "Santa Cruz": 149,
+   "Santa Cruz": 150,
    "Beni": 158,
    "La Paz": 17,
    "Tarija": 13,
@@ -257,7 +257,7 @@
    "Pando": 9
   },
   "2026-11-17": {
-   "Santa Cruz": 256,
+   "Santa Cruz": 255,
    "Beni": 415,
    "Pando": 16,
    "Tarija": 49,
@@ -289,14 +289,15 @@
    "Pando": 9
   },
   "2026-11-20": {
-   "Santa Cruz": 49,
-   "Beni": 210,
-   "Tarija": 3,
-   "La Paz": 32,
-   "Oruro": 15,
-   "Potosí": 3,
-   "Cochabamba": 1,
-   "Pando": 5
+   "Santa Cruz": 155,
+   "Beni": 509,
+   "Tarija": 15,
+   "La Paz": 42,
+   "Oruro": 18,
+   "Potosí": 7,
+   "Chuquisaca": 9,
+   "Cochabamba": 15,
+   "Pando": 9
   }
  },
  "municipios": {
@@ -786,7 +787,7 @@
    "Magdalena (Beni)": 85,
    "Exaltación (Beni)": 77,
    "San Ramón (Beni)": 45,
-   "San Ignacio (Santa Cruz)": 41,
+   "San Ignacio (Santa Cruz)": 40,
    "Reyes (Beni)": 36,
    "San Borja (Beni)": 30,
    "Concepción (Santa Cruz)": 26,
@@ -834,26 +835,26 @@
    "Exaltación (Beni)": 11
   },
   "2026-11-20": {
-   "Huacaraje (Beni)": 67,
-   "Magdalena (Beni)": 37,
-   "Reyes (Beni)": 31,
-   "San Ignacio (Santa Cruz)": 27,
-   "San Javier (Beni)": 23,
-   "San Borja (Beni)": 14,
-   "Salinas de Garcí Mendoza (Oruro)": 12,
-   "Inquisivi (La Paz)": 12,
-   "Santa Ana (Beni)": 11,
-   "Ascención de Guarayos (Santa Cruz)": 9,
-   "San Ramón (Beni)": 8,
-   "Ixiamas (La Paz)": 8,
-   "San Andrés (Beni)": 7,
-   "Concepción (Santa Cruz)": 5,
-   "Exaltación (Beni)": 5
+   "Huacaraje (Beni)": 96,
+   "Magdalena (Beni)": 92,
+   "Reyes (Beni)": 64,
+   "Exaltación (Beni)": 45,
+   "San Ignacio (Santa Cruz)": 43,
+   "San Ramón (Beni)": 39,
+   "San Andrés (Beni)": 37,
+   "Santa Ana (Beni)": 31,
+   "San Javier (Beni)": 30,
+   "San Borja (Beni)": 26,
+   "Ixiamas (La Paz)": 16,
+   "El Puente (Santa Cruz)": 16,
+   "Salinas de Garcí Mendoza (Oruro)": 15,
+   "Ascención de Guarayos (Santa Cruz)": 13,
+   "Yacuiba (Tarija)": 12
   }
  },
- "actualizado": "2026-11-20T21:45:34.190430Z",
+ "actualizado": "2026-11-21T03:03:29.837650Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1545,
- "slack_dia": "2026-11-20"
+ "detecciones_fuera_de_limites": 1322,
+ "slack_dia": "2026-11-21"
 }

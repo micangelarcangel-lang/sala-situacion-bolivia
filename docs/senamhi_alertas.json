@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-20T21:45:15.591798Z",
+ "actualizado": "2026-11-21T03:03:14.019063Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -64,7 +64,7 @@
    "descripcion": "SE PRONOSTICA TEMPERATURAS MÁXIMAS POR ENCIMA DE SU PROMEDIO, ALCANZANDO TEMPERATURAS ENTRE 36 °C Y 41 °C DESDE EL DÍA MIÉRCOLES 18 HASTA EL DÍA VIERNES 20 DE NOVIEMBRE EN:",
    "texto": "SE PRONOSTICA TEMPERATURAS MÁXIMAS POR ENCIMA DE SU PROMEDIO, ALCANZANDO TEMPERATURAS ENTRE 36 °C Y 41 °C DESDE EL DÍA MIÉRCOLES 18 HASTA EL DÍA VIERNES 20 DE NOVIEMBRE EN:",
    "numero": "96/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2,
    "departamentos": [
     "Santa Cruz",
