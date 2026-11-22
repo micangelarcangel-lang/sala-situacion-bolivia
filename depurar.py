@@ -15,7 +15,7 @@ BO = ("bolivia", "bolivian", "la paz", "el alto", "cochabamba", "santa cruz", "o
 # ciudades/hechos extranjeros concretos: se descartan aunque aparezca una palabra boliviana (p. ej. «hospitales de La Paz, de Getafe…»)
 EXT_FUERTE = ("getafe", "toledo", "madrid", "adamuz", "urda", "barcelona", "valencia", "sevilla", "bogota", "medellin", "lima peru", "buenos aires", "santiago de chile", "sao paulo",
               "rio de janeiro", "ciudad de mexico", "el bronco", "texas", "california", "nueva york", "pensilvania", "florida", "kiev", "gaza", "tel aviv", "teheran",
-              "damasco", "siria", "corcega", "galapagos", "montevideo", "brooklyn", "praga", "guinea", "los angeles", "eaton", "salomon", "casa blanca", "trump")
+              "damasco", "siria", "corcega", "galapagos", "montevideo", "brooklyn", "praga", "guinea", "los angeles", "eaton", "salomon", "casa blanca", "trump", "gran sabana", "estado bolivar", "caracas", "maracaibo", "ciudad bolivar")
 EXT_PAIS = ("espana", "mexico", "mexican", "chile", "chileno", "argentin", "peru ", "peruano", "brasil ", "colombia", "venezuela", "ecuador", "paraguay", "uruguay", "estados unidos",
             "ee uu", "china", "india", "japon", "rusia", "ucrania", "italia", "francia", "alemania", "reino unido", "turquia", "iran", "israel", "cuba", "guatemala", "honduras", "nicaragua", "haiti",
             "filipinas", "indonesia", "nepal", "pakistan", "africa", "europa",

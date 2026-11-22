@@ -21,6 +21,7 @@ class Clasificacion(unittest.TestCase):
 
     def test_descarta_extranjero_y_enlaces(self):
         self.assertIsNone(cat("Casavalle, la barriada humilde de Montevideo", "hidrológica"))
+        self.assertIsNone(cat("Una avioneta sufrió un accidente en la comunidad de Parkupik, en La Gran Sabana, estado Bolívar, por las fuertes lluvias", "meteorológica"))
         self.assertIsNone(cat("https://ejemplo.com/nota"))
 
     def test_palabra_completa_respalda_el_tipo(self):

@@ -71,6 +71,12 @@ var MAPAZ = (function () {
     E.R.forEach(function (o) { C.forEach(function (x) { if (x.d <= o.km) { var k = x.p.k === "res" ? "bom" : x.p.k; o[k]++; } }); });
     E.C = C; E.lat = lat; E.lon = lon; return E;
   }
+  /* celdas de un municipio (para dibujar dónde vive la gente dentro de él); null si no hay malla */
+  function mallaMun(key) {
+    if (!MG) return null; var q = MG.munis.indexOf(key); if (q < 0) return null;
+    var ci = [], pob = 0, i; for (i = 0; i < MG.n; i++) if (MG.m[i] === q) { ci.push(i); pob += MG.p[i]; }
+    return {grid: true, cel: {ci: ci, cd: ci.map(function () { return 0; })}, pob: pob, n: ci.length, anio: MG.meta.anio_ine};
+  }
   function popX(x, E) { return E && E.grid ? x.pr : x.m.pob; }
   function habX(x, E) { var v = popX(x, E); return v != null ? fmtP(v) : "s/d"; }
   function cabHab(E) { return E && E.grid ? "En el radio" : "Hab."; }
@@ -128,13 +134,23 @@ var MAPAZ = (function () {
   /* ---------- iconos: cada clase tiene forma y color propios (los peligros son círculos o triángulos; los servicios, formas con glifo) ---------- */
   function estrella(r1, r2) { var p = [], k, a; for (k = 0; k < 10; k++) { a = (-90 + 36 * k) * Math.PI / 180; p.push((24 + (k % 2 ? r2 : r1) * Math.cos(a)).toFixed(1) + " " + (24 + (k % 2 ? r2 : r1) * Math.sin(a)).toFixed(1)); } return "M" + p.join("L") + "Z"; }
   var RR = "M14 6H34Q42 6 42 14V34Q42 42 34 42H14Q6 42 6 34V14Q6 6 14 6Z";
+  var HEX = "M24 3L43 13.5V34.5L24 45L5 34.5V13.5Z";
   var ICO = {
     hosp: {f: "#1b8a4e", d: RR, g: "M15 13h5v8h8v-8h5v22h-5v-9h-8v9h-5Z", gc: "#fff", n: "Hospital"},
     cli: {f: "#2fae6c", d: RR, g: "M21 12h6v9h9v6h-9v9h-6v-9h-9v-6h9Z", gc: "#fff", n: "Centro / puesto / clínica"},
     cons: {f: "#a7dcbf", d: RR, g: "M21 12h6v9h9v6h-9v9h-6v-9h-9v-6h9Z", gc: "#14532d", n: "Consultorio"},
     bom: {f: "#b3261e", d: "M24 2L46 24L24 46L2 24Z", g: "M25 9C25.5 15 33 19 33 28C33 35 28.500 39 24 39C19.500 39 15 35 15 28C15 23.500 17.500 20.500 20 17.500C20.500 21 22 22.500 23.500 23C22.500 18.500 22.500 13 25 9Z", gc: "#fff", n: "Bomberos / rescate"},
     pol: {f: "#1d4ed8", d: "M24 3L42 9L41 26Q39 38 24 45Q9 38 7 26L6 9Z", g: estrella(9.5, 4), gc: "#fff", n: "Policía"},
-    der: {f: "#8a4b1f", d: "M24 4L45 41L3 41Z", g: "M21.2 17h5.6l-1 14h-3.6ZM24 33.4a3 3 0 1 1 0 6a3 3 0 1 1 0-6Z", gc: "#fff", n: "Derrumbe / deslizamiento"}
+    der: {f: "#8a4b1f", d: "M24 4L45 41L3 41Z", g: "M21.2 17h5.6l-1 14h-3.6ZM24 33.4a3 3 0 1 1 0 6a3 3 0 1 1 0-6Z", gc: "#fff", n: "Derrumbe / deslizamiento"},
+    /* fenómenos meteorológicos: hexágonos (forma que no usa ningún otro tipo de hecho) con un glifo y un color por fenómeno */
+    vie: {f: "#0f8b8d", d: HEX, g: "M15 15h16a2 2 0 0 1 0 4H15a2 2 0 0 1 0-4ZM13 22h22a2 2 0 0 1 0 4H13a2 2 0 0 1 0-4ZM18 29h10a2 2 0 0 1 0 4H18a2 2 0 0 1 0-4Z", gc: "#fff", n: "Viento"},
+    llu: {f: "#2563eb", d: HEX, g: "M27.5 7.5L14 26.5h8.2L19.5 40.5L34 20.5h-9Z", gc: "#fff", n: "Lluvia con tormenta eléctrica"},
+    fri: {f: "#7c3aed", d: HEX, g: "M19 12a3 3 0 0 1 6 0v14.2a7 7 0 1 1-6 0ZM30 16h9l-4.5 8Z", gc: "#fff", n: "Descenso de temperatura / helada"},
+    cal: {f: "#db2777", d: HEX, g: "M24 17.5a6.5 6.5 0 1 1 0 13a6.5 6.5 0 1 1 0-13ZM34.5 22.1L40 22.1L40 25.9L34.5 25.9ZM32.8 30.1L36.7 34L34 36.7L30.1 32.8ZM25.9 34.5L25.9 40L22.1 40L22.1 34.5ZM17.9 32.8L14 36.7L11.3 34L15.2 30.1ZM13.5 25.9L8 25.9L8 22.1L13.5 22.1ZM15.2 17.9L11.3 14L14 11.3L17.9 15.2ZM22.1 13.5L22.1 8L25.9 8L25.9 13.5ZM30.1 15.2L34 11.3L36.7 14L32.8 17.9Z", gc: "#fff", n: "Ascenso de temperatura / calor"},
+    gra: {f: "#475569", d: HEX, g: "M17 14.5a4.5 4.5 0 1 1 0 9a4.5 4.5 0 1 1 0-9ZM31 14.5a4.5 4.5 0 1 1 0 9a4.5 4.5 0 1 1 0-9ZM24 25.5a4.5 4.5 0 1 1 0 9a4.5 4.5 0 1 1 0-9Z", gc: "#fff", n: "Granizada"},
+    nev: {f: "#38bdf8", d: HEX, g: "M9.5 22.1L38.5 22.1L38.5 25.9L9.5 25.9ZM18.4 10.5L32.9 35.6L29.6 37.5L15.1 12.4ZM32.9 12.4L18.4 37.5L15.1 35.6L29.6 10.5Z", gc: "#0c4a6e", n: "Nevada"},
+    otr: {f: "#64748b", d: HEX, g: "M21.2 12h5.6l-1 17h-3.6ZM24 31.4a3 3 0 1 1 0 6a3 3 0 1 1 0-6Z", gc: "#fff", n: "Otro fenómeno"},
+    fle: {f: "#0f8b8d", d: "M24 3L41 28H29.5V45H18.5V28H7Z", g: "", gc: "#fff", n: "Dirección del viento"}
   };
   function icono(map, k) {
     var I = ICO[k], c = document.createElement("canvas"); c.width = c.height = 48; var g = c.getContext("2d"), p = new Path2D(I.d);
@@ -210,5 +226,5 @@ var MAPAZ = (function () {
     map.getSource("inf").setData(fc(E ? E.C.map(function (x) { return {type: "Feature", geometry: {type: "Point", coordinates: [x.p.lon, x.p.lat]}, properties: {k: x.p.k, n: x.p.n, d: +x.d.toFixed(1), op: x.p.op, m: x.p.mun, e: x.p.esp}}; }) : []));
     pintaMalla(map, E);
   }
-  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
+  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
 })();
