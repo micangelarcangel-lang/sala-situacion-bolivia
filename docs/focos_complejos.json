@@ -1,12 +1,12 @@
 {
- "actualizado": "2026-11-22T05:56:03.367509Z",
- "dia": "2026-11-21",
+ "actualizado": "2026-11-22T14:22:03.157469Z",
+ "dia": "2026-11-22",
  "complejos": [
   {
-   "n": 164,
-   "frp_mw": 2448.5,
-   "lat": -13.871,
-   "lon": -64.294,
+   "n": 72,
+   "frp_mw": 1019.5,
+   "lat": -13.903,
+   "lon": -64.296,
    "departamento": "Beni",
    "municipio": "Huacaraje",
    "municipios": [
@@ -15,16 +15,34 @@
    "bbox": [
     -64.316,
     -13.928,
-    -64.262,
-    -13.78
+    -64.12,
+    -13.75
    ],
-   "id": "2026-11-21:1"
+   "id": "2026-11-22:1"
   },
   {
-   "n": 82,
-   "frp_mw": 981.5,
-   "lat": -14.208,
-   "lon": -67.319,
+   "n": 56,
+   "frp_mw": 915.5,
+   "lat": -12.896,
+   "lon": -65.256,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.272,
+    -12.941,
+    -65.224,
+    -12.879
+   ],
+   "id": "2026-11-22:2"
+  },
+  {
+   "n": 71,
+   "frp_mw": 625.5,
+   "lat": -14.269,
+   "lon": -67.296,
    "departamento": "Beni",
    "municipio": "Reyes",
    "municipios": [
@@ -32,143 +50,126 @@
    ],
    "bbox": [
     -67.352,
-    -14.236,
-    -67.271,
+    -14.423,
+    -67.145,
     -14.173
    ],
-   "id": "2026-11-21:2"
-  },
-  {
-   "n": 40,
-   "frp_mw": 897.3,
-   "lat": -12.884,
-   "lon": -65.263,
-   "departamento": "Beni",
-   "municipio": "Exaltación",
-   "municipios": [
-    "Exaltación"
-   ],
-   "bbox": [
-    -65.317,
-    -12.904,
-    -65.248,
-    -12.771
-   ],
-   "id": "2026-11-21:3"
-  },
-  {
-   "n": 62,
-   "frp_mw": 466.1,
-   "lat": -12.518,
-   "lon": -63.855,
-   "departamento": "Beni",
-   "municipio": "Magdalena",
-   "municipios": [
-    "Magdalena"
-   ],
-   "bbox": [
-    -63.893,
-    -12.543,
-    -63.829,
-    -12.503
-   ],
-   "id": "2026-11-21:4"
-  },
-  {
-   "n": 12,
-   "frp_mw": 444.8,
-   "lat": -16.606,
-   "lon": -67.142,
-   "departamento": "La Paz",
-   "municipio": "Inquisivi",
-   "municipios": [
-    "Inquisivi"
-   ],
-   "bbox": [
-    -67.146,
-    -16.608,
-    -67.137,
-    -16.6
-   ],
-   "id": "2026-11-21:5"
+   "id": "2026-11-22:3"
   },
   {
    "n": 25,
-   "frp_mw": 413.5,
-   "lat": -14.981,
-   "lon": -66.647,
-   "departamento": "Beni",
-   "municipio": "San Borja",
+   "frp_mw": 462.2,
+   "lat": -16.922,
+   "lon": -60.56,
+   "departamento": "Santa Cruz",
+   "municipio": "San Rafael",
    "municipios": [
-    "San Borja"
+    "San Rafael"
    ],
    "bbox": [
-    -66.657,
-    -14.988,
-    -66.637,
-    -14.969
+    -60.568,
+    -16.931,
+    -60.552,
+    -16.911
    ],
-   "id": "2026-11-21:6"
+   "id": "2026-11-22:4"
   },
   {
-   "n": 40,
-   "frp_mw": 402.3,
+   "n": 29,
+   "frp_mw": 337.6,
+   "lat": -16.157,
+   "lon": -64.761,
+   "departamento": "Cochabamba",
+   "municipio": "Chimoré",
+   "municipios": [
+    "Chimoré"
+   ],
+   "bbox": [
+    -64.773,
+    -16.169,
+    -64.751,
+    -16.128
+   ],
+   "id": "2026-11-22:5"
+  },
+  {
+   "n": 31,
+   "frp_mw": 266.1,
    "lat": -13.42,
-   "lon": -67.457,
+   "lon": -67.459,
    "departamento": "La Paz",
    "municipio": "Ixiamas",
    "municipios": [
     "Ixiamas"
    ],
    "bbox": [
-    -67.468,
-    -13.445,
-    -67.44,
+    -67.499,
+    -13.541,
+    -67.446,
     -13.407
    ],
-   "id": "2026-11-21:7"
+   "id": "2026-11-22:6"
   },
   {
-   "n": 45,
-   "frp_mw": 376.9,
+   "n": 60,
+   "frp_mw": 260.0,
    "lat": -14.368,
-   "lon": -64.223,
+   "lon": -64.224,
    "departamento": "Beni",
    "municipio": "San Javier",
    "municipios": [
     "San Javier"
    ],
    "bbox": [
-    -64.244,
+    -64.252,
     -14.389,
-    -64.209,
+    -64.185,
     -14.343
    ],
-   "id": "2026-11-21:8"
+   "id": "2026-11-22:7"
   },
   {
-   "n": 13,
-   "frp_mw": 301.2,
-   "lat": -15.664,
-   "lon": -64.001,
-   "departamento": "Beni",
-   "municipio": "San Andrés",
+   "n": 22,
+   "frp_mw": 239.7,
+   "lat": -21.854,
+   "lon": -63.107,
+   "departamento": "Tarija",
+   "municipio": "Yacuiba",
    "municipios": [
-    "San Andrés"
+    "Yacuiba"
    ],
    "bbox": [
-    -64.013,
-    -15.667,
-    -63.993,
-    -15.656
+    -63.118,
+    -21.865,
+    -63.07,
+    -21.851
    ],
-   "id": "2026-11-21:9"
+   "id": "2026-11-22:8"
   },
   {
-   "n": 43,
-   "frp_mw": 288.1,
-   "lat": -12.55,
-   "lon": -66.853,
+   "n": 41,
+   "frp_mw": 213.9,
+   "lat": -17.309,
+   "lon": -60.162,
+   "departamento": "Santa Cruz",
+   "municipio": "San José",
+   "municipios": [
+    "San José",
+    "San Rafael"
+   ],
+   "bbox": [
+    -60.37,
+    -17.399,
+    -60.024,
+    -17.176
+   ],
+   "id": "2026-11-22:9"
+  },
+  {
+   "n": 39,
+   "frp_mw": 170.5,
+   "lat": -12.567,
+   "lon": -66.836,
    "departamento": "Beni",
    "municipio": "Reyes",
    "municipios": [
@@ -180,103 +181,31 @@
     -66.805,
     -12.514
    ],
-   "id": "2026-11-21:10"
+   "id": "2026-11-22:10"
   },
   {
-   "n": 29,
-   "frp_mw": 287.5,
-   "lat": -21.851,
-   "lon": -63.114,
-   "departamento": "Tarija",
-   "municipio": "Yacuiba",
-   "municipios": [
-    "Yacuiba"
-   ],
-   "bbox": [
-    -63.15,
-    -21.865,
-    -63.07,
-    -21.828
-   ],
-   "id": "2026-11-21:11"
-  },
-  {
-   "n": 17,
-   "frp_mw": 270.5,
-   "lat": -19.549,
-   "lon": -67.682,
-   "departamento": "Oruro",
-   "municipio": "Salinas de Garcí Mendoza",
-   "municipios": [
-    "Salinas de Garcí Mendoza"
-   ],
-   "bbox": [
-    -67.69,
-    -19.563,
-    -67.662,
-    -19.53
-   ],
-   "id": "2026-11-21:12"
-  },
-  {
-   "n": 26,
-   "frp_mw": 256.6,
-   "lat": -17.239,
-   "lon": -58.364,
-   "departamento": "Santa Cruz",
-   "municipio": "San Matías",
-   "municipios": [
-    "San Matías"
-   ],
-   "bbox": [
-    -58.381,
-    -17.26,
-    -58.353,
-    -17.225
-   ],
-   "id": "2026-11-21:13"
-  },
-  {
-   "n": 30,
-   "frp_mw": 246.5,
-   "lat": -12.487,
-   "lon": -64.21,
-   "departamento": "Beni",
-   "municipio": "Magdalena",
-   "municipios": [
-    "Magdalena"
-   ],
-   "bbox": [
-    -64.238,
-    -12.565,
-    -64.104,
-    -12.464
-   ],
-   "id": "2026-11-21:14"
-  },
-  {
-   "n": 18,
-   "frp_mw": 187.9,
-   "lat": -12.307,
-   "lon": -65.007,
+   "n": 16,
+   "frp_mw": 162.1,
+   "lat": -12.308,
+   "lon": -65.002,
    "departamento": "Beni",
    "municipio": "Puerto Siles",
    "municipios": [
     "Puerto Siles"
    ],
    "bbox": [
-    -65.047,
+    -65.024,
     -12.322,
-    -64.996,
-    -12.289
+    -64.989,
+    -12.278
    ],
-   "id": "2026-11-21:15"
+   "id": "2026-11-22:11"
   },
   {
-   "n": 13,
-   "frp_mw": 176.8,
-   "lat": -13.575,
-   "lon": -66.568,
+   "n": 10,
+   "frp_mw": 160.3,
+   "lat": -13.577,
+   "lon": -66.572,
    "departamento": "Beni",
    "municipio": "Santa Rosa",
    "municipios": [
@@ -285,52 +214,71 @@
    "bbox": [
     -66.582,
     -13.582,
-    -66.52,
-    -13.555
+    -66.568,
+    -13.566
    ],
-   "id": "2026-11-21:16"
+   "id": "2026-11-22:12"
   },
   {
-   "n": 24,
-   "frp_mw": 167.9,
-   "lat": -14.408,
-   "lon": -67.215,
-   "departamento": "Beni",
-   "municipio": "Reyes",
+   "n": 9,
+   "frp_mw": 143.0,
+   "lat": -21.631,
+   "lon": -63.109,
+   "departamento": "Tarija",
+   "municipio": "Yacuiba",
    "municipios": [
-    "Reyes"
+    "Yacuiba"
    ],
    "bbox": [
-    -67.258,
-    -14.42,
-    -67.137,
-    -14.401
+    -63.114,
+    -21.635,
+    -63.105,
+    -21.629
    ],
-   "id": "2026-11-21:17"
+   "id": "2026-11-22:13"
   },
   {
-   "n": 22,
-   "frp_mw": 160.9,
-   "lat": -14.391,
-   "lon": -66.384,
+   "n": 20,
+   "frp_mw": 131.9,
+   "lat": -16.013,
+   "lon": -61.675,
+   "departamento": "Santa Cruz",
+   "municipio": "San Ignacio",
+   "municipios": [
+    "San Ignacio",
+    "Concepción"
+   ],
+   "bbox": [
+    -61.714,
+    -16.048,
+    -61.636,
+    -15.985
+   ],
+   "id": "2026-11-22:14"
+  },
+  {
+   "n": 8,
+   "frp_mw": 108.4,
+   "lat": -13.96,
+   "lon": -65.88,
    "departamento": "Beni",
    "municipio": "Santa Ana",
    "municipios": [
     "Santa Ana"
    ],
    "bbox": [
-    -66.39,
-    -14.397,
-    -66.368,
-    -14.385
+    -65.887,
+    -13.964,
+    -65.875,
+    -13.942
    ],
-   "id": "2026-11-21:18"
+   "id": "2026-11-22:15"
   },
   {
-   "n": 26,
-   "frp_mw": 159.7,
-   "lat": -13.394,
-   "lon": -66.797,
+   "n": 25,
+   "frp_mw": 101.9,
+   "lat": -13.41,
+   "lon": -66.782,
    "departamento": "Beni",
    "municipio": "Santa Rosa",
    "municipios": [
@@ -339,118 +287,172 @@
    "bbox": [
     -66.828,
     -13.441,
-    -66.773,
+    -66.763,
     -13.35
    ],
-   "id": "2026-11-21:19"
+   "id": "2026-11-22:16"
+  },
+  {
+   "n": 12,
+   "frp_mw": 95.2,
+   "lat": -15.79,
+   "lon": -61.858,
+   "departamento": "Santa Cruz",
+   "municipio": "Concepción",
+   "municipios": [
+    "Concepción"
+   ],
+   "bbox": [
+    -61.862,
+    -15.795,
+    -61.854,
+    -15.787
+   ],
+   "id": "2026-11-22:17"
+  },
+  {
+   "n": 12,
+   "frp_mw": 89.3,
+   "lat": -15.858,
+   "lon": -63.229,
+   "departamento": "Santa Cruz",
+   "municipio": "Ascención de Guarayos",
+   "municipios": [
+    "Ascención de Guarayos"
+   ],
+   "bbox": [
+    -63.233,
+    -15.862,
+    -63.225,
+    -15.851
+   ],
+   "id": "2026-11-22:18"
+  },
+  {
+   "n": 14,
+   "frp_mw": 78.4,
+   "lat": -13.029,
+   "lon": -65.725,
+   "departamento": "Beni",
+   "municipio": "Exaltación",
+   "municipios": [
+    "Exaltación"
+   ],
+   "bbox": [
+    -65.743,
+    -13.039,
+    -65.701,
+    -13.005
+   ],
+   "id": "2026-11-22:19"
+  },
+  {
+   "n": 19,
+   "frp_mw": 76.3,
+   "lat": -17.244,
+   "lon": -58.376,
+   "departamento": "Santa Cruz",
+   "municipio": "San Matías",
+   "municipios": [
+    "San Matías"
+   ],
+   "bbox": [
+    -58.382,
+    -17.26,
+    -58.361,
+    -17.223
+   ],
+   "id": "2026-11-22:20"
+  },
+  {
+   "n": 21,
+   "frp_mw": 57.0,
+   "lat": -14.392,
+   "lon": -66.378,
+   "departamento": "Beni",
+   "municipio": "Santa Ana",
+   "municipios": [
+    "Santa Ana"
+   ],
+   "bbox": [
+    -66.387,
+    -14.397,
+    -66.368,
+    -14.388
+   ],
+   "id": "2026-11-22:21"
   },
   {
    "n": 16,
-   "frp_mw": 151.4,
-   "lat": -16.222,
-   "lon": -64.063,
+   "frp_mw": 39.9,
+   "lat": -16.048,
+   "lon": -63.744,
    "departamento": "Santa Cruz",
-   "municipio": "Santa Rosa",
+   "municipio": "El Puente",
    "municipios": [
-    "Santa Rosa"
+    "El Puente"
    ],
    "bbox": [
-    -64.08,
-    -16.242,
-    -64.051,
-    -16.208
+    -63.771,
+    -16.138,
+    -63.735,
+    -16.01
    ],
-   "id": "2026-11-21:20"
+   "id": "2026-11-22:22"
   },
   {
-   "n": 24,
-   "frp_mw": 142.6,
-   "lat": -13.458,
-   "lon": -64.611,
-   "departamento": "Beni",
-   "municipio": "San Ramón",
-   "municipios": [
-    "San Ramón"
-   ],
-   "bbox": [
-    -64.684,
-    -13.522,
-    -64.567,
-    -13.42
-   ],
-   "id": "2026-11-21:21"
-  },
-  {
-   "n": 13,
-   "frp_mw": 130.1,
-   "lat": -12.911,
-   "lon": -64.19,
+   "n": 14,
+   "frp_mw": 27.3,
+   "lat": -12.517,
+   "lon": -63.854,
    "departamento": "Beni",
    "municipio": "Magdalena",
    "municipios": [
     "Magdalena"
    ],
    "bbox": [
-    -64.197,
-    -12.918,
-    -64.185,
-    -12.902
+    -63.889,
+    -12.53,
+    -63.827,
+    -12.506
    ],
-   "id": "2026-11-21:22"
+   "id": "2026-11-22:23"
   },
   {
-   "n": 16,
-   "frp_mw": 123.6,
-   "lat": -13.219,
-   "lon": -64.435,
+   "n": 15,
+   "frp_mw": 23.0,
+   "lat": -13.107,
+   "lon": -64.503,
    "departamento": "Beni",
    "municipio": "San Ramón",
    "municipios": [
     "San Ramón"
    ],
    "bbox": [
-    -64.517,
-    -13.275,
-    -64.358,
-    -13.179
+    -64.515,
+    -13.126,
+    -64.496,
+    -13.084
    ],
-   "id": "2026-11-21:23"
+   "id": "2026-11-22:24"
   },
   {
-   "n": 9,
-   "frp_mw": 121.6,
-   "lat": -16.927,
-   "lon": -60.559,
-   "departamento": "Santa Cruz",
-   "municipio": "San Rafael",
-   "municipios": [
-    "San Rafael"
-   ],
-   "bbox": [
-    -60.563,
-    -16.93,
-    -60.553,
-    -16.923
-   ],
-   "id": "2026-11-21:24"
-  },
-  {
-   "n": 30,
-   "frp_mw": 118.7,
-   "lat": -13.711,
-   "lon": -61.66,
+   "n": 8,
+   "frp_mw": 18.8,
+   "lat": -15.934,
+   "lon": -60.417,
    "departamento": "Santa Cruz",
    "municipio": "San Ignacio",
    "municipios": [
     "San Ignacio"
    ],
    "bbox": [
-    -61.683,
-    -13.748,
-    -61.642,
-    -13.669
+    -60.422,
+    -15.94,
+    -60.413,
+    -15.928
    ],
-   "id": "2026-11-21:25"
+   "id": "2026-11-22:25"
   }
  ]
 }
