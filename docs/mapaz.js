@@ -37,51 +37,64 @@ var MAPAZ = (function () {
   function tablaAn(R) {
     return '<table class="xt2 gfi-t"><tr><td></td>' + R.map(function (r) { return '<td style="text-align:right"><b>≤ ' + r.km + ' km</b></td>'; }).join("") + '</tr>' +
       filaR("Municipios", R.map(function (r) { return r.n; })) + filaR("Población (est.)", R.map(function (r) { return r.n ? fmtP(r.pob) : "—"; })) +
-      filaR('<i class="gi-hosp gi"></i>Hospitales', R.map(function (r) { return r.hosp; })) + filaR('<i class="gi-cli gi"></i>Centros, puestos, clínicas', R.map(function (r) { return r.cli; })) + filaR('<i class="gi-cons gi"></i>Consultorios', R.map(function (r) { return r.cons; })) +
-      filaR('<i class="gi-bom gi"></i>Bomberos y rescate', R.map(function (r) { return r.bom; })) + filaR('<i class="gi-pol gi"></i>Policía', R.map(function (r) { return r.pol; })) + '</table>';
+      filaR(ico("hosp") + 'Hospitales', R.map(function (r) { return r.hosp; })) + filaR(ico("cli") + 'Centros, puestos, clínicas', R.map(function (r) { return r.cli; })) + filaR(ico("cons") + 'Consultorios', R.map(function (r) { return r.cons; })) +
+      filaR(ico("bom") + 'Bomberos y rescate', R.map(function (r) { return r.bom; })) + filaR(ico("pol") + 'Policía', R.map(function (r) { return r.pol; })) + '</table>';
   }
   function legendaInfra() {
     return '<div class="glg"><b>Población del municipio</b><div><span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span></div></div>' +
-      '<div class="glg"><b>Infraestructura (OpenStreetMap)</b><div>' + [["hosp", "Hospital"], ["cli", "Centro / puesto / clínica"], ["cons", "Consultorio"], ["bom", "Bomberos / rescate"], ["pol", "Policía"]].map(function (x) { return '<span class="gic"><i class="gi-' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</div></div>';
+      '<div class="glg"><b>Infraestructura (OpenStreetMap)</b><div>' + ["hosp", "cli", "cons", "bom", "pol"].map(function (k) { return '<span class="gic">' + ico(k, 18) + ICO[k].n + '</span>'; }).join("") + '</div></div>';
   }
 
-  /* ---------- mapa base ---------- */
-  function icono(map, id, col, dib) {
-    var c = document.createElement("canvas"); c.width = c.height = 44; var g = c.getContext("2d");
-    g.fillStyle = "#fff"; g.beginPath(); g.arc(22, 22, 20, 0, 6.2832); g.fill(); g.fillStyle = col; g.beginPath(); g.arc(22, 22, 16.5, 0, 6.2832); g.fill(); g.fillStyle = "#fff"; dib(g);
-    map.addImage(id, g.getImageData(0, 0, 44, 44), {pixelRatio: 2});
+  /* ---------- iconos: cada clase tiene forma y color propios (los peligros son círculos o triángulos; los servicios, formas con glifo) ---------- */
+  function estrella(r1, r2) { var p = [], k, a; for (k = 0; k < 10; k++) { a = (-90 + 36 * k) * Math.PI / 180; p.push((24 + (k % 2 ? r2 : r1) * Math.cos(a)).toFixed(1) + " " + (24 + (k % 2 ? r2 : r1) * Math.sin(a)).toFixed(1)); } return "M" + p.join("L") + "Z"; }
+  var RR = "M14 6H34Q42 6 42 14V34Q42 42 34 42H14Q6 42 6 34V14Q6 6 14 6Z";
+  var ICO = {
+    hosp: {f: "#1b8a4e", d: RR, g: "M15 13h5v8h8v-8h5v22h-5v-9h-8v9h-5Z", gc: "#fff", n: "Hospital"},
+    cli: {f: "#2fae6c", d: RR, g: "M21 12h6v9h9v6h-9v9h-6v-9h-9v-6h9Z", gc: "#fff", n: "Centro / puesto / clínica"},
+    cons: {f: "#a7dcbf", d: RR, g: "M21 12h6v9h9v6h-9v9h-6v-9h-9v-6h9Z", gc: "#14532d", n: "Consultorio"},
+    bom: {f: "#b3261e", d: "M24 2L46 24L24 46L2 24Z", g: "M25 9C25.5 15 33 19 33 28C33 35 28.500 39 24 39C19.500 39 15 35 15 28C15 23.500 17.500 20.500 20 17.500C20.500 21 22 22.500 23.500 23C22.500 18.500 22.500 13 25 9Z", gc: "#fff", n: "Bomberos / rescate"},
+    pol: {f: "#1d4ed8", d: "M24 3L42 9L41 26Q39 38 24 45Q9 38 7 26L6 9Z", g: estrella(9.5, 4), gc: "#fff", n: "Policía"},
+    der: {f: "#8a4b1f", d: "M24 4L45 41L3 41Z", g: "M21.2 17h5.6l-1 14h-3.6ZM24 33.4a3 3 0 1 1 0 6a3 3 0 1 1 0-6Z", gc: "#fff", n: "Derrumbe / deslizamiento"}
+  };
+  function icono(map, k) {
+    var I = ICO[k], c = document.createElement("canvas"); c.width = c.height = 48; var g = c.getContext("2d"), p = new Path2D(I.d);
+    g.lineJoin = "round"; g.strokeStyle = "#fff"; g.lineWidth = 5; g.stroke(p); g.fillStyle = I.f; g.fill(p); g.fillStyle = I.gc; g.fill(new Path2D(I.g));
+    if (!map.hasImage("i-" + k)) map.addImage("i-" + k, g.getImageData(0, 0, 48, 48), {pixelRatio: 2});
   }
-  function iconos(map) {
-    var cruz = function (a) { return function (g) { g.fillRect(22 - a / 2, 22 - a * 2.1, a, a * 4.2); g.fillRect(22 - a * 2.1, 22 - a / 2, a * 4.2, a); }; };
-    icono(map, "i-hosp", "#e53935", cruz(4.6)); icono(map, "i-cli", "#f57c00", cruz(3.6)); icono(map, "i-cons", "#f9a825", cruz(2.8));
-    icono(map, "i-bom", "#d84315", function (g) { g.beginPath(); g.moveTo(22, 10); g.quadraticCurveTo(33, 22, 27, 31); g.quadraticCurveTo(22, 35, 17, 31); g.quadraticCurveTo(11, 22, 22, 10); g.fill(); });
-    icono(map, "i-pol", "#1565c0", function (g) { g.beginPath(); g.moveTo(22, 10); g.lineTo(31, 14); g.lineTo(30, 24); g.quadraticCurveTo(28, 31, 22, 35); g.quadraticCurveTo(16, 31, 14, 24); g.lineTo(13, 14); g.closePath(); g.fill(); });
-  }
+  function iconos(map) { Object.keys(ICO).forEach(function (k) { icono(map, k); }); }
+  /* el mismo dibujo, en SVG, para leyendas y tablas */
+  function ico(k, px) { var I = ICO[k]; return '<svg class="gs" viewBox="0 0 48 48" width="' + (px || 16) + '" height="' + (px || 16) + '" aria-hidden="true"><path d="' + I.d + '" fill="' + I.f + '" stroke="#fff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke"/><path d="' + I.g + '" fill="' + I.gc + '"/></svg>'; }
   var BASES = function (osc) { return {
-    carto: {t: ["a", "b", "c", "d"].map(function (x) { return "https://" + x + ".basemaps.cartocdn.com/" + (osc ? "dark_all" : "rastertiles/voyager") + "/{z}/{x}/{y}.png"; }), a: "© OpenStreetMap, © CARTO", z: 19},
-    osm: {t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], a: "© OpenStreetMap", z: 19},
-    topo: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"], a: "© Esri, HERE, Garmin, OSM", z: 17},
-    sat: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], a: "Imagen © Esri, Maxar", z: 17}}; };
+    calles: {t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], a: "© colaboradores de OpenStreetMap", z: 19, p: osc ? {"raster-brightness-max": .82, "raster-saturation": -.2} : {}},
+    calles2: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"], a: "© Esri, HERE, Garmin, OpenStreetMap", z: 19, p: osc ? {"raster-brightness-max": .82, "raster-saturation": -.2} : {}},
+    topo: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"], a: "© Esri, HERE, Garmin, OSM", z: 17, p: {}},
+    sat: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], a: "Imagen © Esri, Maxar", z: 17, p: {}}}; };
+  /* «calles» (OpenStreetMap) y su respaldo «calles2» (Esri) no necesitan clave; CARTO pasó a exigirla */
+  var BK = ["calles", "calles2", "topo", "sat"], SIG = {calles: "calles2", calles2: "topo"}, ALIAS = {calles2: "calles"};
+  function estiloBase(osc) {
+    var B = BASES(osc), src = {}, lay = [{id: "bg", type: "background", paint: {"background-color": X.css("--soft") || "#e6ebf2"}}];
+    BK.forEach(function (k) { src["b-" + k] = {type: "raster", tiles: B[k].t, tileSize: 256, maxzoom: B[k].z, attribution: B[k].a}; lay.push({id: "b-" + k, type: "raster", source: "b-" + k, paint: B[k].p, layout: {visibility: k === "calles" ? "visible" : "none"}}); });
+    return {version: 8, sources: src, layers: lay};
+  }
+  function baseVis(map, id) { BK.forEach(function (k) { map.setLayoutProperty("b-" + k, "visibility", k === id ? "visible" : "none"); }); }
 
   /* o: {id, av, tool, bajo(map), alto(map), listo(map), refInfra} */
   function crear(o) {
-    var osc = document.documentElement.getAttribute("data-theme") === "dark", B = BASES(osc), src = {}, st = {act: "carto", ok: {}, err: {}}, av = document.getElementById(o.av), tool = o.tool,
-      lay = [{id: "bg", type: "background", paint: {"background-color": X.css("--soft") || "#e6ebf2"}}];
-    ["carto", "osm", "topo", "sat"].forEach(function (k) { src["b-" + k] = {type: "raster", tiles: B[k].t, tileSize: 256, maxzoom: B[k].z, attribution: B[k].a}; lay.push({id: "b-" + k, type: "raster", source: "b-" + k, layout: {visibility: k === "carto" ? "visible" : "none"}}); });
-    var map = new maplibregl.Map({container: o.id, style: {version: 8, sources: src, layers: lay}, bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
+    var osc = document.documentElement.getAttribute("data-theme") === "dark", st = {act: "calles", ok: {}, err: {}}, av = document.getElementById(o.av), tool = o.tool;
+    var map = new maplibregl.Map({container: o.id, style: estiloBase(osc), bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
     map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"}); map._pop = pop;
     function botones() { return [].slice.call(document.querySelectorAll(tool + " button[data-b]")); }
-    function pon(id) { st.act = id; ["carto", "osm", "topo", "sat"].forEach(function (b) { map.setLayoutProperty("b-" + b, "visibility", b === id ? "visible" : "none"); }); botones().forEach(function (z) { z.classList.toggle("on", z.dataset.b === id); }); if (id === "none" || st.ok[id] || !st.err[id]) av.hidden = true; }
+    function pon(id) { st.act = id; baseVis(map, id); botones().forEach(function (z) { z.classList.toggle("on", z.dataset.b === (ALIAS[id] || id)); }); if (id === "none" || st.ok[id] || !st.err[id]) av.hidden = true; }
     function fallo(id) {
       if (id !== st.act || st.ok[id]) return; st.err[id] = (st.err[id] || 0) + 1; if (st.err[id] < 4) return;
-      var sig = {carto: "osm", osm: "topo"}[id]; if (sig && !st.err[sig]) { pon(sig); return; }
+      var sig = SIG[id]; if (sig && !st.err[sig]) { pon(sig); return; }
       av.hidden = false; av.innerHTML = 'No se pudo cargar el mapa base (sin conexión con el servidor de mapas o bloqueo de la red). <b>Los municipios y las capas del módulo se muestran igual.</b> <button class="xlink" type="button" id="' + o.av + 'R">Reintentar</button>';
-      document.getElementById(o.av + "R").onclick = function () { st.err = {}; st.ok = {}; av.hidden = true; pon("carto"); };
+      document.getElementById(o.av + "R").onclick = function () { st.err = {}; st.ok = {}; av.hidden = true; pon("calles"); };
     }
     map.on("error", function (e) { if (e && e.sourceId && e.sourceId.indexOf("b-") === 0) fallo(e.sourceId.slice(2)); else if (e && e.error) console.warn("MAPAZ " + e.error.message); });
     map.on("data", function (e) { if (e.sourceId && e.sourceId.indexOf("b-") === 0 && e.tile) { var id = e.sourceId.slice(2); st.ok[id] = 1; if (id === st.act) av.hidden = true; } });
-    botones().forEach(function (b) { b.onclick = function () { if (b.dataset.b === "none") { ["carto", "osm", "topo", "sat"].forEach(function (k) { map.setLayoutProperty("b-" + k, "visibility", "none"); }); botones().forEach(function (z) { z.classList.toggle("on", z === b); }); st.act = "none"; av.hidden = true; } else { st.err[b.dataset.b] = 0; pon(b.dataset.b); } }; });
+    botones().forEach(function (b) { b.onclick = function () { if (b.dataset.b === "none") { baseVis(map, "none"); botones().forEach(function (z) { z.classList.toggle("on", z === b); }); st.act = "none"; av.hidden = true; } else { st.err[b.dataset.b] = 0; pon(b.dataset.b); } }; });
     map.on("load", function () {
       iconos(map);
       map.addSource("dep", {type: "geojson", data: fc(T.D.geoDep.features)}); map.addSource("mun", {type: "geojson", data: fc(((T.D.geoMun || {}).features) || [])});
@@ -115,5 +128,5 @@ var MAPAZ = (function () {
     map.getSource("an").setData(fc(E ? radios.slice().sort(function (a, b) { return b - a; }).map(function (r) { return {type: "Feature", geometry: {type: "Polygon", coordinates: [circulo(E.lat, E.lon, r)]}, properties: {r: r}}; }) : []));
     map.getSource("inf").setData(fc(E ? E.C.map(function (x) { return {type: "Feature", geometry: {type: "Point", coordinates: [x.p.lon, x.p.lat]}, properties: {k: x.p.k, n: x.p.n, d: +x.d.toFixed(1), op: x.p.op, m: x.p.mun, e: x.p.esp}}; }) : []));
   }
-  return {iniciar: iniciar, crear: crear, expo: expo, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
+  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
 })();

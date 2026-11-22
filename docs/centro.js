@@ -149,7 +149,7 @@ var CMD = (function () {
   }
   function crearMapa() {
     var d = osc();
-    map = new maplibregl.Map({container: "cmMap", style: {version: 8, sources: {carto: {type: "raster", tiles: ["a", "b", "c", "d"].map(function (s) { return "https://" + s + ".basemaps.cartocdn.com/rastertiles/" + (d ? "dark_all" : "voyager") + "/{z}/{x}/{y}.png"; }), tileSize: 256, maxzoom: 19, attribution: "© OpenStreetMap, © CARTO"}}, layers: [{id: "bg", type: "background", paint: {"background-color": d ? "#0e1420" : "#dfe6ee"}}, {id: "carto", type: "raster", source: "carto", paint: {"raster-opacity": d ? .8 : .9}}]}, bounds: [[-69.8, -22.9], [-57.4, -9.6]], fitBoundsOptions: {padding: 8}, attributionControl: {compact: true}});
+    map = new maplibregl.Map({container: "cmMap", style: {version: 8, sources: {carto: {type: "raster", tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256, maxzoom: 19, attribution: "© colaboradores de OpenStreetMap"}}, layers: [{id: "bg", type: "background", paint: {"background-color": d ? "#0e1420" : "#dfe6ee"}}, {id: "carto", type: "raster", source: "carto", paint: d ? {"raster-opacity": .8, "raster-brightness-max": .82, "raster-saturation": -.2} : {"raster-opacity": .9}}]}, bounds: [[-69.8, -22.9], [-57.4, -9.6]], fitBoundsOptions: {padding: 8}, attributionControl: {compact: true}});
     map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 8});
     map.on("load", function () {

@@ -1,6 +1,6 @@
 /* Módulo Geológica: sismos (mapa de epicentros por magnitud y profundidad), exposición por radio, derrumbes/deslizamientos de prensa y antecedentes. */
 var GEO = (function () {
-  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], INF = [], st = {p: 30, m: 0, pr: true, pob: true, sal: true, eme: true}, sel = null, selD = null, map = null, DEPC = {}, rq = 0, MK = [], baseAct = "carto", bErr = {}, bOk = {};
+  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], INF = [], st = {p: 30, m: 0, pr: true, pob: true, sal: true, eme: true}, sel = null, selD = null, map = null, DEPC = {}, rq = 0, MK = [], baseAct = "calles", bErr = {}, bOk = {};
   var PROF = [[70, "Superficial (< 70 km)", "#d7263d"], [300, "Intermedio (70–300 km)", "#f2a41b"], [1e5, "Profundo (> 300 km)", "#4f5bd5"]];
   var BOL = /bolivia|la paz|potos|cochabamba|santa cruz|tarija|oruro|beni|pando|chuquisaca|yungas|el alto/i;
   function esc(s) { return S.esc(s == null ? "" : String(s)); }
@@ -61,7 +61,7 @@ var GEO = (function () {
       '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período</b><select id="gP"><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="0">Todo lo disponible</option></select></div>' +
       '<div class="xs1"><b>Magnitud mínima</b><select id="gM"><option value="0">Todas</option><option value="3.5">≥ 3,5</option><option value="4">≥ 4</option><option value="5">≥ 5</option></select></div>' +
       '<div class="xs1"><b>Derrumbes</b><label><input type="checkbox" id="gPr" checked> Mostrar derrumbes y deslizamientos (prensa)</label></div></div>' +
-      '<div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><span class="xtl">Mapa base</span><button data-b="carto" class="on">Calles</button><button data-b="osm">OpenStreetMap</button><button data-b="topo">Relieve</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><span class="xsp"></span><label><input type="checkbox" id="gN" checked> Departamentos</label><label><input type="checkbox" id="gLp" checked> Población</label><label><input type="checkbox" id="gLs" checked> Salud</label><label><input type="checkbox" id="gLe" checked> Bomberos y policía</label></div><div class="xmap" id="gMap"></div><div class="xav" id="gAv" hidden></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
+      '<div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><span class="xtl">Mapa base</span><button data-b="calles" class="on">Calles</button><button data-b="topo">Relieve</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><span class="xsp"></span><label><input type="checkbox" id="gN" checked> Departamentos</label><label><input type="checkbox" id="gLp" checked> Población</label><label><input type="checkbox" id="gLs" checked> Salud</label><label><input type="checkbox" id="gLe" checked> Bomberos y policía</label></div><div class="xmap" id="gMap"></div><div class="xav" id="gAv" hidden></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
       '<div class="xside"><div id="gDet"></div></div></div><div id="eviP"></div>' +
       '<div class="g3"><div class="card"><h3>Magnitud y energía en el tiempo</h3><div id="gCh" style="height:250px"></div><p class="nota" id="gChN"></p></div>' +
       '<div class="card"><h3>Corte de profundidad</h3><div id="gCor" style="height:250px"></div><p class="nota" id="gCorN"></p></div>' +
@@ -98,6 +98,7 @@ var GEO = (function () {
   function marca(html, cls, lon, lat, anchor) { var el = document.createElement("div"); el.className = cls; el.innerHTML = html; MK.push(new maplibregl.Marker({element: el, anchor: anchor || "center"}).setLngLat([lon, lat]).addTo(map)); }
   function etiquetas() {
     limpiaMK(); if (!map || !map._ok) return;
+    if (sel && EX && map.getZoom() < 6.4) return;
     if (sel && EX) {
       EX.R.forEach(function (r) { marca('<b>≤ ' + r.km + ' km</b><span>' + (r.pob ? fmtP(r.pob) + ' hab.' : 'sin población') + ' · ' + (r.hosp + r.cli + r.cons) + ' est. salud</span>', "gr-lab", sel.lon, sel.lat + r.km / 111.32, "bottom"); });
       var top = EX.mu.slice().sort(function (a, b) { return (b.m.pob || 0) - (a.m.pob || 0); }).slice(0, 9), ids = {}; top.forEach(function (x) { ids[x.m.k] = 1; }); EX.mu.slice(0, 3).forEach(function (x) { if (!ids[x.m.k]) { top.push(x); ids[x.m.k] = 1; } });
@@ -110,41 +111,25 @@ var GEO = (function () {
     h += g("Epicentros", '<span class="xs"><i style="width:7px;height:7px;border-radius:50%;background:#9aa7bd"></i><i style="width:11px;height:11px;border-radius:50%;background:#9aa7bd"></i><i style="width:18px;height:18px;border-radius:50%;background:#9aa7bd"></i> tamaño = magnitud (3 · 4 · 5)</span><br>' + PROF.map(function (p) { return '<span><i style="background:' + p[2] + ';border-radius:50%;width:11px;height:11px"></i>' + p[1] + '</span>'; }).join(" "));
     if (sel) h += g("Distancia al epicentro", '<span><i class="gbn"></i>Bandas de 25, 50 y 100 km<br><small>más intensa = más cerca; no es intensidad del sismo</small></span>');
     if (sel || selD) h += g("Población del municipio", '<span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span>') +
-      g("Infraestructura (OpenStreetMap)", [["hosp", "Hospital"], ["cli", "Centro / puesto / clínica"], ["cons", "Consultorio"], ["bom", "Bomberos / rescate"], ["pol", "Policía"]].map(function (x) { return '<span class="gic"><i class="gi-' + x[0] + '"></i>' + x[1] + '</span>'; }).join(""));
-    if (st.pr) h += g("Derrumbes (prensa)", '<span><i style="background:#7b4a2b;border:2px solid #fff;border-radius:50%;width:11px;height:11px;box-sizing:border-box"></i>Derrumbe / deslizamiento</span>' + (selD && DX && DX.rad > 0 ? '<br><span><i style="background:rgba(245,166,35,.35);border:1px dashed #f5a623;border-radius:50%;width:12px;height:12px;box-sizing:border-box"></i>Incertidumbre de ubicación (~' + fmt(DX.rad) + ' km)</span>' : ""));
+      g("Infraestructura (OpenStreetMap)", [["hosp", "Hospital"], ["cli", "Centro / puesto / clínica"], ["cons", "Consultorio"], ["bom", "Bomberos / rescate"], ["pol", "Policía"]].map(function (x) { return '<span class="gic">' + MAPAZ.ico(x[0], 18) + x[1] + '</span>'; }).join(""));
+    if (st.pr) h += g("Derrumbes (prensa)", '<span class="gic">' + MAPAZ.ico("der", 18) + 'Derrumbe / deslizamiento (prensa)</span>' + (selD && DX && DX.rad > 0 ? '<br><span><i style="background:rgba(245,166,35,.35);border:1px dashed #f5a623;border-radius:50%;width:12px;height:12px;box-sizing:border-box"></i>Incertidumbre de ubicación (~' + fmt(DX.rad) + ' km)</span>' : ""));
     $("gL").innerHTML = h;
   }
-  function icono(id, col, dib, sz) {
-    var c = document.createElement("canvas"); c.width = c.height = 44; var g = c.getContext("2d");
-    g.fillStyle = "#fff"; g.beginPath(); g.arc(22, 22, 20, 0, 6.2832); g.fill(); g.fillStyle = col; g.beginPath(); g.arc(22, 22, 16.5, 0, 6.2832); g.fill(); g.fillStyle = "#fff"; dib(g);
-    map.addImage(id, g.getImageData(0, 0, 44, 44), {pixelRatio: 2});
-  }
-  function iconos() {
-    var cruz = function (a) { return function (g) { g.fillRect(22 - a / 2, 22 - a * 2.1, a, a * 4.2); g.fillRect(22 - a * 2.1, 22 - a / 2, a * 4.2, a); }; };
-    icono("i-hosp", "#e53935", cruz(4.6)); icono("i-cli", "#f57c00", cruz(3.6)); icono("i-cons", "#f9a825", cruz(2.8));
-    icono("i-bom", "#d84315", function (g) { g.beginPath(); g.moveTo(22, 10); g.quadraticCurveTo(33, 22, 27, 31); g.quadraticCurveTo(22, 35, 17, 31); g.quadraticCurveTo(11, 22, 22, 10); g.fill(); });
-    icono("i-pol", "#1565c0", function (g) { g.beginPath(); g.moveTo(22, 10); g.lineTo(31, 14); g.lineTo(30, 24); g.quadraticCurveTo(28, 31, 22, 35); g.quadraticCurveTo(16, 31, 14, 24); g.lineTo(13, 14); g.closePath(); g.fill(); });
-  }
-  var BASES = function (osc) { return {
-    carto: {t: ["a", "b", "c", "d"].map(function (x) { return "https://" + x + ".basemaps.cartocdn.com/" + (osc ? "dark_all" : "rastertiles/voyager") + "/{z}/{x}/{y}.png"; }), a: "© OpenStreetMap, © CARTO", z: 19},
-    osm: {t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], a: "© OpenStreetMap", z: 19},
-    topo: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"], a: "© Esri, HERE, Garmin, OSM", z: 17},
-    sat: {t: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], a: "Imagen © Esri, Maxar", z: 17}}; };
+  function iconos() { MAPAZ.iconos(map); }
   function pongaBase(id) {
-    baseAct = id; ["carto", "osm", "topo", "sat"].forEach(function (b) { map.setLayoutProperty("b-" + b, "visibility", b === id ? "visible" : "none"); });
-    [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z.dataset.b === id); }); $("gAv").hidden = id === "none" || bOk[id] || !bErr[id] ? true : $("gAv").hidden;
+    baseAct = id; MAPAZ.baseVis(map, id);
+    [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z.dataset.b === (MAPAZ.ALIAS[id] || id)); }); $("gAv").hidden = id === "none" || bOk[id] || !bErr[id] ? true : $("gAv").hidden;
   }
   function falloBase(id) {
     if (id !== baseAct || bOk[id]) return; bErr[id] = (bErr[id] || 0) + 1; if (bErr[id] < 4) return;
-    var sig = {carto: "osm", osm: "topo"}[id];
+    var sig = MAPAZ.SIG[id];
     if (sig && !bErr[sig]) { pongaBase(sig); return; }
     $("gAv").hidden = false; $("gAv").innerHTML = 'No se pudo cargar el mapa base (sin conexión con el servidor de mapas o bloqueo de la red). <b>Los municipios, sismos e infraestructura se muestran igual.</b> <button class="xlink" id="gAvR">Reintentar</button>';
-    $("gAvR").onclick = function () { bErr = {}; bOk = {}; $("gAv").hidden = true; pongaBase("carto"); };
+    $("gAvR").onclick = function () { bErr = {}; bOk = {}; $("gAv").hidden = true; pongaBase("calles"); };
   }
   function crearMapa() {
-    var osc = document.documentElement.getAttribute("data-theme") === "dark", B = BASES(osc), src = {}, lay = [{id: "bg", type: "background", paint: {"background-color": X.css("--soft") || "#e6ebf2"}}];
-    ["carto", "osm", "topo", "sat"].forEach(function (k) { src["b-" + k] = {type: "raster", tiles: B[k].t, tileSize: 256, maxzoom: B[k].z, attribution: B[k].a}; lay.push({id: "b-" + k, type: "raster", source: "b-" + k, layout: {visibility: k === "carto" ? "visible" : "none"}}); });
-    map = new maplibregl.Map({container: "gMap", style: {version: 8, sources: src, layers: lay}, bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
+    var osc = document.documentElement.getAttribute("data-theme") === "dark";
+    map = new maplibregl.Map({container: "gMap", style: MAPAZ.estiloBase(osc), bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
     map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"});
     map.on("error", function (e) { if (e && e.sourceId && e.sourceId.indexOf("b-") === 0) falloBase(e.sourceId.slice(2)); else if (e && e.error) console.warn("GEO-MAP " + e.error.message); });
@@ -165,7 +150,7 @@ var GEO = (function () {
       map.addLayer({id: "inf-s", type: "symbol", source: "inf", filter: ["in", ["get", "k"], ["literal", ["hosp", "cli", "cons"]]], layout: {"icon-image": ["match", ["get", "k"], "hosp", "i-hosp", "cli", "i-cli", "i-cons"], "icon-size": ikm(.9, .75, .6, 1.5, 1.25, 1.0), "icon-allow-overlap": true, "icon-ignore-placement": true}});
       map.addLayer({id: "inf-e", type: "symbol", source: "inf", filter: ["in", ["get", "k"], ["literal", ["bom", "res", "pol"]]], layout: {"icon-image": ["match", ["get", "k"], "pol", "i-pol", "i-bom"], "icon-size": ik(.8, 1.3), "icon-allow-overlap": true, "icon-ignore-placement": true}});
       map.addLayer({id: "pr-h", type: "circle", source: "pr", filter: ["==", ["get", "s"], 1], paint: {"circle-radius": 14, "circle-color": "#f5a623", "circle-opacity": .35, "circle-stroke-color": "#f5a623", "circle-stroke-width": 2}});
-      map.addLayer({id: "pr", type: "circle", source: "pr", paint: {"circle-radius": 7, "circle-color": "#7b4a2b", "circle-stroke-color": "#fff", "circle-stroke-width": 2}});
+      map.addLayer({id: "pr", type: "symbol", source: "pr", layout: {"icon-image": "i-der", "icon-size": ["interpolate", ["linear"], ["zoom"], 5, .8, 10, 1.25], "icon-allow-overlap": true, "icon-ignore-placement": true}});
       map.addLayer({id: "sis", type: "circle", source: "sis", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 3.5, 3, 6, 4, 10, 5, 16, 6, 24], "circle-color": ["get", "c"], "circle-opacity": .8, "circle-stroke-color": ["case", ["==", ["get", "s"], 1], osc ? "#ffffff" : "#000000", osc ? "rgba(255,255,255,.75)" : "#fff"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 3.2, 1]}});
       map.on("mousemove", "sis", function (e) { var q = Q.filter(function (z) { return z.id === e.features[0].properties.id; })[0]; if (!q) return; map.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">M ' + fmt(q.mag, 1) + ' · ' + esc(q.lugar) + '</b>' + hora(q.ts) + (q.prof != null ? ' · prof. ' + fmt(q.prof) + ' km' : '') + ' · clic para ver población e infraestructura cercanas</div>').addTo(map); });
       map.on("mouseleave", "sis", function () { pop.remove(); map.getCanvas().style.cursor = ""; });
@@ -178,10 +163,10 @@ var GEO = (function () {
         map.on("mouseleave", L, function () { pop.remove(); map.getCanvas().style.cursor = ""; });
       });
       map.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); map.on("resize", rotular);
-      map.on("zoom", function () { $("gMap").classList.toggle("gz-lo", map.getZoom() < 6.3); });
+      map.on("zoom", function () { $("gMap").classList.toggle("gz-lo", map.getZoom() < 6.3); }); map.on("zoomend", etiquetas);
       map._ok = 1; LUGAR.ajusta(map, T, LG, false); capas(); dibuja();
     });
-    [].forEach.call(document.querySelectorAll(".xtool button"), function (b) { b.onclick = function () { if (b.dataset.b === "none") { ["carto", "osm", "topo", "sat"].forEach(function (k) { map.setLayoutProperty("b-" + k, "visibility", "none"); }); [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z === b); }); baseAct = "none"; $("gAv").hidden = true; } else { bErr[b.dataset.b] = 0; pongaBase(b.dataset.b); } }; });
+    [].forEach.call(document.querySelectorAll(".xtool button"), function (b) { b.onclick = function () { if (b.dataset.b === "none") { MAPAZ.baseVis(map, "none"); [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z === b); }); baseAct = "none"; $("gAv").hidden = true; } else { bErr[b.dataset.b] = 0; pongaBase(b.dataset.b); } }; });
   }
   function vis(id, on) { if (map && map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); }
   function capas() { if (!map || !map._ok) return; vis("ex-f", st.pob); vis("ex-l", st.pob); vis("inf-s", st.sal); vis("inf-e", st.eme); etiquetas(); }
@@ -212,8 +197,8 @@ var GEO = (function () {
   function tablaAn(R) {
     return '<table class="xt2 gfi-t"><tr><td></td>' + R.map(function (r) { return '<td style="text-align:right"><b>≤ ' + r.km + ' km</b></td>'; }).join("") + '</tr>' +
       filaR("Municipios", R.map(function (r) { return r.n; })) + filaR("Población (est.)", R.map(function (r) { return r.n ? fmtP(r.pob) : "—"; })) +
-      filaR('<i class="gi-hosp gi"></i>Hospitales', R.map(function (r) { return r.hosp; })) + filaR('<i class="gi-cli gi"></i>Centros, puestos, clínicas', R.map(function (r) { return r.cli; })) + filaR('<i class="gi-cons gi"></i>Consultorios', R.map(function (r) { return r.cons; })) +
-      filaR('<i class="gi-bom gi"></i>Bomberos y rescate', R.map(function (r) { return r.bom; })) + filaR('<i class="gi-pol gi"></i>Policía', R.map(function (r) { return r.pol; })) + '</table>';
+      filaR(MAPAZ.ico("hosp") + 'Hospitales', R.map(function (r) { return r.hosp; })) + filaR(MAPAZ.ico("cli") + 'Centros, puestos, clínicas', R.map(function (r) { return r.cli; })) + filaR(MAPAZ.ico("cons") + 'Consultorios', R.map(function (r) { return r.cons; })) +
+      filaR(MAPAZ.ico("bom") + 'Bomberos y rescate', R.map(function (r) { return r.bom; })) + filaR(MAPAZ.ico("pol") + 'Policía', R.map(function (r) { return r.pol; })) + '</table>';
   }
   function dato(k, v) { return '<div class="gpar"><span>' + k + '</span><b>' + v + '</b></div>'; }
   function detalle() {
