@@ -195,10 +195,10 @@ var CLIM2 = (function () {
   function dato(k, v, full) { return '<div class="gpar' + (full ? " full" : "") + '"><span>' + k + '</span><b>' + v + '</b></div>'; }
   function pie(txt) { return '<p class="nota" style="margin:8px 0 0">' + txt + '</p>'; }
   function cerc(E, km) {
-    var hc = M.primero(E.C, ["hosp"]), bc = M.primero(E.C, ["bom", "res"]), pr = E.mu.slice().sort(function (a, b) { return (b.en ? 1 : 0) - (a.en ? 1 : 0) || (b.m.pob || 0) - (a.m.pob || 0); }).slice(0, 4);
-    return '<div class="gsec">Qué hay cerca</div>' + M.tablaAn(E.R) + '<p class="nota" style="margin:6px 0">Población = municipios cuyo centro cae dentro del radio, más el municipio donde está el punto (estimación INE; se cuenta el municipio entero). Establecimientos y servicios: OpenStreetMap, cobertura incompleta.' + (E.R[E.R.length - 1].sd ? ' ' + E.R[E.R.length - 1].sd + ' municipio(s) sin dato de población.' : '') + '</p>' +
+    var hc = M.primero(E.C, ["hosp"]), bc = M.primero(E.C, ["bom", "res"]), pr = M.principales(E, 4);
+    return '<div class="gsec">Qué hay cerca</div>' + M.tablaAn(E.R) + '<p class="nota" style="margin:6px 0">' + M.notaPob(E) + '</p>' +
       dato("Hospital más cercano", hc ? esc(hc.p.n) + ' · ' + fmt(hc.d, 1) + ' km' : 'ninguno a ≤ ' + km + ' km en el mapa') + dato("Bomberos / rescate", bc ? esc(bc.p.n) + ' · ' + fmt(bc.d, 1) + ' km' : 'ninguno a ≤ ' + km + ' km en el mapa') +
-      (pr.length ? '<div class="gsec">Poblaciones principales (en el punto o a ≤ ' + km + ' km)</div><table class="xt2 gfi-t"><tr><td></td><td style="text-align:right"><b>Hab.</b></td><td style="text-align:right"><b>Distancia</b></td></tr>' + pr.map(function (x) { return '<tr><td><a href="municipio.html?d=' + encodeURIComponent(x.m.d) + '&m=' + encodeURIComponent(x.m.n) + '">' + esc(x.m.n) + '</a></td><td style="text-align:right">' + (x.m.pob != null ? M.fmtP(x.m.pob) : "s/d") + '</td><td style="text-align:right">' + (x.en ? "aquí" : fmt(x.d) + ' km') + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Ningún municipio a menos de ' + km + ' km.</p>');
+      (pr.length ? '<div class="gsec">Poblaciones principales (en el punto o a ≤ ' + km + ' km)</div><table class="xt2 gfi-t"><tr><td></td><td style="text-align:right"><b>' + M.cabHab(E) + '</b></td><td style="text-align:right"><b>Distancia</b></td></tr>' + pr.map(function (x) { return '<tr><td><a href="municipio.html?d=' + encodeURIComponent(x.m.d) + '&m=' + encodeURIComponent(x.m.n) + '">' + esc(x.m.n) + '</a></td><td style="text-align:right">' + M.habX(x, E) + '</td><td style="text-align:right">' + (x.en ? "aquí" : fmt(x.d) + ' km') + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Ningún municipio a menos de ' + km + ' km.</p>');
   }
   function aireCerca(lat, lon) {
     if (AQ.estado !== "ok") return AQ.estado === "error" ? "sin datos (el modelo no respondió)" : "consultando…";
@@ -301,14 +301,14 @@ var CLIM2 = (function () {
     if (st.v === "fuego" && st.cx) cxLugar().slice(0, 8).forEach(function (c) { if (SEL && SEL.t === "cx" && SEL.c.id === c.id) return; marca('<span class="cl-pin">' + c.n + ' focos · ' + fmt(c.frp_mw, 0) + ' MW</span>', "cl-lab", c.lon, c.lat, "bottom"); });
     if (EX && !EX.aq && SEL && st.v === "fuego" && map.getZoom() >= 6.4) {
       var lat = EX.lat, lon = EX.lon; EX.R.forEach(function (r) { marca('<b>≤ ' + r.km + ' km</b><span>' + (r.pob ? M.fmtP(r.pob) + ' hab.' : 'sin población') + ' · ' + (r.hosp + r.cli + r.cons) + ' est. salud</span>', "gr-lab", lon, lat + r.km / 111.32, "bottom"); });
-      var top = EX.mu.slice().sort(function (a, b) { return (b.m.pob || 0) - (a.m.pob || 0); }).slice(0, 6); if (st.pob) top.forEach(function (x) { marca('<span class="gm-n">' + esc(x.m.n) + '</span><small>' + (x.m.pob != null ? M.fmtP(x.m.pob) + ' hab.' : 'sin dato') + '</small>', "gm-lab", x.m._c[0], x.m._c[1]); });
+      var top = M.principales(EX, 6); if (st.pob) top.forEach(function (x) { marca('<span class="gm-n">' + esc(x.m.n) + '</span><small>' + (x.m.pob != null ? M.fmtP(x.m.pob) + ' hab.' : 'sin dato') + '</small>', "gm-lab", x.m._c[0], x.m._c[1]); });
     }
   }
   function leyenda() {
     var g = function (t, b) { return '<div class="glg"><b>' + t + '</b><div>' + b + '</div></div>'; }, h = "", v = st.v;
     if (v === "fuego") { h += g("Focos de calor", COLF.map(function (c, i) { return '<span><i style="background:' + c + ';border-radius:50%;width:11px;height:11px"></i>' + (i === 0 ? "último día" : i === 3 ? "hace 3 días o más" : "hace " + i + (i === 1 ? " día" : " días")) + '</span>'; }).join(" ") + '<br><span class="xs"><i style="width:7px;height:7px;border-radius:50%;background:#9aa7bd"></i><i style="width:11px;height:11px;border-radius:50%;background:#9aa7bd"></i><i style="width:18px;height:18px;border-radius:50%;background:#9aa7bd"></i> tamaño = potencia (FRP)</span>') + (st.cx ? g("Complejo de incendio", '<span><i style="border:2px solid #b71c1c;background:rgba(211,47,47,.15);border-radius:50%;width:12px;height:12px;box-sizing:border-box"></i>focos vecinos del último día</span>') : "") + (EX ? g("Distancia al punto", '<span><i class="gbn"></i>Bandas de 10, 25 y 50 km</span>') + M.legendaInfra() : ""); }
     else if (v === "sequia") h += g("SPI-" + st.spi + " (sequía ←→ húmedo)", '<span class="gesc">' + [["#a50f15", "≤ −2"], ["#de2d26", "−2 a −1,5"], ["#fb6a4a", "−1,5 a −1"], ["#b8c4d6", "−1 a 1"], ["#9ecae1", "1 a 1,5"], ["#4292c6", "1,5 a 2"], ["#08519c", "≥ 2"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span>');
-    else { h += g("PM2,5 (24 h) · modelo", '<span class="gesc">' + AQC.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[2] + '</span>'; }).join("") + '</span>'); if (EX) h += M.legendaInfra().split('<div class="glg"><b>Infraestructura')[0]; }
+    else { h += g("PM2,5 (24 h) · modelo", '<span class="gesc">' + AQC.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[2] + '</span>'; }).join("") + '</span>'); if (EX) h += M.leyendaPob(false); }
     $("cL").innerHTML = h;
   }
   function refrescaAire() { if (map && map._ok) map.getSource("aq").setData(geoAire()); }
@@ -379,14 +379,14 @@ var CLIM2 = (function () {
   }
   function iniciar() {
     TERR.cargar().then(function (t) {
-      T = t; A = TERR.api; D = T.D; A.estilos(); X.header("modulo.html"); document.title = "Climatológica — Sala de Situación Bolivia"; M.iniciar(T); prep();
+      T = t; A = TERR.api; D = T.D; A.estilos(); X.header("modulo.html"); document.title = "Climatológica — Sala de Situación Bolivia"; M.iniciar(T); M.malla(function () { if (map && map._ok) { if (SEL) selecciona(false); else leyenda(); } }); prep();
       $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "climatológica", D);
       LUGAR.init(T, $("lgBox"), LG, function () { SEL = null; dibuja(); LUGAR.ajusta(map, T, LG); if (LG.m && window.CLIMA) CLIMA.irMun(LG.m + " (" + LG.d + ")"); });
       [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.onclick = function () { vista(b.dataset.v, false); }; });
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });
       $("cNd").onchange = rotular; $("cLp").onchange = function () { st.pob = this.checked; capasVista(); etiquetas(); }; $("cLs").onchange = function () { st.sal = this.checked; capasVista(); }; $("cLe").onchange = function () { st.eme = this.checked; capasVista(); };
       [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.classList.toggle("on", b.dataset.v === st.v); });
-      map = M.crear({id: "cMap", av: "cAv", tool: "#cTool", bajo: bajo, alto: alto, listo: listo, refInfra: "del punto"});
+      map = M.crear({id: "cMap", av: "cAv", tool: "#cTool", bajo: bajo, alto: alto, listo: listo, refInfra: "del punto", evitar: ["fo", "fo2", "cx-c", "aq-p"]});
       pulso(); if (window.CLIMA) CLIMA.iniciar("clima", cfgMon());
       cargarAire();
     });

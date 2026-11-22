@@ -1,6 +1,6 @@
 /* Módulo Geológica: sismos (mapa de epicentros por magnitud y profundidad), exposición por radio, derrumbes/deslizamientos de prensa y antecedentes. */
 var GEO = (function () {
-  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], INF = [], st = {p: 30, m: 0, pr: true, pob: true, sal: true, eme: true}, sel = null, selD = null, map = null, DEPC = {}, rq = 0, MK = [], baseAct = "calles", bErr = {}, bOk = {};
+  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], st = {p: 30, m: 0, pr: true, pob: true, sal: true, eme: true}, sel = null, selD = null, map = null, DEPC = {}, rq = 0, MK = [], baseAct = "calles", bErr = {}, bOk = {};
   var PROF = [[70, "Superficial (< 70 km)", "#d7263d"], [300, "Intermedio (70–300 km)", "#f2a41b"], [1e5, "Profundo (> 300 km)", "#4f5bd5"]];
   var BOL = /bolivia|la paz|potos|cochabamba|santa cruz|tarija|oruro|beni|pando|chuquisaca|yungas|el alto/i;
   function esc(s) { return S.esc(s == null ? "" : String(s)); }
@@ -30,25 +30,9 @@ var GEO = (function () {
   }
   function enLugar(q) { if (!LG.d) return true; if (LG.m) { var m = T.M[LG.d + "|" + LG.m]; if (!m._c) m._c = A.cenPoly(m.f.geometry); return hav(q.lat, q.lon, m._c[1], m._c[0]) <= 50; } return q.dep === LG.d; }
   function filtrado() { var t0 = st.p ? Date.now() - st.p * 864e5 : 0; return Q.filter(function (q) { return q.ts >= t0 && q.mag >= st.m && enLugar(q); }); }
-  /* ---- infraestructura (OpenStreetMap vía HOT/HDX; cobertura incompleta) ---- */
+  /* ---- infraestructura y población: código común en mapaz.js (OpenStreetMap vía HOT/HDX; población: malla WorldPop+INE o, si no existe, municipios INE) ---- */
   var INFN = {hosp: "Hospital (por nombre)", cli: "Centro, puesto o clínica", cons: "Consultorio", bom: "Bomberos", res: "Rescate", pol: "Policía"};
-  function prepInf() {
-    INF = [];
-    T.est.forEach(function (p) { INF.push({lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: /hospital/i.test(p[2] || "") ? "hosp" : p[3] === "consultorio" ? "cons" : "cli", op: p[4] || "", esp: p[5] || "", dep: p[6] || "", mun: p[7] || ""}); });
-    T.emer.forEach(function (p) { INF.push({lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: p[3] === "bomberos" ? "bom" : p[3] === "rescate" ? "res" : "pol", op: "", esp: "", dep: p[4] || "", mun: p[5] || ""}); });
-  }
-  function cerca(lat, lon, km) { var o = []; INF.forEach(function (p) { var d = hav(lat, lon, p.lat, p.lon); if (d <= km) o.push({p: p, d: d}); }); o.sort(function (a, b) { return a.d - b.d; }); return o; }
-  function expo(lat, lon, radios, km) {
-    var mu = []; T.lista.forEach(function (m) { if (!m._c) m._c = A.cenPoly(m.f.geometry); var d = hav(lat, lon, m._c[1], m._c[0]); if (d <= km) mu.push({m: m, d: d}); });
-    mu.sort(function (a, b) { return a.d - b.d; });
-    var C = cerca(lat, lon, km), R = radios.map(function (r) {
-      var o = {km: r, n: 0, pob: 0, sd: 0, hosp: 0, cli: 0, cons: 0, bom: 0, pol: 0};
-      mu.forEach(function (x) { if (x.d <= r) { o.n++; if (x.m.pob == null) o.sd++; else o.pob += x.m.pob; } });
-      C.forEach(function (x) { if (x.d <= r) { var k = x.p.k === "res" ? "bom" : x.p.k; o[k]++; } });
-      return o;
-    });
-    return {mu: mu, C: C, R: R};
-  }
+  function expo(lat, lon, radios, km) { return MAPAZ.expo(lat, lon, radios, km); }
   function primero(C, ks) { for (var i = 0; i < C.length; i++) if (ks.indexOf(C[i].p.k) >= 0) return C[i]; return null; }
   function eTNT(M) { var t = Math.pow(10, 1.5 * M + 4.8) / 4.184e9; return t < 1 ? fmt(Math.max(1, Math.round(t * 1000))) + " kg de TNT" : t < 1000 ? fmt(t, t < 10 ? 1 : 0) + " t de TNT" : fmt(t / 1000, 1) + " kt de TNT"; }
   function claseM(m) { return m < 4 ? ["menor", "Suele sentirse, rara vez causa daños."] : m < 5 ? ["ligero", "Se nota el movimiento de objetos y ruidos en interiores; daños significativos poco probables."] : m < 6 ? ["moderado", "Puede dañar edificios mal construidos en zonas pequeñas; daño leve en los bien diseñados."] : m < 7 ? ["fuerte", "Puede ser destructivo en áreas de hasta ~160 km en zonas pobladas."] : ["mayor", "Puede causar daño grave en zonas extensas."]; }
@@ -101,7 +85,7 @@ var GEO = (function () {
     if (sel && EX && map.getZoom() < 6.4) return;
     if (sel && EX) {
       EX.R.forEach(function (r) { marca('<b>≤ ' + r.km + ' km</b><span>' + (r.pob ? fmtP(r.pob) + ' hab.' : 'sin población') + ' · ' + (r.hosp + r.cli + r.cons) + ' est. salud</span>', "gr-lab", sel.lon, sel.lat + r.km / 111.32, "bottom"); });
-      var top = EX.mu.slice().sort(function (a, b) { return (b.m.pob || 0) - (a.m.pob || 0); }).slice(0, 9), ids = {}; top.forEach(function (x) { ids[x.m.k] = 1; }); EX.mu.slice(0, 3).forEach(function (x) { if (!ids[x.m.k]) { top.push(x); ids[x.m.k] = 1; } });
+      var top = MAPAZ.principales(EX, 9), ids = {}; top.forEach(function (x) { ids[x.m.k] = 1; }); EX.mu.slice(0, 3).forEach(function (x) { if (!ids[x.m.k]) { top.push(x); ids[x.m.k] = 1; } });
       if (st.pob) top.forEach(function (x) { marca('<span class="gm-n">' + esc(x.m.n) + '</span><small>' + (x.m.pob != null ? fmtP(x.m.pob) + ' hab.' : 'sin dato') + '</small>', "gm-lab", x.m._c[0], x.m._c[1]); });
     } else if (selD && DX && DX.m) { var m = DX.m; if (!m._c) m._c = A.cenPoly(m.f.geometry); marca('<span class="gm-n">' + esc(m.n) + '</span><small>' + (m.pob != null ? fmtP(m.pob) + ' hab.' : 'sin dato') + '</small>', "gm-lab", m._c[0], m._c[1]); [10, 25].forEach(function (r) { marca('<b>' + r + ' km</b>', "gr-lab gr-s", selD.lon, selD.lat + r / 111.32, "bottom"); }); }
   }
@@ -110,7 +94,7 @@ var GEO = (function () {
     var g = function (t, body) { return '<div class="glg"><b>' + t + '</b><div>' + body + '</div></div>'; }, h = '';
     h += g("Epicentros", '<span class="xs"><i style="width:7px;height:7px;border-radius:50%;background:#9aa7bd"></i><i style="width:11px;height:11px;border-radius:50%;background:#9aa7bd"></i><i style="width:18px;height:18px;border-radius:50%;background:#9aa7bd"></i> tamaño = magnitud (3 · 4 · 5)</span><br>' + PROF.map(function (p) { return '<span><i style="background:' + p[2] + ';border-radius:50%;width:11px;height:11px"></i>' + p[1] + '</span>'; }).join(" "));
     if (sel) h += g("Distancia al epicentro", '<span><i class="gbn"></i>Bandas de 25, 50 y 100 km<br><small>más intensa = más cerca; no es intensidad del sismo</small></span>');
-    if (sel || selD) h += g("Población del municipio", '<span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span>') +
+    if (sel || selD) h += MAPAZ.leyendaPob() +
       g("Infraestructura (OpenStreetMap)", [["hosp", "Hospital"], ["cli", "Centro / puesto / clínica"], ["cons", "Consultorio"], ["bom", "Bomberos / rescate"], ["pol", "Policía"]].map(function (x) { return '<span class="gic">' + MAPAZ.ico(x[0], 18) + x[1] + '</span>'; }).join(""));
     if (st.pr) h += g("Derrumbes (prensa)", '<span class="gic">' + MAPAZ.ico("der", 18) + 'Derrumbe / deslizamiento (prensa)</span>' + (selD && DX && DX.rad > 0 ? '<br><span><i style="background:rgba(245,166,35,.35);border:1px dashed #f5a623;border-radius:50%;width:12px;height:12px;box-sizing:border-box"></i>Incertidumbre de ubicación (~' + fmt(DX.rad) + ' km)</span>' : ""));
     $("gL").innerHTML = h;
@@ -141,6 +125,7 @@ var GEO = (function () {
       map.addLayer({id: "d-f", type: "fill", source: "dep", paint: {"fill-color": "#ffffff", "fill-opacity": osc ? .05 : .03}});
       LUGAR.capa(map);
       map.addLayer({id: "ex-f", type: "fill", source: "ex", paint: {"fill-color": ["case", ["<", ["get", "pob"], 0], "#9aa3b2", ["step", ["get", "pob"], "#c9b8ff", 1000, "#a68cff", 5000, "#8461f0", 20000, "#6338d6", 100000, "#3f1fa3"]], "fill-opacity": .5}});
+      MAPAZ.capaMalla(map, ["sis", "pr"]);
       map.addLayer({id: "ex-l", type: "line", source: "ex", paint: {"line-color": osc ? "#ffffff" : "#25165c", "line-width": 1.1, "line-opacity": .75}});
       map.addLayer({id: "m-l", type: "line", source: "mun", minzoom: 6, paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": .5, "line-opacity": .22}});
       map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": osc ? "#e6efff" : "#10233d", "line-width": 1.3, "line-opacity": .8}});
@@ -168,14 +153,21 @@ var GEO = (function () {
     });
     [].forEach.call(document.querySelectorAll(".xtool button"), function (b) { b.onclick = function () { if (b.dataset.b === "none") { MAPAZ.baseVis(map, "none"); [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z === b); }); baseAct = "none"; $("gAv").hidden = true; } else { bErr[b.dataset.b] = 0; pongaBase(b.dataset.b); } }; });
   }
-  function vis(id, on) { if (map && map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); }
+  function vis(id, on) { if (map && map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); if (id === "ex-f") MAPAZ.vis(map, "pg-f", on); }
   function capas() { if (!map || !map._ok) return; vis("ex-f", st.pob); vis("ex-l", st.pob); vis("inf-s", st.sal); vis("inf-e", st.eme); etiquetas(); }
   function fuente() { return sel ? "q" : selD ? "d" : ""; }
   function refrescaMapa() {
     if (!map || !map._ok) return;
     map.getSource("ex").setData(geoExp()); map.getSource("an").setData(geoAn()); map.getSource("inf").setData(geoInf()); map.getSource("sis").setData(geoSism(filtrado())); map.getSource("pr").setData(geoPrensa());
+    MAPAZ.pintaMalla(map, sel ? EX : selD ? DX : null);
     map.setPaintProperty("an-f", "fill-color", ["case", ["==", ["get", "u"], 1], "#f5a623", sel ? "#f26a1b" : "#7b4a2b"]);
     leyenda(); etiquetas(); rotular();
+  }
+  function recalcula() {
+    if (sel) { EX = expo(sel.lat, sel.lon, [25, 50, 100], 100); EX._id = sel.id; }
+    else if (selD && selD.lat != null && DX) DX = Object.assign({m: DX.m, rad: DX.rad}, expo(selD.lat, selD.lon, [10, 25], 25));
+    if (map && map._ok) refrescaMapa();
+    detalle();
   }
   function selecciona() {
     EX = sel ? expo(sel.lat, sel.lon, [25, 50, 100], 100) : null; if (EX) EX._id = sel.id; DX = null;
@@ -193,13 +185,6 @@ var GEO = (function () {
     if (map && map._ok) { refrescaMapa(); var r = Math.max(25, DX.rad) * 1.15, dl = r / 111.32, dn = dl / Math.cos(e.lat * Math.PI / 180); map.fitBounds([[e.lon - dn, e.lat - dl], [e.lon + dn, e.lat + dl]], {duration: 600, padding: 24, maxZoom: 11}); }
     detalle();
   }
-  function filaR(t, f) { return '<tr><td>' + t + '</td>' + f.map(function (v) { return '<td style="text-align:right">' + v + '</td>'; }).join("") + '</tr>'; }
-  function tablaAn(R) {
-    return '<table class="xt2 gfi-t"><tr><td></td>' + R.map(function (r) { return '<td style="text-align:right"><b>≤ ' + r.km + ' km</b></td>'; }).join("") + '</tr>' +
-      filaR("Municipios", R.map(function (r) { return r.n; })) + filaR("Población (est.)", R.map(function (r) { return r.n ? fmtP(r.pob) : "—"; })) +
-      filaR(MAPAZ.ico("hosp") + 'Hospitales', R.map(function (r) { return r.hosp; })) + filaR(MAPAZ.ico("cli") + 'Centros, puestos, clínicas', R.map(function (r) { return r.cli; })) + filaR(MAPAZ.ico("cons") + 'Consultorios', R.map(function (r) { return r.cons; })) +
-      filaR(MAPAZ.ico("bom") + 'Bomberos y rescate', R.map(function (r) { return r.bom; })) + filaR(MAPAZ.ico("pol") + 'Policía', R.map(function (r) { return r.pol; })) + '</table>';
-  }
   function dato(k, v) { return '<div class="gpar"><span>' + k + '</span><b>' + v + '</b></div>'; }
   function detalle() {
     var el = $("gDet");
@@ -210,17 +195,17 @@ var GEO = (function () {
       nP = P.sis.filter(function (e) { return Math.abs(e.ts - q.ts) < 432e5 && (e.departamentos || []).indexOf(q.dep) >= 0; }).length,
       act = Q.filter(function (z) { return z.id !== q.id && Math.abs(z.ts - q.ts) <= 7 * 864e5 && hav(q.lat, q.lon, z.lat, z.lon) <= 50; }).length,
       sent = (q.mag >= 4 && q.prof != null && q.prof <= 100) || q.mag >= 6, hc = primero(EX.C, ["hosp"]), bc = primero(EX.C, ["bom", "res"]),
-      pr = EX.mu.slice().sort(function (a, b) { return (b.m.pob || 0) - (a.m.pob || 0); }).slice(0, 4);
+      pr = MAPAZ.principales(EX, 4);
     el.innerHTML = '<div class="xc gfi"><div class="gfi-h"><div class="gfi-m" style="--c:' + PROF[cl][2] + '">M ' + fmt(q.mag, 1) + '</div><div><h3>' + esc(q.lugar) + '</h3><div class="nota">' + hora(q.ts) + ' · ' + hace(q.ts) + '</div></div></div>' +
       '<div class="gsec">Parámetros del sismo</div><div class="gpars">' +
       dato("Magnitud", "M " + fmt(q.mag, 1) + ' <small>(' + kc[0] + ')</small>') + dato("Profundidad", h != null ? fmt(h) + ' km <small>(' + PROF[cl][1].split(" (")[0].toLowerCase() + ')</small>' : "sin dato") +
       dato("Energía liberada", "≈ " + eTNT(q.mag)) + (h != null ? dato("Ondas S a la superficie", "≈ " + fmt(h / 4.6) + "–" + fmt(h / 3.5) + " s") : "") +
       dato("Actividad cercana", act + ' sismo(s) a ≤ 50 km en ± 7 días') + dato("¿Sentido?", sent ? "Probablemente sí" : "Poco probable") + '</div>' +
       '<p class="nota" style="margin:6px 0 0">' + (h != null && h > 70 ? '<b>El foco está ' + fmt(h) + ' km bajo el epicentro:</b> ningún punto de la superficie queda a menos de esa distancia del foco, por eso la energía llega muy atenuada. ' : h != null ? 'Foco superficial: el movimiento llega con poca atenuación a las zonas cercanas. ' : "") + 'Efecto típico de un sismo «' + kc[0] + '» (USGS, foco superficial): ' + kc[1] + '</p>' +
-      '<div class="gsec">Qué hay cerca del epicentro</div>' + tablaAn(R) +
-      '<p class="nota" style="margin:6px 0">Población = municipios cuyo centro cae dentro del radio (estimación INE). Establecimientos y servicios: OpenStreetMap, cobertura incompleta.' + (R[2].sd ? ' ' + R[2].sd + ' municipio(s) sin dato de población.' : '') + '</p>' +
+      '<div class="gsec">Qué hay cerca del epicentro</div>' + MAPAZ.tablaAn(R) +
+      '<p class="nota" style="margin:6px 0">' + MAPAZ.notaPob(EX) + '</p>' +
       (hc ? '<div class="gpar"><span>Hospital más cercano</span><b>' + esc(hc.p.n) + ' · ' + fmt(hc.d, 1) + ' km</b></div>' : '<div class="gpar"><span>Hospital más cercano</span><b>ninguno a ≤ 100 km en el mapa</b></div>') + (bc ? '<div class="gpar"><span>Bomberos / rescate</span><b>' + esc(bc.p.n) + ' · ' + fmt(bc.d, 1) + ' km</b></div>' : '<div class="gpar"><span>Bomberos / rescate</span><b>ninguno a ≤ 100 km en el mapa</b></div>') +
-      (pr.length ? '<div class="gsec">Poblaciones principales (≤ 100 km)</div><table class="xt2 gfi-t"><tr><td></td><td style="text-align:right"><b>Hab.</b></td><td style="text-align:right"><b>Al epicentro</b></td><td style="text-align:right"><b>Al foco</b></td></tr>' + pr.map(function (x) { return '<tr><td><a href="municipio.html?d=' + encodeURIComponent(x.m.d) + '&m=' + encodeURIComponent(x.m.n) + '">' + esc(x.m.n) + '</a></td><td style="text-align:right">' + (x.m.pob != null ? fmtP(x.m.pob) : "s/d") + '</td><td style="text-align:right">' + fmt(x.d) + ' km</td><td style="text-align:right">' + (h != null ? fmt(Math.sqrt(x.d * x.d + h * h)) + ' km' : "—") + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Ningún municipio a menos de 100 km del epicentro.</p>') +
+      (pr.length ? '<div class="gsec">Poblaciones principales (≤ 100 km)</div><table class="xt2 gfi-t"><tr><td></td><td style="text-align:right"><b>' + MAPAZ.cabHab(EX) + '</b></td><td style="text-align:right"><b>Al epicentro</b></td><td style="text-align:right"><b>Al foco</b></td></tr>' + pr.map(function (x) { return '<tr><td><a href="municipio.html?d=' + encodeURIComponent(x.m.d) + '&m=' + encodeURIComponent(x.m.n) + '">' + esc(x.m.n) + '</a></td><td style="text-align:right">' + MAPAZ.habX(x, EX) + '</td><td style="text-align:right">' + (x.en ? "aquí" : fmt(x.d) + ' km') + '</td><td style="text-align:right">' + (h != null ? fmt(Math.sqrt(x.d * x.d + h * h)) + ' km' : "—") + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Ningún municipio a menos de 100 km del epicentro.</p>') +
       '<p class="nota" style="margin:8px 0 0">No hay intensidad medida (Mercalli) ni datos de viviendas, suelos o carreteras: <b>no se estima daño</b>. ' + (nP ? nP + ' nota(s) de prensa del mismo día en ' + esc(q.dep) + '. ' : 'Sin notas de prensa del mismo día en ' + esc(q.dep) + '. ') + 'Fuente: ' + esc(q.fuente) + '.</p>' +
       (ficha ? '<a class="btn" href="evento.html?id=' + encodeURIComponent(q.id) + '">Abrir ficha del hecho →</a>' : "") + '</div>';
   }
@@ -237,7 +222,7 @@ var GEO = (function () {
       dato("Avisos SENAMHI vigentes hoy en el departamento", vig.length ? vig.length + " (" + esc(vig.slice(0, 2).map(function (a) { return a.fenomeno || "aviso"; }).join(", ")) + ")" : "ninguno") + '</div>' +
       '<p class="nota" style="margin:6px 0 0">La ubicación es el centro del lugar nombrado en la nota, no el punto exacto del evento' + (DX && DX.rad > 0 ? ': el círculo ámbar muestra hasta dónde podría estar realmente.' : '.') + '</p>' +
       (m ? '<div class="gsec">Municipio: ' + esc(m.n) + '</div><div class="gpars">' + dato("Población (est.)", m.pob != null ? fmtP(m.pob) : "sin dato") + dato("Superficie", fmt(m.km2) + " km²") + dato("Antecedentes 1970–2015 (DesInventar)", desl.length ? desl.length + " deslizamiento(s), " + fall + " fallecido(s)" : "sin registros") + dato("Reportes de prensa en el municipio", npm + " en el período") + '</div>' : "") +
-      (R.length ? '<div class="gsec">Qué hay cerca</div>' + tablaAn(R).replace(/<tr>[^]*?<\/tr>/, function (x) { return x; }) + '<p class="nota" style="margin:6px 0">' + (hc ? 'Hospital más cercano: <b>' + esc(hc.p.n) + '</b> (' + fmt(hc.d, 1) + ' km). ' : 'Sin hospital a ≤ 25 km en el mapa. ') + (bc ? 'Bomberos/rescate: <b>' + esc(bc.p.n) + '</b> (' + fmt(bc.d, 1) + ' km). ' : 'Sin bomberos ni rescate a ≤ 25 km en el mapa. ') + 'OpenStreetMap, cobertura incompleta.</p>' : "") +
+      (R.length ? '<div class="gsec">Qué hay cerca</div>' + MAPAZ.tablaAn(R).replace(/<tr>[^]*?<\/tr>/, function (x) { return x; }) + '<p class="nota" style="margin:6px 0">' + (hc ? 'Hospital más cercano: <b>' + esc(hc.p.n) + '</b> (' + fmt(hc.d, 1) + ' km). ' : 'Sin hospital a ≤ 25 km en el mapa. ') + (bc ? 'Bomberos/rescate: <b>' + esc(bc.p.n) + '</b> (' + fmt(bc.d, 1) + ' km). ' : 'Sin bomberos ni rescate a ≤ 25 km en el mapa. ') + MAPAZ.notaPob(DX) + '</p>' : "") +
       '<p class="nota" style="margin:8px 0 0">No hay datos de pendiente, geología, lluvia acumulada ni red vial: <b>no se estima susceptibilidad ni se confirma el hecho</b>. Sirve para ubicar el reporte y ver qué hay alrededor.</p></div>';
   }
   function dibuja() {
@@ -360,7 +345,7 @@ var GEO = (function () {
       T = t; A = TERR.api; A.estilos(); X.header("modulo.html"); document.title = "Geológica — Sala de Situación Bolivia";
       return fetch("sismos_oficiales.json").then(function (r) { return r.json(); }).catch(function () { return {sismos: []}; });
     }).then(function (off) {
-      Q = preparar(T.D, off); P = prensa(T.D); prepInf();
+      Q = preparar(T.D, off); P = prensa(T.D); MAPAZ.iniciar(T); MAPAZ.malla(recalcula);
       $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "geológica", T.D);
       (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
       LUGAR.init(T, $("lgBox"), LG, function () { sel = null; dibuja(); LUGAR.ajusta(map, T, LG); }); $("gP").onchange = function () { st.p = +this.value; dibuja(); }; $("gM").onchange = function () { st.m = +this.value; dibuja(); }; $("gPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("gN").onchange = rotular; $("gLp").onchange = function () { st.pob = this.checked; capas(); }; $("gLs").onchange = function () { st.sal = this.checked; capas(); }; $("gLe").onchange = function () { st.eme = this.checked; capas(); };

@@ -1,6 +1,8 @@
 /* MAPAZ: herramientas comunes de mapa para los módulos de amenaza.
    Mapa base con respaldo y aviso si falla, infraestructura (OpenStreetMap vía HOT/HDX; cobertura incompleta) y exposición por radio
-   (municipios cuyo centro cae dentro del radio, población INE, establecimientos de salud, bomberos/rescate y policía). */
+   (población dentro del radio, establecimientos de salud, bomberos/rescate y policía).
+   Población: si existe poblacion_malla.json (poblacion_malla.py: WorldPop ~1 km repartida y reescalada al total INE de cada municipio) se cuentan las celdas
+   cuyo centro cae dentro del radio; si no, se usa el método anterior (municipios cuyo centro cae dentro del radio, total INE). */
 var MAPAZ = (function () {
   var S = SALA, X = S2, T, A, INF = [];
   var INFN = {hosp: "Hospital (por nombre)", cli: "Centro, puesto o clínica", cons: "Consultorio", bom: "Bomberos", res: "Rescate", pol: "Policía"};
@@ -13,35 +15,113 @@ var MAPAZ = (function () {
   function cen(m) { if (!m._c) m._c = A.cenPoly(m.f.geometry); return m._c; }
 
   function iniciar(t) {
-    T = t; A = TERR.api; INF = [];
+    T = t; A = TERR.api; INF = []; cargaMalla();
     T.est.forEach(function (p) { INF.push({lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: /hospital/i.test(p[2] || "") ? "hosp" : p[3] === "consultorio" ? "cons" : "cli", op: p[4] || "", esp: p[5] || "", dep: p[6] || "", mun: p[7] || ""}); });
     T.emer.forEach(function (p) { INF.push({lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: p[3] === "bomberos" ? "bom" : p[3] === "rescate" ? "res" : "pol", op: "", esp: "", dep: p[4] || "", mun: p[5] || ""}); });
   }
   function cerca(lat, lon, km) { var o = []; INF.forEach(function (p) { var d = hav(lat, lon, p.lat, p.lon); if (d <= km) o.push({p: p, d: d}); }); o.sort(function (a, b) { return a.d - b.d; }); return o; }
-  /* exposición alrededor de un punto: radios en km; km = radio máximo de búsqueda */
-  function expo(lat, lon, radios, km) {
+
+  /* ---------- malla de población ~1 km ---------- */
+  var MG = null, MGE = "pend", MGI = false, MGL = [];
+  var PAL = [["#e6dcff", "< 10"], ["#c9b8ff", "10–50"], ["#a68cff", "50–250"], ["#8461f0", "250–1 000"], ["#6338d6", "1 000–5 000"], ["#3f1fa3", "> 5 000"]];
+  function malla(fn) { if (MGE !== "pend") fn(); else MGL.push(fn); }
+  function hayMalla() { return !!MG; }
+  function cargaMalla() {
+    if (MGI) return; MGI = true;
+    fetch("poblacion_malla.json").then(function (r) { if (!r.ok) throw new Error("sin malla"); return r.json(); }).then(function (j) {
+      var g = j.grid, n = j.p.length, nc = g.nc, F = 0, i, r, c, row = new Int32Array(n), lat = new Float64Array(n), lon = new Float64Array(n), rs = new Int32Array(g.nr + 2), k = 0;
+      for (i = 0; i < n; i++) { F += j.i[i]; r = Math.floor(F / nc); c = F - r * nc; row[i] = r; lat[i] = g.lat0 - (r + .5) * g.d; lon[i] = g.lon0 + (c + .5) * g.d; }
+      for (r = 0; r <= g.nr + 1; r++) { while (k < n && row[k] < r) k++; rs[r] = k; }
+      MG = {meta: j.meta, g: g, n: n, lat: lat, lon: lon, m: Int32Array.from(j.m), p: Int32Array.from(j.p), rs: rs, munis: j.munis}; MGE = "ok";
+    }).catch(function () { MG = null; MGE = "no"; }).then(function () { var f = MGL.splice(0); f.forEach(function (fn) { try { fn(); } catch (e) { console.warn("MAPAZ malla " + e.message); } }); });
+  }
+  /* celdas cuyo centro está a ≤ km del punto (recorre solo las filas de latitud necesarias) */
+  function celdas(lat, lon, km) {
+    var g = MG.g, dl = km / 111.32, dn = dl / Math.cos(lat * Math.PI / 180) * 1.02, r1 = Math.max(0, Math.floor((g.lat0 - lat - dl) / g.d) - 1), r2 = Math.min(g.nr - 1, Math.ceil((g.lat0 - lat + dl) / g.d) + 1), ci = [], cd = [], i, d;
+    for (i = r1 <= r2 ? MG.rs[r1] : 0; r1 <= r2 && i < MG.rs[r2 + 1]; i++) { if (Math.abs(MG.lon[i] - lon) > dn) continue; d = hav(lat, lon, MG.lat[i], MG.lon[i]); if (d <= km) { ci.push(i); cd.push(d); } }
+    return {ci: ci, cd: cd};
+  }
+  function ring0(radios) { return radios.map(function (r) { return {km: r, n: 0, pob: 0, sd: 0, hosp: 0, cli: 0, cons: 0, bom: 0, pol: 0}; }); }
+  function expoMalla(lat, lon, radios, km) {
+    var c = celdas(lat, lon, km), mm = {}, R = ring0(radios), j, k, e, mi, p, d, mu = [];
+    for (j = 0; j < c.ci.length; j++) {
+      mi = MG.m[c.ci[j]]; p = MG.p[c.ci[j]]; d = c.cd[j]; e = mm[mi] || (mm[mi] = {pr: 0, d: 1e9, rg: radios.map(function () { return 0; })});
+      e.pr += p; if (d < e.d) e.d = d;
+      for (k = 0; k < radios.length; k++) if (d <= radios[k]) { R[k].pob += p; e.rg[k] += p; }
+    }
+    Object.keys(mm).forEach(function (q) { var m = T.M[MG.munis[q]]; if (m) mu.push({m: m, d: mm[q].d, pr: mm[q].pr, rg: mm[q].rg}); });
+    var ya = T.donde ? T.donde(lat, lon) : null;
+    if (ya) { var h = mu.filter(function (x) { return x.m === ya; })[0]; if (h) h.en = true; else mu.push({m: ya, d: 0, pr: 0, rg: radios.map(function () { return 0; }), en: true}); }
+    mu.sort(function (a, b) { return a.d - b.d; });
+    R.forEach(function (o, q) { mu.forEach(function (x) { if (x.rg[q] > 0 || x.en) o.n++; }); });
+    T.lista.forEach(function (m) { if (m.pob == null) { var c0 = cen(m), d0 = hav(lat, lon, c0[1], c0[0]); R.forEach(function (o) { if (d0 <= o.km) o.sd++; }); } });
+    return {mu: mu, R: R, grid: true, km: km, cel: c};
+  }
+  function expoMun(lat, lon, radios, km) {
     var mu = []; T.lista.forEach(function (m) { var c = cen(m), d = hav(lat, lon, c[1], c[0]); if (d <= km) mu.push({m: m, d: d}); });
     var ya = T.donde ? T.donde(lat, lon) : null;
     if (ya) { var h = mu.filter(function (x) { return x.m === ya; })[0]; if (h) h.en = true; else { var c0 = cen(ya); mu.push({m: ya, d: hav(lat, lon, c0[1], c0[0]), en: true}); } }
     mu.sort(function (a, b) { return a.d - b.d; });
-    var C = cerca(lat, lon, km), R = radios.map(function (r) {
-      var o = {km: r, n: 0, pob: 0, sd: 0, hosp: 0, cli: 0, cons: 0, bom: 0, pol: 0};
-      mu.forEach(function (x) { if (x.d <= r || x.en) { o.n++; if (x.m.pob == null) o.sd++; else o.pob += x.m.pob; } });
-      C.forEach(function (x) { if (x.d <= r) { var k = x.p.k === "res" ? "bom" : x.p.k; o[k]++; } });
-      return o;
+    var R = ring0(radios); R.forEach(function (o) { mu.forEach(function (x) { if (x.d <= o.km || x.en) { o.n++; if (x.m.pob == null) o.sd++; else o.pob += x.m.pob; } }); });
+    return {mu: mu, R: R};
+  }
+  /* exposición alrededor de un punto: radios en km; km = radio máximo de búsqueda */
+  function expo(lat, lon, radios, km) {
+    var E = MG ? expoMalla(lat, lon, radios, km) : expoMun(lat, lon, radios, km), C = cerca(lat, lon, km);
+    E.R.forEach(function (o) { C.forEach(function (x) { if (x.d <= o.km) { var k = x.p.k === "res" ? "bom" : x.p.k; o[k]++; } }); });
+    E.C = C; E.lat = lat; E.lon = lon; return E;
+  }
+  function popX(x, E) { return E && E.grid ? x.pr : x.m.pob; }
+  function habX(x, E) { var v = popX(x, E); return v != null ? fmtP(v) : "s/d"; }
+  function cabHab(E) { return E && E.grid ? "En el radio" : "Hab."; }
+  /* municipios principales: el del punto primero, luego por habitantes (dentro del radio si hay malla) */
+  function principales(E, n) { return E.mu.slice().sort(function (a, b) { return (b.en ? 1 : 0) - (a.en ? 1 : 0) || (popX(b, E) || 0) - (popX(a, E) || 0); }).slice(0, n); }
+  function notaPob(E) {
+    var R = E.R[E.R.length - 1], sd = R.sd ? ' ' + R.sd + ' municipio(s) sin dato de población.' : '';
+    if (E.grid) return 'Población = celdas de ~1 km cuyo centro cae dentro del radio (malla WorldPop repartida dentro de cada municipio y reescalada a su total INE ' + esc(MG.meta.anio_ine) + '). «Distancia» = a la celda habitada más cercana del municipio. Establecimientos y servicios: OpenStreetMap, cobertura incompleta.' + sd;
+    return 'Población = municipios cuyo centro cae dentro del radio, más el municipio donde está el punto (estimación INE; se cuenta el municipio entero). Establecimientos y servicios: OpenStreetMap, cobertura incompleta.' + sd;
+  }
+  function leyendaPob(celdas) {
+    if (celdas === false || !MG) return '<div class="glg"><b>Población del municipio</b><div><span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span></div></div>';
+    return '<div class="glg"><b>Población por celda de ~1 km</b><div><span class="gesc">' + PAL.map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span><br><small>hab./km² · WorldPop repartida y reescalada al total INE de cada municipio</small></div></div>';
+  }
+  /* capa de celdas (se dibuja bajo los contornos); evitar = capas del módulo que tienen su propia ventanita al pasar el cursor */
+  function capaMalla(map, evitar) {
+    if (map.getSource("pg")) return;
+    map.addSource("pg", {type: "geojson", data: fc([])});
+    map.addLayer({id: "pg-f", type: "fill", source: "pg", paint: {"fill-color": ["step", ["get", "h"], PAL[0][0], 10, PAL[1][0], 50, PAL[2][0], 250, PAL[3][0], 1000, PAL[4][0], 5000, PAL[5][0]], "fill-opacity": ["interpolate", ["linear"], ["zoom"], 5, .6, 10, .7], "fill-antialias": false}});
+    var pg = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 8, maxWidth: "260px"}), otras = ["inf-s", "inf-e"].concat(evitar || []);
+    map.on("mousemove", "pg-f", function (e) {
+      var ls = otras.filter(function (id) { return map.getLayer(id); });
+      if (ls.length && map.queryRenderedFeatures(e.point, {layers: ls}).length) { pg.remove(); return; }
+      var p = e.features[0].properties; map.getCanvas().style.cursor = "help";
+      pg.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">≈ ' + A.fmt(+p.p) + ' hab.</b>celda de ~1 km · ' + fmt(+p.h, 0) + ' hab./km²<br>' + esc(p.n) + '<br><i>estimación: WorldPop reescalada al total INE</i></div>').addTo(map);
     });
-    return {mu: mu, C: C, R: R, lat: lat, lon: lon};
+    map.on("mouseleave", "pg-f", function () { pg.remove(); map.getCanvas().style.cursor = ""; });
+  }
+  function pintaMalla(map, E) {
+    if (!map || !map._ok || !map.getSource("pg")) return;
+    var g = !!(E && E.grid && MG), f = [];
+    if (g) {
+      var G = MG.g, h2 = G.d / 2, kx = Math.pow(G.d * 111.32, 2), r5 = function (v) { return Math.round(v * 1e5) / 1e5; };
+      E.cel.ci.forEach(function (i) {
+        var la = MG.lat[i], lo = MG.lon[i], p = MG.p[i], a = kx * Math.cos(la * Math.PI / 180), nm = MG.munis[MG.m[i]].split("|")[1];
+        f.push({type: "Feature", geometry: {type: "Polygon", coordinates: [[[r5(lo - h2), r5(la - h2)], [r5(lo + h2), r5(la - h2)], [r5(lo + h2), r5(la + h2)], [r5(lo - h2), r5(la + h2)], [r5(lo - h2), r5(la - h2)]]]}, properties: {p: p, h: Math.round(p / a * 10) / 10, n: nm}});
+      });
+    }
+    map.getSource("pg").setData(fc(f));
+    if (map.getLayer("ex-f")) map.setPaintProperty("ex-f", "fill-opacity", g ? 0 : .5);
   }
   function primero(C, ks) { for (var i = 0; i < C.length; i++) if (ks.indexOf(C[i].p.k) >= 0) return C[i]; return null; }
   function filaR(t, f) { return '<tr><td>' + t + '</td>' + f.map(function (v) { return '<td style="text-align:right">' + v + '</td>'; }).join("") + '</tr>'; }
   function tablaAn(R) {
     return '<table class="xt2 gfi-t"><tr><td></td>' + R.map(function (r) { return '<td style="text-align:right"><b>≤ ' + r.km + ' km</b></td>'; }).join("") + '</tr>' +
-      filaR("Municipios", R.map(function (r) { return r.n; })) + filaR("Población (est.)", R.map(function (r) { return r.n ? fmtP(r.pob) : "—"; })) +
+      filaR("Municipios", R.map(function (r) { return r.n; })) + filaR(MG ? "Población (malla)" : "Población (est.)", R.map(function (r) { return r.n ? fmtP(r.pob) : "—"; })) +
       filaR(ico("hosp") + 'Hospitales', R.map(function (r) { return r.hosp; })) + filaR(ico("cli") + 'Centros, puestos, clínicas', R.map(function (r) { return r.cli; })) + filaR(ico("cons") + 'Consultorios', R.map(function (r) { return r.cons; })) +
       filaR(ico("bom") + 'Bomberos y rescate', R.map(function (r) { return r.bom; })) + filaR(ico("pol") + 'Policía', R.map(function (r) { return r.pol; })) + '</table>';
   }
   function legendaInfra() {
-    return '<div class="glg"><b>Población del municipio</b><div><span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span></div></div>' +
+    return leyendaPob() +
       '<div class="glg"><b>Infraestructura (OpenStreetMap)</b><div>' + ["hosp", "cli", "cons", "bom", "pol"].map(function (k) { return '<span class="gic">' + ico(k, 18) + ICO[k].n + '</span>'; }).join("") + '</div></div>';
   }
 
@@ -103,6 +183,7 @@ var MAPAZ = (function () {
       LUGAR.capa(map);
       if (o.bajo) o.bajo(map);
       map.addLayer({id: "ex-f", type: "fill", source: "ex", paint: {"fill-color": ["case", ["<", ["get", "pob"], 0], "#9aa3b2", ["step", ["get", "pob"], "#c9b8ff", 1000, "#a68cff", 5000, "#8461f0", 20000, "#6338d6", 100000, "#3f1fa3"]], "fill-opacity": .5}});
+      capaMalla(map, o.evitar);
       map.addLayer({id: "ex-l", type: "line", source: "ex", paint: {"line-color": osc ? "#ffffff" : "#25165c", "line-width": 1.1, "line-opacity": .75}});
       map.addLayer({id: "m-l", type: "line", source: "mun", minzoom: 6, paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": .5, "line-opacity": .22}});
       map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": osc ? "#e6efff" : "#10233d", "line-width": 1.3, "line-opacity": .8}});
@@ -120,13 +201,14 @@ var MAPAZ = (function () {
     });
     return map;
   }
-  function vis(map, id, on) { if (map && map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); }
+  function vis(map, id, on) { if (map && map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); if (id === "ex-f" && map && map.getLayer("pg-f")) map.setLayoutProperty("pg-f", "visibility", on ? "visible" : "none"); }
   /* dibuja la selección: exposición (municipios), anillos e infraestructura */
   function selec(map, E, radios) {
     if (!map || !map._ok) return;
     map.getSource("ex").setData(fc(E ? E.mu.map(function (x) { return {type: "Feature", geometry: x.m.f.geometry, properties: {pob: x.m.pob == null ? -1 : x.m.pob, n: x.m.n}}; }) : []));
     map.getSource("an").setData(fc(E ? radios.slice().sort(function (a, b) { return b - a; }).map(function (r) { return {type: "Feature", geometry: {type: "Polygon", coordinates: [circulo(E.lat, E.lon, r)]}, properties: {r: r}}; }) : []));
     map.getSource("inf").setData(fc(E ? E.C.map(function (x) { return {type: "Feature", geometry: {type: "Point", coordinates: [x.p.lon, x.p.lat]}, properties: {k: x.p.k, n: x.p.n, d: +x.d.toFixed(1), op: x.p.op, m: x.p.mun, e: x.p.esp}}; }) : []));
+    pintaMalla(map, E);
   }
-  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
+  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
 })();
