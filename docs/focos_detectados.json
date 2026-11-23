@@ -320,12 +320,15 @@
    "Chuquisaca": 29
   },
   "2026-11-23": {
-   "Santa Cruz": 224,
-   "La Paz": 17,
+   "Santa Cruz": 327,
+   "La Paz": 40,
    "Cochabamba": 139,
-   "Beni": 400,
-   "Pando": 8,
-   "Potosí": 2
+   "Beni": 909,
+   "Pando": 37,
+   "Potosí": 3,
+   "Tarija": 6,
+   "Chuquisaca": 5,
+   "Oruro": 1
   }
  },
  "municipios": {
@@ -914,26 +917,26 @@
    "San Matías (Santa Cruz)": 30
   },
   "2026-11-23": {
+   "Exaltación (Beni)": 220,
+   "Magdalena (Beni)": 172,
    "Chimoré (Cochabamba)": 138,
-   "Exaltación (Beni)": 123,
-   "San Andrés (Beni)": 73,
-   "Magdalena (Beni)": 68,
-   "San José (Santa Cruz)": 55,
-   "San Javier (Beni)": 36,
-   "Concepción (Santa Cruz)": 31,
-   "San Ignacio (Santa Cruz)": 29,
-   "San Rafael (Santa Cruz)": 28,
-   "Reyes (Beni)": 17,
-   "Ascención de Guarayos (Santa Cruz)": 16,
-   "Ixiamas (La Paz)": 15,
-   "El Puente (Santa Cruz)": 14,
-   "Puerto Siles (Beni)": 14,
-   "Santa Rosa (Beni)": 13
+   "San Andrés (Beni)": 118,
+   "San Javier (Beni)": 89,
+   "San José (Santa Cruz)": 73,
+   "Reyes (Beni)": 70,
+   "San Ignacio (Santa Cruz)": 66,
+   "San Rafael (Santa Cruz)": 47,
+   "Concepción (Santa Cruz)": 42,
+   "Riberalta (Beni)": 42,
+   "Santa Ana (Beni)": 39,
+   "Ixiamas (La Paz)": 32,
+   "Santa Rosa (Beni)": 26,
+   "Baures (Beni)": 25
   }
  },
- "actualizado": "2026-11-23T09:43:16.062109Z",
+ "actualizado": "2026-11-23T21:58:01.862901Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1171,
+ "detecciones_fuera_de_limites": 1260,
  "slack_dia": "2026-11-23"
 }
