@@ -1,188 +1,478 @@
-/* Módulo Hidrológica: avisos de amenaza SENAMHI (ríos y poblaciones), caudal previsto GloFAS en 9 puntos vs. normal (P50–P90), municipios mencionados, cronología por departamento, prensa y antecedentes. */
+/* Módulo Hidrológica: avisos hidrológicos del SENAMHI (por departamento, ríos y poblados; el sistema lee el texto oficial), población y servicios en los municipios nombrados
+   (INE + malla de ~1 km), caudal modelado GloFAS en 9 puntos de grandes ríos frente a lo normal (P50–P90), lluvia prevista (Open-Meteo, 7 días) y prensa.
+   Límites: los avisos no traen polígonos ni municipios (se ubican por el nombre del poblado); no hay capa de ríos; GloFAS no ve crecidas repentinas de ríos menores. */
 var HID = (function () {
-  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, AV = [], ST = [], PR = [], st = {p: "vig", pr: true}, selA = null, selS = null, map = null, rq = 0, DEPC = {}, MEN = {};
-  var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now());
+  var S = SALA, X = S2, M = MAPAZ, A, T, D, map = null, LG = {d: "", m: ""}, MK = [], rq = 0, SEL = null;
+  var st = {v: "avisos", p: "vig", cd: "max", ac: 3, pr: true, pob: true, sal: true, eme: true};
+  var AV = [], ST = [], PR = [], FX = M.PRON, IDX = {}, DEPC = {};
+  var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now()), COL = "#0369a1";
+  var DEPS = ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Pando", "Oruro", "Potosí", "Chuquisaca", "Tarija"];
+  var CQ = [["Dentro de lo normal", NC[0]], ["Algo sobre la mediana", NC[1]], ["Sobre el P90 (caudal alto)", NC[2]], ["Más de 150 % del P90", NC[3]]];
+  var LL = [[5, "#e3ebf5", "< 5"], [20, "#a6d9f7", "5–20"], [50, "#4aa3f5", "20–50"], [100, "#2563eb", "50–100"], [200, "#6d28d9", "100–200"], [99999, "#4c1d95", "> 200"]];
+  var CLARO = /^#(e3ebf5|a6d9f7)$/i;
   function esc(s) { return S.esc(s == null ? "" : String(s)); }
   function $(i) { return document.getElementById(i); }
-  function fechaC(s) { return s ? new Date(s + "T12:00:00").toLocaleDateString("es-BO", {day: "2-digit", month: "short"}) : "—"; }
+  function fmt(n, d) { return d ? (n == null ? "—" : Number(n).toFixed(d).replace(".", ",")) : M.fmt(n); }
+  function fd(s) { return s ? new Date(s + "T12:00:00").toLocaleDateString("es-BO", {day: "numeric", month: "short"}).replace(/\./g, "") : "—"; }
+  function fdl(s) { return s ? new Date(s + "T12:00:00").toLocaleDateString("es-BO", {weekday: "short", day: "numeric"}).replace(/\./g, "") : "—"; }
   function norm(s) { return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
-  function dentro(a, p) { if (p === "vig") return a.inicio <= HOY && a.fin >= HOY; if (p === "todo") return true; return a.fin >= S.diaKey(Date.now() - (+p) * DIA); }
-  function enA(a) { return !LG.d || (a.departamentos || []).indexOf(LG.d) >= 0; }
-  function enM(k) { var m = T.M[k]; return m && (!LG.d || (m.d === LG.d && (!LG.m || m.n === LG.m))); }
-  function enS(p) { return !LG.d || p.departamento === LG.d; }
-  function menc(L) { var o = mencionados(L); Object.keys(o).forEach(function (k) { if (!enM(k)) delete o[k]; }); return o; }
-  function filtrados() { return AV.filter(function (a) { return dentro(a, st.p) && enA(a); }); }
-  function nivDep(L) { var o = {}; L.forEach(function (a) { (a.departamentos || []).forEach(function (d) { o[d] = Math.max(o[d] == null ? -1 : o[d], a._n); }); }); return o; }
-  function mencionados(L) {
-    var o = {}; L.forEach(function (a) { var tx = " " + norm(pobl(a).join(" ; ")) + " "; T.lista.forEach(function (m) { if ((a.departamentos || []).indexOf(m.d) < 0) return; var n = norm(m.n); if (n.length < 4) return; if (tx.indexOf(" " + n) >= 0 && /[^a-z]/.test(tx.charAt(tx.indexOf(" " + n) + n.length + 1) || " ")) { o[m.k] = Math.max(o[m.k] == null ? -1 : o[m.k], a._n); } }); }); return o;
+  function normP(s) { return norm(s).replace(/[^a-z0-9ñ ]+/g, " ").replace(/\s+/g, " ").trim(); }
+  function ts0(s) { return Date.parse(s + "T00:00:00-04:00"); }
+  function ts1(s) { return Date.parse(s + "T23:59:59-04:00"); }
+  function dur(ms) { var h = Math.max(1, Math.round(ms / 36e5)); if (h < 48) return h + " h"; var d = Math.floor(h / 24), r = h % 24; return d + " d" + (r ? " " + r + " h" : ""); }
+  function resta(a) { var n = Date.now(); if (n < ts0(a.inicio)) return "inicia en " + dur(ts0(a.inicio) - n); if (n <= ts1(a.fin)) return "termina en " + dur(ts1(a.fin) - n); return "terminó hace " + dur(n - ts1(a.fin)); }
+  function vig(a) { return a.inicio <= HOY && a.fin >= HOY; }
+  function ndias(a) { return Math.round((ts1(a.fin) - ts0(a.inicio)) / DIA); }
+  function vigTxt(a) { return a.inicio === a.fin ? fd(a.inicio) : fd(a.inicio) + " – " + fd(a.fin); }
+  function dep0(n) { var q = normP(n); return DEPS.filter(function (d) { var p = normP(d); return q === p || q.indexOf(p + " ") === 0; })[0] || String(n || "").trim(); }
+  function uniq(l) { var v = {}, o = []; l.forEach(function (x) { var k = norm(x); if (x && !v[k]) { v[k] = 1; o.push(x); } }); return o; }
+  function centro(m) { return M.cen(m); }
+
+  /* ---------- lectura del texto oficial: departamento → cuenca → río → poblados, con el período de cada departamento ---------- */
+  function lista(txt) {
+    var o = [], v = {};
+    String(txt || "").replace(/\([^)]*\)/g, " ").replace(/\.\s*$/, "").split(/,|\s+y\s+(?=[A-ZÁÉÍÓÚÑ])/).forEach(function (n) {
+      n = n.replace(/^\s*(?:y|e|como)\s+/i, "").replace(/\s*(?:y\s+)?(?:las\s+)?(?:poblaciones|poblados|comunidades|localidades|sectores|zonas|áreas)(?:\s+(?:cercan[oa]s?|aledañ[oa]s?))?\s*$/i, "").replace(/[.\s]+$/, "").trim();
+      if (n.length > 2 && !/^(poblaciones|poblados|comunidades)/i.test(n) && !v[n.toLowerCase()]) { v[n.toLowerCase()] = 1; o.push(n); }
+    });
+    return o;
   }
-  function pobl(a) { var o = [], v = {}; (a.poblaciones || []).forEach(function (x) { x.replace(/\s*DEL \d+.*$/i, "").split(/,| y (?=[A-ZÁÉÍÓÚ])/).forEach(function (n) { n = n.replace(/[.\s]+$/, "").replace(/\s*(y )?(poblaciones|poblados|comunidades)( cercan[oa]s?)?\s*$/i, "").replace(/^\s*(y )/, "").trim(); if (n.length > 2 && !v[n.toLowerCase()]) { v[n.toLowerCase()] = 1; o.push(n); } }); }); return o; }
-  function preparar(D) {
-    AV = (((D.senamhi_alertas || {}).alertas) || []).filter(function (a) { return a.tipo === "hidrológica" || /HIDROL/i.test(a.titulo || ""); }).map(function (a) { a._n = a.nivel_num != null ? a.nivel_num : 1; return a; }).sort(function (a, b) { return (b.publicada || "").localeCompare(a.publicada || ""); });
+  function iso(y, m, d) { return y + "-" + String(m).padStart(2, "0") + "-" + String(d).padStart(2, "0"); }
+  function parseAv(a) {
+    var t = String(a.texto || "").replace(/\s+/g, " "), re = /(?:DEL\s+(\d{1,2})\s+AL\s+(\d{1,2})\/(\d{1,2})\/(\d{4})\s*[:.]?\s*)?(?:[✓✔➢•●◦]|\bo\b)\s*Departamento\s+de\s+([^(:➢✓]+?)\s*(?:\(([^)]*)\))?\s*:/gi, m, P = [], R = [];
+    while ((m = re.exec(t))) P.push({i: m.index, e: re.lastIndex, m: m});
+    P.forEach(function (q, j) {
+      var blk = t.slice(q.e, j + 1 < P.length ? P[j + 1].i : t.length), g = q.m, b = {d: dep0(g[5]), cu: (g[6] || "").replace(/^Cuencas?\s+(?:de[l]?\s+)?/i, "").trim(), ini: null, fin: null, it: []};
+      if (g[1]) { var d1 = +g[1], d2 = +g[2], mm = +g[3], y = +g[4], m1 = d1 > d2 ? mm - 1 : mm; b.ini = iso(m1 < 1 ? y - 1 : y, m1 < 1 ? 12 : m1, d1); b.fin = iso(y, mm, d2); }
+      blk.split("➢").slice(1).forEach(function (x) {
+        var s = x.replace(/\s+/g, " ").trim(); if (!s) return;
+        var nm = /^(.*?)(?:,|\s+ascensos?\b)/i.exec(s), nombre = (nm ? nm[1] : s.slice(0, 40)).replace(/^R[ií]o\s+/i, "").replace(/\s+y\s+afluentes.*$/i, "").trim();
+        var i = s.lastIndexOf(":"), pob = i >= 0 ? s.slice(i + 1) : ((/\bcomo\s+(.+)$/i.exec(s) || /\bdesbordes\s+(?:que\s+afectar[aá]n\s+)?(?:a\s+|en\s+|para\s+)(?:los\s+|las\s+)?(?:poblados?\s+de\s+|poblaciones\s+de\s+)?(.+)$/i.exec(s) || [])[1] || ""), tp = /(ascensos?[^:]*?)(?=\s+(?:en|próxim)|:|$)/i.exec(s);
+        b.it.push({rio: nombre, tipo: tp ? tp[1].trim() : "ascenso de nivel", pob: lista(pob), txt: pob.trim().replace(/\.$/, ""), ms: munNom(b.d, lista(pob))});
+      });
+      if (b.it.length) R.push(b);
+    });
+    return R.length ? R : parseTabla(t);
+  }
+  /* formato antiguo (ene–may): tabla «N° Río / Afluente · Tipo de amenaza · Áreas y poblaciones en riesgo» por departamento */
+  function parseTabla(t) {
+    var re = /(?:^|\s)\d\.\s+(?:DEPARTAMENTO\s+DE\s+)?(La Paz|Cochabamba|Santa Cruz|Beni|Pando|Oruro|Potos[ií]|Chuquisaca|Tarija)\b/gi, m, P = [], R = [], fin = t.search(/\sSENAMHI,\s/i);
+    while ((m = re.exec(t))) P.push({i: m.index, e: re.lastIndex, d: m[1]});
+    P.forEach(function (q, j) {
+      var fl = j + 1 < P.length ? P[j + 1].i : (fin > q.e ? fin : t.length), blk = t.slice(q.e, fl), k = blk.search(/[ÁA]reas\s+y\s+poblaciones\s+en\s+riesgo/i);
+      if (k < 0) return;
+      var cab = blk.slice(0, k), cm = /^\s*\(?\s*(Cuencas?.*?)\)?\s+N°\s+R[ií]o/i.exec(cab), b = {d: dep0(q.d), cu: cm ? cm[1].replace(/^Cuencas?\s+(?:afluentes\s+)?(?:de[l]?\s+)?(?:r[ií]o\s+)?/i, "").trim() : "", ini: null, fin: null, it: []};
+      blk.slice(k).replace(/^[^\d]*/, "").split(/\s(?=\d{1,2}\s+(?:R[ií]o|Quebrada)\s)/).forEach(function (r) {
+        var x = /^\d{1,2}\s+(?:R[ií]o|Quebrada)\s+(.+?)\s+((?:Crecidas?|Ascensos?|Activaci[oó]n)\b.*?\bdesbordes?)\s+(.+)$/i.exec(r.trim()); if (!x) return;
+        var pob = x[3].replace(/\s*\.\s*$/, ""); b.it.push({rio: x[1].replace(/\s+y\s+afluentes.*$/i, "").trim(), tipo: x[2].trim(), pob: lista(pob), txt: pob.replace(/\([^)]*\)/g, "").trim(), ms: munNom(b.d, lista(pob))});
+      });
+      if (b.it.length) R.push(b);
+    });
+    return R;
+  }
+  function munNom(d, arr) {
+    var tx = " " + normP((arr || []).join(" ; ")) + " ", o = [];
+    (IDX[d] || (IDX[d] = (T.DEP[d] || []).map(function (m) { return {k: m.k, n: normP(m.n)}; }).filter(function (x) { return x.n.length >= 4; }))).forEach(function (x) { if (tx.indexOf(" " + x.n + " ") >= 0) o.push(x.k); });
+    return o;
+  }
+  function poblFlat(a) { var o = []; (a.poblaciones || []).forEach(function (x) { lista(String(x).replace(/\s*DEL \d+.*$/i, "")).forEach(function (n) { o.push(n); }); }); return uniq(o); }
+  function cuencas(a) { var m = /CUENCAS?(?:\s+DE\s+LOS\s+R[ÍI]OS)?:?\s+(.+?)\s+(?:AFECTANDO|CON\s+POSIBLES\s+AFECTACI)/i.exec(String(a.texto || "").replace(/\s+/g, " ")); return m ? uniq(m[1].split(/,|\s+Y\s+/).map(function (x) { return x.replace(/\(.*?\)/g, "").trim(); }).filter(function (x) { return x.length > 2; })) : []; }
+
+  function preparar() {
+    AV = (((D.senamhi_alertas || {}).alertas) || []).filter(function (a) { return a.tipo !== "meteorológica"; }).map(function (a) {
+      a._n = a.nivel_num != null ? a.nivel_num : 1; a._sin = !a.texto; a._b = a._sin ? [] : parseAv(a);
+      var rios = a._b.length ? [].concat.apply([], a._b.map(function (b) { return b.it.map(function (i) { return i.rio; }); })) : (a.rios || []).map(function (r) { return String(r).replace(/^R[ií]o\s+/i, "").replace(/\s+(?:ascensos?|crecidas?)\b.*$/i, "").trim(); });
+      a._rios = uniq(rios); a._pob = a._b.length ? uniq([].concat.apply([], a._b.map(function (b) { return [].concat.apply([], b.it.map(function (i) { return i.pob; })); }))) : poblFlat(a);
+      a._d = (a.departamentos && a.departamentos.length) ? a.departamentos.slice() : uniq(a._b.map(function (b) { return b.d; }));
+      var ms = {}; if (a._b.length) a._b.forEach(function (b) { b.it.forEach(function (i) { i.ms.forEach(function (k) { ms[k] = 1; }); }); }); else a._d.forEach(function (d) { munNom(d, a._pob).forEach(function (k) { ms[k] = 1; }); });
+      a._ms = Object.keys(ms); a._cu = a._b.length ? uniq(a._b.map(function (b) { return b.cu; }).filter(Boolean)) : cuencas(a); return a;
+    }).sort(function (a, b) { return (b.publicada || "").localeCompare(a.publicada || ""); });
+    AV.forEach(function (a, i) { a._i = i; });
     ST = ((D.caudales || {}).puntos) || [];
     var R = /río|rio|inundaci|riada|desborde|crecida|mazamorra|cauce|lluvia/i;
     PR = D.ev.filter(function (e) { return e.categoria === "hidrológica" && e.origen === "prensa" && ((e.departamentos && e.departamentos.length) || e.lat != null) && R.test(e.titulo); });
+    (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
   }
-  function html() {
-    return '<nav class="tnav"><a href="index.html">Tablero</a><span class="tsep">›</span><b>Tipo de evento · Hidrológica</b></nav><h1 class="th">Hidrológica <small>crecidas, desbordes e inundaciones</small></h1>' +
-      '<div class="cap">Los <b>avisos</b> son oficiales (SENAMHI) y se publican por departamento, ríos y poblaciones, no por municipio. El <b>caudal</b> es un indicador de modelo (GloFAS, 9 puntos), no un aviso. No hay capa de ríos ni cuencas en este sistema (pendiente). Información preliminar.</div>' +
-      '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período de avisos</b><select id="hP"><option value="vig">Vigentes hoy</option><option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="todo">Todo lo disponible</option></select></div>' +
-      '<div class="xs1"><b>Capas</b><label><input type="checkbox" id="hPr" checked> Reportes de prensa</label></div></div>' +
-      '<div class="xhelp" id="hH"></div><div id="hTri"></div><div class="xg"><div class="xmw"><div class="xtool"><button data-b="osm" class="on">Calles</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><label><input type="checkbox" id="hN" checked> Departamentos</label></div><div class="xmap" id="hMap"></div><div class="xleg" id="hL"></div><div class="xlab" id="hLb"></div></div>' +
-      '<div class="xside"><div id="hK"></div><div id="hAv"></div><div id="hSt"></div></div></div><div id="eviP"></div>' +
-      '<div class="xc" style="margin-top:12px"><h3>Avisos por departamento en el tiempo</h3><div id="hGm" class="nota"></div><div id="hG"></div><p class="nota">Cada barra es un aviso, del primer al último día de vigencia; el color es el nivel.</p></div>' +
-      '<div class="xc" style="margin-top:12px"><div class="xtabs"><button class="on" data-s="hTa">Avisos (lista)</button><button data-s="hTc">Caudales (9 puntos)</button><button data-s="hTp">Prensa</button><button data-s="hTh">Antecedentes 1970–2015</button></div><div id="hTa"></div><div id="hTc" style="display:none"></div><div id="hTp" style="display:none"></div><div id="hTh" style="display:none"></div></div>';
+
+  /* ---------- filtros ---------- */
+  function dentro(a, p) { if (p === "vig") return vig(a); if (p === "todo") return true; return a.fin >= S.diaKey(Date.now() - (+p) * DIA) && a.inicio <= HOY; }
+  function enA(a) { return !LG.d || a._d.indexOf(LG.d) >= 0; }
+  function enM(k) { var m = T.M[k]; return !!m && (!LG.d || (m.d === LG.d && (!LG.m || m.n === LG.m))); }
+  function enS(p) { return !LG.d || p.departamento === LG.d; }
+  function enP(p) { if (!LG.d) return true; if (p._d === undefined) { var m = T.donde(p.lat, p.lon); p._d = p.cap ? p.dep : (m ? m.d : null); p._m = m ? m.n : null; } return p._d === LG.d && (!LG.m || p._m === LG.m); }
+  function filtrados() { return AV.filter(function (a) { return dentro(a, st.p) && enA(a); }); }
+  function nivDep(L) { var o = {}; L.forEach(function (a) { a._d.forEach(function (d) { o[d] = Math.max(o[d] == null ? -1 : o[d], a._n); }); }); return o; }
+  function nivMun(L) { var o = {}; L.forEach(function (a) { a._ms.forEach(function (k) { if (enM(k)) o[k] = Math.max(o[k] == null ? -1 : o[k], a._n); }); }); return o; }
+  function keysDe(L) { var o = {}; L.forEach(function (a) { a._ms.forEach(function (k) { if (enM(k)) o[k] = 1; }); }); return Object.keys(o); }
+  function popMuns(keys) { var pob = 0, sd = 0; keys.forEach(function (k) { var m = T.M[k]; if (m) { if (m.pob == null) sd++; else pob += m.pob; } }); return {n: keys.length, pob: pob, sd: sd}; }
+  function infraDe(keys) {
+    var o = {hosp: 0, cli: 0, cons: 0, bom: 0, pol: 0};
+    keys.forEach(function (k) { var m = T.M[k]; if (!m) return; m.est.forEach(function (p) { o[/hospital/i.test(p[2] || "") ? "hosp" : p[3] === "consultorio" ? "cons" : "cli"]++; }); o.bom += m.bom.length + m.res.length; o.pol += m.pol.length; });
+    return o;
   }
-  function leyenda() { $("hL").innerHTML = '<b>Aviso hidrológico (departamento)</b>' + NT.slice(1).map(function (n, i) { return '<span><i style="background:' + NC[i + 1] + '"></i>' + n + '</span>'; }).join("") + '<span><i style="background:#6b7a8c;opacity:.35"></i>Sin aviso en el filtro</span><b style="margin-top:6px">Caudal previsto (punto)</b><span><i style="background:' + NC[0] + ';border-radius:50%;width:11px;height:11px;border:2px solid #fff;box-sizing:border-box"></i>Normal</span><span><i style="background:' + NC[1] + ';border-radius:50%;width:11px;height:11px;border:2px solid #fff;box-sizing:border-box"></i>Sobre la mediana</span><span><i style="background:' + NC[2] + ';border-radius:50%;width:11px;height:11px;border:2px solid #fff;box-sizing:border-box"></i>Elevado (&gt; P90)</span><span style="margin-top:6px"><i style="border:2px solid #f26a1b;background:rgba(242,106,27,.35)"></i>Municipio mencionado en el aviso*</span>' + (st.pr ? '<span><i style="background:#2d7fb8;border:2px solid #fff;border-radius:50%;width:11px;height:11px;box-sizing:border-box"></i>Prensa (aprox.)</span>' : "") + '<em>*coincidencia por nombre, por validar</em>'; }
-  function geoDep(L) { var o = nivDep(L); return {type: "FeatureCollection", features: T.D.geoDep.features.map(function (f) { var v = o[f.properties.n]; return {type: "Feature", geometry: f.geometry, properties: {n: f.properties.n, c: v == null ? SIN : NC[Math.min(3, v)], o: v == null ? .1 : .5}}; })}; }
-  function geoMen(L) { MEN = menc(L); return {type: "FeatureCollection", features: Object.keys(MEN).map(function (k) { return {type: "Feature", geometry: T.M[k].f.geometry, properties: {k: k}}; })}; }
-  function geoSt() { return {type: "FeatureCollection", features: ST.map(function (p, i) { return enS(p) ? {type: "Feature", geometry: {type: "Point", coordinates: [p.lon, p.lat]}, properties: {i: i, c: NC[Math.min(3, p.nivel || 0)], r: 7 + Math.min(10, Math.log10(Math.max(p.caudal_max_10d, 1)) * 2.2), s: selS === i ? 1 : 0}} : null; }).filter(Boolean)}; }
-  function geoPr() { return {type: "FeatureCollection", features: st.pr ? PR.filter(function (e) { return e.lat != null && LUGAR.ev(T, LG, e); }).map(function (e) { return {type: "Feature", geometry: {type: "Point", coordinates: [e.lon, e.lat]}, properties: {t: e.titulo, f: e.fuente || ""}}; }) : []}; }
-  function rotular() { var l = $("hLb"); if (!map || !l) return; if (!$("hN").checked) { l.innerHTML = ""; return; } var o = ""; Object.keys(DEPC).forEach(function (d) { var p = map.project(DEPC[d]); o += '<span style="left:' + p.x.toFixed(0) + 'px;top:' + p.y.toFixed(0) + 'px">' + esc(d) + '</span>'; }); ST.forEach(function (p) { if (!enS(p)) return; var q = map.project([p.lon, p.lat]); o += '<span class="xs2" style="left:' + q.x.toFixed(0) + 'px;top:' + (q.y + 17).toFixed(0) + 'px">' + esc(p.nombre) + '</span>'; }); l.innerHTML = o; }
-  function crearMapa() {
-    var osc = document.documentElement.getAttribute("data-theme") === "dark";
-    map = new maplibregl.Map({container: "hMap", style: {version: 8, sources: {osm: {type: "raster", tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256, maxzoom: 19, attribution: "© OpenStreetMap"}, sat: {type: "raster", tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], tileSize: 256, maxzoom: 17, attribution: "Imagen © Esri, Maxar"}}, layers: [{id: "bg", type: "background", paint: {"background-color": X.css("--soft") || "#e6ebf2"}}, {id: "osm", type: "raster", source: "osm", paint: {"raster-opacity": osc ? .5 : .8}}, {id: "sat", type: "raster", source: "sat", layout: {visibility: "none"}}]}, bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
-    map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
-    var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10});
-    map.on("load", function () {
-      map.addSource("d", {type: "geojson", data: geoDep([])}); map.addSource("men", {type: "geojson", data: geoMen([])}); map.addSource("st", {type: "geojson", data: geoSt()}); map.addSource("pr", {type: "geojson", data: geoPr()});
-      map.addLayer({id: "d-f", type: "fill", source: "d", paint: {"fill-color": ["get", "c"], "fill-opacity": ["get", "o"]}});
-      LUGAR.capa(map); map.addLayer({id: "d-l", type: "line", source: "d", paint: {"line-color": "#10233d", "line-width": 1.4, "line-opacity": .85}});
-      map.addLayer({id: "men-f", type: "fill", source: "men", paint: {"fill-color": "#f26a1b", "fill-opacity": .4}});
-      map.addLayer({id: "men-l", type: "line", source: "men", paint: {"line-color": "#f26a1b", "line-width": 2}});
-      map.addLayer({id: "pr", type: "circle", source: "pr", paint: {"circle-radius": 5, "circle-color": "#2d7fb8", "circle-stroke-color": "#fff", "circle-stroke-width": 2}});
-      map.addLayer({id: "st", type: "circle", source: "st", paint: {"circle-radius": ["get", "r"], "circle-color": ["get", "c"], "circle-stroke-color": ["case", ["==", ["get", "s"], 1], "#000", "#fff"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 3, 2]}});
-      map.on("mousemove", "st", function (e) { var p = ST[e.features[0].properties.i]; map.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.nombre) + ' · ' + esc(p.rio) + '</b>' + esc(p.estado) + ' · clic para ver el pronóstico</div>').addTo(map); });
-      map.on("mouseleave", "st", function () { pop.remove(); map.getCanvas().style.cursor = ""; });
-      map.on("click", "st", function (e) { selS = e.features[0].properties.i; map.getSource("st").setData(geoSt()); caudal(); });
-      map.on("mousemove", "men-f", function (e) { var m = T.M[e.features[0].properties.k]; if (m) pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(m.n) + ' <span style="font-weight:400">' + esc(m.d) + '</span></b>Mencionado en un aviso hidrológico (por nombre, por validar)</div>').addTo(map); }); map.on("mouseleave", "men-f", function () { pop.remove(); });
-      map.on("mousemove", "pr", function (e) { var p = e.features[0].properties; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.t) + '</b>' + esc(p.f) + ' · ubicación aproximada</div>').addTo(map); }); map.on("mouseleave", "pr", function () { pop.remove(); });
-      map.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); map.on("resize", rotular);
-      map._ok = 1; LUGAR.ajusta(map, T, LG, false); dibuja();
-    });
-    [].forEach.call(document.querySelectorAll(".xtool button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z === b); }); map.setLayoutProperty("osm", "visibility", b.dataset.b === "osm" ? "visible" : "none"); map.setLayoutProperty("sat", "visibility", b.dataset.b === "sat" ? "visible" : "none"); }; });
-  }
-  function kpis(L) {
-    var o = nivDep(L), mx = L.reduce(function (a, x) { return Math.max(a, x._n); }, -1), rios = {}; L.forEach(function (a) { (a.rios || []).forEach(function (r) { rios[r] = 1; }); });
-    var ms = Object.keys(MEN), pob = ms.reduce(function (s, k) { return s + (T.M[k].pob || 0); }, 0), vig = AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY; }), modAltos = ST.filter(function (p) { return enS(p) && (p.nivel || 0) >= 2; }).length;
-    $("hK").innerHTML = '<div class="xc"><div class="xk"><div><b>' + L.length + '</b><span>avisos</span></div><div><b style="color:' + (mx < 0 ? "inherit" : NC[Math.min(3, mx)]) + '">' + (mx < 0 ? "—" : NT[Math.min(3, mx)]) + '</b><span>nivel máximo</span></div><div><b>' + Object.keys(o).length + '</b><span>departamentos</span></div><div><b>' + Object.keys(rios).length + '</b><span>ríos citados</span></div></div><p class="nota" style="margin:8px 0 0">' + (ms.length ? ms.length + ' municipios mencionados por nombre (' + A.fmt(pob) + ' hab. en total; <b>no es la población en riesgo</b>). ' : '') + (vig.length ? vig.length + ' aviso(s) vigente(s) hoy.' : '<b>No hay avisos hidrológicos vigentes hoy.</b>') + (modAltos ? ' El modelo GloFAS marca <b>' + modAltos + ' punto' + (modAltos === 1 ? '' : 's') + ' sobre el umbral alto (P90)</b>: ver triangulación.' : '') + '</p></div>';
-  }
-  function tarjetaAviso(L) {
-    var a = selA != null && L.indexOf(selA) >= 0 ? selA : L[0]; selA = a || null;
-    if (!a) { $("hAv").innerHTML = '<div class="xc"><h3>Aviso</h3><p class="nota">Sin avisos en el filtro.</p></div>'; return; }
-    $("hAv").innerHTML = '<div class="xc"><h3>Aviso N° ' + esc(a.numero || "") + (L.length > 1 ? ' <span class="nota">(1 de ' + L.length + ')</span>' : "") + '</h3><div class="xval" style="border-left:6px solid ' + NC[Math.min(3, a._n)] + '">' + NT[Math.min(3, a._n)] + ' · ' + fechaC(a.inicio) + (a.fin !== a.inicio ? ' – ' + fechaC(a.fin) : "") + ' · ' + esc((a.departamentos || []).join(", ")) + '</div>' +
-      '<p class="nota" style="margin:2px 0 6px">' + esc((a.definicion || "").slice(0, 260)) + (a.definicion && a.definicion.length > 260 ? "…" : "") + '</p>' +
-      '<b style="font-size:12px">Ríos (' + (a.rios || []).length + ')</b><div class="xchips">' + (a.rios || []).slice(0, 40).map(function (r) { return '<span>' + esc(r) + '</span>'; }).join("") + '</div>' +
-      '<b style="font-size:12px">Poblaciones citadas (' + pobl(a).length + ')</b><div class="xchips">' + pobl(a).map(function (r) { return '<span>' + esc(r) + '</span>'; }).join("") + '</div>' +
-      '<div class="xact">' + (a.pdf ? '<a class="btn" href="' + esc(S.urlOk(a.pdf)) + '" target="_blank" rel="noopener">Aviso oficial</a>' : "") + (L.length > 1 ? '<button class="btn" id="hNx">Siguiente aviso ›</button>' : "") + '</div></div>';
-    var b = $("hNx"); if (b) b.onclick = function () { selA = L[(L.indexOf(a) + 1) % L.length]; tarjetaAviso(L); };
-  }
-  function caudal() {
-    var el = $("hSt"); if (selS == null) { el.innerHTML = '<div class="xc xhint">Haga clic en un punto del mapa (círculo con el nombre de una localidad) para ver el caudal previsto frente a lo normal.</div>'; return; }
-    var p = ST[selS]; el.innerHTML = '<div class="xc"><h3>' + esc(p.nombre) + ' · ' + esc(p.rio) + '</h3><div class="xval" style="border-left:6px solid ' + NC[Math.min(3, p.nivel || 0)] + '">' + esc(p.estado) + '</div><div id="hCh" style="height:210px"></div><p class="nota">Máximo previsto en 10 días: <b>' + A.fmt(p.caudal_max_10d) + ' m³/s</b> (' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del valor P90 de la climatología 1993–2022). Modelo GloFAS: indicador, no alerta oficial.</p></div>';
-    var ch = echarts.init($("hCh"), null, {renderer: "svg"}), tx = X.css("--mut") || "#888", ln = X.css("--line") || "#ccc", hoy = p.hoy;
-    ch.setOption({animation: false, grid: {left: 46, right: 10, top: 10, bottom: 24}, tooltip: {trigger: "axis"}, legend: {show: false}, xAxis: {type: "category", data: p.fechas, axisLabel: {color: tx, fontSize: 10, formatter: function (v) { return v.slice(5); }}, axisLine: {lineStyle: {color: ln}}}, yAxis: {type: "value", name: "m³/s", nameTextStyle: {color: tx}, axisLabel: {color: tx, fontSize: 10}, splitLine: {lineStyle: {color: ln}}},
-      series: [{name: "P90 (normal alto)", type: "line", data: p.p90, symbol: "none", lineStyle: {width: 1, type: "dashed", color: "#d7263d"}}, {name: "Mediana (P50)", type: "line", data: p.p50, symbol: "none", lineStyle: {width: 1, type: "dashed", color: "#888"}}, {name: "Caudal previsto", type: "line", data: p.caudal_m3s, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8"}, markLine: {symbol: "none", label: {formatter: "hoy", color: tx}, lineStyle: {color: tx}, data: [{xAxis: hoy}]}}]});
-    el.querySelector(".xc").insertAdjacentHTML("beforeend", '<p class="nota" style="margin-top:0"><span style="color:#1d6fb8">━</span> previsto · <span style="color:#888">╌</span> mediana · <span style="color:#d7263d">╌</span> P90</p>');
-  }
-  function gantt(L) {
-    var el = $("hG"); $("hGm").textContent = L.length ? "" : "Sin avisos en el filtro."; if (!L.length) { el.style.height = "0"; var c0 = echarts.getInstanceByDom(el); if (c0) c0.clear(); return; }
-    var fs = []; L.forEach(function (a) { (a.departamentos || []).forEach(function (d) { if (fs.indexOf(d) < 0) fs.push(d); }); }); fs.sort(); var data = [];
-    L.forEach(function (a) { (a.departamentos || []).forEach(function (d) { data.push({value: [fs.indexOf(d), Date.parse(a.inicio + "T00:00:00-04:00"), Date.parse(a.fin + "T23:59:59-04:00"), a], itemStyle: {color: NC[Math.min(3, a._n)]}}); }); });
-    var t0 = Math.min.apply(0, data.map(function (d) { return d.value[1]; })), t1 = Math.max.apply(0, data.map(function (d) { return d.value[2]; }));
-    el.style.height = (70 + fs.length * 32) + "px"; var ch = echarts.getInstanceByDom(el) || echarts.init(el, null, {renderer: "svg"}), tx = X.css("--mut") || "#888", ln = X.css("--line") || "#ccc";
-    ch.setOption({animation: false, grid: {left: 100, right: 16, top: 10, bottom: 30}, tooltip: {formatter: function (p) { var a = p.data.value[3]; return 'Aviso N° ' + esc(a.numero || "") + '<br>' + NT[Math.min(3, a._n)] + ' · ' + fechaC(a.inicio) + ' – ' + fechaC(a.fin) + '<br>' + (a.rios || []).length + ' ríos'; }}, xAxis: {type: "time", min: t0, max: t1 + DIA, axisLabel: {color: tx, fontSize: 11}, splitLine: {lineStyle: {color: ln}}}, yAxis: {type: "category", data: fs, inverse: true, axisLabel: {color: tx, fontSize: 11}, axisLine: {lineStyle: {color: ln}}},
-      series: [{type: "custom", renderItem: function (p, api) { var ci = api.value(0), s = api.coord([api.value(1), ci]), e = api.coord([api.value(2), ci]), h = Math.min(api.size([0, 1])[1] * .55, 18); return {type: "rect", shape: {x: s[0], y: s[1] - h / 2, width: Math.max(4, e[0] - s[0]), height: h, r: 3}, style: {fill: api.visual("color"), opacity: .85, stroke: "#fff", lineWidth: .6}}; }, encode: {x: [1, 2], y: 0}, data: data}]}, true); ch.resize();
-  }
-  function tablas(L) {
-    $("hTa").innerHTML = L.length ? '<table class="xt2"><tr><th align="left">Publicado</th><th align="left">N°</th><th>Nivel</th><th align="left">Vigencia</th><th align="left">Departamentos</th><th>Ríos</th></tr>' + L.map(function (a) { return '<tr><td>' + esc((a.publicada || "").slice(0, 16)) + '</td><td>' + (a.pdf ? '<a href="' + esc(S.urlOk(a.pdf)) + '" target="_blank" rel="noopener">' + esc(a.numero || "aviso") + '</a>' : esc(a.numero || "")) + '</td><td align="center"><i class="xdot" style="background:' + NC[Math.min(3, a._n)] + '"></i>' + NT[Math.min(3, a._n)] + '</td><td>' + fechaC(a.inicio) + (a.fin !== a.inicio ? " – " + fechaC(a.fin) : "") + '</td><td>' + esc((a.departamentos || []).join(", ")) + '</td><td align="center">' + (a.rios || []).length + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Sin avisos con este filtro.</p>';
-    $("hTc").innerHTML = '<p class="nota">GloFAS (Copernicus EMS) vía Open-Meteo; climatología 1993–2022. Es un indicador de modelo en grandes ríos, no cubre ríos menores ni crecidas repentinas.</p><table class="xt2"><tr><th align="left">Punto</th><th align="left">Río</th><th align="left">Estado</th><th>Máx. 10 d (m³/s)</th></tr>' + ST.map(function (p) { return '<tr><td>' + esc(p.nombre) + '</td><td>' + esc(p.rio) + '</td><td><i class="xdot" style="background:' + NC[Math.min(3, p.nivel || 0)] + '"></i>' + esc(p.estado) + '</td><td align="right">' + A.fmt(p.caudal_max_10d) + '</td></tr>'; }).join("") + '</table>';
-    $("hTp").innerHTML = '<p class="nota">Notas de prensa con lugar identificado. La posición es aproximada.</p>' + (PR.filter(function (e) { return LUGAR.ev(T, LG, e); }).length ? '<table class="xt2">' + PR.filter(function (e) { return LUGAR.ev(T, LG, e); }).map(function (e) { return '<tr><td style="white-space:nowrap">' + esc(new Date(e.ts).toLocaleDateString("es-BO", {day: "2-digit", month: "short"})) + '</td><td>' + (e.url ? '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.titulo) + '</a>' : esc(e.titulo)) + '</td><td class="nota">' + esc(e.fuente || "") + '</td><td class="nota">' + esc((e.departamentos || []).join(", ")) + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Sin notas.</p>');
-    var h = (T.dh && T.dh.departamentos) || {}, tp = ["Inundación", "Riada", "Aluvión", "Desbordamiento", "Flujo Lodo"], fil = Object.keys(h).sort().filter(function (d) { return !LG.d || d === LG.d; }).map(function (d) { var n = 0, mu = 0, af = 0; tp.forEach(function (t) { var x = h[d][t]; if (x) { n += x[0]; mu += x[1]; af += x[2]; } }); return {d: d, n: n, mu: mu, af: af}; }).sort(function (a, b) { return b.n - a.n; });
-    $("hTh").innerHTML = '<p class="nota"><b>Limitación:</b> DesInventar (UNDRR) cubre 1970–2015, con subregistro, y no incluye eventos recientes. Suma inundación, riada, aluvión, desbordamiento y flujo de lodo. Solo es contexto.</p><table class="xt2"><tr><th align="left">Departamento</th><th>Eventos</th><th>Fallecidos</th><th>Afectados</th></tr>' + fil.map(function (r) { return '<tr><td>' + esc(r.d) + '</td><td align="center">' + r.n + '</td><td align="center">' + r.mu + '</td><td align="center">' + A.fmt(r.af) + '</td></tr>'; }).join("") + '</table>';
-  }
-  /* ---------- Triangulación por punto de río: modelo GloFAS – aviso SENAMHI – prensa ---------- */
-  function normP(s) { return norm(s).replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim(); }
-  function vigDep(d) { return AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY && (a.departamentos || []).indexOf(d) >= 0; }); }
-  function ultDep(d) { var u = null; AV.forEach(function (a) { if ((a.departamentos || []).indexOf(d) >= 0 && (!u || a.fin > u.fin)) u = a; }); return u; }
+  function topAv(L) { return L.slice().sort(function (a, b) { return b._n - a._n || b.fin.localeCompare(a.fin); })[0]; }
+
+  /* ---------- caudal modelado (GloFAS) ---------- */
+  function iHoy(p) { var i = p.fechas.indexOf(p.hoy); return i < 0 ? p.fechas.length - 1 : i; }
+  function ratioCq(p) { if (st.cd === "max") return p.ratio_p90_max_10d; var i = iHoy(p) + (+st.cd), q = p.caudal_m3s[i], b = p.p90 && p.p90[i]; return q == null || !b ? null : q / b; }
+  function claseCq(p) { var r = ratioCq(p); if (r == null) return 0; if (r >= 1.5) return 3; if (r >= 1) return 2; var i = st.cd === "max" ? -1 : iHoy(p) + (+st.cd), q = st.cd === "max" ? p.caudal_max_10d : p.caudal_m3s[i], m = st.cd === "max" ? (p.p50 || [])[iHoy(p)] : (p.p50 || [])[i]; return m && q != null && q > m * 1.2 ? 1 : 0; }
+  function sinDetVig() { return AV.filter(function (a) { return vig(a) && !a._d.length; }); }
+  function notaSin() { var n = sinDetVig().length; return n ? ' Además hay ' + n + ' aviso' + (n === 1 ? "" : "s") + ' vigente' + (n === 1 ? "" : "s") + ' cuyo detalle no se pudo leer (PDF no disponible): podría' + (n === 1 ? "" : "n") + ' incluir este departamento.' : ""; }
+  function vigDep(d) { return AV.filter(function (a) { return vig(a) && a._d.indexOf(d) >= 0; }); }
   function prDep(d) { var t = Date.now() - 30 * DIA; return PR.filter(function (e) { return e.ts >= t && (e.departamentos || []).indexOf(d) >= 0; }); }
-  function prLoc(p, L) { var re = new RegExp("(^| )" + normP(p.nombre) + "( |$)"); return L.filter(function (e) { return re.test(normP((e.titulo || "") + " " + (e.lugar || ""))); }); }
   function lecturaP(p) {
     var alto = (p.nivel || 0) >= 2, av = vigDep(p.departamento).length > 0;
-    if (alto && av) return {k: "conc", t: "Concordante", c: "#d7263d", f: "#fff", d: "El modelo y el SENAMHI señalan crecida en el departamento."};
-    if (alto) return {k: "mod", t: "Solo modelo", c: "#f26a1b", f: "#111", d: "Sin aviso oficial vigente: vigilar y confirmar con el SENAMHI."};
-    if (av) return {k: "of", t: "Solo oficial", c: "#f5b700", f: "#111", d: "Hay aviso oficial vigente en el departamento; el aviso puede referirse a otros ríos que el modelo no cubre."};
-    return {k: "no", t: "Sin señal", c: "#2e9e5b", f: "#fff", d: "Ninguna de las tres fuentes señala crecida en este punto."};
+    if (alto && av) return {t: "Concordante", c: "#d7263d", f: "#fff", d: "El modelo y el SENAMHI señalan crecida en el departamento."};
+    if (alto) return {t: "Solo modelo", c: "#f26a1b", f: "#fff", d: "Sin aviso oficial vigente con ubicación legible: vigilar y confirmar con el SENAMHI." + notaSin()};
+    if (av) return {t: "Solo oficial", c: "#f5b700", f: "#10233d", d: "Hay aviso oficial vigente en el departamento; puede referirse a otros ríos que el modelo no cubre."};
+    return {t: "Sin señal", c: "#2e9e5b", f: "#fff", d: "Ninguna fuente señala crecida en este punto." + notaSin()};
   }
-  function cssTri() {
-    if ($("hTriCss")) return; var s = document.createElement("style"); s.id = "hTriCss";
-    s.textContent = ".hx-head{padding:9px 13px;margin:4px 0 12px;background:var(--soft);border-radius:8px;font-size:13.5px;line-height:1.55}.hx-head p{margin:2px 0}.hx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:12px}" +
-      ".hx-card{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:10px 12px;background:var(--card);cursor:pointer}.hx-card:hover,.hx-card:focus{outline:2px solid var(--brand2);outline-offset:1px}" +
-      ".hx-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.hx-top b{display:block;font-size:15px}.hx-top .hx-r{font-size:12px;color:var(--mut)}" +
-      ".hx-chip{font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap}.hx-ch{height:128px;margin:6px 0 2px}" +
-      ".hx-src{display:grid;grid-template-columns:64px 1fr;gap:3px 8px;margin:4px 0;font-size:12px;line-height:1.4}.hx-src dt{font-weight:700;color:var(--brand2);text-transform:uppercase;font-size:10.5px;letter-spacing:.03em;padding-top:1px}.hx-src dd{margin:0}" +
-      ".hx-rd{font-size:12px;margin:5px 0 0;color:var(--mut)}.hx-rd b{color:var(--ink)}";
-    document.head.appendChild(s);
+
+  /* ---------- lluvia prevista (modelo compartido con Meteorológica) ---------- */
+  function acum(p, n) { var s = 0, k; for (k = 0; k < Math.min(n, (p.pp || []).length); k++) s += p.pp[k] || 0; return Math.round(s * 10) / 10; }
+  function claseLl(v) { for (var i = 0; i < LL.length; i++) if (v < LL[i][0]) return LL[i]; return LL[LL.length - 1]; }
+  function avisoPron() {
+    var el = $("hAq"); if (!el) return; if (st.v !== "lluvia" || FX.estado === "ok") { el.hidden = true; return; }
+    el.hidden = false; el.innerHTML = FX.estado === "error" ? 'No se pudo consultar la lluvia prevista (' + esc(FX.msg) + '). <button class="xlink" type="button" id="hAqR">Reintentar</button>' : 'Consultando el pronóstico del modelo Open-Meteo…';
+    var r = $("hAqR"); if (r) r.onclick = function () { M.pron(pronListo, true); dibuja(); };
   }
-  function miniGraf(el, p) {
-    var tx = X.css("--mut") || "#888", ln = X.css("--line") || "#ccc", i = p.fechas.indexOf(p.hoy); if (i < 0) i = p.fechas.length - 1;
-    var pas = p.caudal_m3s.map(function (v, k) { return k <= i ? v : null; }), fut = p.caudal_m3s.map(function (v, k) { return k >= i ? v : null; });
-    var ban = (p.p90 || []).map(function (v, k) { return Math.max(0, v - (p.p50 || [])[k]); }), ch = echarts.init(el, null, {renderer: "svg"});
-    ch.setOption({animation: false, grid: {left: 42, right: 8, top: 20, bottom: 20},
-      tooltip: {trigger: "axis", confine: true, formatter: function (ps) { var k = ps[0].dataIndex; return fechaC(p.fechas[k]) + (k > i ? " (previsto)" : "") + '<br>Caudal modelado: <b>' + A.fmt(p.caudal_m3s[k]) + '</b> m³/s<br>Mediana: ' + A.fmt((p.p50 || [])[k]) + ' · P90: ' + A.fmt((p.p90 || [])[k]); }},
-      xAxis: {type: "category", data: p.fechas, boundaryGap: false, axisLabel: {color: tx, fontSize: 9.5, interval: 13, formatter: function (v) { return fechaC(v); }}, axisLine: {lineStyle: {color: ln}}, axisTick: {show: false}},
-      yAxis: {type: "value", min: 0, splitNumber: 2, axisLabel: {color: tx, fontSize: 9.5, formatter: function (v) { return v >= 1000 ? (v / 1000) + " mil" : v; }}, splitLine: {lineStyle: {color: ln}}},
-      series: [{type: "line", data: p.p50 || [], stack: "b", symbol: "none", lineStyle: {opacity: 0}, silent: true},
-        {type: "line", data: ban, stack: "b", symbol: "none", lineStyle: {opacity: 0}, areaStyle: {color: "#8a97a8", opacity: .28}, silent: true},
-        {type: "line", data: p.p90 || [], symbol: "none", lineStyle: {width: 1, type: "dashed", color: "#d7263d"}, silent: true},
-        {type: "line", data: pas, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8"}, markLine: {symbol: "none", silent: true, label: {formatter: "hoy", color: tx, fontSize: 9.5}, lineStyle: {color: tx, type: "solid", width: 1}, data: [{xAxis: p.fechas[i]}]}},
-        {type: "line", data: fut, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8", type: "dashed"}}]});
+  function pronListo() { avisoPron(); pulso(); graficos(); if (st.v === "lluvia") dibuja(); }
+
+  /* ---------- pulso ---------- */
+  function tarjeta(col, ic, tit, big, sub, extra, sp, off) { return '<div class="card cpc' + (off ? " off" : "") + '" style="--k:' + col + '"><div class="eye">' + X.ic(ic) + '<span>' + tit + '</span></div><div class="big">' + big + '</div><div class="sub">' + sub + '</div>' + (extra || "") + '<div class="sp" style="color:' + col + '">' + (sp || "") + '</div></div>'; }
+  function faja() {
+    var L = AV.filter(enA), n = 17, w = 100 / n, h = "";
+    for (var i = 0; i < n; i++) {
+      var d = S.diaKey(Date.now() + (i - 13) * DIA), mx = -1; L.forEach(function (a) { if (a.inicio <= d && a.fin >= d) mx = Math.max(mx, a._n); });
+      h += '<rect x="' + (i * w + .25).toFixed(2) + '%" y="3" width="' + (w - .5).toFixed(2) + '%" height="14" rx="2" fill="' + (mx < 0 ? "currentColor" : NC[Math.min(3, mx)]) + '" opacity="' + (mx < 0 ? .13 : 1) + '"' + (i === 13 ? ' stroke="currentColor" stroke-width="1.6"' : "") + '><title>' + fd(d) + (i === 13 ? " (hoy)" : "") + ": " + (mx < 0 ? "sin aviso" : NT[Math.min(3, mx)]) + '</title></rect>';
+    }
+    return '<svg class="mst" viewBox="0 0 100 20" preserveAspectRatio="none" aria-label="Avisos de los últimos 14 días y próximos 3">' + h + '</svg>';
   }
-  function triang() {
-    var box = $("hTri"); if (!box) return; cssTri();
-    [].forEach.call(box.querySelectorAll(".hx-ch"), function (e) { var c = echarts.getInstanceByDom(e); if (c) c.dispose(); });
-    var Lp = ST.map(function (p, i) { return {p: p, i: i}; }).filter(function (x) { return enS(x.p); }).sort(function (a, b) { return (b.p.ratio_p90_max_10d || 0) - (a.p.ratio_p90_max_10d || 0); });
-    if (!Lp.length) { box.innerHTML = '<section class="xc" style="margin-top:12px"><h3>Situación hidrológica hoy · triangulación</h3><p class="nota">Sin puntos de río del modelo en el filtro elegido. El modelo GloFAS cubre solo 9 puntos de grandes ríos.</p></section>'; return; }
-    var vig = AV.filter(function (a) { return a.inicio <= HOY && a.fin >= HOY && enA(a); }), u = null, Ls = Lp.map(function (x) { return x.p; });
-    AV.forEach(function (a) { if (enA(a) && (!u || a.fin > u.fin)) u = a; });
-    var altos = Ls.filter(function (p) { return (p.nivel || 0) >= 2; }), g = {mod: [], conc: [], of: []};
-    Ls.forEach(function (p) { var k = lecturaP(p).k; if (g[k]) g[k].push(p); });
-    var nom = function (L) { return L.map(function (p) { return '<b>' + esc(p.nombre) + '</b> (' + esc(p.rio) + ')'; }).join(", "); };
-    var l1 = altos.length ? '<b>' + altos.length + ' de ' + Ls.length + ' punto' + (Ls.length === 1 ? '' : 's') + '</b> con caudal modelado sobre el umbral alto (P90): ' + altos.map(function (p) { return '<b>' + esc(p.nombre) + '</b> · ' + esc(p.rio) + ' (' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del P90)'; }).join("; ") + '.' : '<b>Ningún punto</b> de los ' + Ls.length + ' supera el umbral alto (P90) según el modelo.';
-    var l2 = (vig.length ? '<b>' + vig.length + ' aviso' + (vig.length === 1 ? '' : 's') + ' hidrológico' + (vig.length === 1 ? '' : 's') + ' vigente' + (vig.length === 1 ? '' : 's') + '</b> del SENAMHI hoy' : '<b>Sin aviso hidrológico vigente</b> del SENAMHI hoy') + (u ? ' (el más reciente, N° ' + esc(u.numero || "s/n") + ', nivel ' + NT[Math.min(3, u._n)].toLowerCase() + ', ' + (u.fin >= HOY ? 'vigente hasta' : 'terminó') + ' el ' + fechaC(u.fin) + ')' : '') + '.';
-    var cr = g.conc.length ? "#d7263d" : g.mod.length ? "#f26a1b" : g.of.length ? "#f5b700" : "#2e9e5b";
-    var l3 = g.conc.length ? 'Lectura: el modelo y el SENAMHI coinciden en ' + nom(g.conc) + '.' : g.mod.length ? 'Lectura: señal solo del modelo en ' + nom(g.mod) + '; sin confirmación oficial. Vigilar y confirmar con el SENAMHI.' : g.of.length ? 'Lectura: hay aviso oficial vigente y el modelo no marca crecida en los puntos monitoreados (el aviso puede referirse a otros ríos).' : 'Lectura: sin señal de crecida en ninguna de las fuentes hoy.';
-    var act = (T.D.caudales || {}).actualizado, actT = act ? new Date(act).toLocaleString("es-BO", {timeZone: "America/La_Paz", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"}) : "sin dato";
-    box.innerHTML = '<section class="xc" style="margin-top:12px"><h3>Situación hidrológica hoy · triangulación modelo – SENAMHI – prensa</h3>' +
-      '<div class="hx-head" style="border-left:5px solid ' + cr + '"><p>' + l1 + '</p><p>' + l2 + '</p><p><b>' + l3.replace(/^Lectura: /, "Lectura: ") + '</b></p><p class="nota" style="margin:4px 0 0">Lectura automática, por validar con el CCES. Modelo actualizado: ' + esc(actT) + ' (hora de Bolivia).</p></div>' +
-      '<div class="hx-grid">' + Lp.map(function (x) {
-        var p = x.p, lec = lecturaP(p), vd = vigDep(p.departamento), ud = ultDep(p.departamento), pd = prDep(p.departamento), pl = prLoc(p, pd);
-        var ofi = vd.length ? '<b>' + vd.length + ' aviso' + (vd.length === 1 ? '' : 's') + ' vigente' + (vd.length === 1 ? '' : 's') + '</b> en ' + esc(p.departamento) + ' (nivel ' + NT[Math.min(3, Math.max.apply(0, vd.map(function (a) { return a._n; })))].toLowerCase() + ')' : 'Sin aviso vigente' + (ud ? ' · último en ' + esc(p.departamento) + ': N° ' + esc(ud.numero || "s/n") + ', ' + NT[Math.min(3, ud._n)].toLowerCase() + ', terminó el ' + fechaC(ud.fin) : ' · sin avisos hidrológicos registrados en ' + esc(p.departamento));
-        return '<article class="hx-card" data-i="' + x.i + '" tabindex="0" role="button" style="--c:' + lec.c + '" aria-label="' + esc(p.nombre + ', ' + p.rio + ': ' + lec.t) + '"><div class="hx-top"><div><b>' + esc(p.nombre) + '</b><span class="hx-r">' + esc(p.rio) + ' · ' + esc(p.departamento) + '</span></div><span class="hx-chip" style="background:' + lec.c + ';color:' + lec.f + '">' + lec.t + '</span></div>' +
-          '<div class="hx-ch" role="img" aria-label="Caudal modelado en ' + esc(p.nombre) + ': ' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del umbral P90 en los próximos 10 días"></div>' +
-          '<dl class="hx-src"><dt>Modelo</dt><dd>' + esc(p.estado) + ' · ' + A.fmt(p.ratio_p90_max_10d * 100) + ' % del P90 (máx. 10 d: ' + A.fmt(p.caudal_max_10d) + ' m³/s)</dd><dt>SENAMHI</dt><dd>' + ofi + '</dd><dt>Prensa</dt><dd>' + pd.length + ' nota' + (pd.length === 1 ? '' : 's') + ' hidrológica' + (pd.length === 1 ? '' : 's') + ' en ' + esc(p.departamento) + ' (30 d) · ' + (pl.length ? '<b>' + pl.length + ' mencionan la localidad</b>' : 'ninguna menciona la localidad') + '</dd></dl>' +
-          '<p class="hx-rd"><b>' + lec.t + ':</b> ' + lec.d.charAt(0).toLowerCase() + lec.d.slice(1) + '</p></article>';
-      }).join("") + '</div>' +
-      '<p class="nota" style="margin:8px 0 0">Gráficos: línea azul = caudal modelado por GloFAS (continua hasta hoy, discontinua = previsión; no es caudal observado); banda gris = entre la mediana (P50) y el umbral alto (P90) de la climatología 1993–2022 para cada fecha; línea roja discontinua = P90. Es un indicador de modelo en grandes ríos, no una alerta oficial. La prensa se cuenta por departamento; «mencionan la localidad» es coincidencia por nombre, por validar. Clic en una tarjeta para ver el detalle y ubicarla en el mapa.</p></section>';
-    Lp.forEach(function (x) { var c = box.querySelector('.hx-card[data-i="' + x.i + '"] .hx-ch'); if (c) miniGraf(c, x.p); });
-    [].forEach.call(box.querySelectorAll(".hx-card"), function (c) {
-      var ir = function () { selS = +c.dataset.i; if (map && map._ok) map.getSource("st").setData(geoSt()); caudal(); $("hSt").scrollIntoView({behavior: "smooth", block: "center"}); };
-      c.onclick = ir; c.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ir(); } };
-    });
-    if (!window._hxRs) { window._hxRs = 1; window.addEventListener("resize", function () { [].forEach.call(document.querySelectorAll("#hTri .hx-ch"), function (e) { var c = echarts.getInstanceByDom(e); if (c) c.resize(); }); }); }
+  function barrasCq(P) {
+    if (!P.length) return ""; var w = 100 / P.length, h = "";
+    P.forEach(function (p, i) { var r = Math.min(1.6, Math.max(.03, p.ratio_p90_max_10d || 0)), hh = r / 1.6 * 17; h += '<rect x="' + (i * w + 1).toFixed(2) + '%" y="' + (19 - hh).toFixed(1) + '" width="' + (w - 2).toFixed(2) + '%" height="' + hh.toFixed(1) + '" rx="1.5" fill="' + NC[Math.min(3, p.nivel || 0)] + '"><title>' + esc(p.nombre) + ': ' + Math.round((p.ratio_p90_max_10d || 0) * 100) + ' % del P90</title></rect>'; });
+    h += '<line x1="0" x2="100" y1="' + (19 - 1 / 1.6 * 17).toFixed(1) + '" y2="' + (19 - 1 / 1.6 * 17).toFixed(1) + '" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 2" opacity=".6"/>';
+    return '<svg class="mst" viewBox="0 0 100 20" preserveAspectRatio="none" aria-label="Caudal modelado en cada punto, como porcentaje del umbral P90 (línea punteada = 100 %)">' + h + '</svg>';
   }
-  function dibuja() {
-    var L = filtrados(); leyenda();
-    $("hH").innerHTML = '<b>' + L.length + ' aviso' + (L.length === 1 ? "" : "s") + ' hidrológico' + (L.length === 1 ? "" : "s") + '</b> en ' + esc(LUGAR.etiqueta(LG)) + (LG.m ? (MEN[LG.d + "|" + LG.m] != null ? " — <b>el municipio figura por nombre</b> en un aviso" : " — el municipio <b>no figura por nombre</b> en los avisos (el aviso es del departamento)") : "") + ' · ' + ({vig: "vigentes hoy", 7: "últimos 7 días", 30: "últimos 30 días", todo: "todo lo disponible"})[st.p] + ' <span class="nota">— Fuente: SENAMHI. Los avisos se publican por departamento; el color del mapa no implica que todo el departamento esté en riesgo.</span>';
-    if (map && map._ok) { map.getSource("d").setData(geoDep(L)); map.getSource("men").setData(geoMen(L)); map.getSource("pr").setData(geoPr()); rotular(); } else MEN = menc(L);
-    kpis(L); triang(); tarjetaAviso(L); caudal(); gantt(L); tablas(L);
+  function pulso() {
+    var v = AV.filter(function (a) { return vig(a) && enA(a); }), mx = v.reduce(function (a, x) { return Math.max(a, x._n); }, -1), top = topAv(v), h = "";
+    var rios = uniq([].concat.apply([], v.map(function (a) { return a._rios; }))), deps = uniq([].concat.apply([], v.map(function (a) { return a._d; }))), sinD = v.filter(function (a) { return a._sin; }).length;
+    var ult = AV.filter(function (a) { return enA(a) && a.fin < HOY; }).sort(function (a, b) { return b.fin.localeCompare(a.fin); })[0];
+    h += tarjeta(COL, "shield", "Avisos hidrológicos", v.length ? '<span style="color:' + NC[Math.min(3, mx)] + '">' + NT[Math.min(3, mx)] + '</span>' : '<span style="color:var(--mut)">Sin aviso</span>',
+      v.length ? v.length + ' aviso' + (v.length > 1 ? "s" : "") + ' vigente' + (v.length > 1 ? "s" : "") + (deps.length ? ' · ' + esc(deps.join(", ")) : "") : (ult ? 'Último aviso: ' + vigTxt(ult) : 'sin avisos en el período disponible') + (LG.d && sinDetVig().length ? '. Hay ' + sinDetVig().length + ' vigente' + (sinDetVig().length === 1 ? "" : "s") + ' sin detalle legible: podría' + (sinDetVig().length === 1 ? "" : "n") + ' incluir este lugar' : ''),
+      v.length ? '<div class="mpar" style="color:' + COL + '">' + (rios.length ? esc(rios.slice(0, 4).join(", ")) + (rios.length > 4 ? " y " + (rios.length - 4) + " más" : "") : (sinD === v.length ? "sin detalle de ríos: el PDF no estuvo disponible" : "ríos no indicados")) + '</div><div class="sub">' + vigTxt(top) + ' · ' + resta(top) + '</div>' : "", faja(), !v.length);
+    var ks = keysDe(v), pm = popMuns(ks), pobl = uniq([].concat.apply([], v.map(function (a) { return a._pob; })));
+    h += tarjeta("#8461f0", "home", "Población en municipios nombrados", v.length && ks.length ? M.fmtP(pm.pob) + ' <small>hab.</small>' : '<span style="color:var(--mut)">' + (v.length ? "Sin dato" : "Sin aviso") + '</span>',
+      v.length && ks.length ? ks.length + ' municipio' + (ks.length > 1 ? "s" : "") + ' · ' + rios.length + ' río' + (rios.length === 1 ? "" : "s") + ' · ' + pobl.length + ' poblado' + (pobl.length === 1 ? "" : "s") : (v.length ? 'los avisos vigentes no permiten nombrar municipios' : 'sin avisos vigentes'),
+      v.length && ks.length ? '<div class="sub">Total INE de cada municipio nombrado; el aviso puede afectar solo una parte.</div>' : "", "", !(v.length && ks.length));
+    var P = ST.filter(enS), alt = P.filter(function (p) { return (p.nivel || 0) >= 2; }).length, mp = P.slice().sort(function (a, b) { return (b.ratio_p90_max_10d || 0) - (a.ratio_p90_max_10d || 0); })[0];
+    h += tarjeta("#1d6fb8", "wave", "Caudal de ríos (modelo)", P.length ? '<span style="color:' + (alt ? NC[2] : NC[0]) + '">' + alt + '</span> <small>de ' + P.length + ' sobre el P90</small>' : '<span style="color:var(--mut)">Sin punto</span>',
+      mp ? 'Mayor: ' + esc(mp.nombre) + ' · ' + esc(mp.rio) + ', ' + Math.round((mp.ratio_p90_max_10d || 0) * 100) + ' % del P90 (10 días)' : 'sin puntos del modelo en este lugar', '<div class="sub">GloFAS: solo grandes ríos, no es aviso.</div>', barrasCq(P), !P.length);
+    var Q = FX.estado === "ok" ? FX.pts.filter(enP) : [], mq = Q.slice().sort(function (a, b) { return acum(b, 3) - acum(a, 3); })[0], n50 = Q.filter(function (p) { return acum(p, 3) >= 50; }).length;
+    h += tarjeta("#2563eb", "water", "Lluvia prevista 72 h (modelo)", FX.estado === "ok" && mq ? fmt(acum(mq, 3), 0) + ' <small>mm, máximo</small>' : '<span style="color:var(--mut)">' + (FX.estado === "error" ? "Sin conexión" : FX.estado === "ok" ? "Sin punto" : "Consultando…") + '</span>',
+      FX.estado === "ok" && mq ? esc(M.nombrePunto(mq)) + ' · ' + n50 + ' punto' + (n50 === 1 ? "" : "s") + ' con ≥ 50 mm' : (FX.estado === "error" ? esc(FX.msg) : 'Open-Meteo, puntos de ~1°'), '<div class="sub">Pronóstico del modelo, no es aviso.</div>', "", FX.estado !== "ok");
+    $("hPul").innerHTML = h;
   }
+
+  /* ---------- página ---------- */
+  function html() {
+    return '<nav class="tnav"><a href="index.html">Tablero</a><span class="tsep">›</span><b>Tipo de evento · Hidrológica</b></nav><h1 class="th">Hidrológica <small>crecidas, desbordes e inundaciones</small></h1>' +
+      '<div class="cap">Los <b>avisos</b> son oficiales (SENAMHI) y se publican por río y poblado, sin polígono ni municipio: el sistema los ubica por el <b>nombre</b> del poblado. El <b>caudal</b> (GloFAS, 9 puntos de grandes ríos) y la <b>lluvia prevista</b> (Open-Meteo) son modelos, no avisos. Información preliminar.</div>' +
+      '<div class="cpul h4" id="hPul"></div>' +
+      '<div class="xq"><div class="xs1" id="lgBox"></div></div>' +
+      '<div class="cvw"><b>Ver en el mapa</b><button type="button" data-v="avisos">' + X.ic("shield") + 'Avisos</button><button type="button" data-v="caudal">' + X.ic("wave") + 'Caudal de ríos</button><button type="button" data-v="lluvia">' + X.ic("water") + 'Lluvia 7 días</button></div>' +
+      '<div class="cvc" id="hCtl"></div><div class="xhelp" id="hH"></div>' +
+      '<div class="xg"><div class="xmw"><div class="xtool" id="hTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button><span class="xsp"></span><label><input type="checkbox" id="hNd" checked> Departamentos</label><label><input type="checkbox" id="hPn" checked> Prensa</label><label><input type="checkbox" id="hLp" checked> Población</label><label><input type="checkbox" id="hLs" checked> Salud</label><label><input type="checkbox" id="hLe" checked> Bomberos y policía</label></div>' +
+      '<div style="position:relative"><div class="xmap" id="hMap"></div><div class="xav" id="hAv" style="top:14px" hidden></div><div class="xav" id="hAq" style="top:14px" hidden></div><div class="xlab" id="hLb" style="top:0;bottom:0;height:auto;min-height:0"></div></div><div class="xleg" id="hL"></div></div>' +
+      '<div class="xside"><div id="hDet"></div></div></div><div id="eviP"></div>' +
+      '<div class="card" style="margin-top:12px"><h3>Cronología de avisos por departamento</h3><div id="hG1" style="height:230px"></div><p class="nota" id="hG1n"></p></div>' +
+      '<div class="xg2"><div class="card"><h3>Avisos por mes</h3><div id="hG2" style="height:230px"></div><p class="nota" id="hG2n"></p></div>' +
+      '<div class="card"><h3>Ríos que más figuran en los avisos</h3><div id="hG3" style="height:230px"></div><p class="nota" id="hG3n"></p></div></div>' +
+      '<div class="card" style="margin-top:12px"><h3>Caudal modelado por punto (% del umbral P90)</h3><div id="hG4" style="height:300px"></div><p class="nota" id="hG4n"></p></div>' +
+      '<div class="card" style="margin-top:12px"><div class="xtabs"><button class="on" data-s="hTa">Avisos (lista)</button><button data-s="hTp">Prensa</button><button data-s="hTh">Antecedentes 1970–2015</button></div><div id="hTa"></div><div id="hTp" style="display:none"></div><div id="hTh" style="display:none"></div></div>' +
+      '<div id="hMon">' + (window.CLIMA ? CLIMA.seccion("hidro", cfgMon()) : "") + '</div>';
+  }
+  function cfgMon() { return {col: COL, geoMun: D.geoMun, colN: NC, nivT: NT, avisos: function (k) { return AV.filter(function (a) { return a._ms.indexOf(k) >= 0; }); }}; }
+  function ayuda() {
+    var v = st.v, h;
+    if (v === "avisos") {
+      var L = filtrados(), sinU = L.filter(function (a) { return !a._d.length; }).length, as = SEL && SEL.t === "av" ? AV[SEL.i] : null, mu = LG.m ? (T.M[LG.d + "|" + LG.m] && L.some(function (a) { return a._ms.indexOf(LG.d + "|" + LG.m) >= 0; })) : null;
+      if (as) h = '<b>Aviso N° ' + esc(as.numero || "") + ' · ' + NT[Math.min(3, as._n)] + '</b> · ' + vigTxt(as) + ' — el mapa muestra solo este aviso. <a href="#" id="hTodos">Ver los ' + L.length + ' del filtro</a>' + (as._d.length ? "" : ' · <b>sin ubicación: no se puede dibujar (PDF del SENAMHI no disponible)</b>');
+      else h = '<b>' + L.length + ' aviso' + (L.length === 1 ? "" : "s") + '</b> hidrológico' + (L.length === 1 ? "" : "s") + ' en ' + esc(LUGAR.etiqueta(LG)) + ' · ' + ({vig: "vigentes hoy", 7: "últimos 7 días", 30: "últimos 30 días", todo: "todo lo disponible"})[st.p] + (mu === true ? ' — <b>el municipio figura por nombre</b> en un aviso' : mu === false ? ' — el municipio <b>no figura por nombre</b> (el aviso es del departamento)' : '') +
+        ' <span class="nota">— Relleno claro: departamento con aviso; relleno fuerte: municipio nombrado por un poblado.' + (sinU ? '</span> <b>' + sinU + ' aviso' + (sinU === 1 ? "" : "s") + ' sin ubicación</b> <span class="nota">(no se pudo leer el PDF del SENAMHI): no se dibuja' + (sinU === 1 ? "" : "n") + ' en el mapa.' : '') + '</span>';
+    } else if (v === "caudal") h = '<b>Caudal modelado</b> · ' + ({max: "máximo de los próximos 10 días", 0: "hoy", 3: "en 3 días", 7: "en 7 días"})[st.cd] + ' <span class="nota">— GloFAS (Copernicus), puntos de grandes ríos, frente al umbral alto (P90) de 1993–2022. Contorno naranja: departamento con aviso vigente.</span>';
+    else h = '<b>Lluvia acumulada ' + ({1: "24 h", 3: "72 h", 7: "7 días"})[st.ac] + '</b> · ' + (FX.estado === "ok" ? "modelo Open-Meteo" : FX.estado === "error" ? "sin conexión con el modelo" : "consultando…") + ' <span class="nota">— Puntos de ~1°, no son estaciones. Contorno naranja: departamento con aviso hidrológico vigente.</span>';
+    $("hH").innerHTML = h; var tt = $("hTodos"); if (tt) tt.onclick = function (e) { e.preventDefault(); SEL = null; dibuja(); LUGAR.ajusta(map, T, LG); };
+  }
+  function controles() {
+    var h = "", ch = function (t, k, val, cur) { return '<button type="button" data-k="' + k + '" data-v="' + val + '"' + (String(cur) === String(val) ? ' class="on"' : "") + '>' + t + '</button>'; };
+    if (st.v === "avisos") h = '<div class="cg"><b>Período</b>' + [["vig", "Vigentes hoy"], ["7", "7 días"], ["30", "30 días"], ["todo", "Todo lo disponible"]].map(function (x) { return ch(x[1], "p", x[0], st.p); }).join("") + '</div>';
+    else if (st.v === "caudal") h = '<div class="cg"><b>Día</b>' + [["max", "Máx. 10 días"], [0, "Hoy"], [3, "En 3 días"], [7, "En 7 días"]].map(function (x) { return ch(x[1], "cd", x[0], st.cd); }).join("") + '</div>';
+    else h = '<div class="cg"><b>Acumulado</b>' + [[1, "24 h"], [3, "72 h"], [7, "7 días"]].map(function (x) { return ch(x[1], "ac", x[0], st.ac); }).join("") + '</div>';
+    $("hCtl").innerHTML = h;
+    [].forEach.call($("hCtl").querySelectorAll("button[data-k]"), function (b) { b.onclick = function () { var k = b.dataset.k; st[k] = k === "p" || (k === "cd" && b.dataset.v === "max") ? b.dataset.v : +b.dataset.v; if (k === "p") SEL = null; dibuja(); }; });
+  }
+
+  /* ---------- fichas ---------- */
+  function dato(k, v, full) { return '<div class="gpar' + (full ? " full" : "") + '"><span>' + k + '</span><b>' + v + '</b></div>'; }
+  function cab(badge, col, tit, sub, tc) { return '<div class="gfi-h"><div class="gfi-m" style="--c:' + col + ';font-size:11px' + (tc ? ';color:' + tc : "") + '">' + badge + '</div><div><h3>' + tit + '</h3><div class="nota">' + sub + '</div></div></div>'; }
+  function filaAv(a) { return '<tr data-i="' + a._i + '"><td>' + M.ico("ola", 16) + '</td><td><b style="color:' + NC[Math.min(3, a._n)] + '">' + NT[Math.min(3, a._n)] + '</b> · N° ' + esc(a.numero || "—") + '<br><small class="nota">' + vigTxt(a) + ' · ' + resta(a) + (a._d.length ? ' · ' + esc(a._d.join(", ")) : ' · sin ubicación') + '</small></td></tr>'; }
+  function contexto(a) {
+    var mis = AV.filter(function (z) { return z !== a && z._d.some(function (d) { return a._d.indexOf(d) >= 0; }); }), ant = mis.filter(function (z) { return z.fin < a.inicio; }).sort(function (x, y) { return y.fin.localeCompare(x.fin); })[0], ini = AV.reduce(function (m, z) { return !m || z.inicio < m ? z.inicio : m; }, "");
+    var n30 = AV.filter(function (z) { return z.fin >= S.diaKey(Date.now() - 30 * DIA) && z._d.some(function (d) { return a._d.indexOf(d) >= 0; }); }).length;
+    return dato("Avisos desde el " + fd(ini), AV.length + ' en total') + (a._d.length ? dato("En estos departamentos, 30 días", n30 + ' aviso' + (n30 === 1 ? "" : "s")) : "") + (ant ? dato("Aviso anterior", '<a href="#" data-av="' + ant._i + '">N° ' + esc(ant.numero || "") + '</a> · ' + vigTxt(ant)) : "");
+  }
+  function fichaAviso(a) {
+    var pm = popMuns(a._ms), I = infraDe(a._ms), pr = a._ms.map(function (k) { return T.M[k]; }).filter(Boolean).sort(function (x, y) { return (y.pob || 0) - (x.pob || 0); }).slice(0, 5), col = NC[Math.min(3, a._n)];
+    var det = a._b.length ? a._b.map(function (b, j) {
+      return '<details class="mdet" style="margin-top:6px"' + (a._b.length <= 2 || j === 0 ? " open" : "") + '><summary>' + esc(b.d) + (b.ini ? ' · ' + (b.ini === b.fin ? fd(b.ini) : fd(b.ini) + ' – ' + fd(b.fin)) : '') + (b.cu ? ' · cuenca ' + esc(b.cu) : '') + '</summary><table class="mlist">' + b.it.map(function (i) { return '<tr><td style="white-space:nowrap"><b>' + esc(i.rio) + '</b></td><td>' + esc(i.txt || "—") + '<br><small class="nota">' + esc(i.tipo) + (i.ms.length ? ' · municipio' + (i.ms.length > 1 ? "s" : "") + ': ' + esc(i.ms.map(function (k) { return T.M[k].n; }).join(", ")) : '') + '</small></td></tr>'; }).join("") + '</table></details>';
+    }).join("") : (a._rios.length || a._pob.length ? '<div class="gsec">Ríos y poblados citados</div>' + (a._rios.length ? '<div class="xchips">' + a._rios.slice(0, 40).map(function (r) { return '<span>' + esc(r) + '</span>'; }).join("") + '</div>' : '') + (a._pob.length ? '<div class="xchips">' + a._pob.map(function (r) { return '<span>' + esc(r) + '</span>'; }).join("") + '</div>' : '') : '');
+    return '<div class="xc gfi">' + cab(NT[Math.min(3, a._n)], col, M.ico("ola", 20) + ' Aviso hidrológico', 'N° ' + esc(a.numero || "—") + ' · publicado ' + esc((a.publicada || "").slice(0, 16)) + ' · SENAMHI') +
+      (a._sin ? '<div class="xval" style="border-left:6px solid #d7263d;font-weight:600">El detalle de este aviso (ríos, poblados y departamentos) no se pudo leer: el PDF del SENAMHI no estaba disponible. Solo se conocen el nivel y la vigencia. Verifíquelo en el enlace oficial.</div>' : '') +
+      '<div class="gsec">Parámetros del aviso</div><div class="gpars">' + dato("Nivel", '<span style="color:' + col + '">' + NT[Math.min(3, a._n)] + '</span>') + dato("Vigencia", vigTxt(a) + ' <small>(' + ndias(a) + ' día' + (ndias(a) === 1 ? "" : "s") + ')</small>') + dato("Estado", resta(a)) + dato("Ríos citados", a._rios.length || "—") +
+      dato("Departamentos", esc(a._d.join(", ")) || "sin dato", true) + (a._cu.length ? dato("Cuencas", esc(a._cu.join(", ")), true) : "") + dato("Poblados citados", a._pob.length || "—") + dato("Municipios nombrados", a._ms.length ? a._ms.length : "ninguno") + '</div>' + det +
+      (a._ms.length ? '<div class="gsec">Población y servicios en los municipios nombrados</div><div class="gpars">' + dato("Población (INE)", pm.pob ? M.fmtP(pm.pob) + ' hab.' : "sin dato") + dato("Hospitales", I.hosp) + dato("Centros, puestos, clínicas", I.cli) + dato("Consultorios", I.cons) + dato("Bomberos y rescate", I.bom) + dato("Policía", I.pol) + '</div>' +
+        '<table class="xt2 gfi-t"><tr><td></td><td style="text-align:right"><b>Hab.</b></td></tr>' + pr.map(function (m) { return '<tr><td><a href="#" data-mun="' + esc(m.k) + '">' + esc(m.n) + '</a> <small class="nota">' + esc(m.d) + '</small></td><td style="text-align:right">' + (m.pob != null ? M.fmtP(m.pob) : "s/d") + '</td></tr>'; }).join("") + '</table>' +
+        '<p class="nota" style="margin:6px 0">Los municipios se identifican por el <b>nombre</b> de los poblados del aviso (aproximado). Se cuenta el total del municipio (INE); la zona afectada es la cercana al río. Servicios: OpenStreetMap, cobertura incompleta.</p>' : '') +
+      '<div class="gsec">Contexto</div><div class="gpars">' + contexto(a) + '</div>' +
+      (a.definicion ? '<details class="mdet" style="margin-top:8px"><summary>Qué significa este nivel (SENAMHI)</summary><p>' + esc(a.definicion) + '</p></details>' : '') +
+      (a.texto ? '<details class="mdet" style="margin-top:6px"><summary>Texto oficial del aviso</summary><p>' + esc(a.texto) + '</p></details>' : '') +
+      '<p class="nota" style="margin:8px 0 0">Es un pronóstico oficial, no una observación. El aviso no delimita la zona exacta.</p><div class="xact">' + (a.pdf ? '<a class="btn" href="' + esc(S.urlOk ? S.urlOk(a.pdf) : a.pdf) + '" target="_blank" rel="noopener">Abrir aviso del SENAMHI →</a>' : '') + '<a class="btn s" href="https://www.senamhi.gob.bo/alertas2.php" target="_blank" rel="noopener">Todos los avisos</a></div></div>';
+  }
+  function antM(k) { var R = (T.dh && T.dh.municipios && T.dh.municipios[k]) || [], o = {n: R.length, m: 0, a: 0, tipos: {}}; R.forEach(function (r) { o.m += r[3] || 0; o.a += r[5] || 0; o.tipos[r[2]] = (o.tipos[r[2]] || 0) + 1; }); return o; }
+  function fichaMun(k) {
+    var m = T.M[k], L = AV.filter(function (a) { return a._ms.indexOf(k) >= 0; }), Lf = filtrados().filter(function (a) { return a._ms.indexOf(k) >= 0; }), I = infraDe([k]), mg = M.mallaMun(k), dd = AV.filter(function (a) { return a._d.indexOf(m.d) >= 0 && vig(a) && a._ms.indexOf(k) < 0; });
+    var mx = Lf.reduce(function (a, x) { return Math.max(a, x._n); }, -1), ant = antM(k), hosp = m.est.filter(function (p) { return /hospital/i.test(p[2] || ""); }).slice(0, 3).map(function (p) { return esc(p[2]); });
+    return '<div class="xc gfi">' + cab(mx < 0 ? "Sin aviso" : NT[Math.min(3, mx)], mx < 0 ? SIN : NC[Math.min(3, mx)], esc(m.n), esc(m.d) + ' · municipio') +
+      '<div class="gsec">Avisos que nombran este municipio</div>' + (Lf.length ? '<table class="mlist">' + Lf.map(filaAv).join("") + '</table>' : '<p class="nota">' + (L.length ? 'Ningún aviso del filtro lo nombra (' + L.length + ' en todo el período: cambie el período).' : 'Ningún aviso lo nombra por el nombre de un poblado.') + (dd.length ? ' Hay ' + dd.length + ' aviso' + (dd.length === 1 ? "" : "s") + ' vigente' + (dd.length === 1 ? "" : "s") + ' en ' + esc(m.d) + ' que no lo nombra' + (dd.length === 1 ? "" : "n") + '.' : '') + '</p>') +
+      '<div class="gsec">Municipio</div><div class="gpars">' + dato("Población (INE)", m.pob != null ? A.fmt(m.pob) + ' hab.' : "sin dato") + dato("Superficie", fmt(m.km2) + " km²") + dato("Densidad media", m.pob != null && m.km2 ? fmt(m.pob / m.km2, 1) + ' hab./km²' : "—") + dato("Avisos que lo nombran (período disponible)", L.length || "ninguno", true) + '</div>' +
+      '<div class="gsec">Qué hay en el municipio</div><div class="gpars">' + dato("Hospitales", I.hosp + (hosp.length ? ' <small>' + hosp.join(", ") + '</small>' : "")) + dato("Centros, puestos, clínicas", I.cli) + dato("Consultorios", I.cons) + dato("Bomberos y rescate", I.bom) + dato("Policía", I.pol) + '</div>' +
+      '<div class="gsec">Antecedentes (DesInventar 1970–2015)</div><div class="gpars">' + dato("Registros de inundación, riada y similares", ant.n || "ninguno", true) + (ant.n ? dato("Muertos", ant.m) + dato("Afectados", A.fmt(ant.a)) : "") + '</div>' +
+      '<p class="nota" style="margin:6px 0">' + (mg ? 'El mapa muestra dónde vive la gente: celdas de ~1 km (malla WorldPop reescalada al total INE ' + esc(mg.anio) + '). ' : '') + 'Servicios: OpenStreetMap, cobertura incompleta. DesInventar tiene subregistro y no incluye eventos recientes.</p>' +
+      '<div class="xact"><a class="btn" href="municipio.html?d=' + encodeURIComponent(m.d) + '&m=' + encodeURIComponent(m.n) + '">Perfil del municipio →</a><a class="btn s" href="#hMon" id="hIrMon">Monitoreo climático ↓</a></div></div>';
+  }
+  function fichaCq(i) {
+    var p = ST[i]; if (!p) return '<div class="xc xhint">Punto no disponible.</div>'; var c = claseCq(p), r = ratioCq(p), lec = lecturaP(p), vd = vigDep(p.departamento), pd = prDep(p.departamento), k = iHoy(p);
+    return '<div class="xc gfi">' + cab(r == null ? "—" : '<span style="white-space:nowrap">' + Math.round(r * 100) + '<small>%</small></span>', NC[c], esc(p.nombre) + ' <small class="nota">' + esc(p.rio) + '</small>', 'Punto del modelo GloFAS · ' + ({max: "máximo de 10 días", 0: "hoy", 3: "en 3 días", 7: "en 7 días"})[st.cd] + ' · % del umbral P90', c === 1 ? "#10233d" : "") +
+      '<div id="hCqC" style="height:215px"></div><div class="gsec">Caudal modelado</div><div class="gpars">' + dato("Estado (próximos 10 días)", esc(p.estado), true) + dato("Hoy", A.fmt(p.caudal_m3s[k]) + ' m³/s') + dato("Máximo en 10 días", A.fmt(p.caudal_max_10d) + ' m³/s') + dato("Mediana de la fecha", A.fmt((p.p50 || [])[k]) + ' m³/s') + dato("Umbral alto (P90)", A.fmt((p.p90 || [])[k]) + ' m³/s') + '</div>' +
+      '<div class="gsec">Lectura de las fuentes</div><div class="xval" style="border-left:6px solid ' + lec.c + '">' + lec.t + '</div><p class="nota" style="margin:2px 0 4px">' + esc(lec.d) + '</p><div class="gpars">' +
+      dato("SENAMHI en " + esc(p.departamento), vd.length ? vd.length + ' aviso' + (vd.length === 1 ? "" : "s") + ' vigente' + (vd.length === 1 ? "" : "s") + ' (' + NT[Math.min(3, Math.max.apply(0, vd.map(function (a) { return a._n; })))].toLowerCase() + ')' : "ninguno vigente con ubicación legible", true) + dato("Prensa, 30 días en " + esc(p.departamento), pd.length + ' nota' + (pd.length === 1 ? "" : "s"), true) + '</div>' +
+      (vd.length ? '<table class="mlist">' + vd.map(filaAv).join("") + '</table>' : "") +
+      '<p class="nota" style="margin:8px 0 0">Línea azul: caudal modelado (continua hasta hoy; discontinua = previsión); no es caudal observado. Banda gris: entre la mediana y el umbral P90 de 1993–2022. Actualizado: ' + esc(((D.caudales || {}).actualizado || "").slice(0, 16).replace("T", " ")) + ' UTC. GloFAS no ve crecidas repentinas de ríos menores.</p></div>';
+  }
+  function serieCq(p) {
+    if (!p || !$("hCqC")) return; var tx = X.css("--mut") || "#888", ln = X.css("--line") || "#ccc", i = iHoy(p), pas = p.caudal_m3s.map(function (v, k) { return k <= i ? v : null; }), fut = p.caudal_m3s.map(function (v, k) { return k >= i ? v : null; }), ban = (p.p90 || []).map(function (v, k) { return Math.max(0, v - (p.p50 || [])[k]); });
+    X.chart("hCqC", {animation: false, grid: {left: 46, right: 10, top: 14, bottom: 24}, tooltip: {trigger: "axis", confine: true, formatter: function (ps) { var k = ps[0].dataIndex; return fd(p.fechas[k]) + (k > i ? " (previsto)" : "") + '<br>Caudal modelado: <b>' + A.fmt(p.caudal_m3s[k]) + '</b> m³/s<br>Mediana: ' + A.fmt((p.p50 || [])[k]) + ' · P90: ' + A.fmt((p.p90 || [])[k]); }},
+      xAxis: {type: "category", data: p.fechas, boundaryGap: false, axisLabel: {color: tx, fontSize: 9.5, interval: 6, formatter: function (v) { return fd(v); }}, axisLine: {lineStyle: {color: ln}}, axisTick: {show: false}}, yAxis: {type: "value", min: 0, splitNumber: 3, axisLabel: {color: tx, fontSize: 9.5, formatter: function (v) { return v >= 1000 ? (v / 1000) + " mil" : v; }}, splitLine: {lineStyle: {color: ln}}},
+      series: [{type: "line", data: p.p50 || [], stack: "b", symbol: "none", lineStyle: {opacity: 0}, silent: true}, {type: "line", data: ban, stack: "b", symbol: "none", lineStyle: {opacity: 0}, areaStyle: {color: "#8a97a8", opacity: .28}, silent: true}, {type: "line", data: p.p90 || [], symbol: "none", lineStyle: {width: 1, type: "dashed", color: "#d7263d"}, silent: true},
+        {type: "line", data: pas, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8"}, markLine: {symbol: "none", silent: true, label: {formatter: "hoy", color: tx, fontSize: 9.5}, lineStyle: {color: tx, type: "solid", width: 1}, data: [{xAxis: p.hoy}]}}, {type: "line", data: fut, symbol: "none", lineStyle: {width: 2.2, color: "#1d6fb8", type: "dashed"}}]});
+  }
+  function fichaLl(i) {
+    var p = FX.pts[i]; if (!p) return '<div class="xc xhint">Punto no disponible.</div>'; var v = acum(p, st.ac), c = claseLl(v), m = T.donde(p.lat, p.lon), av = m ? AV.filter(function (a) { return vig(a) && a._d.indexOf(m.d) >= 0; }) : [], dmx = -1, jm = -1;
+    (p.pp || []).forEach(function (x, j) { if (x != null && x > dmx) { dmx = x; jm = j; } });
+    return '<div class="xc gfi">' + cab('<span style="white-space:nowrap">' + fmt(v, 0) + '<small>mm</small></span>', c[1], esc(M.nombrePunto(p)) + (p.cap ? ' <small class="nota">capital</small>' : ""), 'Punto del modelo · lluvia acumulada ' + ({1: "24 h", 3: "72 h", 7: "7 días"})[st.ac], CLARO.test(c[1]) ? "#10233d" : "") +
+      '<div id="hLlC" style="height:200px"></div><div class="gsec">Lluvia prevista en este punto</div><div class="gpars">' + dato("24 h", fmt(acum(p, 1), 1) + ' mm') + dato("72 h", fmt(acum(p, 3), 1) + ' mm') + dato("7 días", fmt(acum(p, 7), 1) + ' mm') + dato("Día más lluvioso", jm < 0 ? "—" : fmt(dmx, 1) + ' mm (' + fd(FX.dias[jm]) + ')') + '</div>' +
+      '<div class="gsec">Aviso hidrológico vigente en ' + esc(m ? m.d : "el departamento") + '</div>' + (av.length ? '<table class="mlist">' + av.map(filaAv).join("") + '</table>' : '<p class="nota">' + (m ? 'Ninguno vigente con ubicación legible.' : 'El punto no cae dentro de un municipio.') + notaSin() + '</p>') +
+      '<p class="nota" style="margin:8px 0 0">Valor de un punto del modelo (~1°), no de una estación: puede diferir mucho en valles y montañas. La lluvia prevista no es un aviso; compárela con el SENAMHI. Más variables en <a href="meteorologica.html">Meteorológica</a>.</p></div>';
+  }
+  function serieLl(p) {
+    if (!p || !$("hLlC")) return; var tx = X.css("--mut") || "#888", d = FX.dias.map(fdl), ac = [], s = 0; (p.pp || []).forEach(function (x) { s += x || 0; ac.push(Math.round(s * 10) / 10); });
+    X.chart("hLlC", {tooltip: {trigger: "axis"}, legend: {top: 0, textStyle: {color: tx, fontSize: 11}, data: ["Lluvia diaria", "Acumulado"]}, grid: {left: 36, right: 40, top: 28, bottom: 22}, xAxis: {type: "category", data: d, axisLabel: {color: tx, fontSize: 10}}, yAxis: [{type: "value", min: 0, axisLabel: {color: tx}, splitLine: {lineStyle: {opacity: .25}}}, {type: "value", min: 0, axisLabel: {color: "#6d28d9"}, splitLine: {show: false}}],
+      series: [{name: "Lluvia diaria", type: "bar", data: p.pp, itemStyle: {color: "#4aa3f5", opacity: .85, borderRadius: [3, 3, 0, 0]}}, {name: "Acumulado", type: "line", yAxisIndex: 1, data: ac, smooth: .3, symbol: "circle", symbolSize: 5, lineStyle: {color: "#6d28d9", width: 2}, itemStyle: {color: "#6d28d9"}}]});
+  }
+  function fichaPrensa(e) {
+    return '<div class="xc gfi">' + cab(M.ico("ola", 26), COL, esc(e.titulo), esc(new Date(e.ts).toLocaleString("es-BO")) + ' · ' + esc(e.fuente || "prensa")) + '<div class="gpars">' + dato("Lugar", esc(e.lugar || (e.departamentos || []).join(", ") || "—")) + dato("Ubicación en el mapa", esc(e.metodo || "aproximada"), true) + '</div>' +
+      '<p class="nota" style="margin:8px 0 0">Hecho reportado por la prensa: no es un aviso ni está confirmado. El punto marca el lugar nombrado en la nota, no el sitio exacto.</p>' + (e.url ? '<a class="btn" href="' + esc(e.url) + '" target="_blank" rel="noopener">Abrir la nota →</a> ' : '') + (e.id && D.ev.some(function (z) { return z.id === e.id; }) ? '<a class="btn s" href="evento.html?id=' + encodeURIComponent(e.id) + '">Ficha del hecho →</a>' : '') + '</div>';
+  }
+  function hint() {
+    if (st.v !== "avisos") return '<div class="xc xhint"><h3>' + (st.v === "caudal" ? "Caudal de ríos" : "Lluvia prevista") + '</h3>' + (st.v === "caudal" ? 'Toque un punto del mapa para ver el caudal modelado frente a lo normal y la lectura de las fuentes.' : (FX.estado === "ok" ? 'Toque un punto para ver la lluvia diaria y acumulada de 7 días.' : 'La lluvia prevista se consulta al modelo Open-Meteo desde su navegador.')) + '</div>';
+    var L = filtrados(); return '<div class="xc"><h3>Avisos (' + L.length + ')</h3>' + (L.length ? '<table class="mlist">' + L.slice(0, 12).map(filaAv).join("") + '</table>' + (L.length > 12 ? '<p class="nota">Y ' + (L.length - 12) + ' más en la lista de abajo.</p>' : '') + '<p class="nota" style="margin:6px 0 0">Toque un aviso, un ícono o un municipio coloreado del mapa.</p>' : '<p class="nota">Ningún aviso en este filtro. Cambie el período.</p>') + '</div>';
+  }
+  function detalle() {
+    var el = $("hDet"); if (!el) return; var h;
+    if (!SEL) h = hint(); else if (SEL.t === "av") h = fichaAviso(AV[SEL.i]); else if (SEL.t === "mun") h = fichaMun(SEL.k); else if (SEL.t === "cq") h = fichaCq(SEL.i); else if (SEL.t === "ll") h = fichaLl(SEL.i); else h = fichaPrensa(SEL.e);
+    el.innerHTML = h;
+    [].forEach.call(el.querySelectorAll("a[data-av]"), function (a) { a.onclick = function (e) { e.preventDefault(); SEL = {t: "av", i: +a.dataset.av}; selecciona(true); }; });
+    [].forEach.call(el.querySelectorAll("a[data-mun]"), function (a) { a.onclick = function (e) { e.preventDefault(); SEL = {t: "mun", k: a.dataset.mun}; selecciona(true); }; });
+    [].forEach.call(el.querySelectorAll("tr[data-i]"), function (r) { r.onclick = function () { SEL = {t: "av", i: +r.dataset.i}; if (st.v !== "avisos") { st.v = "avisos"; vistaBtn(); } selecciona(true); }; });
+    var ir = $("hIrMon"); if (ir) ir.onclick = function (e) { e.preventDefault(); var m = SEL && T.M[SEL.k]; if (m && window.CLIMA) CLIMA.irMun(m.n + " (" + m.d + ")"); var s = $("hMon"); if (s) s.scrollIntoView({behavior: "smooth"}); };
+    if (SEL && SEL.t === "cq") serieCq(ST[SEL.i]); if (SEL && SEL.t === "ll") serieLl(FX.pts[SEL.i]);
+  }
+
+  /* ---------- datos del mapa ---------- */
+  function prensaL() { var t0 = Date.now() - 30 * DIA; return PR.filter(function (e) { return e.lat != null && e.ts >= t0 && LUGAR.ev(T, LG, e); }); }
+  function geoDep(L) {
+    var o = nivDep(L), vg = {}; AV.forEach(function (a) { if (vig(a)) a._d.forEach(function (d) { vg[d] = 1; }); });
+    return M.fc((T.D.geoDep.features || []).map(function (f) { var d = f.properties.n, v = o[d]; return {type: "Feature", geometry: f.geometry, properties: {n: d, c: v == null ? SIN : NC[Math.min(3, v)], o: st.v === "avisos" && v != null && (!LG.d || d === LG.d) ? .2 : 0, a: vg[d] ? 1 : 0}}; }));
+  }
+  function geoMun(L) {
+    var o = nivMun(L), f = Object.keys(o).map(function (k) { return {type: "Feature", geometry: T.M[k].f.geometry, properties: {k: k, c: NC[Math.min(3, o[k])], o: .66, s: SEL && SEL.t === "mun" && SEL.k === k ? 1 : 0}}; });
+    if (SEL && SEL.t === "mun" && o[SEL.k] == null && T.M[SEL.k]) f.push({type: "Feature", geometry: T.M[SEL.k].f.geometry, properties: {k: SEL.k, c: SIN, o: 0, s: 1}});
+    return M.fc(f);
+  }
+  function geoIconos(L) {
+    var g = {}; L.forEach(function (a) { a._d.forEach(function (d) { if (LG.d && d !== LG.d) return; var o = g[d] || (g[d] = {d: d, mx: 0, av: {}, x: 0, y: 0, n: 0}); o.mx = Math.max(o.mx, a._n); o.av[a._i] = 1; a._ms.forEach(function (k) { var m = T.M[k]; if (m && m.d === d && enM(k)) { var c = centro(m); o.x += c[0]; o.y += c[1]; o.n++; } }); }); });
+    return M.fc(Object.keys(g).map(function (d) { var o = g[d], c = o.n ? [o.x / o.n, o.y / o.n] : DEPC[d]; if (!c) return null; var ai = Object.keys(o.av).map(Number).sort(function (a, b) { return AV[b]._n - AV[a]._n || AV[b].fin.localeCompare(AV[a].fin); })[0]; return {type: "Feature", geometry: {type: "Point", coordinates: c}, properties: {ic: "ola", d: d, mx: o.mx, na: Object.keys(o.av).length, ai: ai}}; }).filter(Boolean));
+  }
+  function geoCq() { return M.fc(ST.map(function (p, i) { if (!enS(p)) return null; var c = claseCq(p), r = ratioCq(p); return {type: "Feature", geometry: {type: "Point", coordinates: [p.lon, p.lat]}, properties: {i: i, c: NC[c], r: 8 + Math.min(10, (r || 0) * 8), s: SEL && SEL.t === "cq" && SEL.i === i ? 1 : 0}}; }).filter(Boolean)); }
+  function geoLl() {
+    if (FX.estado !== "ok") return M.fc([]);
+    return M.fc(FX.pts.map(function (p, i) { if (!enP(p)) return null; var v = acum(p, st.ac), c = claseLl(v); return {type: "Feature", geometry: {type: "Point", coordinates: [p.lon, p.lat]}, properties: {i: i, v: v, c: c[1], s: SEL && SEL.t === "ll" && SEL.i === i ? 1 : 0}}; }).filter(Boolean));
+  }
+  function geoPrensa() { return M.fc(prensaL().map(function (e, i) { return {type: "Feature", geometry: {type: "Point", coordinates: [e.lon, e.lat]}, properties: {i: i, s: SEL && SEL.t === "pn" && SEL.e === e ? 1 : 0}}; })); }
+  function bajo(m) {
+    var osc = document.documentElement.getAttribute("data-theme") === "dark";
+    m.addSource("hd", {type: "geojson", data: geoDep([])}); m.addSource("mv", {type: "geojson", data: geoMun([])});
+    m.addLayer({id: "hd-f", type: "fill", source: "hd", paint: {"fill-color": ["get", "c"], "fill-opacity": ["get", "o"]}});
+    m.addLayer({id: "hd-o", type: "line", source: "hd", layout: {visibility: "none"}, filter: ["==", ["get", "a"], 1], paint: {"line-color": "#f26a1b", "line-width": 2, "line-dasharray": [2, 1.5]}});
+    m.addLayer({id: "mv-f", type: "fill", source: "mv", paint: {"fill-color": ["get", "c"], "fill-opacity": ["get", "o"]}});
+    m.addLayer({id: "mv-s", type: "line", source: "mv", filter: ["==", ["get", "s"], 1], paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": 3}});
+  }
+  function alto(m) {
+    var osc = document.documentElement.getAttribute("data-theme") === "dark";
+    m.addSource("ai", {type: "geojson", data: geoIconos([])}); m.addSource("cq", {type: "geojson", data: geoCq()}); m.addSource("fx", {type: "geojson", data: geoLl()}); m.addSource("pn", {type: "geojson", data: geoPrensa()});
+    m.addLayer({id: "fx-b", type: "circle", source: "fx", layout: {visibility: "none"}, paint: {"circle-radius": ["interpolate", ["exponential", 1.6], ["zoom"], 4, 16, 6, 38, 8, 110, 10, 300], "circle-color": ["get", "c"], "circle-opacity": .55, "circle-blur": .55}});
+    m.addLayer({id: "fx-c", type: "circle", source: "fx", layout: {visibility: "none"}, paint: {"circle-radius": ["case", ["==", ["get", "s"], 1], 8, 5], "circle-color": ["get", "c"], "circle-stroke-color": ["case", ["==", ["get", "s"], 1], osc ? "#fff" : "#000", "rgba(255,255,255,.85)"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 3, 1.2]}});
+    m.addLayer({id: "cq-c", type: "circle", source: "cq", layout: {visibility: "none"}, paint: {"circle-radius": ["get", "r"], "circle-color": ["get", "c"], "circle-stroke-color": ["case", ["==", ["get", "s"], 1], osc ? "#fff" : "#000", "#fff"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 4, 2.5]}});
+    m.addLayer({id: "ai", type: "symbol", source: "ai", layout: {"icon-image": ["concat", "i-", ["get", "ic"]], "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .7, 7, .95, 10, 1.25], "icon-allow-overlap": true, "icon-ignore-placement": true}});
+    m.addLayer({id: "pn-c", type: "circle", source: "pn", paint: {"circle-radius": ["case", ["==", ["get", "s"], 1], 8, 5.5], "circle-color": "#2d7fb8", "circle-stroke-color": ["case", ["==", ["get", "s"], 1], osc ? "#fff" : "#000", "#fff"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 3, 2]}});
+  }
+  function listo(m) {
+    var pop = m._pop, mun = function (e) { return T.M[e.features[0].properties.k]; }, sobre = function (e, caps) { return m.queryRenderedFeatures(e.point, {layers: caps}).length > 0; };
+    m.on("mousemove", "mv-f", function (e) { var q = mun(e); if (!q || st.v !== "avisos" || sobre(e, ["ai", "pn-c"])) return; var L = filtrados().filter(function (a) { return a._ms.indexOf(q.k) >= 0; }); m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(q.n) + ' <span style="font-weight:400">' + esc(q.d) + '</span></b>' + L.map(function (a) { return '<span style="color:' + NC[Math.min(3, a._n)] + '">●</span> N° ' + esc(a.numero || "") + ' · ' + esc(a._rios.slice(0, 3).join(", ")); }).join("<br>") + '<br>clic para ver el detalle</div>').addTo(m); });
+    m.on("mouseleave", "mv-f", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
+    m.on("click", "mv-f", function (e) { var q = mun(e); if (!q || st.v !== "avisos" || sobre(e, ["ai", "pn-c"])) return; SEL = {t: "mun", k: q.k}; selecciona(false); });
+    m.on("click", "hd-f", function (e) { if (st.v !== "avisos" || sobre(e, ["ai", "pn-c", "mv-f"])) return; var d = e.features[0].properties.n, L = filtrados().filter(function (a) { return a._d.indexOf(d) >= 0; }), a = topAv(L); if (a) { SEL = {t: "av", i: a._i}; selecciona(false); } });
+    m.on("mousemove", "ai", function (e) { var p = e.features[0].properties; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">Aviso hidrológico · ' + esc(NT[Math.min(3, +p.mx)]) + '</b>' + esc(p.d) + (+p.na > 1 ? ' · ' + p.na + ' avisos' : '') + '<br>clic para ver el aviso</div>').addTo(m); });
+    m.on("mouseleave", "ai", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
+    m.on("click", "ai", function (e) { SEL = {t: "av", i: +e.features[0].properties.ai}; selecciona(false); });
+    m.on("mousemove", "pn-c", function (e) { var q = prensaL()[e.features[0].properties.i]; if (!q) return; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(q.titulo) + '</b>' + esc(q.fuente || "") + ' · ubicación aproximada</div>').addTo(m); });
+    m.on("mouseleave", "pn-c", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
+    m.on("click", "pn-c", function (e) { var q = prensaL()[e.features[0].properties.i]; if (q) { SEL = {t: "pn", e: q}; selecciona(false); } });
+    m.on("mousemove", "cq-c", function (e) { var p = ST[e.features[0].properties.i]; if (!p) return; var r = ratioCq(p); m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.nombre) + ' · ' + esc(p.rio) + ': ' + (r == null ? "—" : Math.round(r * 100)) + ' % del P90</b>' + esc(p.estado) + '<br>clic para ver el caudal</div>').addTo(m); });
+    m.on("mouseleave", "cq-c", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
+    m.on("click", "cq-c", function (e) { SEL = {t: "cq", i: +e.features[0].properties.i}; selecciona(false); });
+    m.on("mousemove", "fx-c", function (e) { var q = FX.pts[e.features[0].properties.i]; if (!q) return; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(M.nombrePunto(q)) + ': ' + fmt(acum(q, st.ac), 1) + ' mm</b>Lluvia acumulada ' + ({1: "24 h", 3: "72 h", 7: "7 días"})[st.ac] + ' · modelo · clic para ver 7 días</div>').addTo(m); });
+    m.on("mouseleave", "fx-c", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
+    m.on("click", "fx-c", function (e) { SEL = {t: "ll", i: +e.features[0].properties.i}; selecciona(false); });
+    m.on("zoomend", etiquetas); m.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); m.on("resize", rotular);
+    LUGAR.ajusta(m, T, LG, false); capasVista(); dibuja();
+  }
+  function capasVista() {
+    if (!map || !map._ok) return; var v = st.v, mu = v === "avisos" && SEL && SEL.t === "mun";
+    M.vis(map, "hd-f", v === "avisos"); M.vis(map, "hd-o", v !== "avisos"); M.vis(map, "mv-f", v === "avisos"); M.vis(map, "ai", v === "avisos"); M.vis(map, "pn-c", v === "avisos" && st.pr); M.vis(map, "cq-c", v === "caudal"); M.vis(map, "fx-b", v === "lluvia"); M.vis(map, "fx-c", v === "lluvia");
+    var lp = $("hLp"), pn = $("hPn"); if (pn && pn.parentNode) pn.parentNode.style.display = v === "avisos" ? "" : "none";
+    ["hLp", "hLs", "hLe"].forEach(function (i) { var l = $(i) && $(i).parentNode; if (l) l.style.display = mu ? "" : "none"; });
+    M.vis(map, "ex-f", st.pob && mu); M.vis(map, "ex-l", st.pob && mu); M.vis(map, "inf-s", st.sal && mu); M.vis(map, "inf-e", st.eme && mu);
+  }
+  function rotular() {
+    var l = $("hLb"); if (!map || !l) return; if (!$("hNd").checked || st.v !== "avisos") { l.innerHTML = ""; return; }
+    var o = ""; (T.D.geoDep.features || []).forEach(function (f) { var p = map.project(A.cenPoly(f.geometry)); o += '<span style="left:' + p.x.toFixed(0) + 'px;top:' + p.y.toFixed(0) + 'px">' + esc(f.properties.n) + '</span>'; }); l.innerHTML = o;
+  }
+  function limpiaMK() { MK.forEach(function (m) { m.remove(); }); MK = []; }
+  function marca(html, cls, lon, lat, top) { var el = document.createElement("div"); el.className = cls; el.innerHTML = html; MK.push(new maplibregl.Marker({element: el, anchor: top ? "top" : "center", offset: top ? [0, 14] : [0, 0]}).setLngLat([lon, lat]).addTo(map)); }
+  function etiquetas() {
+    limpiaMK(); if (!map || !map._ok) return;
+    if (st.v === "lluvia" && FX.estado === "ok") FX.pts.forEach(function (p) { if (enP(p)) marca(fmt(acum(p, st.ac), 0), "fx-lab" + (p.cap ? " cap" : ""), p.lon, p.lat); });
+    if (st.v === "caudal") ST.forEach(function (p) { if (!enS(p)) return; var r = ratioCq(p); marca('<b>' + esc(p.nombre) + '</b><small>' + (r == null ? "—" : Math.round(r * 100) + " % del P90") + '</small>', "cq-lab", p.lon, p.lat, true); });
+    if (st.v === "avisos" && SEL && SEL.t === "mun" && map.getZoom() >= 6) { var m = T.M[SEL.k], c = centro(m); marca('<span class="gm-n">' + esc(m.n) + '</span><small>' + (m.pob != null ? M.fmtP(m.pob) + ' hab.' : 'sin dato') + '</small>', "gm-lab", c[0], c[1]); }
+  }
+  function leyenda() {
+    var g = function (t, b) { return '<div class="glg"><b>' + t + '</b><div>' + b + '</div></div>'; }, h = "", v = st.v;
+    if (v === "avisos") {
+      var mu0 = SEL && SEL.t === "mun";
+      h += g("Nivel de aviso (máximo)", '<span class="gesc">' + [1, 2, 3].map(function (i) { return '<span><i style="background:' + NC[i] + '"></i>' + NT[i] + '</span>'; }).join("") + '<span><i style="background:#7b8794;opacity:.4"></i>Sin aviso en el filtro</span></span>');
+      h += g("Capas", '<span class="gic">' + M.ico("ola", 18) + 'Aviso hidrológico (un ícono por departamento)</span><span class="gic"><i style="background:#2d7fb8"></i>Reporte de prensa (ubicación aproximada)</span><small>Relleno claro = departamento con aviso · fuerte = municipio nombrado por un poblado.</small>');
+      if (mu0) h += M.leyendaPob() + g("Infraestructura (OpenStreetMap)", ["hosp", "cli", "cons", "bom", "pol"].map(function (k) { return '<span class="gic">' + M.ico(k, 18) + ({hosp: "Hospital", cli: "Centro / puesto / clínica", cons: "Consultorio", bom: "Bomberos / rescate", pol: "Policía"})[k] + '</span>'; }).join(""));
+    } else if (v === "caudal") {
+      h += g("Caudal modelado frente al P90", '<span class="gesc">' + CQ.map(function (x) { return '<span><i style="background:' + x[1] + ';border-radius:50%"></i>' + x[0] + '</span>'; }).join("") + '</span><br><small>Tamaño del círculo = porcentaje del P90. Puntos del modelo GloFAS, no estaciones.</small>') + g("Contorno", '<span><i style="border:2px dashed #f26a1b;background:transparent;box-sizing:border-box"></i>Departamento con aviso vigente hoy</span>');
+    } else h += g("Lluvia acumulada (mm) · modelo", '<span class="gesc">' + LL.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[2] + '</span>'; }).join("") + '</span><br><small>Clases descriptivas, no niveles de aviso.</small>') + g("Contorno", '<span><i style="border:2px dashed #f26a1b;background:transparent;box-sizing:border-box"></i>Departamento con aviso hidrológico vigente hoy</span>');
+    $("hL").innerHTML = h;
+  }
+  function listaMapa() { return st.v === "avisos" && SEL && SEL.t === "av" && AV[SEL.i] ? [AV[SEL.i]] : filtrados(); }
+  function refrescaMapa() {
+    if (!map || !map._ok) return; var L = listaMapa();
+    map.getSource("hd").setData(geoDep(L)); map.getSource("mv").setData(geoMun(L)); map.getSource("ai").setData(geoIconos(L)); map.getSource("cq").setData(geoCq()); map.getSource("fx").setData(geoLl()); map.getSource("pn").setData(geoPrensa());
+    var m = st.v === "avisos" && SEL && SEL.t === "mun" ? T.M[SEL.k] : null;
+    if (m) { var c = centro(m), C = []; m.est.forEach(function (p) { C.push({d: 0, p: {lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: /hospital/i.test(p[2] || "") ? "hosp" : p[3] === "consultorio" ? "cons" : "cli", op: p[4] || "", esp: p[5] || "", dep: p[6] || "", mun: p[7] || ""}}); }); [["bom", "bom"], ["res", "res"], ["pol", "pol"]].forEach(function (z) { m[z[0]].forEach(function (p) { C.push({d: 0, p: {lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: z[1], op: "", esp: "", dep: p[4] || "", mun: p[5] || ""}}); }); });
+      M.selec(map, {mu: [{m: m, d: 0, en: true}], C: C, R: [], lat: c[1], lon: c[0]}, []); var mg = M.mallaMun(m.k); if (mg) M.pintaMalla(map, mg); }
+    else M.selec(map, null, []);
+    capasVista(); leyenda(); etiquetas(); rotular();
+  }
+  function volar() {
+    if (!map || !map._ok || !SEL) return; var b = null, ext = function (m) { b = b ? [Math.min(b[0], m.bb[0]), Math.min(b[1], m.bb[1]), Math.max(b[2], m.bb[2]), Math.max(b[3], m.bb[3])] : m.bb.slice(); };
+    if (SEL.t === "mun") ext(T.M[SEL.k]); else if (SEL.t === "av") { var a = AV[SEL.i]; if (a._ms.length) a._ms.forEach(function (k) { ext(T.M[k]); }); else a._d.forEach(function (d) { (T.DEP[d] || []).forEach(ext); }); }
+    else if (SEL.t === "cq") { var p = ST[SEL.i]; map.flyTo({center: [p.lon, p.lat], zoom: Math.max(map.getZoom(), 6.5), duration: 600}); return; } else if (SEL.t === "ll") { var q = FX.pts[SEL.i]; map.flyTo({center: [q.lon, q.lat], zoom: Math.max(map.getZoom(), 6.5), duration: 600}); return; }
+    else if (SEL.t === "pn") { map.flyTo({center: [SEL.e.lon, SEL.e.lat], zoom: Math.max(map.getZoom(), 8), duration: 600}); return; }
+    if (b) map.fitBounds([[b[0], b[1]], [b[2], b[3]]], {duration: 600, padding: 40, maxZoom: 10});
+  }
+  function selecciona(vuela) { ayuda(); refrescaMapa(); detalle(); if (vuela !== false) volar(); else if (SEL && SEL.t === "mun") volar(); }
+
+  /* ---------- gráficos ---------- */
+  function graficos() {
+    var tx = X.css("--mut") || "#888", L = AV.filter(enA), el = $("hG1");
+    var fs = DEPS.filter(function (d) { return L.some(function (a) { return a._d.indexOf(d) >= 0; }); }); if (L.some(function (a) { return !a._d.length; })) fs.push("Sin ubicar");
+    if (!L.length) { el.style.height = "60px"; $("hG1n").textContent = "Sin avisos en este lugar."; var c0 = echarts.getInstanceByDom(el); if (c0) c0.clear(); }
+    else {
+      el.style.height = (80 + fs.length * 30) + "px"; var t0 = Math.min.apply(0, L.map(function (a) { return ts0(a.inicio); })), t1 = Math.max.apply(0, L.map(function (a) { return ts1(a.fin); }), Date.now() + 3 * DIA), dat = [];
+      L.forEach(function (a) { (a._d.length ? a._d : ["Sin ubicar"]).forEach(function (d) { if (fs.indexOf(d) >= 0) dat.push({value: [fs.indexOf(d), ts0(a.inicio), ts1(a.fin), a._i], itemStyle: {color: NC[Math.min(3, a._n)]}}); }); });
+      X.chart("hG1", {animation: false, grid: {left: 96, right: 16, top: 14, bottom: 30}, tooltip: {formatter: function (p) { if (!p.value) return ""; var a = AV[p.value[3]]; return 'Aviso N° ' + esc(a.numero || "") + ' · ' + NT[Math.min(3, a._n)] + '<br>' + vigTxt(a) + '<br>' + esc(a._rios.slice(0, 5).join(", ")); }},
+        xAxis: {type: "time", min: t0, max: t1, axisLabel: {color: tx, fontSize: 10, formatter: function (v) { return fd(S.diaKey(v)); }}, splitLine: {lineStyle: {opacity: .2}}}, yAxis: {type: "category", data: fs, inverse: true, axisLabel: {color: tx, fontSize: 11.5}, axisLine: {show: false}, axisTick: {show: false}},
+        series: [{type: "custom", renderItem: function (p, api) { var ci = api.value(0), s = api.coord([api.value(1), ci]), e = api.coord([api.value(2), ci]), h = Math.min(api.size([0, 1])[1] * .6, 20); return {type: "rect", shape: {x: s[0], y: s[1] - h / 2, width: Math.max(4, e[0] - s[0]), height: h, r: 3}, style: api.style()}; }, encode: {x: [1, 2], y: 0}, data: dat},
+          {type: "line", data: [], markLine: {silent: true, symbol: "none", data: [{xAxis: Date.now(), label: {formatter: "hoy", color: tx, fontSize: 10}}], lineStyle: {type: "dashed", color: tx, width: 1.3}}}]});
+      var ch = echarts.getInstanceByDom(el); if (ch) { ch.resize(); ch.off("click"); ch.on("click", function (p) { if (p.value && p.value[3] != null) { SEL = {t: "av", i: p.value[3]}; vista("avisos", true); } }); }
+      $("hG1n").textContent = "Cada barra es un aviso (primer a último día de vigencia); el color es el nivel. Un aviso que abarca varios departamentos aparece en cada uno. Toque una barra para abrirla. Línea punteada: hoy.";
+    }
+    /* avisos por mes y nivel */
+    var m0 = L.length ? L.reduce(function (m, a) { return !m || a.inicio < m ? a.inicio : m; }, "").slice(0, 7) : HOY.slice(0, 7), meses = [], y = +m0.slice(0, 4), mo = +m0.slice(5, 7), fin = HOY.slice(0, 7);
+    while (true) { var k = y + "-" + String(mo).padStart(2, "0"); meses.push(k); if (k >= fin) break; if (++mo > 12) { mo = 1; y++; } }
+    var por = [1, 2, 3].map(function (n) { return meses.map(function (k) { return L.filter(function (a) { return a._n === n && a.inicio.slice(0, 7) === k; }).length; }); }), multi = meses[0].slice(0, 4) !== meses[meses.length - 1].slice(0, 4);
+    X.chart("hG2", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}}, legend: {top: 0, textStyle: {color: tx, fontSize: 11}}, grid: {left: 30, right: 10, top: 28, bottom: 24}, xAxis: {type: "category", data: meses.map(function (k) { return new Date(k + "-15T12:00:00").toLocaleDateString("es-BO", multi ? {month: "short", year: "2-digit"} : {month: "short"}).replace(/\./g, ""); }), axisLabel: {color: tx, fontSize: 10}}, yAxis: {type: "value", minInterval: 1, axisLabel: {color: tx}, splitLine: {lineStyle: {opacity: .25}}},
+      series: [1, 2, 3].map(function (n, i) { return {name: NT[n], type: "bar", stack: "n", data: por[i], itemStyle: {color: NC[n]}}; })});
+    $("hG2n").textContent = "Avisos emitidos por mes de inicio (desde " + fd(L.reduce(function (m, a) { return !m || a.inicio < m ? a.inicio : m; }, "")) + "); la temporada de lluvias va de noviembre a marzo. Es un registro de pocos meses: no permite hablar de frecuencia histórica.";
+    /* ríos más repetidos */
+    var cnt = {}, nom = {}; L.forEach(function (a) { a._rios.forEach(function (r) { var k = norm(r); cnt[k] = (cnt[k] || 0) + 1; nom[k] = nom[k] || r; }); });
+    var top = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a] || (nom[a] < nom[b] ? -1 : 1); }).slice(0, 10).reverse(), e3 = $("hG3");
+    if (!top.length) { var c3 = echarts.getInstanceByDom(e3); if (c3) c3.clear(); $("hG3n").textContent = "Sin ríos leídos en los avisos de este lugar."; }
+    else { X.chart("hG3", {tooltip: {trigger: "axis", axisPointer: {type: "shadow"}, formatter: function (p) { return esc(p[0].name) + ': <b>' + p[0].value + '</b> aviso' + (p[0].value === 1 ? "" : "s"); }}, grid: {left: 96, right: 20, top: 8, bottom: 22}, xAxis: {type: "value", minInterval: 1, axisLabel: {color: tx}, splitLine: {lineStyle: {opacity: .25}}}, yAxis: {type: "category", data: top.map(function (k) { return nom[k]; }), axisLabel: {color: tx, fontSize: 11}, axisTick: {show: false}},
+        series: [{type: "bar", data: top.map(function (k) { return cnt[k]; }), itemStyle: {color: COL, borderRadius: [0, 4, 4, 0]}, label: {show: true, position: "right", color: tx, fontSize: 11}}]}); $("hG3n").textContent = "Número de avisos en que figura cada río (según el texto oficial; los avisos sin PDF legible no cuentan). Los ríos se nombran como en el aviso, a veces por tramo o afluente."; }
+    /* caudal por punto y día */
+    var e4 = $("hG4"), P = ST.filter(enS).slice().sort(function (a, b) { return (b.ratio_p90_max_10d || 0) - (a.ratio_p90_max_10d || 0); });
+    if (!P.length) { var c4 = echarts.getInstanceByDom(e4); if (c4) c4.clear(); $("hG4n").textContent = "Sin puntos del modelo en este lugar."; return; }
+    e4.style.height = (70 + P.length * 30) + "px"; var i0 = iHoy(P[0]), dias = P[0].fechas.slice(i0 - 4, i0 + 11), dat4 = [], col4 = ["#cfe8dc", "#f5e6a1", "#f6b26b", "#d7263d"];
+    P.forEach(function (p, y) { var j0 = iHoy(p); dias.forEach(function (d, x) { var j = j0 - 4 + x, q = p.caudal_m3s[j], b = p.p90 && p.p90[j]; if (q == null || !b) return; var r = q / b, c = r >= 1.5 ? 3 : r >= 1 ? 2 : r >= .75 ? 1 : 0; dat4.push({value: [x, y, Math.round(r * 100)], itemStyle: {color: col4[c]}, label: {show: true, formatter: Math.round(r * 100), color: c === 3 ? "#fff" : "#10233d", fontSize: 10.5, fontWeight: 700}}); }); });
+    X.chart("hG4", {tooltip: {formatter: function (p) { return esc(P[p.value[1]].nombre) + ' · ' + esc(P[p.value[1]].rio) + '<br>' + fd(dias[p.value[0]]) + (dias[p.value[0]] === P[0].hoy ? " (hoy)" : dias[p.value[0]] > P[0].hoy ? " (previsto)" : "") + ': <b>' + p.value[2] + ' % del P90</b>'; }}, grid: {left: 196, right: 8, top: 26, bottom: 4}, xAxis: {type: "category", position: "top", data: dias.map(function (d) { return d === P[0].hoy ? "hoy" : fd(d); }), axisLabel: {color: tx, fontSize: 10, interval: 1}, axisTick: {show: false}}, yAxis: {type: "category", data: P.map(function (p) { return p.nombre + " · " + p.rio.replace(/^R[ií]o /, ""); }), inverse: true, axisLabel: {color: tx, fontSize: 11}, axisTick: {show: false}}, series: [{type: "heatmap", data: dat4, itemStyle: {borderColor: "rgba(0,0,0,.25)", borderWidth: 2, borderRadius: 3}}]});
+    var ch4 = echarts.getInstanceByDom(e4); if (ch4) { ch4.resize(); ch4.off("click"); ch4.on("click", function (p) { if (p.value) { SEL = {t: "cq", i: ST.indexOf(P[p.value[1]])}; vista("caudal", true); } }); }
+    $("hG4n").textContent = "Caudal diario modelado como porcentaje del umbral alto (P90) de la misma fecha, 4 días atrás y 10 por delante. Verde < 75 %, amarillo 75–100 %, naranja ≥ 100 %, rojo ≥ 150 %. Toque una celda para abrir el punto. GloFAS no es un aviso.";
+  }
+  function tablas() {
+    var L = filtrados();
+    $("hTa").innerHTML = L.length ? '<table class="mlist"><tr><th></th><th>N°</th><th>Nivel</th><th>Vigencia</th><th>Departamentos</th><th>Ríos</th><th>Muni.</th></tr>' + L.map(function (a) { return '<tr data-i="' + a._i + '"><td>' + M.ico("ola", 16) + '</td><td>' + esc(a.numero || "—") + '</td><td><b style="color:' + NC[Math.min(3, a._n)] + '">' + NT[Math.min(3, a._n)] + '</b></td><td style="white-space:nowrap">' + vigTxt(a) + '</td><td>' + (esc(a._d.join(", ")) || '<small class="nota">sin detalle</small>') + '</td><td>' + (a._rios.length ? esc(a._rios.slice(0, 6).join(", ")) + (a._rios.length > 6 ? " +" + (a._rios.length - 6) : "") : "—") + '</td><td>' + a._ms.length + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Sin avisos con este filtro.</p>';
+    [].forEach.call($("hTa").querySelectorAll("tr[data-i]"), function (r) { r.onclick = function () { SEL = {t: "av", i: +r.dataset.i}; if (st.v !== "avisos") vista("avisos", true); else selecciona(true); window.scrollTo({top: $("hMap").getBoundingClientRect().top + scrollY - 150, behavior: "smooth"}); }; });
+    var P = PR.filter(function (e) { return e.ts >= Date.now() - 30 * DIA && LUGAR.ev(T, LG, e); }).sort(function (a, b) { return b.ts - a.ts; });
+    $("hTp").innerHTML = '<p class="nota">Notas de prensa de los últimos 30 días con lugar identificado. La posición es aproximada.</p>' + (P.length ? '<table class="mlist"><tr><th>Fecha</th><th>Titular</th><th>Lugar</th><th>Fuente</th></tr>' + P.map(function (e) { return '<tr><td style="white-space:nowrap">' + esc(new Date(e.ts).toLocaleDateString("es-BO", {day: "2-digit", month: "short"})) + '</td><td>' + (e.url ? '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.titulo) + '</a>' : esc(e.titulo)) + '</td><td>' + esc(e.lugar || "") + '</td><td>' + esc(e.fuente || "") + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Sin notas.</p>');
+    var h = (T.dh && T.dh.departamentos) || {}, tp = ["Inundación", "Riada", "Aluvión", "Desbordamiento", "Flujo Lodo"], fil = Object.keys(h).sort().filter(function (d) { return !LG.d || d === LG.d; }).map(function (d) { var n = 0, mu = 0, af = 0; tp.forEach(function (t) { var r = h[d][t]; if (r) { n += r[0]; mu += r[1]; af += r[2]; } }); return '<tr><td>' + esc(d) + '</td><td align="right">' + A.fmt(n) + '</td><td align="right">' + A.fmt(mu) + '</td><td align="right">' + A.fmt(af) + '</td></tr>'; });
+    $("hTh").innerHTML = '<p class="nota"><b>Limitación:</b> DesInventar (UNDRR) cubre 1970–2015, con subregistro, y no incluye eventos recientes. Suma inundación, riada, aluvión, desbordamiento y flujo de lodo. Solo es contexto.</p><table class="mlist"><tr><th>Departamento</th><th style="text-align:right">Registros</th><th style="text-align:right">Muertos</th><th style="text-align:right">Afectados</th></tr>' + fil.join("") + '</table>';
+  }
+  function vistaBtn() { [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.classList.toggle("on", b.dataset.v === st.v); }); }
+  function vista(v, vuela) {
+    if (!vuela) SEL = null; st.v = v; vistaBtn(); if (v === "lluvia" && FX.estado === "idle") M.pron(pronListo);
+    dibuja(); if (vuela) volar(); else if (map && map._ok) LUGAR.ajusta(map, T, LG);
+  }
+  function dibuja() { ayuda(); controles(); pulso(); refrescaMapa(); detalle(); graficos(); tablas(); avisoPron(); }
   function iniciar() {
-    TERR.cargar().then(function (t) { T = t; A = TERR.api; A.estilos(); X.header("modulo.html"); document.title = "Hidrológica — Sala de Situación Bolivia"; preparar(T.D); $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "hidrológica", T.D);
-      (T.D.geoDep.features || []).forEach(function (f) { DEPC[f.properties.n] = A.cenPoly(f.geometry); });
-      LUGAR.init(T, $("lgBox"), LG, function () { selS = null; dibuja(); LUGAR.ajusta(map, T, LG); }); $("hP").onchange = function () { st.p = this.value; dibuja(); }; $("hPr").onchange = function () { st.pr = this.checked; dibuja(); }; $("hN").onchange = rotular;
+    TERR.cargar().then(function (t) {
+      T = t; A = TERR.api; D = T.D; A.estilos(); X.header("modulo.html"); document.title = "Hidrológica — Sala de Situación Bolivia"; M.iniciar(T); M.malla(function () { if (map && map._ok) { if (SEL && SEL.t === "mun") selecciona(false); else leyenda(); } }); preparar();
+      $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "hidrológica", D);
+      LUGAR.init(T, $("lgBox"), LG, function () { SEL = LG.m ? {t: "mun", k: LG.d + "|" + LG.m} : null; if (SEL && st.v !== "avisos") { st.v = "avisos"; vistaBtn(); } dibuja(); LUGAR.ajusta(map, T, LG); if (LG.m && window.CLIMA) CLIMA.irMun(LG.m + " (" + LG.d + ")"); });
+      [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.onclick = function () { vista(b.dataset.v, false); }; });
+      vistaBtn();
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });
-      crearMapa(); dibuja(); });
+      $("hNd").onchange = rotular; $("hPn").onchange = function () { st.pr = this.checked; capasVista(); }; $("hLp").onchange = function () { st.pob = this.checked; capasVista(); }; $("hLs").onchange = function () { st.sal = this.checked; capasVista(); }; $("hLe").onchange = function () { st.eme = this.checked; capasVista(); };
+      map = M.crear({id: "hMap", av: "hAv", tool: "#hTool", bajo: bajo, alto: alto, listo: listo, refInfra: "del municipio", evitar: ["ai", "pn-c", "fx-c", "cq-c"]});
+      pulso(); if (window.CLIMA) CLIMA.iniciar("hidro", cfgMon());
+      M.pron(pronListo);
+    });
   }
-  return {iniciar: iniciar};
+  return {iniciar: iniciar, _depura: function () { return {map: map, st: st, SEL: SEL, FX: FX, AV: AV, ST: ST, PR: PR}; }};
 })();

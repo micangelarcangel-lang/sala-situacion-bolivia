@@ -131,10 +131,44 @@ var MAPAZ = (function () {
       '<div class="glg"><b>Infraestructura (OpenStreetMap)</b><div>' + ["hosp", "cli", "cons", "bom", "pol"].map(function (k) { return '<span class="gic">' + ico(k, 18) + ICO[k].n + '</span>'; }).join("") + '</div></div>';
   }
 
+  /* ---------- pronóstico de modelo (Open-Meteo, consultado desde el navegador): lo comparten Meteorológica e Hidrológica ----------
+     ~270 puntos (9 capitales + una rejilla de 1° dentro de Bolivia), 7 días: tx, tn (°C), pp (mm), ra (ráfaga km/h). Caché de 1 h en el navegador. */
+  var CAPS = [["La Paz", -16.50, -68.15, "La Paz"], ["Santa Cruz", -17.78, -63.18, "Santa Cruz"], ["Cochabamba", -17.39, -66.16, "Cochabamba"], ["Oruro", -17.97, -67.11, "Oruro"], ["Potosí", -19.58, -65.75, "Potosí"], ["Sucre", -19.04, -65.26, "Chuquisaca"], ["Tarija", -21.53, -64.73, "Tarija"], ["Trinidad", -14.83, -64.90, "Beni"], ["Cobija", -11.02, -68.77, "Pando"]];
+  var PRON = {estado: "idle", pts: [], dias: [], msg: "", t: 0}, PRONL = [];
+  function rejilla() {
+    var P = [], la, lo; T.lista.forEach(function (m) { cen(m); });
+    for (la = -22.5; la <= -9.5; la += 1) for (lo = -69.5; lo <= -57.5; lo += 1) {
+      var ok = !!T.donde(la, lo); if (!ok) for (var i = 0; i < T.lista.length; i++) { var c = T.lista[i]._c; if (Math.abs(c[1] - la) < 1 && Math.abs(c[0] - lo) < 1 && hav(la, lo, c[1], c[0]) <= 70) { ok = true; break; } }
+      if (ok && !CAPS.some(function (c) { return hav(la, lo, c[1], c[2]) < 70; })) P.push([la, lo]);
+    }
+    return P;
+  }
+  function puntosPron() { var P = CAPS.map(function (c) { return {n: c[0], lat: c[1], lon: c[2], dep: c[3], cap: 1}; }); rejilla().forEach(function (g) { P.push({n: null, lat: g[0], lon: g[1], cap: 0}); }); return P; }
+  function nombrePunto(p) { if (p.n) return p.n; var m = T.donde(p.lat, p.lon); if (!m) { var b = null, bd = 1e9; T.lista.forEach(function (z) { var c = cen(z), d = hav(p.lat, p.lon, c[1], c[0]); if (d < bd) { bd = d; b = z; } }); return b ? "cerca de " + b.n : "punto del modelo"; } return m.n; }
+  function pron(fn, forzar) {
+    if (fn) PRONL.push(fn);
+    var fin = function () { PRONL.splice(0).forEach(function (f) { try { f(PRON); } catch (e) { console.error(e); } }); };
+    if (PRON.estado === "cargando") return;
+    if (PRON.estado === "ok" && !forzar) { fin(); return; }
+    PRON.estado = "cargando"; PRON.msg = "";
+    var KEY = "sala_pron_v1", ahora = Date.now();
+    try { var c = !forzar && JSON.parse(localStorage.getItem(KEY) || "null"); if (c && ahora - c.t < 60 * 6e4 && c.pts && c.pts.length) { PRON.pts = c.pts; PRON.dias = c.dias; PRON.t = c.t; PRON.estado = "ok"; fin(); return; } } catch (e) {}
+    var P = puntosPron(), u = "https://api.open-meteo.com/v1/forecast?latitude=" + P.map(function (g) { return g.lat; }).join(",") + "&longitude=" + P.map(function (g) { return g.lon; }).join(",") + "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max&timezone=America%2FLa_Paz&forecast_days=7";
+    fetch(u).then(function (r) { if (!r.ok) throw new Error(r.status === 429 ? "el servicio limitó las consultas (error 429); reintente en unos minutos" : "el servicio respondió " + r.status); return r.json(); }).then(function (j) {
+      var arr = Array.isArray(j) ? j : [j], rd = function (v) { return (v || []).map(function (x) { return x == null ? null : Math.round(x * 10) / 10; }); };
+      P.forEach(function (p, i) { var d = (arr[i] || {}).daily || {}; p.tx = rd(d.temperature_2m_max); p.tn = rd(d.temperature_2m_min); p.pp = rd(d.precipitation_sum); p.ra = rd(d.wind_gusts_10m_max); });
+      PRON.pts = P.filter(function (p) { return p.tx.length; }); PRON.dias = ((arr[0] || {}).daily || {}).time || []; PRON.t = Date.now(); PRON.estado = PRON.pts.length ? "ok" : "error"; if (!PRON.pts.length) PRON.msg = "respuesta vacía";
+      try { if (PRON.pts.length) localStorage.setItem(KEY, JSON.stringify({t: PRON.t, pts: PRON.pts, dias: PRON.dias})); } catch (e) {}
+      fin();
+    }).catch(function (e) { PRON.estado = "error"; PRON.msg = (e && e.message && !/failed to fetch|networkerror|load failed/i.test(e.message)) ? e.message : "sin conexión con Open-Meteo (red o bloqueo del navegador)"; fin(); });
+  }
+
   /* ---------- iconos: cada clase tiene forma y color propios (los peligros son círculos o triángulos; los servicios, formas con glifo) ---------- */
   function estrella(r1, r2) { var p = [], k, a; for (k = 0; k < 10; k++) { a = (-90 + 36 * k) * Math.PI / 180; p.push((24 + (k % 2 ? r2 : r1) * Math.cos(a)).toFixed(1) + " " + (24 + (k % 2 ? r2 : r1) * Math.sin(a)).toFixed(1)); } return "M" + p.join("L") + "Z"; }
   var RR = "M14 6H34Q42 6 42 14V34Q42 42 34 42H14Q6 42 6 34V14Q6 6 14 6Z";
   var HEX = "M24 3L43 13.5V34.5L24 45L5 34.5V13.5Z";
+  /* banda ondulada de 4 unidades de alto, centrada en y0 (glifo de agua) */
+  function onda(y0) { var a = [], b = [], i, x, y; for (i = 0; i <= 16; i++) { x = 10 + i * 1.75; y = y0 + 2.4 * Math.sin((x - 10) / 28 * Math.PI * 3); a.push(x.toFixed(1) + " " + y.toFixed(1)); b.unshift(x.toFixed(1) + " " + (y + 4).toFixed(1)); } return "M" + a.concat(b).join("L") + "Z"; }
   var ICO = {
     hosp: {f: "#1b8a4e", d: RR, g: "M15 13h5v8h8v-8h5v22h-5v-9h-8v9h-5Z", gc: "#fff", n: "Hospital"},
     cli: {f: "#2fae6c", d: RR, g: "M21 12h6v9h9v6h-9v9h-6v-9h-9v-6h9Z", gc: "#fff", n: "Centro / puesto / clínica"},
@@ -150,7 +184,8 @@ var MAPAZ = (function () {
     gra: {f: "#475569", d: HEX, g: "M17 14.5a4.5 4.5 0 1 1 0 9a4.5 4.5 0 1 1 0-9ZM31 14.5a4.5 4.5 0 1 1 0 9a4.5 4.5 0 1 1 0-9ZM24 25.5a4.5 4.5 0 1 1 0 9a4.5 4.5 0 1 1 0-9Z", gc: "#fff", n: "Granizada"},
     nev: {f: "#38bdf8", d: HEX, g: "M9.5 22.1L38.5 22.1L38.5 25.9L9.5 25.9ZM18.4 10.5L32.9 35.6L29.6 37.5L15.1 12.4ZM32.9 12.4L18.4 37.5L15.1 35.6L29.6 10.5Z", gc: "#0c4a6e", n: "Nevada"},
     otr: {f: "#64748b", d: HEX, g: "M21.2 12h5.6l-1 17h-3.6ZM24 31.4a3 3 0 1 1 0 6a3 3 0 1 1 0-6Z", gc: "#fff", n: "Otro fenómeno"},
-    fle: {f: "#0f8b8d", d: "M24 3L41 28H29.5V45H18.5V28H7Z", g: "", gc: "#fff", n: "Dirección del viento"}
+    fle: {f: "#0f8b8d", d: "M24 3L41 28H29.5V45H18.5V28H7Z", g: "", gc: "#fff", n: "Dirección del viento"},
+    ola: {f: "#0369a1", d: HEX, g: onda(13) + onda(22) + onda(31), gc: "#fff", n: "Aviso hidrológico"}
   };
   function icono(map, k) {
     var I = ICO[k], c = document.createElement("canvas"); c.width = c.height = 48; var g = c.getContext("2d"), p = new Path2D(I.d);
@@ -226,5 +261,5 @@ var MAPAZ = (function () {
     map.getSource("inf").setData(fc(E ? E.C.map(function (x) { return {type: "Feature", geometry: {type: "Point", coordinates: [x.p.lon, x.p.lat]}, properties: {k: x.p.k, n: x.p.n, d: +x.d.toFixed(1), op: x.p.op, m: x.p.mun, e: x.p.esp}}; }) : []));
     pintaMalla(map, E);
   }
-  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc};
+  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, estiloBase: estiloBase, baseVis: baseVis, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc, pron: pron, PRON: PRON, CAPS: CAPS, nombrePunto: nombrePunto};
 })();

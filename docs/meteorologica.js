@@ -4,7 +4,7 @@
 var MET = (function () {
   var S = SALA, X = S2, M = MAPAZ, A, T, D, map = null, LG = {d: "", m: ""}, MK = [], rq = 0, SEL = null;
   var st = {v: "avisos", p: "vig", f: "", pp: 7, vr: "tx", dia: 0, nd: true, pob: true, sal: true, eme: true};
-  var AV = [], PR = [], FC = [], FX = {estado: "idle", pts: [], dias: [], msg: "", t: 0};
+  var AV = [], PR = [], FC = [], FX = M.PRON;
   var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now());
   /* fenómenos: orden de clasificación = orden de la lista (granizada y nevada antes que lluvia y frío) */
   var FEN = [
@@ -16,7 +16,6 @@ var MET = (function () {
     {k: "nev", n: "Nevada", col: "#38bdf8", re: /nevada|nieve/i}
   ], OTR = {k: "otr", n: "Otros avisos", col: "#64748b"};
   var ORD = ["gra", "nev", "vie", "fri", "cal", "llu"];
-  var CAPS = [["La Paz", -16.50, -68.15, "La Paz"], ["Santa Cruz", -17.78, -63.18, "Santa Cruz"], ["Cochabamba", -17.39, -66.16, "Cochabamba"], ["Oruro", -17.97, -67.11, "Oruro"], ["Potosí", -19.58, -65.75, "Potosí"], ["Sucre", -19.04, -65.26, "Chuquisaca"], ["Tarija", -21.53, -64.73, "Tarija"], ["Trinidad", -14.83, -64.90, "Beni"], ["Cobija", -11.02, -68.77, "Pando"]];
   /* variables del pronóstico: clases descriptivas (no son niveles de aviso) */
   var VR = {
     tx: {n: "Temp. máxima", u: "°C", k: "tx", cl: [[20, "#4575b4", "< 20"], [25, "#91bfdb", "20–25"], [30, "#fee090", "25–30"], [35, "#fc8d59", "30–35"], [40, "#d73027", "35–40"], [999, "#7f0000", "≥ 40"]]},
@@ -94,29 +93,7 @@ var MET = (function () {
   }
 
   /* ---------- pronóstico de modelo (Open-Meteo, desde el navegador) ---------- */
-  function rejilla() {
-    var P = [], la, lo; T.lista.forEach(function (m) { centro(m); });
-    for (la = -22.5; la <= -9.5; la += 1) for (lo = -69.5; lo <= -57.5; lo += 1) {
-      var ok = !!T.donde(la, lo); if (!ok) for (var i = 0; i < T.lista.length; i++) { var c = T.lista[i]._c; if (Math.abs(c[1] - la) < 1 && Math.abs(c[0] - lo) < 1 && M.hav(la, lo, c[1], c[0]) <= 70) { ok = true; break; } }
-      if (ok && !CAPS.some(function (c) { return M.hav(la, lo, c[1], c[2]) < 70; })) P.push([la, lo]);
-    }
-    return P;
-  }
-  function puntosBase() { var P = CAPS.map(function (c) { return {n: c[0], lat: c[1], lon: c[2], dep: c[3], cap: 1}; }); rejilla().forEach(function (g) { P.push({n: null, lat: g[0], lon: g[1], cap: 0}); }); return P; }
-  function nombrePunto(p) { if (p.n) return p.n; var m = T.donde(p.lat, p.lon); if (!m) { var b = null, bd = 1e9; T.lista.forEach(function (z) { var c = centro(z), d = M.hav(p.lat, p.lon, c[1], c[0]); if (d < bd) { bd = d; b = z; } }); return b ? "cerca de " + b.n : "punto del modelo"; } return m.n; }
-  function cargarPron(forzar) {
-    FX.estado = "cargando"; FX.msg = ""; if (st.v === "pron") dibuja();
-    var KEY = "sala_pron_v1", ahora = Date.now();
-    try { var c = !forzar && JSON.parse(localStorage.getItem(KEY) || "null"); if (c && ahora - c.t < 60 * 6e4 && c.pts && c.pts.length) { FX.pts = c.pts; FX.dias = c.dias; FX.t = c.t; FX.estado = "ok"; pronListo(); return; } } catch (e) {}
-    var P = puntosBase(), u = "https://api.open-meteo.com/v1/forecast?latitude=" + P.map(function (g) { return g.lat; }).join(",") + "&longitude=" + P.map(function (g) { return g.lon; }).join(",") + "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_gusts_10m_max&timezone=America%2FLa_Paz&forecast_days=7";
-    fetch(u).then(function (r) { if (!r.ok) throw new Error(r.status === 429 ? "el servicio limitó las consultas (error 429); reintente en unos minutos" : "el servicio respondió " + r.status); return r.json(); }).then(function (j) {
-      var arr = Array.isArray(j) ? j : [j], rd = function (v) { return (v || []).map(function (x) { return x == null ? null : Math.round(x * 10) / 10; }); };
-      P.forEach(function (p, i) { var d = (arr[i] || {}).daily || {}; p.tx = rd(d.temperature_2m_max); p.tn = rd(d.temperature_2m_min); p.pp = rd(d.precipitation_sum); p.ra = rd(d.wind_gusts_10m_max); });
-      FX.pts = P.filter(function (p) { return p.tx.length; }); FX.dias = ((arr[0] || {}).daily || {}).time || []; FX.t = Date.now(); FX.estado = FX.pts.length ? "ok" : "error"; if (!FX.pts.length) FX.msg = "respuesta vacía";
-      try { localStorage.setItem(KEY, JSON.stringify({t: FX.t, pts: FX.pts, dias: FX.dias})); } catch (e) {}
-      pronListo();
-    }).catch(function (e) { FX.estado = "error"; FX.msg = (e && e.message) || "sin conexión"; pronListo(); });
-  }
+  function cargarPron(forzar) { M.pron(pronListo, forzar); if (st.v === "pron") dibuja(); }
   function pronListo() { if (st.dia >= FX.dias.length) st.dia = 0; avisoPron(); graficos(); if (st.v === "pron") dibuja(); }
   function vPunto(p, vr, d) { var a = p[VR[vr].k]; return a && a[d] != null ? a[d] : null; }
   function clasePron(vr, v) { if (v == null) return null; var c = VR[vr].cl; for (var i = 0; i < c.length; i++) if (v <= c[i][0]) return c[i]; return c[c.length - 1]; }
@@ -226,7 +203,7 @@ var MET = (function () {
     var p = FX.pts[i]; if (!p) return '<div class="xc xhint">Punto no disponible.</div>'; var vr = st.vr, v = vPunto(p, vr, st.dia), c = clasePron(vr, v), m = T.donde(p.lat, p.lon), av = AV.filter(function (a) { return vig(a) && m && a._ms.indexOf(m.k) >= 0; });
     var mx = function (k, f) { var a = p[k] || [], b = -1e9, j = -1; a.forEach(function (x, n) { if (x != null && (f ? x > b : -x > b)) { b = f ? x : -x; j = n; } }); return j < 0 ? "—" : fmt(f ? b : -b, 1) + " " + (k === "tn" || k === "tx" ? "°C" : k === "pp" ? "mm" : "km/h") + " (" + fd(FX.dias[j]) + ")"; };
     var tot = (p.pp || []).reduce(function (a, x) { return a + (x || 0); }, 0);
-    return '<div class="xc gfi">' + cab(v == null ? "—" : fmt(v, 0) + '<small> ' + VR[vr].u + '</small>', c ? c[1] : SIN, esc(nombrePunto(p)) + (p.cap ? ' <small class="nota">capital</small>' : ""), 'Punto del modelo · ' + (st.dia === 0 ? "hoy" : fd(FX.dias[st.dia])) + ' · ' + esc(VR[vr].n), c && CLARO.test(c[1]) ? "#10233d" : "") +
+    return '<div class="xc gfi">' + cab(v == null ? "—" : fmt(v, 0) + '<small> ' + VR[vr].u + '</small>', c ? c[1] : SIN, esc(M.nombrePunto(p)) + (p.cap ? ' <small class="nota">capital</small>' : ""), 'Punto del modelo · ' + (st.dia === 0 ? "hoy" : fd(FX.dias[st.dia])) + ' · ' + esc(VR[vr].n), c && CLARO.test(c[1]) ? "#10233d" : "") +
       '<div id="mFxC" style="height:200px"></div><div class="gsec">Próximos 7 días en este punto</div><div class="gpars">' + dato("Temp. máxima más alta", mx("tx", 1)) + dato("Temp. mínima más baja", mx("tn", 0)) + dato("Lluvia en 7 días", fmt(tot, 1) + ' mm') + dato("Día más lluvioso", mx("pp", 1)) + dato("Ráfaga más fuerte", mx("ra", 1), true) + '</div>' +
       '<div class="gsec">Aviso oficial en el municipio</div>' + (av.length ? '<table class="mlist">' + av.map(function (a) { return '<tr data-i="' + a._i + '"><td>' + M.ico(a._k, 16) + '</td><td><b style="color:' + NC[Math.min(3, a._n)] + '">' + NT[Math.min(3, a._n)] + '</b> · ' + esc(a._f) + '<br><small class="nota">' + esc(parTxt(a)) + ' · ' + vigTxt(a) + '</small></td></tr>'; }).join("") + '</table>' : '<p class="nota">' + (m ? 'Sin aviso meteorológico vigente en ' + esc(m.n) + '.' : 'El punto no cae dentro de un municipio.') + '</p>') +
       '<p class="nota" style="margin:8px 0 0">Valor de un punto de modelo (~1°), no de una estación: puede diferir mucho en valles y montañas. Compárelo siempre con SENAMHI. Las clases de color son descriptivas, no niveles de aviso.</p></div>';
@@ -308,7 +285,7 @@ var MET = (function () {
     m.on("mousemove", "pn-i", function (e) { var q = prensaL()[e.features[0].properties.i]; if (!q) return; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(q.titulo) + '</b>' + esc(q.fuente || "") + ' · ubicación aproximada</div>').addTo(m); });
     m.on("mouseleave", "pn-i", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
     m.on("click", "pn-i", function (e) { var q = prensaL()[e.features[0].properties.i]; if (q) { SEL = {t: "pn", e: q}; selecciona(false); } });
-    m.on("mousemove", "fx-c", function (e) { var q = FX.pts[e.features[0].properties.i]; if (!q) return; var v = vPunto(q, st.vr, st.dia); m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(nombrePunto(q)) + ': ' + fmt(v, 1) + ' ' + VR[st.vr].u + '</b>' + esc(VR[st.vr].n) + ' · modelo · clic para ver 7 días</div>').addTo(m); });
+    m.on("mousemove", "fx-c", function (e) { var q = FX.pts[e.features[0].properties.i]; if (!q) return; var v = vPunto(q, st.vr, st.dia); m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(M.nombrePunto(q)) + ': ' + fmt(v, 1) + ' ' + VR[st.vr].u + '</b>' + esc(VR[st.vr].n) + ' · modelo · clic para ver 7 días</div>').addTo(m); });
     m.on("mouseleave", "fx-c", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
     m.on("click", "fx-c", function (e) { SEL = {t: "fx", i: e.features[0].properties.i}; selecciona(false); });
     m.on("zoomend", etiquetas); m.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); m.on("resize", rotular);
