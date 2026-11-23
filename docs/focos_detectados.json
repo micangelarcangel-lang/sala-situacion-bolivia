@@ -906,9 +906,9 @@
    "San Matías (Santa Cruz)": 30
   }
  },
- "actualizado": "2026-11-22T20:49:19.713691Z",
+ "actualizado": "2026-11-23T01:30:37.645969Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1408,
- "slack_dia": "2026-11-22"
+ "detecciones_fuera_de_limites": 1136,
+ "slack_dia": "2026-11-23"
 }
