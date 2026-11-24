@@ -76,7 +76,7 @@ var GEO = (function () {
   }
   function geoInf() {
     var C = sel && EX ? EX.C : selD && DX ? DX.C : [];
-    return fc(C.map(function (x) { return {type: "Feature", geometry: {type: "Point", coordinates: [x.p.lon, x.p.lat]}, properties: {k: x.p.k, n: x.p.n, d: +x.d.toFixed(1), op: x.p.op, m: x.p.mun, e: x.p.esp}}; }));
+    return C.map(MAPAZ.infoFeat);
   }
   function limpiaMK() { MK.forEach(function (m) { m.remove(); }); MK = []; }
   function marca(html, cls, lon, lat, anchor) { var el = document.createElement("div"); el.className = cls; el.innerHTML = html; MK.push(new maplibregl.Marker({element: el, anchor: anchor || "center"}).setLngLat([lon, lat]).addTo(map)); }
@@ -100,40 +100,27 @@ var GEO = (function () {
     $("gL").innerHTML = h;
   }
   function iconos() { MAPAZ.iconos(map); }
-  function pongaBase(id) {
-    baseAct = id; MAPAZ.baseVis(map, id);
-    [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z.dataset.b === (MAPAZ.ALIAS[id] || id)); }); $("gAv").hidden = id === "none" || bOk[id] || !bErr[id] ? true : $("gAv").hidden;
-  }
-  function falloBase(id) {
-    if (id !== baseAct || bOk[id]) return; bErr[id] = (bErr[id] || 0) + 1; if (bErr[id] < 4) return;
-    var sig = MAPAZ.SIG[id];
-    if (sig && !bErr[sig]) { pongaBase(sig); return; }
-    $("gAv").hidden = false; $("gAv").innerHTML = 'No se pudo cargar el mapa base (sin conexión con el servidor de mapas o bloqueo de la red). <b>Los municipios, sismos e infraestructura se muestran igual.</b> <button class="xlink" id="gAvR">Reintentar</button>';
-    $("gAvR").onclick = function () { bErr = {}; bOk = {}; $("gAv").hidden = true; pongaBase("calles"); };
-  }
   function crearMapa() {
     var osc = document.documentElement.getAttribute("data-theme") === "dark";
     map = new maplibregl.Map({container: "gMap", style: MAPAZ.estiloBase(osc), bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
     map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"});
-    map.on("error", function (e) { if (e && e.sourceId && e.sourceId.indexOf("b-") === 0) falloBase(e.sourceId.slice(2)); else if (e && e.error) console.warn("GEO-MAP " + e.error.message); });
-    map.on("data", function (e) { if (e.sourceId && e.sourceId.indexOf("b-") === 0 && e.tile) { var id = e.sourceId.slice(2); bOk[id] = 1; if (id === baseAct) $("gAv").hidden = true; } });
+    MAPAZ.baseControl(map, {av: "gAv", tool: ".xtool", msg: "Los municipios, sismos e infraestructura se muestran igual."});
     map.on("load", function () {
       iconos();
       map.addSource("dep", {type: "geojson", data: fc(T.D.geoDep.features)}); map.addSource("mun", {type: "geojson", data: fc(((T.D.geoMun || {}).features) || [])});
-      map.addSource("ex", {type: "geojson", data: geoExp()}); map.addSource("an", {type: "geojson", data: geoAn()}); map.addSource("inf", {type: "geojson", data: geoInf()}); map.addSource("sis", {type: "geojson", data: geoSism([])}); map.addSource("pr", {type: "geojson", data: geoPrensa()});
+      map.addSource("ex", {type: "geojson", data: geoExp()}); map.addSource("an", {type: "geojson", data: geoAn()}); map.addSource("sis", {type: "geojson", data: geoSism([])}); map.addSource("pr", {type: "geojson", data: geoPrensa()});
       map.addLayer({id: "d-f", type: "fill", source: "dep", paint: {"fill-color": "#ffffff", "fill-opacity": osc ? .05 : .03}});
       LUGAR.capa(map);
-      map.addLayer({id: "ex-f", type: "fill", source: "ex", paint: {"fill-color": ["case", ["<", ["get", "pob"], 0], "#9aa3b2", ["step", ["get", "pob"], "#c9b8ff", 1000, "#a68cff", 5000, "#8461f0", 20000, "#6338d6", 100000, "#3f1fa3"]], "fill-opacity": .5}});
+      map.addLayer({id: "ex-f", type: "fill", source: "ex", paint: {"fill-color": ["case", ["<", ["get", "pob"], 0], "#9aa3b2", ["step", ["get", "pob"], "#c9b8ff", 1000, "#a68cff", 5000, "#8461f0", 20000, "#6338d6", 100000, "#3f1fa3"]], "fill-opacity": .14}});
       MAPAZ.capaMalla(map, ["sis", "pr"]);
       map.addLayer({id: "ex-l", type: "line", source: "ex", paint: {"line-color": osc ? "#ffffff" : "#25165c", "line-width": 1.1, "line-opacity": .75}});
       map.addLayer({id: "m-l", type: "line", source: "mun", minzoom: 6, paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": .5, "line-opacity": .22}});
       map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": osc ? "#e6efff" : "#10233d", "line-width": 1.3, "line-opacity": .8}});
+      MAPAZ.capasPob(map, osc);
       map.addLayer({id: "an-f", type: "fill", source: "an", paint: {"fill-color": ["case", ["==", ["get", "u"], 1], "#f5a623", sel ? "#f26a1b" : "#7b4a2b"], "fill-opacity": ["case", ["==", ["get", "u"], 1], .2, ["match", ["get", "r"], 25, .13, 50, .1, 100, .07, .05]]}});
       map.addLayer({id: "an-l", type: "line", source: "an", paint: {"line-color": ["case", ["==", ["get", "u"], 1], "#f5a623", "#f26a1b"], "line-width": 1.6, "line-dasharray": [3, 2]}});
-      var ik = function (a, z) { return ["interpolate", ["linear"], ["zoom"], 6, a, 12, z]; }, ikm = function (h, c, o, h2, c2, o2) { return ["interpolate", ["linear"], ["zoom"], 6, ["match", ["get", "k"], "hosp", h, "cli", c, o], 12, ["match", ["get", "k"], "hosp", h2, "cli", c2, o2]]; };
-      map.addLayer({id: "inf-s", type: "symbol", source: "inf", filter: ["in", ["get", "k"], ["literal", ["hosp", "cli", "cons"]]], layout: {"icon-image": ["match", ["get", "k"], "hosp", "i-hosp", "cli", "i-cli", "i-cons"], "icon-size": ikm(.9, .75, .6, 1.5, 1.25, 1.0), "icon-allow-overlap": true, "icon-ignore-placement": true}});
-      map.addLayer({id: "inf-e", type: "symbol", source: "inf", filter: ["in", ["get", "k"], ["literal", ["bom", "res", "pol"]]], layout: {"icon-image": ["match", ["get", "k"], "pol", "i-pol", "i-bom"], "icon-size": ik(.8, 1.3), "icon-allow-overlap": true, "icon-ignore-placement": true}});
+      MAPAZ.capasInfra(map, {ref: function () { return sel ? "del epicentro" : "del punto"; }});
       map.addLayer({id: "pr-h", type: "circle", source: "pr", filter: ["==", ["get", "s"], 1], paint: {"circle-radius": 14, "circle-color": "#f5a623", "circle-opacity": .35, "circle-stroke-color": "#f5a623", "circle-stroke-width": 2}});
       map.addLayer({id: "pr", type: "symbol", source: "pr", layout: {"icon-image": "i-der", "icon-size": ["interpolate", ["linear"], ["zoom"], 5, .8, 10, 1.25], "icon-allow-overlap": true, "icon-ignore-placement": true}});
       map.addLayer({id: "sis", type: "circle", source: "sis", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 3.5, 3, 6, 4, 10, 5, 16, 6, 24], "circle-color": ["get", "c"], "circle-opacity": .8, "circle-stroke-color": ["case", ["==", ["get", "s"], 1], osc ? "#ffffff" : "#000000", osc ? "rgba(255,255,255,.75)" : "#fff"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 3.2, 1]}});
@@ -143,23 +130,18 @@ var GEO = (function () {
       map.on("mousemove", "pr", function (e) { var p = e.features[0].properties; map.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.t) + '</b>' + esc(p.f) + ' · ' + esc(p.u) + ' · clic para ver la ficha</div>').addTo(map); });
       map.on("mouseleave", "pr", function () { pop.remove(); map.getCanvas().style.cursor = ""; });
       map.on("click", "pr", function (e) { var id = e.features[0].properties.id; selD = P.mm.filter(function (z) { return z.id === id; })[0] || null; if (selD) { sel = null; seleccionaD(); } });
-      ["inf-s", "inf-e"].forEach(function (L) {
-        map.on("mousemove", L, function (e) { var p = e.features[0].properties; map.getCanvas().style.cursor = "help"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.n) + '</b>' + esc(INFN[p.k]) + (p.e && p.e !== "general" ? ' · ' + esc(p.e) : '') + (p.op ? ' · ' + esc(p.op) : '') + '<br>a ' + fmt(+p.d, 1) + ' km ' + (sel ? 'del epicentro' : 'del punto') + (p.m ? ' · ' + esc(p.m) : '') + '<br><i>OpenStreetMap: cobertura incompleta</i></div>').addTo(map); });
-        map.on("mouseleave", L, function () { pop.remove(); map.getCanvas().style.cursor = ""; });
-      });
       map.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); map.on("resize", rotular);
       map.on("zoom", function () { $("gMap").classList.toggle("gz-lo", map.getZoom() < 6.3); }); map.on("zoomend", etiquetas);
       map._ok = 1; LUGAR.ajusta(map, T, LG, false); capas(); dibuja();
     });
-    [].forEach.call(document.querySelectorAll(".xtool button"), function (b) { b.onclick = function () { if (b.dataset.b === "none") { MAPAZ.baseVis(map, "none"); [].forEach.call(document.querySelectorAll(".xtool button"), function (z) { z.classList.toggle("on", z === b); }); baseAct = "none"; $("gAv").hidden = true; } else { bErr[b.dataset.b] = 0; pongaBase(b.dataset.b); } }; });
   }
-  function vis(id, on) { if (map && map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none"); if (id === "ex-f") MAPAZ.vis(map, "pg-f", on); }
+  function vis(id, on) { MAPAZ.vis(map, id, on); }
   function capas() { if (!map || !map._ok) return; vis("ex-f", st.pob); vis("ex-l", st.pob); vis("inf-s", st.sal); vis("inf-e", st.eme); etiquetas(); }
   function fuente() { return sel ? "q" : selD ? "d" : ""; }
   function refrescaMapa() {
     if (!map || !map._ok) return;
-    map.getSource("ex").setData(geoExp()); map.getSource("an").setData(geoAn()); map.getSource("inf").setData(geoInf()); map.getSource("sis").setData(geoSism(filtrado())); map.getSource("pr").setData(geoPrensa());
-    MAPAZ.pintaMalla(map, sel ? EX : selD ? DX : null);
+    map.getSource("ex").setData(geoExp()); map.getSource("an").setData(geoAn()); MAPAZ.infData(map, geoInf()); map.getSource("sis").setData(geoSism(filtrado())); map.getSource("pr").setData(geoPrensa());
+    MAPAZ.pintaMalla(map, sel ? EX : selD ? DX : null); MAPAZ.pobData(map, MAPAZ.burbujasExpo(sel ? EX : selD ? DX : null));
     map.setPaintProperty("an-f", "fill-color", ["case", ["==", ["get", "u"], 1], "#f5a623", sel ? "#f26a1b" : "#7b4a2b"]);
     leyenda(); etiquetas(); rotular();
   }

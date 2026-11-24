@@ -131,6 +131,9 @@ var S2 = (function () {
       if (r.left + w > W - 12) { if (r.right - w >= 12) { p.style.left = "auto"; p.style.right = "0"; p.style.transformOrigin = "top right"; } else p.style.left = (12 - r.left) + "px"; }
     }
     function abre(g) { cierra(g); ajusta(g); g.classList.add("open"); var b = g.querySelector("button"); b && b.setAttribute("aria-expanded", "true"); }
+    /* los paneles cerrados también deben quedar dentro de la ventana (si no, aparece una barra de desplazamiento horizontal) */
+    var reajusta = function () { grupos.forEach(function (g) { if (!g.classList.contains("open")) ajusta(g); }); };
+    reajusta(); window.addEventListener("load", reajusta); window.addEventListener("resize", reajusta);
     grupos.forEach(function (g) {
       var b = g.querySelector("button");
       b.addEventListener("click", function (e) { e.stopPropagation(); g.classList.contains("open") ? cierra() : abre(g); });

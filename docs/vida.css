@@ -134,3 +134,4 @@ select option{background:#0c1626;color:#e8eef7}:root[data-theme=light] select op
 :root[data-theme=light] body .tnav{background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.3))!important}
 :root[data-theme=light] body .foot{color:#2a3d57}
 :root[data-theme=light] .cmd .hp,:root[data-theme=light] .cmd .terr{background:linear-gradient(155deg,rgba(255,255,255,.8),rgba(255,255,255,.5))!important}
+html{overflow-x:clip}
