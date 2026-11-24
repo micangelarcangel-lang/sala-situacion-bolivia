@@ -1,0 +1,42 @@
+name: Red hidrográfica (ríos, lagos y cuencas)
+
+on:
+  schedule:
+    - cron: "30 12 3 1 *"     # una vez al año (3 de enero): la red cambia muy poco
+  workflow_dispatch:          # botón manual (la primera vez hay que lanzarlo a mano)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hidro-red
+  cancel-in-progress: false
+
+jobs:
+  hidro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install shapely pyshp
+      - name: Construir ríos, lagos y cuencas (cada producto es independiente; si falla uno, no toca el archivo anterior)
+        run: python hidro_red.py
+      - name: Guardar resultado
+        run: |
+          git config user.name "sala-bot"
+          git config user.email "sala-bot@users.noreply.github.com"
+          git add docs/hidro_rios.json docs/hidro_lagos.json docs/hidro_cuencas.json
+          if git diff --staged --quiet; then echo "Sin cambios que guardar"; exit 0; fi
+          git commit -m "Red hidrográfica (OSM, Natural Earth, HydroBASINS)"
+          for intento in 1 2 3 4 5; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "Intento $intento fallido; se reintenta en $((intento * 5)) s"
+            git rebase --abort 2>/dev/null || true
+            sleep $((intento * 5))
+          done
+          echo "::error::No se pudo guardar la red hidrográfica tras 5 intentos"
+          exit 1
