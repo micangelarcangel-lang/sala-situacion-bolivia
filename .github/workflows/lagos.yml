@@ -1,0 +1,54 @@
+name: Lagos (nivel y extensión)
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "sondeo = solo imprime qué fuentes responden; completo = construye docs/lagos_serie.json"
+        default: "completo"
+  schedule:
+    - cron: "20 11 * * 1"      # semanal (lunes 07:20 Bolivia): la extensión se mide con imágenes que llegan cada ~5 días
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lagos
+  cancel-in-progress: false
+
+jobs:
+  lagos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install numpy rasterio
+      - name: Sondeo de fuentes
+        if: ${{ github.event.inputs.modo == 'sondeo' }}
+        run: python lagos_descubrir.py
+      - name: Pruebas (sin internet)
+        if: ${{ github.event.inputs.modo != 'sondeo' }}
+        run: python -m unittest tests.test_lagos -v
+      - name: Construir series (si falla una fuente, se conserva lo anterior de ese lago)
+        if: ${{ github.event.inputs.modo != 'sondeo' }}
+        run: python lagos_serie.py
+      - name: Guardar resultado
+        if: ${{ github.event.inputs.modo != 'sondeo' }}
+        run: |
+          git config user.name "sala-bot"
+          git config user.email "sala-bot@users.noreply.github.com"
+          git add docs/lagos_serie.json
+          if git diff --staged --quiet; then echo "Sin cambios que guardar"; exit 0; fi
+          git commit -m "Lagos: series de nivel y extensión"
+          for intento in 1 2 3 4 5; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "Intento $intento fallido; se reintenta en $((intento * 5)) s"
+            git rebase --abort 2>/dev/null || true
+            sleep $((intento * 5))
+          done
+          echo "::error::No se pudieron guardar las series de lagos tras 5 intentos"
+          exit 1
