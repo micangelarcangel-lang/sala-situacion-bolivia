@@ -54,6 +54,15 @@
  "internacional": [
   {
    "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Influenza A(H5N1) - United States of America",
+   "fecha": "2026-11-24",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON629",
+   "resumen": "Between 16 October and 4 November 2026, the United States of America, through its International Health Regulations (IHR) National Focal Point, notified WHO of three laboratory-confirmed human infections with influenza A(H5) virus in Washington State. These included one fatal case, the first reported death following exposure to infected dairy cattle or a related contaminated environment. All three cases were adults who worked on dairy cattle farms in Yakima County, Washington State, where the hig",
+   "slug": "2026-DON629",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Circulating vaccine-derived poliovirus type 1 – Syrian Arab Republic",
    "fecha": "2026-11-23",
    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON628",
@@ -365,7 +374,8 @@
   "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON628"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON628",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON629"
  ],
- "actualizado": "2026-11-24T05:54:34.150016Z"
+ "actualizado": "2026-11-24T17:17:45.041792Z"
 }
