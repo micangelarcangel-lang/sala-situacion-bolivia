@@ -54,6 +54,15 @@
  "internacional": [
   {
    "fuente": "OMS (Disease Outbreak News)",
+   "titulo": "Circulating vaccine-derived poliovirus type 1 – Syrian Arab Republic",
+   "fecha": "2026-11-23",
+   "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON628",
+   "resumen": "In October 2026, a cluster of four cases of acute flaccid paralysis (AFP) was identified in Al-Mayadin District, Deir Ez Zor Governorate, Syrian Arab Republic. As of 13 November 2026, three confirmed cases of circulating vaccine-derived poliovirus type 1 (cVDPV1) have been reported. Vaccine-derived poliovirus type 1 (VDPV1) was also detected in three contacts who did not present with AFP and are therefore not included in the reported paralytic poliomyelitis case count. Between 9 and 20 November ",
+   "slug": "2026-DON628",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Ebola disease caused by Bundibugyo virus- Democratic Republic of the Congo, Kenya and Nigeria",
    "fecha": "2026-11-20",
    "url": "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630",
@@ -355,7 +364,8 @@
   "https://www.paho.org/es/documentos/alerta-epidemiologica-recoleccion-consumo-hongos-silvestres-region-americas-17-noviembre",
   "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-estacional-otros-virus-respiratorios-inicio-temporada-0",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630",
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON628"
  ],
- "actualizado": "2026-11-23T21:57:58.917970Z"
+ "actualizado": "2026-11-24T05:54:34.150016Z"
 }
