@@ -62,6 +62,22 @@
    "menciona_bolivia": false
   },
   {
+   "fuente": "OPS/OMS",
+   "titulo": "Alerta epidemiologica mpox region americas 24 noviembre 2026",
+   "fecha": "2026-11-24",
+   "url": "https://www.paho.org/es/documentos/alerta-epidemiologica-mpox-region-americas-24-noviembre-2026",
+   "slug": "alerta-epidemiologica-mpox-region-americas-24-noviembre-2026",
+   "menciona_bolivia": false
+  },
+  {
+   "fuente": "OPS/OMS",
+   "titulo": "Alerta epidemiologica influenza aviar ah5n1 region americas 24 noviembre 2026",
+   "fecha": "2026-11-24",
+   "url": "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-aviar-ah5n1-region-americas-24-noviembre-2026",
+   "slug": "alerta-epidemiologica-influenza-aviar-ah5n1-region-americas-24-noviembre-2026",
+   "menciona_bolivia": false
+  },
+  {
    "fuente": "OMS (Disease Outbreak News)",
    "titulo": "Circulating vaccine-derived poliovirus type 1 – Syrian Arab Republic",
    "fecha": "2026-11-23",
@@ -375,7 +391,9 @@
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON627",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON630",
   "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON628",
-  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON629"
+  "https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON629",
+  "https://www.paho.org/es/documentos/alerta-epidemiologica-mpox-region-americas-24-noviembre-2026",
+  "https://www.paho.org/es/documentos/alerta-epidemiologica-influenza-aviar-ah5n1-region-americas-24-noviembre-2026"
  ],
- "actualizado": "2026-11-25T01:31:56.311887Z"
+ "actualizado": "2026-11-25T11:01:33.517211Z"
 }

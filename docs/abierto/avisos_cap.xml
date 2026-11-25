@@ -2,6 +2,32 @@
 <!-- Reproducción en CAP 1.2 de los avisos vigentes de SENAMHI; la fuente oficial es senamhi.gob.bo. Municipios por intersección de polígonos (aproximado). Severidad según el color del aviso: amarilla = Moderate, naranja = Severe, roja = Extreme (convención de la sala, no de SENAMHI). -->
 <alerts xmlns:cap="urn:oasis:names:tc:emergency:cap:1.2">
   <alert>
+    <identifier>senamhi-98-26</identifier>
+    <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
+    <sent>2026-11-25T04:23:04-04:00</sent>
+    <status>Actual</status>
+    <msgType>Alert</msgType>
+    <source>SENAMHI Bolivia</source>
+    <scope>Public</scope>
+    <info>
+      <language>es-BO</language>
+      <category>Met</category>
+      <event>Descenso Brusco de Temperaturas</event>
+      <urgency>Expected</urgency>
+      <severity>Severe</severity>
+      <certainty>Likely</certainty>
+      <effective>2026-11-25T00:00:00-04:00</effective>
+      <expires>2026-11-26T23:59:59-04:00</expires>
+      <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
+      <headline>AVISO METEOROLÓGICO N° 98/26 — Descenso Brusco de Temperaturas</headline>
+      <description>SE PRONOSTICA DESCENSOS BRUSCOS DE TEMPERATURA ENTRE 6 °C Y 12 °C POR DEBAJO DE LOS VALORES NORMALES DE CADA REGIÓN AFECTADA. A OCURRIR ENTRE EL DÍA MIÉRCOLES 25 HASTA EL DÍA JUEVES 26 DE NOVIEMBRE, AFECTANDO A:</description>
+      <web>https://sena.senamhi.gob.bo/public/forecast-public-reports/655</web>
+      <area>
+        <areaDesc>Charagua (Santa Cruz), Villa Montes (Tarija), Yapacaní (Santa Cruz), Macharetí (Chuquisaca), Entre Ríos (Tarija), Cabezas (Santa Cruz), Santa Rosa (Santa Cruz), Yacuiba (Tarija), Villa Vaca Guzmán (Chuquisaca), Comarapa (Santa Cruz), Vallegrande (Santa Cruz), San Pedro (Santa Cruz), Caraparí (Tarija), Gutiérrez (Santa Cruz), Buena Vista (Santa Cruz), Tarija (Tarija), Samaipata (Santa Cruz), Boyuibe (Santa Cruz), San Juan (Santa Cruz), Warnes (Santa Cruz), Huacaya (Chuquisaca), Santa Cruz de la Sierra (Santa Cruz), San Carlos (Santa Cruz), Lagunillas (Santa Cruz), Postrervalle (Santa Cruz), Portachuelo (Santa Cruz), Camiri (Santa Cruz), Pampa Grande (Santa Cruz), Okinawa Uno (Santa Cruz), La Guardia (Santa Cruz), El Torno (Santa Cruz), Porongo (Santa Cruz), Cuevo (Santa Cruz), Mairana (Santa Cruz), Fernández Alonso (Santa Cruz), Uriondo (Tarija), Moromoro (Santa Cruz), Pucará (Santa Cruz), Cotoca (Santa Cruz), General Saavedra (Santa Cruz), Saipina (Santa Cruz), Mineros (Santa Cruz), Tr</areaDesc>
+      </area>
+    </info>
+  </alert>
+  <alert>
     <identifier>senamhi-50-2026</identifier>
     <sender>sala-situacion-bolivia@users.noreply.github.com</sender>
     <sent>2026-11-20T23:35:41-04:00</sent>

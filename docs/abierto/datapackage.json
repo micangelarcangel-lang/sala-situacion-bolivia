@@ -4,7 +4,7 @@
  "title": "Sala de Situación Bolivia — datos abiertos",
  "description": "Hechos geolocalizados, avisos vigentes en formato CAP e índice de riesgo municipal diario. Información preliminar de fuentes abiertas; el índice es relativo entre municipios y está por validar con el CCES.",
  "homepage": "https://micangelarcangel-lang.github.io/sala-situacion-bolivia/",
- "created": "2026-11-24T21:41:00-04:00",
+ "created": "2026-11-25T07:13:54-04:00",
  "licenses": [],
  "notes_licencia": "Licencia por definir por el titular del proyecto; cada fuente original conserva su propia licencia y condiciones de uso.",
  "resources": [
@@ -13,14 +13,14 @@
    "path": "eventos.geojson",
    "format": "geojson",
    "mediatype": "application/geo+json",
-   "description": "1466 hechos con ubicación (RFC 7946)."
+   "description": "1500 hechos con ubicación (RFC 7946)."
   },
   {
    "name": "avisos-cap",
    "path": "avisos_cap.xml",
    "format": "xml",
    "mediatype": "application/xml",
-   "description": "2 aviso(s) vigente(s) de SENAMHI en CAP 1.2 (OASIS)."
+   "description": "3 aviso(s) vigente(s) de SENAMHI en CAP 1.2 (OASIS)."
   },
   {
    "name": "riesgo-municipal",
