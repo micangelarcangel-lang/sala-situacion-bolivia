@@ -342,10 +342,10 @@
    "Oruro": 1
   },
   "2026-11-25": {
-   "Santa Cruz": 239,
-   "Beni": 304,
-   "La Paz": 5,
-   "Pando": 7
+   "Santa Cruz": 298,
+   "Beni": 444,
+   "La Paz": 20,
+   "Pando": 10
   }
  },
  "municipios": {
@@ -968,26 +968,26 @@
    "El Carmen Rivero Tórrez (Santa Cruz)": 31
   },
   "2026-11-25": {
-   "Magdalena (Beni)": 100,
-   "Exaltación (Beni)": 86,
-   "San Matías (Santa Cruz)": 46,
+   "Magdalena (Beni)": 156,
+   "Exaltación (Beni)": 106,
+   "San Matías (Santa Cruz)": 66,
+   "San Ignacio (Santa Cruz)": 57,
    "San José (Santa Cruz)": 46,
-   "San Rafael (Santa Cruz)": 34,
+   "San Rafael (Santa Cruz)": 35,
    "Concepción (Santa Cruz)": 30,
    "San Miguel (Santa Cruz)": 28,
-   "San Ignacio (Santa Cruz)": 22,
+   "Loreto (Beni)": 24,
+   "San Ignacio (Beni)": 21,
    "Puerto Siles (Beni)": 19,
-   "San Andrés (Beni)": 16,
+   "San Andrés (Beni)": 17,
+   "Santa Rosa (Beni)": 15,
    "San Joaquín (Beni)": 15,
-   "San Ramón (Beni)": 13,
-   "Baures (Beni)": 12,
-   "Santa Rosa (Beni)": 12,
-   "Ascención de Guarayos (Santa Cruz)": 11
+   "San Javier (Beni)": 15
   }
  },
- "actualizado": "2026-11-25T11:01:54.891212Z",
+ "actualizado": "2026-11-25T20:27:40.641484Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1252,
+ "detecciones_fuera_de_limites": 1278,
  "slack_dia": "2026-11-25"
 }
