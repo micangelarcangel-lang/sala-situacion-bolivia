@@ -3,7 +3,7 @@
    Mapa y fichas comparten el código de MAPAZ (mapa base, íconos, población). Los avisos cubren pocas semanas: no permiten estimar frecuencia. */
 var MET = (function () {
   var S = SALA, X = S2, M = MAPAZ, A, T, D, map = null, LG = {d: "", m: ""}, MK = [], rq = 0, SEL = null;
-  var st = {v: "avisos", p: "vig", f: "", pp: 7, vr: "tx", dia: 0, nd: true, pob: true, sal: true, eme: true};
+  var st = {v: "avisos", p: "vig", f: "", pp: 7, vr: "tx", dia: 0, nd: false, pob: false, sal: false, eme: false};
   var AV = [], PR = [], FC = [], FX = M.PRON;
   var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now());
   /* fenómenos: orden de clasificación = orden de la lista (granizada y nevada antes que lluvia y frío) */
@@ -136,7 +136,7 @@ var MET = (function () {
       '<div class="xq"><div class="xs1" id="lgBox"></div></div>' +
       '<div class="cvw"><b>Ver en el mapa</b><button type="button" data-v="avisos">' + X.ic("shield") + 'Avisos</button><button type="button" data-v="pron">' + X.ic("sun") + 'Pronóstico 7 días</button><button type="button" data-v="prensa">' + X.ic("doc") + 'Prensa</button></div>' +
       '<div class="cvc" id="mCtl"></div><div class="xhelp" id="mH"></div>' +
-      '<div class="xg"><div class="xmw"><div class="xtool" id="mTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button><span class="xsp"></span><label><input type="checkbox" id="mNd" checked> Departamentos</label><label><input type="checkbox" id="mLp" checked> Población</label><label><input type="checkbox" id="mLs" checked> Salud</label><label><input type="checkbox" id="mLe" checked> Bomberos y policía</label></div>' +
+      '<div class="xg"><div class="xmw"><div class="xtool" id="mTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button><span class="xsp"></span><span class="xtl">Añadir al mapa</span><label><input type="checkbox" id="mNd"> Nombres de departamentos</label><label><input type="checkbox" id="mLp"> Población</label><label><input type="checkbox" id="mLs"> Hospitales y centros de salud</label><label><input type="checkbox" id="mLe"> Bomberos y policía</label></div>' +
       '<div style="position:relative"><div class="xmap" id="mMap"></div><div class="xav" id="mAv" style="top:14px" hidden></div><div class="xav" id="mAq" style="top:14px" hidden></div><div class="xlab" id="mLb" style="top:0;bottom:0;height:auto;min-height:0"></div></div><div class="xleg" id="mL"></div></div>' +
       '<div class="xside"><div id="mDet"></div></div></div><div id="eviP"></div>' +
       '<div class="card" style="margin-top:12px"><h3>Cronología de avisos por fenómeno</h3><div id="mG1" style="height:230px"></div><p class="nota" id="mG1n"></p></div>' +

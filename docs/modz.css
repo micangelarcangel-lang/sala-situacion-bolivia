@@ -85,3 +85,9 @@
 /* mapa v2: leyenda de burbujas de población y grupos de infraestructura */
 .gbub{margin-top:4px;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:6px}
 .gbub i{display:inline-block;width:13px;height:13px;border-radius:50%;background:rgba(139,92,246,.34);border:1.5px solid #8b5cf6;flex:none}
+/* mapas: sin rótulos fijos; los datos aparecen al pasar el cursor por el elemento */
+.gr-lab,.gm-lab,.cl-lab,.fx-lab,.cq-lab{display:none!important}
+/* leyenda de la superficie de población */
+.gpop{display:block;height:10px;border-radius:6px;min-width:190px;border:1px solid rgba(255,255,255,.18)}
+.gpopt{display:flex;justify-content:space-between;font-size:11px;opacity:.85;margin:2px 0 4px;font-style:normal}.gpopt i{font-style:normal}
+.xtool .xtl+label{margin-left:2px}

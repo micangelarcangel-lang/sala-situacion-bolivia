@@ -3,7 +3,7 @@
    Límites: los avisos no traen polígonos ni municipios (se ubican por el nombre del poblado); no hay capa de ríos; GloFAS no ve crecidas repentinas de ríos menores. */
 var HID = (function () {
   var S = SALA, X = S2, M = MAPAZ, A, T, D, map = null, LG = {d: "", m: ""}, MK = [], rq = 0, SEL = null;
-  var st = {v: "avisos", p: "vig", cd: "max", ac: 3, pr: true, pob: true, sal: true, eme: true};
+  var st = {v: "avisos", p: "vig", cd: "max", ac: 3, pr: true, pob: false, sal: false, eme: false};
   var AV = [], ST = [], PR = [], FX = M.PRON, IDX = {}, DEPC = {};
   var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now()), COL = "#0369a1";
   var DEPS = ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Pando", "Oruro", "Potosí", "Chuquisaca", "Tarija"];
@@ -182,7 +182,7 @@ var HID = (function () {
       '<div class="xq"><div class="xs1" id="lgBox"></div></div>' +
       '<div class="cvw"><b>Ver en el mapa</b><button type="button" data-v="avisos">' + X.ic("shield") + 'Avisos</button><button type="button" data-v="caudal">' + X.ic("wave") + 'Caudal de ríos</button><button type="button" data-v="lluvia">' + X.ic("water") + 'Lluvia 7 días</button></div>' +
       '<div class="cvc" id="hCtl"></div><div class="xhelp" id="hH"></div>' +
-      '<div class="xg"><div class="xmw"><div class="xtool" id="hTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button><span class="xsp"></span><label><input type="checkbox" id="hNd" checked> Departamentos</label><label><input type="checkbox" id="hPn" checked> Prensa</label><label><input type="checkbox" id="hLp" checked> Población</label><label><input type="checkbox" id="hLs" checked> Salud</label><label><input type="checkbox" id="hLe" checked> Bomberos y policía</label></div>' +
+      '<div class="xg"><div class="xmw"><div class="xtool" id="hTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button><span class="xsp"></span><span class="xtl">Añadir al mapa</span><label><input type="checkbox" id="hNd"> Nombres de departamentos</label><label><input type="checkbox" id="hPn" checked> Prensa</label><label><input type="checkbox" id="hLp"> Población</label><label><input type="checkbox" id="hLs"> Hospitales y centros de salud</label><label><input type="checkbox" id="hLe"> Bomberos y policía</label></div>' +
       '<div style="position:relative"><div class="xmap" id="hMap"></div><div class="xav" id="hAv" style="top:14px" hidden></div><div class="xav" id="hAq" style="top:14px" hidden></div><div class="xlab" id="hLb" style="top:0;bottom:0;height:auto;min-height:0"></div></div><div class="xleg" id="hL"></div></div>' +
       '<div class="xside"><div id="hDet"></div></div></div><div id="eviP"></div>' +
       '<div class="card" style="margin-top:12px"><h3>Cronología de avisos por departamento</h3><div id="hG1" style="height:230px"></div><p class="nota" id="hG1n"></p></div>' +

@@ -1,6 +1,6 @@
 /* Módulo Geológica: sismos (mapa de epicentros por magnitud y profundidad), exposición por radio, derrumbes/deslizamientos de prensa y antecedentes. */
 var GEO = (function () {
-  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], st = {p: 30, m: 0, pr: true, pob: true, sal: true, eme: true}, sel = null, selD = null, map = null, DEPC = {}, rq = 0, MK = [], baseAct = "calles", bErr = {}, bOk = {};
+  var LG = {d: "", m: ""}, S = SALA, X = S2, A, T, Q = [], P = [], st = {p: 30, m: 0, pr: true, pob: false, sal: false, eme: false}, sel = null, selD = null, map = null, DEPC = {}, rq = 0, MK = [], baseAct = "calles", bErr = {}, bOk = {};
   var PROF = [[70, "Superficial (< 70 km)", "#d7263d"], [300, "Intermedio (70–300 km)", "#f2a41b"], [1e5, "Profundo (> 300 km)", "#4f5bd5"]];
   var BOL = /bolivia|la paz|potos|cochabamba|santa cruz|tarija|oruro|beni|pando|chuquisaca|yungas|el alto/i;
   function esc(s) { return S.esc(s == null ? "" : String(s)); }
@@ -45,7 +45,7 @@ var GEO = (function () {
       '<div class="xq"><div class="xs1" id="lgBox"></div><div class="xs1"><b>Período</b><select id="gP"><option value="7">Últimos 7 días</option><option value="30" selected>Últimos 30 días</option><option value="0">Todo lo disponible</option></select></div>' +
       '<div class="xs1"><b>Magnitud mínima</b><select id="gM"><option value="0">Todas</option><option value="3.5">≥ 3,5</option><option value="4">≥ 4</option><option value="5">≥ 5</option></select></div>' +
       '<div class="xs1"><b>Derrumbes</b><label><input type="checkbox" id="gPr" checked> Mostrar derrumbes y deslizamientos (prensa)</label></div></div>' +
-      '<div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><span class="xtl">Mapa base</span><button data-b="calles" class="on">Calles</button><button data-b="topo">Relieve</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><span class="xsp"></span><label><input type="checkbox" id="gN" checked> Departamentos</label><label><input type="checkbox" id="gLp" checked> Población</label><label><input type="checkbox" id="gLs" checked> Salud</label><label><input type="checkbox" id="gLe" checked> Bomberos y policía</label></div><div class="xmap" id="gMap"></div><div class="xav" id="gAv" hidden></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
+      '<div class="xhelp" id="gH"></div><div class="xg"><div class="xmw"><div class="xtool"><span class="xtl">Mapa base</span><button data-b="calles" class="on">Calles</button><button data-b="topo">Relieve</button><button data-b="sat">Satélite</button><button data-b="none">Sin mapa</button><span class="xsp"></span><span class="xtl">Añadir al mapa</span><label><input type="checkbox" id="gN"> Nombres de departamentos</label><label><input type="checkbox" id="gLp"> Población</label><label><input type="checkbox" id="gLs"> Hospitales y centros de salud</label><label><input type="checkbox" id="gLe"> Bomberos y policía</label></div><div class="xmap" id="gMap"></div><div class="xav" id="gAv" hidden></div><div class="xleg" id="gL"></div><div class="xlab" id="gLb"></div></div>' +
       '<div class="xside"><div id="gDet"></div></div></div><div id="eviP"></div>' +
       '<div class="g3"><div class="card"><h3>Magnitud y energía en el tiempo</h3><div id="gCh" style="height:250px"></div><p class="nota" id="gChN"></p></div>' +
       '<div class="card"><h3>Corte de profundidad</h3><div id="gCor" style="height:250px"></div><p class="nota" id="gCorN"></p></div>' +
@@ -117,7 +117,6 @@ var GEO = (function () {
       map.addLayer({id: "ex-l", type: "line", source: "ex", paint: {"line-color": osc ? "#ffffff" : "#25165c", "line-width": 1.1, "line-opacity": .75}});
       map.addLayer({id: "m-l", type: "line", source: "mun", minzoom: 6, paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": .5, "line-opacity": .22}});
       map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": osc ? "#e6efff" : "#10233d", "line-width": 1.3, "line-opacity": .8}});
-      MAPAZ.capasPob(map, osc);
       map.addLayer({id: "an-f", type: "fill", source: "an", paint: {"fill-color": ["case", ["==", ["get", "u"], 1], "#f5a623", sel ? "#f26a1b" : "#7b4a2b"], "fill-opacity": ["case", ["==", ["get", "u"], 1], .2, ["match", ["get", "r"], 25, .13, 50, .1, 100, .07, .05]]}});
       map.addLayer({id: "an-l", type: "line", source: "an", paint: {"line-color": ["case", ["==", ["get", "u"], 1], "#f5a623", "#f26a1b"], "line-width": 1.6, "line-dasharray": [3, 2]}});
       MAPAZ.capasInfra(map, {ref: function () { return sel ? "del epicentro" : "del punto"; }});
@@ -141,7 +140,7 @@ var GEO = (function () {
   function refrescaMapa() {
     if (!map || !map._ok) return;
     map.getSource("ex").setData(geoExp()); map.getSource("an").setData(geoAn()); MAPAZ.infData(map, geoInf()); map.getSource("sis").setData(geoSism(filtrado())); map.getSource("pr").setData(geoPrensa());
-    MAPAZ.pintaMalla(map, sel ? EX : selD ? DX : null); MAPAZ.pobData(map, MAPAZ.burbujasExpo(sel ? EX : selD ? DX : null));
+    MAPAZ.pintaMalla(map, sel ? EX : selD ? DX : null);
     map.setPaintProperty("an-f", "fill-color", ["case", ["==", ["get", "u"], 1], "#f5a623", sel ? "#f26a1b" : "#7b4a2b"]);
     leyenda(); etiquetas(); rotular();
   }

@@ -87,36 +87,82 @@ var MAPAZ = (function () {
     if (E.grid) return 'Población = celdas de ~1 km cuyo centro cae dentro del radio (malla WorldPop repartida dentro de cada municipio y reescalada a su total INE ' + esc(MG.meta.anio_ine) + '). «Distancia» = a la celda habitada más cercana del municipio. Establecimientos y servicios: OpenStreetMap, cobertura incompleta.' + sd;
     return 'Población = municipios cuyo centro cae dentro del radio, más el municipio donde está el punto (estimación INE; se cuenta el municipio entero). Establecimientos y servicios: OpenStreetMap, cobertura incompleta.' + sd;
   }
+  /* rampa de la superficie de población: densidad en hab./km² (escala logarítmica) */
+  var RAMPA = [[0, [78, 64, 176, .0]], [.3, [78, 64, 176, .34]], [1, [96, 78, 214, .5]], [2, [150, 96, 236, .66]], [3, [226, 112, 214, .8]], [4, [255, 214, 240, .94]]];
+  var RAMPAL = [["1", 0], ["10", 1], ["100", 2], ["1 000", 3], ["10 000", 4]];
+  function colRampa(l) {
+    var i, a, b, t; if (l <= 0) return [0, 0, 0, 0]; if (l >= 4) return RAMPA[5][1].slice();
+    for (i = 1; i < RAMPA.length; i++) if (l <= RAMPA[i][0]) { a = RAMPA[i - 1]; b = RAMPA[i]; t = (l - a[0]) / (b[0] - a[0]); return [0, 1, 2, 3].map(function (k) { return a[1][k] + (b[1][k] - a[1][k]) * t; }); }
+    return RAMPA[RAMPA.length - 1][1].slice();
+  }
   function leyendaPob(celdas) {
-    if (celdas === false || !MG) return '<div class="glg"><b>Población del municipio</b><div><span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span></div><div class="gbub"><i></i> Burbuja = habitantes del municipio (el área es proporcional)</div></div>';
-    return '<div class="glg"><b>Población por celda de ~1 km</b><div><span class="gesc">' + PAL.map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span><br><small>hab./km² · WorldPop repartida y reescalada al total INE de cada municipio</small></div><div class="gbub"><i></i> Burbuja = habitantes del municipio dentro del radio (el área es proporcional)</div></div>';
+    if (celdas === false || !MG) return '<div class="glg"><b>Población del municipio</b><div><span class="gesc">' + [["#c9b8ff", "< 1 mil"], ["#a68cff", "1–5 mil"], ["#8461f0", "5–20 mil"], ["#6338d6", "20–100 mil"], ["#3f1fa3", "> 100 mil"]].map(function (x) { return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join("") + '</span></div></div>';
+    var gr = RAMPAL.map(function (x) { var c = colRampa(x[1] + .001); return "rgba(" + c.slice(0, 3).map(Math.round).join(",") + "," + Math.max(.55, c[3]).toFixed(2) + ")"; });
+    return '<div class="glg"><b>Densidad de población</b><div><span class="gpop" style="background:linear-gradient(90deg,' + gr.join(",") + ')"></span><span class="gpopt">' + RAMPAL.map(function (x) { return '<i>' + x[0] + '</i>'; }).join("") + '</span><small>hab./km² · superficie suavizada de la malla WorldPop (~1 km) reescalada al total INE de cada municipio. Pase el cursor para ver la cifra.</small></div></div>';
   }
-  /* capa de celdas (se dibuja bajo los contornos); evitar = capas del módulo que tienen su propia ventanita al pasar el cursor */
-  function capaMalla(map, evitar) {
-    if (map.getSource("pg")) return;
-    map.addSource("pg", {type: "geojson", data: fc([])});
-    map.addLayer({id: "pg-f", type: "fill", source: "pg", paint: {"fill-color": ["step", ["get", "h"], PAL[0][0], 10, PAL[1][0], 50, PAL[2][0], 250, PAL[3][0], 1000, PAL[4][0], 5000, PAL[5][0]], "fill-opacity": ["interpolate", ["linear"], ["zoom"], 5, .6, 10, .7], "fill-antialias": false}});
-    var pg = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 8, maxWidth: "260px"}), otras = ["inf-c", "inf-s", "inf-e", "pb-c"].concat(evitar || []);
-    map.on("mousemove", "pg-f", function (e) {
-      var ls = otras.filter(function (id) { return map.getLayer(id); });
-      if (ls.length && map.queryRenderedFeatures(e.point, {layers: ls}).length) { pg.remove(); return; }
-      var p = e.features[0].properties; map.getCanvas().style.cursor = "help";
-      pg.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">≈ ' + A.fmt(+p.p) + ' hab.</b>celda de ~1 km · ' + fmt(+p.h, 0) + ' hab./km²<br>' + esc(p.n) + '<br><i>estimación: WorldPop reescalada al total INE</i></div>').addTo(map);
-    });
-    map.on("mouseleave", "pg-f", function () { pg.remove(); map.getCanvas().style.cursor = ""; });
-  }
-  function pintaMalla(map, E) {
-    if (!map || !map._ok || !map.getSource("pg")) return;
-    var g = !!(E && E.grid && MG), f = [];
-    if (g) {
-      var G = MG.g, h2 = G.d / 2, kx = Math.pow(G.d * 111.32, 2), r5 = function (v) { return Math.round(v * 1e5) / 1e5; };
-      E.cel.ci.forEach(function (i) {
-        var la = MG.lat[i], lo = MG.lon[i], p = MG.p[i], a = kx * Math.cos(la * Math.PI / 180), nm = MG.munis[MG.m[i]].split("|")[1];
-        f.push({type: "Feature", geometry: {type: "Polygon", coordinates: [[[r5(lo - h2), r5(la - h2)], [r5(lo + h2), r5(la - h2)], [r5(lo + h2), r5(la + h2)], [r5(lo - h2), r5(la + h2)], [r5(lo - h2), r5(la - h2)]]]}, properties: {p: p, h: Math.round(p / a * 10) / 10, n: nm}});
-      });
+  /* superficie continua de densidad: la malla se suma en un raster de ~1 km en proyección Mercator, se suaviza (gaussiana) y se pinta con la rampa;
+     así no hay celdas cuadradas y el área sigue siendo la del dato (la suma se conserva). Se construye una sola vez. */
+  var PS = null;
+  function superficie() {
+    if (PS || !MG) return PS;
+    var lo0 = -70.3, lo1 = -56.3, la0 = -23.3, la1 = -8.4, W = 1400, D = Math.PI / 180, my = function (la) { return Math.log(Math.tan(Math.PI / 4 + la * D / 2)); };
+    var y1 = my(la1), y0 = my(la0), wx = (lo1 - lo0) * D, hy = y1 - y0, H = Math.round(W * hy / wx), px = wx / W, A = new Float32Array(W * H), B = new Float32Array(W * H), i, c, r, k, v;
+    for (i = 0; i < MG.n; i++) { c = Math.floor((MG.lon[i] - lo0) / (lo1 - lo0) * W); r = Math.floor((y1 - my(MG.lat[i])) / hy * H); if (c >= 0 && c < W && r >= 0 && r < H) A[r * W + c] += MG.p[i]; }
+    var sg = 1.7, K = [], sum = 0, R = 4, j; for (k = -R; k <= R; k++) { v = Math.exp(-k * k / (2 * sg * sg)); K.push(v); sum += v; } K = K.map(function (x) { return x / sum; });
+    for (r = 0; r < H; r++) for (c = 0; c < W; c++) { v = 0; for (k = -R; k <= R; k++) { j = c + k; if (j >= 0 && j < W) v += A[r * W + j] * K[k + R]; } B[r * W + c] = v; }
+    for (r = 0; r < H; r++) for (c = 0; c < W; c++) { v = 0; for (k = -R; k <= R; k++) { j = r + k; if (j >= 0 && j < H) v += B[j * W + c] * K[k + R]; } A[r * W + c] = v; }
+    var cv = document.createElement("canvas"); cv.width = W; cv.height = H; var cx = cv.getContext("2d"), im = cx.createImageData(W, H), d = im.data, lut = [], q, lat, lado, dens;
+    for (q = 0; q <= 400; q++) lut.push(colRampa(q / 100));
+    for (r = 0; r < H; r++) {
+      lat = (2 * Math.atan(Math.exp(y1 - (r + .5) / H * hy)) - Math.PI / 2) / D; lado = px * 6371 * Math.cos(lat * D); lado = lado * lado;
+      for (c = 0; c < W; c++) { dens = A[r * W + c] / lado; q = dens > 0 ? Math.max(0, Math.min(400, Math.round(Math.log10(dens) * 100))) : 0; if (dens <= 0.01) q = 0; var col = lut[q], o = (r * W + c) * 4; d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = Math.round(col[3] * 255); }
     }
-    map.getSource("pg").setData(fc(f));
-    if (map.getLayer("ex-f")) map.setPaintProperty("ex-f", "fill-opacity", g ? 0 : .14);
+    cx.putImageData(im, 0, 0);
+    PS = {url: cv.toDataURL("image/png"), coords: [[lo0, la1], [lo1, la1], [lo1, la0], [lo0, la0]]};
+    return PS;
+  }
+  /* texto al pasar el cursor por los anillos de distancia: el radio más pequeño que contiene el punto (cifras acumuladas desde el centro) */
+  function textoAnillo(map, ll) {
+    var E = map._E; if (!E || !E.R || !E.R.length || E.lat == null) return "";
+    var d = hav(E.lat, E.lon, ll.lat, ll.lng), R = E.R.slice().sort(function (a, b) { return a.km - b.km; }), r = null, i;
+    for (i = 0; i < R.length; i++) if (d <= R[i].km) { r = R[i]; break; }
+    if (!r) return "";
+    var ref = typeof map._ref === "function" ? map._ref() : (map._ref || "del punto");
+    return '<b style="margin:0">Radio de ≤ ' + r.km + ' km ' + esc(ref) + '</b>' + (r.pob ? fmtP(r.pob) + ' hab. (malla)' : 'sin población en la malla') + ' · ' + (r.hosp + r.cli + r.cons) + ' est. de salud · ' + r.bom + ' bomberos · ' + r.pol + ' policía<br><i>servicios: OpenStreetMap, cobertura incompleta</i>';
+  }
+  /* capa de la superficie (se dibuja bajo los contornos); evitar = capas del módulo que tienen su propia ventanita al pasar el cursor */
+  function capaMalla(map, evitar) {
+    if (map.getSource("pgi")) return;
+    var pp = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 12, maxWidth: "270px"}), otras = ["inf-c", "inf-s", "inf-e"].concat(evitar || []), rq = 0, ev = null;
+    function pon() {
+      if (map.getSource("pgi") || !MG) return;
+      var S = superficie(); if (!S) return;
+      map.addSource("pgi", {type: "image", url: S.url, coordinates: S.coords});
+      var antes = map.getLayer("ex-l") ? "ex-l" : undefined;
+      map.addLayer({id: "pg-f", type: "raster", source: "pgi", layout: {visibility: map._pobOn === false ? "none" : "visible"}, paint: {"raster-opacity": .92, "raster-resampling": "linear", "raster-fade-duration": 0}}, antes);
+    }
+    malla(function () { setTimeout(pon, 0); });
+    map.on("mousemove", function (e) {
+      ev = e; if (rq) return;
+      rq = requestAnimationFrame(function () {
+        rq = 0; var e2 = ev; if (!e2) return;
+        var ls = otras.filter(function (id) { return map.getLayer(id); });
+        if (ls.length && map.queryRenderedFeatures(e2.point, {layers: ls}).length) { pp.remove(); return; }
+        var ll = e2.lngLat, h = textoAnillo(map, ll), pv = MG && map.getLayer("pg-f") && map.getLayoutProperty("pg-f", "visibility") !== "none";
+        if (pv) {
+          var mpp = 78271.517 * Math.cos(ll.lat * Math.PI / 180) / Math.pow(2, map.getZoom()), km = Math.max(1.5, Math.min(40, 16 * mpp / 1000)), c = celdas(ll.lat, ll.lng, km), n = 0, i;
+          for (i = 0; i < c.ci.length; i++) n += MG.p[c.ci[i]];
+          if (n) { var mu = T.donde ? T.donde(ll.lat, ll.lng) : null, dn = n / (Math.PI * km * km); h += (h ? '<hr style="border:0;border-top:1px solid rgba(255,255,255,.18);margin:6px 0">' : '') + '<b style="margin:0">≈ ' + fmtP(n) + ' hab.</b>a ≤ ' + (km < 10 ? km.toFixed(1).replace(".", ",") : Math.round(km)) + ' km del cursor · ' + fmt(dn, dn < 10 ? 1 : 0) + ' hab./km²' + (mu ? ' · ' + esc(mu.n) : '') + '<br><i>estimación WorldPop reescalada al total INE</i>'; }
+        }
+        if (!h) { pp.remove(); return; }
+        pp.setLngLat(ll).setHTML('<div class="pop">' + h + '</div>').addTo(map);
+      });
+    });
+    map.getCanvas().addEventListener("mouseleave", function () { pp.remove(); });
+  }
+  function pintaMalla(map) {
+    if (!map || !map._ok) return;
+    if (map.getLayer("ex-f")) map.setPaintProperty("ex-f", "fill-opacity", MG ? .07 : .5);
   }
   function primero(C, ks) { for (var i = 0; i < C.length; i++) if (ks.indexOf(C[i].p.k) >= 0) return C[i]; return null; }
   function filaR(t, f) { return '<tr><td>' + t + '</td>' + f.map(function (v) { return '<td style="text-align:right">' + v + '</td>'; }).join("") + '</tr>'; }
@@ -189,18 +235,18 @@ var MAPAZ = (function () {
   };
   /* color mezclado con blanco ("w") o negro ("b") en proporción t */
   function mez(h, c, t) { var n = parseInt(h.slice(1), 16), v = [n >> 16, (n >> 8) & 255, n & 255], d = c === "w" ? 255 : 0; return "rgb(" + v.map(function (x) { return Math.round(x + (d - x) * t); }).join(",") + ")"; }
-  /* dibuja un ícono en un contexto 2D: s = píxeles por unidad (la figura mide 48 u; deja 6 u de margen para la sombra).
-     Capas: sombra suave, aro blanco, relleno con degradado, brillo superior y glifo con relieve ligero. */
+  /* color del aro de cada clase (más vivo que el relleno, para leerse sobre vidrio oscuro) */
+  var ARO = {hosp: "#34d17a", cli: "#5ee0a0", cons: "#a7e8c7", bom: "#ff6b5e", pol: "#6b9bff", der: "#e0985a", vie: "#2bd4d6", llu: "#6b97ff", fri: "#b197fc", cal: "#ff6fb0", gra: "#a3b1c6", nev: "#8fdcff", otr: "#a3b1c6", fle: "#2bd4d6", ola: "#3fb8f5"};
+  function aro(k) { return ARO[k] || ICO[k].f; }
+  /* dibuja un ícono en un contexto 2D (figura de 48 u con 6 u de margen): cuerpo de vidrio oscuro, brillo superior, aro de color con halo y glifo blanco */
   function pinta(g, k, s) {
-    var I = ICO[k], p = new Path2D(I.d), q = new Path2D(I.g), gr;
+    var I = ICO[k], p = new Path2D(I.d), q = new Path2D(I.g), gr, c = aro(k);
     g.save(); g.scale(s, s); g.translate(6, 6); g.lineJoin = "round"; g.lineCap = "round";
-    g.save(); g.shadowColor = "rgba(0,0,0,.5)"; g.shadowBlur = 3.6 * s; g.shadowOffsetY = 1.5 * s; g.strokeStyle = "#fff"; g.lineWidth = 4.8; g.stroke(p); g.restore();
-    g.strokeStyle = "#fff"; g.lineWidth = 4.8; g.stroke(p);
-    gr = g.createLinearGradient(0, 3, 0, 45); gr.addColorStop(0, mez(I.f, "w", .2)); gr.addColorStop(1, mez(I.f, "b", .2));
-    g.fillStyle = gr; g.strokeStyle = gr; g.lineWidth = 2.4; g.fill(p); g.stroke(p);
-    g.save(); g.clip(p); gr = g.createLinearGradient(0, 2, 0, 28); gr.addColorStop(0, "rgba(255,255,255,.34)"); gr.addColorStop(1, "rgba(255,255,255,0)"); g.fillStyle = gr; g.fillRect(0, 0, 48, 30);
-    g.strokeStyle = "rgba(255,255,255,.28)"; g.lineWidth = 1.2; g.stroke(p); g.restore();
-    g.save(); g.shadowColor = "rgba(0,0,0,.3)"; g.shadowBlur = 1.3 * s; g.shadowOffsetY = .7 * s; g.fillStyle = I.gc; g.fill(q); g.restore();
+    g.save(); g.shadowColor = c; g.shadowBlur = 5 * s; g.fillStyle = "rgba(8,16,32,.92)"; g.fill(p); g.restore();
+    gr = g.createLinearGradient(0, 3, 0, 45); gr.addColorStop(0, "rgba(36,62,104,.95)"); gr.addColorStop(1, "rgba(7,15,30,.97)"); g.fillStyle = gr; g.fill(p);
+    g.save(); g.clip(p); gr = g.createLinearGradient(0, 2, 0, 26); gr.addColorStop(0, "rgba(255,255,255,.26)"); gr.addColorStop(1, "rgba(255,255,255,0)"); g.fillStyle = gr; g.fillRect(0, 0, 48, 28); g.restore();
+    g.strokeStyle = c; g.lineWidth = 3; g.stroke(p);
+    g.save(); g.shadowColor = "rgba(0,0,0,.5)"; g.shadowBlur = 1.2 * s; g.shadowOffsetY = .6 * s; g.fillStyle = "#fff"; g.fill(q); g.restore();
     g.restore();
   }
   function icono(map, k) {
@@ -214,12 +260,12 @@ var MAPAZ = (function () {
   function defsSvg() {
     if (document.getElementById("mz-defs")) return;
     var d = document.createElement("div"); d.id = "mz-defs"; d.setAttribute("aria-hidden", "true"); d.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
-    d.innerHTML = '<svg width="0" height="0"><defs><linearGradient id="mz-gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>';
+    d.innerHTML = '<svg width="0" height="0"><defs><linearGradient id="mz-gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#243e68"/><stop offset="1" stop-color="#070f1e"/></linearGradient><linearGradient id="mz-gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>';
     (document.body || document.documentElement).appendChild(d);
   }
   function ico(k, px) {
     var I = ICO[k]; defsSvg();
-    return '<svg class="gs" viewBox="-4 -4 56 56" width="' + (px || 16) + '" height="' + (px || 16) + '" aria-hidden="true"><path d="' + I.d + '" fill="' + I.f + '" stroke="#fff" stroke-width="4" stroke-linejoin="round" paint-order="stroke"/><path d="' + I.d + '" fill="url(#mz-gl)"/><path d="' + I.g + '" fill="' + I.gc + '"/></svg>';
+    return '<svg class="gs" viewBox="-4 -4 56 56" width="' + (px || 16) + '" height="' + (px || 16) + '" aria-hidden="true"><path d="' + I.d + '" fill="url(#mz-gd)" stroke="' + aro(k) + '" stroke-width="3.4" stroke-linejoin="round"/><path d="' + I.d + '" fill="url(#mz-gl)"/><path d="' + I.g + '" fill="#fff"/></svg>';
   }
   var BASES = function (osc) { return {
     osm: {t: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], a: "© colaboradores de OpenStreetMap", z: 19, p: osc ? {"raster-brightness-max": .82, "raster-saturation": -.2} : {}},
@@ -270,7 +316,7 @@ var MAPAZ = (function () {
     var map = new maplibregl.Map({container: o.id, style: estiloBase(osc), bounds: [[-70.2, -23.2], [-56.8, -8.8]], fitBoundsOptions: {padding: 10}, attributionControl: {compact: true}});
     map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"}); map._pop = pop;
-    map._bc = baseControl(map, {av: o.av, tool: tool});
+    map._bc = baseControl(map, {av: o.av, tool: tool}); map._ref = o.refInfra;
     map.on("load", function () {
       iconos(map);
       map.addSource("dep", {type: "geojson", data: fc(T.D.geoDep.features)}); map.addSource("mun", {type: "geojson", data: fc(((T.D.geoMun || {}).features) || [])});
@@ -283,7 +329,6 @@ var MAPAZ = (function () {
       map.addLayer({id: "ex-l", type: "line", source: "ex", paint: {"line-color": osc ? "#ffffff" : "#25165c", "line-width": 1.1, "line-opacity": .75}});
       map.addLayer({id: "m-l", type: "line", source: "mun", minzoom: 6, paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": .5, "line-opacity": .22}});
       map.addLayer({id: "d-l", type: "line", source: "dep", paint: {"line-color": osc ? "#e6efff" : "#10233d", "line-width": 1.3, "line-opacity": .8}});
-      capasPob(map, osc);
       map.addLayer({id: "an-f", type: "fill", source: "an", paint: {"fill-color": "#f26a1b", "fill-opacity": ["match", ["get", "r"], 10, .16, 25, .12, 50, .09, .06]}});
       map.addLayer({id: "an-l", type: "line", source: "an", paint: {"line-color": "#f26a1b", "line-width": 1.6, "line-dasharray": [3, 2]}});
       if (o.alto) o.alto(map);
@@ -292,34 +337,6 @@ var MAPAZ = (function () {
     });
     return map;
   }
-  /* ---------- burbujas de población: área ∝ habitantes; crecen al acercar y se ven siempre, sin tapar el mapa ---------- */
-  function rBurb() {
-    var f = function (a, mn, mx) { return ["case", ["<", ["get", "pob"], 0], 4, ["max", mn, ["min", mx, ["*", ["sqrt", ["get", "pob"]], a]]]]; };
-    return ["interpolate", ["linear"], ["zoom"], 4, f(.016, 3.5, 30), 7, f(.045, 4.5, 50), 10, f(.08, 5.5, 66), 13, f(.15, 6.5, 92)];
-  }
-  function capasPob(map, osc) {
-    map.addSource("pb", {type: "geojson", data: fc([])});
-    map.addLayer({id: "pb-c", type: "circle", source: "pb", paint: {"circle-radius": rBurb(), "circle-color": "#8b5cf6", "circle-opacity": ["interpolate", ["linear"], ["zoom"], 9, .34, 12, .2], "circle-stroke-color": osc ? "#c4b5fd" : "#5b21b6", "circle-stroke-width": 1.5, "circle-stroke-opacity": .9}});
-    var pp = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 8, maxWidth: "260px"});
-    map.on("mousemove", "pb-c", function (e) {
-      var p = e.features[0].properties; map.getCanvas().style.cursor = "help";
-      pp.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.n) + '</b>' + (+p.pob >= 0 ? '≈ ' + A.fmt(+p.pob) + ' hab. ' + esc(p.nota || "") : 'sin dato de población') + '<br><i>burbuja: el área es proporcional a los habitantes</i></div>').addTo(map);
-    });
-    map.on("mouseleave", "pb-c", function () { pp.remove(); map.getCanvas().style.cursor = ""; });
-  }
-  /* una burbuja por municipio de la exposición: en el centro de gravedad de sus celdas dentro del radio (o en su centro si no hay malla) */
-  function burbujasExpo(E) {
-    if (!E) return [];
-    return E.mu.filter(function (x) { return E.grid ? x.pr > 0 : x.m.pob != null; }).map(function (x) {
-      var c = E.grid && x.la != null ? [x.lo, x.la] : cen(x.m);
-      return {lon: c[0], lat: c[1], pob: E.grid ? x.pr : x.m.pob, n: x.m.n, nota: E.grid ? "dentro del radio" : "(municipio entero)"};
-    });
-  }
-  function pobData(map, items) {
-    if (!map || !map._ok || !map.getSource("pb")) return;
-    map.getSource("pb").setData(fc((items || []).map(function (b) { return {type: "Feature", geometry: {type: "Point", coordinates: [b.lon, b.lat]}, properties: {pob: b.pob == null ? -1 : b.pob, n: b.n, nota: b.nota || ""}}; })));
-  }
-
   /* ---------- infraestructura: íconos que se agrupan al alejar (el número es la cantidad) y se abren al acercar ---------- */
   var SAL = ["hosp", "cli", "cons"], EME = ["bom", "res", "pol"];
   function grupoInf(k) { return EME.indexOf(k) >= 0 ? "e" : "s"; }
@@ -331,10 +348,11 @@ var MAPAZ = (function () {
   }
   function infData(map, feats) { if (!map) return; map._infF = feats || []; infRefresca(map); }
   function capasInfra(map, o) {
-    var pop = map._pop || new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"}), noC = ["!", ["has", "point_count"]];
+    map._ref = map._ref || o.ref;
+    map._ref = o.ref || map._ref; var pop = map._pop || new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"}), noC = ["!", ["has", "point_count"]];
     var ik = function (a, z) { return ["interpolate", ["linear"], ["zoom"], 6, a, 12, z]; }, ikm = function (h, c, ot, h2, c2, o2) { return ["interpolate", ["linear"], ["zoom"], 6, ["match", ["get", "k"], "hosp", h, "cli", c, ot], 12, ["match", ["get", "k"], "hosp", h2, "cli", c2, o2]]; };
     map.addSource("inf", {type: "geojson", data: fc([]), cluster: true, clusterMaxZoom: 11, clusterRadius: 42, clusterProperties: {sal: ["+", ["case", ["in", ["get", "k"], ["literal", SAL]], 1, 0]], eme: ["+", ["case", ["in", ["get", "k"], ["literal", EME]], 1, 0]]}});
-    map.addLayer({id: "inf-c", type: "circle", source: "inf", filter: ["has", "point_count"], paint: {"circle-radius": ["step", ["get", "point_count"], 13, 10, 17, 50, 22, 200, 27], "circle-color": ["case", [">=", ["get", "sal"], ["get", "eme"]], "#13795b", "#b3261e"], "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.4, "circle-opacity": .94}});
+    map.addLayer({id: "inf-c", type: "circle", source: "inf", filter: ["has", "point_count"], paint: {"circle-radius": ["step", ["get", "point_count"], 13, 10, 17, 50, 22, 200, 27], "circle-color": "rgba(9,20,40,.9)", "circle-stroke-color": ["case", [">=", ["get", "sal"], ["get", "eme"]], "#34d17a", "#ff6b5e"], "circle-stroke-width": 2.6, "circle-blur": .15}});
     map.addLayer({id: "inf-cn", type: "symbol", source: "inf", filter: ["has", "point_count"], layout: {"text-field": ["get", "point_count_abbreviated"], "text-font": ["Noto Sans Bold"], "text-size": 12, "text-allow-overlap": true, "text-ignore-placement": true}, paint: {"text-color": "#ffffff"}});
     map.addLayer({id: "inf-s", type: "symbol", source: "inf", filter: ["all", noC, ["in", ["get", "k"], ["literal", SAL]]], layout: {"icon-image": ["match", ["get", "k"], "hosp", "i-hosp", "cli", "i-cli", "i-cons"], "icon-size": ikm(.9, .75, .6, 1.5, 1.25, 1.0), "icon-allow-overlap": true, "icon-ignore-placement": true}});
     map.addLayer({id: "inf-e", type: "symbol", source: "inf", filter: ["all", noC, ["in", ["get", "k"], ["literal", EME]]], layout: {"icon-image": ["match", ["get", "k"], "pol", "i-pol", "i-bom"], "icon-size": ik(.8, 1.3), "icon-allow-overlap": true, "icon-ignore-placement": true}});
@@ -357,16 +375,16 @@ var MAPAZ = (function () {
     if (!map) return;
     if (id === "inf-s" || id === "inf-e") { var q = id === "inf-s" ? "s" : "e"; map._infOn = map._infOn || {s: true, e: true}; if (map._infOn[q] !== !!on) { map._infOn[q] = !!on; infRefresca(map); } return; }
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
-    if (id === "ex-f") ["pg-f", "pb-c"].forEach(function (l) { if (map.getLayer(l)) map.setLayoutProperty(l, "visibility", on ? "visible" : "none"); });
+    if (id === "ex-f") { map._pobOn = !!on; if (map.getLayer("pg-f")) map.setLayoutProperty("pg-f", "visibility", on ? "visible" : "none"); }
   }
   /* dibuja la selección: exposición (municipios), anillos e infraestructura */
   function selec(map, E, radios) {
     if (!map || !map._ok) return;
+    map._E = E || null;
     map.getSource("ex").setData(fc(E ? E.mu.map(function (x) { return {type: "Feature", geometry: x.m.f.geometry, properties: {pob: x.m.pob == null ? -1 : x.m.pob, n: x.m.n}}; }) : []));
     map.getSource("an").setData(fc(E ? radios.slice().sort(function (a, b) { return b - a; }).map(function (r) { return {type: "Feature", geometry: {type: "Polygon", coordinates: [circulo(E.lat, E.lon, r)]}, properties: {r: r}}; }) : []));
     infData(map, E ? E.C.map(infoFeat) : []);
-    pobData(map, burbujasExpo(E));
     pintaMalla(map, E);
   }
-  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, ICO: ICO, pinta: pinta, estiloBase: estiloBase, baseVis: baseVis, baseControl: baseControl, capasInfra: capasInfra, infData: infData, infoFeat: infoFeat, capasPob: capasPob, pobData: pobData, burbujasExpo: burbujasExpo, radioEscala: radioEscala, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc, pron: pron, PRON: PRON, CAPS: CAPS, nombrePunto: nombrePunto};
+  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, ICO: ICO, pinta: pinta, estiloBase: estiloBase, baseVis: baseVis, baseControl: baseControl, capasInfra: capasInfra, infData: infData, infoFeat: infoFeat, radioEscala: radioEscala, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc, pron: pron, PRON: PRON, CAPS: CAPS, nombrePunto: nombrePunto};
 })();
