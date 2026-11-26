@@ -32,7 +32,7 @@ var LUGAR = (function () {
   function ajusta(map, T, st, vuelo) {
     var f = feat(T, st), ok = map && map.getSource("area"); if (!ok) return;
     map.getSource("area").setData({type: "FeatureCollection", features: f ? [f] : []});
-    var b = f ? bboxG(f.geometry) : [-70.2, -23.2, -56.8, -8.8], pad = f ? 40 : 10; map.resize();
+    var b = f ? bboxG(f.geometry) : [-70.2, -23.2, -56.8, -8.8], pad = f ? 40 : 10, pl = map._padL || 0; map.resize(); pad = {top: pad, bottom: pad, right: pad, left: pad + pl};
     map.fitBounds([[b[0], b[1]], [b[2], b[3]]], {padding: pad, duration: vuelo === false ? 0 : 600, maxZoom: st.m ? 10 : 9});
   }
   function etiqueta(st) { return st.m ? st.m + " (" + st.d + ")" : st.d || "todo Bolivia"; }

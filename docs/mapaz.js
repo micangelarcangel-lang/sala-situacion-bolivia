@@ -304,7 +304,8 @@ var MAPAZ = (function () {
       document.getElementById(o.av + "R").onclick = function () { st.err = {}; st.ok = {}; av.hidden = true; pon("calles"); };
     }
     var idDe = function (e) { var s = e && e.sourceId; return s === "ofm" ? "calles" : s && s.indexOf("b-") === 0 ? s.slice(2) : null; };
-    map.on("error", function (e) { var id = idDe(e); if (id) fallo(id, id === "calles" && !e.tile); else if (e && e.error) console.warn("MAPAZ " + e.error.message); });
+    function sinVec() { if (!VEC || !map.getSource("ofm")) return; try { VIDS.forEach(function (l) { if (map.getLayer(l)) map.removeLayer(l); }); map.removeSource("ofm"); } catch (x) { console.warn("MAPAZ " + x.message); } }
+    map.on("error", function (e) { var id = idDe(e); if (id) { if (id === "calles" && !e.tile) sinVec(); fallo(id, id === "calles" && !e.tile); } else if (e && e.error) console.warn("MAPAZ " + e.error.message); });
     map.on("data", function (e) { var id = e.tile ? idDe(e) : null; if (id) { st.ok[id] = 1; if (id === st.act) av.hidden = true; } });
     botones().forEach(function (b) { b.onclick = function () { if (b.dataset.b === "none") { baseVis(map, "none"); botones().forEach(function (z) { z.classList.toggle("on", z === b); }); st.act = "none"; av.hidden = true; } else { st.err[b.dataset.b] = 0; pon(b.dataset.b); } }; });
     return {pon: pon, st: st};
@@ -317,7 +318,9 @@ var MAPAZ = (function () {
     map.addControl(new maplibregl.NavigationControl({showCompass: false}), "top-right"); map.addControl(new maplibregl.ScaleControl({unit: "metric"}), "bottom-right");
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"}); map._pop = pop;
     map._bc = baseControl(map, {av: o.av, tool: tool}); map._ref = o.refInfra;
-    map.on("load", function () {
+    var arrancado = false;
+    function arranca() {
+      if (arrancado) return; arrancado = true;
       iconos(map);
       map.addSource("dep", {type: "geojson", data: fc(T.D.geoDep.features)}); map.addSource("mun", {type: "geojson", data: fc(((T.D.geoMun || {}).features) || [])});
       map.addSource("ex", {type: "geojson", data: fc([])}); map.addSource("an", {type: "geojson", data: fc([])});
@@ -334,7 +337,11 @@ var MAPAZ = (function () {
       if (o.alto) o.alto(map);
       capasInfra(map, {ref: o.refInfra});
       map._ok = 1; if (o.listo) o.listo(map);
-    });
+    }
+    map.on("load", arranca);
+    /* respaldo: si una fuente del mapa base nunca termina (red bloqueada), 'load' no llega; con el estilo ya leído se dibujan igual las capas del módulo */
+    var t0 = setInterval(function () { if (arrancado) { clearInterval(t0); return; } if (map.style && map.style._loaded && !map.getSource("ofm")) { clearInterval(t0); arranca(); } }, 400);
+    setTimeout(function () { clearInterval(t0); if (!arrancado && map.style && map.style._loaded) arranca(); }, 9000);
     return map;
   }
   /* ---------- infraestructura: íconos que se agrupan al alejar (el número es la cantidad) y se abren al acercar ---------- */
@@ -357,7 +364,7 @@ var MAPAZ = (function () {
     map.addLayer({id: "inf-s", type: "symbol", source: "inf", filter: ["all", noC, ["in", ["get", "k"], ["literal", SAL]]], layout: {"icon-image": ["match", ["get", "k"], "hosp", "i-hosp", "cli", "i-cli", "i-cons"], "icon-size": ikm(.9, .75, .6, 1.5, 1.25, 1.0), "icon-allow-overlap": true, "icon-ignore-placement": true}});
     map.addLayer({id: "inf-e", type: "symbol", source: "inf", filter: ["all", noC, ["in", ["get", "k"], ["literal", EME]]], layout: {"icon-image": ["match", ["get", "k"], "pol", "i-pol", "i-bom"], "icon-size": ik(.8, 1.3), "icon-allow-overlap": true, "icon-ignore-placement": true}});
     ["inf-s", "inf-e"].forEach(function (L) {
-      map.on("mousemove", L, function (e) { var p = e.features[0].properties, r = typeof o.ref === "function" ? o.ref() : (o.ref || "del punto"); map.getCanvas().style.cursor = "help"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.n) + '</b>' + esc(INFN[p.k]) + (p.e && p.e !== "general" ? ' · ' + esc(p.e) : '') + (p.op ? ' · ' + esc(p.op) : '') + '<br>a ' + fmt(+p.d, 1) + ' km ' + esc(r) + (p.m ? ' · ' + esc(p.m) : '') + '<br><i>OpenStreetMap: cobertura incompleta</i></div>').addTo(map); });
+      map.on("mousemove", L, function (e) { var p = e.features[0].properties, r = typeof o.ref === "function" ? o.ref() : (o.ref || "del punto"); map.getCanvas().style.cursor = "help"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(p.n) + '</b>' + esc(INFN[p.k]) + (p.e && p.e !== "general" ? ' · ' + esc(p.e) : '') + (p.op ? ' · ' + esc(p.op) : '') + (+p.d >= 0 ? '<br>a ' + fmt(+p.d, 1) + ' km ' + esc(r) : '') + (p.m ? (+p.d >= 0 ? ' · ' : '<br>') + esc(p.m) : '') + '<br><i>OpenStreetMap: cobertura incompleta</i></div>').addTo(map); });
       map.on("mouseleave", L, function () { pop.remove(); map.getCanvas().style.cursor = ""; });
     });
     map.on("mousemove", "inf-c", function (e) { var p = e.features[0].properties; map.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + p.point_count + ' establecimientos y servicios</b>' + p.sal + ' de salud · ' + p.eme + ' bomberos, rescate o policía<br><i>clic para acercar y separarlos</i></div>').addTo(map); });
@@ -370,6 +377,28 @@ var MAPAZ = (function () {
     var st = [], z, mpp, r;
     for (z = 4; z <= 19; z++) { mpp = 156543.03 * Math.cos(16 * Math.PI / 180) / Math.pow(2, z); r = (m / 2) / mpp; st.push(z, typeof min === "number" ? Math.max(min, r) : ["max", min, r]); }
     return ["interpolate", ["exponential", 2], ["zoom"]].concat(st);
+  }
+
+  /* todos los establecimientos y servicios (para el contexto nacional, sin distancia): d = -1 */
+  function infTodos(filtro) { return INF.filter(function (p) { return !filtro || filtro(p); }).map(function (p) { return {p: p, d: -1}; }); }
+  /* ---------- panel «Capas» dentro del mapa: se parte de la base temática y se añade contexto a pedido ----------
+     grupos = [{t, items: [{id, t, on, sw (color del interruptor), v (vista en la que aplica; omitir = siempre)}]}]
+     cb(id, activo) se llama al cambiar; devuelve {get, set, vista, abre}. */
+  function panelCapas(host, grupos, cb, o) {
+    o = o || {}; var E = {}, vista = o.vista || null, ab = o.abierto != null ? o.abierto : (window.innerWidth > 760), SVG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 12.5 9 5 9-5"/><path d="m3 17 9 5 9-5" opacity=".55"/></svg>';
+    grupos.forEach(function (g) { g.items.forEach(function (i) { E[i.id] = !!i.on; }); });
+    function ok(i) { return !i.v || i.v === vista; }
+    function pinta() {
+      var n = 0; grupos.forEach(function (g) { g.items.forEach(function (i) { if (ok(i) && E[i.id]) n++; }); });
+      host.className = "mzc"; host.innerHTML = '<button type="button" class="mzc-h" aria-expanded="' + ab + '">' + SVG + '<b>Capas</b><span class="mzc-n">' + n + ' activas</span><i class="mzc-c' + (ab ? " on" : "") + '"></i></button><div class="mzc-b"' + (ab ? "" : " hidden") + '>' +
+        grupos.map(function (g) { var it = g.items.filter(ok); return it.length ? '<div class="mzc-g"><div class="mzc-t">' + g.t + '</div>' + it.map(function (i) { return '<label class="mzc-i" title="' + esc(i.h || i.t) + '"><input type="checkbox" data-c="' + i.id + '"' + (E[i.id] ? " checked" : "") + '><span class="mzc-s" style="--sw:' + (i.sw || "#5fd0ff") + '"></span><span>' + i.t + '</span></label>'; }).join("") + '</div>' : ""; }).join("") + '</div>';
+      var mp = o.mapa && o.mapa(); if (mp) mp._padL = ab && window.innerWidth > 900 ? host.offsetWidth + 14 : 0;
+      host.querySelector(".mzc-h").onclick = function () { ab = !ab; pinta(); };
+      [].forEach.call(host.querySelectorAll("input[data-c]"), function (x) { x.onchange = function () { E[x.dataset.c] = x.checked; pinta(); cb(x.dataset.c, x.checked); }; });
+    }
+    pinta();
+    return {get: function (id) { return !!E[id] && (function () { var r = false; grupos.forEach(function (g) { g.items.forEach(function (i) { if (i.id === id && ok(i)) r = true; }); }); return r; })(); }, raw: function (id) { return !!E[id]; },
+      set: function (id, on) { E[id] = !!on; pinta(); }, vista: function (v) { vista = v; pinta(); }, abre: function (a) { ab = !!a; pinta(); }};
   }
   function vis(map, id, on) {
     if (!map) return;
@@ -386,5 +415,5 @@ var MAPAZ = (function () {
     infData(map, E ? E.C.map(infoFeat) : []);
     pintaMalla(map, E);
   }
-  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, ICO: ICO, pinta: pinta, estiloBase: estiloBase, baseVis: baseVis, baseControl: baseControl, capasInfra: capasInfra, infData: infData, infoFeat: infoFeat, radioEscala: radioEscala, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc, pron: pron, PRON: PRON, CAPS: CAPS, nombrePunto: nombrePunto};
+  return {iniciar: iniciar, crear: crear, iconos: iconos, ico: ico, ICO: ICO, pinta: pinta, estiloBase: estiloBase, baseVis: baseVis, baseControl: baseControl, capasInfra: capasInfra, infData: infData, infoFeat: infoFeat, radioEscala: radioEscala, SIG: SIG, ALIAS: ALIAS, expo: expo, malla: malla, mallaMun: mallaMun, hayMalla: hayMalla, capaMalla: capaMalla, pintaMalla: pintaMalla, leyendaPob: leyendaPob, notaPob: notaPob, principales: principales, habX: habX, cabHab: cabHab, cerca: cerca, primero: primero, tablaAn: tablaAn, legendaInfra: legendaInfra, selec: selec, vis: vis, hav: hav, circulo: circulo, fc: fc, cen: cen, fmtP: fmtP, fmt: fmt, esc: esc, pron: pron, PRON: PRON, panelCapas: panelCapas, infTodos: infTodos, MG: function () { return MG; }, CAPS: CAPS, nombrePunto: nombrePunto};
 })();

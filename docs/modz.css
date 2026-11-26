@@ -91,3 +91,21 @@
 .gpop{display:block;height:10px;border-radius:6px;min-width:190px;border:1px solid rgba(255,255,255,.18)}
 .gpopt{display:flex;justify-content:space-between;font-size:11px;opacity:.85;margin:2px 0 4px;font-style:normal}.gpopt i{font-style:normal}
 .xtool .xtl+label{margin-left:2px}
+
+/* ---------- Panel «Capas» dentro del mapa (MAPAZ.panelCapas) y cartografía hidrográfica ---------- */
+.mzc{position:absolute;left:10px;top:10px;z-index:6;width:236px;max-width:calc(100% - 70px);font-size:12px;color:#e8f1ff}
+.mzc-h{display:flex;align-items:center;gap:7px;background:rgba(9,18,36,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(140,190,255,.3);color:inherit;border-radius:10px;padding:6px 10px;font:inherit;cursor:pointer;width:100%;transition:border-color .2s,transform .2s}
+.mzc-h:hover{border-color:rgba(160,210,255,.65);transform:translateY(-1px)}.mzc-h b{font-weight:700;letter-spacing:.02em}.mzc-n{margin-left:auto;font-size:10.5px;color:#9fc0ea}
+.mzc-c{width:7px;height:7px;border-right:2px solid #9fc0ea;border-bottom:2px solid #9fc0ea;transform:rotate(45deg);margin:-3px 2px 0 4px;transition:transform .2s}.mzc-c.on{transform:rotate(-135deg);margin-top:3px}
+.mzc-b{margin-top:6px;background:rgba(9,18,36,.84);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(140,190,255,.26);border-radius:12px;padding:8px 11px 9px;max-height:min(58vh,430px);overflow:auto;box-shadow:0 10px 28px rgba(0,0,0,.4)}
+.mzc-t{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#8fb4e8;margin:10px 0 3px;font-weight:700}.mzc-g:first-child .mzc-t{margin-top:0}
+.mzc-i{display:flex;align-items:center;gap:9px;padding:3px 0;cursor:pointer;line-height:1.25;position:relative}.mzc-i input{position:absolute;opacity:0;width:1px;height:1px}
+.mzc-s{width:27px;height:15px;border-radius:9px;background:rgba(255,255,255,.14);position:relative;flex:none;transition:background .2s}
+.mzc-s::after{content:"";position:absolute;left:2px;top:2px;width:11px;height:11px;border-radius:50%;background:#cfe0f7;transition:transform .2s,background .2s}
+.mzc-i input:checked+.mzc-s{background:var(--sw)}.mzc-i input:checked+.mzc-s::after{transform:translateX(12px);background:#fff}.mzc-i input:focus-visible+.mzc-s{outline:2px solid #8cc3f6;outline-offset:2px}
+:root[data-theme=light] .mzc{color:#10233d}:root[data-theme=light] .mzc-h,:root[data-theme=light] .mzc-b{background:rgba(255,255,255,.9);border-color:rgba(16,35,61,.22)}:root[data-theme=light] .mzc-n,:root[data-theme=light] .mzc-t{color:#4a6a92}:root[data-theme=light] .mzc-s{background:rgba(16,35,61,.18)}
+.glg .grmp{display:block;height:10px;border-radius:5px;margin:4px 0 2px}.glg .grmpt{display:flex;justify-content:space-between;font-size:10.5px;opacity:.85}
+.glg .glin{display:inline-flex;align-items:center;gap:7px;margin:2px 12px 2px 0}.glg .glin i{display:inline-block;width:26px;height:0;border-top:3px solid var(--c,#5fd0ff);border-radius:2px}.glg .glin i.d{border-top-style:dashed;border-top-width:2px}.glg .glin i.s{height:12px;border:2px dashed var(--c);border-radius:3px;width:20px;background:color-mix(in srgb,var(--c) 22%,transparent)}
+.glg .gring{display:inline-block;width:12px;height:12px;border-radius:50%;border:2.5px solid var(--c,#2e9e5b);background:#0a1426;margin-right:6px;vertical-align:-2px}
+/* leyenda del mapa hidrográfico: las notas ocupan su propia línea */
+#hL .glg>div{display:flex;flex-wrap:wrap;align-items:center;gap:2px 0}#hL .glg small{display:block;flex:0 0 100%;white-space:normal;max-width:560px;margin-top:3px;line-height:1.35}
