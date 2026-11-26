@@ -1,0 +1,18 @@
+/* VIENTO: partículas de viento y nubosidad sobre el mapa de Meteorología */
+.vi-cv{position:absolute;left:0;top:0;pointer-events:none;z-index:2;transition:opacity .25s}
+.vi-sel{width:20px;height:20px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px rgba(15,139,141,.95),0 0 16px rgba(15,139,141,.85);pointer-events:none;animation:vipulso 2.2s ease-out infinite}
+@keyframes vipulso{0%{box-shadow:0 0 0 2px rgba(15,139,141,.95),0 0 0 0 rgba(15,139,141,.55)}100%{box-shadow:0 0 0 2px rgba(15,139,141,.95),0 0 0 16px rgba(15,139,141,0)}}
+[data-mov=off] .vi-sel{animation:none}@media (prefers-reduced-motion:reduce){.vi-sel{animation:none}}
+.vi-r{width:min(280px,42vw);accent-color:var(--brand2,#2d7fb8);vertical-align:middle}
+.vi-t{font-size:12.5px;font-weight:700;margin-left:4px;min-width:150px}
+.vi-lb{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;margin-left:10px;cursor:pointer}
+.glg .vi-gr{display:block;height:10px;border-radius:5px;margin:4px 0 2px;min-width:210px}.glg .vi-gt{display:flex;justify-content:space-between;font-size:10.5px;opacity:.85}
+.glg .vi-nb{background:linear-gradient(90deg,rgba(255,255,255,0),rgba(228,238,255,.45) 50%,rgba(255,255,255,.92));border:1px solid rgba(127,140,160,.35)}.glg .vi-nb.cl{background:linear-gradient(90deg,rgba(36,58,100,0),rgba(36,58,100,.4) 50%,rgba(36,58,100,.85))}
+#mVi:empty{display:none}#mVi{margin:0 0 8px}#mVi .vi-cg{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 6px;font-size:13px}#mVi .vi-cg>b{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin-right:2px}
+/* la ventana de datos debe quedar sobre las partículas y la nube */
+#mMap .maplibregl-popup{z-index:6}
+/* mismos botones que la barra de controles del módulo */
+#mVi button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:4px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+#mVi button.on{background:#1d6fb8;color:#fff;border-color:#1d6fb8}
+#mVi button:disabled{opacity:.45;cursor:not-allowed}
+#mVi label{display:flex;gap:6px;align-items:center}

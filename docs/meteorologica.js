@@ -3,7 +3,7 @@
    Mapa y fichas comparten el código de MAPAZ (mapa base, íconos, población). Los avisos cubren pocas semanas: no permiten estimar frecuencia. */
 var MET = (function () {
   var S = SALA, X = S2, M = MAPAZ, A, T, D, map = null, LG = {d: "", m: ""}, MK = [], rq = 0, SEL = null;
-  var st = {v: "avisos", p: "vig", f: "", pp: 7, vr: "tx", dia: 0, nd: false, pob: false, sal: false, eme: false};
+  var st = {v: "avisos", p: "vig", f: "", pp: 7, vr: "tx", dia: 0}, PN = null, FXP = [], SFK = "";
   var AV = [], PR = [], FC = [], FX = M.PRON;
   var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now());
   /* fenómenos: orden de clasificación = orden de la lista (granizada y nevada antes que lluvia y frío) */
@@ -129,15 +129,20 @@ var MET = (function () {
   }
 
   /* ---------- página ---------- */
+  var GRUPOS = [
+    {t: "Base", items: [{id: "dep", t: "Departamentos", on: true, sw: "#cfe0f7"}, {id: "mun", t: "Límites municipales", on: true, sw: "#9db4d4", h: "Se ven al acercar el mapa"}]},
+    {t: "Monitoreo de esta vista", items: [{id: "niv", t: "Municipios por nivel de aviso", on: true, v: "avisos", sw: "#f26a1b"}, {id: "fle", t: "Flechas de viento del aviso", on: true, v: "avisos", sw: "#0f8b8d"}, {id: "sup", t: "Superficie del pronóstico", on: true, v: "pron", sw: "#fc8d59"}, {id: "ctr", t: "Municipios con aviso vigente (contorno)", on: true, v: "pron", sw: "#f26a1b"}, {id: "pr", t: "Reportes de prensa", on: true, v: "prensa", sw: "#7fc4ff"}]},
+    {t: "Contexto (a pedido)", items: [{id: "pob", t: "Población", on: false, sw: "#8461f0"}, {id: "sal", t: "Hospitales y centros de salud", on: false, sw: "#34d17a"}, {id: "eme", t: "Bomberos y policía", on: false, sw: "#ff6b5e"}]}
+  ];
   function html() {
     return '<nav class="tnav"><a href="index.html">Tablero</a><span class="tsep">›</span><b>Tipo de evento · Meteorológica</b></nav><h1 class="th">Meteorológica <small>avisos del SENAMHI y pronóstico</small></h1>' +
       '<div class="cap">Los <b>avisos</b> son oficiales (SENAMHI); la intensidad y la dirección se leen de su texto. El <b>pronóstico de modelo</b> (Open-Meteo) no es un aviso. Los avisos disponibles cubren pocas semanas: <b>no permiten estimar frecuencia</b>. Información preliminar.</div>' +
       '<div class="cpul c6" id="mPul"></div>' +
       '<div class="xq"><div class="xs1" id="lgBox"></div></div>' +
-      '<div class="cvw"><b>Ver en el mapa</b><button type="button" data-v="avisos">' + X.ic("shield") + 'Avisos</button><button type="button" data-v="pron">' + X.ic("sun") + 'Pronóstico 7 días</button><button type="button" data-v="prensa">' + X.ic("doc") + 'Prensa</button></div>' +
-      '<div class="cvc" id="mCtl"></div><div class="xhelp" id="mH"></div>' +
-      '<div class="xg"><div class="xmw"><div class="xtool" id="mTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button><span class="xsp"></span><span class="xtl">Añadir al mapa</span><label><input type="checkbox" id="mNd"> Nombres de departamentos</label><label><input type="checkbox" id="mLp"> Población</label><label><input type="checkbox" id="mLs"> Hospitales y centros de salud</label><label><input type="checkbox" id="mLe"> Bomberos y policía</label></div>' +
-      '<div style="position:relative"><div class="xmap" id="mMap"></div><div class="xav" id="mAv" style="top:14px" hidden></div><div class="xav" id="mAq" style="top:14px" hidden></div><div class="xlab" id="mLb" style="top:0;bottom:0;height:auto;min-height:0"></div></div><div class="xleg" id="mL"></div></div>' +
+      '<div class="cvw"><b>Ver en el mapa</b><button type="button" data-v="avisos">' + X.ic("shield") + 'Avisos</button><button type="button" data-v="pron">' + X.ic("sun") + 'Pronóstico 7 días</button><button type="button" data-v="viento">' + X.ic("compass") + 'Viento y nubes</button><button type="button" data-v="prensa">' + X.ic("doc") + 'Prensa</button></div>' +
+      '<div class="cvc" id="mCtl"></div><div id="mVi"></div><div class="xhelp" id="mH"></div>' +
+      '<div class="xg"><div class="xmw"><div class="xtool" id="mTool"><span class="xtl">Mapa base</span><button type="button" data-b="calles" class="on">Calles</button><button type="button" data-b="topo">Relieve</button><button type="button" data-b="sat">Satélite</button><button type="button" data-b="none">Sin mapa</button></div>' +
+      '<div style="position:relative"><div class="xmap" id="mMap"></div><div id="mCapas"></div><div class="xav" id="mAv" style="top:14px" hidden></div><div class="xav" id="mAq" style="top:14px;left:auto;right:56px;transform:none" hidden></div></div><div class="xleg" id="mL"></div></div>' +
       '<div class="xside"><div id="mDet"></div></div></div><div id="eviP"></div>' +
       '<div class="card" style="margin-top:12px"><h3>Cronología de avisos por fenómeno</h3><div id="mG1" style="height:230px"></div><p class="nota" id="mG1n"></p></div>' +
       '<div class="xg2"><div class="card"><h3>Población bajo aviso, por día</h3><div id="mG2" style="height:230px"></div><p class="nota" id="mG2n"></p></div>' +
@@ -148,8 +153,9 @@ var MET = (function () {
   function cfgMon() { return {col: "#0f8b8d", geoMun: D.geoMun, colN: NC, nivT: ["Verde", "Amarillo", "Naranja", "Rojo"], avisos: function (k) { return AV.filter(function (a) { return (a.municipios || []).indexOf(k) >= 0; }); }}; }
   function ayuda() {
     var v = st.v, h, fl = st.f ? '<span class="mfil">' + esc(fenDe(st.f).n) + '<button type="button" id="mFq" title="Quitar el filtro" aria-label="Quitar el filtro">×</button></span> ' : "";
-    if (v === "avisos") { var L = filtrados(); h = '<b>' + L.length + ' aviso' + (L.length === 1 ? "" : "s") + '</b> en ' + esc(LUGAR.etiqueta(LG)) + ' · ' + ({vig: "vigentes hoy", 7: "últimos 7 días", 30: "últimos 30 días", todo: "todo lo disponible"})[st.p] + ' ' + fl + '<span class="nota">— Toque un municipio o un ícono para ver parámetros, población y servicios. Excluye los avisos hidrológicos (módulo Hidrológica).</span>'; }
-    else if (v === "pron") h = '<b>' + esc(VR[st.vr].n) + '</b> · ' + (FX.estado === "ok" ? (st.dia === 0 ? "hoy" : fd(FX.dias[st.dia])) : FX.estado === "error" ? "sin conexión con el modelo" : "consultando…") + ' <span class="nota">— Modelo Open-Meteo en puntos de ~1°, no son estaciones. Contorno naranja: municipio con aviso vigente.</span>';
+    if (v === "avisos") { var L = filtrados(); h = '<b>' + L.length + ' aviso' + (L.length === 1 ? "" : "s") + '</b> en ' + esc(LUGAR.etiqueta(LG)) + ' · ' + ({vig: "vigentes hoy", 7: "últimos 7 días", 30: "últimos 30 días", todo: "todo lo disponible"})[st.p] + ' ' + fl + '<span class="nota">— Pase el cursor por un municipio para ver su aviso y toque para el detalle. Excluye los avisos hidrológicos (módulo Hidrológica).</span>'; }
+    else if (v === "pron") h = '<b>' + esc(VR[st.vr].n) + '</b> · ' + (FX.estado === "ok" ? (st.dia === 0 ? "hoy" : fd(FX.dias[st.dia])) : FX.estado === "error" ? "sin conexión con el modelo" : "consultando…") + ' <span class="nota">— Superficie interpolada entre puntos del modelo Open-Meteo (~1°), no son estaciones; pase el cursor para ver el valor. Contorno naranja: municipio con aviso vigente.</span>';
+    else if (v === "viento") h = '<b>Viento y nubes</b> · ' + (VIENTO.estado() === "ok" ? esc(VIENTO.hora()) : VIENTO.estado() === "error" ? "sin conexión con el modelo" : "consultando…") + ' <span class="nota">— Modelo Open-Meteo (~1°), no son observaciones. Las partículas siguen el viento a 10 m de altura; pase el cursor para ver el valor y toque un punto para ver las próximas 48 h.</span>';
     else h = '<b>' + prensaL().length + ' reportes</b> de prensa con lugar en ' + esc(LUGAR.etiqueta(LG)) + ' <span class="nota">— Ubicación aproximada (lugar nombrado en la nota); son hechos reportados, no avisos.</span>';
     $("mH").innerHTML = h; var q = $("mFq"); if (q) q.onclick = function () { st.f = ""; SEL = null; dibuja(); };
   }
@@ -157,8 +163,9 @@ var MET = (function () {
     var h = "", ch = function (t, k, val, cur) { return '<button type="button" data-k="' + k + '" data-v="' + val + '"' + (String(cur) === String(val) ? ' class="on"' : "") + '>' + t + '</button>'; };
     if (st.v === "avisos") h = '<div class="cg"><b>Período</b>' + [["vig", "Vigentes hoy"], ["7", "7 días"], ["30", "30 días"], ["todo", "Todo lo disponible"]].map(function (x) { return ch(x[1], "p", x[0], st.p); }).join("") + '</div>';
     else if (st.v === "pron") { h = '<div class="cg"><b>Variable</b>' + Object.keys(VR).map(function (k) { return ch(VR[k].n, "vr", k, st.vr); }).join("") + '</div>'; if (FX.estado === "ok") h += '<div class="cg"><b>Día</b>' + FX.dias.map(function (d, i) { return ch(i === 0 ? "Hoy" : i === 1 ? "Mañana" : fdl(d), "dia", i, st.dia); }).join("") + '</div>'; }
+    else if (st.v === "viento") h = "";
     else h = '<div class="cg"><b>Período</b>' + [["1", "24 h"], ["7", "7 días"], ["30", "30 días"]].map(function (x) { return ch(x[1], "pp", x[0], st.pp); }).join("") + '</div>';
-    $("mCtl").innerHTML = h;
+    $("mCtl").innerHTML = h; $("mCtl").style.display = h ? "" : "none"; if ($("mVi")) { if (st.v === "viento") VIENTO.ui($("mVi")); else $("mVi").innerHTML = ""; }
     [].forEach.call($("mCtl").querySelectorAll("button[data-k]"), function (b) { b.onclick = function () { var k = b.dataset.k; st[k] = (k === "p") ? b.dataset.v : (k === "vr") ? b.dataset.v : +b.dataset.v; if (k !== "dia" && k !== "vr") SEL = null; if (k === "vr" && SEL && SEL.t !== "fx") SEL = null; dibuja(); }; });
   }
 
@@ -216,14 +223,14 @@ var MET = (function () {
   }
   function detalle() {
     var el = $("mDet"); if (!el) return; var h;
-    if (!SEL) h = '<div class="xc xhint"><h3>' + (st.v === "avisos" ? "Avisos" : st.v === "pron" ? "Pronóstico" : "Prensa") + '</h3>' + (st.v === "avisos" ? 'Toque un municipio coloreado o un ícono de fenómeno para ver los parámetros del aviso, la población y los servicios.' : st.v === "pron" ? (FX.estado === "ok" ? 'Toque un punto del mapa para ver su pronóstico de 7 días y el aviso oficial del municipio.' : 'El pronóstico se consulta al modelo Open-Meteo desde su navegador.') : 'Toque un reporte para ver su detalle.') + '</div>';
-    else if (SEL.t === "av") h = fichaAviso(AV[SEL.i]); else if (SEL.t === "mun") h = fichaMun(SEL.k); else if (SEL.t === "fx") h = fichaPron(SEL.i); else h = fichaPrensa(SEL.e);
+    if (!SEL) h = '<div class="xc xhint"><h3>' + (st.v === "avisos" ? "Avisos" : st.v === "pron" ? "Pronóstico" : st.v === "viento" ? "Viento y nubes" : "Prensa") + '</h3>' + (st.v === "avisos" ? 'Toque un municipio coloreado para ver los parámetros del aviso, la población y los servicios.' : st.v === "pron" ? (FX.estado === "ok" ? 'Toque el mapa para ver el pronóstico de 7 días del punto del modelo más cercano y el aviso oficial del municipio.' : 'El pronóstico se consulta al modelo Open-Meteo desde su navegador.') : st.v === "viento" ? 'Toque un punto del mapa para ver el viento y la nubosidad previstos en ese lugar para las próximas 48 h.' : 'Toque un reporte para ver su detalle.') + '</div>';
+    else if (SEL.t === "av") h = fichaAviso(AV[SEL.i]); else if (SEL.t === "mun") h = fichaMun(SEL.k); else if (SEL.t === "fx") h = fichaPron(SEL.i); else if (SEL.t === "vi") h = fichaViento(SEL.ll); else h = fichaPrensa(SEL.e);
     el.innerHTML = h;
     [].forEach.call(el.querySelectorAll("a[data-av]"), function (a) { a.onclick = function (e) { e.preventDefault(); SEL = {t: "av", i: +a.dataset.av}; selecciona(true); }; });
     [].forEach.call(el.querySelectorAll("a[data-mun]"), function (a) { a.onclick = function (e) { e.preventDefault(); SEL = {t: "mun", k: a.dataset.mun}; selecciona(true); }; });
     [].forEach.call(el.querySelectorAll("tr[data-i]"), function (r) { r.onclick = function () { SEL = {t: "av", i: +r.dataset.i}; selecciona(true); }; });
     var ir = $("mIrMon"); if (ir) ir.onclick = function (e) { e.preventDefault(); var m = SEL && T.M[SEL.k]; if (m && window.CLIMA) CLIMA.irMun(m.n + " (" + m.d + ")"); var s = $("mMon"); if (s) s.scrollIntoView({behavior: "smooth"}); };
-    if (SEL && SEL.t === "fx") serieFx(FX.pts[SEL.i]);
+    if (SEL && SEL.t === "fx") serieFx(FX.pts[SEL.i]); if (SEL && SEL.t === "vi") serieVi(SEL.ll);
   }
   function serieFx(p) {
     if (!p || !$("mFxC")) return; var tx = X.css("--mut") || "#888", d = FX.dias.map(fdl);
@@ -232,6 +239,23 @@ var MET = (function () {
       series: [{name: "Lluvia (mm)", type: "bar", yAxisIndex: 1, data: p.pp, itemStyle: {color: "#4aa3f5", opacity: .75, borderRadius: [3, 3, 0, 0]}}, {name: "Máx.", type: "line", data: p.tx, smooth: .3, symbol: "circle", symbolSize: 5, lineStyle: {color: "#d73027", width: 2}, itemStyle: {color: "#d73027"}}, {name: "Mín.", type: "line", data: p.tn, smooth: .3, symbol: "circle", symbolSize: 5, lineStyle: {color: "#4575b4", width: 2}, itemStyle: {color: "#4575b4"}}]});
   }
 
+  function fHoraV(ms) { try { return new Date(ms).toLocaleString("es-BO", {weekday: "short", hour: "2-digit", minute: "2-digit", timeZone: "America/La_Paz", hour12: false}).replace(/\./g, ""); } catch (e) { return ""; } }
+  function fichaViento(ll) {
+    var q = VIENTO.en(ll[0], ll[1]); if (!q) return '<div class="xc xhint">Sin dato del modelo en ese punto (fuera de la rejilla o del país).</div>';
+    var m = T.donde(ll[0], ll[1]), av = m ? AV.filter(function (a) { return vig(a) && a._k === "vie" && a._ms.indexOf(m.k) >= 0; }) : [];
+    return '<div class="xc gfi">' + cab(Math.round(q.sp) + '<small> km/h</small>', "#0f8b8d", "Viento y nubes" + (m ? ' <small class="nota">' + esc(m.n) + ' · ' + esc(m.d) + '</small>' : ""), 'Punto ' + fmt(ll[0], 2) + '°, ' + fmt(ll[1], 2) + '° · modelo Open-Meteo · ' + esc(VIENTO.hora())) +
+      '<div id="mViC" style="height:220px"></div><div class="gsec">En este momento</div><div class="gpars">' + dato("Viento a 10 m", Math.round(q.sp) + ' km/h <small>(' + fmt(q.ms, 1) + ' m/s)</small>') + dato("Dirección", 'del ' + VIENTO.cardinal(q.dr) + ' (' + Math.round(q.dr) + '°)<br><small>sopla hacia el ' + VIENTO.cardinal(q.hacia) + '</small>') + dato("Nubosidad", q.c == null ? "sin dato" : "≈ " + Math.round(q.c) + " %", true) + '</div>' +
+      '<div class="gsec">Aviso oficial de viento en el municipio</div>' + (av.length ? '<table class="mlist">' + av.map(function (a) { return '<tr data-i="' + a._i + '"><td>' + M.ico(a._k, 16) + '</td><td><b style="color:' + NC[Math.min(3, a._n)] + '">' + NT[Math.min(3, a._n)] + '</b> · ' + esc(a._f) + '<br><small class="nota">' + esc(parTxt(a)) + ' · ' + vigTxt(a) + '</small></td></tr>'; }).join("") + '</table>' : '<p class="nota">' + (m ? 'Sin aviso de viento vigente en ' + esc(m.n) + '.' : 'El punto no cae dentro de un municipio.') + '</p>') +
+      '<p class="nota" style="margin:8px 0 0">Modelo de ~1°: no resuelve valles ni montañas y no son observaciones. Compárelo siempre con SENAMHI.</p></div>';
+  }
+  function serieVi(ll) {
+    var el = $("mViC"); if (!el) return; var r = VIENTO.serie(ll[0], ll[1]); if (!r) { el.innerHTML = '<p class="nota">Sin serie del modelo.</p>'; return; }
+    var tx = X.css("--mut") || "#888", n = Math.min(49, r.t.length), lab = r.t.slice(0, n).map(fHoraV), now = Math.max(0, r.t.findIndex(function (t) { return t > Date.now(); }) - 1);
+    X.chart("mViC", {tooltip: {trigger: "axis"}, legend: {top: 0, textStyle: {color: tx, fontSize: 11}, data: ["Viento (km/h)", "Nubosidad (%)"]}, grid: {left: 38, right: 38, top: 50, bottom: 36}, xAxis: {type: "category", data: lab, axisLabel: {color: tx, fontSize: 10, interval: 11}},
+      yAxis: [{type: "value", min: 0, axisLabel: {color: tx}, splitLine: {lineStyle: {opacity: .25}}}, {type: "value", min: 0, max: 100, axisLabel: {color: tx}, splitLine: {show: false}}],
+      series: [{name: "Nubosidad (%)", type: "line", yAxisIndex: 1, data: r.c.slice(0, n), showSymbol: false, areaStyle: {color: "rgba(160,180,210,.22)"}, lineStyle: {color: "rgba(160,180,210,.7)", width: 1}, itemStyle: {color: "#9fb4d6"}},
+        {name: "Viento (km/h)", type: "line", data: r.sp.slice(0, n).map(function (v) { return v == null ? null : +v.toFixed(1); }), showSymbol: false, smooth: .25, lineStyle: {color: "#0f8b8d", width: 2.2}, itemStyle: {color: "#0f8b8d"}, markLine: {silent: true, symbol: "none", label: {formatter: "ahora", color: tx, fontSize: 10}, lineStyle: {color: tx, type: "dashed"}, data: [{xAxis: now}]}}]});
+  }
   /* ---------- datos del mapa ---------- */
   function prensaL() { var t0 = Date.now() - st.pp * DIA; return PR.filter(function (e) { return e.lat != null && e.ts >= t0 && LUGAR.ev(T, LG, e); }); }
   function geoMun(L) {
@@ -239,22 +263,22 @@ var MET = (function () {
     return M.fc(T.lista.map(function (m) { var v = enM(m) ? ms[m.k] : null; return {type: "Feature", geometry: m.f.geometry, properties: {k: m.k, c: v == null ? SIN : NC[Math.min(3, v)], o: st.v === "avisos" ? (v == null ? .08 : .7) : 0, s: SEL && SEL.t === "mun" && SEL.k === m.k ? 1 : 0, a: vg[m.k] ? 1 : 0}}; }));
   }
   /* un ícono por fenómeno y departamento, en el centro de los municipios alcanzados */
-  function geoIconos(L) {
-    var g = {}; L.forEach(function (a) { a._ms.forEach(function (k) { var m = T.M[k]; if (!m || !enM(m)) return; var key = a._k + "|" + m.d, o = g[key] || (g[key] = {k: a._k, d: m.d, n: 0, mx: 0, av: {}, ms: {}, x: 0, y: 0}); if (!o.ms[k]) { o.ms[k] = 1; var c = centro(m); o.x += c[0]; o.y += c[1]; o.n++; } o.mx = Math.max(o.mx, a._n); o.av[a._i] = 1; }); });
-    var por = {}; Object.keys(g).forEach(function (q) { (por[g[q].d] = por[g[q].d] || []).push(g[q]); });
-    var f = []; Object.keys(por).forEach(function (d) { var l = por[d].sort(function (a, b) { return ORD.indexOf(a.k) - ORD.indexOf(b.k); }); l.forEach(function (o, j) { f.push({type: "Feature", geometry: {type: "Point", coordinates: [o.x / o.n, o.y / o.n]}, properties: {ic: o.k, k: o.k, d: d, n: o.n, mx: o.mx, na: Object.keys(o.av).length, off: l.length + "_" + j, ai: Object.keys(o.av).map(Number).sort(function (x, y) { return AV[y]._n - AV[x]._n; })[0]}}); }); });
-    return M.fc(f);
-  }
   function geoViento(L) {
     var f = [], vistos = {}; L.forEach(function (a) { if (a._k !== "vie" || !a._p.dir) return; a._ms.forEach(function (k) { var m = T.M[k]; if (!m || !enM(m)) return; var c = centro(m), q = Math.round(c[0] / .6) + "," + Math.round(c[1] / .6) + "," + Math.round(a._p.dir.hacia); if (vistos[q]) return; vistos[q] = 1; f.push({type: "Feature", geometry: {type: "Point", coordinates: c}, properties: {rot: a._p.dir.hacia, i: a._i}}); }); });
     return M.fc(f);
   }
   function geoPrensa() { return M.fc(prensaL().map(function (e, i) { return {type: "Feature", geometry: {type: "Point", coordinates: [e.lon, e.lat]}, properties: {i: i, ic: e._k, s: SEL && SEL.t === "pn" && SEL.e === e ? 1 : 0}}; })); }
-  function geoPron() {
-    if (FX.estado !== "ok") return M.fc([]);
-    return M.fc(FX.pts.map(function (p, i) { var v = vPunto(p, st.vr, st.dia), c = clasePron(st.vr, v); return v == null ? null : {type: "Feature", geometry: {type: "Point", coordinates: [p.lon, p.lat]}, properties: {i: i, v: v, c: c[1], s: SEL && SEL.t === "fx" && SEL.i === i ? 1 : 0}}; }).filter(Boolean));
+  function clavePron() { return st.vr + "|" + st.dia + "|" + FX.estado + "|" + (FX.pts ? FX.pts.length : 0); }
+  var AL = {pp: function (v) { return v < .2 ? 0 : Math.min(.8, (v - .2) / 2.2 * .8); }}, ALD = function () { return .74; };
+  function superficieMapa() {
+    if (!map || !map._ok) return; if (st.v !== "pron" || FX.estado !== "ok") { FXP = []; SUPF.quita(map, "fx-sf"); SFK = ""; return; }
+    FXP = FX.pts.map(function (p) { return {lon: p.lon, lat: p.lat, v: vPunto(p, st.vr, st.dia), p: p}; }).filter(function (q) { return q.v != null; });
+    SUPF.pon(map, "fx-sf", FXP, SUPF.deClases(VR[st.vr].cl), AL[st.vr] || ALD, (T.D.geoDep.features || []).map(function (f) { return f.geometry; }), "m-l", clavePron(), .95);
   }
-  var OFS = (function () { var e = ["match", ["get", "off"]], n, j; for (n = 1; n <= 6; n++) for (j = 0; j < n; j++) { e.push(n + "_" + j); e.push(["literal", [(j - (n - 1) / 2) * 27, 0]]); } e.push(["literal", [0, 0]]); return e; })();
+  function geoSelFx() {
+    if (FX.estado !== "ok" || !SEL || SEL.t !== "fx" || !FX.pts[SEL.i]) return M.fc([]); var p = FX.pts[SEL.i];
+    return M.fc([{type: "Feature", geometry: {type: "Point", coordinates: [p.lon, p.lat]}, properties: {}}]);
+  }
   function bajo(m) {
     var osc = document.documentElement.getAttribute("data-theme") === "dark";
     m.addSource("mv", {type: "geojson", data: geoMun([])});
@@ -263,76 +287,84 @@ var MET = (function () {
     m.addLayer({id: "mv-s", type: "line", source: "mv", filter: ["==", ["get", "s"], 1], paint: {"line-color": osc ? "#ffffff" : "#10233d", "line-width": 3}});
   }
   function alto(m) {
-    var osc = document.documentElement.getAttribute("data-theme") === "dark", ik = ["interpolate", ["linear"], ["zoom"], 4, .62, 7, .85, 10, 1.15];
-    m.addSource("wd", {type: "geojson", data: geoViento([])}); m.addSource("ai", {type: "geojson", data: geoIconos([])}); m.addSource("pn", {type: "geojson", data: geoPrensa()}); m.addSource("fx", {type: "geojson", data: geoPron()});
-    m.addLayer({id: "fx-b", type: "circle", source: "fx", layout: {visibility: "none"}, paint: {"circle-radius": ["interpolate", ["exponential", 1.6], ["zoom"], 4, 16, 6, 38, 8, 110, 10, 300], "circle-color": ["get", "c"], "circle-opacity": .55, "circle-blur": .55}});
-    m.addLayer({id: "fx-c", type: "circle", source: "fx", layout: {visibility: "none"}, paint: {"circle-radius": ["case", ["==", ["get", "s"], 1], 8, 5], "circle-color": ["get", "c"], "circle-stroke-color": ["case", ["==", ["get", "s"], 1], osc ? "#fff" : "#000", "rgba(255,255,255,.85)"], "circle-stroke-width": ["case", ["==", ["get", "s"], 1], 3, 1.2]}});
+    var osc = document.documentElement.getAttribute("data-theme") === "dark";
+    m.addSource("wd", {type: "geojson", data: geoViento([])}); m.addSource("pn", {type: "geojson", data: geoPrensa()}); m.addSource("fx", {type: "geojson", data: geoSelFx()});
+    m.addLayer({id: "fx-s", type: "circle", source: "fx", layout: {visibility: "none"}, paint: {"circle-radius": 9, "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": osc ? "#ffffff" : "#10233d", "circle-stroke-width": 3}});
     m.addLayer({id: "wd", type: "symbol", source: "wd", layout: {"icon-image": "i-fle", "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .42, 7, .6, 10, .95], "icon-rotate": ["get", "rot"], "icon-rotation-alignment": "map", "icon-allow-overlap": true, "icon-ignore-placement": true}, paint: {"icon-opacity": .92}});
-    m.addLayer({id: "ai", type: "symbol", source: "ai", layout: {"icon-image": ["concat", "i-", ["get", "ic"]], "icon-size": ik, "icon-offset": OFS, "icon-allow-overlap": true, "icon-ignore-placement": true}});
     m.addLayer({id: "pn-i", type: "symbol", source: "pn", layout: {"icon-image": ["concat", "i-", ["get", "ic"]], "icon-size": ["interpolate", ["linear"], ["zoom"], 4, ["case", ["==", ["get", "s"], 1], .8, .62], 7, ["case", ["==", ["get", "s"], 1], 1.1, .85], 10, ["case", ["==", ["get", "s"], 1], 1.5, 1.15]], "icon-allow-overlap": true, "icon-ignore-placement": true}});
   }
+  function nombreLugar(lat, lon) { var m = T.donde(lat, lon); return m ? m.n + " · " + m.d : ""; }
   function listo(m) {
-    var pop = m._pop, mun = function (e) { return T.M[e.features[0].properties.k]; };
+    var pop = m._pop, mun = function (e) { return T.M[e.features[0].properties.k]; }, sobre = function (e, caps) { var ls = caps.filter(function (l) { return m.getLayer(l) && m.getLayoutProperty(l, "visibility") !== "none"; }); return ls.length > 0 && m.queryRenderedFeatures(e.point, {layers: ls}).length > 0; };
     m.on("mousemove", "mv-f", function (e) {
-      var q = mun(e); if (!q || st.v !== "avisos") return; var L = filtrados().filter(function (a) { return a._ms.indexOf(q.k) >= 0; }); if (m.queryRenderedFeatures(e.point, {layers: ["ai"]}).length) return; m.getCanvas().style.cursor = "pointer";
+      var q = mun(e); if (!q || st.v !== "avisos" || sobre(e, ["pn-i", "wd"])) return; var L = filtrados().filter(function (a) { return a._ms.indexOf(q.k) >= 0; }); m.getCanvas().style.cursor = "pointer";
       pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(q.n) + ' <span style="font-weight:400">' + esc(q.d) + '</span></b>' + (L.length ? L.map(function (a) { return '<span style="color:' + NC[Math.min(3, a._n)] + '">●</span> ' + esc(a._f) + ' · ' + esc(parTxt(a)); }).join("<br>") : "sin aviso en el filtro") + '<br>clic para ver el detalle</div>').addTo(m);
     });
     m.on("mouseleave", "mv-f", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
-    m.on("click", "mv-f", function (e) { var q = mun(e); if (!q || st.v !== "avisos" || m.queryRenderedFeatures(e.point, {layers: ["ai"]}).length) return; SEL = {t: "mun", k: q.k}; selecciona(false); });
-    m.on("mousemove", "ai", function (e) { var p = e.features[0].properties; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(fenDe(p.k).n) + ' · ' + esc(NT[Math.min(3, +p.mx)]) + '</b>' + esc(p.d) + ' · ' + p.n + ' municipio' + (+p.n === 1 ? "" : "s") + (+p.na > 1 ? ' · ' + p.na + ' avisos' : '') + '<br>clic para ver el aviso</div>').addTo(m); });
-    m.on("mouseleave", "ai", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
-    m.on("click", "ai", function (e) { SEL = {t: "av", i: +e.features[0].properties.ai}; selecciona(false); });
+    m.on("click", "mv-f", function (e) { var q = mun(e); if (!q || st.v !== "avisos" || sobre(e, ["pn-i", "wd"])) return; SEL = {t: "mun", k: q.k}; selecciona(false); });
+    m.on("mousemove", "wd", function (e) { var a = AV[+e.features[0].properties.i]; if (!a) return; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">Viento del ' + esc(a._p.dir.de || "") + ' · ' + esc(NT[Math.min(3, a._n)]) + '</b>sopla hacia ' + esc(a._p.dir.haciaTxt || "") + '<br>clic para ver el aviso</div>').addTo(m); });
+    m.on("mouseleave", "wd", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
+    m.on("click", "wd", function (e) { SEL = {t: "av", i: +e.features[0].properties.i}; selecciona(false); });
     m.on("mousemove", "pn-i", function (e) { var q = prensaL()[e.features[0].properties.i]; if (!q) return; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(q.titulo) + '</b>' + esc(q.fuente || "") + ' · ubicación aproximada</div>').addTo(m); });
     m.on("mouseleave", "pn-i", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
     m.on("click", "pn-i", function (e) { var q = prensaL()[e.features[0].properties.i]; if (q) { SEL = {t: "pn", e: q}; selecciona(false); } });
-    m.on("mousemove", "fx-c", function (e) { var q = FX.pts[e.features[0].properties.i]; if (!q) return; var v = vPunto(q, st.vr, st.dia); m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + esc(M.nombrePunto(q)) + ': ' + fmt(v, 1) + ' ' + VR[st.vr].u + '</b>' + esc(VR[st.vr].n) + ' · modelo · clic para ver 7 días</div>').addTo(m); });
-    m.on("mouseleave", "fx-c", function () { pop.remove(); m.getCanvas().style.cursor = ""; });
-    m.on("click", "fx-c", function (e) { SEL = {t: "fx", i: e.features[0].properties.i}; selecciona(false); });
-    m.on("zoomend", etiquetas); m.on("move", function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; rotular(); }); }); m.on("resize", rotular);
+    /* pronóstico: superficie continua; el valor y el punto del modelo más cercano aparecen al pasar el cursor */
+    m.on("mousemove", function (e) {
+      if (st.v !== "pron" || FX.estado !== "ok" || !FXP.length || sobre(e, ["wd"])) return; var r = SUPF.idw(FXP, e.lngLat.lng, e.lngLat.lat); if (r.v == null || r.dm > 1.6) { if (st.v === "pron") pop.remove(); m.getCanvas().style.cursor = ""; return; }
+      m.getCanvas().style.cursor = "pointer"; var u = VR[st.vr].u, c = clasePron(st.vr, r.v), nm = nombreLugar(e.lngLat.lat, e.lngLat.lng);
+      pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0"><span style="color:' + (c ? c[1] : SIN) + '">●</span> ≈ ' + fmt(r.v, st.vr === "pp" ? 1 : 0) + ' ' + u + '</b>' + esc(VR[st.vr].n) + (nm ? ' · ' + esc(nm) : "") + '<br>punto del modelo más cercano: ' + esc(M.nombrePunto(r.n.p)) + '<br><i>modelo (~1°), no es una estación · clic para ver 7 días</i></div>').addTo(m);
+    });
+    m.on("click", function (e) {
+      if (st.v !== "pron" || FX.estado !== "ok" || !FXP.length || sobre(e, ["wd"])) return; var r = SUPF.idw(FXP, e.lngLat.lng, e.lngLat.lat); if (r.v == null || r.dm > 1.6 || !r.n) return; SEL = {t: "fx", i: FX.pts.indexOf(r.n.p)}; selecciona(false);
+    });
+    m.getCanvas().addEventListener("mouseleave", function () { if (st.v === "pron") pop.remove(); });
+    VIENTO.adjunta(m, {banner: "mAq", nombre: nombreLugar, alCambiar: function () { if (st.v === "viento") { leyenda(); ayuda(); } }, alHora: function () { if (st.v === "viento") ayuda(); },
+      alElegir: function (lat, lon) { if (st.v !== "viento") return; SEL = {t: "vi", ll: [lat, lon]}; VIENTO.marca([lat, lon]); selecciona(false); }});
+    VIENTO.activa(st.v === "viento");
     LUGAR.ajusta(m, T, LG, false); capasVista(); dibuja();
   }
   function capasVista() {
-    if (!map || !map._ok) return; var v = st.v, mu = v === "avisos" && SEL && SEL.t === "mun";
-    M.vis(map, "mv-f", v === "avisos"); M.vis(map, "mv-o", v === "pron"); M.vis(map, "ai", v === "avisos"); M.vis(map, "wd", v === "avisos" && (!st.f || st.f === "vie")); M.vis(map, "pn-i", v === "prensa"); M.vis(map, "fx-b", v === "pron"); M.vis(map, "fx-c", v === "pron");
-    ["mLp", "mLs", "mLe"].forEach(function (i) { var l = $(i) && $(i).parentNode; if (l) l.style.display = mu ? "" : "none"; });
-    M.vis(map, "ex-f", st.pob && mu); M.vis(map, "ex-l", st.pob && mu); M.vis(map, "inf-s", st.sal && mu); M.vis(map, "inf-e", st.eme && mu);
-  }
-  function rotular() {
-    var l = $("mLb"); if (!map || !l) return; if (!$("mNd").checked || (st.v === "pron" && FX.estado === "ok")) { l.innerHTML = ""; return; }
-    var o = ""; (T.D.geoDep.features || []).forEach(function (f) { var p = map.project(A.cenPoly(f.geometry)); o += '<span style="left:' + p.x.toFixed(0) + 'px;top:' + p.y.toFixed(0) + 'px">' + esc(f.properties.n) + '</span>'; }); l.innerHTML = o;
+    if (!map || !map._ok || !PN) return; var v = st.v, on = function (id) { return PN.get(id); }, mu = v === "avisos" && SEL && SEL.t === "mun";
+    M.vis(map, "d-l", on("dep")); M.vis(map, "m-l", on("mun"));
+    M.vis(map, "mv-f", v === "avisos" && on("niv")); M.vis(map, "mv-o", v === "pron" && on("ctr")); M.vis(map, "wd", v === "avisos" && on("fle") && (!st.f || st.f === "vie")); M.vis(map, "fx-sf", v === "pron" && on("sup")); M.vis(map, "fx-s", v === "pron" && SEL && SEL.t === "fx"); M.vis(map, "pn-i", v === "prensa" && on("pr"));
+    M.vis(map, "ex-f", on("pob")); M.vis(map, "ex-l", mu); M.vis(map, "inf-s", on("sal")); M.vis(map, "inf-e", on("eme"));
   }
   function limpiaMK() { MK.forEach(function (m) { m.remove(); }); MK = []; }
   function marca(html, cls, lon, lat) { var el = document.createElement("div"); el.className = cls; el.innerHTML = html; MK.push(new maplibregl.Marker({element: el, anchor: "center"}).setLngLat([lon, lat]).addTo(map)); }
   function etiquetas() {
     limpiaMK(); if (!map || !map._ok) return;
-    if (st.v === "pron" && FX.estado === "ok") FX.pts.forEach(function (p) { var v = vPunto(p, st.vr, st.dia); if (v != null) marca(fmt(v, st.vr === "pp" || st.vr === "ra" ? 0 : 0), "fx-lab" + (p.cap ? " cap" : ""), p.lon, p.lat); });
     if (st.v === "avisos" && SEL && SEL.t === "mun" && map.getZoom() >= 6) { var m = T.M[SEL.k], c = centro(m); marca('<span class="gm-n">' + esc(m.n) + '</span><small>' + (m.pob != null ? M.fmtP(m.pob) + ' hab.' : 'sin dato') + '</small>', "gm-lab", c[0], c[1]); }
   }
   function leyenda() {
-    var g = function (t, b) { return '<div class="glg"><b>' + t + '</b><div>' + b + '</div></div>'; }, h = "", v = st.v;
+    var g = function (t, b) { return '<div class="glg"><b>' + t + '</b><div>' + b + '</div></div>'; }, h = "", v = st.v, on = function (i) { return PN && PN.get(i); };
     if (v === "avisos") {
-      var mu0 = SEL && SEL.t === "mun";
-      h += g("Nivel de aviso (máximo)", '<span class="gesc">' + [1, 2, 3].map(function (i) { return '<span><i style="background:' + NC[i] + '"></i>' + NT[i] + '</span>'; }).join("") + '<span><i style="background:#7b8794;opacity:.4"></i>Sin aviso en el filtro</span></span>');
-      var ks = {}; filtrados().forEach(function (a) { ks[a._k] = 1; }); var fl = FEN.concat([OTR]).filter(function (f) { return ks[f.k]; });
-      if (!mu0) h += g("Fenómeno", (fl.length ? fl : FEN).map(function (f) { return '<span class="gic">' + M.ico(f.k, 18) + esc(f.n) + '</span>'; }).join("") + (ks.vie ? '<span class="gic">' + M.ico("fle", 18) + 'Flecha: hacia dónde sopla</span><small>El aviso indica de dónde viene el viento.</small>' : ""));
-      if (mu0) h += M.leyendaPob() + g("Infraestructura (OpenStreetMap)", ["hosp", "cli", "cons", "bom", "pol"].map(function (k) { return '<span class="gic">' + M.ico(k, 18) + ({hosp: "Hospital", cli: "Centro / puesto / clínica", cons: "Consultorio", bom: "Bomberos / rescate", pol: "Policía"})[k] + '</span>'; }).join(""));
+      if (on("niv")) h += g("Nivel de aviso (máximo)", '<span class="gesc">' + [1, 2, 3].map(function (i) { return '<span><i style="background:' + NC[i] + '"></i>' + NT[i] + '</span>'; }).join("") + '<span><i style="background:#7b8794;opacity:.4"></i>Sin aviso en el filtro</span></span><small>Cada municipio se colorea por el nivel más alto de los avisos del filtro. El fenómeno se lee al pasar el cursor y en la ficha.</small>');
+      if (on("fle") && filtrados().some(function (a) { return a._k === "vie" && a._p.dir; })) h += g("Viento del aviso", '<span class="gic">' + M.ico("fle", 18) + 'Flecha: hacia dónde sopla</span><small>El aviso indica de dónde viene el viento.</small>');
     } else if (v === "pron") {
-      h += g(esc(VR[st.vr].n) + " (" + VR[st.vr].u + ") · modelo", '<span class="gesc">' + VR[st.vr].cl.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[2] + '</span>'; }).join("") + '</span><br><small>Clases descriptivas, no niveles de aviso.</small>') + g("Contorno", '<span><i style="border:2px dashed #f26a1b;background:transparent;box-sizing:border-box"></i>Municipio con aviso vigente hoy</span>');
-    } else h += g("Fenómeno (según el titular)", FEN.concat([OTR]).map(function (f) { return '<span class="gic">' + M.ico(f.k, 18) + esc(f.n) + '</span>'; }).join(""));
+      h += g(esc(VR[st.vr].n) + " (" + VR[st.vr].u + ") · modelo", '<span class="gesc">' + VR[st.vr].cl.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[2] + '</span>'; }).join("") + '</span><small>Superficie interpolada entre puntos del modelo (~1°); el color cambia suave entre clases. Son clases descriptivas, no niveles de aviso.</small>');
+      if (on("ctr")) h += g("Contorno", '<span><i style="border:2px dashed #f26a1b;background:transparent;box-sizing:border-box"></i>Municipio con aviso vigente hoy</span>');
+    } else if (v === "viento") h += VIENTO.leyenda();
+    else h += g("Fenómeno (según el titular)", FEN.concat([OTR]).map(function (f) { return '<span class="gic">' + M.ico(f.k, 18) + esc(f.n) + '</span>'; }).join(""));
+    if (on("pob")) h += M.leyendaPob();
+    if (on("sal") || on("eme")) h += g("Infraestructura (OpenStreetMap)", ["hosp", "cli", "cons", "bom", "pol"].filter(function (k) { return (k === "bom" || k === "pol") ? on("eme") : on("sal"); }).map(function (k) { return '<span class="gic">' + M.ico(k, 18) + ({hosp: "Hospital", cli: "Centro / puesto / clínica", cons: "Consultorio", bom: "Bomberos / rescate", pol: "Policía"})[k] + '</span>'; }).join(""));
     $("mL").innerHTML = h;
+  }
+  function infraMapa(m) {
+    var on = function (i) { return PN && PN.get(i); }; if (!on("sal") && !on("eme")) { M.infData(map, []); return; }
+    if (m) return; M.infData(map, M.infTodos(function (p) { return !LG.d || p.dep === LG.d; }).map(M.infoFeat));
   }
   function refrescaMapa() {
     if (!map || !map._ok) return; var L = filtrados();
-    map.getSource("mv").setData(geoMun(L)); map.getSource("ai").setData(geoIconos(L)); map.getSource("wd").setData(geoViento(L)); map.getSource("pn").setData(geoPrensa()); map.getSource("fx").setData(geoPron());
+    map.getSource("mv").setData(geoMun(L)); map.getSource("wd").setData(geoViento(L)); map.getSource("pn").setData(geoPrensa()); map.getSource("fx").setData(geoSelFx()); superficieMapa();
     var m = st.v === "avisos" && SEL && SEL.t === "mun" ? T.M[SEL.k] : null;
     if (m) { var c = centro(m), C = []; m.est.forEach(function (p) { C.push({d: 0, p: {lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: /hospital/i.test(p[2] || "") ? "hosp" : p[3] === "consultorio" ? "cons" : "cli", op: p[4] || "", esp: p[5] || "", dep: p[6] || "", mun: p[7] || ""}}); }); [["bom", "bom"], ["res", "res"], ["pol", "pol"]].forEach(function (z) { m[z[0]].forEach(function (p) { C.push({d: 0, p: {lat: p[0], lon: p[1], n: p[2] || "(sin nombre)", k: z[1], op: "", esp: "", dep: p[4] || "", mun: p[5] || ""}}); }); });
       M.selec(map, {mu: [{m: m, d: 0, en: true}], C: C, R: [], lat: c[1], lon: c[0]}, []); var mg = M.mallaMun(m.k); if (mg) M.pintaMalla(map, mg); }
     else M.selec(map, null, []);
-    capasVista(); leyenda(); etiquetas(); rotular();
+    infraMapa(m); capasVista(); leyenda(); etiquetas();
   }
   function volar() {
     if (!map || !map._ok || !SEL) return; var b = null, ext = function (m) { b = b ? [Math.min(b[0], m.bb[0]), Math.min(b[1], m.bb[1]), Math.max(b[2], m.bb[2]), Math.max(b[3], m.bb[3])] : m.bb.slice(); };
-    if (SEL.t === "mun") ext(T.M[SEL.k]); else if (SEL.t === "av") AV[SEL.i]._ms.forEach(function (k) { ext(T.M[k]); }); else if (SEL.t === "fx") { var p = FX.pts[SEL.i]; map.flyTo({center: [p.lon, p.lat], zoom: Math.max(map.getZoom(), 6.5), duration: 600}); return; } else if (SEL.t === "pn") { map.flyTo({center: [SEL.e.lon, SEL.e.lat], zoom: Math.max(map.getZoom(), 8), duration: 600}); return; }
+    if (SEL.t === "mun") ext(T.M[SEL.k]); else if (SEL.t === "av") AV[SEL.i]._ms.forEach(function (k) { ext(T.M[k]); }); else if (SEL.t === "fx") { var p = FX.pts[SEL.i]; map.flyTo({center: [p.lon, p.lat], zoom: Math.max(map.getZoom(), 6.5), duration: 600}); return; } else if (SEL.t === "pn") { map.flyTo({center: [SEL.e.lon, SEL.e.lat], zoom: Math.max(map.getZoom(), 8), duration: 600}); return; } else if (SEL.t === "vi") return;
     if (b) map.fitBounds([[b[0], b[1]], [b[2], b[3]]], {duration: 600, padding: 40, maxZoom: 10});
   }
   function selecciona(vuela) { refrescaMapa(); detalle(); if (vuela !== false) volar(); else if (SEL && SEL.t === "mun") volar(); }
@@ -376,8 +408,8 @@ var MET = (function () {
     $("mTf").innerHTML = '<p class="nota"><b>Alertas de modelo del sistema (Open-Meteo), no son avisos oficiales.</b> Son umbrales superados en las ciudades capitales; compárelas siempre con SENAMHI.</p>' + (F.length ? '<table class="mlist"><tr><th>Fecha</th><th>Lugar</th><th>Nivel</th><th>Detalle</th></tr>' + F.map(function (e) { return '<tr><td style="white-space:nowrap">' + esc(new Date(e.ts).toLocaleDateString("es-BO", {day: "2-digit", month: "short"})) + '</td><td>' + esc(e.lugar || "") + '</td><td>' + esc(e.nivel_txt || "") + '</td><td>' + esc(e.titulo) + '</td></tr>'; }).join("") + '</table>' : '<p class="nota">Sin alertas de modelo.</p>');
   }
   function vista(v, vuela) {
-    if (!vuela) SEL = null; st.v = v;
-    [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.classList.toggle("on", b.dataset.v === v); });
+    if (!vuela) SEL = null; st.v = v; if (v !== "viento") VIENTO.marca(null);
+    [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.classList.toggle("on", b.dataset.v === v); }); if (PN) PN.vista(v); if (map && map._ok) VIENTO.activa(v === "viento");
     if (v === "pron" && FX.estado === "idle") cargarPron();
     dibuja(); if (vuela) volar(); else if (map && map._ok) LUGAR.ajusta(map, T, LG);
   }
@@ -386,13 +418,13 @@ var MET = (function () {
   }
   function iniciar() {
     TERR.cargar().then(function (t) {
-      T = t; A = TERR.api; D = T.D; A.estilos(); X.header("modulo.html"); document.title = "Meteorológica — Sala de Situación Bolivia"; M.iniciar(T); M.malla(function () { if (map && map._ok) { if (SEL && SEL.t === "mun") selecciona(false); else leyenda(); } }); preparar();
+      T = t; A = TERR.api; D = T.D; A.estilos(); X.header("modulo.html"); document.title = "Meteorológica — Sala de Situación Bolivia"; M.iniciar(T); M.malla(function () { if (map && map._ok) { if (SEL && SEL.t === "mun") selecciona(false); else refrescaMapa(); } }); preparar();
       $("app").innerHTML = html(); if (window.EVI) EVI.panel("eviP", "meteorológica", D);
       LUGAR.init(T, $("lgBox"), LG, function () { SEL = null; dibuja(); LUGAR.ajusta(map, T, LG); if (LG.m && window.CLIMA) CLIMA.irMun(LG.m + " (" + LG.d + ")"); });
       [].forEach.call(document.querySelectorAll(".cvw button"), function (b) { b.onclick = function () { vista(b.dataset.v, false); }; b.classList.toggle("on", b.dataset.v === st.v); });
       [].forEach.call(document.querySelectorAll(".xtabs button"), function (b) { b.onclick = function () { [].forEach.call(document.querySelectorAll(".xtabs button"), function (z) { z.classList.toggle("on", z === b); $(z.dataset.s).style.display = z === b ? "" : "none"; }); }; });
-      $("mNd").onchange = rotular; $("mLp").onchange = function () { st.pob = this.checked; capasVista(); }; $("mLs").onchange = function () { st.sal = this.checked; capasVista(); }; $("mLe").onchange = function () { st.eme = this.checked; capasVista(); };
-      map = M.crear({id: "mMap", av: "mAv", tool: "#mTool", bajo: bajo, alto: alto, listo: listo, refInfra: "del municipio", evitar: ["ai", "pn-i", "fx-c", "wd"]});
+      map = M.crear({id: "mMap", av: "mAv", tool: "#mTool", bajo: bajo, alto: alto, listo: listo, refInfra: "del municipio", evitar: ["pn-i", "wd"]});
+      PN = M.panelCapas($("mCapas"), GRUPOS, function () { refrescaMapa(); }, {vista: st.v, mapa: function () { return map; }});
       pulso(); if (window.CLIMA) CLIMA.iniciar("meteo", cfgMon());
       cargarPron();
     });

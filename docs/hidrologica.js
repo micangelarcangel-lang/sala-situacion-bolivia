@@ -4,7 +4,7 @@
    Límites: los avisos no traen polígonos ni municipios (se ubican por el nombre del poblado y se dibujan los ríos citados dentro del departamento); GloFAS no ve crecidas repentinas de ríos menores. */
 var HID = (function () {
   var S = SALA, X = S2, M = MAPAZ, A, T, D, map = null, LG = {d: "", m: ""}, MK = [], rq = 0, SEL = null;
-  var st = {v: "avisos", p: "vig", cd: "max", ac: 3}, PN = null, SINT = [], LLK = "", TRAMO_KM = 80;
+  var st = {v: "avisos", p: "vig", cd: "max", ac: 3}, PN = null, SINT = [], LLK = "", TRAMO_KM = 80, TRAMO_KM_LG = 320;
   var AV = [], ST = [], PR = [], FX = M.PRON, IDX = {}, DEPC = {};
   var NC = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], NT = ["Verde", "Amarillo", "Naranja", "Rojo"], SIN = "#7b8794", DIA = 864e5, HOY = S.diaKey(Date.now()), COL = "#0369a1";
   var DEPS = ["La Paz", "Cochabamba", "Santa Cruz", "Beni", "Pando", "Oruro", "Potosí", "Chuquisaca", "Tarija"];
@@ -318,7 +318,7 @@ var HID = (function () {
   function prensaL() { var t0 = Date.now() - 30 * DIA; return PR.filter(function (e) { return e.lat != null && e.ts >= t0 && LUGAR.ev(T, LG, e); }); }
   function geoDep(L) {
     var o = nivDep(L), vg = {}; AV.forEach(function (a) { if (vig(a)) a._d.forEach(function (d) { vg[d] = 1; }); });
-    return M.fc((T.D.geoDep.features || []).map(function (f) { var d = f.properties.n, v = o[d]; return {type: "Feature", geometry: f.geometry, properties: {n: d, c: v == null ? SIN : NC[Math.min(3, v)], o: st.v === "avisos" && v != null && (!LG.d || d === LG.d) ? .2 : 0, a: vg[d] ? 1 : 0}}; }));
+    return M.fc((T.D.geoDep.features || []).map(function (f) { var d = f.properties.n, v = o[d]; return {type: "Feature", geometry: f.geometry, properties: {n: d, c: v == null ? SIN : NC[Math.min(3, v)], o: st.v === "avisos" && v != null && (!LG.d || d === LG.d) ? .12 : 0, a: vg[d] ? 1 : 0}}; }));
   }
   function geoMun(L) {
     var o = nivMun(L), f = Object.keys(o).map(function (k) { return {type: "Feature", geometry: T.M[k].f.geometry, properties: {k: k, c: NC[Math.min(3, o[k])], o: .66, s: SEL && SEL.t === "mun" && SEL.k === k ? 1 : 0}}; });
@@ -331,7 +331,7 @@ var HID = (function () {
     var tr = [], pt = [];
     ST.forEach(function (p, i) {
       if (!enS(p)) return; var c = claseCq(p), t = HMAP.tramo(p, TRAMO_KM), sel = SEL && SEL.t === "cq" && SEL.i === i ? 1 : 0;
-      if (t) tr.push({type: "Feature", geometry: {type: "LineString", coordinates: t.coords}, properties: {i: i, c: NC[c], rn: t.rio}});
+      if (t) { var t2 = HMAP.tramo(p, TRAMO_KM_LG); if (t2 && t2.coords.length > t.coords.length) tr.push({type: "Feature", geometry: {type: "LineString", coordinates: t2.coords}, properties: {i: i, c: NC[c], rn: t.rio, lg: 1}}); tr.push({type: "Feature", geometry: {type: "LineString", coordinates: t.coords}, properties: {i: i, c: NC[c], rn: t.rio, lg: 0}}); }
       pt.push({type: "Feature", geometry: {type: "Point", coordinates: [t ? t.x : p.lon, t ? t.y : p.lat]}, properties: {i: i, c: NC[c], p: (p.nivel || 0) >= 2 ? 1 : 0, s: sel}});
     });
     return {tr: tr, pt: pt};
@@ -395,7 +395,7 @@ var HID = (function () {
     if (!map || !map._ok || !PN) return; var v = st.v, on = function (id) { return PN.get(id); }, mu = SEL && SEL.t === "mun", V = function (ids, x) { ids.forEach(function (i) { M.vis(map, i, x); }); };
     V(["h-cu-f", "h-cu-l"], on("cu")); V(["h-rio-c", "h-rio-ab", "h-rio-fl", "h-rio-hit", "h-rio-hitc"], on("rio")); V(["h-lg-f", "h-lg-l"], on("lg")); M.vis(map, "d-l", on("dep"));
     M.vis(map, "hd-f", v === "avisos"); M.vis(map, "hd-o", v !== "avisos" && on("dep")); V(["mv-f", "mv-s"], v === "avisos" && on("mn"));
-    V(["h-ar-k", "h-ar-l", "h-ar-fl"], v === "avisos" && on("ar")); V(["h-tr-k", "h-tr-l", "h-tr-fl", "h-pt-p", "h-pt-c", "h-pt-i"], v === "caudal" && on("tr")); V(["h-ca-f", "h-ca-l"], v === "caudal" && on("ca")); M.vis(map, "h-ll", v === "lluvia" && on("ll"));
+    V(["h-ar-k", "h-ar-l", "h-ar-fl"], v === "avisos" && on("ar")); V(["h-tr-w", "h-tr-k", "h-tr-l", "h-tr-fl", "h-pt-p", "h-pt-c", "h-pt-i"], v === "caudal" && on("tr")); V(["h-ca-f", "h-ca-l"], v === "caudal" && on("ca")); M.vis(map, "h-ll", v === "lluvia" && on("ll"));
     M.vis(map, "pn-c", on("pr")); M.vis(map, "ex-f", on("pob")); M.vis(map, "ex-l", mu); M.vis(map, "inf-s", on("sal")); M.vis(map, "inf-e", on("eme"));
   }
   function limpiaMK() { MK.forEach(function (m) { m.remove(); }); MK = []; }
@@ -411,7 +411,7 @@ var HID = (function () {
     if (v === "avisos") {
       h += g("Aviso hidrológico (nivel)", '<span class="gesc">' + [1, 2, 3].map(function (i) { return '<span><i style="background:' + NC[i] + '"></i>' + NT[i] + '</span>'; }).join("") + '<span><i style="background:#7b8794;opacity:.4"></i>Sin aviso</span></span><small>El río encendido es el citado en el aviso, dentro del departamento del aviso. Relleno claro = departamento con aviso · fuerte = municipio nombrado por un poblado.' + (SINT.length ? ' <b>' + SINT.length + ' río' + (SINT.length === 1 ? "" : "s") + ' citado' + (SINT.length === 1 ? "" : "s") + ' sin trazado en la red cargada</b> (' + esc(SINT.slice(0, 6).join(", ")) + (SINT.length > 6 ? "…" : "") + '): ríos menores.' : '') + '</small>');
     } else if (v === "caudal") {
-      h += g("Caudal modelado frente al P90", '<span class="gesc">' + CQ.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[0] + '</span>'; }).join("") + '</span><span class="gic"><span class="gring" style="--c:' + NC[0] + '"></span>Punto de medición del modelo (sobre el río)</span><small>El tramo coloreado (±' + TRAMO_KM + ' km) es indicativo: lo representa el punto GloFAS (celda de ~5 km), no una estación. Pulso = sobre el P90.</small>') + g("Contorno", '<span><i style="border:2px dashed #f26a1b;background:transparent;box-sizing:border-box"></i>Departamento con aviso vigente hoy</span><span><i style="border:2px dashed #ffd166;background:transparent;box-sizing:border-box"></i>Cuenca aportante del punto elegido (aproximada)</span>');
+      h += g("Caudal modelado frente al P90", '<span class="gesc">' + CQ.map(function (x) { return '<span><i style="background:' + x[1] + '"></i>' + x[0] + '</span>'; }).join("") + '</span><span class="gic"><span class="gring" style="--c:' + NC[0] + '"></span>Punto de medición del modelo (sobre el río)</span><small>El tramo grueso (±' + TRAMO_KM + ' km) es lo que representa el punto GloFAS (celda de ~5 km); el trazo fino es el resto del curso del mismo río, solo de referencia. No son estaciones. Pulso = sobre el P90.</small>') + g("Contorno", '<span><i style="border:2px dashed #f26a1b;background:transparent;box-sizing:border-box"></i>Departamento con aviso vigente hoy</span><span><i style="border:2px dashed #ffd166;background:transparent;box-sizing:border-box"></i>Cuenca aportante del punto elegido (aproximada)</span>');
     } else {
       h += g("Lluvia acumulada " + ({1: "24 h", 3: "72 h", 7: "7 días"})[st.ac] + " (mm) · modelo", '<span class="grmp" style="background:' + HMAP.gradLl() + '"></span><span class="grmpt"><i>0</i><i>5</i><i>20</i><i>50</i><i>100</i><i>200+</i></span><small>Interpolación entre puntos del modelo Open-Meteo (~1°); no son estaciones ni un aviso. Pase el cursor para ver el valor.</small>');
     }
