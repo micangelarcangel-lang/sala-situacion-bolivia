@@ -1,8 +1,32 @@
 {
- "actualizado": "2026-11-26T03:01:05.161343Z",
+ "actualizado": "2026-11-26T12:16:24.472591Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261126T073052_-19.058_-67.23",
+   "fecha_local": "2026-11-26 07:30:52",
+   "lat": -19.058,
+   "lon": -67.23,
+   "prof_km": 227.0,
+   "mag": 3.0,
+   "provincia": "Sud Carangas",
+   "departamento": "Oruro",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
+  {
+   "id": "20261126T061704_-22.053_-67.35",
+   "fecha_local": "2026-11-26 06:17:04",
+   "lat": -22.053,
+   "lon": -67.35,
+   "prof_km": 180.9,
+   "mag": 3.1,
+   "provincia": "Sud Lipez",
+   "departamento": "Potosí",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261125T110831_-22.43_-67.633",
    "fecha_local": "2026-11-25 11:08:31",
