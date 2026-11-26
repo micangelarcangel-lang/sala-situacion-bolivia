@@ -1,4 +1,5 @@
 ﻿id,fecha_local,lat,lon,prof_km,mag,provincia,departamento,fuente
+20261126T160405_-17.314_-67.274,2026-11-26 16:04:05,-17.314,-67.274,19.6,3.6,Inquisivi,La Paz,Observatorio San Calixto
 20261126T073052_-19.058_-67.23,2026-11-26 07:30:52,-19.058,-67.23,227.0,3.0,Sud Carangas,Oruro,Observatorio San Calixto
 20261126T061704_-22.053_-67.35,2026-11-26 06:17:04,-22.053,-67.35,180.9,3.1,Sud Lipez,Potosí,Observatorio San Calixto
 20261125T110831_-22.43_-67.633,2026-11-25 11:08:31,-22.43,-67.633,114.7,3.3,Sud Lipez,Potosí,Observatorio San Calixto

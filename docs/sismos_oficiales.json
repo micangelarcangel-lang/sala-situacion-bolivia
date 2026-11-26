@@ -1,8 +1,20 @@
 {
- "actualizado": "2026-11-26T12:16:24.472591Z",
+ "actualizado": "2026-11-26T21:50:55.856235Z",
  "fuente": "https://osc.org.bo/index.php/es/27-sismicidad/51-boletin-sismico",
  "criterio_slack": "M>=4.0 y prof<=100 km, o M>=6.0",
  "sismos": [
+  {
+   "id": "20261126T160405_-17.314_-67.274",
+   "fecha_local": "2026-11-26 16:04:05",
+   "lat": -17.314,
+   "lon": -67.274,
+   "prof_km": 19.6,
+   "mag": 3.6,
+   "provincia": "Inquisivi",
+   "departamento": "La Paz",
+   "fuente": "Observatorio San Calixto",
+   "probable_sentido": false
+  },
   {
    "id": "20261126T073052_-19.058_-67.23",
    "fecha_local": "2026-11-26 07:30:52",
