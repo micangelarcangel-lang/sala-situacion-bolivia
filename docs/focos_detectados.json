@@ -346,6 +346,11 @@
    "Beni": 444,
    "La Paz": 23,
    "Pando": 13
+  },
+  "2026-11-27": {
+   "Tarija": 6,
+   "Santa Cruz": 6,
+   "Beni": 1
   }
  },
  "municipios": {
@@ -983,11 +988,19 @@
    "Santa Rosa (Beni)": 15,
    "San Joaquín (Beni)": 15,
    "San Javier (Beni)": 15
+  },
+  "2026-11-27": {
+   "Yacuiba (Tarija)": 4,
+   "San José (Santa Cruz)": 3,
+   "Villa Montes (Tarija)": 2,
+   "Pailón (Santa Cruz)": 2,
+   "Colpa Bélgica (Santa Cruz)": 1,
+   "San Javier (Beni)": 1
   }
  },
- "actualizado": "2026-11-27T04:02:50.485170Z",
+ "actualizado": "2026-11-27T13:45:26.526756Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1013,
+ "detecciones_fuera_de_limites": 1017,
  "slack_dia": "2026-11-26"
 }
