@@ -310,7 +310,7 @@
    "Chuquisaca": 6
   },
   "2026-11-22": {
-   "Santa Cruz": 422,
+   "Santa Cruz": 423,
    "Beni": 794,
    "La Paz": 96,
    "Pando": 42,
@@ -927,7 +927,7 @@
    "San Ignacio (Santa Cruz)": 55,
    "El Puente (Santa Cruz)": 54,
    "San Andrés (Beni)": 50,
-   "Concepción (Santa Cruz)": 43,
+   "Concepción (Santa Cruz)": 44,
    "Santa Ana (Beni)": 40,
    "Ixiamas (La Paz)": 39,
    "San Rafael (Santa Cruz)": 32,
@@ -985,9 +985,9 @@
    "San Javier (Beni)": 15
   }
  },
- "actualizado": "2026-11-26T21:51:03.297577Z",
+ "actualizado": "2026-11-27T04:02:50.485170Z",
  "fuente": "NASA FIRMS VIIRS_NOAA21_NRT",
  "aclaracion": "Detecciones térmicas del satélite VIIRS; incluyen quemas agrícolas y no equivalen a incendios confirmados.",
- "detecciones_fuera_de_limites": 1172,
+ "detecciones_fuera_de_limites": 1013,
  "slack_dia": "2026-11-26"
 }

@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-26T21:50:53.079656Z",
+ "actualizado": "2026-11-27T04:01:05.220228Z",
  "fuente": "https://www.senamhi.gob.bo/alertas2.php",
  "alertas": [
   {
@@ -69,7 +69,7 @@
    "n_municipios": 46,
    "texto": "SE PRONOSTICA DESCENSOS BRUSCOS DE TEMPERATURA ENTRE 6 °C Y 12 °C POR DEBAJO DE LOS VALORES NORMALES DE CADA REGIÓN AFECTADA. A OCURRIR ENTRE EL DÍA MIÉRCOLES 25 HASTA EL DÍA JUEVES 26 DE NOVIEMBRE, AFECTANDO A:",
    "numero": "98/26",
-   "vigente": true,
+   "vigente": false,
    "nivel_num": 2
   },
   {
