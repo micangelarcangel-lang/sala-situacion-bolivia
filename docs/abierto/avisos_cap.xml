@@ -20,10 +20,10 @@
       <expires>2026-11-28T23:59:59-04:00</expires>
       <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
       <headline>AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 50/2026</headline>
-      <description></description>
+      <description> AAVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 50/2026 ALERTA NARANJA PARA EL PERIODO: 22 AL 25 y 25 AL 28 NOVIEMBRE DE 2026 PROBABLES ASCENSOS REPENTINOS Y PROGRESIVOS DE NIVEL, CON POSIBLES DESBORDES EN LAS CUENCAS BERMEJO, GUADALQUIVIR, PILCOMAYO, PARAPETÍ, GRANDE (CHUQUISACA), PIRAÍ, YAPACANÍ, ICHILO, CHAPARE, MIZQUE, CAINE, BENI, MANIQUI, TIJAMUCHÍ, COLORADO CON AFECTACIONES EN: DEL 22 AL 24, 25 AL 27/11/2026: ✓ Departamento de Tarija (Cuenca Rio Bermejo, Guadalquivir): ➢ Río Pilaya, ascensos cerca a los niveles de seguridad en áreas próximas a las poblaciones de: San Josesito y poblados cercanos. ➢ Río Guadalquivir, y afluentes secundarios ascensos próximos a los niveles de seguridad con posibles desbordes para los poblados de: San Mateo, Monte Sur y zonas cercanas. ➢ Río Bermejo, y afluentes secundarios ascensos próximos a los niveles de seguridad con posibles desbordes que afectarán a poblados de: Los Pozos, Bermejo y comunidades cercanas. ➢ Río Salinas, y afluentes secundarios, ascensos próximos a los niveles de seguridad con posibles desbordes que afectarán a poblados de: Entre Ríos, Los Naranjos, Salinas y comunidades cercanas. ➢ Río San Telmo, y afluentes secundarios, ascensos próximos a los niveles de seguridad con posibles desbordes que afectarán a poblados de: San Telmo y comunidades cercanas. ➢ Quebradas, ascensos próximos a los niveles de seguridad en los poblados de: Yacuiba y zonas cercanas. DEL 22 AL 24, 25 AL 27/11/2026: ✓ Departamento de Chuquisaca (Cuenc</description>
       <web>https://www.senamhi.gob.bo/pdf_alertas/alerta_1549.pdf</web>
       <area>
-        <areaDesc>Bolivia</areaDesc>
+        <areaDesc>La Paz, Cochabamba, Santa Cruz, Beni, Chuquisaca, Tarija</areaDesc>
       </area>
     </info>
   </alert>
@@ -46,10 +46,10 @@
       <expires>2026-11-28T23:59:59-04:00</expires>
       <senderName>SENAMHI Bolivia (reproducido por Sala de Situación Bolivia)</senderName>
       <headline>AVISO DE AMENAZA HIDROLÓGICA PARA EMISIÓN DE ALERTA N° 49/2026</headline>
-      <description></description>
+      <description> AAVISO HIDROLÓGICO PARA EMISIÓN DE ALERTA N° 49/2026 ALERTA AMARILLA PARA EL PERIODO: 22 AL 24 y 25 AL 28 NOVIEMBRE 2026 POSIBLE INCREMENTO DE NIVELES, FORMACIÓN DE HUMEDALES (CURICHIS) Y DESBORDAMIENTOS PUNTUALES, EN LAS CUENCAS DE LOS RÍOS PILCOMAYO (POTOSÍ y TARIJA), CHAYANTA, PARAPETÍ, MAMORÉ, MADRE DE DIOS, TAHUAMANU, ACRE AFECTANDO A: DEL 22 AL 24, 25 AL 27/11/2026: ✓ Departamento de Tarija (Cuenca Rio Pilcomayo): ➢ Río Pilcomayo, ascensos cerca a los niveles de seguridad en áreas próximas a las poblaciones de: Puente Aruma, Ibibobo, La Esmeralda, La Victoria y poblados cercanos aguas debajo de Villa Montes. ➢ Río San Juan del Oro, ascensos cerca de los niveles de seguridad en áreas próximas a las poblaciones de: El Molino, El Puente, Yunchará y poblados cercanos. ➢ Río Sococha, y afluentes secundarios ascensos repentinos con posibles desbordes en áreas próximas a las poblaciones de: Villazón, La Quiaca y poblados cercanos. DEL 22 AL 24/11/2026: ✓ Departamento de Chuquisaca (Cuenca Río Grande): ➢ Río Ravelo, ascensos con posibles desbordes de nivel en áreas próximas a los poblados de: Ravelo y poblaciones cercanas. ➢ Río Potolo, ascensos con posibles desbordes de nivel en áreas próximas a los poblados de: Potolo y poblaciones cercanas. ➢ Río Cachimayu, ascensos con posibles desbordes de nivel en áreas próximas a los poblados cercanos como Puente Chaunaca. ➢ Río Quirpirchaca, ascensos con posibles desbordes de nivel en áreas próximas a los poblados de: Chuquisaca Ciudad</description>
       <web>https://www.senamhi.gob.bo/pdf_alertas/alerta_1548.pdf</web>
       <area>
-        <areaDesc>Bolivia</areaDesc>
+        <areaDesc>La Paz, Santa Cruz, Beni, Pando, Potosí, Chuquisaca, Tarija</areaDesc>
       </area>
     </info>
   </alert>

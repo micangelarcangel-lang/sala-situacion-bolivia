@@ -1,5 +1,42 @@
 {
- "actualizado": "2026-11-27T13:45:26.526756Z",
+ "actualizado": "2026-11-27T22:35:34.760714Z",
  "dia": "2026-11-27",
- "complejos": []
+ "complejos": [
+  {
+   "n": 13,
+   "frp_mw": 340.6,
+   "lat": -16.313,
+   "lon": -61.525,
+   "departamento": "Santa Cruz",
+   "municipio": "San Miguel",
+   "municipios": [
+    "San Miguel"
+   ],
+   "bbox": [
+    -61.533,
+    -16.399,
+    -61.477,
+    -16.303
+   ],
+   "id": "2026-11-27:1"
+  },
+  {
+   "n": 9,
+   "frp_mw": 290.0,
+   "lat": -17.114,
+   "lon": -60.66,
+   "departamento": "Santa Cruz",
+   "municipio": "San Rafael",
+   "municipios": [
+    "San Rafael"
+   ],
+   "bbox": [
+    -60.665,
+    -17.117,
+    -60.655,
+    -17.11
+   ],
+   "id": "2026-11-27:2"
+  }
+ ]
 }

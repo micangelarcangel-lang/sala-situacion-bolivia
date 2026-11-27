@@ -1,340 +1,340 @@
 fecha,departamento,municipio,riesgo,amenaza,vulnerabilidad,falta_capacidad,nivel,indice_parcial
-2026-11-26,Beni,Baures,4.75,3.65,4.11,7.14,Medio,no
-2026-11-26,Beni,Exaltación,6.74,7.02,6.2,7.05,Alto,no
-2026-11-26,Beni,Guayaramerín,4.26,6.71,1.31,8.78,Medio,no
-2026-11-26,Beni,Huacaraje,4.67,4.85,2.58,8.15,Medio,no
-2026-11-26,Beni,Loreto,6.78,8.9,6.16,5.68,Alto,no
-2026-11-26,Beni,Magdalena,4.05,4.85,2.47,5.54,Medio,no
-2026-11-26,Beni,Puerto Menor de Rurrenabaque,5.59,8.53,3.28,6.24,Medio,no
-2026-11-26,Beni,Puerto Siles,5.21,5.98,2.53,9.32,Medio,no
-2026-11-26,Beni,Reyes,6.06,9.53,5.38,4.34,Alto,no
-2026-11-26,Beni,Riberalta,5.5,9.9,3.08,5.45,Medio,no
-2026-11-26,Beni,San Andrés,6.48,8.48,5.6,5.72,Alto,no
-2026-11-26,Beni,San Borja,7.74,8.64,6.99,7.68,Alto,no
-2026-11-26,Beni,San Ignacio,6.61,9.73,5.54,5.36,Alto,no
-2026-11-26,Beni,San Javier,6.97,9.57,5.77,6.13,Alto,no
-2026-11-26,Beni,San Joaquín,4.46,5.82,2.09,7.3,Medio,no
-2026-11-26,Beni,San Ramón,5.38,6.69,2.71,8.6,Medio,no
-2026-11-26,Beni,Santa Ana,6,9.19,5.2,4.53,Alto,no
-2026-11-26,Beni,Santa Rosa,5.68,7.91,3.27,7.07,Medio,no
-2026-11-26,Beni,Trinidad,2.99,9.17,1.55,1.89,Bajo,no
-2026-11-26,Chuquisaca,Alcalá,3.97,2.37,3.93,6.7,Bajo,no
-2026-11-26,Chuquisaca,Azurduy,5.88,4.62,8.15,5.41,Medio,no
-2026-11-26,Chuquisaca,Camargo,5.01,5.97,4.77,4.42,Medio,no
-2026-11-26,Chuquisaca,Culpina,6.09,6.22,7.45,4.87,Alto,no
-2026-11-26,Chuquisaca,El Villar,5.02,4.22,5.56,5.41,Medio,no
-2026-11-26,Chuquisaca,Huacareta,5.46,5.82,5.48,5.1,Medio,no
-2026-11-26,Chuquisaca,Huacaya,4.81,6.22,3.49,5.13,Medio,no
-2026-11-26,Chuquisaca,Incahuasi,6.18,4.22,8.07,6.95,Alto,no
-2026-11-26,Chuquisaca,Las Carreras,4.59,3.02,4.68,6.87,Medio,no
-2026-11-26,Chuquisaca,Macharetí,6.2,7.57,3.65,8.62,Alto,no
-2026-11-26,Chuquisaca,Mojocoya,3.32,1.31,5.36,5.2,Bajo,no
-2026-11-26,Chuquisaca,Monteagudo,5.33,7.68,3.65,5.4,Medio,no
-2026-11-26,Chuquisaca,Padilla,4.22,3.25,5.16,4.48,Medio,no
-2026-11-26,Chuquisaca,Poroma,6.06,5.28,9.3,4.53,Alto,no
-2026-11-26,Chuquisaca,Presto,4.88,3.49,7.72,4.32,Medio,no
-2026-11-26,Chuquisaca,San Lucas,6.88,6.1,7.77,6.86,Alto,no
-2026-11-26,Chuquisaca,Sopachui,3.9,2.69,7.02,3.14,Bajo,no
-2026-11-26,Chuquisaca,Sucre,3.09,9.05,1.88,1.73,Bajo,no
-2026-11-26,Chuquisaca,Tarabuco,4.9,4.37,7.92,3.4,Medio,no
-2026-11-26,Chuquisaca,Tarvita,6.34,5.85,7.44,5.84,Alto,no
-2026-11-26,Chuquisaca,Tomina,3.07,1.98,5.12,2.86,Bajo,no
-2026-11-26,Chuquisaca,Villa Abecia,4.62,3.02,4.64,7.04,Medio,no
-2026-11-26,Chuquisaca,Villa Charcas,4.08,1.31,7.82,6.65,Medio,no
-2026-11-26,Chuquisaca,Villa Ricardo Mugia - Icla,4.81,3.42,6.85,4.76,Medio,no
-2026-11-26,Chuquisaca,Villa Serrano,4.5,3.65,5.4,4.64,Medio,no
-2026-11-26,Chuquisaca,Villa Vaca Guzmán,5.56,6.52,4.57,5.78,Medio,no
-2026-11-26,Chuquisaca,Yamparáez,5.14,4.48,6.75,4.49,Medio,no
-2026-11-26,Chuquisaca,Yotala,3.96,4.14,3.92,3.83,Bajo,no
-2026-11-26,Chuquisaca,Zudañez,4.33,4.14,5.82,3.37,Medio,no
-2026-11-26,Cochabamba,Aiquile,5.71,6.57,6.42,4.42,Medio,no
-2026-11-26,Cochabamba,Alalay,4.72,2.51,9.18,4.57,Medio,no
-2026-11-26,Cochabamba,Anzaldo,4.03,2.37,8.41,3.28,Medio,no
-2026-11-26,Cochabamba,Arani,2.87,2.37,3.68,2.71,Bajo,no
-2026-11-26,Cochabamba,Arbieto,2.96,1.31,6.41,3.09,Bajo,no
-2026-11-26,Cochabamba,Arque,6.09,5.99,9,4.19,Alto,no
-2026-11-26,Cochabamba,Ayopaya,5.48,4.94,8.82,3.77,Medio,no
-2026-11-26,Cochabamba,Bolivar,6.16,4.51,9.46,5.47,Alto,no
-2026-11-26,Cochabamba,Capinota,4.42,6.17,5.38,2.61,Medio,no
-2026-11-26,Cochabamba,Chimoré,5.26,9.79,4.5,3.3,Medio,no
-2026-11-26,Cochabamba,Cliza,2.79,7.44,1.57,1.86,Bajo,no
-2026-11-26,Cochabamba,Cocapata,5.63,3.58,8.98,5.55,Medio,no
-2026-11-26,Cochabamba,Cochabamba,2.39,9.14,1.48,1.01,Bajo,no
-2026-11-26,Cochabamba,Colcapirhua,2.11,6.64,0.61,2.31,Bajo,no
-2026-11-26,Cochabamba,Colomi,5.12,5.84,6.5,3.53,Medio,no
-2026-11-26,Cochabamba,Entre Ríos,4.9,4.62,4.96,5.14,Medio,no
-2026-11-26,Cochabamba,Mizque,5.45,6.17,6.82,3.85,Medio,no
-2026-11-26,Cochabamba,Morochata,5.39,4.14,8.89,4.26,Medio,no
-2026-11-26,Cochabamba,Omereque,4.48,4.14,4.45,4.89,Medio,no
-2026-11-26,Cochabamba,Pasorapa,4.76,4.69,4,5.73,Medio,no
-2026-11-26,Cochabamba,Pocona,4.48,3.02,7,4.24,Medio,no
-2026-11-26,Cochabamba,Pojo,5.96,4.52,7.81,6.01,Medio,no
-2026-11-26,Cochabamba,Puerto Villarroel,4.64,7.33,4.93,2.77,Medio,no
-2026-11-26,Cochabamba,Punata,2.8,3.02,2.47,2.94,Bajo,no
-2026-11-26,Cochabamba,Quillacollo,3.06,8.48,1.45,2.33,Bajo,no
-2026-11-26,Cochabamba,Sacaba,3.16,6.48,2.01,2.43,Bajo,no
-2026-11-26,Cochabamba,Sacabamba,2.85,0.25,7.49,6.15,Bajo,no
-2026-11-26,Cochabamba,San Benito,2.73,2.69,2.41,3.15,Bajo,no
-2026-11-26,Cochabamba,Santivañez,3.04,1.98,4.16,3.39,Bajo,no
-2026-11-26,Cochabamba,Shinahota,3.87,4.62,4.53,2.77,Bajo,no
-2026-11-26,Cochabamba,Sicaya,3.85,3.82,6.24,2.39,Bajo,no
-2026-11-26,Cochabamba,Sipesipe,4.05,5.64,4.07,2.89,Medio,no
-2026-11-26,Cochabamba,Tacachi,1.71,0.09,2.21,4.52,Muy bajo,no
-2026-11-26,Cochabamba,Tacopaya,6.2,6.2,8.75,4.4,Alto,no
-2026-11-26,Cochabamba,Tapacarí,5.98,5.44,9.52,4.12,Medio,no
-2026-11-26,Cochabamba,Tarata,3.22,2.69,4.73,2.61,Bajo,no
-2026-11-26,Cochabamba,Tiquipaya,2.31,5.34,1.11,2.09,Bajo,no
-2026-11-26,Cochabamba,Tiraque,3.8,2.45,6.87,3.27,Bajo,no
-2026-11-26,Cochabamba,Toco,3.73,2.37,4.42,4.96,Bajo,no
-2026-11-26,Cochabamba,Tolata,3.48,3.91,3.07,3.51,Bajo,no
-2026-11-26,Cochabamba,Totora,4.95,4.64,8.61,3.04,Medio,no
-2026-11-26,Cochabamba,Vacas,3.64,1.98,7.3,3.33,Bajo,no
-2026-11-26,Cochabamba,Vila Vila,4.07,1.31,9.34,5.5,Medio,no
-2026-11-26,Cochabamba,Villa Gualberto Villarroel,2.25,0.25,4.03,5.64,Bajo,no
-2026-11-26,Cochabamba,Villa Rivero,3.34,1.98,4.16,4.53,Bajo,no
-2026-11-26,Cochabamba,Villa Tunari,5.55,8.67,6,3.29,Medio,no
-2026-11-26,Cochabamba,Vinto,3.1,5.28,2.4,2.35,Bajo,no
-2026-11-26,La Paz,Achacachi,5.17,5.81,5.65,4.21,Medio,no
-2026-11-26,La Paz,Achocalla,2.57,1.31,4.69,2.77,Bajo,no
-2026-11-26,La Paz,Alto Beni,4.14,2.91,5.53,4.42,Medio,no
-2026-11-26,La Paz,Apolo,7.8,7.34,7.68,8.43,Alto,no
-2026-11-26,La Paz,Aucapata,3.16,0.46,7.81,8.05,Bajo,no
-2026-11-26,La Paz,Ayata,6.75,4.94,8.14,7.63,Alto,no
-2026-11-26,La Paz,Ayo Ayo,2.09,0.25,7.18,2.54,Bajo,no
-2026-11-26,La Paz,Batallas,4.64,4.22,6.18,3.83,Medio,no
-2026-11-26,La Paz,Cairoma,4.11,1.98,6.69,5.22,Medio,no
-2026-11-26,La Paz,Cajuata,3.65,1.65,4.65,6.34,Bajo,no
-2026-11-26,La Paz,Calacoto,6.76,6.9,7.13,6.26,Alto,no
-2026-11-26,La Paz,Calamarca,2.98,1.31,5.81,3.47,Bajo,no
-2026-11-26,La Paz,Caquiaviri,5.53,3.72,6.48,7.03,Medio,no
-2026-11-26,La Paz,Caranavi,4.99,6.72,4.57,4.04,Medio,no
-2026-11-26,La Paz,Catacora,4.91,2.69,5.08,8.65,Medio,no
-2026-11-26,La Paz,Chacarilla,6.52,4.9,7.7,7.34,Alto,no
-2026-11-26,La Paz,Charazani,5.3,2.45,7.99,7.6,Medio,no
-2026-11-26,La Paz,Charaña,5.54,3.98,6.34,6.73,Medio,no
-2026-11-26,La Paz,Chua Cocani,4.3,5.14,4.34,3.57,Medio,no
-2026-11-26,La Paz,Chulumani,4.19,4.62,3.46,4.6,Medio,no
-2026-11-26,La Paz,Chuma,6.69,5.28,7.37,7.69,Alto,no
-2026-11-26,La Paz,Collana,3.08,1.65,3.86,4.56,Bajo,no
-2026-11-26,La Paz,Colquencha,3.64,2.37,4,5.08,Bajo,no
-2026-11-26,La Paz,Colquiri,4.23,2.05,7.45,4.97,Medio,no
-2026-11-26,La Paz,Comanche,3.97,1.98,6.89,4.58,Bajo,no
-2026-11-26,La Paz,Combaya,4.53,2.45,7.65,4.96,Medio,no
-2026-11-26,La Paz,Copacabana,5.33,5.05,6.52,4.6,Medio,no
-2026-11-26,La Paz,Coripata,2.97,1.26,3.8,5.48,Bajo,no
-2026-11-26,La Paz,Corocoro,4.61,3.02,6.74,4.81,Medio,no
-2026-11-26,La Paz,Coroico,4.11,4.22,4.09,4.03,Medio,no
-2026-11-26,La Paz,Curva,5.28,1.98,8.49,8.75,Medio,no
-2026-11-26,La Paz,Desaguadero,2.48,1.45,4,2.62,Bajo,no
-2026-11-26,La Paz,El Alto,3.15,9.12,1.91,1.8,Bajo,no
-2026-11-26,La Paz,Escoma,5.22,2.37,8.15,7.34,Medio,no
-2026-11-26,La Paz,Guanay,5.2,8.45,4.11,4.04,Medio,no
-2026-11-26,La Paz,Huarina,3.44,2.37,5.64,3.05,Bajo,no
-2026-11-26,La Paz,Huatajata,1.63,0.25,2.11,4.08,Muy bajo,no
-2026-11-26,La Paz,Humanata,3.19,0.09,9.26,6.99,Bajo,no
-2026-11-26,La Paz,Ichoca,5.64,4.64,7.94,4.87,Medio,no
-2026-11-26,La Paz,Inquisivi,5.79,5.17,8.1,4.63,Medio,no
-2026-11-26,La Paz,Irupana,4.85,4.52,5.14,4.91,Medio,no
-2026-11-26,La Paz,Ixiamas,7.37,9,5.65,7.86,Alto,no
-2026-11-26,La Paz,Jesús de Machaka,3.88,1.98,5.25,5.63,Bajo,no
-2026-11-26,La Paz,La (Marka) San Andrés de Mach,5.13,3.17,6.96,6.1,Medio,no
-2026-11-26,La Paz,La Asunta,6.09,5.02,6.27,7.19,Alto,no
-2026-11-26,La Paz,Laja,4.29,3.72,6.29,3.38,Medio,no
-2026-11-26,La Paz,Luribay,5.58,6.37,6.12,4.46,Medio,no
-2026-11-26,La Paz,Malla,3.96,1.31,7.29,6.53,Bajo,no
-2026-11-26,La Paz,Mapiri,4.69,5.02,3.21,6.39,Medio,no
-2026-11-26,La Paz,Mecapaca,5.03,6.59,4.62,4.17,Medio,no
-2026-11-26,La Paz,Mocomoco,7.04,5.44,8.5,7.54,Alto,no
-2026-11-26,La Paz,Nazacara de Pacajes,4.15,1.65,6.83,6.31,Medio,no
-2026-11-26,La Paz,Nuestra Señora de La Paz,1.94,9.19,0.79,1,Muy bajo,no
-2026-11-26,La Paz,Palca,5.56,6.08,7.77,3.64,Medio,no
-2026-11-26,La Paz,Palos Blancos,5.53,6.52,4.81,5.4,Medio,no
-2026-11-26,La Paz,Papel Pampa,4.72,5.44,6.47,2.99,Medio,no
-2026-11-26,La Paz,Patacamaya,4.08,3.98,5.26,3.24,Medio,no
-2026-11-26,La Paz,Pelechuco,6.17,4.94,5.74,8.28,Alto,no
-2026-11-26,La Paz,Pucarani,4.16,4.34,6.73,2.47,Medio,no
-2026-11-26,La Paz,Puerto Acosta,6.87,5.42,8.96,6.68,Alto,no
-2026-11-26,La Paz,Puerto Mayor de Carabuco,5.42,3.02,8.1,6.5,Medio,no
-2026-11-26,La Paz,Puerto Mayor de Guaqui,3.09,2.45,5.43,2.21,Bajo,no
-2026-11-26,La Paz,Puerto Pérez,4.16,3.02,7.77,3.07,Medio,no
-2026-11-26,La Paz,Quiabaya,4.65,1.65,7.96,7.65,Medio,no
-2026-11-26,La Paz,Quime,3.31,2.78,4.94,2.63,Bajo,no
-2026-11-26,La Paz,San Buenaventura,4.85,8.57,2.6,5.11,Medio,no
-2026-11-26,La Paz,San Pedro de Curahuara,5.26,3.91,6.49,5.75,Medio,no
-2026-11-26,La Paz,San Pedro de Tiquina,4.02,3.02,5.77,3.73,Medio,no
-2026-11-26,La Paz,Santiago de Callapa,4.74,1.98,8.86,6.08,Medio,no
-2026-11-26,La Paz,Santiago de Huata,2.5,0.89,4.98,3.54,Bajo,no
-2026-11-26,La Paz,Santiago de Machaca,5.31,3.02,5.99,8.27,Medio,no
-2026-11-26,La Paz,Sapahaqui,5.58,4.9,7.8,4.55,Medio,no
-2026-11-26,La Paz,Sicasica,4.24,4.77,5.97,2.67,Medio,no
-2026-11-26,La Paz,Sorata,5.36,3.82,6.85,5.9,Medio,no
-2026-11-26,La Paz,Tacacoma,4.66,2.11,6.42,7.46,Medio,no
-2026-11-26,La Paz,Taraco,3.37,1.31,6.91,4.22,Bajo,no
-2026-11-26,La Paz,Teoponte,5.32,6.71,5.39,4.16,Medio,no
-2026-11-26,La Paz,Tiahuanacu,3.37,1.31,6.68,4.37,Bajo,no
-2026-11-26,La Paz,Tipuani,3.44,5.37,3.21,2.37,Bajo,no
-2026-11-26,La Paz,Tito Yupanqui,4.44,2.11,7.34,5.65,Medio,no
-2026-11-26,La Paz,Umala,4.98,4.14,6.4,4.67,Medio,no
-2026-11-26,La Paz,Viacha,3.86,8.48,2.79,2.43,Bajo,no
-2026-11-26,La Paz,Villa Ancoraimes,5.33,3.42,8.15,5.45,Medio,no
-2026-11-26,La Paz,Villa Libertad Licoma,2.11,0.09,4.09,4.57,Bajo,no
-2026-11-26,La Paz,Waldo Ballivian,2.15,0.25,3.81,5.25,Bajo,no
-2026-11-26,La Paz,Yaco,2.78,0.46,7.22,5.97,Bajo,no
-2026-11-26,La Paz,Yanacachi,2.82,3.42,2.76,2.37,Bajo,no
-2026-11-26,Oruro,Andamarca,4.22,5.11,5.89,2.5,Medio,no
-2026-11-26,Oruro,Antequera,3.61,3.18,3.23,4.56,Bajo,no
-2026-11-26,Oruro,Belén de Andamarca,2.84,1.31,3.82,4.58,Bajo,no
-2026-11-26,Oruro,Caracollo,4.76,5.12,4.99,4.24,Medio,no
-2026-11-26,Oruro,Carangas,2.59,0.46,5.09,6.87,Bajo,no
-2026-11-26,Oruro,Challapata,6.35,7.34,7.33,4.76,Alto,no
-2026-11-26,Oruro,Chipaya,5.16,4.14,5.29,6.29,Medio,no
-2026-11-26,Oruro,Choquecota,2.13,0.46,4.21,4.6,Bajo,no
-2026-11-26,Oruro,Coipasa,1.77,0.46,2.4,4.66,Muy bajo,no
-2026-11-26,Oruro,Corque,5.32,5.34,5.92,4.76,Medio,no
-2026-11-26,Oruro,Cruz de Machacamarca,2.76,0.85,3.81,6.48,Bajo,no
-2026-11-26,Oruro,Curahuara de Carangas,5.73,4.52,6.38,6.52,Medio,no
-2026-11-26,Oruro,El Choro,4.65,4.77,6.94,3.03,Medio,no
-2026-11-26,Oruro,Escara,3.46,2.11,4.18,4.69,Bajo,no
-2026-11-26,Oruro,Esmeralda,2.6,0.85,3.21,6.41,Bajo,no
-2026-11-26,Oruro,Eucaliptus,3.93,2.78,5.25,4.15,Bajo,no
-2026-11-26,Oruro,Huachacalla,1.82,0.46,1.7,7.1,Muy bajo,no
-2026-11-26,Oruro,Huanuni,2.96,6.62,1.34,2.93,Bajo,no
-2026-11-26,Oruro,Huayllamarca,4.24,1.65,6.08,7.57,Medio,no
-2026-11-26,Oruro,La Rivera,4.45,2.51,5.08,6.9,Medio,no
-2026-11-26,Oruro,Machacamarca,3.42,4.69,2.36,3.62,Bajo,no
-2026-11-26,Oruro,Oruro,2.64,9.03,1.12,1.83,Bajo,no
-2026-11-26,Oruro,Pampa Aullagas,4.58,2.05,6.27,7.46,Medio,no
-2026-11-26,Oruro,Paria,4.87,5.99,6.77,2.85,Medio,no
-2026-11-26,Oruro,Pazña,4.4,4.62,4.8,3.85,Medio,no
-2026-11-26,Oruro,Poopó,3.17,2.85,3.2,3.5,Bajo,no
-2026-11-26,Oruro,Sabaya,4.91,4.29,4.26,6.46,Medio,no
-2026-11-26,Oruro,Salinas de Garcí Mendoza,5.79,6.52,4.41,6.74,Medio,no
-2026-11-26,Oruro,Santiago de Huari,4.58,3.17,6.25,4.84,Medio,no
-2026-11-26,Oruro,Santuario de Quillacas,2.77,0.85,4.67,5.37,Bajo,no
-2026-11-26,Oruro,Todos Santos,4.47,5.57,2.29,6.98,Medio,no
-2026-11-26,Oruro,Toledo,5.74,5.92,6.49,4.94,Medio,no
-2026-11-26,Oruro,Totora,4.09,1.65,6.63,6.25,Medio,no
-2026-11-26,Oruro,Turco,3.41,1.31,5.68,5.31,Bajo,no
-2026-11-26,Oruro,Yunguyo del Litoral,1.42,0.25,1.29,4.48,Muy bajo,no
-2026-11-26,Pando,Bella Flor,4.77,4.45,3.32,7.32,Medio,no
-2026-11-26,Pando,Bolpebra,4.94,5.17,3.56,6.54,Medio,no
-2026-11-26,Pando,Cobija,2.05,7.57,0.66,1.71,Bajo,no
-2026-11-26,Pando,Filadelfia,5.32,5.49,3.56,7.68,Medio,no
-2026-11-26,Pando,Ingavi,3.05,0.46,6.31,8.98,Bajo,no
-2026-11-26,Pando,Nueva Esperanza,3.38,0.89,4.65,9.32,Bajo,no
-2026-11-26,Pando,Porvenir,3.13,4.62,1.47,4.54,Bajo,no
-2026-11-26,Pando,Puerto Gonzalo Moreno,3.83,2.11,4.35,6.12,Bajo,no
-2026-11-26,Pando,Puerto Rico,4.28,5.72,3.05,4.49,Medio,no
-2026-11-26,Pando,San Lorenzo,4.72,4.22,3.68,6.78,Medio,no
-2026-11-26,Pando,San Pedro,5.15,2.37,6.87,8.41,Medio,no
-2026-11-26,Pando,Santa Rosa,4.19,3.58,3.62,5.66,Medio,no
-2026-11-26,Pando,Santos Mercado,4.67,2.11,5.28,9.14,Medio,no
-2026-11-26,Pando,Sena,5.98,4.62,5.33,8.68,Medio,no
-2026-11-26,Pando,Villa Nueva,2.61,0.46,4.4,8.05,Bajo,no
-2026-11-26,Potosí,Acasio,3.25,0.89,8.46,4.56,Bajo,no
-2026-11-26,Potosí,Arampampa,2.56,0.89,9.03,2.08,Bajo,no
-2026-11-26,Potosí,Atocha,2.58,2.51,1.99,3.45,Bajo,no
-2026-11-26,Potosí,Betanzos,6.32,6.49,7.25,5.36,Alto,no
-2026-11-26,Potosí,"Caiza ""D""",4.29,2.69,4.39,6.7,Medio,no
-2026-11-26,Potosí,Caripuyo,3.08,0.09,9.22,6.36,Bajo,no
-2026-11-26,Potosí,Chaquí,4.91,3.42,7.55,4.58,Medio,no
-2026-11-26,Potosí,Chayanta,4.71,2.37,7.24,6.1,Medio,no
-2026-11-26,Potosí,Chuquihuta Ayllu Jucumani,3.65,0.85,8.56,6.66,Bajo,no
-2026-11-26,Potosí,Ckochas,4.83,1.65,9.29,7.36,Medio,no
-2026-11-26,Potosí,"Colcha ""K""",3.16,4.85,1.47,4.44,Bajo,no
-2026-11-26,Potosí,Colquechaca,6.11,4.22,8.88,6.09,Alto,no
-2026-11-26,Potosí,Cotagaita,6.34,7.5,5.47,6.2,Alto,no
-2026-11-26,Potosí,Llallagua,3.39,3.42,3.54,3.23,Bajo,no
-2026-11-26,Potosí,Llica,3.32,2.45,2.25,6.66,Bajo,no
-2026-11-26,Potosí,Mojinete,2.62,0.46,4.25,8.46,Bajo,no
-2026-11-26,Potosí,Ocurí,5.69,2.69,9.64,7.12,Medio,no
-2026-11-26,Potosí,Pocoata,6.4,4.14,8.76,7.22,Alto,no
-2026-11-26,Potosí,Porco,2.95,2.37,2.35,4.61,Bajo,no
-2026-11-26,Potosí,Potosí,3.11,8.87,1.65,2.07,Bajo,no
-2026-11-26,Potosí,Puna,6.03,5.19,6.54,6.45,Alto,no
-2026-11-26,Potosí,Ravelo,5.96,3.49,9.19,6.61,Medio,no
-2026-11-26,Potosí,Sacaca,4.86,1.98,9.12,6.34,Medio,no
-2026-11-26,Potosí,San Agustín,2.49,1.31,1.99,5.92,Bajo,no
-2026-11-26,Potosí,San Antonio de Esmoruco,4.42,1.98,6.51,6.7,Medio,no
-2026-11-26,Potosí,San Pablo,5.75,5.57,5.44,6.26,Medio,no
-2026-11-26,Potosí,San Pedro,4.66,1.65,9.76,6.29,Medio,no
-2026-11-26,Potosí,San Pedro de Quemes,3.68,4.37,1.69,6.71,Bajo,no
-2026-11-26,Potosí,Tacobamba,6.48,5.28,9.84,5.23,Alto,no
-2026-11-26,Potosí,Tahua,2.26,0.46,3.48,6.62,Bajo,no
-2026-11-26,Potosí,Tinguipaya,6.66,4.71,9.57,6.56,Alto,no
-2026-11-26,Potosí,Tomave,4.6,3.02,6.11,5.28,Medio,no
-2026-11-26,Potosí,Toro Toro,5.26,2.78,9.05,5.78,Medio,no
-2026-11-26,Potosí,Tupiza,3.7,7.19,2.27,3.09,Bajo,no
-2026-11-26,Potosí,Uncía,4.33,3.02,6.38,4.21,Medio,no
-2026-11-26,Potosí,Urmiri,3.07,0.46,8.4,6.91,Bajo,no
-2026-11-26,Potosí,Uyuni,2.73,4.37,2.97,1.57,Bajo,no
-2026-11-26,Potosí,Villazón,4.08,6.77,2.73,3.68,Medio,no
-2026-11-26,Potosí,Vitiche,5.33,4.14,5.72,6.4,Medio,no
-2026-11-26,Potosí,Yocalla,4.26,3.82,5.54,3.64,Medio,no
-2026-11-26,Santa Cruz,Ascención de Guarayos,5.94,8.48,4.97,4.98,Medio,no
-2026-11-26,Santa Cruz,Boyuibe,5.45,6.52,3.09,8.01,Medio,no
-2026-11-26,Santa Cruz,Buena Vista,3.88,5.17,2.79,4.05,Bajo,no
-2026-11-26,Santa Cruz,Cabezas,5.69,7.28,4.32,5.87,Medio,no
-2026-11-26,Santa Cruz,Camiri,3.36,7.8,1.13,4.27,Bajo,no
-2026-11-26,Santa Cruz,Charagua,5.95,9.05,4.18,5.55,Medio,no
-2026-11-26,Santa Cruz,Colpa Bélgica,2.56,3.26,1.55,3.32,Bajo,no
-2026-11-26,Santa Cruz,Comarapa,5.81,6.94,4.63,6.11,Medio,no
-2026-11-26,Santa Cruz,Concepción,7.26,7.91,5.8,8.34,Alto,no
-2026-11-26,Santa Cruz,Cotoca,2.61,3.65,1.86,2.63,Bajo,no
-2026-11-26,Santa Cruz,Cuatro Cañadas,3.56,2.05,3.51,6.27,Bajo,no
-2026-11-26,Santa Cruz,Cuevo,4.3,7.14,1.65,6.77,Medio,no
-2026-11-26,Santa Cruz,El Carmen Rivero Tórrez,4.59,3.05,3.42,9.29,Medio,no
-2026-11-26,Santa Cruz,El Puente,7.29,7.91,5.8,8.44,Alto,no
-2026-11-26,Santa Cruz,El Torno,3.87,8.08,2.99,2.39,Bajo,no
-2026-11-26,Santa Cruz,Fernández Alonso,4.47,4.11,3.84,5.66,Medio,no
-2026-11-26,Santa Cruz,General Saavedra,3.61,3.65,3.07,4.19,Bajo,no
-2026-11-26,Santa Cruz,Gutiérrez,5.8,7.14,4.61,5.91,Medio,no
-2026-11-26,Santa Cruz,La Guardia,3.12,5.89,1.51,3.41,Bajo,no
-2026-11-26,Santa Cruz,Lagunillas,4.58,6.52,3.08,4.78,Medio,no
-2026-11-26,Santa Cruz,Mairana,3.88,3.65,4.45,3.6,Bajo,no
-2026-11-26,Santa Cruz,Mineros,4.11,6.52,2.37,4.5,Medio,no
-2026-11-26,Santa Cruz,Montero,2.6,7.7,1.16,1.98,Bajo,no
-2026-11-26,Santa Cruz,Moromoro,4.82,3.65,4.73,6.5,Medio,no
-2026-11-26,Santa Cruz,Okinawa Uno,2.38,5.17,1.57,1.67,Bajo,no
-2026-11-26,Santa Cruz,Pailón,6.14,8.48,4,6.82,Alto,no
-2026-11-26,Santa Cruz,Pampa Grande,3.83,3.26,4.66,3.7,Bajo,no
-2026-11-26,Santa Cruz,Porongo,1.75,4.45,0.69,1.74,Muy bajo,no
-2026-11-26,Santa Cruz,Portachuelo,2.3,6.22,0.62,3.15,Bajo,no
-2026-11-26,Santa Cruz,Postrervalle,4.7,3.65,3.93,7.24,Medio,no
-2026-11-26,Santa Cruz,Pucará,3.64,2.89,3.83,4.37,Bajo,no
-2026-11-26,Santa Cruz,Puerto Quijarro,1.42,0.46,1.12,5.05,Muy bajo,no
-2026-11-26,Santa Cruz,Puerto Suarez,3.17,4.22,0.91,8.22,Bajo,no
-2026-11-26,Santa Cruz,Quirusillas,3.87,3.65,2.59,6.14,Bajo,no
-2026-11-26,Santa Cruz,Roboré,3.58,5.65,1.43,5.7,Bajo,no
-2026-11-26,Santa Cruz,Saipina,5.01,4.78,4.13,6.36,Medio,no
-2026-11-26,Santa Cruz,Samaipata,3.26,3.65,3.01,3.16,Bajo,no
-2026-11-26,Santa Cruz,San Antonio de Lomerio,3.86,2.06,3.25,8.6,Bajo,no
-2026-11-26,Santa Cruz,San Carlos,3.67,3.65,3.17,4.28,Bajo,no
-2026-11-26,Santa Cruz,San Ignacio,5.77,7.42,4.94,5.23,Medio,no
-2026-11-26,Santa Cruz,San Javier,3.7,2.45,4.08,5.06,Bajo,no
-2026-11-26,Santa Cruz,San José,5.25,5.65,5.31,4.81,Medio,no
-2026-11-26,Santa Cruz,San Juan,3.29,4.51,2.38,3.32,Bajo,no
-2026-11-26,Santa Cruz,San Julián,5.47,7.7,3.71,5.71,Medio,no
-2026-11-26,Santa Cruz,San Matías,5.02,4.85,3.3,7.89,Medio,no
-2026-11-26,Santa Cruz,San Miguel,5.96,4.85,5.16,8.48,Medio,no
-2026-11-26,Santa Cruz,San Pedro,4.1,5.17,1.87,7.13,Medio,no
-2026-11-26,Santa Cruz,San Rafael,4.63,4.09,5.31,4.58,Medio,no
-2026-11-26,Santa Cruz,San Ramón,5.14,5.94,3.31,6.93,Medio,no
-2026-11-26,Santa Cruz,Santa Cruz de la Sierra,2.31,9.16,0.8,1.68,Bajo,no
-2026-11-26,Santa Cruz,Santa Rosa,6.31,8.34,3.99,7.53,Alto,no
-2026-11-26,Santa Cruz,Trigal,2.52,3.65,0.89,4.9,Bajo,no
-2026-11-26,Santa Cruz,Urubicha,4.98,4.78,3.32,7.8,Medio,no
-2026-11-26,Santa Cruz,Vallegrande,3.55,6.71,2.13,3.12,Bajo,no
-2026-11-26,Santa Cruz,Warnes,3.4,7.7,1.76,2.89,Bajo,no
-2026-11-26,Santa Cruz,Yapacaní,5.32,9.12,4.2,3.94,Medio,no
-2026-11-26,Tarija,Bermejo,3.44,7.61,1.7,3.15,Bajo,no
-2026-11-26,Tarija,Caraparí,3.84,6.22,2.37,3.85,Bajo,no
-2026-11-26,Tarija,El Puente,3.44,3.42,4.23,2.83,Bajo,no
-2026-11-26,Tarija,Entre Ríos,4.33,7.57,4.33,2.48,Medio,no
-2026-11-26,Tarija,Padcaya,4.97,7.07,4.44,3.9,Medio,no
-2026-11-26,Tarija,San Lorenzo,3.68,6.41,3.8,2.04,Bajo,no
-2026-11-26,Tarija,Tarija,2.54,9.08,1.08,1.67,Bajo,no
-2026-11-26,Tarija,Uriondo,4.09,8.3,3.68,2.24,Medio,no
-2026-11-26,Tarija,Villa Montes,3.15,8.67,1.57,2.3,Bajo,no
-2026-11-26,Tarija,Yacuiba,3.66,9.76,2.1,2.4,Bajo,no
-2026-11-26,Tarija,Yunchará,5.52,5.97,5.17,5.44,Medio,no
+2026-11-27,Beni,Baures,4.75,3.65,4.11,7.14,Medio,no
+2026-11-27,Beni,Exaltación,6.74,7.02,6.2,7.05,Alto,no
+2026-11-27,Beni,Guayaramerín,4.26,6.71,1.31,8.78,Medio,no
+2026-11-27,Beni,Huacaraje,4.67,4.85,2.58,8.15,Medio,no
+2026-11-27,Beni,Loreto,6.78,8.9,6.16,5.68,Alto,no
+2026-11-27,Beni,Magdalena,4.05,4.85,2.47,5.54,Medio,no
+2026-11-27,Beni,Puerto Menor de Rurrenabaque,5.59,8.53,3.28,6.24,Medio,no
+2026-11-27,Beni,Puerto Siles,5.21,5.98,2.53,9.32,Medio,no
+2026-11-27,Beni,Reyes,6.06,9.53,5.38,4.34,Alto,no
+2026-11-27,Beni,Riberalta,5.5,9.9,3.08,5.45,Medio,no
+2026-11-27,Beni,San Andrés,6.48,8.48,5.6,5.72,Alto,no
+2026-11-27,Beni,San Borja,7.74,8.64,6.99,7.68,Alto,no
+2026-11-27,Beni,San Ignacio,6.61,9.73,5.54,5.36,Alto,no
+2026-11-27,Beni,San Javier,6.97,9.57,5.77,6.13,Alto,no
+2026-11-27,Beni,San Joaquín,4.46,5.82,2.09,7.3,Medio,no
+2026-11-27,Beni,San Ramón,5.38,6.69,2.71,8.6,Medio,no
+2026-11-27,Beni,Santa Ana,6,9.19,5.2,4.53,Alto,no
+2026-11-27,Beni,Santa Rosa,5.68,7.91,3.27,7.07,Medio,no
+2026-11-27,Beni,Trinidad,2.99,9.17,1.55,1.89,Bajo,no
+2026-11-27,Chuquisaca,Alcalá,3.97,2.37,3.93,6.7,Bajo,no
+2026-11-27,Chuquisaca,Azurduy,5.88,4.62,8.15,5.41,Medio,no
+2026-11-27,Chuquisaca,Camargo,4.65,4.77,4.77,4.42,Medio,no
+2026-11-27,Chuquisaca,Culpina,5.67,5.02,7.45,4.87,Medio,no
+2026-11-27,Chuquisaca,El Villar,5.02,4.22,5.56,5.41,Medio,no
+2026-11-27,Chuquisaca,Huacareta,5.46,5.82,5.48,5.1,Medio,no
+2026-11-27,Chuquisaca,Huacaya,3.94,3.42,3.49,5.13,Bajo,no
+2026-11-27,Chuquisaca,Incahuasi,6.18,4.22,8.07,6.95,Alto,no
+2026-11-27,Chuquisaca,Las Carreras,4.59,3.02,4.68,6.87,Medio,no
+2026-11-27,Chuquisaca,Macharetí,5.6,5.57,3.65,8.62,Medio,no
+2026-11-27,Chuquisaca,Mojocoya,3.32,1.31,5.36,5.2,Bajo,no
+2026-11-27,Chuquisaca,Monteagudo,5.33,7.68,3.65,5.4,Medio,no
+2026-11-27,Chuquisaca,Padilla,4.22,3.25,5.16,4.48,Medio,no
+2026-11-27,Chuquisaca,Poroma,6.06,5.28,9.3,4.53,Alto,no
+2026-11-27,Chuquisaca,Presto,4.88,3.49,7.72,4.32,Medio,no
+2026-11-27,Chuquisaca,San Lucas,6.88,6.1,7.77,6.86,Alto,no
+2026-11-27,Chuquisaca,Sopachui,3.9,2.69,7.02,3.14,Bajo,no
+2026-11-27,Chuquisaca,Sucre,3.09,9.05,1.88,1.73,Bajo,no
+2026-11-27,Chuquisaca,Tarabuco,4.9,4.37,7.92,3.4,Medio,no
+2026-11-27,Chuquisaca,Tarvita,6.34,5.85,7.44,5.84,Alto,no
+2026-11-27,Chuquisaca,Tomina,3.07,1.98,5.12,2.86,Bajo,no
+2026-11-27,Chuquisaca,Villa Abecia,4.62,3.02,4.64,7.04,Medio,no
+2026-11-27,Chuquisaca,Villa Charcas,4.08,1.31,7.82,6.65,Medio,no
+2026-11-27,Chuquisaca,Villa Ricardo Mugia - Icla,4.81,3.42,6.85,4.76,Medio,no
+2026-11-27,Chuquisaca,Villa Serrano,3.94,2.45,5.4,4.64,Bajo,no
+2026-11-27,Chuquisaca,Villa Vaca Guzmán,5.2,5.32,4.57,5.78,Medio,no
+2026-11-27,Chuquisaca,Yamparáez,5.14,4.48,6.75,4.49,Medio,no
+2026-11-27,Chuquisaca,Yotala,3.96,4.14,3.92,3.83,Bajo,no
+2026-11-27,Chuquisaca,Zudañez,4.33,4.14,5.82,3.37,Medio,no
+2026-11-27,Cochabamba,Aiquile,5.71,6.57,6.42,4.42,Medio,no
+2026-11-27,Cochabamba,Alalay,4.72,2.51,9.18,4.57,Medio,no
+2026-11-27,Cochabamba,Anzaldo,4.03,2.37,8.41,3.28,Medio,no
+2026-11-27,Cochabamba,Arani,2.87,2.37,3.68,2.71,Bajo,no
+2026-11-27,Cochabamba,Arbieto,2.96,1.31,6.41,3.09,Bajo,no
+2026-11-27,Cochabamba,Arque,6.09,5.99,9,4.19,Alto,no
+2026-11-27,Cochabamba,Ayopaya,5.48,4.94,8.82,3.77,Medio,no
+2026-11-27,Cochabamba,Bolivar,6.16,4.51,9.46,5.47,Alto,no
+2026-11-27,Cochabamba,Capinota,4.42,6.17,5.38,2.61,Medio,no
+2026-11-27,Cochabamba,Chimoré,5.26,9.79,4.5,3.3,Medio,no
+2026-11-27,Cochabamba,Cliza,2.79,7.44,1.57,1.86,Bajo,no
+2026-11-27,Cochabamba,Cocapata,5.63,3.58,8.98,5.55,Medio,no
+2026-11-27,Cochabamba,Cochabamba,2.39,9.14,1.48,1.01,Bajo,no
+2026-11-27,Cochabamba,Colcapirhua,2.11,6.64,0.61,2.31,Bajo,no
+2026-11-27,Cochabamba,Colomi,5.12,5.84,6.5,3.53,Medio,no
+2026-11-27,Cochabamba,Entre Ríos,4.76,4.22,4.96,5.14,Medio,no
+2026-11-27,Cochabamba,Mizque,5.45,6.17,6.82,3.85,Medio,no
+2026-11-27,Cochabamba,Morochata,5.39,4.14,8.89,4.26,Medio,no
+2026-11-27,Cochabamba,Omereque,4.48,4.14,4.45,4.89,Medio,no
+2026-11-27,Cochabamba,Pasorapa,4.76,4.69,4,5.73,Medio,no
+2026-11-27,Cochabamba,Pocona,4.48,3.02,7,4.24,Medio,no
+2026-11-27,Cochabamba,Pojo,5.96,4.52,7.81,6.01,Medio,no
+2026-11-27,Cochabamba,Puerto Villarroel,4.64,7.33,4.93,2.77,Medio,no
+2026-11-27,Cochabamba,Punata,2.8,3.02,2.47,2.94,Bajo,no
+2026-11-27,Cochabamba,Quillacollo,3.06,8.48,1.45,2.33,Bajo,no
+2026-11-27,Cochabamba,Sacaba,3.16,6.48,2.01,2.43,Bajo,no
+2026-11-27,Cochabamba,Sacabamba,2.85,0.25,7.49,6.15,Bajo,no
+2026-11-27,Cochabamba,San Benito,2.73,2.69,2.41,3.15,Bajo,no
+2026-11-27,Cochabamba,Santivañez,3.04,1.98,4.16,3.39,Bajo,no
+2026-11-27,Cochabamba,Shinahota,3.87,4.62,4.53,2.77,Bajo,no
+2026-11-27,Cochabamba,Sicaya,3.85,3.82,6.24,2.39,Bajo,no
+2026-11-27,Cochabamba,Sipesipe,4.05,5.64,4.07,2.89,Medio,no
+2026-11-27,Cochabamba,Tacachi,1.71,0.09,2.21,4.52,Muy bajo,no
+2026-11-27,Cochabamba,Tacopaya,6.2,6.2,8.75,4.4,Alto,no
+2026-11-27,Cochabamba,Tapacarí,5.98,5.44,9.52,4.12,Medio,no
+2026-11-27,Cochabamba,Tarata,3.22,2.69,4.73,2.61,Bajo,no
+2026-11-27,Cochabamba,Tiquipaya,2.31,5.34,1.11,2.09,Bajo,no
+2026-11-27,Cochabamba,Tiraque,3.8,2.45,6.87,3.27,Bajo,no
+2026-11-27,Cochabamba,Toco,3.73,2.37,4.42,4.96,Bajo,no
+2026-11-27,Cochabamba,Tolata,3.48,3.91,3.07,3.51,Bajo,no
+2026-11-27,Cochabamba,Totora,4.95,4.64,8.61,3.04,Medio,no
+2026-11-27,Cochabamba,Vacas,3.64,1.98,7.3,3.33,Bajo,no
+2026-11-27,Cochabamba,Vila Vila,4.07,1.31,9.34,5.5,Medio,no
+2026-11-27,Cochabamba,Villa Gualberto Villarroel,2.25,0.25,4.03,5.64,Bajo,no
+2026-11-27,Cochabamba,Villa Rivero,3.34,1.98,4.16,4.53,Bajo,no
+2026-11-27,Cochabamba,Villa Tunari,5.55,8.67,6,3.29,Medio,no
+2026-11-27,Cochabamba,Vinto,3.1,5.28,2.4,2.35,Bajo,no
+2026-11-27,La Paz,Achacachi,5.17,5.81,5.65,4.21,Medio,no
+2026-11-27,La Paz,Achocalla,2.57,1.31,4.69,2.77,Bajo,no
+2026-11-27,La Paz,Alto Beni,4.14,2.91,5.53,4.42,Medio,no
+2026-11-27,La Paz,Apolo,7.8,7.34,7.68,8.43,Alto,no
+2026-11-27,La Paz,Aucapata,3.16,0.46,7.81,8.05,Bajo,no
+2026-11-27,La Paz,Ayata,6.75,4.94,8.14,7.63,Alto,no
+2026-11-27,La Paz,Ayo Ayo,2.09,0.25,7.18,2.54,Bajo,no
+2026-11-27,La Paz,Batallas,4.64,4.22,6.18,3.83,Medio,no
+2026-11-27,La Paz,Cairoma,4.11,1.98,6.69,5.22,Medio,no
+2026-11-27,La Paz,Cajuata,3.65,1.65,4.65,6.34,Bajo,no
+2026-11-27,La Paz,Calacoto,6.76,6.9,7.13,6.26,Alto,no
+2026-11-27,La Paz,Calamarca,2.98,1.31,5.81,3.47,Bajo,no
+2026-11-27,La Paz,Caquiaviri,5.53,3.72,6.48,7.03,Medio,no
+2026-11-27,La Paz,Caranavi,4.99,6.72,4.57,4.04,Medio,no
+2026-11-27,La Paz,Catacora,4.91,2.69,5.08,8.65,Medio,no
+2026-11-27,La Paz,Chacarilla,6.52,4.9,7.7,7.34,Alto,no
+2026-11-27,La Paz,Charazani,5.3,2.45,7.99,7.6,Medio,no
+2026-11-27,La Paz,Charaña,5.54,3.98,6.34,6.73,Medio,no
+2026-11-27,La Paz,Chua Cocani,4.3,5.14,4.34,3.57,Medio,no
+2026-11-27,La Paz,Chulumani,4.42,5.42,3.46,4.6,Medio,no
+2026-11-27,La Paz,Chuma,6.69,5.28,7.37,7.69,Alto,no
+2026-11-27,La Paz,Collana,3.08,1.65,3.86,4.56,Bajo,no
+2026-11-27,La Paz,Colquencha,3.64,2.37,4,5.08,Bajo,no
+2026-11-27,La Paz,Colquiri,4.23,2.05,7.45,4.97,Medio,no
+2026-11-27,La Paz,Comanche,3.97,1.98,6.89,4.58,Bajo,no
+2026-11-27,La Paz,Combaya,4.53,2.45,7.65,4.96,Medio,no
+2026-11-27,La Paz,Copacabana,5.33,5.05,6.52,4.6,Medio,no
+2026-11-27,La Paz,Coripata,2.97,1.26,3.8,5.48,Bajo,no
+2026-11-27,La Paz,Corocoro,4.61,3.02,6.74,4.81,Medio,no
+2026-11-27,La Paz,Coroico,4.11,4.22,4.09,4.03,Medio,no
+2026-11-27,La Paz,Curva,5.28,1.98,8.49,8.75,Medio,no
+2026-11-27,La Paz,Desaguadero,2.48,1.45,4,2.62,Bajo,no
+2026-11-27,La Paz,El Alto,3.15,9.12,1.91,1.8,Bajo,no
+2026-11-27,La Paz,Escoma,5.22,2.37,8.15,7.34,Medio,no
+2026-11-27,La Paz,Guanay,5.2,8.45,4.11,4.04,Medio,no
+2026-11-27,La Paz,Huarina,3.44,2.37,5.64,3.05,Bajo,no
+2026-11-27,La Paz,Huatajata,1.63,0.25,2.11,4.08,Muy bajo,no
+2026-11-27,La Paz,Humanata,3.19,0.09,9.26,6.99,Bajo,no
+2026-11-27,La Paz,Ichoca,6.09,5.84,7.94,4.87,Alto,no
+2026-11-27,La Paz,Inquisivi,5.79,5.17,8.1,4.63,Medio,no
+2026-11-27,La Paz,Irupana,4.85,4.52,5.14,4.91,Medio,no
+2026-11-27,La Paz,Ixiamas,7.37,9,5.65,7.86,Alto,no
+2026-11-27,La Paz,Jesús de Machaka,3.88,1.98,5.25,5.63,Bajo,no
+2026-11-27,La Paz,La (Marka) San Andrés de Mach,5.13,3.17,6.96,6.1,Medio,no
+2026-11-27,La Paz,La Asunta,6.09,5.02,6.27,7.19,Alto,no
+2026-11-27,La Paz,Laja,4.29,3.72,6.29,3.38,Medio,no
+2026-11-27,La Paz,Luribay,5.58,6.37,6.12,4.46,Medio,no
+2026-11-27,La Paz,Malla,3.96,1.31,7.29,6.53,Bajo,no
+2026-11-27,La Paz,Mapiri,4.69,5.02,3.21,6.39,Medio,no
+2026-11-27,La Paz,Mecapaca,5.03,6.59,4.62,4.17,Medio,no
+2026-11-27,La Paz,Mocomoco,7.04,5.44,8.5,7.54,Alto,no
+2026-11-27,La Paz,Nazacara de Pacajes,4.15,1.65,6.83,6.31,Medio,no
+2026-11-27,La Paz,Nuestra Señora de La Paz,1.94,9.19,0.79,1,Muy bajo,no
+2026-11-27,La Paz,Palca,5.56,6.08,7.77,3.64,Medio,no
+2026-11-27,La Paz,Palos Blancos,5.53,6.52,4.81,5.4,Medio,no
+2026-11-27,La Paz,Papel Pampa,4.72,5.44,6.47,2.99,Medio,no
+2026-11-27,La Paz,Patacamaya,4.08,3.98,5.26,3.24,Medio,no
+2026-11-27,La Paz,Pelechuco,6.17,4.94,5.74,8.28,Alto,no
+2026-11-27,La Paz,Pucarani,4.16,4.34,6.73,2.47,Medio,no
+2026-11-27,La Paz,Puerto Acosta,6.87,5.42,8.96,6.68,Alto,no
+2026-11-27,La Paz,Puerto Mayor de Carabuco,5.42,3.02,8.1,6.5,Medio,no
+2026-11-27,La Paz,Puerto Mayor de Guaqui,3.09,2.45,5.43,2.21,Bajo,no
+2026-11-27,La Paz,Puerto Pérez,4.16,3.02,7.77,3.07,Medio,no
+2026-11-27,La Paz,Quiabaya,4.65,1.65,7.96,7.65,Medio,no
+2026-11-27,La Paz,Quime,3.31,2.78,4.94,2.63,Bajo,no
+2026-11-27,La Paz,San Buenaventura,4.85,8.57,2.6,5.11,Medio,no
+2026-11-27,La Paz,San Pedro de Curahuara,5.26,3.91,6.49,5.75,Medio,no
+2026-11-27,La Paz,San Pedro de Tiquina,4.02,3.02,5.77,3.73,Medio,no
+2026-11-27,La Paz,Santiago de Callapa,4.74,1.98,8.86,6.08,Medio,no
+2026-11-27,La Paz,Santiago de Huata,2.5,0.89,4.98,3.54,Bajo,no
+2026-11-27,La Paz,Santiago de Machaca,5.31,3.02,5.99,8.27,Medio,no
+2026-11-27,La Paz,Sapahaqui,5.58,4.9,7.8,4.55,Medio,no
+2026-11-27,La Paz,Sicasica,4.24,4.77,5.97,2.67,Medio,no
+2026-11-27,La Paz,Sorata,5.36,3.82,6.85,5.9,Medio,no
+2026-11-27,La Paz,Tacacoma,4.66,2.11,6.42,7.46,Medio,no
+2026-11-27,La Paz,Taraco,3.37,1.31,6.91,4.22,Bajo,no
+2026-11-27,La Paz,Teoponte,5.32,6.71,5.39,4.16,Medio,no
+2026-11-27,La Paz,Tiahuanacu,3.37,1.31,6.68,4.37,Bajo,no
+2026-11-27,La Paz,Tipuani,3.68,6.57,3.21,2.37,Bajo,no
+2026-11-27,La Paz,Tito Yupanqui,4.44,2.11,7.34,5.65,Medio,no
+2026-11-27,La Paz,Umala,4.98,4.14,6.4,4.67,Medio,no
+2026-11-27,La Paz,Viacha,3.86,8.48,2.79,2.43,Bajo,no
+2026-11-27,La Paz,Villa Ancoraimes,5.33,3.42,8.15,5.45,Medio,no
+2026-11-27,La Paz,Villa Libertad Licoma,2.11,0.09,4.09,4.57,Bajo,no
+2026-11-27,La Paz,Waldo Ballivian,2.15,0.25,3.81,5.25,Bajo,no
+2026-11-27,La Paz,Yaco,2.78,0.46,7.22,5.97,Bajo,no
+2026-11-27,La Paz,Yanacachi,2.82,3.42,2.76,2.37,Bajo,no
+2026-11-27,Oruro,Andamarca,4.22,5.11,5.89,2.5,Medio,no
+2026-11-27,Oruro,Antequera,3.61,3.18,3.23,4.56,Bajo,no
+2026-11-27,Oruro,Belén de Andamarca,2.84,1.31,3.82,4.58,Bajo,no
+2026-11-27,Oruro,Caracollo,4.76,5.12,4.99,4.24,Medio,no
+2026-11-27,Oruro,Carangas,2.59,0.46,5.09,6.87,Bajo,no
+2026-11-27,Oruro,Challapata,6.35,7.34,7.33,4.76,Alto,no
+2026-11-27,Oruro,Chipaya,5.16,4.14,5.29,6.29,Medio,no
+2026-11-27,Oruro,Choquecota,2.13,0.46,4.21,4.6,Bajo,no
+2026-11-27,Oruro,Coipasa,1.77,0.46,2.4,4.66,Muy bajo,no
+2026-11-27,Oruro,Corque,5.32,5.34,5.92,4.76,Medio,no
+2026-11-27,Oruro,Cruz de Machacamarca,2.76,0.85,3.81,6.48,Bajo,no
+2026-11-27,Oruro,Curahuara de Carangas,5.73,4.52,6.38,6.52,Medio,no
+2026-11-27,Oruro,El Choro,4.65,4.77,6.94,3.03,Medio,no
+2026-11-27,Oruro,Escara,3.46,2.11,4.18,4.69,Bajo,no
+2026-11-27,Oruro,Esmeralda,2.6,0.85,3.21,6.41,Bajo,no
+2026-11-27,Oruro,Eucaliptus,3.93,2.78,5.25,4.15,Bajo,no
+2026-11-27,Oruro,Huachacalla,1.82,0.46,1.7,7.1,Muy bajo,no
+2026-11-27,Oruro,Huanuni,2.96,6.62,1.34,2.93,Bajo,no
+2026-11-27,Oruro,Huayllamarca,4.24,1.65,6.08,7.57,Medio,no
+2026-11-27,Oruro,La Rivera,4.45,2.51,5.08,6.9,Medio,no
+2026-11-27,Oruro,Machacamarca,3.42,4.69,2.36,3.62,Bajo,no
+2026-11-27,Oruro,Oruro,2.64,9.03,1.12,1.83,Bajo,no
+2026-11-27,Oruro,Pampa Aullagas,3.41,0.85,6.27,7.46,Bajo,no
+2026-11-27,Oruro,Paria,4.87,5.99,6.77,2.85,Medio,no
+2026-11-27,Oruro,Pazña,4.4,4.62,4.8,3.85,Medio,no
+2026-11-27,Oruro,Poopó,3.17,2.85,3.2,3.5,Bajo,no
+2026-11-27,Oruro,Sabaya,4.91,4.29,4.26,6.46,Medio,no
+2026-11-27,Oruro,Salinas de Garcí Mendoza,5.79,6.52,4.41,6.74,Medio,no
+2026-11-27,Oruro,Santiago de Huari,4.58,3.17,6.25,4.84,Medio,no
+2026-11-27,Oruro,Santuario de Quillacas,3.72,2.05,4.67,5.37,Bajo,no
+2026-11-27,Oruro,Todos Santos,4.47,5.57,2.29,6.98,Medio,no
+2026-11-27,Oruro,Toledo,5.74,5.92,6.49,4.94,Medio,no
+2026-11-27,Oruro,Totora,4.09,1.65,6.63,6.25,Medio,no
+2026-11-27,Oruro,Turco,3.41,1.31,5.68,5.31,Bajo,no
+2026-11-27,Oruro,Yunguyo del Litoral,1.42,0.25,1.29,4.48,Muy bajo,no
+2026-11-27,Pando,Bella Flor,4.77,4.45,3.32,7.32,Medio,no
+2026-11-27,Pando,Bolpebra,4.94,5.17,3.56,6.54,Medio,no
+2026-11-27,Pando,Cobija,2.05,7.57,0.66,1.71,Bajo,no
+2026-11-27,Pando,Filadelfia,5.32,5.49,3.56,7.68,Medio,no
+2026-11-27,Pando,Ingavi,3.05,0.46,6.31,8.98,Bajo,no
+2026-11-27,Pando,Nueva Esperanza,3.38,0.89,4.65,9.32,Bajo,no
+2026-11-27,Pando,Porvenir,3.13,4.62,1.47,4.54,Bajo,no
+2026-11-27,Pando,Puerto Gonzalo Moreno,3.83,2.11,4.35,6.12,Bajo,no
+2026-11-27,Pando,Puerto Rico,4.28,5.72,3.05,4.49,Medio,no
+2026-11-27,Pando,San Lorenzo,4.72,4.22,3.68,6.78,Medio,no
+2026-11-27,Pando,San Pedro,5.15,2.37,6.87,8.41,Medio,no
+2026-11-27,Pando,Santa Rosa,4.19,3.58,3.62,5.66,Medio,no
+2026-11-27,Pando,Santos Mercado,4.67,2.11,5.28,9.14,Medio,no
+2026-11-27,Pando,Sena,5.98,4.62,5.33,8.68,Medio,no
+2026-11-27,Pando,Villa Nueva,2.61,0.46,4.4,8.05,Bajo,no
+2026-11-27,Potosí,Acasio,3.25,0.89,8.46,4.56,Bajo,no
+2026-11-27,Potosí,Arampampa,2.56,0.89,9.03,2.08,Bajo,no
+2026-11-27,Potosí,Atocha,2.58,2.51,1.99,3.45,Bajo,no
+2026-11-27,Potosí,Betanzos,6.32,6.49,7.25,5.36,Alto,no
+2026-11-27,Potosí,"Caiza ""D""",4.29,2.69,4.39,6.7,Medio,no
+2026-11-27,Potosí,Caripuyo,3.08,0.09,9.22,6.36,Bajo,no
+2026-11-27,Potosí,Chaquí,4.91,3.42,7.55,4.58,Medio,no
+2026-11-27,Potosí,Chayanta,4.71,2.37,7.24,6.1,Medio,no
+2026-11-27,Potosí,Chuquihuta Ayllu Jucumani,3.65,0.85,8.56,6.66,Bajo,no
+2026-11-27,Potosí,Ckochas,4.83,1.65,9.29,7.36,Medio,no
+2026-11-27,Potosí,"Colcha ""K""",3.16,4.85,1.47,4.44,Bajo,no
+2026-11-27,Potosí,Colquechaca,6.11,4.22,8.88,6.09,Alto,no
+2026-11-27,Potosí,Cotagaita,6.34,7.5,5.47,6.2,Alto,no
+2026-11-27,Potosí,Llallagua,3.39,3.42,3.54,3.23,Bajo,no
+2026-11-27,Potosí,Llica,3.32,2.45,2.25,6.66,Bajo,no
+2026-11-27,Potosí,Mojinete,2.62,0.46,4.25,8.46,Bajo,no
+2026-11-27,Potosí,Ocurí,5.69,2.69,9.64,7.12,Medio,no
+2026-11-27,Potosí,Pocoata,6.4,4.14,8.76,7.22,Alto,no
+2026-11-27,Potosí,Porco,2.95,2.37,2.35,4.61,Bajo,no
+2026-11-27,Potosí,Potosí,3.11,8.87,1.65,2.07,Bajo,no
+2026-11-27,Potosí,Puna,6.03,5.19,6.54,6.45,Alto,no
+2026-11-27,Potosí,Ravelo,6.58,4.69,9.19,6.61,Alto,no
+2026-11-27,Potosí,Sacaca,4.86,1.98,9.12,6.34,Medio,no
+2026-11-27,Potosí,San Agustín,2.49,1.31,1.99,5.92,Bajo,no
+2026-11-27,Potosí,San Antonio de Esmoruco,4.42,1.98,6.51,6.7,Medio,no
+2026-11-27,Potosí,San Pablo,5.75,5.57,5.44,6.26,Medio,no
+2026-11-27,Potosí,San Pedro,4.66,1.65,9.76,6.29,Medio,no
+2026-11-27,Potosí,San Pedro de Quemes,3.68,4.37,1.69,6.71,Bajo,no
+2026-11-27,Potosí,Tacobamba,6.48,5.28,9.84,5.23,Alto,no
+2026-11-27,Potosí,Tahua,2.26,0.46,3.48,6.62,Bajo,no
+2026-11-27,Potosí,Tinguipaya,6.66,4.71,9.57,6.56,Alto,no
+2026-11-27,Potosí,Tomave,4.6,3.02,6.11,5.28,Medio,no
+2026-11-27,Potosí,Toro Toro,5.26,2.78,9.05,5.78,Medio,no
+2026-11-27,Potosí,Tupiza,3.7,7.19,2.27,3.09,Bajo,no
+2026-11-27,Potosí,Uncía,4.33,3.02,6.38,4.21,Medio,no
+2026-11-27,Potosí,Urmiri,3.07,0.46,8.4,6.91,Bajo,no
+2026-11-27,Potosí,Uyuni,2.73,4.37,2.97,1.57,Bajo,no
+2026-11-27,Potosí,Villazón,4.08,6.77,2.73,3.68,Medio,no
+2026-11-27,Potosí,Vitiche,5.33,4.14,5.72,6.4,Medio,no
+2026-11-27,Potosí,Yocalla,4.26,3.82,5.54,3.64,Medio,no
+2026-11-27,Santa Cruz,Ascención de Guarayos,5.94,8.48,4.97,4.98,Medio,no
+2026-11-27,Santa Cruz,Boyuibe,4.82,4.52,3.09,8.01,Medio,no
+2026-11-27,Santa Cruz,Buena Vista,3.43,3.57,2.79,4.05,Bajo,no
+2026-11-27,Santa Cruz,Cabezas,5.69,7.28,4.32,5.87,Medio,no
+2026-11-27,Santa Cruz,Camiri,2.89,5,1.13,4.27,Bajo,no
+2026-11-27,Santa Cruz,Charagua,5.95,9.05,4.18,5.55,Medio,no
+2026-11-27,Santa Cruz,Colpa Bélgica,1.86,1.26,1.55,3.32,Muy bajo,no
+2026-11-27,Santa Cruz,Comarapa,5.19,4.94,4.63,6.11,Medio,no
+2026-11-27,Santa Cruz,Concepción,7.26,7.91,5.8,8.34,Alto,no
+2026-11-27,Santa Cruz,Cotoca,2.41,2.85,1.86,2.63,Bajo,no
+2026-11-27,Santa Cruz,Cuatro Cañadas,3.56,2.05,3.51,6.27,Bajo,no
+2026-11-27,Santa Cruz,Cuevo,3.95,5.54,1.65,6.77,Bajo,no
+2026-11-27,Santa Cruz,El Carmen Rivero Tórrez,4.59,3.05,3.42,9.29,Medio,no
+2026-11-27,Santa Cruz,El Puente,7.29,7.91,5.8,8.44,Alto,no
+2026-11-27,Santa Cruz,El Torno,3.93,8.48,2.99,2.39,Bajo,no
+2026-11-27,Santa Cruz,Fernández Alonso,3.98,2.91,3.84,5.66,Bajo,no
+2026-11-27,Santa Cruz,General Saavedra,2.77,1.65,3.07,4.19,Bajo,no
+2026-11-27,Santa Cruz,Gutiérrez,5.45,5.94,4.61,5.91,Medio,no
+2026-11-27,Santa Cruz,La Guardia,3.12,5.89,1.51,3.41,Bajo,no
+2026-11-27,Santa Cruz,Lagunillas,4.05,4.52,3.08,4.78,Medio,no
+2026-11-27,Santa Cruz,Mairana,2.39,0.85,4.45,3.6,Bajo,no
+2026-11-27,Santa Cruz,Mineros,3.93,5.72,2.37,4.5,Bajo,no
+2026-11-27,Santa Cruz,Montero,2.51,6.9,1.16,1.98,Bajo,no
+2026-11-27,Santa Cruz,Moromoro,3.7,1.65,4.73,6.5,Bajo,no
+2026-11-27,Santa Cruz,Okinawa Uno,2.18,3.97,1.57,1.67,Bajo,no
+2026-11-27,Santa Cruz,Pailón,6.14,8.48,4,6.82,Alto,no
+2026-11-27,Santa Cruz,Pampa Grande,2.79,1.26,4.66,3.7,Bajo,no
+2026-11-27,Santa Cruz,Porongo,1.44,2.45,0.69,1.74,Muy bajo,no
+2026-11-27,Santa Cruz,Portachuelo,2.2,5.42,0.62,3.15,Bajo,no
+2026-11-27,Santa Cruz,Postrervalle,4.12,2.45,3.93,7.24,Medio,no
+2026-11-27,Santa Cruz,Pucará,3.05,1.69,3.83,4.37,Bajo,no
+2026-11-27,Santa Cruz,Puerto Quijarro,1.42,0.46,1.12,5.05,Muy bajo,no
+2026-11-27,Santa Cruz,Puerto Suarez,3.17,4.22,0.91,8.22,Bajo,no
+2026-11-27,Santa Cruz,Quirusillas,2.97,1.65,2.59,6.14,Bajo,no
+2026-11-27,Santa Cruz,Roboré,3.58,5.65,1.43,5.7,Bajo,no
+2026-11-27,Santa Cruz,Saipina,3.73,1.98,4.13,6.36,Bajo,no
+2026-11-27,Santa Cruz,Samaipata,2.5,1.65,3.01,3.16,Bajo,no
+2026-11-27,Santa Cruz,San Antonio de Lomerio,3.86,2.06,3.25,8.6,Bajo,no
+2026-11-27,Santa Cruz,San Carlos,3.22,2.45,3.17,4.28,Bajo,no
+2026-11-27,Santa Cruz,San Ignacio,5.77,7.42,4.94,5.23,Medio,no
+2026-11-27,Santa Cruz,San Javier,3.7,2.45,4.08,5.06,Bajo,no
+2026-11-27,Santa Cruz,San José,5.25,5.65,5.31,4.81,Medio,no
+2026-11-27,Santa Cruz,San Juan,3.29,4.51,2.38,3.32,Bajo,no
+2026-11-27,Santa Cruz,San Julián,5.47,7.7,3.71,5.71,Medio,no
+2026-11-27,Santa Cruz,San Matías,5.02,4.85,3.3,7.89,Medio,no
+2026-11-27,Santa Cruz,San Miguel,5.96,4.85,5.16,8.48,Medio,no
+2026-11-27,Santa Cruz,San Pedro,4.1,5.17,1.87,7.13,Medio,no
+2026-11-27,Santa Cruz,San Rafael,4.63,4.09,5.31,4.58,Medio,no
+2026-11-27,Santa Cruz,San Ramón,4.9,5.14,3.31,6.93,Medio,no
+2026-11-27,Santa Cruz,Santa Cruz de la Sierra,2.31,9.16,0.8,1.68,Bajo,no
+2026-11-27,Santa Cruz,Santa Rosa,6.31,8.34,3.99,7.53,Alto,no
+2026-11-27,Santa Cruz,Trigal,1.93,1.65,0.89,4.9,Muy bajo,no
+2026-11-27,Santa Cruz,Urubicha,4.98,4.78,3.32,7.8,Medio,no
+2026-11-27,Santa Cruz,Vallegrande,3.32,5.51,2.13,3.12,Bajo,no
+2026-11-27,Santa Cruz,Warnes,3.15,6.1,1.76,2.89,Bajo,no
+2026-11-27,Santa Cruz,Yapacaní,5.32,9.12,4.2,3.94,Medio,no
+2026-11-27,Tarija,Bermejo,3.44,7.61,1.7,3.15,Bajo,no
+2026-11-27,Tarija,Caraparí,3.84,6.22,2.37,3.85,Bajo,no
+2026-11-27,Tarija,El Puente,3.44,3.42,4.23,2.83,Bajo,no
+2026-11-27,Tarija,Entre Ríos,4.09,6.37,4.33,2.48,Medio,no
+2026-11-27,Tarija,Padcaya,4.97,7.07,4.44,3.9,Medio,no
+2026-11-27,Tarija,San Lorenzo,3.68,6.41,3.8,2.04,Bajo,no
+2026-11-27,Tarija,Tarija,2.54,9.08,1.08,1.67,Bajo,no
+2026-11-27,Tarija,Uriondo,3.56,5.5,3.68,2.24,Bajo,no
+2026-11-27,Tarija,Villa Montes,3.15,8.67,1.57,2.3,Bajo,no
+2026-11-27,Tarija,Yacuiba,3.66,9.76,2.1,2.4,Bajo,no
+2026-11-27,Tarija,Yunchará,5.52,5.97,5.17,5.44,Medio,no
