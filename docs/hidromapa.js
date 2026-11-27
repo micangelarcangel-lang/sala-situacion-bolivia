@@ -190,13 +190,13 @@ var HMAP = (function () {
       var fs = hit(e.point), f = fs[0], p, h = "", nom = null;
       if (f) {
         p = f.properties;
-        if (f.layer.id === "h-pt-c" || f.layer.id === "h-tr-l") h = cb.tip("cq", +p.i);
-        else if (f.layer.id === "h-ar-l") h = cb.tip("ar", +p.ai, p);
+        if (f.layer.id === "h-pt-c" || f.layer.id === "h-tr-l") h = cb.tip ? cb.tip("cq", +p.i) : "";
+        else if (f.layer.id === "h-ar-l") h = cb.tip ? cb.tip("ar", +p.ai, p) : "";
         else { nom = p.n; var rf = RN[p.n]; h = '<b style="margin:0">' + esc(p.n) + '</b>' + (rf ? esc(M.fmt(rf.properties.km)) + ' km dentro de Bolivia (OpenStreetMap)<br><i>' + (rf.properties.c === "A" ? "río principal por longitud" : rf.properties.c === "B" ? "río mediano por longitud" : "río menor por longitud") + '; la clase no es el orden hidrológico</i>' : ""); }
         if (f.layer.id === "h-ar-l" || f.layer.id === "h-tr-l") nom = p.rn || null;
       } else {
         var bl = ["h-lg-f", "h-cu-f"].filter(vis), o = bl.length ? m.queryRenderedFeatures(e.point, {layers: bl}) : [], g = o[0];
-        if (g && g.layer.id === "h-lg-f") h = '<b style="margin:0">' + esc(g.properties.n) + '</b>contorno de referencia, no la superficie de agua de hoy<br><i>' + esc(((D.lagos && D.lagos.meta && D.lagos.meta.fuente) || "")) + '</i>';
+        if (g && g.layer.id === "h-lg-f") h = H.cb.tipLago ? H.cb.tipLago(g.properties.n, g.properties.t) : '<b style="margin:0">' + esc(g.properties.n) + '</b>contorno de referencia, no la superficie de agua de hoy<br><i>' + esc(((D.lagos && D.lagos.meta && D.lagos.meta.fuente) || "")) + '</i>';
         else if (g && !(H.cb.cuencaHover === false)) h = '<b style="margin:0">' + esc(g.properties.n) + '</b>' + (g.properties.km2 ? esc(M.fmt(g.properties.km2)) + ' km² dentro de Bolivia' : "") + '<br><i>HydroBASINS (nivel 6)</i>';
       }
       resalta(m, nom); return h;
@@ -217,7 +217,9 @@ var HMAP = (function () {
     });
     m.getCanvas().addEventListener("mouseleave", function () { pop.remove(); H.mostrado = false; resalta(m, null); });
     m.on("click", function (e) {
-      var fs = hit(e.point), f = fs[0]; if (!f) return; var p = f.properties;
+      var fs = hit(e.point), f = fs[0];
+      if (!f) { if (H.cb.clicLago && vis("h-lg-f")) { var lg = m.queryRenderedFeatures(e.point, {layers: ["h-lg-f"]})[0]; if (lg) H.cb.clicLago(lg.properties.n, lg.properties.t); } return; }
+      var p = f.properties;
       if (f.layer.id === "h-pt-c" || f.layer.id === "h-tr-l") cb.clic("cq", +p.i); else if (f.layer.id === "h-ar-l") cb.clic("ar", +p.ai);
     });
   }
@@ -232,5 +234,6 @@ var HMAP = (function () {
     if (m.getSource("h-ll")) m.getSource("h-ll").updateImage({url: S.url, coordinates: S.coordinates});
     else { m.addSource("h-ll", {type: "image", url: S.url, coordinates: S.coordinates}); m.addLayer({id: "h-ll", type: "raster", source: "h-ll", layout: {visibility: "none"}, paint: {"raster-opacity": .92, "raster-resampling": "linear", "raster-fade-duration": 0}}, m.getLayer("h-rio-c") ? "h-rio-c" : undefined); }
   }
-  return {carga: carga, hay: hay, meta: meta, bajo: bajo, alto: alto, enlaza: enlaza, vista: vista, tramo: tramo, riosAviso: riosAviso, setData: setData, aportante: aportante, cuencaDe: cuencaDe, lluviaCuenca: lluviaCuenca, departamentoDe: departamentoDe, ponLluvia: ponLluvia, gradLl: gradLl, colLl: colLl, idw: idw, enGeom: enGeom, norm: norm, simple: simple, CAPAS_HIT: CAPAS_HIT, fc: fc, _depura: function () { return {D: D, H: H}; }};
+  function lago(n) { var r = null; ((D.lagos && D.lagos.features) || []).forEach(function (f) { if (!r && f.properties.n === n) r = f; }); return r; }
+  return {lago: lago, bbox: bbG, carga: carga, hay: hay, meta: meta, bajo: bajo, alto: alto, enlaza: enlaza, vista: vista, tramo: tramo, riosAviso: riosAviso, setData: setData, aportante: aportante, cuencaDe: cuencaDe, lluviaCuenca: lluviaCuenca, departamentoDe: departamentoDe, ponLluvia: ponLluvia, gradLl: gradLl, colLl: colLl, idw: idw, enGeom: enGeom, norm: norm, simple: simple, CAPAS_HIT: CAPAS_HIT, fc: fc, _depura: function () { return {D: D, H: H}; }};
 })();

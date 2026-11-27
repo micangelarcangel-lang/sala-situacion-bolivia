@@ -89,7 +89,7 @@
 .gr-lab,.gm-lab,.cl-lab,.fx-lab,.cq-lab{display:none!important}
 /* leyenda de la superficie de población */
 .gpop{display:block;height:10px;border-radius:6px;min-width:190px;border:1px solid rgba(255,255,255,.18)}
-.gpopt{display:flex;justify-content:space-between;font-size:11px;opacity:.85;margin:2px 0 4px;font-style:normal}.gpopt i{font-style:normal}
+.gpopt{display:flex;justify-content:space-between;gap:6px;white-space:nowrap;font-size:11px;opacity:.85;margin:2px 0 4px;font-style:normal}.gpopt i{font-style:normal}
 .xtool .xtl+label{margin-left:2px}
 
 /* ---------- Panel «Capas» dentro del mapa (MAPAZ.panelCapas) y cartografía hidrográfica ---------- */

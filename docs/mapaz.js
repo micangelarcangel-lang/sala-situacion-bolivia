@@ -89,7 +89,7 @@ var MAPAZ = (function () {
   }
   /* rampa de la superficie de población: densidad en hab./km² (escala logarítmica) */
   var RAMPA = [[0, [78, 64, 176, .0]], [.3, [78, 64, 176, .34]], [1, [96, 78, 214, .5]], [2, [150, 96, 236, .66]], [3, [226, 112, 214, .8]], [4, [255, 214, 240, .94]]];
-  var RAMPAL = [["1", 0], ["10", 1], ["100", 2], ["1 000", 3], ["10 000", 4]];
+  var RAMPAL = [["1", 0], ["10", 1], ["100", 2], ["1 mil", 3], ["10 mil", 4]];
   function colRampa(l) {
     var i, a, b, t; if (l <= 0) return [0, 0, 0, 0]; if (l >= 4) return RAMPA[5][1].slice();
     for (i = 1; i < RAMPA.length; i++) if (l <= RAMPA[i][0]) { a = RAMPA[i - 1]; b = RAMPA[i]; t = (l - a[0]) / (b[0] - a[0]); return [0, 1, 2, 3].map(function (k) { return a[1][k] + (b[1][k] - a[1][k]) * t; }); }
@@ -387,7 +387,7 @@ var MAPAZ = (function () {
   function panelCapas(host, grupos, cb, o) {
     o = o || {}; var E = {}, vista = o.vista || null, ab = o.abierto != null ? o.abierto : (window.innerWidth > 760), SVG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 12.5 9 5 9-5"/><path d="m3 17 9 5 9-5" opacity=".55"/></svg>';
     grupos.forEach(function (g) { g.items.forEach(function (i) { E[i.id] = !!i.on; }); });
-    function ok(i) { return !i.v || i.v === vista; }
+    function ok(i) { return !i.v || ("|" + i.v + "|").indexOf("|" + vista + "|") >= 0; }
     function pinta() {
       var n = 0; grupos.forEach(function (g) { g.items.forEach(function (i) { if (ok(i) && E[i.id]) n++; }); });
       host.className = "mzc"; host.innerHTML = '<button type="button" class="mzc-h" aria-expanded="' + ab + '">' + SVG + '<b>Capas</b><span class="mzc-n">' + n + ' activas</span><i class="mzc-c' + (ab ? " on" : "") + '"></i></button><div class="mzc-b"' + (ab ? "" : " hidden") + '>' +
