@@ -109,3 +109,7 @@
 .glg .gring{display:inline-block;width:12px;height:12px;border-radius:50%;border:2.5px solid var(--c,#2e9e5b);background:#0a1426;margin-right:6px;vertical-align:-2px}
 /* leyenda del mapa hidrográfico: las notas ocupan su propia línea */
 #hL .glg>div,#mL .glg>div{display:flex;flex-wrap:wrap;align-items:center;gap:2px 0}#hL .glg small,#mL .glg small{display:block;flex:0 0 100%;white-space:normal;max-width:560px;margin-top:3px;line-height:1.35}
+
+/* símbolos de leyenda de Geológica: anillo (epicentro) y rombo (derrumbe) */
+.glg i.gar,.gar{display:inline-block;border-radius:50%!important;border:2px solid var(--c)!important;background:rgba(128,140,170,.18)!important;box-sizing:border-box;vertical-align:middle;margin-right:5px;flex:none}
+.glg i.gdr,.gdr{display:inline-block;width:11px!important;height:11px!important;border-radius:2px!important;transform:rotate(45deg);background:linear-gradient(#ffd98a,#b8680a)!important;border:1.6px solid #fff!important;box-sizing:border-box;margin:0 7px 0 3px;flex:none}

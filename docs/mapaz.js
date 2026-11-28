@@ -139,7 +139,7 @@ var MAPAZ = (function () {
       var S = superficie(); if (!S) return;
       map.addSource("pgi", {type: "image", url: S.url, coordinates: S.coords});
       var antes = map.getLayer("ex-l") ? "ex-l" : undefined;
-      map.addLayer({id: "pg-f", type: "raster", source: "pgi", layout: {visibility: map._pobOn === false ? "none" : "visible"}, paint: {"raster-opacity": .92, "raster-resampling": "linear", "raster-fade-duration": 0}}, antes);
+      map.addLayer({id: "pg-f", type: "raster", source: "pgi", layout: {visibility: map._pobOn === false ? "none" : "visible"}, paint: {"raster-opacity": ["interpolate", ["linear"], ["zoom"], 5, .9, 9, .72, 12, .46], "raster-resampling": "linear", "raster-fade-duration": 0}}, antes);
     }
     malla(function () { setTimeout(pon, 0); });
     map.on("mousemove", function (e) {

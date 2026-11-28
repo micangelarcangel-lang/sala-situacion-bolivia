@@ -428,7 +428,7 @@ var HID = (function () {
   function infraMapa(m) {
     var on = function (i) { return PN && PN.get(i); }; if (!on("sal") && !on("eme")) { M.infData(map, []); return; }
     if (m) return;
-    var f = M.infTodos(function (p) { return !LG.d || p.dep === LG.d; }).map(M.infoFeat); M.infData(map, f);
+    var f = M.infTodos(function (p) { return !LG.d || p.dep === LG.d; }).map(M.infoFeat).filter(function (x) { return x.properties.g === "s" ? on("sal") : on("eme"); }); M.infData(map, f);
   }
   function refrescaMapa() {
     if (!map || !map._ok) return; var L = listaMapa();
