@@ -54,13 +54,22 @@
 </section>
 
 <section id="t-map" style="display:none">
- <div class="callout">__I_INFO__<div><p><b>Cómo usar el mapa.</b> Active o desactive capas a la izquierda. El <b>mapa de calor</b> muestra dónde se concentran los focos de calor; mueva el control de días para ver su evolución. Toque un círculo para ver el detalle y abrir su informe.</p></div></div>
+ <div class="callout">__I_INFO__<div><p><b>Cómo usar el mapa.</b> Parte de lo esencial (focos de calor y complejos); añada contexto desde «Capas»: ríos y cuencas, sismos, otros eventos. El <b>mapa de calor</b> muestra dónde se concentran las detecciones satelitales (no confirman un incendio); mueva el control de días para ver su evolución. Los datos aparecen al pasar el cursor. Toque un círculo para ver el detalle y abrir su informe.</p></div></div>
  <div class="maplayout">
   <div class="card lay" id="layers"><h2>Capas</h2>
    <div class="sec">Incendios (NASA FIRMS)</div>
-   <label><input type="checkbox" id="lHeat" checked> Mapa de calor de focos</label>
-   <label><input type="checkbox" id="lComp" checked> Complejos de incendio</label>
+   <label><input type="checkbox" id="lHeat" checked> Densidad de focos de calor</label>
+   <label><input type="checkbox" id="lComp" checked> Complejos de focos</label>
    <div class="nota" id="lblDias">Últimos 3 días</div><input type="range" id="rgDias" min="1" max="10" value="3">
+   <div class="nota">Un foco de calor es una detección satelital: puede ser incendio, quema agrícola o industria.</div>
+   <div class="sec">Hidrografía</div>
+   <label><input type="checkbox" id="lRed"> Red de ríos</label>
+   <label><input type="checkbox" id="lCue"> Cuencas</label>
+   <label><input type="checkbox" id="lLag"> Lagos y salares (referencia)</label>
+   <label><input type="checkbox" id="lRio"> Ríos monitoreados: tramo y punto (GloFAS)</label>
+   <div class="sec">Eventos</div>
+   <label><input type="checkbox" id="lSis"> Sismos (7 días)</label>
+   <label><input type="checkbox" id="lEv"> Otros eventos con ubicación</label>
    <div class="sec">Ir a un territorio</div>
    <select id="mDep" style="width:100%;margin-bottom:6px"><option value="">Todo Bolivia</option></select>
    <select id="mMun" style="width:100%" disabled><option value="">Todos los municipios</option></select>
@@ -68,10 +77,6 @@
    <label><input type="radio" name="fill" value="none" checked> Nada</label>
    <label><input type="radio" name="fill" value="avisos"> Avisos SENAMHI (municipios)</label>
    <label><input type="radio" name="fill" value="spi"> Sequía: SPI-3 (departamentos)</label>
-   <div class="sec">Otros eventos</div>
-   <label><input type="checkbox" id="lSis" checked> Sismos</label>
-   <label><input type="checkbox" id="lRio" checked> Ríos (GloFAS)</label>
-   <label><input type="checkbox" id="lEv" checked> Otros eventos con ubicación</label>
    <div class="sec">Mapa base</div>
    <label><input type="checkbox" id="lBase" checked> Calles y relieve (OpenStreetMap)</label>
    <div class="leg" id="legMap"></div>
@@ -180,5 +185,5 @@
 </section>
 </div>
 <div class="foot" id="foot"></div>
-<script src="evidencia.js?v=20261120a"></script><script src="app.js?v=20261119b"></script>
+<script src="evidencia.js?v=20261120a"></script><script src="mapaz.js?v=20261127a"></script><script src="hidromapa.js?v=20261125b"></script><script src="app.js?v=20261127a"></script>
 </body></html>

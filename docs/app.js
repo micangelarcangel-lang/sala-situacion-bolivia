@@ -123,57 +123,103 @@
   }
   function popEv(m, capa, fn) { m.on("click", capa, function (e) { new maplibregl.Popup().setLngLat(e.lngLat).setHTML('<div class="pop">' + fn(e.features[0].properties) + '</div>').addTo(m); }); m.on("mouseenter", capa, function () { m.getCanvas().style.cursor = "pointer"; }); m.on("mouseleave", capa, function () { m.getCanvas().style.cursor = ""; }); }
   function depSpi(escala) { var g = geoCopia(D.geoDep); g.features.forEach(function (f) { var v = D.sq[f.properties.n]; f.properties.spi = v ? v["spi" + escala] : null; f.properties.cl = v ? v["clase" + escala] : ""; }); return g; }
+  /* ---- Territorio: el mapa parte de lo esencial (departamentos y focos de calor); el resto se añade desde «Capas». Datos solo al pasar el cursor. ---- */
+  var NCV = ["#2e9e5b", "#f5b700", "#f26a1b", "#d7263d"], AMB = "#ffb02e", TR_KM = 80, TR_KM_LG = 320;
+  function rombo(m) {
+    if (m.hasImage("ev-d")) return; var n = 48, c = document.createElement("canvas"), x; c.width = c.height = n; x = c.getContext("2d");
+    x.translate(n / 2, n / 2); x.rotate(Math.PI / 4); x.lineWidth = 6; x.strokeStyle = "#fff"; x.strokeRect(-13, -13, 26, 26); x.fillStyle = "#fff"; x.fillRect(-5, -5, 10, 10);
+    m.addImage("ev-d", x.getImageData(0, 0, n, n), {pixelRatio: 2, sdf: true});
+  }
+  function datosRios(m) {
+    var tr = [], pt = [];
+    D.cau.forEach(function (c, i) {
+      var t = HMAP.tramo(c, TR_KM), col = NCV[Math.min(3, c.nivel || 0)];
+      if (t) { var t2 = HMAP.tramo(c, TR_KM_LG); if (t2 && t2.coords.length > t.coords.length) tr.push({type: "Feature", geometry: {type: "LineString", coordinates: t2.coords}, properties: {i: i, c: col, rn: t.rio, lg: 1}}); tr.push({type: "Feature", geometry: {type: "LineString", coordinates: t.coords}, properties: {i: i, c: col, rn: t.rio, lg: 0}}); }
+      pt.push({type: "Feature", geometry: {type: "Point", coordinates: [t ? t.x : c.lon, t ? t.y : c.lat]}, properties: {i: i, c: col, p: (c.nivel || 0) >= 2 ? 1 : 0, s: 0}});
+    });
+    HMAP.setData(m, "h-tr", tr); HMAP.setData(m, "h-pt", pt);
+  }
+  var EVL = ["sis", "comp", "evs", "focoPt"];
+  function textoEv(l, p) {
+    if (l === "comp") return "<b style='margin:0'>Complejo de focos de calor</b>" + S.esc(p.lugar) + "<br>" + p.n + " detecciones · " + p.frp + " MW<br><i>Detección satelital: no confirma un incendio</i><br>clic para abrir el informe";
+    if (l === "sis") return "<b style='margin:0'>Sismo M " + p.mag + "</b>" + S.esc(p.l) + "<br>" + S.esc(p.t) + " · prof. " + p.p + " km<br>clic para abrir el informe";
+    if (l === "evs") return "<b style='margin:0'>" + S.esc(p.t) + "</b>" + S.esc(p.c) + (p.l ? " · " + S.esc(p.l) : "") + "<br><i>ubicación aproximada</i><br>clic para abrir el informe";
+    return "<b style='margin:0'>Foco de calor</b>" + S.esc(p.mun) + ", " + S.esc(p.dep) + "<br>" + S.esc(p.f) + " · FRP " + p.frp + " MW<br><i>Detección satelital (VIIRS): no confirma un incendio</i>";
+  }
+  function hoverEv(m) {
+    var pop = m._pop, rq = 0, ev = null, mio = false;
+    function vivas() { return EVL.filter(function (l) { return m.getLayer(l) && m.getLayoutProperty(l, "visibility") !== "none"; }); }
+    function arriba(pt) { var ls = vivas(), fs = ls.length ? m.queryRenderedFeatures(pt, {layers: ls}) : [], i, j; for (i = 0; i < EVL.length; i++) for (j = 0; j < fs.length; j++) if (fs[j].layer.id === EVL[i]) return fs[j]; return null; }
+    m.on("mousemove", function (e) {
+      ev = e; if (rq) return;
+      rq = requestAnimationFrame(function () { rq = 0; if (!ev) return; var f = arriba(ev.point);
+        if (f) { mio = true; m.getCanvas().style.cursor = f.layer.id === "focoPt" ? "help" : "pointer"; pop.setLngLat(ev.lngLat).setHTML('<div class="pop">' + textoEv(f.layer.id, f.properties) + '</div>').addTo(m); }
+        else if (mio) { mio = false; pop.remove(); m.getCanvas().style.cursor = ""; }
+      });
+    });
+    m.getCanvas().addEventListener("mouseleave", function () { if (mio) { mio = false; pop.remove(); } });
+    m.on("click", function (e) { var f = arriba(e.point); if (f && f.properties.id) location.href = fichaUrl(f.properties.id); });
+  }
   function mapaGeneral() {
-    var m = MAPS.gen = nuevoMapa("mapa", true); controlesTerr();
-    m.on("load", function () {
+    var m = MAPS.gen = nuevoMapa("mapa", true), lis = 0; controlesTerr(); m._pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 10, maxWidth: "300px"}); m._evl = EVL.concat(["h-pt-c", "h-tr-l"]);
+    function listo() {
+      if (++lis < 2) return;
       var mun = geoCopia(D.geoMun), niv = {}; D.avisos.forEach(function (a) { var n = nivN(a.nivel); if (n < 0) return; (a.municipios || []).forEach(function (t) { var k = t; if (niv[k] == null || n > niv[k]) niv[k] = n; }); });
       mun.features.forEach(function (f) { var v = niv[f.properties.n + " (" + f.properties.d + ")"]; f.properties.niv = v == null ? -1 : v; });
       m.addSource("mun", {type: "geojson", data: mun}); m.addSource("dep", {type: "geojson", data: depSpi(3)});
       m.addLayer({id: "mun-fill", type: "fill", source: "mun", layout: {visibility: "none"}, paint: {"fill-color": ["match", ["round", ["get", "niv"]], 0, "#bfe5c9", 1, "#f9dc6b", 2, "#f7a15e", 3, "#e5576a", "rgba(0,0,0,0)"], "fill-opacity": ["case", [">=", ["get", "niv"], 0], .75, 0]}});
       m.addLayer({id: "dep-fill", type: "fill", source: "dep", layout: {visibility: "none"}, paint: {"fill-color": ["step", ["coalesce", ["get", "spi"], 0]].concat(SPICOL), "fill-opacity": .7}});
+      HMAP.bajo(m);
       m.addLayer({id: "dep-line", type: "line", source: "dep", paint: {"line-color": "#4b5a70", "line-width": 1.2}});
-      capasMun(m);
+      capasMun(m); HMAP.alto(m); rombo(m);
       capaHeat(m, 3, true);
+      m.setPaintProperty("focoPt", "circle-radius", ["interpolate", ["linear"], ["get", "frp"], 0, 2.4, 40, 6]); m.setPaintProperty("focoPt", "circle-stroke-width", .8);
       var cp = ((D.focos_complejos && D.focos_complejos.complejos) || []).map(function (c) { return {type: "Feature", properties: {n: c.n, frp: c.frp_mw, lugar: c.municipio + ", " + c.departamento, id: "complejo:" + c.id + ":" + c.departamento}, geometry: {type: "Point", coordinates: [c.lon, c.lat]}}; });
       m.addSource("comp", {type: "geojson", data: {type: "FeatureCollection", features: cp}});
-      m.addLayer({id: "comp", type: "circle", source: "comp", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "n"], 8, 7, 120, 20], "circle-color": "rgba(215,38,61,.15)", "circle-stroke-color": "#d7263d", "circle-stroke-width": 2.5}});
-      popEv(m, "comp", function (p) { return "<b>Complejo de focos</b>" + S.esc(p.lugar) + "<br>" + p.n + " detecciones · " + p.frp + " MW<br><a href='" + fichaUrl(p.id) + "'>Abrir informe →</a>"; });
-      var sis = D.sis.filter(function (s) { return s.ts > Date.now() - 7 * DIA; }).map(function (s) { return {type: "Feature", properties: {mag: s.mag, t: s.fecha_local, l: s.provincia + ", " + s.departamento, p: s.prof_km, id: "sismo:" + s.id}, geometry: {type: "Point", coordinates: [s.lon, s.lat]}}; });
+      m.addLayer({id: "comp", type: "circle", source: "comp", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "n"], 8, 7, 120, 20], "circle-color": "rgba(255,176,46,.10)", "circle-stroke-color": AMB, "circle-stroke-width": 1.6}});
+      var sis = D.sis.filter(function (z) { return z.ts > Date.now() - 7 * DIA; }).map(function (z) { return {type: "Feature", properties: {mag: z.mag, t: z.fecha_local, l: z.provincia + ", " + z.departamento, p: z.prof_km, id: "sismo:" + z.id}, geometry: {type: "Point", coordinates: [z.lon, z.lat]}}; });
+      var PC = ["step", ["coalesce", ["get", "p"], 30], "#d7263d", 70, "#f2a41b", 300, "#5b6cff"], MG = ["interpolate", ["linear"], ["get", "mag"], 2, 3.5, 3, 6, 4, 10, 5, 16, 6, 24];
       m.addSource("sis", {type: "geojson", data: {type: "FeatureCollection", features: sis}});
-      m.addLayer({id: "sis", type: "circle", source: "sis", paint: {"circle-radius": ["interpolate", ["linear"], ["get", "mag"], 2, 4, 6, 18], "circle-color": ["interpolate", ["linear"], ["get", "p"], 0, "#d7263d", 100, "#f5b700", 300, "#2a7fd1"], "circle-opacity": .8, "circle-stroke-color": "#fff", "circle-stroke-width": 1.2}});
-      popEv(m, "sis", function (p) { return "<b>Sismo M " + p.mag + "</b>" + S.esc(p.l) + "<br>" + p.t + " · prof. " + p.p + " km<br><a href='" + fichaUrl(p.id) + "'>Abrir informe →</a>"; });
-      var rio = D.cau.map(function (c) { return {type: "Feature", properties: {n: c.nombre, r: c.rio, e: c.estado, v: c.nivel || 0, id: "caudal:" + c.nombre + ":" + c.hoy}, geometry: {type: "Point", coordinates: [c.lon, c.lat]}}; });
-      m.addSource("rio", {type: "geojson", data: {type: "FeatureCollection", features: rio}});
-      m.addLayer({id: "rio", type: "circle", source: "rio", paint: {"circle-radius": 8, "circle-color": ["match", ["get", "v"], 0, "#2a9d8f", 1, "#f5b700", 2, "#f26a1b", "#d7263d"], "circle-stroke-color": "#fff", "circle-stroke-width": 2}});
-      popEv(m, "rio", function (p) { return "<b>" + S.esc(p.r) + " — " + S.esc(p.n) + "</b>" + S.esc(p.e) + "<br><a href='" + fichaUrl(p.id) + "'>Abrir informe →</a> <a href='#' onclick=\"document.querySelector('[data-t=rio]').click();return false\">Ver caudales</a>"; });
+      m.addLayer({id: "sis-g", type: "circle", source: "sis", paint: {"circle-radius": ["*", MG, 2], "circle-color": PC, "circle-opacity": .14, "circle-blur": 1}});
+      m.addLayer({id: "sis", type: "circle", source: "sis", paint: {"circle-radius": MG, "circle-color": PC, "circle-opacity": .2, "circle-stroke-color": PC, "circle-stroke-width": 1.8, "circle-stroke-opacity": .95}});
       var evs = D.ev.filter(function (e) { return e.lat != null && ["foco", "sismo", "caudal", "modelo"].indexOf(e.origen) < 0; }).map(function (e) { return {type: "Feature", properties: {t: e.titulo, c: e.categoria, id: e.id, l: e.lugar || ""}, geometry: {type: "Point", coordinates: [e.lon, e.lat]}}; });
-      var col = ["match", ["get", "c"]]; Object.keys(S.COLCAT).forEach(function (k) { col.push(k, S.COLCAT[k]); }); col.push("#777");
+      var col = ["match", ["get", "c"]]; Object.keys(S.COLCAT).forEach(function (k) { col.push(k, S.COLCAT[k]); }); col.push("#9aa7bd");
       m.addSource("evs", {type: "geojson", data: {type: "FeatureCollection", features: evs}});
-      m.addLayer({id: "evs", type: "circle", source: "evs", paint: {"circle-radius": 6, "circle-color": col, "circle-stroke-color": "#fff", "circle-stroke-width": 1.5}});
-      popEv(m, "evs", function (p) { return "<b>" + S.esc(p.t) + "</b>" + S.esc(p.l) + "<br><a href='" + fichaUrl(p.id) + "'>Abrir informe →</a>"; });
-      m.on("mouseenter", "comp", function () { m.getCanvas().style.cursor = "pointer"; });
-      ligarCapas(m); leyenda();
-    });
+      m.addLayer({id: "evs", type: "symbol", source: "evs", layout: {"icon-image": "ev-d", "icon-size": ["interpolate", ["linear"], ["zoom"], 4, .5, 9, .8], "icon-allow-overlap": true, "icon-ignore-placement": true}, paint: {"icon-color": col, "icon-halo-color": "rgba(5,13,28,.85)", "icon-halo-width": 1}});
+      datosRios(m);
+      HMAP.enlaza(m, {
+        tip: function (k, i) { var c = D.cau[i]; if (!c) return ""; return '<b style="margin:0">' + S.esc(c.nombre) + ' · ' + S.esc(c.rio) + '</b><span style="color:' + NCV[Math.min(3, c.nivel || 0)] + '">●</span> ' + S.esc(c.estado) + '<br><i>punto de medición del modelo GloFAS; el tramo es indicativo (±' + TR_KM + ' km)</i><br>clic para abrir el informe'; },
+        tipLluvia: function () { return ""; },
+        clic: function (k, i) { var c = D.cau[i]; if (c) location.href = fichaUrl("caudal:" + c.nombre + ":" + c.hoy); }
+      });
+      hoverEv(m); ligarCapas(m); leyenda();
+    }
+    HMAP.carga(listo); m.on("load", listo);
   }
   function vis(m, ids, on) { ids.forEach(function (i) { if (m.getLayer(i)) m.setLayoutProperty(i, "visibility", on ? "visible" : "none"); }); }
   function ligarCapas(m) {
-    $("lHeat").onchange = function () { vis(m, ["heat", "focoPt"], this.checked); };
-    $("lComp").onchange = function () { vis(m, ["comp"], this.checked); };
-    $("lSis").onchange = function () { vis(m, ["sis"], this.checked); };
-    $("lRio").onchange = function () { vis(m, ["rio"], this.checked); };
-    $("lEv").onchange = function () { vis(m, ["evs"], this.checked); };
-    $("lBase").onchange = function () { vis(m, ["osm"], this.checked); };
+    var G = {lHeat: ["heat", "focoPt"], lComp: ["comp"], lSis: ["sis-g", "sis"], lEv: ["evs"], lRed: ["h-rio-c", "h-rio-ab", "h-rio-fl", "h-rio-hit", "h-rio-hitc"], lCue: ["h-cu-f", "h-cu-l"], lLag: ["h-lg-f", "h-lg-l"], lRio: ["h-tr-w", "h-tr-k", "h-tr-l", "h-tr-fl", "h-pt-p", "h-pt-c", "h-pt-i"], lBase: ["osm"]};
+    vis(m, ["h-ca-f", "h-ca-l", "h-ar-k", "h-ar-l", "h-ar-fl"], false);
+    Object.keys(G).forEach(function (id) { var el = $(id); if (!el) return; el.onchange = function () { vis(m, G[id], this.checked); if (id === "lRio") HMAP.vista(this.checked ? "caudal" : "avisos"); leyenda(); }; vis(m, G[id], el.checked); });
+    HMAP.vista($("lRio").checked ? "caudal" : "avisos");
     $("rgDias").max = Math.max(1, D.dias.length || 10);
     $("rgDias").oninput = function () { $("lblDias").textContent = this.value == 1 ? "Último día" : "Últimos " + this.value + " días"; m.getSource("focos").setData(puntosGeo(D.P, +this.value)); };
     [].forEach.call(document.querySelectorAll("input[name=fill]"), function (r) { r.onchange = function () { vis(m, ["mun-fill"], r.value === "avisos" && r.checked); vis(m, ["dep-fill"], r.value === "spi" && r.checked); leyenda(); }; });
   }
   function leyenda() {
-    var f = (document.querySelector("input[name=fill]:checked") || {}).value, h = '<span><i style="background:linear-gradient(90deg,#feb24c,#f03b20,#7a0026)"></i>Densidad de focos</span><span><i style="border:2px solid #d7263d;background:none"></i>Complejo</span>';
+    var f = (document.querySelector("input[name=fill]:checked") || {}).value, on = function (i) { return $(i) && $(i).checked; }, h = "", ring = function (c, bg, px) { return '<i style="width:' + (px || 12) + 'px;height:' + (px || 12) + 'px;border:2px solid ' + c + ';background:' + (bg || "transparent") + ';border-radius:50%;box-sizing:border-box"></i>'; };
+    if (on("lHeat")) h += '<span><i style="background:linear-gradient(90deg,#feb24c,#f03b20,#7a0026)"></i>Densidad de focos de calor (detección satelital; no confirma un incendio)</span>';
+    if (on("lComp")) h += '<span>' + ring(AMB, "rgba(255,176,46,.12)", 14) + 'Complejo: grupo de focos vecinos (tamaño = nº de focos)</span>';
+    if (on("lSis")) h += '<span>' + ring("#d7263d", "rgba(215,38,61,.2)", 12) + ring("#f2a41b", "rgba(242,164,27,.2)", 12) + ring("#5b6cff", "rgba(91,108,255,.2)", 12) + 'Sismo: tamaño = magnitud · color = profundidad (rojo &lt; 70 km · ámbar · azul &gt; 300 km)</span>';
+    if (on("lRio")) h += '<span><i style="height:4px;width:22px;border-radius:2px;background:linear-gradient(90deg,' + NCV.join(",") + ');vertical-align:2px"></i>Río monitoreado: tramo coloreado y punto de medición (verde normal · amarillo · naranja sobre P90 · rojo &gt; 150 %)</span>';
+    if (on("lRed")) h += '<span><i style="height:3px;width:22px;border-radius:2px;background:#5fd0ff;vertical-align:3px"></i>Red de ríos (OpenStreetMap)</span>';
+    if (on("lCue")) h += '<span><i style="border:1.5px solid #22b8cf;background:rgba(34,184,207,.2)"></i>Cuenca del Amazonas</span><span><i style="border:1.5px solid #8b8cff;background:rgba(139,140,255,.2)"></i>del Plata</span><span><i style="border:1.5px solid #e0a85c;background:rgba(224,168,92,.2)"></i>Altiplano (endorreica)</span>';
+    if (on("lLag")) h += '<span><i style="border:1.5px dashed #46b2ff;background:rgba(70,178,255,.3)"></i>Lagos y salares: contorno de referencia, no la superficie de hoy</span>';
+    if (on("lEv")) h += '<span><i style="transform:rotate(45deg) scale(.8);border:2px solid #9aa7bd;border-radius:2px;background:transparent;box-sizing:border-box"></i>Otro evento (color = tipo; ubicación aproximada)</span>';
     if (f === "avisos") h += ["#bfe5c9", "#f9dc6b", "#f7a15e", "#e5576a"].map(function (c, i) { return '<span><i style="background:' + c + '"></i>Aviso ' + S.NIVTXT[i].toLowerCase() + '</span>'; }).join("");
     if (f === "spi") h += SPICLS.map(function (c) { return '<span><i style="background:' + c[1] + '"></i>' + c[0] + '</span>'; }).join("");
-    $("legMap").innerHTML = h + '<span><i style="background:#2a9d8f;border-radius:50%"></i>Río normal</span><span><i style="background:#f26a1b;border-radius:50%"></i>Río elevado</span>';
+    $("legMap").innerHTML = h || '<span>Sin capas de eventos activas: active alguna en «Capas».</span>';
   }
-
   /* ---------- INCENDIOS ---------- */
   function incendios() {
     if (!D.focos_puntos) { $("t-inc").innerHTML = '<div class="card vacio"><b>Aún no hay datos de focos de calor del módulo nuevo.</b><br>Se generan en la próxima actualización automática (cada 30 minutos). Si pasaron más de 2 horas, revise <a href="fuentes.html">Estado de las fuentes</a>.</div>'; return; }
@@ -453,10 +499,10 @@
     m.addLayer({id: "mun-sel", type: "fill", source: "mun", filter: ["==", ["get", "n"], "__ninguno__"], paint: {"fill-color": "#1d6fb8", "fill-opacity": 0.16}});
     m.addLayer({id: "mun-sel-l", type: "line", source: "mun", filter: ["==", ["get", "n"], "__ninguno__"], paint: {"line-color": "#0b3b6e", "line-width": 2.4}});
     var pop = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 8});
-    m.on("mousemove", "mun-hit", function (e) { var p = e.features[0].properties; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + S.esc(p.n) + '</b>' + S.esc(p.d) + ' · clic para ver detalle</div>').addTo(m); });
+    m.on("mousemove", "mun-hit", function (e) { var ls = (m._evl || []).filter(function (l) { return m.getLayer(l) && m.getLayoutProperty(l, "visibility") !== "none"; }); if (ls.length && m.queryRenderedFeatures(e.point, {layers: ls}).length) { pop.remove(); return; } var p = e.features[0].properties; m.getCanvas().style.cursor = "pointer"; pop.setLngLat(e.lngLat).setHTML('<div class="pop"><b style="margin:0">' + S.esc(p.n) + '</b>' + S.esc(p.d) + ' · clic para ver detalle</div>').addTo(m); });
     m.on("mouseleave", "mun-hit", function () { m.getCanvas().style.cursor = ""; pop.remove(); });
     m.on("click", "mun-hit", function (e) {
-      var capas = ["comp", "sis", "rio", "evs", "focoPt"].filter(function (c) { return m.getLayer(c); });
+      var capas = (m._evl || ["comp", "sis", "evs", "focoPt"]).filter(function (c) { return m.getLayer(c) && m.getLayoutProperty(c, "visibility") !== "none"; });
       if (capas.length && m.queryRenderedFeatures(e.point, {layers: capas}).length) return;
       var p = e.features[0].properties; $("mDep").value = p.d; llenaMun("mDep", "mMun"); $("mMun").value = p.n; irTerritorio(p.d, p.n);
     });
